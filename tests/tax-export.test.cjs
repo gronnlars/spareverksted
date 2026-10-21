@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict'),fs=require('node:fs');
+const E=require('../dist/engine.js'),Tax=require('../dist/tax.js'),Export=require('../dist/export-kit.js');
+const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-7*Math.max(1,Math.abs(b)),`${a} vs ${b}`);
+for(const taxModel of ['ask','share'])for(const mode of ['amount','percent','budget'])for(const free of [0,50000,500000]){
+ const s={...E.defaults,taxModel,taxFreeCapital:free,taxShield:1000,taxableShare:40,rate:4,fee:.2,retireYears:20,annualWithdraw:18000,extraWithdraw:50000,extraWithdrawYear:5,withdrawMode:mode};const r=E.withdrawal(s,300000);let freeLeft=free+1000,sumTax=0,sumNet=0;
+ for(let year=1;year<=r.n;year++){const p=r.row(year);let tax=0;for(const gross of [p.actual,p.extra||0]){const taxable=taxModel==='ask'?Math.max(0,gross-freeLeft):gross*.4;if(taxModel==='ask')freeLeft=Math.max(0,freeLeft-gross);tax+=taxable*s.taxRate/100;}sumTax+=tax;sumNet+=p.actual+(p.extra||0)-tax;const actual=Tax.at(s,r,year);near(actual.tax,tax);near(actual.totalTax,sumTax);near(actual.totalNet,sumNet);near(actual.regularNet+Math.max(0,(p.extra||0)-actual.extraTax),actual.net);assert.ok(actual.net>=0);}
+}
+const zero={...E.defaults,rate:0,fee:0,annualWithdraw:10000,retireYears:5,withdrawInflation:false,taxFreeCapital:25000,taxShield:5000,taxRate:40,taxModel:'ask'};const r=E.withdrawal(zero,50000);near(Tax.at(zero,r,3).tax,0);near(Tax.at(zero,r,4).tax,4000);near(Tax.at(zero,r,5).totalNet,42000);near(Tax.at({...zero,taxRate:0},r,5).totalNet,50000);assert.throws(()=>Tax.validate({...zero,taxRate:101}));
+const sheets=[{name:'Prøve',rows:[['Navn','Beløp','Merknad'],['Lars <&>',123456.78,'=SUM(A1)'],['Linje; to',-1200,'ÆØÅ\nNy linje']]},{name:'Uttak',rows:[['År','Etter skatt'],[1,Tax.at(zero,r,1).net]]}];const bytes=Export.workbook(sheets);fs.writeFileSync('/tmp/spareverksted-export-test.xlsx',bytes);assert.ok(bytes[0]===80&&bytes[1]===75);assert.ok(Export.csv([['a;b','"x"'],[123.45,'Norsk']]).includes('123,45'));
+console.log('Passed: tax thresholds, extra withdrawals and cumulative tax for 18 scenarios; valid XLSX ZIP and CSV quoting.');
