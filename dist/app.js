@@ -6,7 +6,7 @@ const BIG=[[1e18,'trillioner','trill.'],[1e15,'billiarder','bd.'],[1e12,'billion
 const big=(x,short)=>{const a=Math.abs(x),sign=x<0?'−':'';if(a>=1e21){const bound=x<0?'under −':'over ';return bound+(short?'1 000 trill.':'1 000 trillioner kr');}for(const [limit,word,abbr] of BIG)if(a>=limit)return sign+dec.format(a/limit)+(short?' '+abbr:' '+word+' kr');return null;};
 const money=x=>!Number.isFinite(x)?'Kan ikke beregnes':big(x)||nf.format(x)+' kr';
 const axisFormat=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0});
-const axisCompact=x=>big(x,true)||(Math.abs(x)>=1e9?axisFormat.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?axisFormat.format(x/1000)+' tusen':axisFormat.format(x));
+const axisCompact=x=>big(x,true)||(Math.abs(x)>=1e9?dec.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?dec.format(x/1000)+' tusen':dec.format(x));
 const compact=x=>big(x,true)||(Math.abs(x)>=1e9?dec.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?dec.format(x/1000)+' tusen':nf.format(x));
 const escapeHTML=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const groupedNumber=value=>new Intl.NumberFormat('nb-NO',{maximumFractionDigits:15}).format(value).replace(/[\u00a0\u202f]/g,' ');
@@ -54,6 +54,8 @@ function planProblem(){
 function focusField(key){const el=key&&$(key);if(!el)return;if(pageOf(key)!==s.activePage&&typeof setPage==='function')setPage(pageOf(key));for(let d=el.closest('details');d;d=d.parentElement?.closest('details'))d.open=true;markInvalid(key,pageOf(key)==='dreams'?'dreamError':pageOf(key)==='withdrawals'?'retirementResult':'error');el.focus({preventScroll:false});}
 function blockIfInvalid(action){const e=planProblem();if(!e)return false;notice(e.message+' '+action,8000);focusField(e.field);return true;}
 const endYear=n=>Math.round(n.years*12)/12;
+// Perioder under ett år vises i måneder, ikke som «0,08 år».
+const periodText=t=>{const m=Math.round(t*12);return m<12?m+(m===1?' måned':' måneder'):dec.format(t)+' år';};
 const inflation=(t,n=s)=>Math.exp(Math.log1p(n.inflation/100)*t);
 const display=(v,t,n=s)=>s.real?v/inflation(t,n):v;
 function nominalPaid(t,n=s){return E.raw({...n,rate:0,fee:0},t,0,0);}
@@ -72,7 +74,7 @@ function render(){
  E.validate(s,fieldLabel);rows=makeRows();const end=endYear(s),final=E.value(s,end),target=E.target(s),need=E.needed(s);
  if(rows.some(r=>Object.values(r).some(x=>!Number.isFinite(x)))||((view.showGoal||mode==='goal')&&!Number.isFinite(target)))throw Error('Tallene er større enn nettleseren kan beregne presist. Prøv kortere tid eller lavere vekst.');
  lastRenderError=null;$('error').hidden=true;$('error').textContent='';$('main').classList.remove('stale');syncFieldErrors(MAIN_KEYS,'error',null);const shown=display(final,end),paid=display(nominalPaid(end),end);
- $('resultLabel').textContent=mode==='goal'?'FOR Å NÅ MÅLET TRENGER DU':`ETTER ${dec.format(end)} ÅR KAN DU HA`;
+ $('resultLabel').textContent=mode==='goal'?'FOR Å NÅ MÅLET TRENGER DU':`ETTER ${periodText(end).toUpperCase()} KAN DU HA`;
  $('total').textContent=mode==='goal'?(Number.isFinite(need)?money(Math.ceil(need))+' / mnd.':'Målet kan ikke nås med denne perioden'):money(shown);
  $('secondary').textContent=mode==='goal'?'Første månedsbeløp. Grafen viser fortsatt sparingen du har lagt inn.':s.real?`Målt i dagens kroner. Kontoen viser da ${money(final)} før skatt.`:`Det tilsvarer ${money(final/inflation(end))} med dagens priser. Før skatt.`;
  if(mode!=='goal'&&Math.abs(shown)>=1e15)$('secondary').textContent+=' Beløpet er så stort at det mister praktisk mening. Sjekk sparetid og vekst.';
@@ -117,7 +119,11 @@ function chart(){
  if(view.showGoal||mode==='goal')series.push({name:'Sparemål',color:'#8c6d88',dash:true,points:rows.map(r=>({t:r.t,v:r.goal}))});
  comparisons.forEach((c,i)=>series.push({name:c.name,color:colors[i%colors.length],points:c.points}));
  const maxTime=Math.max(endYear(s),...comparisons.map(c=>endYear(c.n))),max=Math.max(1,...series.flatMap(a=>a.points.map(p=>p.v)),...(view.showRange?rows.map(r=>r.high):[]));
- const transform=v=>s.log?Math.log10(1+Math.max(0,v)):v,top=Number.isFinite(transform(max)*1.08)?transform(max)*1.08:transform(max);
+ // Uten beløp å vise gir en graf med aksetall bare forvirring.
+ if(Math.max(0,...series.flatMap(a=>a.points.map(p=>p.v)))<=0){el.onpointermove=null;el.onkeydown=null;el.innerHTML='<p class="hint chart-empty">Ingen beløp å vise ennå. Legg inn et startbeløp eller et beløp du sparer hver måned.</p>';$('chartLegend').innerHTML='';$('chartNote').textContent='';return;}
+ // Lineær akse: runde trinn (1, 2, 2,5 eller 5 ganger en tierpotens), slik at aksetallene blir lesbare og ulike.
+ const niceStep=x=>{const p=10**Math.floor(Math.log10(x)),f=x/p;return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p;};
+ const transform=v=>s.log?Math.log10(1+Math.max(0,v)):v,top=s.log?(Number.isFinite(transform(max)*1.08)?transform(max)*1.08:transform(max)):(Number.isFinite(max*1.04/4)?niceStep(max*1.04/4)*4:max);
  const x=t=>L+(maxTime?t/maxTime:0)*w,y=v=>T+h-transform(v)/top*h;
  const path=points=>points.map((p,i)=>(i?'L':'M')+x(p.t).toFixed(2)+','+y(p.v).toFixed(2)).join(' ');
  let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Spareutvikling i ${s.real?'dagens':'fremtidige'} kroner"><title>Utvikling i sparingen</title><desc>${escapeHTML(series.map(a=>a.name).join(', '))}. År langs vannrett akse, kroner langs loddrett akse.</desc><defs><linearGradient id="spareArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#98b77a" stop-opacity=".32"/><stop offset="1" stop-color="#98b77a" stop-opacity=".03"/></linearGradient><clipPath id="plotClip"><rect x="${L}" y="${T}" width="${w}" height="${h}"/></clipPath></defs>`;
