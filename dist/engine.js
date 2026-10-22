@@ -10,7 +10,7 @@ function needed(s){const base=value(s,s.years,s.rate,s.fee,0),unit=value({...s,s
 // [min, maks, enhet, etikett, valg]. open: min er utelukket. minText: egen tekst for minstegrensen.
 const R=(min,max,unit,label,opt={})=>({min,max,unit,label,...opt});
 const FIELDS={
- start:R(0,1e10,' kr','Du har allerede'),monthly:R(0,1e7,' kr','Du sparer hver måned'),years:R(0,100,' år','Du vil spare i'),rate:R(-100,100,' %','Antatt årlig vekst',{open:true}),
+ start:R(0,1e10,' kr','Du har allerede'),monthly:R(0,50000,' kr','Du sparer hver måned'),years:R(0,100,' år','Du vil spare i'),rate:R(-100,100,' %','Antatt årlig vekst',{open:true}),
  inflation:R(-100,100,' %','Prisvekst per år',{open:true}),fee:R(0,99.99,' %','Kostnad per år'),goal:R(0,1e11,' kr','Beløpet du vil nå'),growth:R(-100,100,' %','Økning i sparingen per år',{open:true}),
  bank:R(-100,100,' %','Bankrente å sammenligne med',{open:true}),spread:R(0,100,' prosentpoeng','Avvik fra valgt avkastning'),extra:R(0,1e10,' kr','Ekstrainnskudd'),extraYear:R(0,100,' år','Innskudd etter'),
  crash:R(0,100,' %','Børsfall'),crashYear:R(0,100,' år','Fall etter'),annualWithdraw:R(0,1e9,' kr','Årsbeløp før skatt'),retireYears:R(0,100,' år','År med uttak'),
@@ -18,7 +18,7 @@ const FIELDS={
 };
 const DREAM_FIELDS={
  dreamCost:R(0,1e11,' kr','Budsjett for kjøpet'),dreamStart:R(0,1e10,' kr','Allerede satt av'),dreamYears:R(1/12,100,' år','Tid til kjøpet',{minText:'én måned'}),
- dreamMonthly:R(0,1e7,' kr','Jeg kan spare per måned'),dreamInflation:R(-100,100,' %','Årlig prisvekst for kjøpet',{open:true}),
+ dreamMonthly:R(0,50000,' kr','Jeg kan spare per måned'),dreamInflation:R(-100,100,' %','Årlig prisvekst for kjøpet',{open:true}),
  dreamSafe:R(-100,100,' %','Bank / lavere risiko',{open:true}),dreamModerate:R(-100,100,' %','Moderat risiko',{open:true}),dreamRisk:R(-100,100,' %','Høyere risiko',{open:true})
 };
 // Felt som ikke er en del av kalkulatorens validering, men som må kontrolleres i delte lenker og lagrede planer.
