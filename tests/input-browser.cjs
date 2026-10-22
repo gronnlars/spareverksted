@@ -132,6 +132,27 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await typeIn(p,'dreamMonthly','3000');fixed(await a11y(p,'dreamMonthly'),'dreamMonthly','dreamError');assert(await p.locator('#dreamError').isHidden());assert.equal(await p.locator('#dreamError').textContent(),'');
   assert.deepEqual(p.errors,[]);
 
+  // Minustegn: siden viser negative tall med typografisk minus (−, U+2212). Både − og - skal leses riktig,
+  // uten å ødelegge desimaltall, tusenskille eller ugyldige skrivemåter.
+  p=await open('#activePage=calculator');await p.waitForTimeout(300);
+  assert.deepEqual(await p.evaluate(()=>['−5','-5','−2,5','-2,5','2,5','−1 234,5','1 234','0','−0'].map(parsedNumber)),[-5,-5,-2.5,-2.5,2.5,-1234.5,1234,0,-0]);
+  assert.deepEqual(await p.evaluate(()=>['5−','−−5','--5','−','– 5','1−2'].map(v=>Number.isNaN(parsedNumber(v)))),[true,true,true,true,true,true],'malformed minus stays invalid');
+  // Delt lenke med negativ avkastning: feltet viser −2, og en senere endring i et annet felt gir ingen feil.
+  p=await open('#activePage=calculator&rate=-2&inflation=-1');await p.waitForTimeout(300);
+  assert.equal(await p.locator('#rate').inputValue(),'\u22122','the page shows typographic minus');
+  await p.locator('#monthly').fill('3000');assert(await p.locator('#error').isHidden(),'a negative value from a link must survive other edits');
+  assert.deepEqual(await p.evaluate(()=>[s.rate,s.inflation,s.monthly]),[-2,-1,3000]);
+  // Skyveknappen for avkastning under null.
+  await p.locator('#rateSlider').fill('-5');assert(await p.locator('#error').isHidden());assert.equal(await p.evaluate(()=>s.rate),-5);
+  await p.locator('#years').fill('12');assert(await p.locator('#error').isHidden(),'slider value below zero must survive other edits');assert.equal(await p.evaluate(()=>s.rate),-5);
+  // Skrevet med begge tegn, med og uten desimaler.
+  for(const [typed,expected] of [['-3',-3],['\u22123',-3],['\u22122,5',-2.5],['-0,5',-0.5]]){await p.locator('#rate').fill(typed);await p.locator('#rate').blur();await p.locator('#years').fill('11');assert(await p.locator('#error').isHidden(),typed);assert.equal(await p.evaluate(()=>s.rate),expected,typed);}
+  // Samme resultat med − og -.
+  await p.locator('#rate').fill('-3');const withHyphen=await p.locator('#total').innerText();await p.locator('#rate').fill('\u22123');assert.equal(await p.locator('#total').innerText(),withHyphen);
+  // Ugyldig skrivemåte gir fortsatt feil på riktig felt.
+  await p.locator('#rate').fill('3\u2212');assert(await p.locator('#error').isVisible());assert.equal(await p.locator('#rate').getAttribute('aria-invalid'),'true');await p.locator('#rate').fill('5');
+  assert.deepEqual(p.errors,[]);
+
   // Sparemål: egne feltnavn, riktig felt markert, og ugyldige mål kan ikke deles, lagres eller eksporteres.
   p=await open('#activePage=dreams');await p.waitForTimeout(300);
   await p.locator('#dreamMonthly').fill('20000000');

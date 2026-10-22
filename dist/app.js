@@ -9,7 +9,9 @@ const axisFormat=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0});
 const axisCompact=x=>big(x,true)||(Math.abs(x)>=1e9?axisFormat.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?axisFormat.format(x/1000)+' tusen':axisFormat.format(x));
 const compact=x=>big(x,true)||(Math.abs(x)>=1e9?dec.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?dec.format(x/1000)+' tusen':nf.format(x));
 const escapeHTML=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const parsedNumber=value=>value.trim()===''?0:Number(value.replace(/[\s\u00a0\u202f]/g,'').replace(',','.'));
+// Godtar tallene slik siden selv viser dem: mellomrom som tusenskille, komma som desimaltegn og
+// typografisk minus (−, U+2212) fra norsk tallformatering. Vanlig bindestrek virker som før.
+const parsedNumber=value=>value.trim()===''?0:Number(value.replace(/[\s\u00a0\u202f]/g,'').replace(/^\u2212/,'-').replace(',','.'));
 const hash=new URLSearchParams(location.hash.slice(1));
 try{const data=JSON.parse(localStorage.getItem('sv-scenarios')||'[]');saved=Array.isArray(data)?data.filter(x=>x&&typeof x.name==='string'&&x.state&&typeof x.state==='object'):[];level=localStorage.getItem('sv-level')||'simple';}catch{}
 // Delte lenker kontrolleres felt for felt. Gyldige verdier beholdes, ugyldige felt får standardverdi.
