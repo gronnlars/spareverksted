@@ -9,7 +9,7 @@ function clean(raw){
  for(const [k,[min,max]]of Object.entries(nums)){const n=p[k];if(typeof n==='number'&&Number.isFinite(n)&&n>=min&&n<=max&&(k!=='age'||Number.isInteger(n))){out.profile[k]=n;out.origins[k]=raw.origins?.[k]==='calculator'?'calculator':'guide';}}
  const choices={buffer:['yes','no'],debt:['yes','no'],income:['stable','uncertain'],risk:['low','medium','high'],discipline:['automatic','flexible'],fixed:['yes','no'],owner:['yes','no'],tax:['yes','no']};
  for(const [k,values]of Object.entries(choices))if(values.includes(p[k])){out.profile[k]=p[k];out.origins[k]=raw.origins?.[k]==='calculator'?'calculator':'guide';}
- for(const id of ['mortgage','student','children','buffer','funds','pension','bsu']){const n=raw.horizons?.[id];if(n===null||typeof n==='number'&&Number.isFinite(n)&&n>=0&&n<=80)out.horizons[id]=n;}
+ for(const [id,n]of Object.entries(raw.horizons||{})){if(!/^[a-z][a-z0-9-]{0,60}$/.test(id)||['constructor','prototype'].includes(id))continue;if(n===null||typeof n==='number'&&Number.isFinite(n)&&n>=0&&n<=80)out.horizons[id]=n;}
  return out;
 }
 function read(storage){try{return clean(JSON.parse(storage.getItem(KEY)));}catch{return empty();}}

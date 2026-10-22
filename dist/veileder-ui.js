@@ -24,7 +24,8 @@ function describe(){
 }
 function fill(){
  const p=profile();for(const input of $('profileForm').elements){if(input.name)input.value=p[input.name]??'';}
- $('fixedField').hidden=selected!=='mortgage';$('ownerField').hidden=selected!=='bsu';$('taxField').hidden=selected!=='bsu';
+ const category=V.topics.find(t=>t.id===selected)?.category||selected;
+ $('fixedField').hidden=category!=='mortgage';$('ownerField').hidden=category!=='bsu';$('taxField').hidden=category!=='bsu';
  $('formError').hidden=true;describe();
 }
 function group(label,items,kind){
@@ -37,21 +38,24 @@ function render(focus=false){
  const out=$('answer');out.replaceChildren(el('p',a.intro,'answer-lead'));if(a.note)out.append(el('p',a.note,'answer-caution'));
  const grid=el('div','','option-grid');for(const o of a.options){const card=el('article','','option-card');card.append(el('h3',o.title),el('p',o.subtitle,'option-subtitle'),group('Fordeler',o.pros,'pro'),group('Ulemper',o.cons,'con'));grid.append(card);}out.append(grid);
  const full=el('details','','full-answer');full.append(el('summary','Les en utfyllende vurdering'));for(const part of a.parts){const section=el('section','','answer-part');section.append(el('h3',part.title),el('p',part.text));full.append(section);}out.append(full);
- const sources=el('details','','answer-sources');sources.append(el('summary','Kilder og forbehold'));sources.append(el('p','Kontrollert 22. oktober 2026. Regelgrenser er merket med år og kan endres. Inndelingen i under 5, 5–10 og minst 10 år er en grov redaksjonell vurdering, ikke en garanti. Kildene har ikke godkjent veilederen.','hint'));
+ const sources=el('details','','answer-sources');sources.append(el('summary','Kilder og forbehold'));const checked=new Intl.DateTimeFormat('nb-NO',{dateStyle:'long'}).format(new Date(a.checked+'T12:00:00Z'));sources.append(el('p','Kontrollert '+checked+'. Regelgrenser er merket med år og kan endres. Inndelingen i under 5, 5–10 og minst 10 år er en grov redaksjonell vurdering, ikke en garanti. Kildene har ikke godkjent veilederen.','hint'));
+ if(a.baseChecked&&a.baseChecked!==a.checked)sources.append(el('p','Grunnveiledningen ble kontrollert '+a.baseChecked+'.','hint'));
  const ul=el('ul','','source-list');for(const s of a.sources){const li=el('li'),link=el('a',s.title);link.href=s.url;link.target='_blank';link.rel='noopener noreferrer';li.append(link);ul.append(li);}sources.append(ul);
  if(selected==='children')sources.append(el('p','Statsforvalterens bakgrunnsside er arkivert. Kontroller gjeldende regler, renter og eventuelle unntak før større overføringer. Den oppgitte stipendgrensen gjelder 2026 og er ikke en prognose for når barnet studerer.','hint'));
  out.append(sources);describe();if(focus)$('answerTitle').focus();
 }
 function choose(id,focus=true){
- selected=id;for(const b of document.querySelectorAll('[data-topic]'))b.setAttribute('aria-pressed',String(b.dataset.topic===id));fill();render(focus);
+ selected=id;const category=V.topics.find(t=>t.id===id)?.category||id;
+ $('followups').replaceChildren();for(const question of V.topics.filter(t=>t.category===category&&t.id!==id)){const b=button(question.title,()=>choose(question.id));b.dataset.topic=question.id;b.setAttribute('aria-pressed','false');$('followups').append(b);}
+ for(const b of document.querySelectorAll('[data-topic]'))b.setAttribute('aria-pressed',String(b.dataset.topic===id));fill();render(focus);
 }
 function search(){
  $('matches').replaceChildren();const ids=V.findTopics($('question').value);
- if(!ids.length){selected=null;$('answerPanel').hidden=true;$('matchStatus').textContent='Jeg fant ikke et passende svar. Velg et tema, eller prøv andre ord.';for(const b of document.querySelectorAll('[data-topic]'))b.setAttribute('aria-pressed','false');fill();return;}
+ if(!ids.length){$('followups').replaceChildren();selected=null;$('answerPanel').hidden=true;$('matchStatus').textContent='Jeg fant ikke et passende svar. Velg et tema, eller prøv andre ord.';for(const b of document.querySelectorAll('[data-topic]'))b.setAttribute('aria-pressed','false');fill();return;}
  choose(ids[0]);$('matchStatus').textContent=ids.length>1?'Viser '+V.topics.find(t=>t.id===ids[0]).title.toLowerCase()+'. Du kan også se:':'';
  for(const id of ids.slice(1)){const t=V.topics.find(t=>t.id===id);$('matches').append(button(t.title,()=>{$('matchStatus').textContent='';$('matches').replaceChildren();choose(id);}));}
 }
-for(const t of V.topics){const b=button(t.title,()=>{$('matchStatus').textContent='';$('matches').replaceChildren();choose(t.id);});b.dataset.topic=t.id;b.setAttribute('aria-pressed','false');$('topics').append(b);}
+for(const t of V.topics.filter(t=>!t.category)){const b=button(t.title,()=>{$('matchStatus').textContent='';$('matches').replaceChildren();choose(t.id);});b.dataset.topic=t.id;b.setAttribute('aria-pressed','false');$('topics').append(b);}
 $('questionForm').addEventListener('submit',e=>{e.preventDefault();search();});
 $('question').addEventListener('input',()=>{if(selected){$('answerPanel').hidden=true;selected=null;} $('matchStatus').textContent='Trykk «Vis svar» for å søke.';$('matches').replaceChildren();for(const b of document.querySelectorAll('[data-topic]'))b.setAttribute('aria-pressed','false');});
 $('profileForm').addEventListener('submit',e=>{

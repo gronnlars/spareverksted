@@ -38,16 +38,17 @@ const content={
  {title:'Spare utenfor BSU',subtitle:'Konto eller fond valgt etter tid til bruk.',pros:[item('Mer fleksibel bruk av pengene','En vanlig sparekonto kan passe buffer og andre formål. Sammenlign rente og uttaksregler.')],cons:[item('Du får ikke BSU-fradraget','Hvis du ellers oppfyller vilkårene, kan du gå glipp av en fordel.'),item('Fond kan være uegnet nær boligkjøp','En kort, fast kjøpsfrist gir begrenset tid til å hente inn et børsfall.')]}]}
 };
 function build(id,profile){
- const full=V.answer(id,profile),p=full.profile,c=content[id];let note='';
+ const full=V.answer(id,profile),p=full.profile,topic=V.topics.find(t=>t.id===id),c=content[id]||topic.entry;const category=topic.category||id;let note='';
  if(p.debt==='yes')note='Du har oppgitt dyr gjeld. Vurder nedbetaling og nødvendige utgifter før du tar mer risiko.';
  else if(p.buffer==='no')note='Du har oppgitt at du mangler buffer. Sett av en tilgjengelig reserve før du binder eller risikerer mer.';
  else if(p.income==='uncertain')note='Med usikker inntekt er tilgjengelige penger ekstra viktige.';
- else if(['mortgage','funds','pension','children','bsu'].includes(id)&&p.years!==null){
+ else if(typeof c.notice==='function'&&c.notice(p))note=c.notice(p);
+ else if(['mortgage','funds','pension','children','bsu'].includes(category)&&p.years!==null){
  if(p.years<5)note='Du har oppgitt under fem år til bruk. For et viktig, fast mål taler det for forutsigbarhet.';
  else if(p.risk==='low')note='Du vil helst unngå store fall. Velg en plan du også klarer å følge når markedet faller.';
  else if(p.years>=10)note='Du har minst ti år til bruk. Det kan gi rom for mer aksjerisiko, hvis resten av økonomien tåler det.';
  }
- if(!note&&id==='pension'&&p.age>=55&&p.age!==null)note='Når du er '+p.age+' år, er det nyttig å skille mellom penger til de første uttaksårene og penger som kan stå lenger.';
+ if(!note&&category==='pension'&&p.age>=55&&p.age!==null)note='Når du er '+p.age+' år, er det nyttig å skille mellom penger til de første uttaksårene og penger som kan stå lenger.';
  return {...full,intro:c.intro,note,options:c.options};
 }
 const api={build,content};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareCards=api;
