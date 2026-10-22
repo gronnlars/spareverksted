@@ -26,3 +26,10 @@ assert.match(Cards.build('funds',{years:3,age:20}).note,/under fem år/);
 assert.match(Cards.build('pension',{age:57}).note,/57 år/);
 assert.match(Cards.build('funds',{years:20,debt:'yes'}).note,/dyr gjeld/);
 console.log(`Context and compact cards: defaults, same-tab storage, child horizon, stale overrides, malformed data and ${count} profile combinations passed.`);
+
+const returned=C.calculatorPatch(ctx,false);
+assert.equal(returned.userAge,57);assert.equal(returned.ageKnown,true);assert.equal(returned.years,10);
+assert.equal(C.fromCalculator({...state,ageKnown:false,...returned},true,ctx).profile.age,57);
+assert.deepEqual(C.calculatorPatch(ctx,true),{},'a shared plan must never inherit this tab’s personal context');
+assert.deepEqual(C.calculatorPatch(C.empty(),false),{});
+assert.equal(returned.years,10,'a child’s three- or four-year horizon must not overwrite the calculator horizon');

@@ -53,6 +53,10 @@ const assert=require('node:assert/strict');
    await page.setViewportSize({width,height:850});
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`Overflow at ${width}`);
   }
+  await page.getByRole('link',{name:'Kalkulator',exact:true}).click();
+  assert.match(await page.locator('#planContext').innerText(),/57 år/);
+  await page.getByRole('link',{name:'Spør om sparing',exact:true}).click();
+  assert.match(await page.locator('#contextSummary').innerText(),/57 år/);
   await page.locator('#profileDetails > summary').click();
   await page.locator('#resetGuidance').click();
   assert.doesNotMatch(await page.locator('#contextSummary').innerText(),/57 år/);
