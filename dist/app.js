@@ -3,7 +3,7 @@ const $=id=>document.getElementById(id), E=Engine;
 let s={...E.defaults},mode='explore',rows=[],saved=[],level='simple',selectedPlans=new Set(),undoState=null,view={showBank:false,showRange:false,showGoal:false};
 const nf=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0}),dec=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:2});
 const BIG=[[1e18,'trillioner','trill.'],[1e15,'billiarder','bd.'],[1e12,'billioner','bill.']];
-const big=(x,short)=>{const a=Math.abs(x),sign=x<0?'−':'';if(a>=1e21)return short?'over 1 000 trill.':'over '+sign+'1 000 trillioner kr';for(const [limit,word,abbr] of BIG)if(a>=limit)return sign+dec.format(a/limit)+(short?' '+abbr:' '+word+' kr');return null;};
+const big=(x,short)=>{const a=Math.abs(x),sign=x<0?'−':'';if(a>=1e21){const bound=x<0?'under −':'over ';return bound+(short?'1 000 trill.':'1 000 trillioner kr');}for(const [limit,word,abbr] of BIG)if(a>=limit)return sign+dec.format(a/limit)+(short?' '+abbr:' '+word+' kr');return null;};
 const money=x=>!Number.isFinite(x)?'Kan ikke beregnes':big(x)||nf.format(x)+' kr';
 const axisFormat=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0});
 const axisCompact=x=>big(x,true)||(Math.abs(x)>=1e9?axisFormat.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?axisFormat.format(x/1000)+' tusen':axisFormat.format(x));

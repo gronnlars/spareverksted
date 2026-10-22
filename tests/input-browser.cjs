@@ -31,6 +31,9 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.locator('#years').fill('100');await p.locator('#rate').fill('100');
   assert.match(await p.locator('#total').innerText(),/(billioner|billiarder|trillioner) kr|over/);assert.match(await p.locator('#secondary').innerText(),/mister praktisk mening/);
   assert(!/e\+\d/.test(await p.locator('main').innerText()),'no scientific notation');
+  // Fortegn beholdes i både kort (akser) og lang form, også over 1 000 trillioner.
+  assert.deepEqual(await p.evaluate(()=>[big(2e21,true),big(-2e21,true),big(-2e21),big(-5e18,true),axisCompact(-3e21),money(-2e21)]),
+   ['over 1 000 trill.','under −1 000 trill.','under −1 000 trillioner kr','−5 trill.','under −1 000 trill.','under −1 000 trillioner kr']);
   await p.locator('#years').fill(years0);await p.locator('#rate').fill('5');
   assert.equal(await p.locator('#total').innerText(),total,'fixing the input must restore the result');assert(await p.locator('#error').isHidden());assert(!await p.evaluate(()=>document.getElementById('main').classList.contains('stale')));
   assert.deepEqual(p.errors,[]);
