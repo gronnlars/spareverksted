@@ -236,8 +236,14 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await click(p,'share');assert(!await p.evaluate(()=>document.getElementById('shareDialog').open),'0 years cannot be shared');
   assert.equal(await p.locator('#yearsSlider').getAttribute('min'),'0.5');assert(await p.locator('#yearsSlider').isDisabled(),'0 years locks the slider until the user chooses it');await p.locator('#yearsSliderUnlock').click();await p.locator('#yearsSlider').fill('0.5');assert(await p.locator('#error').isHidden(),'the slider minimum is valid');
   assert.notEqual(await p.locator('#total').innerText(),'0 kr','3 000 kr a month for half a year is more than 0 kr');
+  // Én måned kan skrives inn slik folk skriver den, og perioder under ett år vises i måneder.
+  for(const typed of ['0,0833','0,08','0,1']){await p.locator('#years').fill(typed);assert(await p.locator('#error').isHidden(),typed+' is one month');
+   assert.equal(await p.locator('#resultLabel').innerText(),'ETTER 1 MÅNED KAN DU HA');assert.match(await p.locator('#total').innerText(),/^3\s000 kr$/);}
+  await p.locator('#years').fill('0,04');assert(await p.locator('#error').isVisible(),'less than half a month is not a month');
+  await p.locator('#years').fill('0,5');assert.equal(await p.locator('#resultLabel').innerText(),'ETTER 6 MÅNEDER KAN DU HA');
+  await p.locator('#years').fill('1');assert.equal(await p.locator('#resultLabel').innerText(),'ETTER 1 ÅR KAN DU HA');
   p=await open('#activePage=calculator&monthly=3000&years=0');await p.waitForTimeout(300);assert.equal(await p.evaluate(()=>s.years),10);assert.match(await p.locator('#toast').innerText(),/«Du vil spare i»/);
-  p=await open('#activePage=dreams');await p.waitForTimeout(300);assert.equal(await p.locator('#dreamYearsSlider').getAttribute('min'),'0.5');await p.locator('#dreamYearsSlider').fill('0.5');assert(await p.locator('#dreamError').isHidden());
+  p=await open('#activePage=dreams');await p.waitForTimeout(300);assert.equal(await p.locator('#dreamYearsSlider').getAttribute('min'),'0.5');await p.locator('#dreamYearsSlider').fill('0.5');assert(await p.locator('#dreamError').isHidden());await p.locator('#dreamYears').fill('0,0833');assert(await p.locator('#dreamError').isHidden(),'one month typed in the goal module');
   // Aksetallene er runde og forskjellige, og en tom plan viser en forklaring i stedet for en graf.
   p=await open('#activePage=calculator');await p.waitForTimeout(300);
   for(const [start,monthly,years] of [['0','2000','10'],['0','3000','1'],['250000','0','5'],['0','100','0,5'],['1000000','20000','40']]){

@@ -7,7 +7,7 @@ const errorOf=fn=>{try{fn();}catch(e){return e;}assert.fail('expected an error')
 // K2: Sparemålets feil skal peke på sparemålets egne felt og bruke sparemålets feltnavn.
 const dreamCases=[
  ['dreamMonthly',2e7,/«Jeg kan spare per måned»/],['dreamMonthly',-1,/«Jeg kan spare per måned»/],
- ['dreamYears',150,/«Tid til kjøpet»/],['dreamYears',0,/«Tid til kjøpet».*én måned/],['dreamYears',1/24,/én måned/],
+ ['dreamYears',150,/«Tid til kjøpet»/],['dreamYears',0,/«Tid til kjøpet».*én måned/],['dreamYears',1/30,/én måned/],
  ['dreamCost',2e11,/«Budsjett for kjøpet»/],['dreamStart',2e10,/«Allerede satt av»/],
  ['dreamInflation',200,/«Årlig prisvekst for kjøpet»/],['dreamInflation',-100,/«Årlig prisvekst for kjøpet»/],
  ['dreamSafe',150,/«Bank \/ lavere risiko»/],['dreamModerate',-100,/«Moderat risiko»/],['dreamRisk',NaN,/gyldig tall i «Høyere risiko»/],
@@ -19,7 +19,7 @@ for(const [key,value,message] of dreamCases){
  assert.doesNotMatch(e.message,/Sparing per måned|Sparetid|Antatt årlig vekst|Sparemålet/,'no labels from the savings calculator');
 }
 // Grensene i sparemålet tåler yttergrensene uten feil.
-for(const patch of [{dreamYears:1/12},{dreamYears:100},{dreamMonthly:1e7},{dreamCost:1e11},{dreamRisk:100},{dreamSafe:0},{dreamInflation:0},{dreamMonthly:0}])
+for(const patch of [{dreamYears:1/12},{dreamYears:0.0833},{dreamYears:0.08},{dreamYears:1/24},{dreamYears:100},{dreamMonthly:1e7},{dreamCost:1e11},{dreamRisk:100},{dreamSafe:0},{dreamInflation:0},{dreamMonthly:0}])
  assert.doesNotThrow(()=>E.dreamPlans({...E.defaults,...patch}),JSON.stringify(patch));
 // Sparemålets felt gjenbruker kalkulatorens grenser, slik at den interne kontrollen aldri feiler med feil feltnavn.
 const pairs=[['dreamCost','goal'],['dreamStart','start'],['dreamMonthly','monthly'],['dreamInflation','inflation'],['dreamSafe','rate']];

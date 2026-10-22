@@ -10,14 +10,14 @@ function needed(s){const base=value(s,s.years,s.rate,s.fee,0),unit=value({...s,s
 // [min, maks, enhet, etikett, valg]. open: min er utelukket. minText: egen tekst for minstegrensen.
 const R=(min,max,unit,label,opt={})=>({min,max,unit,label,...opt});
 const FIELDS={
- start:R(0,1e10,' kr','Du har allerede'),monthly:R(0,1e7,' kr','Du sparer hver måned'),years:R(1/12,100,' år','Du vil spare i',{minText:'én måned'}),rate:R(0,100,' %','Antatt årlig vekst'),
+ start:R(0,1e10,' kr','Du har allerede'),monthly:R(0,1e7,' kr','Du sparer hver måned'),years:R(1/24,100,' år','Du vil spare i',{minText:'én måned'}),rate:R(0,100,' %','Antatt årlig vekst'),
  inflation:R(0,100,' %','Prisvekst per år'),fee:R(0,99.99,' %','Kostnad per år'),goal:R(0,1e11,' kr','Beløpet du vil nå'),growth:R(-100,100,' %','Årlig endring i månedssparingen',{open:true}),
  bank:R(0,100,' %','Bankrente å sammenligne med'),spread:R(0,100,' prosentpoeng','Avvik fra valgt avkastning'),extra:R(0,1e10,' kr','Ekstrainnskudd'),extraYear:R(0,100,' år','Innskudd etter'),
  crash:R(0,100,' %','Børsfall'),crashYear:R(0,100,' år','Fall etter'),annualWithdraw:R(0,1e9,' kr','Årsbeløp før skatt'),retireYears:R(0,100,' år','År med uttak'),
  withdrawPercent:R(0,100,' %','Uttak hvert år'),extraWithdraw:R(0,1e9,' kr','Ekstra engangsuttak'),extraWithdrawYear:R(0,100,' år','Etter uttaksår'),withdraw:R(0,1e9,' kr','Uttak')
 };
 const DREAM_FIELDS={
- dreamCost:R(0,1e11,' kr','Budsjett for kjøpet'),dreamStart:R(0,1e10,' kr','Allerede satt av'),dreamYears:R(1/12,100,' år','Tid til kjøpet',{minText:'én måned'}),
+ dreamCost:R(0,1e11,' kr','Budsjett for kjøpet'),dreamStart:R(0,1e10,' kr','Allerede satt av'),dreamYears:R(1/24,100,' år','Tid til kjøpet',{minText:'én måned'}),
  dreamMonthly:R(0,1e7,' kr','Jeg kan spare per måned'),dreamInflation:R(0,100,' %','Årlig prisvekst for kjøpet'),
  dreamSafe:R(0,100,' %','Bank / lavere risiko'),dreamModerate:R(0,100,' %','Moderat risiko'),dreamRisk:R(0,100,' %','Høyere risiko')
 };
@@ -26,6 +26,8 @@ const OTHER_FIELDS={userAge:R(0,120,' år','Alder'),taxFreeCapital:R(0,Infinity,
 const CHOICES={activePage:[['calculator','dreams','withdrawals'],'Side'],withdrawMode:[['amount','duration','budget','percent'],'Hva vil du finne ut?'],withdrawBase:[['remaining','initial'],'Prosent av'],
  taxModel:[['ask','share'],'Skattemodell'],dreamType:[['car','home','holiday','renovation','freedom','buffer','other'],'Jeg sparer til'],stress:[['low','medium','high'],'Risikovilje'],
  purpose:[['freedom','home','buffer','dream'],'Formål'],ageGroup:[['all','18-24','25-29','30-34','35-39','40-44','45-49','50-54','55-66','67+'],'Aldersgruppe']};
+// Perioder regnes i hele måneder (avrundet). Nedre grense 1/24 år betyr at alt som avrundes til minst én måned
+// er gyldig, slik at «0,08» og «0,0833» godtas som én måned.
 const RULES={...FIELDS,...DREAM_FIELDS,...OTHER_FIELDS};
 // Vanlige regneeksempler bruker minst 0 % forventet vekst, prisvekst og bankrente. Mulige tap vises som
 // risikoscenarioer (børsfall, lavere vekst, stresstester), ikke som forventningen. Eldre lenker og planer

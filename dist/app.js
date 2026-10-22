@@ -54,6 +54,8 @@ function planProblem(){
 function focusField(key){const el=key&&$(key);if(!el)return;if(pageOf(key)!==s.activePage&&typeof setPage==='function')setPage(pageOf(key));for(let d=el.closest('details');d;d=d.parentElement?.closest('details'))d.open=true;markInvalid(key,pageOf(key)==='dreams'?'dreamError':pageOf(key)==='withdrawals'?'retirementResult':'error');el.focus({preventScroll:false});}
 function blockIfInvalid(action){const e=planProblem();if(!e)return false;notice(e.message+' '+action,8000);focusField(e.field);return true;}
 const endYear=n=>Math.round(n.years*12)/12;
+// Perioder under ett år vises i måneder, ikke som «0,08 år».
+const periodText=t=>{const m=Math.round(t*12);return m<12?m+(m===1?' måned':' måneder'):dec.format(t)+' år';};
 const inflation=(t,n=s)=>Math.exp(Math.log1p(n.inflation/100)*t);
 const display=(v,t,n=s)=>s.real?v/inflation(t,n):v;
 function nominalPaid(t,n=s){return E.raw({...n,rate:0,fee:0},t,0,0);}
@@ -72,7 +74,7 @@ function render(){
  E.validate(s,fieldLabel);rows=makeRows();const end=endYear(s),final=E.value(s,end),target=E.target(s),need=E.needed(s);
  if(rows.some(r=>Object.values(r).some(x=>!Number.isFinite(x)))||((view.showGoal||mode==='goal')&&!Number.isFinite(target)))throw Error('Tallene er større enn nettleseren kan beregne presist. Prøv kortere tid eller lavere vekst.');
  lastRenderError=null;$('error').hidden=true;$('error').textContent='';$('main').classList.remove('stale');syncFieldErrors(MAIN_KEYS,'error',null);const shown=display(final,end),paid=display(nominalPaid(end),end);
- $('resultLabel').textContent=mode==='goal'?'FOR Å NÅ MÅLET TRENGER DU':`ETTER ${dec.format(end)} ÅR KAN DU HA`;
+ $('resultLabel').textContent=mode==='goal'?'FOR Å NÅ MÅLET TRENGER DU':`ETTER ${periodText(end).toUpperCase()} KAN DU HA`;
  $('total').textContent=mode==='goal'?(Number.isFinite(need)?money(Math.ceil(need))+' / mnd.':'Målet kan ikke nås med denne perioden'):money(shown);
  $('secondary').textContent=mode==='goal'?'Første månedsbeløp. Grafen viser fortsatt sparingen du har lagt inn.':s.real?`Målt i dagens kroner. Kontoen viser da ${money(final)} før skatt.`:`Det tilsvarer ${money(final/inflation(end))} med dagens priser. Før skatt.`;
  if(mode!=='goal'&&Math.abs(shown)>=1e15)$('secondary').textContent+=' Beløpet er så stort at det mister praktisk mening. Sjekk sparetid og vekst.';

@@ -14,8 +14,8 @@ assert.doesNotThrow(()=>E.withdrawal({...w,extraWithdrawYear:0},100000),'unused 
 for(const p of E.dreamPlans(E.defaults))near(E.value(p.plan,p.plan.years,p.plan.rate,0,p.required),p.goal,'dream target');
 console.log('Passed: 200 monthly recurrence cases, goal solver, 10000 years, 32 withdrawal combinations and dream targets.');
 for(const [patch,label] of [[{annualWithdraw:-5},'negative annual withdrawal'],[{extraWithdraw:1e12},'huge extra withdrawal'],[{withdrawPercent:101},'withdraw percent above 100'],[{retireYears:101},'retire years above 100'],[{goal:-1},'negative goal'],[{extraWithdrawYear:-1},'negative extra withdrawal year'],[{rate:NaN},'NaN rate'],[{years:101},'years above 100'],[{years:-1},'negative years'],[{monthly:2e7},'huge monthly'],[{rate:101},'rate above 100'],[{monthly:-1},'negative monthly']])assert.throws(()=>E.validate({...E.defaults,...patch}),Error,label);
-for(const patch of [{years:1/12},{years:100},{rate:0},{rate:100},{monthly:0},{growth:-50},{inflation:0},{bank:0}])assert.doesNotThrow(()=>E.validate({...E.defaults,...patch}));
+for(const patch of [{years:1/12},{years:0.0833},{years:0.08},{years:1/24},{years:100},{rate:0},{rate:100},{monthly:0},{growth:-50},{inflation:0},{bank:0}])assert.doesNotThrow(()=>E.validate({...E.defaults,...patch}));
 // Vanlige regneeksempler bruker minst 0 % forventet vekst, prisvekst og bankrente.
-for(const patch of [{years:0},{years:1/24},{rate:-0.1},{rate:-50},{inflation:-1},{bank:-0.5},{growth:-100}])assert.throws(()=>E.validate({...E.defaults,...patch}),JSON.stringify(patch));
+for(const patch of [{years:0},{years:1/30},{years:0.04},{rate:-0.1},{rate:-50},{inflation:-1},{bank:-0.5},{growth:-100}])assert.throws(()=>E.validate({...E.defaults,...patch}),JSON.stringify(patch));
 for(const k of ['start','monthly','years','rate','inflation','fee','growth','goal','bank','spread','extra','extraYear','crash','crashYear','withdraw','retireYears','annualWithdraw','withdrawPercent','extraWithdraw','extraWithdrawYear'])try{E.validate({...E.defaults,[k]:NaN});assert.fail('NaN accepted for '+k);}catch(e){assert.equal(e.field,k,'NaN for '+k);}
 console.log('Passed: input limits.');
