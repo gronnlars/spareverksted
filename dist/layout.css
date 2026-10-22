@@ -3,6 +3,8 @@
 .brand{font-size:22px;letter-spacing:-.8px;white-space:nowrap}
 .mark{width:32px;height:32px;font-size:24px;border-radius:9px}
 .site-menu{position:relative;flex:0 0 auto;border:0;margin:0;padding:0}
+.site-header details.site-menu,.workbench-toolbar details.display-options{border:0;margin:0;padding:0}
+.site-menu[open]>summary,.display-options[open]>summary{margin-bottom:0}
 .site-menu>summary{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-weight:600;list-style:none;cursor:pointer}
 .site-menu>summary::-webkit-details-marker,.display-options>summary::-webkit-details-marker{display:none}
 .site-menu>summary::after,.display-options>summary::after{display:none}
@@ -19,6 +21,8 @@
 .display-options{position:relative;flex-shrink:0;border:0;margin:0;padding:0}
 .display-options>summary{list-style:none;cursor:pointer;padding:8px 10px;min-height:40px;border:1px solid var(--line);border-radius:9px;font-size:13px;white-space:nowrap;background:#fff}
 .display-options .level-control{position:absolute;right:0;top:calc(100% + 8px);z-index:25;min-width:280px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow);margin:0}
+.workbench-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.workbench-toolbar .page-nav{flex:1;min-width:0;margin-bottom:0}
 .page-nav{gap:8px;margin-bottom:18px}
 .page-nav button{padding:10px 18px;font-size:14px;min-height:44px}
 .welcome-wizard{margin:8px auto 32px}
@@ -45,27 +49,35 @@
 .guidance-page .question-panel{padding:20px}
 .guidance-page .question-row{margin-top:12px}
 .guidance-page #contextSummary:empty{display:none}
+.guidance-page #searchBox{border:0;margin:0;padding:0}
+.guidance-page:not(.has-answer) #searchBox>summary{display:none}
+.has-answer .ask-intro,.has-answer #questionTitle{display:none}
+.has-answer #searchBox>summary{font-size:14px}
+body[data-level=simple] #basic .range-control{display:none}
 footer{align-items:center;gap:12px}
 @media(max-width:760px){
  .site-header,.guidance-page .site-header{height:64px;min-height:64px;padding:0 16px;gap:8px}
  .brand{font-size:20px;gap:8px}.mark{width:30px;height:30px;font-size:22px}
  main,.guidance-page main{padding:20px 16px 0}
- .intro{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:10px;margin-bottom:12px}
+ .intro{display:block;margin-bottom:12px}
  .intro h1{font-size:27px;letter-spacing:-.8px;margin:0 0 6px}
  .intro #introText{font-size:13px;line-height:1.5}
  .display-options>summary{font-size:12px;padding:8px}
  .plan-context{font-size:12px;margin-top:8px!important}
  .page-nav{margin-bottom:14px;gap:0}
  .page-nav button{display:block;padding:8px 6px;font-size:14px;min-height:44px}
+ .workbench-toolbar{gap:8px;margin-bottom:14px}
  .panel{padding:18px;border-radius:14px;margin-bottom:14px}
  .plan-inputs .panel-title{margin-bottom:0}.plan-inputs h2{font-size:16px}
  #basic label{margin-top:12px;font-size:12px}
- #basic .field-label{min-height:20px;padding-right:24px;line-height:1.4}
+ #basic .field-label{min-height:34px;padding-right:24px;line-height:1.4}
  #basic .fieldbox{margin-top:6px}
  #basic .help-button{width:22px;height:22px;font-size:11px}
  body[data-level=simple] #basic .field-description,body[data-level=simple] .input-note{display:none}
  .range-control{margin-top:2px}.range-control input[type=range]{height:24px}
  .privacy-note{font-size:11px;margin-bottom:0}
+ body[data-level=simple] .plan-inputs .privacy-note{display:none}
+ .plan-inputs #essentials{margin-top:14px;padding-top:12px}
  .hero-result{padding:20px;border-radius:14px;margin-bottom:14px}
  .before-tax-badge{margin-bottom:8px}.big{font-size:38px}
  .hero-result #secondary{font-size:13px}.metrics{gap:8px}.metrics strong{font-size:16px}

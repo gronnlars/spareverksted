@@ -14,7 +14,7 @@ function describe(){
  if(p.age!==undefined)bits.push('er '+p.age+' år');
  if(p.years!==undefined&&p.years!==null)bits.push('har oppgitt '+p.years+' år til bruk');
  if(names.risk[p.risk])bits.push('har oppgitt '+names.risk[p.risk]);
- $('contextSummary').textContent=bits.length?'Basert på at du '+bits.join(', ').replace(/, ([^,]*)$/,' og $1')+'.':'Du kan få et generelt svar uten å fylle inn noe.';
+ $('contextSummary').textContent=bits.length?'Basert på at du '+bits.join(', ').replace(/, ([^,]*)$/,' og $1')+'.':'';
  const imported=[];
  if(p.age!==undefined&&context.origins.age==='calculator')imported.push('alder');
  if(p.years!==undefined&&p.years!==null&&context.origins.years==='calculator'&&!Object.hasOwn(context.horizons,selected))imported.push('sparetid');
@@ -45,7 +45,7 @@ function render(focus=false){
  out.append(sources);describe();if(focus)$('answerTitle').focus();
 }
 function choose(id,focus=true){
- selected=id;const picker=$('topicPicker');if(picker){picker.open=false;picker.querySelector('summary').textContent='Tema: '+V.topics.find(t=>t.id===id).title;}const category=V.topics.find(t=>t.id===id)?.category||id;
+ selected=id;document.body.classList.add('has-answer');$('searchBox').open=false;const picker=$('topicPicker');if(picker){picker.open=false;picker.querySelector('summary').textContent='Tema: '+V.topics.find(t=>t.id===id).title;}const category=V.topics.find(t=>t.id===id)?.category||id;
  $('followups').replaceChildren();for(const question of V.topics.filter(t=>t.category===category&&t.id!==id)){const b=button(question.title,()=>choose(question.id));b.dataset.topic=question.id;b.setAttribute('aria-pressed','false');$('followups').append(b);}
  for(const b of document.querySelectorAll('[data-topic]'))b.setAttribute('aria-pressed',String(b.dataset.topic===id));fill();render(focus);
 }

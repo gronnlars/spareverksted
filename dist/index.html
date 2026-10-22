@@ -5,7 +5,7 @@
 <meta name="description" content="Se hva sparingen kan bli, finn veien til et mål og planlegg uttak. En enkel start, med plass til å utforske mer.">
 <meta name="theme-color" content="#173f36"><title>Spareverksted · Din plan, i ditt tempo</title>
 <link rel="stylesheet" href="style.css?v=11">
-<link rel="stylesheet" href="layout.css?v=1"><script defer src="layout.js?v=1"></script></head>
+<link rel="stylesheet" href="layout.css?v=2"><script defer src="layout.js?v=2"></script></head>
 <body data-level="simple" data-stage="welcome">
 <a class="skip" href="#main">Hopp til kalkulatoren</a>
 <header class="site-header"><a class="brand" href="index.html" id="brandHome"><span class="mark" aria-hidden="true">↗</span>spareverksted</a><details class="site-menu"><summary>Meny <span aria-hidden="true">☰</span></summary><div class="menu-panel"><nav class="site-nav" aria-label="Hovedmeny"><a href="index.html" aria-current="page">Kalkulator</a><a href="spor.html">Spør om sparing</a><a href="https://github.com/gronnlars/spareverksted">Kildekode på GitHub</a></nav><div class="actions"><button id="startAgain" class="text guide-return" hidden>Start på nytt</button><button id="save">Lagre plan</button><button id="reportButton">Eksporter</button><button id="share">Del plan</button></div></div></details></header>
@@ -22,8 +22,8 @@
 <a class="welcome-question" href="spor.html"><span><strong>Spør om sparing</strong><small>Svar om fond, lån, pensjon og barnesparing.</small></span><span aria-hidden="true">↗</span></a><p class="welcome-privacy">Ingen konto nødvendig. Tallene beregnes i nettleseren din.</p></section>
 <div id="workbench" hidden>
 
-<section class="intro"><div><h1 id="pageTitle">Hva kan sparingen <em>bli?</em></h1><p id="introText">Start med fire tall. Se resultatet, og utforsk det som betyr noe for deg.</p><p id="planContext" class="plan-context" hidden></p></div><details class="display-options"><summary>Vis mer</summary><div class="level-control"><span id="levelLabel">Hvor mye vil du se?</span><div id="levels" class="segmented" role="group" aria-labelledby="levelLabel"><button data-level="simple" aria-pressed="true">Enkel</button><button data-level="explore" aria-pressed="false">Utforsk</button><button data-level="advanced" aria-pressed="false">Avansert</button></div><p id="levelDescription">Det viktigste, forklart enkelt.</p></div></details></section>
-<nav class="page-nav" aria-label="Hva vil du finne ut?"><button id="calculatorPage" aria-pressed="true">Sparing</button><button id="dreamPage" aria-pressed="false">Sparemål</button><button id="withdrawalPage" aria-pressed="false">Uttak</button></nav>
+<section class="intro"><div><h1 id="pageTitle">Hva kan sparingen <em>bli?</em></h1><p id="introText">Start med fire tall. Se resultatet, og utforsk det som betyr noe for deg.</p><p id="planContext" class="plan-context" hidden></p></div></section>
+<div class="workbench-toolbar"><nav class="page-nav" aria-label="Hva vil du finne ut?"><button id="calculatorPage" aria-pressed="true">Sparing</button><button id="dreamPage" aria-pressed="false">Sparemål</button><button id="withdrawalPage" aria-pressed="false">Uttak</button></nav><details class="display-options"><summary>Vis mer</summary><div class="level-control"><span id="levelLabel">Hvor mye vil du se?</span><div id="levels" class="segmented" role="group" aria-labelledby="levelLabel"><button data-level="simple" aria-pressed="true">Enkel</button><button data-level="explore" aria-pressed="false">Utforsk</button><button data-level="advanced" aria-pressed="false">Avansert</button></div><p id="levelDescription">Det viktigste, forklart enkelt.</p></div></details></div>
 <div id="undoBar" class="undo-bar" hidden><span id="undoText"></span><button id="undo">Angre</button></div>
 <div id="error" class="error" role="alert" hidden></div>
 <div id="calculatorPanel">
