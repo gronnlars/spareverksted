@@ -52,6 +52,24 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   const linkToast=await p.locator('#toast').innerText();for(const name of ['Hva vil du finne ut?','Du sparer hver måned'])assert(linkToast.includes('«'+name+'»'),'toast must name '+name+': '+linkToast);
   p=await open('#activePage=tull');await p.waitForTimeout(300);assert.equal(await p.evaluate(()=>document.body.dataset.page),'calculator');assert.deepEqual(p.errors,[]);
 
+  // Skyveknapper har faste grenser selv når skrivefeltet har større eller ugyldige tall.
+  p=await open('#activePage=calculator&monthly=20000');await p.waitForTimeout(300);
+  assert.equal(await p.locator('#monthlySlider').getAttribute('max'),'10000');
+  assert.equal(await p.locator('#monthlySlider').inputValue(),'10000');
+  assert.equal(await p.locator('#monthly').inputValue(),'20000','the typed amount must be preserved');
+  await p.locator('#monthly').fill('20000000');
+  assert.equal(await p.locator('#monthlySlider').getAttribute('max'),'10000','invalid text must not extend the slider');
+  assert.equal(await p.locator('#monthlySlider').inputValue(),'10000');
+  await p.locator('#monthlySlider').fill('500');
+  assert.equal(await p.locator('#monthly').inputValue(),'500','slider must restore a valid normal amount');
+  assert(await p.locator('#error').isHidden());
+  p=await open('#activePage=dreams&dreamMonthly=20000');await p.waitForTimeout(300);
+  assert.equal(await p.locator('#dreamMonthlySlider').getAttribute('max'),'10000');
+  assert.equal(await p.locator('#dreamMonthly').inputValue(),'20000');
+  await p.locator('#dreamMonthlySlider').fill('500');
+  assert.equal(await p.locator('#dreamMonthly').inputValue(),'500');
+  assert.deepEqual(p.errors,[]);
+
   // Sparemål: egne feltnavn, riktig felt markert, og ugyldige mål kan ikke deles, lagres eller eksporteres.
   p=await open('#activePage=dreams');await p.waitForTimeout(300);
   await p.locator('#dreamMonthly').fill('20000000');
