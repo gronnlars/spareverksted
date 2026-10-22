@@ -22,7 +22,9 @@ jobs:
           node tests/engine.test.cjs
           node tests/tax-export.test.cjs
           node tests/veileder.test.cjs
+          node tests/veileder-context.test.cjs
           node --check dist/veileder-ui.js
+          node --check dist/veileder-bridge.js
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: checks

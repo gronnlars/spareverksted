@@ -25,3 +25,15 @@ Kontroller lenker og regelpåstander før neste utvidelse og ved kjente regelend
 ## Kvalitetssikring
 
 Kjør eksisterende beregningstester og tests/veileder.test.cjs. Nettlesertesten krever Playwright og lokal server på port 8000. Den kontrollerer temabekreftelse, endrede opplysninger, tømming, innsettingsangrep, lenker, fokus, ingen eksterne forespørsler fra veiledersiden og horisontal overløp ved fire skjermbredder. Temaene gir samme grunnsvar for sine eksempelspørsmål; dette opplyses i grensesnittet.
+
+## Forenklet versjon, 22. oktober 2026
+
+Kortsvaret viser to alternativer med lukkede fordeler og ulemper. Utdyping og kilder åpnes ved behov. Alder, oppgitt sparetid og eksplisitt risikovalg følger fra kalkulatoren via fanens øktlagring. Ukjent alder og risikovalg blir ikke gjettet fra standardverdier. Sparetiden for barn må oppgis separat; foreldres tid til pensjon brukes ikke automatisk. Øktlagringen inneholder ikke fritekst eller sparebeløp.
+
+Stipendpunktet er nå konkretisert med nettoformuesgrensen 534 225 kroner for ugifte i 2026, verifisert på Lånekassens side om omgjøring. Egne regler for gifte/samboere med felles barn og gradvis reduksjon er nevnt. Grensen beskriver ikke framtidige vilkår eller alle stipend i videregående skole. Kilden: https://lanekassen.no/nb-NO/stipend-og-lan/omgjoring-av-basislan/
+
+Statsforvalteren omtales med dagens navn. Påstanden «lav rente» brukes ikke, siden verken dagens rentenivå eller alle aktuelle kontovilkår er kontrollert. Poenget er bankplassering og begrensede investeringsvalg. Forvaltningsgrenser og unntak må avklares før overføring; den arkiverte bakgrunnskilden erstatter ikke en slik kontroll.
+
+Fleksibilitet ved økonomiske problemer i familien gjelder penger forelderen fortsatt eier. Teksten presiserer at penger som allerede er gitt bort, ikke fritt kan tas tilbake. Fordelene ved foreldreeierskap balanseres mot arv, kreditorer, samlivsbrudd og at barnet ikke automatisk har krav på beløpet. Dette er forhold å undersøke, ikke individuell juridisk rådgivning.
+
+Nye tester dekker 504 kombinasjoner i kortsvarene, validering av kontekst, blokkert/ødelagt øktlagring og at en forelders sparehorisont ikke overføres til barnet. Nettlesertesten er oppdatert for den forenklede flyten.

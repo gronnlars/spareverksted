@@ -76,17 +76,26 @@ Glidere er snarveier; egne tall kan være høyere enn gliderens utgangspunkt. Ek
 
 ## Spør om sparing
 
-`dist/spor.html` er en gratis, lokal veileder med syv temaer og 28 eksempelspørsmål. `veileder-engine.js` ruter spørsmål og setter sammen forhåndsskrevne forklaringer fra eksplisitte skjemavalg. `veileder-ui.js` viser temaer, forutsetninger og kilder. Ukjente spørsmål gir temavalg, ikke et oppdiktet svar. Endrede opplysninger fjerner den gamle vurderingen til brukeren ber om et nytt svar.
+`dist/spor.html` gir et kort svar med to alternativer. Hvert alternativ har grønne fordeler og røde ulemper som er lukket fra start. Punktoverskriftene kan åpnes for forklaring. Utfyllende vurdering og kilder ligger bak egne valg. Ett klikk på et tema viser svaret; søk viser det høyest rangerte temaet med eventuelle alternativer. Tall i friteksten blir ikke tolket.
 
-Veilederen henter ikke opplysninger fra kalkulatoren, lagrer ikke spørsmål eller profil og bruker ingen eksterne API-er. Frie spørsmål brukes bare til å finne tema. Eksempelspørsmål innen samme tema har samme grunnsvar. Ingen bestemt fondsandel, navngitte fond eller personlige kjøpsanbefalinger foreslås. Satser og detaljregler for IPS omfattes ikke. Se `research/veileder-kilder.md` for kilder, avgrensninger og vedlikehold.
+- `veileder-engine.js`: temaruting og utfyllende forklaringer.
+- `veileder-cards.js`: korte sammenligninger og situasjonsbestemte forbehold.
+- `veileder-context.js`: validering av samme-fane-kontekst, uten nettverkskall.
+- `veileder-bridge.js`: overfører oppgitt alder, aktuell sparetid og eksplisitt risikovalg fra kalkulatoren ved navigering.
+- `veileder-ui.js`: direkte temavalg, lukkede fordeler/ulemper og valgfrie opplysninger.
 
-Kontroll av svarlogikken:
+Veilederen bruker fanens `sessionStorage` under `sv-guidance-tab-v2`, uten navn, kontoinformasjon, sparebeløp eller fritekst. Opplysninger som mangler i kalkulatoren, fylles ikke fra standardverdier. Kalkulatorens sparetid brukes ikke automatisk til barnesparing. Manuell sparetid lagres per tema. Opplysningene kan glemmes fra veilederen. Dette endrer ikke kalkulatorens egne felt. Veilederen virker også når øktlagring er blokkert, men da kan opplysninger ikke følge mellom sidene.
+
+Ingen eksterne KI-kall, bestemte aksjeandeler eller navngitte fondsanbefalinger. Svarene er generelle, med kildelenker og datoforbehold. Se `research/veileder-kilder.md` for kildene og begrensningene.
+
+Kontroller logikk og overføring:
 
 ```sh
 node tests/veileder.test.cjs
+node tests/veileder-context.test.cjs
 ```
 
-Valgfri nettleserkontroll med Playwright installert, mens lokal server kjører på port 8000:
+Valgfri nettleserkontroll med Playwright og Chromium installert, mens lokal server kjører på port 8000:
 
 ```sh
 node tests/veileder-browser.cjs
