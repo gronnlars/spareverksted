@@ -4,11 +4,11 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Se hva sparingen kan bli, finn veien til et mål og planlegg uttak. En enkel start, med plass til å utforske mer.">
 <meta name="theme-color" content="#173f36"><title>Spareverksted · Din plan, i ditt tempo</title>
-<link rel="stylesheet" href="style.css?v=10">
+<link rel="stylesheet" href="style.css?v=11">
 </head>
 <body data-level="simple" data-stage="welcome">
 <a class="skip" href="#main">Hopp til kalkulatoren</a>
-<header class="site-header"><a class="brand" href="#" id="brandHome"><span class="mark" aria-hidden="true">↗</span>spareverksted</a><button id="startAgain" class="text guide-return" hidden>Startvalg</button><div class="actions"><a href="spor.html" style="align-self:center;font-size:13px">Spør om sparing</a><button id="save">Lagre</button><button id="reportButton">Eksporter</button><button id="share" class="primary">Del plan <span aria-hidden="true">↗</span></button></div></header>
+<header class="site-header"><a class="brand" href="#" id="brandHome"><span class="mark" aria-hidden="true">↗</span>spareverksted</a><button id="startAgain" class="text guide-return" hidden>Startvalg</button><nav class="site-nav" aria-label="Hovedmeny"><a href="spor.html">Spør om sparing</a></nav><div class="actions"><button id="save">Lagre</button><button id="reportButton">Eksporter</button><button id="share" class="primary">Del plan <span aria-hidden="true">↗</span></button></div></header>
 <main id="main">
 <section id="welcomeWizard" class="welcome-wizard" aria-labelledby="welcomeTitle">
 <div class="welcome-intro"><p class="eyebrow">SPAREVERKSTED</p><h1 id="welcomeTitle">Hva vil du <em>finne ut?</em></h1><p>Begynn med det du lurer på. Resten tar vi underveis.</p></div>
@@ -18,7 +18,7 @@
 <label class="check" id="until67Label" hidden><input id="onboardUntil67" type="checkbox"> Foreslå sparing frem til jeg er 67</label><p id="journeyHorizon" class="hint"></p>
 <details class="journey-risk"><summary>Hvor mye svingninger er greit for deg? <span class="optional">Valgfritt</span></summary><label for="onboardRisk">Hvordan ville du reagert om verdien falt mye?<select id="onboardRisk"><option value="">Jeg vet ikke ennå</option><option value="low">Jeg vil helst unngå store fall</option><option value="medium">Jeg tåler noe uro underveis</option><option value="high">Jeg tåler store svingninger</option></select></label><p class="hint">Dette tilpasser forklaringene. Det endrer ikke veksten i regneeksemplet.</p></details>
 <p id="journeyError" class="error" role="alert" hidden></p><div class="button-row"><button type="submit" class="primary" id="beginJourney">Vis spareplanen min <span aria-hidden="true">↗</span></button><button type="button" class="text" id="exampleJourney">Bare vis meg et eksempel</button></div></form>
-<p><a href="spor.html">Lurer du på lån, fond eller pensjon? Spør om sparing ↗</a></p>
+
 <p class="welcome-privacy">Ingen konto nødvendig. Tallene beregnes i nettleseren din.</p></section>
 <div id="workbench" hidden>
 
