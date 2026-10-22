@@ -53,7 +53,6 @@
 .guidance-page:not(.has-answer) #searchBox>summary{display:none}
 .has-answer .ask-intro,.has-answer #questionTitle{display:none}
 .has-answer #searchBox>summary{font-size:14px}
-body[data-level=simple] #basic .range-control{display:none}
 footer{align-items:center;gap:12px}
 @media(max-width:760px){
  .site-header,.guidance-page .site-header{height:64px;min-height:64px;padding:0 16px;gap:8px}
@@ -74,7 +73,7 @@ footer{align-items:center;gap:12px}
  #basic .fieldbox{margin-top:6px}
  #basic .help-button{width:22px;height:22px;font-size:11px}
  body[data-level=simple] #basic .field-description,body[data-level=simple] .input-note{display:none}
- .range-control{margin-top:2px}.range-control input[type=range]{height:24px}
+ .range-control{margin-top:2px}.range-control input[type=range]{height:32px}
  .privacy-note{font-size:11px;margin-bottom:0}
  body[data-level=simple] .plan-inputs .privacy-note{display:none}
  .plan-inputs #essentials{margin-top:14px;padding-top:12px}
