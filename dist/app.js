@@ -41,6 +41,11 @@ function render(){
  $('total').textContent=mode==='goal'?(Number.isFinite(need)?money(Math.ceil(need))+' / mnd.':'Målet kan ikke nås med denne perioden'):money(shown);
  $('secondary').textContent=mode==='goal'?'Første månedsbeløp. Grafen viser fortsatt sparingen du har lagt inn.':s.real?`Målt i dagens kroner. Kontoen viser da ${money(final)} før skatt.`:`Det tilsvarer ${money(final/inflation(end))} med dagens priser. Før skatt.`;
  $('mobileTotal').textContent=$('total').textContent;$('paid').textContent=money(paid);$('gain').textContent=money(shown-paid);$('cost').textContent=money(display(E.value(s,end,s.rate,0)-final,end));
+ $('mobileResultLabel').textContent=mode==='goal'?'Nødvendig per måned · før skatt':s.real?'Dagens kroner · før skatt':'Regneeksempel · før skatt';
+ $('mobileCurve').hidden=mode==='goal';
+ const miniMax=Math.max(1,...rows.map(r=>Math.max(r.v,r.paid)));
+ const miniPath=key=>rows.map((r,i)=>(i?'L':'M')+(3+(end?r.t/end:0)*74).toFixed(2)+','+(35-r[key]/miniMax*32).toFixed(2)).join(' ');
+ $('mobileValueCurve').setAttribute('d',miniPath('v'));$('mobilePaidCurve').setAttribute('d',miniPath('paid'));
  $('chartSubtitle').textContent=s.real?'Beløpene er justert for prisvekst.':'Beløpene viser kroner på det fremtidige tidspunktet.';
  $('essentialsValue').textContent=`${dec.format(s.inflation)} % prisvekst · ${dec.format(s.fee)} % kostnad`;
  const ratio=target===0?1:final/target,hit=rows.find(r=>r.v>=r.goal);
@@ -50,7 +55,7 @@ function render(){
  $('progress').style.width=Math.max(0,Math.min(100,ratio*100))+'%';$('goalAction').replaceChildren();
  if(Number.isFinite(need)){const b=document.createElement('button');b.textContent=`Prøv ${money(Math.ceil(need))} per måned`;b.onclick=()=>changePlan({monthly:Math.ceil(need)},'Månedssparingen er tilpasset målet.');$('goalAction').append(b);}
  chart();table();experiments();plainExplanation(final,end);tips(need);retirement(final,end);$('withdrawCapital').textContent=money(final);drawWithdrawal(final);savedRender();syncLevel();
- }catch(err){$('error').hidden=false;$('error').textContent=err.message+' Resultatene nedenfor er ikke oppdatert.';}
+ }catch(err){$('error').hidden=false;$('error').textContent=err.message+' Resultatene nedenfor er ikke oppdatert.';$('mobileTotal').textContent='Sjekk tallene';$('mobileCurve').hidden=true;}
  if(window.renderDream)window.renderDream();
 }
 function selectedComparisons(){return saved.map((item,index)=>({item,index})).filter(x=>selectedPlans.has(x.index)&&x.item.state.activePage!=='dreams').map(({item,index})=>{try{const n={...E.defaults,...item.state};E.validate(n);const points=planRows(n);if(points.some(p=>!Number.isFinite(p.v)))return null;return {name:item.name,index,n,points};}catch{return null;}}).filter(Boolean);}
@@ -140,7 +145,7 @@ $('tableTab').onclick=()=>{$('chart').hidden=true;$('tableWrap').hidden=false;$(
 function openSave(){try{E.validate(s);}catch(e){notice(e.message);return;}$('scenarioName').value=`Plan ${saved.length+1}`;$('saveDescription').textContent=s.activePage==='dreams'?'Lagrer sparemålet og spareplanen. Graf-sammenligning bruker spareplanen. Overfør et mål-alternativ til sparekalkulatoren først hvis du vil sammenligne det.':'Lagrer alle forutsetningene på denne enheten.';$('saveDialog').showModal();$('scenarioName').select();}
 $('save').onclick=openSave;$('saveHere').onclick=openSave;$('cancelSave').onclick=()=>$('saveDialog').close();$('saveForm').onsubmit=e=>{e.preventDefault();const name=$('scenarioName').value.trim();if(!name)return;saved.push({name,state:{...s},mode,view:{...view}});if(persist())notice('Planen er lagret på denne enheten.');$('saveDialog').close();savedRender();};
 $('compareJump').onclick=()=>{$('savedDetails').open=true;$('savedDetails').scrollIntoView({behavior:'smooth',block:'start'});};
-$('share').onclick=()=>{const params=new URLSearchParams();for(const k in s)params.set(k,typeof s[k]==='boolean'?s[k]?'1':'0':s[k]);params.set('level',level);params.set('mode',mode);for(const k in view)params.set(k,view[k]?'1':'0');$('shareUrl').value=location.origin+location.pathname+'#'+params;$('shareDialog').showModal();$('shareUrl').select();};
+$('share').onclick=()=>{const params=new URLSearchParams(),privateFields=new Set(['userAge','ageKnown','until67','riskChosen','stress','ageGroup','purpose']);for(const k in s)if(!privateFields.has(k))params.set(k,typeof s[k]==='boolean'?s[k]?'1':'0':s[k]);params.set('level',level);params.set('mode',mode);for(const k in view)params.set(k,view[k]?'1':'0');$('shareUrl').value=location.origin+location.pathname+'#'+params;$('shareDialog').showModal();$('shareUrl').select();};
 $('closeDialog').onclick=()=>$('shareDialog').close();
 $('csv').onclick=()=>{
  if(!$('error').hidden){notice('Rett tallene før du eksporterer.');return;}
@@ -150,3 +155,4 @@ $('csv').onclick=()=>{
 };
 fill();render();
 let lastChartWidth=0;new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width>0&&Math.abs(width-lastChartWidth)>2){lastChartWidth=width;if(rows.length)chart();}}).observe($('chart'));
+

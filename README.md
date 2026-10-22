@@ -76,9 +76,10 @@ Glidere er snarveier; egne tall kan være høyere enn gliderens utgangspunkt. Ek
 
 ## Spør om sparing
 
-`dist/spor.html` gir et kort svar med to alternativer. Hvert alternativ har grønne fordeler og røde ulemper som er lukket fra start. Punktoverskriftene kan åpnes for forklaring. Utfyllende vurdering og kilder ligger bak egne valg. Ett klikk på et tema viser svaret; søk viser det høyest rangerte temaet med eventuelle alternativer. Tall i friteksten blir ikke tolket.
+`dist/spor.html` gir et kort svar med to alternativer. Hvert alternativ har grønne fordeler og røde ulemper som er lukket fra start. Ett trykk åpner hele listen med forklaringer. Hvert kort har minst to fordeler, to ulemper og en linje om når valget passer dårlig. Utfyllende vurdering viser først maksimalt tre seksjoner, med resten bak «Vis flere». Kontrolldatoen vises uten å åpne kildene. Ett klikk på et tema viser svaret; søk viser det høyest rangerte temaet med eventuelle alternativer. Tall i friteksten blir ikke tolket.
 
-- `veileder-engine.js`: temaruting og utfyllende forklaringer.
+- `veileder-facts.js`: felles faktatall med regelår, kontrolldato og primærkilde.
+- `veileder-engine.js`: temaruting, relevansregler, spørsmålsforslag og utfyllende forklaringer.
 - `veileder-cards.js`: korte sammenligninger og situasjonsbestemte forbehold.
 - `veileder-context.js`: validering av samme-fane-kontekst, uten nettverkskall.
 - `veileder-bridge.js`: overfører oppgitt alder, aktuell sparetid og eksplisitt risikovalg fra kalkulatoren ved navigering.
@@ -86,7 +87,7 @@ Glidere er snarveier; egne tall kan være høyere enn gliderens utgangspunkt. Ek
 
 Veilederen bruker fanens `sessionStorage` under `sv-guidance-tab-v2`, uten navn, kontoinformasjon, sparebeløp eller fritekst. Opplysninger som mangler i kalkulatoren, fylles ikke fra standardverdier. Kalkulatorens sparetid brukes ikke automatisk til barnesparing. Manuell sparetid lagres per tema. Ved vanlig retur til kalkulatoren gjenbrukes kjent alder, sparetid og risikovalg. En eksplisitt plan i lenken overstyres aldri av denne konteksten. Opplysningene kan glemmes fra veilederen. Dette endrer ikke kalkulatorens egne felt. Veilederen virker også når øktlagring er blokkert, men da kan opplysninger ikke følge mellom sidene.
 
-Ingen eksterne KI-kall, bestemte aksjeandeler eller navngitte fondsanbefalinger. Svarene er generelle, med kildelenker og datoforbehold. Se `research/veileder-kilder.md` for kildene og begrensningene.
+Ingen eksterne KI-kall, bestemte aksjeandeler eller navngitte fondsanbefalinger. Svarene er generelle, med kildelenker og datoforbehold. Se `research/veileder-kilder.md` for bakgrunn og `research/ux-2026-10-22.md` for endringer, faktaliste og manuell testliste. Delingslenker fra kalkulatoren utelater alder, risikovalg og andre personlige profilvalg.
 
 Kontroller logikk og overføring:
 
@@ -95,14 +96,9 @@ node tests/veileder.test.cjs
 node tests/veileder-context.test.cjs
 ```
 
-Valgfri nettleserkontroll med Playwright og Chromium installert, mens lokal server kjører på port 8000:
+Valgfri nettleserkontroll med Playwright og Chromium installert. Testen starter og stopper sin egen lokale server. En eksisterende Chromium-binær kan angis med `SPARE_BROWSER`:
 
 ```sh
 node tests/veileder-browser.cjs
 ```
 
-### Spørsmålsdatabase
-
-`dist/veileder-knowledge.js` inneholder egne spørsmål under eksisterende kategorier, med kilde, dato, søkeord og fordeler/ulemper. `SpareVeileder.register` validerer at hvert spørsmål har et unikt navn, en eksisterende hovedkategori, kilder og to komplette alternativer. Hovedmenyen beholder sju valg; nye spørsmål vises gjennom søk og relaterte spørsmål under temaet. Se `research/sporsmal-og-prioritering.md` for research og videre arbeidsliste.
-
-Kjør også `node tests/veileder-knowledge.test.cjs` ved endringer i spørsmålsdatabasen. Testen dekker ruting, 225 profilkombinasjoner, reglene for BSU/IPS og separate horisonter for nye spørsmål.

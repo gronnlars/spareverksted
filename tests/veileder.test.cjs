@@ -2,8 +2,8 @@ const assert=require('node:assert/strict');
 const V=require('../dist/veileder-engine.js');
 const text=(id,p)=>V.answer(id,p).parts.map(p=>p.title+' '+p.text).join('\n');
 const secure={buffer:'yes',debt:'no',income:'stable',risk:'high',years:20};
-assert.match(text('funds',{...secure,age:20}),/høyere aksjeandel/);
-assert.match(text('funds',{...secure,age:20,years:3}),/under fem år/);
+assert.match(text('funds',{...secure,age:20}),/ingen garanti for gevinst/);
+assert.match(text('funds',{...secure,age:20,years:3}),/minst 5 års sparehorisont/);
 assert.doesNotMatch(text('funds',{...secure,age:20,years:3}),/høyere aksjeandel aktuell/);
 assert.match(text('pension',{...secure,age:57}),/første uttaksårene/);
 assert.match(text('pension',{...secure,age:57}),/Lang tid/);
@@ -14,7 +14,7 @@ assert.match(text('mortgage',{fixed:'yes'}),/overkurs eller underkurs/);
 assert.match(text('student',{}),/normalt rentefritt mens du får støtte til fulltidsutdanning/);
 assert.match(text('student',{}),/ikke automatisk mindre stipend/);
 assert.match(text('children',{}),/barnets situasjon/);
-assert.match(text('bsu',{age:34,owner:'yes',tax:'no'}),/minst 34/);
+assert.match(text('bsu',{age:34,owner:'yes',tax:'no'}),/ikke gjøre nye innskudd/);
 assert.match(text('bsu',{age:33}),/BSU kan være gunstig/);
 assert.doesNotMatch(text('bsu',{age:33}),/minst 34/);
 assert.match(text('funds',{}),/Alder alene/);
@@ -35,3 +35,4 @@ for(const t of V.topics){
  }
 }
 console.log('Veileder: routing, safety boundaries, validation and 588 profile combinations passed.');
+

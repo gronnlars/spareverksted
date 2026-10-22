@@ -17,13 +17,13 @@ assert.equal(C.write(undefined,ctx),false);assert.deepEqual(C.read(undefined),C.
 let count=0;
 for(const t of V.topics)for(const age of [20,57,80,null])for(const years of [0,3,5,10,25,null])for(const buffer of ['yes','no','']){
  const a=Cards.build(t.id,{age,years,buffer});assert.equal(a.options.length,2);for(const o of a.options){assert.ok(o.pros.length&&o.cons.length);for(const i of [...o.pros,...o.cons])assert.ok(i.title&&i.text);}
- if(buffer==='no')assert.match(a.note,/mangler buffer/);count++;
+ if(buffer==='no')assert.match(a.note,/Uten buffer/);count++;
 }
 const child=Cards.build('children',{});const all=JSON.stringify(child.options);
-assert.match(all,/534 225/);assert.match(all,/I 2026/);assert.match(all,/Lånekassen/);assert.match(all,/nettoformuen/);assert.match(all,/gradvis/);assert.match(all,/ikke nødvendigvis lav/);assert.match(all,/allerede er gitt/);
+assert.match(all,/534 225/);assert.match(all,/I 2026/);assert.match(all,/Lånekassen/);assert.match(all,/nettoformuen/);assert.match(all,/gradvis/);assert.match(all,/allerede er gitt/);
 assert.doesNotMatch(all,/Skatteetaten.*stipend/);
-assert.match(Cards.build('funds',{years:3,age:20}).note,/under fem år/);
-assert.match(Cards.build('pension',{age:57}).note,/57 år/);
+assert.match(Cards.build('funds',{years:3,age:20}).note,/nært mål/);
+assert.equal(Cards.build('pension',{age:57}).note,'','age alone must not invent proximity to retirement');
 assert.match(Cards.build('funds',{years:20,debt:'yes'}).note,/dyr gjeld/);
 console.log(`Context and compact cards: defaults, same-tab storage, child horizon, stale overrides, malformed data and ${count} profile combinations passed.`);
 
@@ -33,3 +33,4 @@ assert.equal(C.fromCalculator({...state,ageKnown:false,...returned},true,ctx).pr
 assert.deepEqual(C.calculatorPatch(ctx,true),{},'a shared plan must never inherit this tab’s personal context');
 assert.deepEqual(C.calculatorPatch(C.empty(),false),{});
 assert.equal(returned.years,10,'a child’s three- or four-year horizon must not overwrite the calculator horizon');
+

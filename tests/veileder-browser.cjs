@@ -1,67 +1,93 @@
-// Optional: local server at port 8000, Playwright and Chromium installed.
-const {chromium}=require('playwright');
-const assert=require('node:assert/strict');
+// Optional: npm install playwright, then npx playwright install chromium.
+// SPARE_BROWSER can point to an existing Chromium binary. No separate server is needed.
+const {chromium}=require('playwright'),assert=require('node:assert/strict');
+const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
 (async()=>{
- const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+ const root=path.resolve(__dirname,'../dist');
+ const server=http.createServer((req,res)=>{
+  const filename=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
+  if(!filename.startsWith(root+path.sep)){res.writeHead(403);res.end();return;}
+  try{const data=fs.readFileSync(filename);res.setHeader('Content-Type',filename.endsWith('.js')?'text/javascript':filename.endsWith('.css')?'text/css':'text/html');res.end(data);}catch{res.writeHead(404);res.end();}
+ });
+ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+ const origin='http://127.0.0.1:'+server.address().port;
+ let browser;
  try{
-  const page=await browser.newPage(),errors=[],external=[];
+  browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu'],...(process.env.SPARE_BROWSER?{executablePath:process.env.SPARE_BROWSER}:{})});
+  const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+  const page=await context.newPage(),errors=[],external=[];
+  page.setDefaultTimeout(10000);
   page.on('pageerror',e=>errors.push(e.message));
-  page.on('request',r=>{if(!r.url().startsWith('http://127.0.0.1:8000'))external.push(r.url());});
-  await page.goto('http://127.0.0.1:8000/index.html');
-  await page.locator('#chooseGrowth').click();
-  await page.locator('#onboardAge').fill('57');
-  await page.locator('#onboardYears').fill('10');
-  await page.locator('.journey-risk > summary').click();
-  await page.locator('#onboardRisk').selectOption('high');
-  await page.locator('#beginJourney').click();
-  await page.getByRole('link',{name:'Spør om sparing',exact:true}).click();
-  assert.match(await page.locator('#contextSummary').innerText(),/57 år/);
-  assert.match(await page.locator('#contextSummary').innerText(),/10 år/);
-  assert.match(await page.locator('#contextSummary').innerText(),/kalkulatoren/);
-  assert.equal(await page.locator('#profileDetails').getAttribute('open'),null);
-  await page.locator('#topics button').filter({hasText:'Sparing til barn'}).click();
-  assert.equal(await page.locator('#answerPanel').isVisible(),true);
-  assert.doesNotMatch(await page.locator('#contextSummary').innerText(),/10 år/);
-  assert.equal(await page.locator('.tradeoff[open]').count(),0);
-  const child=page.locator('.option-card').nth(1);
-  await child.locator('.con > summary').click();
-  await child.getByText('Formuen kan gi mindre stipend senere',{exact:true}).click();
-  assert.match(await child.innerText(),/534 225 kr/);
-  assert.match(await child.innerText(),/2026/);
-  await page.locator('#profileDetails > summary').click();
-  await page.locator('#years').fill('3');
-  assert.equal(await page.locator('#answerPanel').isVisible(),false);
-  await page.locator('#answerButton').click();
-  assert.match(await page.locator('.answer-caution').innerText(),/under fem år/);
-  await page.locator('#topics button').filter({hasText:'Sparekonto eller fond'}).click();
-  assert.match(await page.locator('#contextSummary').innerText(),/10 år/);
-  await page.locator('#question').fill('Boliglån eller fond?');
-  await page.getByRole('button',{name:'Vis svar',exact:true}).click();
-  assert.equal(await page.locator('#answerTitle').innerText(),'Boliglån eller sparing');
-  assert.equal(await page.locator('#matches button').count(),1);
-  await page.locator('#question').fill('<img src=x onerror="window.injected=true">');
-  await page.getByRole('button',{name:'Vis svar',exact:true}).click();
-  assert.equal(await page.locator('#answerPanel').isVisible(),false);
-  assert.equal(await page.evaluate(()=>window.injected),undefined);
-  for(const t of ['Boliglån eller sparing','Studielån','Sparing til barn','Buffer og dyr gjeld','Sparekonto eller fond','Sparing til pensjon','BSU og boligkjøp']){
-   await page.locator('#topics button').getByText(t,{exact:true}).click();
-   assert.equal(await page.locator('#answerPanel').isVisible(),true);
-   assert.equal(await page.locator('.option-card').count(),2);
-   assert.ok(await page.locator('#answer a').count());
+  page.on('request',r=>{if(!r.url().startsWith(origin))external.push(r.url());});
+  const pick=async id=>{if(!await page.locator('#topicPicker').getAttribute('open'))await page.locator('#topicPicker>summary').click();await page.locator('[data-topic="'+id+'"]').click();};
+  const search=async value=>{if(!await page.locator('#searchBox').getAttribute('open'))await page.locator('#searchBox>summary').click();await page.locator('#question').fill(value);await page.locator('#questionForm button').click();};
+  const noOverflow=async()=>assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Horizontal scrolling');
+  await page.goto(origin+'/index.html');
+  assert(await page.locator('.welcome-question').isVisible());
+  await page.locator('#chooseGrowth').click();await page.locator('#onboardAge').fill('57');await page.locator('#onboardYears').fill('10');
+  await page.locator('.journey-risk>summary').click();await page.locator('#onboardRisk').selectOption('low');await page.locator('#beginJourney').click();
+  for(const id of ['start','monthly','years','rate'])assert(await page.locator('#'+id+'Slider').isVisible());
+  const slider=page.locator('#monthlySlider');await slider.scrollIntoViewIfNeeded();
+  const box=await slider.boundingBox(),before=await page.locator('#total').textContent();
+  await page.touchscreen.tap(box.x+box.width*.65,box.y+box.height/2);
+  assert.notEqual(await page.locator('#total').textContent(),before,'Touch must update the result');
+  await slider.focus();assert(await page.locator('#mobileSummary').isVisible());
+  assert.equal(await page.locator('#mobileTotal').textContent(),await page.locator('#total').textContent());
+  assert(await page.locator('#mobileValueCurve').getAttribute('d'));
+  await page.locator('#mobileResultButton').click();await page.waitForTimeout(500);
+  assert.equal(await page.evaluate(()=>document.activeElement.id),'chart');
+  await page.locator('.site-menu>summary').click();await page.locator('.site-menu a[href="spor.html"]').click();
+  await pick('funds');assert.match(await page.locator('#contextSummary').innerText(),/10 år til bruk/);
+  assert(await page.locator('.answer-checked').isVisible());assert.equal(await page.locator('.answer-sources').getAttribute('open'),null);
+  await pick('children');assert.doesNotMatch(await page.locator('#contextSummary').innerText(),/10 år/);
+  await page.locator('#profileDetails>summary').click();await page.locator('#years').fill('3');
+  await page.locator('#buffer').selectOption('no');await page.locator('#debt').selectOption('yes');await page.locator('#income').selectOption('uncertain');await page.locator('#risk').selectOption('low');
+  assert(await page.locator('#answerPanel').isHidden());await page.locator('#answerButton').click();
+  await pick('buffer');
+  const answer=await page.locator('#answerPanel').innerText();
+  assert.doesNotMatch(answer,/aksjeandel|Uro teller også|Du har oppgitt|mangler buffer/);
+  assert.doesNotMatch(await page.locator('#contextSummary').innerText(),/år til bruk/);
+  assert.equal(await page.locator('#suggestedQuestions button').count(),0,'No unrelated follow-up after an urgent buffer answer');
+  assert.equal(await page.locator('.next-steps li').count(),3);assert(await page.locator('.answer-caution').isVisible());
+  await page.locator('.full-answer>summary').click();
+  assert.equal(await page.locator('.full-answer>.answer-part').count(),3);
+  assert.equal(await page.locator('.more-sections').getAttribute('open'),null);
+  await page.locator('.more-sections>summary').click();assert.match(await page.locator('.more-sections').innerText(),/kontakte kreditorer tidlig/);
+  for(const card of await page.locator('.option-card').all()){
+   assert(await card.locator('.pro li').count()>=2);assert(await card.locator('.con li').count()>=2);
+   await card.locator('.pro>summary').click();assert(await card.locator('.pro li p').first().isVisible());
+   assert.equal(await card.locator('.tradeoff details').count(),0);
+   assert.match(await card.locator('.poor-fit').innerText(),/^Passer dårlig hvis /);
   }
-  for(const width of [360,390,768,1280]){
-   await page.setViewportSize({width,height:850});
-   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`Overflow at ${width}`);
-  }
-  await page.getByRole('link',{name:'Kalkulator',exact:true}).click();
-  assert.match(await page.locator('#planContext').innerText(),/57 år/);
-  await page.getByRole('link',{name:'Spør om sparing',exact:true}).click();
-  assert.match(await page.locator('#contextSummary').innerText(),/57 år/);
-  await page.locator('#profileDetails > summary').click();
-  await page.locator('#resetGuidance').click();
-  assert.doesNotMatch(await page.locator('#contextSummary').innerText(),/57 år/);
+  await page.locator('#profileDetails>summary').click();assert(await page.locator('#years').isDisabled());assert(await page.locator('#risk').isDisabled());
+  await page.locator('#income').selectOption('stable');await page.locator('#answerButton').click();
+  const stored=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('sv-guidance-tab-v2')));
+  assert.equal(stored.profile.risk,'low');assert.equal(stored.profile.years,10);assert.equal(stored.profile.age,57);assert.equal(stored.horizons.children,3);
+  assert(await page.locator('#answerPanel').isVisible());
+  await page.locator('#profileDetails>summary').click();await page.locator('#resetGuidance').click();
   assert.equal(await page.evaluate(()=>sessionStorage.getItem('sv-guidance-tab-v2')),null);
+  await search('Hva er BSU?');assert.equal(await page.locator('#answerTitle').innerText(),'Hva er BSU?');
+  await page.locator('.full-answer>summary').click();assert.match(await page.locator('.full-answer').innerText(),/27 500/);
+  await search('<img src=x onerror="window.injected=true">');assert(await page.locator('#answerPanel').isHidden());assert.equal(await page.evaluate(()=>window.injected),undefined);
+  for(const id of ['mortgage','student','children','buffer','funds','pension','bsu']){await pick(id);assert(await page.locator('#answerPanel').isVisible());assert.equal(await page.locator('.option-card').count(),2);}
+  for(const width of [320,360,390,768,1280]){await page.setViewportSize({width,height:844});await noOverflow();}
+  await page.reload();assert.equal(await page.locator('#question').inputValue(),'','Question must not be stored');
   assert.deepEqual(external,[]);assert.deepEqual(errors,[]);
-  console.log('Browser: inherited context, one-click answers, expandable tradeoffs, separate child horizon, updates, reset and mobile overflow passed.');
- }finally{await browser.close();}
-})().catch(e=>{console.error(e);process.exit(1);});
+  await context.close();
+  const desktop=await browser.newPage({viewport:{width:1280,height:900}});
+  desktop.on('pageerror',e=>errors.push(e.message));await desktop.goto(origin+'/index.html');await desktop.locator('#chooseGrowth').click();await desktop.locator('#beginJourney').click();
+  const range=desktop.locator('#monthlySlider');await range.scrollIntoViewIfNeeded();const b=await range.boundingBox();
+  const graph=await desktop.locator('#chart svg').innerHTML(),total=await desktop.locator('#total').textContent();
+  await desktop.mouse.move(b.x+b.width*.1,b.y+b.height/2);await desktop.mouse.down();await desktop.mouse.move(b.x+b.width*.7,b.y+b.height/2,{steps:5});
+  assert.notEqual(await desktop.locator('#total').textContent(),total);assert.notEqual(await desktop.locator('#chart svg').innerHTML(),graph);await desktop.mouse.up();
+  const value=await desktop.locator('#monthly').inputValue();await range.press('ArrowRight');assert.notEqual(await desktop.locator('#monthly').inputValue(),value);
+  await desktop.locator('#monthly').fill('50000');await desktop.locator('#monthly').press('Tab');assert.equal(await desktop.locator('#monthly').inputValue(),'50000');assert(Number(await range.getAttribute('max'))>=50000);
+  await desktop.locator('.site-menu>summary').click();await desktop.locator('#share').click();
+  const shared=new URLSearchParams(new URL(await desktop.locator('#shareUrl').inputValue()).hash.slice(1));
+  assert.equal(shared.get('monthly'),'50000');
+  for(const key of ['userAge','ageKnown','riskChosen','stress','ageGroup','purpose','buffer','debt','income','discipline'])assert.equal(shared.has(key),false,'Private field in shared URL: '+key);
+  assert.deepEqual(errors,[]);
+  console.log('Browser: mobile touch, live result and curve, keyboard, profile relevance, independent horizons, preserved hidden fields, disclosure, privacy and responsive layouts passed.');
+ }finally{if(browser)await browser.close();server.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});
+
