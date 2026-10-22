@@ -75,8 +75,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.equal(sl.max,'1000000');assert(sl.disabled);assert.equal(sl.field,'2000000','no grouping while the user is typing');await p.locator('#start').blur();assert.equal(await p.locator('#start').inputValue(),'2 000 000','grouped when leaving the field');
   await p.locator('#start').fill('20000000000');sl=await slider(p,'start');
   assert.equal(sl.max,'1000000');assert(sl.disabled);
-  await p.locator('#start').fill('0');await p.locator('#rate').fill('-95');sl=await slider(p,'rate');
-  assert.equal(sl.min,'-10');assert(sl.disabled);
+  await p.locator('#start').fill('0');await p.locator('#rate').fill('-5');sl=await slider(p,'rate');
+  assert.equal(sl.min,'0');assert(sl.disabled);assert.match(sl.note,/ugyldig/);await p.locator('#rate').fill('5');
   await p.locator('#years').fill('70');assert.equal((await slider(p,'years')).max,'50');
   assert.deepEqual(p.errors,[]);
   p=await open('#activePage=dreams&dreamMonthly=25000&dreamCost=2500000');await p.waitForTimeout(300);
@@ -131,20 +131,31 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   p=await open('#activePage=calculator');await p.waitForTimeout(300);
   assert.deepEqual(await p.evaluate(()=>['−5','-5','−2,5','-2,5','2,5','−1 234,5','1 234','0','−0'].map(parsedNumber)),[-5,-5,-2.5,-2.5,2.5,-1234.5,1234,0,-0]);
   assert.deepEqual(await p.evaluate(()=>['5−','−−5','--5','−','– 5','1−2'].map(v=>Number.isNaN(parsedNumber(v)))),[true,true,true,true,true,true],'malformed minus stays invalid');
-  // Delt lenke med negativ avkastning: feltet viser −2, og en senere endring i et annet felt gir ingen feil.
-  p=await open('#activePage=calculator&rate=-2&inflation=-1');await p.waitForTimeout(300);
-  assert.equal(await p.locator('#rate').inputValue(),'\u22122','the page shows typographic minus');
-  await p.locator('#monthly').fill('3000');assert(await p.locator('#error').isHidden(),'a negative value from a link must survive other edits');
-  assert.deepEqual(await p.evaluate(()=>[s.rate,s.inflation,s.monthly]),[-2,-1,3000]);
-  // Skyveknappen for avkastning under null.
-  await p.locator('#rateSlider').fill('-5');assert(await p.locator('#error').isHidden());assert.equal(await p.evaluate(()=>s.rate),-5);
-  await p.locator('#years').fill('12');assert(await p.locator('#error').isHidden(),'slider value below zero must survive other edits');assert.equal(await p.evaluate(()=>s.rate),-5);
-  // Skrevet med begge tegn, med og uten desimaler.
-  for(const [typed,expected] of [['-3',-3],['\u22123',-3],['\u22122,5',-2.5],['-0,5',-0.5]]){await p.locator('#rate').fill(typed);await p.locator('#rate').blur();await p.locator('#years').fill('11');assert(await p.locator('#error').isHidden(),typed);assert.equal(await p.evaluate(()=>s.rate),expected,typed);}
-  // Samme resultat med − og -.
-  await p.locator('#rate').fill('-3');const withHyphen=await p.locator('#total').innerText();await p.locator('#rate').fill('\u22123');assert.equal(await p.locator('#total').innerText(),withHyphen);
-  // Ugyldig skrivemåte gir fortsatt feil på riktig felt.
-  await p.locator('#rate').fill('3\u2212');assert(await p.locator('#error').isVisible());assert.equal(await p.locator('#rate').getAttribute('aria-invalid'),'true');await p.locator('#rate').fill('5');
+  // Negativ forventet vekst, prisvekst og bankrente brukes ikke i vanlige regneeksempler. Eldre lenker settes til 0 % med forklaring.
+  p=await open('#activePage=calculator&rate=-2&inflation=-1&growth=-10&monthly=3000');await p.waitForTimeout(300);
+  assert.deepEqual(await p.evaluate(()=>[s.rate,s.inflation,s.growth,s.monthly]),[0,0,-10,3000],'growth may still be negative');
+  assert.equal(await p.locator('#rate').inputValue(),'0');assert.equal(await p.locator('#growth').inputValue(),'\u221210','the page shows typographic minus');
+  const adjustToast=await p.locator('#toast').innerText();
+  assert.match(adjustToast,/«Antatt årlig vekst» fra −2\s%\s*til 0 %/);assert.match(adjustToast,/«Prisvekst per år» fra −1/);assert.match(adjustToast,/Børsfall/);assert.match(adjustToast,/Resten av planen er beholdt/);
+  await p.locator('#monthly').fill('3500');assert(await p.locator('#error').isHidden(),'a negative growth value survives other edits');assert.equal(await p.evaluate(()=>s.growth),-10);
+  // Skyveknappen for avkastning starter på 0 %.
+  assert.equal(await p.locator('#rateSlider').getAttribute('min'),'0');
+  // Skrevet negativ avkastning gir en tydelig feil på riktig felt.
+  await p.locator('#rate').fill('-3');assert(await p.locator('#error').isVisible());assert.match(await p.locator('#error').innerText(),/«Antatt årlig vekst» må være fra 0\s%/);assert.equal(await p.locator('#rate').getAttribute('aria-invalid'),'true');
+  await click(p,'share');assert(!await p.evaluate(()=>document.getElementById('shareDialog').open),'negative return cannot be shared');
+  await p.locator('#rate').fill('0');assert(await p.locator('#error').isHidden());
+  // Minustegn i feltet som fortsatt kan være negativt: begge tegn, med og uten desimaler, gir samme resultat.
+  await p.evaluate(()=>{setLevel('advanced');for(let d=document.getElementById('growth').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});
+  for(const [typed,expected] of [['-3',-3],['\u22123',-3],['\u22122,5',-2.5],['-0,5',-0.5]]){await p.locator('#growth').fill(typed);await p.locator('#growth').blur();await p.locator('#years').fill('11');assert(await p.locator('#error').isHidden(),typed);assert.equal(await p.evaluate(()=>s.growth),expected,typed);}
+  await p.locator('#growth').fill('-3');const withHyphen=await p.locator('#total').innerText();await p.locator('#growth').fill('\u22123');assert.equal(await p.locator('#total').innerText(),withHyphen);
+  await p.locator('#growth').fill('3\u2212');assert(await p.locator('#error').isVisible());assert.equal(await p.locator('#growth').getAttribute('aria-invalid'),'true');await p.locator('#growth').fill('0');
+  assert.match(await p.locator('#growth').evaluate(e=>e.closest('label').querySelector('.field-label').textContent),/endring/i,'growth is labelled as a change, not only an increase');
+  // Tap mot innskuddene vises tydelig, også med positiv eller null vekst.
+  await p.evaluate(()=>setLevel('simple'));
+  await p.locator('#start').fill('0');await p.locator('#monthly').fill('8200');await p.locator('#years').fill('38,5');await p.locator('#rate').fill('0');
+  assert.match(await p.locator('#gainLabel').innerText(),/Tap mot innskuddene/);assert.match(await p.locator('#gain').innerText(),/^−/);
+  assert.match(await p.locator('#secondary').innerText(),/mindre enn du setter inn/);assert.match(await p.locator('#mobileResultLabel').innerText(),/under innskuddene/);
+  await p.locator('#rate').fill('5');assert.match(await p.locator('#gainLabel').innerText(),/Beregnet vekst/);assert.doesNotMatch(await p.locator('#mobileResultLabel').innerText(),/under innskuddene/);
   assert.deepEqual(p.errors,[]);
 
   // Tusenskille: feltene viser grupperte tall, beregningen bruker samme tallverdi, og markøren hopper ikke mens brukeren skriver.
@@ -161,8 +172,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // Desimaler og negative tall.
   await p.locator('#rate').fill('2,5');await p.locator('#rate').blur();assert.equal(await p.locator('#rate').inputValue(),'2,5');
   await p.evaluate(()=>{for(let d=document.getElementById('inflation').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});
-  await p.locator('#inflation').fill('-1,25');await p.locator('#inflation').blur();assert.equal(await p.locator('#inflation').inputValue(),'\u22121,25');
-  await p.locator('#years').fill('12');assert(await p.locator('#error').isHidden(),'grouped negative decimal survives other edits');assert.deepEqual(await p.evaluate(()=>[s.rate,s.inflation,s.years]),[2.5,-1.25,12]);
+  await p.locator('#inflation').fill('1,25');await p.locator('#inflation').blur();assert.equal(await p.locator('#inflation').inputValue(),'1,25');
+  await p.locator('#years').fill('12');assert(await p.locator('#error').isHidden(),'grouped decimal survives other edits');assert.deepEqual(await p.evaluate(()=>[s.rate,s.inflation,s.years]),[2.5,1.25,12]);
   // Skyveknappen skriver grupperte tall direkte.
   await p.locator('#startSlider').fill('250000');assert.equal(await p.locator('#start').inputValue(),'250 000');assert.equal(await p.evaluate(()=>s.start),250000);
   await p.locator('#monthlySlider').fill('15000');assert.equal(await p.locator('#monthly').inputValue(),'15 000');
@@ -171,8 +182,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.evaluate(()=>document.getElementById('shareDialog').close());assert.deepEqual(p.errors,[]);
   // Mobil 375 px: store grupperte beløp gir ingen horisontal scrolling.
   {const c=await browser.newContext({viewport:{width:375,height:740},isMobile:true,hasTouch:true});const q=await c.newPage();q.errors=[];q.on('pageerror',e=>q.errors.push(e.message));
-   await q.goto(origin+'#activePage=calculator&start=9999999999&monthly=50000&rate=-3&years=40');await q.waitForTimeout(300);
-   assert.equal(await q.locator('#start').inputValue(),'9 999 999 999');assert.equal(await q.locator('#rate').inputValue(),'\u22123');
+   await q.goto(origin+'#activePage=calculator&start=9999999999&monthly=50000&rate=3&growth=-3&years=40');await q.waitForTimeout(300);
+   assert.equal(await q.locator('#start').inputValue(),'9 999 999 999');assert.equal(await q.locator('#growth').inputValue(),'\u22123');
    assert.equal(await q.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0,'no horizontal scroll at 375 px');assert(await q.locator('#error').isHidden());
    assert((await q.locator('#startSlider').isDisabled())&&(await q.locator('#monthlySlider').isDisabled()),'large valid amounts lock their sliders');assert.deepEqual(q.errors,[]);await c.close();}
 
@@ -200,11 +211,11 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await click(p,'share');assert(await p.evaluate(()=>document.getElementById('shareDialog').open));assert.deepEqual(p.errors,[]);
 
   // Lagrede planer fra før grensene ble innført: ugyldige felt tilbakestilles og nevnes, resten beholdes.
-  {const c=await browser.newContext({viewport:{width:1280,height:900}});await c.addInitScript(()=>{if(!sessionStorage.getItem('seeded')){sessionStorage.setItem('seeded','1');localStorage.setItem('sv-scenarios',JSON.stringify([{name:'Gammel plan',state:{years:500,monthly:4321,rate:6,withdrawMode:'tull'},mode:'explore',view:{}}]));}});
+  {const c=await browser.newContext({viewport:{width:1280,height:900}});await c.addInitScript(()=>{if(!sessionStorage.getItem('seeded')){sessionStorage.setItem('seeded','1');localStorage.setItem('sv-scenarios',JSON.stringify([{name:'Gammel plan',state:{years:500,monthly:4321,rate:6,inflation:-1,withdrawMode:'tull'},mode:'explore',view:{}}]));}});
    const q=await c.newPage();q.errors=[];q.on('pageerror',e=>q.errors.push(e.message));await q.goto(origin+'#start=0&activePage=calculator');await q.waitForTimeout(300);
    await q.evaluate(()=>{document.getElementById('savedDetails').open=true;});await q.locator('button[aria-label="Åpne Gammel plan"]').click();
    assert.equal(await q.locator('#monthly').inputValue(),'4 321');assert.equal(await q.locator('#years').inputValue(),'10');
-   assert.match(await q.locator('#undoText').innerText(),/«Du vil spare i»/);assert(await q.locator('#error').isHidden());assert.deepEqual(q.errors,[]);await c.close();}
+   assert.match(await q.locator('#undoText').innerText(),/«Du vil spare i»/);assert.match(await q.locator('#undoText').innerText(),/«Prisvekst per år» fra −1\s%\s*til 0 %/);assert.equal(await q.evaluate(()=>s.inflation),0);assert(await q.locator('#error').isHidden());assert.deepEqual(q.errors,[]);await c.close();}
   console.log('Passed: invalid input flow, blocked share/save/export with focus, stale marking, large numbers, field-by-field shared links, goal and withdrawal validation, and old saved plans.');
  }finally{if(browser)await browser.close();server.close();}
 })().catch(e=>{console.error(e);process.exit(1);});

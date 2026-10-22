@@ -10,16 +10,16 @@ function needed(s){const base=value(s,s.years,s.rate,s.fee,0),unit=value({...s,s
 // [min, maks, enhet, etikett, valg]. open: min er utelukket. minText: egen tekst for minstegrensen.
 const R=(min,max,unit,label,opt={})=>({min,max,unit,label,...opt});
 const FIELDS={
- start:R(0,1e10,' kr','Du har allerede'),monthly:R(0,1e7,' kr','Du sparer hver måned'),years:R(0,100,' år','Du vil spare i'),rate:R(-100,100,' %','Antatt årlig vekst',{open:true}),
- inflation:R(-100,100,' %','Prisvekst per år',{open:true}),fee:R(0,99.99,' %','Kostnad per år'),goal:R(0,1e11,' kr','Beløpet du vil nå'),growth:R(-100,100,' %','Økning i sparingen per år',{open:true}),
- bank:R(-100,100,' %','Bankrente å sammenligne med',{open:true}),spread:R(0,100,' prosentpoeng','Avvik fra valgt avkastning'),extra:R(0,1e10,' kr','Ekstrainnskudd'),extraYear:R(0,100,' år','Innskudd etter'),
+ start:R(0,1e10,' kr','Du har allerede'),monthly:R(0,1e7,' kr','Du sparer hver måned'),years:R(0,100,' år','Du vil spare i'),rate:R(0,100,' %','Antatt årlig vekst'),
+ inflation:R(0,100,' %','Prisvekst per år'),fee:R(0,99.99,' %','Kostnad per år'),goal:R(0,1e11,' kr','Beløpet du vil nå'),growth:R(-100,100,' %','Årlig endring i månedssparingen',{open:true}),
+ bank:R(0,100,' %','Bankrente å sammenligne med'),spread:R(0,100,' prosentpoeng','Avvik fra valgt avkastning'),extra:R(0,1e10,' kr','Ekstrainnskudd'),extraYear:R(0,100,' år','Innskudd etter'),
  crash:R(0,100,' %','Børsfall'),crashYear:R(0,100,' år','Fall etter'),annualWithdraw:R(0,1e9,' kr','Årsbeløp før skatt'),retireYears:R(0,100,' år','År med uttak'),
  withdrawPercent:R(0,100,' %','Uttak hvert år'),extraWithdraw:R(0,1e9,' kr','Ekstra engangsuttak'),extraWithdrawYear:R(0,100,' år','Etter uttaksår'),withdraw:R(0,1e9,' kr','Uttak')
 };
 const DREAM_FIELDS={
  dreamCost:R(0,1e11,' kr','Budsjett for kjøpet'),dreamStart:R(0,1e10,' kr','Allerede satt av'),dreamYears:R(1/12,100,' år','Tid til kjøpet',{minText:'én måned'}),
- dreamMonthly:R(0,1e7,' kr','Jeg kan spare per måned'),dreamInflation:R(-100,100,' %','Årlig prisvekst for kjøpet',{open:true}),
- dreamSafe:R(-100,100,' %','Bank / lavere risiko',{open:true}),dreamModerate:R(-100,100,' %','Moderat risiko',{open:true}),dreamRisk:R(-100,100,' %','Høyere risiko',{open:true})
+ dreamMonthly:R(0,1e7,' kr','Jeg kan spare per måned'),dreamInflation:R(0,100,' %','Årlig prisvekst for kjøpet'),
+ dreamSafe:R(0,100,' %','Bank / lavere risiko'),dreamModerate:R(0,100,' %','Moderat risiko'),dreamRisk:R(0,100,' %','Høyere risiko')
 };
 // Felt som ikke er en del av kalkulatorens validering, men som må kontrolleres i delte lenker og lagrede planer.
 const OTHER_FIELDS={userAge:R(0,120,' år','Alder'),taxFreeCapital:R(0,Infinity,' kr','Gjenstående innskudd'),taxShield:R(0,Infinity,' kr','Kjent skjerming'),taxRate:R(0,100,' %','Skattesats'),taxableShare:R(0,100,' %','Skattepliktig andel')};
@@ -27,6 +27,10 @@ const CHOICES={activePage:[['calculator','dreams','withdrawals'],'Side'],withdra
  taxModel:[['ask','share'],'Skattemodell'],dreamType:[['car','home','holiday','renovation','freedom','buffer','other'],'Jeg sparer til'],stress:[['low','medium','high'],'Risikovilje'],
  purpose:[['freedom','home','buffer','dream'],'Formål'],ageGroup:[['all','18-24','25-29','30-34','35-39','40-44','45-49','50-54','55-66','67+'],'Aldersgruppe']};
 const RULES={...FIELDS,...DREAM_FIELDS,...OTHER_FIELDS};
+// Vanlige regneeksempler bruker minst 0 % forventet vekst, prisvekst og bankrente. Mulige tap vises som
+// risikoscenarioer (børsfall, lavere vekst, stresstester), ikke som forventningen. Eldre lenker og planer
+// med negative verdier i disse feltene settes til 0 %, og brukeren får beskjed om det.
+const ZERO_FLOOR=new Set(['rate','inflation','bank','dreamInflation','dreamSafe','dreamModerate','dreamRisk']);
 function label(key){return RULES[key]?.label||CHOICES[key]?.[1]||key}
 function fail(key,text){const e=new Error(text);e.field=key;throw e}
 const num=new Intl.NumberFormat('nb-NO');
@@ -47,17 +51,18 @@ function validateDream(s,labelOf){checkGroup(s,DREAM_FIELDS,labelOf)}
 // Kontrollerer verdier fra en delt lenke (tekst) eller en lagret plan. Gyldige verdier beholdes,
 // ugyldige felt får standardverdi. Hvis helheten likevel er ugyldig, tilbakestilles alle oppgitte felt.
 function sanitize(input,{text=false}={}){
- const state={...defaults},rejected=[];
+ const state={...defaults},rejected=[],adjusted=[];
  for(const k in defaults){
   if(!input||!Object.prototype.hasOwnProperty.call(input,k))continue;
   const raw=input[k],def=defaults[k];let v,ok=true;
   if(typeof def==='boolean'){if(text){ok=raw==='1'||raw==='0';v=raw==='1';}else{ok=typeof raw==='boolean';v=raw;}}
   else if(typeof def==='number'){if(text){ok=typeof raw==='string'&&/^-?(\d+\.?\d*|\.\d+)(e[+-]?\d+)?$/i.test(raw);v=ok?Number(raw):NaN;}else v=raw;ok=ok&&typeof v==='number'&&Number.isFinite(v)&&fieldError(k,v)===null;}
   else {v=raw;ok=typeof raw==='string'&&(!CHOICES[k]||CHOICES[k][0].includes(raw));}
+  if(!ok&&ZERO_FLOOR.has(k)&&typeof v==='number'&&Number.isFinite(v)&&v<0){state[k]=0;adjusted.push({key:k,from:v});continue;}
   if(ok)state[k]=v;else rejected.push(k);
  }
- try{validate(state);validateDream(state);}catch{return {state:{...defaults},rejected:Object.keys(input||{}).filter(k=>k in defaults),allReset:true};}
- return {state,rejected,allReset:false};
+ try{validate(state);validateDream(state);}catch{return {state:{...defaults},rejected:Object.keys(input||{}).filter(k=>k in defaults),adjusted:[],allReset:true};}
+ return {state,rejected,adjusted,allReset:false};
 }
 function withdrawalCore(s,capital){
  const n=Math.floor(s.retireYears),a=Math.log1p(s.rate/100)+Math.log1p(-s.fee/100),g=s.withdrawInflation?Math.log1p(s.inflation/100):0,percent=s.withdrawMode==='percent',remaining=percent&&s.withdrawBase==='remaining',p=s.withdrawPercent/100;
