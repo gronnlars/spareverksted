@@ -81,7 +81,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await desktop.mouse.move(b.x+b.width*.1,b.y+b.height/2);await desktop.mouse.down();await desktop.mouse.move(b.x+b.width*.7,b.y+b.height/2,{steps:5});
   assert.notEqual(await desktop.locator('#total').textContent(),total);assert.notEqual(await desktop.locator('#chart svg').innerHTML(),graph);await desktop.mouse.up();
   const value=await desktop.locator('#monthly').inputValue();await range.press('ArrowRight');assert.notEqual(await desktop.locator('#monthly').inputValue(),value);
-  await desktop.locator('#monthly').fill('50000');await desktop.locator('#monthly').press('Tab');assert.equal(await desktop.locator('#monthly').inputValue(),'50000');assert.equal(await range.getAttribute('max'),'10000','monthly slider keeps its fixed range');assert(await range.isDisabled(),'slider waits for a deliberate choice when the typed amount is outside its range');assert.match(await desktop.locator('#monthlySliderNote').innerText(),/går til 10\s000 kr/);
+  await desktop.locator('#monthly').fill('50000');await desktop.locator('#monthly').press('Tab');assert.equal(await desktop.locator('#monthly').inputValue(),'50 000');assert.equal(await range.getAttribute('max'),'20000','monthly slider keeps its fixed range');assert(await range.isDisabled(),'slider waits for a deliberate choice when the typed amount is outside its range');assert.match(await desktop.locator('#monthlySliderNote').innerText(),/går til 20\s000 kr/);
   await desktop.locator('.site-menu>summary').click();await desktop.locator('#share').click();
   const shared=new URLSearchParams(new URL(await desktop.locator('#shareUrl').inputValue()).hash.slice(1));
   assert.equal(shared.get('monthly'),'50000');

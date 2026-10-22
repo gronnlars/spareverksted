@@ -10,7 +10,9 @@ const axisCompact=x=>big(x,true)||(Math.abs(x)>=1e9?axisFormat.format(x/1e9)+' m
 const compact=x=>big(x,true)||(Math.abs(x)>=1e9?dec.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?dec.format(x/1000)+' tusen':nf.format(x));
 const escapeHTML=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const groupedNumber=value=>new Intl.NumberFormat('nb-NO',{maximumFractionDigits:15}).format(value).replace(/[\u00a0\u202f]/g,' ');
-const parsedNumber=value=>value.trim()===''?0:Number(value.replace(/[\s\u00a0\u202f]/g,'').replace(',','.'));
+// Godtar tallene slik siden selv viser dem: mellomrom som tusenskille, komma som desimaltegn og
+// typografisk minus (−, U+2212) fra norsk tallformatering. Vanlig bindestrek virker som før.
+const parsedNumber=value=>value.trim()===''?0:Number(value.replace(/[\s\u00a0\u202f]/g,'').replace(/^\u2212/,'-').replace(',','.'));
 const hash=new URLSearchParams(location.hash.slice(1));
 try{const data=JSON.parse(localStorage.getItem('sv-scenarios')||'[]');saved=Array.isArray(data)?data.filter(x=>x&&typeof x.name==='string'&&x.state&&typeof x.state==='object'):[];level=localStorage.getItem('sv-level')||'simple';}catch{}
 // Delte lenker kontrolleres felt for felt. Gyldige verdier beholdes, ugyldige felt får standardverdi.
@@ -29,6 +31,12 @@ const quoted=keys=>keys.map(k=>'«'+fieldLabel(k)+'»').join(', ');
 // Feilmarkering knyttes til meldingen med aria-describedby, slik at skjermlesere leser den ved feltet.
 function markInvalid(key,messageId){const el=key&&$(key);if(!el)return;el.setAttribute('aria-invalid','true');const ids=(el.getAttribute('aria-describedby')||'').split(' ').filter(Boolean);if(!ids.includes(messageId))el.setAttribute('aria-describedby',[...ids,messageId].join(' '));}
 function clearInvalid(el,messageId){el.removeAttribute('aria-invalid');const ids=(el.getAttribute('aria-describedby')||'').split(' ').filter(x=>x&&x!==messageId);ids.length?el.setAttribute('aria-describedby',ids.join(' ')):el.removeAttribute('aria-describedby');}
+// Rydder koblingen til én feilmelding for en gruppe felt. Feltet med feil (field) markeres; de andre
+// mister koblingen til meldingen. aria-invalid fjernes bare når feltet faktisk har et gyldig tall.
+function syncFieldErrors(keys,messageId,field){for(const k of keys){const el=$(k);if(!el)continue;if(k===field){markInvalid(k,messageId);continue;}
+ const linked=(el.getAttribute('aria-describedby')||'').split(' ').includes(messageId);if(!linked&&el.getAttribute('aria-invalid')!=='true')continue;
+ if(Number.isFinite(parsedNumber(el.value)))clearInvalid(el,messageId);else{clearInvalid(el,messageId);el.setAttribute('aria-invalid','true');}}}
+const MAIN_KEYS=Object.keys(E.FIELDS),RETIREMENT_ERROR_KEYS=['retireYears','extraWithdraw','extraWithdrawYear'];
 const WITHDRAW_KEYS=['annualWithdraw','retireYears','withdrawPercent','extraWithdraw','extraWithdrawYear','withdraw'];
 const pageOf=key=>key in E.DREAM_FIELDS?'dreams':WITHDRAW_KEYS.includes(key)?'withdrawals':'calculator';
 let lastRenderError=null;
@@ -61,7 +69,7 @@ function render(){
  try{
  E.validate(s,fieldLabel);rows=makeRows();const end=endYear(s),final=E.value(s,end),target=E.target(s),need=E.needed(s);
  if(rows.some(r=>Object.values(r).some(x=>!Number.isFinite(x)))||((view.showGoal||mode==='goal')&&!Number.isFinite(target)))throw Error('Tallene er større enn nettleseren kan beregne presist. Prøv kortere tid eller lavere vekst.');
- lastRenderError=null;$('error').hidden=true;$('main').classList.remove('stale');for(const el of document.querySelectorAll('input[aria-invalid=true]'))if(el.id in E.defaults&&!(el.id in E.DREAM_FIELDS)&&Number.isFinite(parsedNumber(el.value)))clearInvalid(el,'error');const shown=display(final,end),paid=display(nominalPaid(end),end);
+ lastRenderError=null;$('error').hidden=true;$('error').textContent='';$('main').classList.remove('stale');syncFieldErrors(MAIN_KEYS,'error',null);const shown=display(final,end),paid=display(nominalPaid(end),end);
  $('resultLabel').textContent=mode==='goal'?'FOR Å NÅ MÅLET TRENGER DU':`ETTER ${dec.format(end)} ÅR KAN DU HA`;
  $('total').textContent=mode==='goal'?(Number.isFinite(need)?money(Math.ceil(need))+' / mnd.':'Målet kan ikke nås med denne perioden'):money(shown);
  $('secondary').textContent=mode==='goal'?'Første månedsbeløp. Grafen viser fortsatt sparingen du har lagt inn.':s.real?`Målt i dagens kroner. Kontoen viser da ${money(final)} før skatt.`:`Det tilsvarer ${money(final/inflation(end))} med dagens priser. Før skatt.`;
@@ -81,7 +89,7 @@ function render(){
  $('progress').style.width=Math.max(0,Math.min(100,ratio*100))+'%';$('goalAction').replaceChildren();
  if(Number.isFinite(need)){const b=document.createElement('button');b.textContent=`Prøv ${money(Math.ceil(need))} per måned`;b.onclick=()=>changePlan({monthly:Math.ceil(need)},'Månedssparingen er tilpasset målet.');$('goalAction').append(b);}
  chart();table();experiments();plainExplanation(final,end);tips(need);retirement(final,end);$('withdrawCapital').textContent=money(final);drawWithdrawal(final);savedRender();syncLevel();
- }catch(err){lastRenderError=err;$('main').classList.add('stale');markInvalid(err.field,'error');$('error').hidden=false;$('error').textContent=err.message+' Resultatene nedenfor er ikke oppdatert.';$('mobileTotal').textContent='Sjekk tallene';$('mobileCurve').hidden=true;}
+ }catch(err){lastRenderError=err;$('main').classList.add('stale');syncFieldErrors(MAIN_KEYS,'error',err.field);$('error').hidden=false;$('error').textContent=err.message+' Resultatene nedenfor er ikke oppdatert.';$('mobileTotal').textContent='Sjekk tallene';$('mobileCurve').hidden=true;}
  if(window.renderDream)window.renderDream();
 }
 function selectedComparisons(){return saved.map((item,index)=>({item,index})).filter(x=>selectedPlans.has(x.index)&&x.item.state.activePage!=='dreams').map(({item,index})=>{try{const n={...E.defaults,...item.state};E.validate(n);const points=planRows(n);if(points.some(p=>!Number.isFinite(p.v)))return null;return {name:item.name,index,n,points};}catch{return null;}}).filter(Boolean);}
@@ -121,8 +129,8 @@ function retirement(final,t){
  $('annualWithdraw').closest('label').hidden=percent||s.withdrawMode==='budget';$('withdrawPercent').closest('label').hidden=!percent;$('withdrawBaseLabel').hidden=!percent;
  $('withdrawInflation').disabled=remaining;
  $('withdrawExplanation').textContent=remaining?'En fast prosent av saldoen gir varierende kronebeløp. Inflasjonsjustering gjelder faste årsbeløp; kjøpekraften vises uansett i tabellen.':'Med inflasjonsjustering øker årsbeløpet med valgt inflasjon fra år 2. Uten justering er kronebeløpet likt hvert år.';
- if(final===0){$('retirementResult').innerHTML='<div class="withdraw-result"><h2>Ingen penger ved uttaksstart</h2><p>Legg inn et startbeløp eller månedlig sparing i spareplanen for å beregne uttak.</p></div>';$('withdrawTable').innerHTML='';return;}
- try{const r=E.withdrawal(s,final);for(const k of ['retireYears','extraWithdraw','extraWithdrawYear'])if($(k)?.getAttribute('aria-describedby')?.includes('retirementResult'))clearInvalid($(k),'retirementResult');let heading,body;
+ if(final===0){syncFieldErrors(RETIREMENT_ERROR_KEYS,'retirementResult',null);$('retirementResult').innerHTML='<div class="withdraw-result"><h2>Ingen penger ved uttaksstart</h2><p>Legg inn et startbeløp eller månedlig sparing i spareplanen for å beregne uttak.</p></div>';$('withdrawTable').innerHTML='';return;}
+ try{const r=E.withdrawal(s,final);syncFieldErrors(RETIREMENT_ERROR_KEYS,'retirementResult',null);let heading,body;
  if(s.withdrawMode==='budget'){heading=money(r.w)+' første år';body=`Tilsvarer ${money(r.w/12)} per måned. Beregnet for å bruke opp kapitalen over ${r.n} år.`;}
  else if(s.withdrawMode==='duration'){heading=Number.isFinite(r.exhausted)?`Pengene varer til uttaket i år ${r.exhausted}`:'Pengene tømmes ikke i denne modellen';body=Number.isFinite(r.exhausted)?`Siste tilgjengelige beløp tas ut i år ${r.exhausted}. Tabellen viser valgt periode på ${r.n} år.`:'Den jevne avkastningen dekker uttakene under disse forutsetningene. Det er ikke en garanti.';}
  else if(percent){heading=money(r.first.actual)+' i første uttak';body=r.remaining?'Prosenten tas av saldoen etter årets avkastning. Uten ekstrauttak tømmes ikke en positiv saldo helt matematisk ved en sats under 100 %, men uttakene kan bli svært små.':'Prosenten brukes på startkapitalen for å finne første årsbeløp. Videre uttak følger inflasjonsvalget ditt.';}
@@ -130,7 +138,7 @@ function retirement(final,t){
  body+=r.extraRequested>0?(r.extraYear>r.n?` Ekstrauttaket i år ${r.extraYear} ligger utenfor tabellperioden.`:` Ekstrauttak i år ${r.extraYear}: ${money(r.extraActual)}.`)+(r.extraActual<r.extraRequested&&r.extraYear<=r.n?` Ønsket ${money(r.extraRequested)}, men saldoen dekker ikke hele beløpet.`:''):'';
  $('retirementResult').innerHTML=`<div class="withdraw-result"><div class="eyebrow">STARTKAPITAL ${money(final)}</div><span class="tax-label">Før skatt på uttak</span><h2>${heading}</h2><p>${body}</p><div class="two"><div><span>Totalt tatt ut før skatt på ${r.n} år</span><strong>${money(r.last.total)}</strong></div><div><span>Saldo før skatt etter ${r.n} år</span><strong>${money(r.last.balance)}</strong></div></div></div>`;
  $('withdrawTable').innerHTML='<table><thead><tr><th>Uttaksår</th><th>Årsuttak før skatt</th><th>Ekstrauttak før skatt</th><th>Per måned før skatt¹</th><th>Kjøpekraft før skatt</th><th>Saldo etter uttak</th></tr></thead><tbody>'+r.points.map(p=>`<tr><td>${p.year}</td><td>${money(p.actual)}</td><td>${money(p.extra||0)}</td><td>${money(p.actual/12)}</td><td>${money(p.real)}</td><td>${money(p.balance)}</td></tr>`).join('')+'</tbody></table><p class="hint">¹ Årsbeløp delt på 12 til sammenligning; selve modellen tar ut én gang i året. Ved lange perioder vises et utvalg år.</p>';
- }catch(err){$('retirementResult').textContent=err.message;$('withdrawTable').innerHTML='';markInvalid(err.field,'retirementResult');}
+ }catch(err){$('retirementResult').textContent=err.message;$('withdrawTable').innerHTML='';syncFieldErrors(RETIREMENT_ERROR_KEYS,'retirementResult',err.field);}
 }
 function drawWithdrawal(capital){if(capital===0){$('withdrawChart').replaceChildren();return;}try{const r=E.withdrawal(s,capital),W=650,H=200,L=65,R=15,T=25,B=30,w=W-L-R,h=H-T-B,max=Math.max(1,...r.points.map(p=>p.balance));let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Saldo gjennom uttaksperioden"><title>Pengene som er igjen etter uttak</title>`;for(let i=0;i<3;i++){const y=T+h-i*h/2;svg+=`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="#e1e7da"/><text x="${L-8}" y="${y+4}" text-anchor="end">${axisCompact(max*i/2)}</text>`;}svg+=`<path d="${r.points.map((p,i)=>(i?'L':'M')+(L+p.year/r.n*w)+','+(T+h-p.balance/max*h)).join(' ')}" fill="none" stroke="#28664d" stroke-width="3"/><text x="${L}" y="${H-4}">Uttaksår 0</text><text x="${W-R}" y="${H-4}" text-anchor="end">${r.n} år</text></svg>`;$('withdrawChart').innerHTML=svg;}catch{$('withdrawChart').replaceChildren();}}
 function savedRender(){
@@ -160,7 +168,9 @@ function syncLevel(){document.body.dataset.level=level;for(const b of $('levels'
 function setLevel(value){level=value;try{localStorage.setItem('sv-level',level);}catch{}syncLevel();if(window.renderDream)window.renderDream();}
 // State changes are read once per user input. Empty numeric fields calculate as zero.
 document.addEventListener('input',event=>{if(!event.target.closest('#taxDialog')&&event.target.id in E.defaults){read();render();}});
-document.addEventListener('focusout',event=>{const el=event.target;if(typeof E.defaults[el.id]!=='number')return;if(el.value.trim()===''){el.value='0';read();render();}const value=parsedNumber(el.value);if(Number.isFinite(value))el.value=groupedNumber(value);});
+// Tusenskille settes når brukeren forlater feltet, ikke mens det skrives, slik at markøren ikke hopper.
+// Startguidens felt grupperes også, men et tomt felt der (for eksempel alder) forblir tomt.
+document.addEventListener('focusout',event=>{const el=event.target;if(el.id?.startsWith('onboard')&&el.inputMode==='decimal'&&el.value.trim()!==''){const v=parsedNumber(el.value);if(Number.isFinite(v))el.value=groupedNumber(v);return;}if(typeof E.defaults[el.id]!=='number')return;if(el.value.trim()===''){el.value='0';read();render();}const value=parsedNumber(el.value);if(Number.isFinite(value))el.value=groupedNumber(value);});
 $('levels').onclick=e=>{const b=e.target.closest('[data-level]');if(b)setLevel(b.dataset.level);};
 $('undo').onclick=()=>{if(!undoState)return;s={...undoState.state};mode=undoState.mode;view={...undoState.view};if(undoState.saved){saved=undoState.saved;selectedPlans=new Set(undoState.selected);persist();}undoState=null;$('undoBar').hidden=true;fill();render();};
 $('modes').onclick=e=>{const b=e.target.closest('[data-mode]');if(!b)return;mode=b.dataset.mode;for(const b of $('modes').children)b.classList.toggle('active',b.dataset.mode===mode);if(mode==='goal')view.showGoal=true;fill();render();};

@@ -5,7 +5,8 @@ function hasStarted(){try{return localStorage.getItem('sv-started')==='1';}catch
 function rememberStart(){try{localStorage.setItem('sv-started','1');}catch{}}
 function stage(showWizard){wizardActive=showWizard;document.body.dataset.stage=showWizard?'welcome':'workbench';$('welcomeWizard').hidden=!showWizard;$('workbench').hidden=showWizard;$('startAgain').hidden=showWizard;if(!showWizard){rememberStart();render();}window.scrollTo({top:0,behavior:'instant'});}
 function inputNumber(id){return parsedNumber($(id).value);}
-function formatInput(value){return new Intl.NumberFormat('nb-NO',{useGrouping:false,maximumFractionDigits:10}).format(value);}
+// Tall som siden selv skriver inn (skyveknapper, startguide, skattevindu), vises med tusenskille som ellers.
+function formatInput(value){return groupedNumber(value);}
 function prepareJourney(kind){journeyKind=kind;$('chooseGrowth').setAttribute('aria-pressed',kind==='growth');$('chooseGoal').setAttribute('aria-pressed',kind==='goal');$('journeyForm').hidden=false;$('onboardGoalLabel').hidden=kind!=='goal';$('journeyTitle').textContent=kind==='goal'?'Hva vil du spare til?':'Hva er utgangspunktet ditt?';$('beginJourney').textContent=kind==='goal'?'Se veien til målet ↗':'Vis spareplanen min ↗';
  const goal=kind==='goal';$('onboardAge').value=s.ageKnown?formatInput(s.userAge):'';$('onboardStart').value=formatInput(goal?s.dreamStart:s.start);$('onboardMonthly').value=formatInput(goal?s.dreamMonthly:s.monthly);$('onboardYears').value=formatInput(goal?s.dreamYears:s.years);$('onboardGoal').value=formatInput(s.dreamCost);$('onboardRisk').value=s.riskChosen?s.stress:'';$('onboardUntil67').checked=s.until67||(!s.ageKnown&&kind==='growth');$('closeJourney').hidden=!hasStarted();$('journeyError').hidden=true;updateHorizon(false);
 }

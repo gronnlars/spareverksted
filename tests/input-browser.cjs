@@ -15,7 +15,10 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.locator('#chooseGrowth').click();
   await p.locator('#onboardAge').fill('130');await p.locator('#beginJourney').click();
   assert.match(await p.locator('#journeyError').innerText(),/120/);assert.equal(await p.locator('#onboardAge').getAttribute('aria-invalid'),'true');
-  await p.locator('#onboardAge').fill('35');await p.locator('#beginJourney').click();
+  await p.locator('#onboardAge').fill('35');await p.locator('#onboardStart').fill('250000');await p.locator('#onboardStart').blur();
+  assert.equal(await p.locator('#onboardStart').inputValue(),'250 000','start guide amounts are grouped when leaving the field');
+  await p.locator('#onboardAge').fill('');await p.locator('#onboardAge').blur();assert.equal(await p.locator('#onboardAge').inputValue(),'','an empty optional age stays empty');
+  await p.locator('#onboardAge').fill('35');await p.locator('#beginJourney').click();assert.equal(await p.evaluate(()=>s.start),250000);
   const total=await p.locator('#total').innerText(),years0=await p.locator('#years').inputValue();
   await p.locator('#years').fill('500');
   assert(await p.locator('#error').isVisible());assert.equal(await p.locator('#years').getAttribute('aria-invalid'),'true');
@@ -40,12 +43,12 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // Delte lenker: bare ugyldige felt tilbakestilles, og brukeren får vite hvilke.
   p=await open('#start=100000&monthly=5000&years=500&rate=5&activePage=calculator');await p.waitForTimeout(300);
   assert.equal(await p.locator('#years').inputValue(),'10','invalid field must fall back to default');
-  assert.equal(await p.locator('#monthly').inputValue(),'5000','valid fields must be kept');assert.equal(await p.locator('#start').inputValue(),'100000');
+  assert.equal(await p.locator('#monthly').inputValue(),'5 000','valid fields must be kept');assert.equal(await p.locator('#start').inputValue(),'100 000');
   assert.match(await p.locator('#toast').innerText(),/«Du vil spare i».*Resten av planen er beholdt/);assert.deepEqual(p.errors,[]);
   p=await open('#start=1000&monthly=500&years=15&rate=4&activePage=calculator');await p.waitForTimeout(300);
   assert.equal(await p.locator('#years').inputValue(),'15','valid shared link must be kept');assert.equal(await p.locator('#toast').innerText(),'','valid link gives no warning');
   p=await open('#activePage=dreams&dreamYears=500&dreamMonthly=4000&dreamCost=250000');await p.waitForTimeout(300);
-  assert.equal(await p.locator('#dreamYears').inputValue(),'5');assert.equal(await p.locator('#dreamMonthly').inputValue(),'4000');assert(await p.locator('#dreamError').isHidden());
+  assert.equal(await p.locator('#dreamYears').inputValue(),'5');assert.equal(await p.locator('#dreamMonthly').inputValue(),'4 000');assert(await p.locator('#dreamError').isHidden());
   assert.match(await p.locator('#toast').innerText(),/«Tid til kjøpet»/);
   p=await open('#activePage=withdrawals&withdrawMode=tull&real=2&monthly=&rate=6');await p.waitForTimeout(300);
   assert.equal(await p.locator('#withdrawMode').inputValue(),'amount');assert.equal(await p.locator('#rate').inputValue(),'6');
@@ -56,20 +59,20 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   const slider=(q,id)=>q.evaluate(i=>{const r=document.getElementById(i+'Slider'),n=document.getElementById(i+'SliderNote');return {field:document.getElementById(i).value,min:r.min,max:r.max,value:r.value,disabled:r.disabled,note:n.hidden?'':n.innerText,describedBy:document.getElementById(i).getAttribute('aria-describedby')||''};},id);
   p=await open('#activePage=calculator&monthly=50000');await p.waitForTimeout(300);
   let sl=await slider(p,'monthly');
-  assert.equal(sl.max,'20000');assert.equal(sl.field,'50000');assert(sl.disabled);
-  assert.match(sl.note,/20\\s000 kr/);assert.match(sl.describedBy,/monthlySliderNote/);
+  assert.equal(sl.max,'20000');assert.equal(sl.field,'50 000');assert(sl.disabled);
+  assert.match(sl.note,/20\s000 kr/);assert.match(sl.describedBy,/monthlySliderNote/);
   await p.locator('#monthlySlider').click({force:true});
-  assert.equal(await p.locator('#monthly').inputValue(),'50000');
+  assert.equal(await p.locator('#monthly').inputValue(),'50 000');
   await p.locator('#monthly').fill('20000000');sl=await slider(p,'monthly');
   assert.equal(sl.max,'20000');assert(sl.disabled);assert.match(sl.note,/ugyldig/);
   await p.locator('#monthly').fill('50000');await p.locator('#monthlySliderUnlock').click();
   assert.equal(await p.evaluate(()=>document.activeElement.id),'monthlySlider');
   await p.keyboard.press('ArrowLeft');sl=await slider(p,'monthly');
-  assert.equal(sl.field,'19900');assert.equal(sl.note,'');assert.doesNotMatch(sl.describedBy,/SliderNote/);
+  assert.equal(sl.field,'19 900');assert.equal(sl.note,'');assert.doesNotMatch(sl.describedBy,/SliderNote/);
   await p.locator('#monthlySlider').fill('500');assert.equal(await p.locator('#monthly').inputValue(),'500');
   await p.locator('#monthly').fill('60000');assert((await slider(p,'monthly')).disabled);
   await p.locator('#start').fill('2000000');sl=await slider(p,'start');
-  assert.equal(sl.max,'1000000');assert(sl.disabled);assert.equal(sl.field,'2000000');
+  assert.equal(sl.max,'1000000');assert(sl.disabled);assert.equal(sl.field,'2000000','no grouping while the user is typing');await p.locator('#start').blur();assert.equal(await p.locator('#start').inputValue(),'2 000 000','grouped when leaving the field');
   await p.locator('#start').fill('20000000000');sl=await slider(p,'start');
   assert.equal(sl.max,'1000000');assert(sl.disabled);
   await p.locator('#start').fill('0');await p.locator('#rate').fill('-95');sl=await slider(p,'rate');
@@ -77,14 +80,101 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.locator('#years').fill('70');assert.equal((await slider(p,'years')).max,'50');
   assert.deepEqual(p.errors,[]);
   p=await open('#activePage=dreams&dreamMonthly=25000&dreamCost=2500000');await p.waitForTimeout(300);
-  sl=await slider(p,'dreamMonthly');assert.equal(sl.max,'20000');assert.equal(sl.field,'25000');assert(sl.disabled);
+  sl=await slider(p,'dreamMonthly');assert.equal(sl.max,'20000');assert.equal(sl.field,'25 000');assert(sl.disabled);
   assert.equal((await slider(p,'dreamCost')).max,'1000000');
   await p.locator('#dreamMonthlySliderUnlock').click();await p.locator('#dreamMonthlySlider').fill('500');
   assert.equal(await p.locator('#dreamMonthly').inputValue(),'500');assert.deepEqual(p.errors,[]);
   {const c=await browser.newContext({viewport:{width:320,height:700},isMobile:true,hasTouch:true});const q=await c.newPage();await q.goto(origin+'#activePage=calculator&monthly=50000');await q.waitForTimeout(300);
-   assert.equal(await q.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0);
-   const box=await q.locator('#monthlySliderUnlock').boundingBox();assert(box.height>=24&&box.width>=24);
-   await q.locator('#monthlySlider').tap({force:true});assert.equal(await q.locator('#monthly').inputValue(),'50000');await c.close();}
+   assert.equal(await q.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0,'no horizontal scroll at 320 px');
+   const box=await q.locator('#monthlySliderUnlock').boundingBox();assert(box.height>=24&&box.width>=24,'unlock button target at least 24 px');
+   await q.locator('#monthlySlider').tap({force:true});assert.equal(await q.locator('#monthly').inputValue(),'50 000','a tap on a locked slider does nothing');await c.close();}
+  // Universell utforming: etter retting skal feltet ikke lenger være ugyldig eller koblet til en feilmelding.
+  // Andre beskrivelser beholdes, og fokus blir værende i feltet brukeren skriver i.
+  const a11y=(q,id)=>q.evaluate(i=>{const e=document.getElementById(i);return {invalid:e.getAttribute('aria-invalid'),ids:(e.getAttribute('aria-describedby')||'').split(' ').filter(Boolean),focus:document.activeElement.id};},id);
+  const typeIn=async(q,id,v)=>{await q.locator('#'+id).focus();await q.keyboard.press('ControlOrMeta+A');await q.keyboard.type(v);};
+  const fixed=(state,id,messageId,keep=[])=>{assert.notEqual(state.invalid,'true',id+' must not stay invalid');assert(!state.ids.includes(messageId),id+' must not point to '+messageId+': '+state.ids);for(const k of keep)assert(state.ids.includes(k),id+' must keep '+k);assert.equal(state.focus,id,'focus stays in '+id);};
+  // Sparing, ett felt.
+  p=await open('#activePage=calculator');await p.waitForTimeout(300);
+  await typeIn(p,'years','500');let st=await a11y(p,'years');assert.equal(st.invalid,'true');assert(st.ids.includes('error')&&st.ids.includes('yearsDescription'));
+  await typeIn(p,'years','10');fixed(await a11y(p,'years'),'years','error',['yearsDescription']);assert(await p.locator('#error').isHidden());assert.equal(await p.locator('#error').textContent(),'','old message text is removed');
+  // Sparing, to felt: bare feltet meldingen gjelder er koblet til den.
+  await typeIn(p,'years','500');await typeIn(p,'rate','500');await typeIn(p,'years','10');
+  fixed(await a11y(p,'years'),'years','error',['yearsDescription']);st=await a11y(p,'rate');assert.equal(st.invalid,'true');assert(st.ids.includes('error'));assert.match(await p.locator('#error').innerText(),/Antatt årlig vekst/);
+  await typeIn(p,'rate','5');fixed(await a11y(p,'rate'),'rate','error',['rateDescription']);
+  // Tom tekst som ikke kan tolkes, beholder aria-invalid, men ikke koblingen til en melding om et annet felt.
+  await typeIn(p,'years','500');await typeIn(p,'monthly','abc');st=await a11y(p,'monthly');assert.equal(st.invalid,'true');
+  await typeIn(p,'years','10');assert.equal((await a11y(p,'years')).invalid,'false');
+  await typeIn(p,'monthly','2000');fixed(await a11y(p,'monthly'),'monthly','error',['monthlyDescription']);assert(await p.locator('#error').isHidden());
+  // Forklaringen til skyveknappen er en annen, gyldig beskrivelse som skal beholdes.
+  await typeIn(p,'monthly','20000000');st=await a11y(p,'monthly');assert(st.ids.includes('error')&&st.ids.includes('monthlySliderNote'));
+  await typeIn(p,'monthly','50000');fixed(await a11y(p,'monthly'),'monthly','error',['monthlyDescription','monthlySliderNote']);
+  assert.deepEqual(p.errors,[]);
+  // Uttak: felt som kontrolleres av kalkulatoren, og felt som kontrolleres av uttaksberegningen.
+  p=await open('#activePage=withdrawals');await p.waitForTimeout(300);
+  await typeIn(p,'annualWithdraw','2000000000');st=await a11y(p,'annualWithdraw');assert.equal(st.invalid,'true');assert(st.ids.includes('error'));
+  await typeIn(p,'annualWithdraw','24000');fixed(await a11y(p,'annualWithdraw'),'annualWithdraw','error');
+  await typeIn(p,'retireYears','0');st=await a11y(p,'retireYears');assert.equal(st.invalid,'true');assert(st.ids.includes('retirementResult'));
+  await typeIn(p,'retireYears','20');fixed(await a11y(p,'retireYears'),'retireYears','retirementResult');
+  await p.evaluate(()=>{document.getElementById('extraWithdraw').closest('details').open=true;});await typeIn(p,'extraWithdraw','1000');await typeIn(p,'extraWithdrawYear','2,5');st=await a11y(p,'extraWithdrawYear');assert.equal(st.invalid,'true');
+  await typeIn(p,'extraWithdrawYear','3');fixed(await a11y(p,'extraWithdrawYear'),'extraWithdrawYear','retirementResult');
+  assert.deepEqual(p.errors,[]);
+  // Sparemål.
+  p=await open('#activePage=dreams');await p.waitForTimeout(300);
+  await typeIn(p,'dreamYears','500');st=await a11y(p,'dreamYears');assert.equal(st.invalid,'true');assert(st.ids.includes('dreamError'));
+  await typeIn(p,'dreamMonthly','-5');await typeIn(p,'dreamYears','5');
+  fixed(await a11y(p,'dreamYears'),'dreamYears','dreamError');st=await a11y(p,'dreamMonthly');assert.equal(st.invalid,'true');assert(st.ids.includes('dreamError'));
+  await typeIn(p,'dreamMonthly','3000');fixed(await a11y(p,'dreamMonthly'),'dreamMonthly','dreamError');assert(await p.locator('#dreamError').isHidden());assert.equal(await p.locator('#dreamError').textContent(),'');
+  assert.deepEqual(p.errors,[]);
+
+  // Minustegn: siden viser negative tall med typografisk minus (−, U+2212). Både − og - skal leses riktig,
+  // uten å ødelegge desimaltall, tusenskille eller ugyldige skrivemåter.
+  p=await open('#activePage=calculator');await p.waitForTimeout(300);
+  assert.deepEqual(await p.evaluate(()=>['−5','-5','−2,5','-2,5','2,5','−1 234,5','1 234','0','−0'].map(parsedNumber)),[-5,-5,-2.5,-2.5,2.5,-1234.5,1234,0,-0]);
+  assert.deepEqual(await p.evaluate(()=>['5−','−−5','--5','−','– 5','1−2'].map(v=>Number.isNaN(parsedNumber(v)))),[true,true,true,true,true,true],'malformed minus stays invalid');
+  // Delt lenke med negativ avkastning: feltet viser −2, og en senere endring i et annet felt gir ingen feil.
+  p=await open('#activePage=calculator&rate=-2&inflation=-1');await p.waitForTimeout(300);
+  assert.equal(await p.locator('#rate').inputValue(),'\u22122','the page shows typographic minus');
+  await p.locator('#monthly').fill('3000');assert(await p.locator('#error').isHidden(),'a negative value from a link must survive other edits');
+  assert.deepEqual(await p.evaluate(()=>[s.rate,s.inflation,s.monthly]),[-2,-1,3000]);
+  // Skyveknappen for avkastning under null.
+  await p.locator('#rateSlider').fill('-5');assert(await p.locator('#error').isHidden());assert.equal(await p.evaluate(()=>s.rate),-5);
+  await p.locator('#years').fill('12');assert(await p.locator('#error').isHidden(),'slider value below zero must survive other edits');assert.equal(await p.evaluate(()=>s.rate),-5);
+  // Skrevet med begge tegn, med og uten desimaler.
+  for(const [typed,expected] of [['-3',-3],['\u22123',-3],['\u22122,5',-2.5],['-0,5',-0.5]]){await p.locator('#rate').fill(typed);await p.locator('#rate').blur();await p.locator('#years').fill('11');assert(await p.locator('#error').isHidden(),typed);assert.equal(await p.evaluate(()=>s.rate),expected,typed);}
+  // Samme resultat med − og -.
+  await p.locator('#rate').fill('-3');const withHyphen=await p.locator('#total').innerText();await p.locator('#rate').fill('\u22123');assert.equal(await p.locator('#total').innerText(),withHyphen);
+  // Ugyldig skrivemåte gir fortsatt feil på riktig felt.
+  await p.locator('#rate').fill('3\u2212');assert(await p.locator('#error').isVisible());assert.equal(await p.locator('#rate').getAttribute('aria-invalid'),'true');await p.locator('#rate').fill('5');
+  assert.deepEqual(p.errors,[]);
+
+  // Tusenskille: feltene viser grupperte tall, beregningen bruker samme tallverdi, og markøren hopper ikke mens brukeren skriver.
+  p=await open('#activePage=calculator&start=141762452&monthly=5000&years=10&rate=5');await p.waitForTimeout(300);
+  assert.equal(await p.locator('#start').inputValue(),'141 762 452');assert.equal(await p.evaluate(()=>s.start),141762452);
+  const groupedTotal=await p.locator('#total').innerText();
+  await p.locator('#start').fill('141762452');await p.locator('#start').blur();assert.equal(await p.locator('#total').innerText(),groupedTotal,'grouped and plain input give the same result');
+  for(const [typed,shown,value] of [['100000','100 000',100000],['1000000','1 000 000',1000000],['10000000','10 000 000',10000000],['0','0',0]]){
+   await p.locator('#start').fill(typed);assert.equal(await p.locator('#start').inputValue(),typed,'no change while typing');await p.locator('#start').blur();
+   assert.equal(await p.locator('#start').inputValue(),shown);assert.equal(await p.evaluate(()=>s.start),value);}
+  // Redigering av et gruppert tall: slett siste siffer.
+  await p.locator('#start').fill('1 000 000');await p.locator('#start').blur();await p.locator('#start').focus();await p.keyboard.press('End');await p.keyboard.press('Backspace');
+  assert.equal(await p.evaluate(()=>s.start),100000);assert(await p.locator('#error').isHidden());await p.locator('#start').blur();assert.equal(await p.locator('#start').inputValue(),'100 000');
+  // Desimaler og negative tall.
+  await p.locator('#rate').fill('2,5');await p.locator('#rate').blur();assert.equal(await p.locator('#rate').inputValue(),'2,5');
+  await p.evaluate(()=>{for(let d=document.getElementById('inflation').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});
+  await p.locator('#inflation').fill('-1,25');await p.locator('#inflation').blur();assert.equal(await p.locator('#inflation').inputValue(),'\u22121,25');
+  await p.locator('#years').fill('12');assert(await p.locator('#error').isHidden(),'grouped negative decimal survives other edits');assert.deepEqual(await p.evaluate(()=>[s.rate,s.inflation,s.years]),[2.5,-1.25,12]);
+  // Skyveknappen skriver grupperte tall direkte.
+  await p.locator('#startSlider').fill('250000');assert.equal(await p.locator('#start').inputValue(),'250 000');assert.equal(await p.evaluate(()=>s.start),250000);
+  await p.locator('#monthlySlider').fill('15000');assert.equal(await p.locator('#monthly').inputValue(),'15 000');
+  // Delt lenke inneholder rene tall uten mellomrom.
+  await click(p,'share');const groupedLink=await p.locator('#shareUrl').inputValue();assert.match(groupedLink,/start=250000&/);assert.match(groupedLink,/monthly=15000&/);assert.doesNotMatch(groupedLink,/%20|\+|%C2%A0/);
+  await p.evaluate(()=>document.getElementById('shareDialog').close());assert.deepEqual(p.errors,[]);
+  // Mobil 375 px: store grupperte beløp gir ingen horisontal scrolling.
+  {const c=await browser.newContext({viewport:{width:375,height:740},isMobile:true,hasTouch:true});const q=await c.newPage();q.errors=[];q.on('pageerror',e=>q.errors.push(e.message));
+   await q.goto(origin+'#activePage=calculator&start=9999999999&monthly=50000&rate=-3&years=40');await q.waitForTimeout(300);
+   assert.equal(await q.locator('#start').inputValue(),'9 999 999 999');assert.equal(await q.locator('#rate').inputValue(),'\u22123');
+   assert.equal(await q.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0,'no horizontal scroll at 375 px');assert(await q.locator('#error').isHidden());
+   assert((await q.locator('#startSlider').isDisabled())&&(await q.locator('#monthlySlider').isDisabled()),'large valid amounts lock their sliders');assert.deepEqual(q.errors,[]);await c.close();}
 
   // Sparemål: egne feltnavn, riktig felt markert, og ugyldige mål kan ikke deles, lagres eller eksporteres.
   p=await open('#activePage=dreams');await p.waitForTimeout(300);
@@ -113,7 +203,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   {const c=await browser.newContext({viewport:{width:1280,height:900}});await c.addInitScript(()=>{if(!sessionStorage.getItem('seeded')){sessionStorage.setItem('seeded','1');localStorage.setItem('sv-scenarios',JSON.stringify([{name:'Gammel plan',state:{years:500,monthly:4321,rate:6,withdrawMode:'tull'},mode:'explore',view:{}}]));}});
    const q=await c.newPage();q.errors=[];q.on('pageerror',e=>q.errors.push(e.message));await q.goto(origin+'#start=0&activePage=calculator');await q.waitForTimeout(300);
    await q.evaluate(()=>{document.getElementById('savedDetails').open=true;});await q.locator('button[aria-label="Åpne Gammel plan"]').click();
-   assert.equal(await q.locator('#monthly').inputValue(),'4321');assert.equal(await q.locator('#years').inputValue(),'10');
+   assert.equal(await q.locator('#monthly').inputValue(),'4 321');assert.equal(await q.locator('#years').inputValue(),'10');
    assert.match(await q.locator('#undoText').innerText(),/«Du vil spare i»/);assert(await q.locator('#error').isHidden());assert.deepEqual(q.errors,[]);await c.close();}
   console.log('Passed: invalid input flow, blocked share/save/export with focus, stale marking, large numbers, field-by-field shared links, goal and withdrawal validation, and old saved plans.');
  }finally{if(browser)await browser.close();server.close();}
