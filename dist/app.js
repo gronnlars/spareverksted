@@ -2,16 +2,18 @@
 const $=id=>document.getElementById(id), E=Engine;
 let s={...E.defaults},mode='explore',rows=[],saved=[],level='simple',selectedPlans=new Set(),undoState=null,view={showBank:false,showRange:false,showGoal:false};
 const nf=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0}),dec=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:2});
-const big=x=>{const a=Math.abs(x),sign=x<0?'−':'';return a>=1e18?'over '+sign+'1 trillion kr':a>=1e15?sign+dec.format(a/1e15)+' billiarder kr':a>=1e12?sign+dec.format(a/1e12)+' billioner kr':null;};
+const BIG=[[1e18,'trillioner','trill.'],[1e15,'billiarder','bd.'],[1e12,'billioner','bill.']];
+const big=(x,short)=>{const a=Math.abs(x),sign=x<0?'−':'';if(a>=1e21)return short?'over 1 000 trill.':'over '+sign+'1 000 trillioner kr';for(const [limit,word,abbr] of BIG)if(a>=limit)return sign+dec.format(a/limit)+(short?' '+abbr:' '+word+' kr');return null;};
 const money=x=>!Number.isFinite(x)?'Kan ikke beregnes':big(x)||nf.format(x)+' kr';
 const axisFormat=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0});
-const axisCompact=x=>Math.abs(x)>=1e18?'over 1 trill.':Math.abs(x)>=1e15?dec.format(x/1e15)+' bilj.':Math.abs(x)>=1e12?axisFormat.format(x/1e12)+' bill.':Math.abs(x)>=1e9?axisFormat.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?axisFormat.format(x/1000)+' tusen':axisFormat.format(x);
-const compact=x=>Math.abs(x)>=1e12?dec.format(x/1e12)+' bill.':Math.abs(x)>=1e9?dec.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?dec.format(x/1000)+' tusen':nf.format(x);
+const axisCompact=x=>big(x,true)||(Math.abs(x)>=1e9?axisFormat.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?axisFormat.format(x/1000)+' tusen':axisFormat.format(x));
+const compact=x=>big(x,true)||(Math.abs(x)>=1e9?dec.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?dec.format(x/1000)+' tusen':nf.format(x));
 const escapeHTML=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const parsedNumber=value=>value.trim()===''?0:Number(value.replace(/[\s\u00a0\u202f]/g,'').replace(',','.'));
 const hash=new URLSearchParams(location.hash.slice(1));
 try{const data=JSON.parse(localStorage.getItem('sv-scenarios')||'[]');saved=Array.isArray(data)?data.filter(x=>x&&typeof x.name==='string'&&x.state&&typeof x.state==='object'):[];level=localStorage.getItem('sv-level')||'simple';}catch{}
 for(const k in s)if(hash.has(k)){const v=hash.get(k);s[k]=typeof s[k]==='boolean'?v==='1':typeof s[k]==='number'?Number(v):v;}
+let badLink=false;try{E.validate(s);}catch{badLink=true;for(const k in s)if(hash.has(k))s[k]=E.defaults[k];}
 if(hash.has('level'))level=hash.get('level');if(!['simple','explore','advanced'].includes(level))level='simple';
 if(hash.has('mode'))mode=hash.get('mode')==='goal'?'goal':'explore';for(const k in view)if(hash.has(k))view[k]=hash.get(k)==='1';
 const specs={basic:[['start','Du har allerede','kr'],['monthly','Du sparer hver måned','kr'],['years','Du vil spare i','år'],['rate','Antatt årlig vekst','%']],essentialsFields:[['inflation','Prisvekst per år','%'],['fee','Kostnad per år','%']],goalField:[['goal','Beløpet du vil nå','kr']],advanced:[['growth','Økning i sparingen per år','%'],['bank','Bankrente å sammenligne med','%'],['spread','Avvik fra valgt avkastning','%-p']],events:[['extra','Ekstrainnskudd','kr'],['extraYear','Innskudd etter','år'],['crash','Børsfall','%'],['crashYear','Fall etter','år']],retirement:[['annualWithdraw','Årsbeløp før skatt','kr'],['retireYears','År med uttak','år'],['withdrawPercent','Uttak hvert år','%']],extraWithdrawalFields:[['extraWithdraw','Ekstra engangsuttak','kr'],['extraWithdrawYear','Etter uttaksår','år']]};
@@ -37,10 +39,11 @@ function render(){
  try{
  E.validate(s);rows=makeRows();const end=endYear(s),final=E.value(s,end),target=E.target(s),need=E.needed(s);
  if(rows.some(r=>Object.values(r).some(x=>!Number.isFinite(x)))||((view.showGoal||mode==='goal')&&!Number.isFinite(target)))throw Error('Tallene er større enn nettleseren kan beregne presist. Prøv kortere tid eller lavere vekst.');
- $('error').hidden=true;$('main').classList.remove('stale');const shown=display(final,end),paid=display(nominalPaid(end),end);
+ $('error').hidden=true;$('main').classList.remove('stale');for(const el of document.querySelectorAll('input[aria-invalid=true]'))if(el.id in E.defaults&&Number.isFinite(parsedNumber(el.value)))el.removeAttribute('aria-invalid');const shown=display(final,end),paid=display(nominalPaid(end),end);
  $('resultLabel').textContent=mode==='goal'?'FOR Å NÅ MÅLET TRENGER DU':`ETTER ${dec.format(end)} ÅR KAN DU HA`;
  $('total').textContent=mode==='goal'?(Number.isFinite(need)?money(Math.ceil(need))+' / mnd.':'Målet kan ikke nås med denne perioden'):money(shown);
  $('secondary').textContent=mode==='goal'?'Første månedsbeløp. Grafen viser fortsatt sparingen du har lagt inn.':s.real?`Målt i dagens kroner. Kontoen viser da ${money(final)} før skatt.`:`Det tilsvarer ${money(final/inflation(end))} med dagens priser. Før skatt.`;
+ if(mode!=='goal'&&Math.abs(shown)>=1e15)$('secondary').textContent+=' Beløpet er så stort at det mister praktisk mening. Sjekk sparetid og vekst.';
  $('mobileTotal').textContent=$('total').textContent;$('paid').textContent=money(paid);$('gain').textContent=money(shown-paid);$('cost').textContent=money(display(E.value(s,end,s.rate,0)-final,end));
  $('mobileResultLabel').textContent=mode==='goal'?'Nødvendig per måned · før skatt':s.real?'Dagens kroner · før skatt':'Regneeksempel · før skatt';
  $('mobileCurve').hidden=mode==='goal';
@@ -56,7 +59,7 @@ function render(){
  $('progress').style.width=Math.max(0,Math.min(100,ratio*100))+'%';$('goalAction').replaceChildren();
  if(Number.isFinite(need)){const b=document.createElement('button');b.textContent=`Prøv ${money(Math.ceil(need))} per måned`;b.onclick=()=>changePlan({monthly:Math.ceil(need)},'Månedssparingen er tilpasset målet.');$('goalAction').append(b);}
  chart();table();experiments();plainExplanation(final,end);tips(need);retirement(final,end);$('withdrawCapital').textContent=money(final);drawWithdrawal(final);savedRender();syncLevel();
- }catch(err){$('main').classList.add('stale');$('error').hidden=false;$('error').textContent=err.message+' Resultatene nedenfor er ikke oppdatert.';$('mobileTotal').textContent='Sjekk tallene';$('mobileCurve').hidden=true;}
+ }catch(err){$('main').classList.add('stale');if(err.field&&$(err.field))$(err.field).setAttribute('aria-invalid','true');$('error').hidden=false;$('error').textContent=err.message+' Resultatene nedenfor er ikke oppdatert.';$('mobileTotal').textContent='Sjekk tallene';$('mobileCurve').hidden=true;}
  if(window.renderDream)window.renderDream();
 }
 function selectedComparisons(){return saved.map((item,index)=>({item,index})).filter(x=>selectedPlans.has(x.index)&&x.item.state.activePage!=='dreams').map(({item,index})=>{try{const n={...E.defaults,...item.state};E.validate(n);const points=planRows(n);if(points.some(p=>!Number.isFinite(p.v)))return null;return {name:item.name,index,n,points};}catch{return null;}}).filter(Boolean);}
@@ -146,7 +149,7 @@ $('tableTab').onclick=()=>{$('chart').hidden=true;$('tableWrap').hidden=false;$(
 function openSave(){try{E.validate(s);}catch(e){notice(e.message);return;}$('scenarioName').value=`Plan ${saved.length+1}`;$('saveDescription').textContent=s.activePage==='dreams'?'Lagrer sparemålet og spareplanen. Graf-sammenligning bruker spareplanen. Overfør et mål-alternativ til sparekalkulatoren først hvis du vil sammenligne det.':'Lagrer alle forutsetningene på denne enheten.';$('saveDialog').showModal();$('scenarioName').select();}
 $('save').onclick=openSave;$('saveHere').onclick=openSave;$('cancelSave').onclick=()=>$('saveDialog').close();$('saveForm').onsubmit=e=>{e.preventDefault();const name=$('scenarioName').value.trim();if(!name)return;saved.push({name,state:{...s},mode,view:{...view}});if(persist())notice('Planen er lagret på denne enheten.');$('saveDialog').close();savedRender();};
 $('compareJump').onclick=()=>{$('savedDetails').open=true;$('savedDetails').scrollIntoView({behavior:'smooth',block:'start'});};
-$('share').onclick=()=>{const params=new URLSearchParams(),privateFields=new Set(['userAge','ageKnown','until67','riskChosen','stress','ageGroup','purpose']);for(const k in s)if(!privateFields.has(k))params.set(k,typeof s[k]==='boolean'?s[k]?'1':'0':s[k]);params.set('level',level);params.set('mode',mode);for(const k in view)params.set(k,view[k]?'1':'0');$('shareUrl').value=location.origin+location.pathname+'#'+params;$('shareDialog').showModal();$('shareUrl').select();};
+$('share').onclick=()=>{try{E.validate(s);if(!$('error').hidden)throw Error('Rett ugyldige tall før du deler planen.');}catch(e){notice(e.message);return;}const params=new URLSearchParams(),privateFields=new Set(['userAge','ageKnown','until67','riskChosen','stress','ageGroup','purpose']);for(const k in s)if(!privateFields.has(k))params.set(k,typeof s[k]==='boolean'?s[k]?'1':'0':s[k]);params.set('level',level);params.set('mode',mode);for(const k in view)params.set(k,view[k]?'1':'0');$('shareUrl').value=location.origin+location.pathname+'#'+params;$('shareDialog').showModal();$('shareUrl').select();};
 $('closeDialog').onclick=()=>$('shareDialog').close();
 $('csv').onclick=()=>{
  if(!$('error').hidden){notice('Rett tallene før du eksporterer.');return;}
@@ -154,6 +157,6 @@ $('csv').onclick=()=>{
  const csv='\ufeff'+[columns.map(c=>c[1]),...rows.map(r=>columns.map(([key])=>String(r[key]).replace('.',',')))].map(r=>r.join(';')).join('\r\n');
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='spareverksted.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 };
-fill();render();
+fill();render();if(badLink)notice('Lenken hadde tall utenfor gyldig område. Du ser standardverdiene i stedet.');
 let lastChartWidth=0;new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width>0&&Math.abs(width-lastChartWidth)>2){lastChartWidth=width;if(rows.length)chart();}}).observe($('chart'));
 

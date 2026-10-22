@@ -31,6 +31,7 @@ Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/packa
 - `dist/style.css`: responsiv utforming og utskriftsstil.
 - `dist/index.html`: sidens struktur.
 - `tests/engine.test.cjs`: uavhengig kontroll mot månedlige og årlige løkker.
+- `tests/input-browser.cjs`: nettleserflyt med ugyldige tall (krever playwright): blokkert deling, lagring og eksport, dempede resultater og delte lenker med ugyldige verdier.
 
 ## Kontroller beregningene
 

@@ -5,7 +5,20 @@ function raw(s,t,rate=s.rate,fee=s.fee,p=s.monthly){const n=Math.round(t*12),a=(
 function value(s,t,rate=s.rate,fee=s.fee,p=s.monthly){let v=raw(s,t,rate,fee,p);const ct=Math.round(s.crashYear*12)/12;if(s.crash>0&&ct<=t){const lost=raw(s,ct,rate,fee,p)*s.crash/100;v-=lost*Math.exp((Math.log1p(rate/100)+Math.log1p(-fee/100))*(Math.round(t*12)/12-ct));}return v}
 function target(s){return s.goal*(s.goalReal?Math.exp(Math.log1p(s.inflation/100)*Math.round(s.years*12)/12):1)}
 function needed(s){const base=value(s,s.years,s.rate,s.fee,0),unit=value({...s,start:0,extra:0},s.years,s.rate,s.fee,1);return unit>0?Math.max(0,(target(s)-base)/unit):base>=target(s)?0:Infinity}
-function validate(s){for(const k of ['start','monthly','years','rate','inflation','fee','growth','goal','bank','spread','extra','extraYear','crash','crashYear']){if(typeof defaults[k]==='number'&&!Number.isFinite(s[k]))throw Error('Fyll inn et gyldig tall i alle tallfeltene.')}if(['start','monthly','years','goal','extra','extraYear','crashYear','withdraw','retireYears','spread'].some(k=>s[k]<0))throw Error('Beløp og tidsperioder må være null eller positive.');if(s.years>100||s.retireYears>100)throw Error('Sparetid og uttaksperiode kan være opptil 100 år.');if(s.start>1e10||s.monthly>1e7||s.goal>1e11||s.extra>1e10||s.withdraw>1e9||s.annualWithdraw>1e9)throw Error('Beløpet er høyere enn kalkulatoren er laget for. Sjekk antall nuller.');if(s.rate>100||s.bank>100||s.inflation>100||s.growth>100)throw Error('Årlig vekst, prisvekst og økning i sparingen kan være opptil 100 %.');if(s.rate<=-100||s.bank<=-100||s.inflation<=-100||s.growth<=-100)throw Error('Årlig vekst, prisvekst og økning i sparingen må være større enn −100 %.');if(s.fee<0||s.fee>=100||s.crash<0||s.crash>100)throw Error('Kostnad må være fra 0 til under 100 %, og børsfall fra 0 til 100 %.');if(!Number.isSafeInteger(Math.round(s.years*12)))throw Error('Perioden er større enn tallpresisjonen i nettleseren tillater.');}
+const amountLimits={start:[1e10,'Du har allerede'],monthly:[1e7,'Sparing per måned'],goal:[1e11,'Sparemålet'],extra:[1e10,'Ekstrainnskudd'],withdraw:[1e9,'Uttak'],annualWithdraw:[1e9,'Årlig uttak'],extraWithdraw:[1e9,'Ekstra engangsuttak']};
+const timeLabels={years:'Sparetid',extraYear:'Innskudd etter',crashYear:'Fall etter',retireYears:'År med uttak',extraWithdrawYear:'Etter uttaksår'};
+const rateLabels={rate:'Antatt årlig vekst',bank:'Bankrente',inflation:'Prisvekst',growth:'Økning i sparingen'};
+const percentRanges={fee:[0,99.99,'Kostnad'],crash:[0,100,'Børsfall'],spread:[0,100,'Avvik fra valgt avkastning'],withdrawPercent:[0,100,'Uttaksprosent']};
+function fail(key,text){const e=new Error(text);e.field=key;throw e}
+// Alle tallfelt valideres her. Motoren regner også utenfor disse grensene, men brukeren stoppes.
+function validate(s){
+ const num=new Intl.NumberFormat('nb-NO'),check=(key,label,min,max,unit,open)=>{const v=s[key];if(!Number.isFinite(v))fail(key,`Fyll inn et gyldig tall i «${label}».`);if(v<min||v>max||(open&&v<=min))fail(key,`«${label}» må være ${open?`over ${num.format(min)}${unit} og opptil`:`fra ${num.format(min)}${unit} til`} ${num.format(max)}${unit}.`)};
+ for(const k in amountLimits)check(k,amountLimits[k][1],0,amountLimits[k][0],' kr');
+ for(const k in timeLabels)check(k,timeLabels[k],0,100,' år');
+ for(const k in rateLabels)check(k,rateLabels[k],-100,100,' %',true);
+ for(const k in percentRanges)check(k,percentRanges[k][2],percentRanges[k][0],percentRanges[k][1],' %');
+ if(!Number.isSafeInteger(Math.round(s.years*12)))fail('years','Perioden er større enn tallpresisjonen i nettleseren tillater.');
+}
 function withdrawalCore(s,capital){
  const n=Math.floor(s.retireYears),a=Math.log1p(s.rate/100)+Math.log1p(-s.fee/100),g=s.withdrawInflation?Math.log1p(s.inflation/100):0,percent=s.withdrawMode==='percent',remaining=percent&&s.withdrawBase==='remaining',p=s.withdrawPercent/100;
  if(s.retireYears<1||!Number.isSafeInteger(n))throw Error('Velg minst ett helt år for uttaksperioden.');
