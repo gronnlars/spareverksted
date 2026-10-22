@@ -52,6 +52,49 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   const linkToast=await p.locator('#toast').innerText();for(const name of ['Hva vil du finne ut?','Du sparer hver måned'])assert(linkToast.includes('«'+name+'»'),'toast must name '+name+': '+linkToast);
   p=await open('#activePage=tull');await p.waitForTimeout(300);assert.equal(await p.evaluate(()=>document.body.dataset.page),'calculator');assert.deepEqual(p.errors,[]);
 
+  // Skyveknapper: fast område for månedsbeløp, utvidelse bare for gyldige verdier, og ingen
+  // store utilsiktede endringer når skrivefeltet har en verdi utenfor skyveknappens område.
+  const slider=(q,id)=>q.evaluate(i=>{const r=document.getElementById(i+'Slider'),n=document.getElementById(i+'SliderNote');return {field:document.getElementById(i).value,min:r.min,max:r.max,value:r.value,disabled:r.disabled,note:n.hidden?'':n.innerText,describedBy:document.getElementById(i).getAttribute('aria-describedby')||''};},id);
+  p=await open('#activePage=calculator&monthly=50000');await p.waitForTimeout(300);
+  let sl=await slider(p,'monthly');
+  assert.equal(sl.max,'10000','monthly slider keeps a fixed range');assert.equal(sl.field,'50000','the typed amount must be preserved');
+  assert(sl.disabled,'slider is locked until the user chooses it');assert.match(sl.note,/går til 10\s000 kr\. Beløpet ditt beholdes/);assert.match(sl.describedBy,/monthlySliderNote/,'the field points to the explanation');
+  // Mus/berøring på en låst skyveknapp endrer ingenting.
+  await p.locator('#monthlySlider').click({force:true});await p.locator('#monthlySlider').dispatchEvent('pointerdown');
+  assert.equal(await p.locator('#monthly').inputValue(),'50000','a tap on a locked slider must not change the amount');
+  // Ugyldig tall utvider aldri området, og forklaringen sier hva som er galt.
+  await p.locator('#monthly').fill('20000000');sl=await slider(p,'monthly');
+  assert.equal(sl.max,'10000','invalid text must not extend the slider');assert(sl.disabled);assert.match(sl.note,/ugyldig/);
+  // Bevisst valg: knappen låser opp, fokus går til skyveknappen, og første tastetrykk gir et vanlig beløp.
+  await p.locator('#monthly').fill('50000');await p.locator('#monthlySliderUnlock').click();sl=await slider(p,'monthly');
+  assert(!sl.disabled);assert.equal(sl.field,'50000','unlocking alone does not change the amount');assert.match(sl.note,/erstattes 50\s000 kr/);
+  assert.equal(await p.evaluate(()=>document.activeElement.id),'monthlySlider');
+  await p.keyboard.press('ArrowLeft');sl=await slider(p,'monthly');assert.equal(sl.field,'9900');assert.equal(sl.note,'','no note inside the range');assert.doesNotMatch(sl.describedBy,/SliderNote/);
+  await p.locator('#monthlySlider').fill('500');assert.equal(await p.locator('#monthly').inputValue(),'500','slider can select a normal amount');assert(await p.locator('#error').isHidden());
+  // Et nytt stort beløp låser igjen.
+  await p.locator('#monthly').fill('60000');assert((await slider(p,'monthly')).disabled,'a new large amount locks the slider again');
+  // Andre skyveknapper utvides til gyldige verdier, men ikke forbi feltets grense.
+  await p.locator('#start').fill('2000000');sl=await slider(p,'start');
+  assert.equal(sl.max,'2000000');assert.equal(sl.value,'2000000');assert(!sl.disabled);assert.equal(sl.note,'');
+  await p.evaluate(()=>{const r=document.getElementById('startSlider');r.stepDown();r.dispatchEvent(new Event('input',{bubbles:true}));});
+  assert.equal(await p.locator('#start').inputValue(),'1999000','one step changes 2 million by one step, not to the old maximum');
+  await p.locator('#start').fill('20000000000');sl=await slider(p,'start');
+  assert.equal(sl.max,'2000000','invalid start capital must not extend the slider');assert(sl.disabled);
+  await p.locator('#start').fill('0');await p.locator('#rate').fill('-95');sl=await slider(p,'rate');
+  assert.equal(sl.min,'-99.9','negative valid return extends, but never to the invalid −100 %');assert(!sl.disabled);
+  await p.locator('#years').fill('70');assert.equal((await slider(p,'years')).max,'70');
+  assert.deepEqual(p.errors,[]);
+  p=await open('#activePage=dreams&dreamMonthly=20000&dreamCost=2500000');await p.waitForTimeout(300);
+  sl=await slider(p,'dreamMonthly');assert.equal(sl.max,'10000');assert.equal(sl.field,'20000');assert(sl.disabled);
+  assert.equal((await slider(p,'dreamCost')).max,'3000000','goal budget slider extends to a valid amount');
+  await p.locator('#dreamMonthlySliderUnlock').click();await p.locator('#dreamMonthlySlider').fill('500');
+  assert.equal(await p.locator('#dreamMonthly').inputValue(),'500');assert.deepEqual(p.errors,[]);
+  // Mobil: forklaringen gir ikke horisontal scrolling, og knappen har tilstrekkelig trykkflate.
+  {const c=await browser.newContext({viewport:{width:320,height:700},isMobile:true,hasTouch:true});const q=await c.newPage();await q.goto(origin+'#activePage=calculator&monthly=50000');await q.waitForTimeout(300);
+   assert.equal(await q.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0,'no horizontal scroll at 320 px');
+   const box=await q.locator('#monthlySliderUnlock').boundingBox();assert(box.height>=24&&box.width>=24,'unlock button target at least 24 px');
+   await q.locator('#monthlySlider').tap({force:true});assert.equal(await q.locator('#monthly').inputValue(),'50000','a tap on a locked slider does nothing');await c.close();}
+
   // Sparemål: egne feltnavn, riktig felt markert, og ugyldige mål kan ikke deles, lagres eller eksporteres.
   p=await open('#activePage=dreams');await p.waitForTimeout(300);
   await p.locator('#dreamMonthly').fill('20000000');

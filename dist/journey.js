@@ -21,11 +21,36 @@ $('journeyForm').onsubmit=event=>{event.preventDefault();try{const start=inputNu
  mode='explore';setLevel('simple');fill();stage(false);
  }catch(error){$('journeyError').textContent=error.message;$('journeyError').hidden=false;for(const id of ['onboardStart','onboardMonthly','onboardYears','onboardAge','onboardGoal']){const v=inputNumber(id),limit=id==='onboardYears'?100:id==='onboardAge'?120:Infinity,empty=$(id).value.trim()==='';$(id).setAttribute('aria-invalid',String(!empty&&(!Number.isFinite(v)||v<0||v>limit)));}$('journeyError').scrollIntoView({block:'nearest'});}};
 $('exampleJourney').onclick=()=>{setLevel('simple');s.activePage=journeyKind==='goal'?'dreams':'calculator';stage(false);};
-// Ranges are shortcuts, never limits. Text fields remain the authoritative values.
-const SLIDER_SPECS={start:[0,1000000,1000],monthly:[0,20000,100],years:[0,50,.5],rate:[-10,15,.1],spread:[0,5,.1],dreamStart:[0,500000,1000],dreamMonthly:[0,20000,100],dreamYears:[0,30,.5],dreamCost:[0,1000000,1000],annualWithdraw:[0,600000,1000],withdrawPercent:[0,10,.1]};
+// Skyveknapper er snarveier, aldri grenser. Skrivefeltet er alltid den gjeldende verdien.
+const SLIDER_SPECS={start:[0,1000000,1000],monthly:[0,10000,100],years:[0,50,.5],rate:[-10,15,.1],spread:[0,5,.1],dreamStart:[0,500000,1000],dreamMonthly:[0,10000,100],dreamYears:[0,30,.5],dreamCost:[0,1000000,1000],annualWithdraw:[0,600000,1000],withdrawPercent:[0,10,.1]};
+// Månedsbeløp har fast område, slik at vanlige beløp er lette å velge presist. De andre utvides
+// til en gyldig verdi brukeren har skrevet, men aldri forbi feltets grense og aldri for ugyldige tall.
+const FIXED_SLIDERS=new Set(['monthly','dreamMonthly']);
 function niceUpper(value){if(!Number.isFinite(value)||value<=0)return 1;const power=10**Math.floor(Math.log10(value));return Math.ceil(value/power)*power;}
-for(const [id,[min,max,step]]of Object.entries(SLIDER_SPECS)){const field=$(id);if(!field)continue;const label=field.closest('label'),wrap=document.createElement('div');wrap.className='range-control';const range=document.createElement('input');range.type='range';range.id=id+'Slider';range.min=min;range.max=max;range.step=step;range.setAttribute('aria-label','Juster '+(label.querySelector('.field-label')?.textContent||id).toLowerCase());range.dataset.baseMin=min;range.dataset.baseMax=max;range.dataset.field=id;wrap.append(range);field.closest('.fieldbox').after(wrap);range.addEventListener('input',()=>{field.value=formatInput(Number(range.value));if(id==='years'||id==='dreamYears')s.until67=false;read();render();});}
-function syncSliders(){for(const range of document.querySelectorAll('input[type=range][data-field]')){const value=s[range.dataset.field];if(!Number.isFinite(value))continue;if(value>Number(range.max))range.max=niceUpper(value);if(value<Number(range.min))range.min=-niceUpper(Math.abs(value));range.value=value;range.setAttribute('aria-valuetext',dec.format(value));}}
+function toggleDescribedBy(el,id,on){const ids=(el.getAttribute('aria-describedby')||'').split(' ').filter(x=>x&&x!==id);if(on)ids.push(id);ids.length?el.setAttribute('aria-describedby',ids.join(' ')):el.removeAttribute('aria-describedby');}
+for(const [id,[min,max,step]]of Object.entries(SLIDER_SPECS)){const field=$(id);if(!field)continue;const label=field.closest('label'),wrap=document.createElement('div');wrap.className='range-control';const range=document.createElement('input');range.type='range';range.id=id+'Slider';range.min=min;range.max=max;range.step=step;range.setAttribute('aria-label','Juster '+(label.querySelector('.field-label')?.textContent||id).toLowerCase());range.dataset.field=id;
+ // Forklaring og bevisst handling når skrivefeltet har en verdi utenfor skyveknappens område.
+ const note=document.createElement('p');note.className='range-note';note.id=id+'SliderNote';note.hidden=true;const text=document.createElement('span');const unlock=document.createElement('button');unlock.type='button';unlock.className='text-link';unlock.id=id+'SliderUnlock';note.append(text,' ',unlock);
+ unlock.addEventListener('click',e=>{e.preventDefault();range.dataset.unlockedFor=String(s[id]);syncSliders();range.focus();});
+ wrap.append(range,note);field.closest('.fieldbox').after(wrap);range.addEventListener('input',()=>{field.value=formatInput(Number(range.value));if(id==='years'||id==='dreamYears')s.until67=false;delete range.dataset.unlockedFor;read();render();});}
+function syncSliders(){for(const range of document.querySelectorAll('input[type=range][data-field]')){
+ const id=range.dataset.field,value=s[id],field=$(id),rule=E.FIELDS[id]||E.DREAM_FIELDS[id],step=Number(range.step),valid=Number.isFinite(value)&&E.fieldError(id,value)===null;
+ if(valid&&!FIXED_SLIDERS.has(id)&&rule){
+  if(value>Number(range.max))range.max=Math.min(rule.max,niceUpper(value));
+  if(value<Number(range.min)){let low=Math.max(rule.min,-niceUpper(Math.abs(value)));if(rule.open&&low<=rule.min)low=rule.min+step;range.min=low;}
+ }
+ const min=Number(range.min),max=Number(range.max),outside=!Number.isFinite(value)||value<min||value>max,unlocked=outside&&range.dataset.unlockedFor===String(value);
+ if(!outside)delete range.dataset.unlockedFor;
+ if(Number.isFinite(value))range.value=Math.min(max,Math.max(min,value));
+ range.disabled=outside&&!unlocked;
+ const unit=field?.closest('label')?.querySelector('.unit')?.textContent||'',shown=Number.isFinite(value)?dec.format(value)+(unit?' '+unit:''):'ugyldig';
+ range.setAttribute('aria-valuetext',dec.format(Number(range.value))+(outside?' (skrivefeltet: '+shown+')':''));
+ const note=$(id+'SliderNote');if(!note)continue;note.hidden=!outside;if(field)toggleDescribedBy(field,note.id,outside);if(!outside)continue;
+ const [text,button]=[note.firstChild,note.querySelector('button')];
+ const range_=(min===0?'til ':'fra '+dec.format(min)+' til ')+dec.format(max)+(unit?' '+unit:'');
+ if(unlocked){text.textContent='Flytter du skyveknappen, erstattes '+shown+'.';button.hidden=true;}
+ else{button.hidden=false;button.textContent='bruk skyveknappen';text.textContent=valid?'Skyveknappen går '+range_+'. Beløpet ditt beholdes.':'Tallet er ugyldig. Rett det, eller';if(valid)button.textContent='Bruk skyveknappen likevel';}
+}}
 for(const id of ['years','dreamYears'])$(id).addEventListener('input',()=>{s.until67=false;});
 $('stress').addEventListener('input',()=>{s.riskChosen=true;});
 // Move the spread control into the chart so its meaning is visible where it matters.

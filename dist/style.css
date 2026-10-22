@@ -18,3 +18,7 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 @media(max-width:390px){.start-choices{grid-template-columns:1fr}.start-choices button{display:grid;grid-template-columns:28px 1fr;column-gap:16px}.choice-icon{grid-row:1/3;margin:0}.start-choices strong{font-size:19px}.start-choices button>span:last-child{grid-column:2;margin-top:6px;font-size:12px}.welcome-intro{margin-bottom:23px}.welcome-intro h1{font-size:36px}.journey-fields{grid-template-columns:1fr}.fan-summary{grid-template-columns:1fr;gap:0}.fan-outcome{display:grid;grid-template-columns:1fr 1fr;gap:0 10px;padding:10px 0}.fan-outcome strong{grid-column:2;grid-row:1/3;text-align:right;align-self:center;margin:0}.fan-outcome small{grid-column:1}.net-estimate .panel-title{flex-wrap:wrap}}
 @media print{.net-estimate{break-inside:avoid;background:#f2f6eb!important;print-color-adjust:exact}.net-figures{grid-template-columns:1fr 1fr}.net-figures strong{font-size:20px}.net-estimate button{display:none!important}}
 #spread{padding-right:86px}.before-tax-badge+.eyebrow{min-height:22px}
+/* Skyveknapp utenfor området: forklaring og bevisst handling */
+.range-control input[type=range]:disabled{opacity:.45;cursor:not-allowed}
+.range-note{font-size:13px;line-height:1.5;color:var(--muted);font-weight:400;margin:6px 0 0}
+.range-note .text-link{display:inline-block;min-height:32px;padding:6px 0;margin:0;font-weight:600;text-decoration:underline;text-underline-offset:2px}
