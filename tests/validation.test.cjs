@@ -19,7 +19,7 @@ for(const [key,value,message] of dreamCases){
  assert.doesNotMatch(e.message,/Sparing per måned|Sparetid|Antatt årlig vekst|Sparemålet/,'no labels from the savings calculator');
 }
 // Grensene i sparemålet tåler yttergrensene uten feil.
-for(const patch of [{dreamYears:1/12},{dreamYears:100},{dreamMonthly:1e7},{dreamCost:1e11},{dreamRisk:100},{dreamSafe:-99},{dreamMonthly:0}])
+for(const patch of [{dreamYears:1/12},{dreamYears:100},{dreamMonthly:1e7},{dreamCost:1e11},{dreamRisk:100},{dreamSafe:0},{dreamInflation:0},{dreamMonthly:0}])
  assert.doesNotThrow(()=>E.dreamPlans({...E.defaults,...patch}),JSON.stringify(patch));
 // Sparemålets felt gjenbruker kalkulatorens grenser, slik at den interne kontrollen aldri feiler med feil feltnavn.
 const pairs=[['dreamCost','goal'],['dreamStart','start'],['dreamMonthly','monthly'],['dreamInflation','inflation'],['dreamSafe','rate']];
@@ -53,6 +53,13 @@ r=link('foo=1&level=advanced');assert.deepEqual(r.rejected,[]);assert.deepEqual(
 const roundTrip=state=>link(new URLSearchParams(Object.entries(state).map(([k,v])=>[k,typeof v==='boolean'?(v?'1':'0'):String(v)])).toString());
 r=roundTrip(E.defaults);assert.deepEqual(r.rejected,[]);assert.deepEqual(r.state,E.defaults);
 
+// Eldre lenker med negativ forventet vekst, prisvekst eller bankrente settes til 0 % og rapporteres.
+r=link('rate=-2&inflation=-1&bank=-0.5&growth=-10&dreamRisk=-5&monthly=3000');
+assert.deepEqual(r.adjusted.map(a=>a.key).sort(),['bank','dreamRisk','inflation','rate']);assert.deepEqual(r.adjusted.find(a=>a.key==='rate'),{key:'rate',from:-2});
+assert.deepEqual(r.rejected,[]);assert.deepEqual([r.state.rate,r.state.inflation,r.state.bank,r.state.dreamRisk,r.state.growth,r.state.monthly],[0,0,0,0,-10,3000],'growth may still be negative');
+r=link('rate=-150');assert.equal(r.state.rate,0);assert.deepEqual(r.adjusted,[{key:'rate',from:-150}]);
+r=link('rate=abc');assert.deepEqual(r.rejected,['rate']);assert.equal(r.state.rate,E.defaults.rate,'unreadable text is still rejected, not set to 0');
+r=E.sanitize({rate:-3,monthly:2500});assert.equal(r.state.rate,0);assert.deepEqual(r.adjusted,[{key:'rate',from:-3}]);assert.equal(r.state.monthly,2500);
 // Lagrede planer (typede verdier) kontrolleres på samme måte.
 r=E.sanitize({years:500,monthly:4321,rate:'6',withdrawMode:'tull',real:'yes'});
 assert.deepEqual(r.rejected.sort(),['rate','real','withdrawMode','years']);assert.equal(r.state.monthly,4321);
@@ -66,7 +73,7 @@ const realistic=[
  {start:50000,monthly:3000,years:30,rate:6,fee:0.3},   // langsiktig fond
  {start:200000,monthly:5000,years:10,rate:4,fee:0.5},  // middels horisont
  {start:20000,monthly:2000,years:3,rate:3.5,fee:0},     // sparekonto
- {start:1000000,monthly:0,years:20,rate:-1,fee:0.2},   // negativ avkastning
+ {start:1000000,monthly:0,years:20,rate:0,fee:0.5},    // 0 % vekst, kostnaden gir tap
  {start:0,monthly:10000,years:40,rate:7,fee:0.1},
 ];
 for(const p of realistic){
@@ -76,6 +83,10 @@ for(const p of realistic){
  assert(Math.abs(v-c)<=Math.max(1e-6,Math.abs(c)*1e-10),`${JSON.stringify(p)}: ${v} vs ${c}`);
  r=roundTrip(s);assert.deepEqual(r.rejected,[]);assert.equal(E.value(r.state,r.state.years),v,'shared link must reproduce the result exactly');
 }
+// Børsfall i et fond: verdien blir aldri negativ, heller ikke ved 100 % fall.
+for(const crash of [50,90,100])for(const crashYear of [0,5,20]){const s={...E.defaults,start:200000,monthly:3000,years:20,rate:7,fee:0.2,crash,crashYear};
+ for(let m=0;m<=240;m++){const v=E.value(s,m/12);assert(v>=0,`crash ${crash} % at year ${crashYear}, month ${m}: ${v}`);}}
+assert.equal(E.value({...E.defaults,start:500000,monthly:0,years:10,crash:100,crashYear:10},10),0);
 // Standardplanen er låst mot en kjent verdi (305 434 kr på siden i dag).
 assert.equal(Math.round(E.value(E.defaults,E.defaults.years)),305434);
 // Sparemål for standardplanen er uendret: nødvendig sparing gir målet.

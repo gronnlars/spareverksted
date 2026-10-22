@@ -75,8 +75,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.equal(sl.max,'1000000');assert(sl.disabled);assert.equal(sl.field,'2000000','no grouping while the user is typing');await p.locator('#start').blur();assert.equal(await p.locator('#start').inputValue(),'2 000 000','grouped when leaving the field');
   await p.locator('#start').fill('20000000000');sl=await slider(p,'start');
   assert.equal(sl.max,'1000000');assert(sl.disabled);
-  await p.locator('#start').fill('0');await p.locator('#rate').fill('-95');sl=await slider(p,'rate');
-  assert.equal(sl.min,'-10');assert(sl.disabled);
+  await p.locator('#start').fill('0');await p.locator('#rate').fill('-5');sl=await slider(p,'rate');
+  assert.equal(sl.min,'0');assert(sl.disabled);assert.match(sl.note,/ugyldig/);await p.locator('#rate').fill('5');
   await p.locator('#years').fill('70');assert.equal((await slider(p,'years')).max,'50');
   assert.deepEqual(p.errors,[]);
   p=await open('#activePage=dreams&dreamMonthly=25000&dreamCost=2500000');await p.waitForTimeout(300);
@@ -131,20 +131,73 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   p=await open('#activePage=calculator');await p.waitForTimeout(300);
   assert.deepEqual(await p.evaluate(()=>['−5','-5','−2,5','-2,5','2,5','−1 234,5','1 234','0','−0'].map(parsedNumber)),[-5,-5,-2.5,-2.5,2.5,-1234.5,1234,0,-0]);
   assert.deepEqual(await p.evaluate(()=>['5−','−−5','--5','−','– 5','1−2'].map(v=>Number.isNaN(parsedNumber(v)))),[true,true,true,true,true,true],'malformed minus stays invalid');
-  // Delt lenke med negativ avkastning: feltet viser −2, og en senere endring i et annet felt gir ingen feil.
-  p=await open('#activePage=calculator&rate=-2&inflation=-1');await p.waitForTimeout(300);
-  assert.equal(await p.locator('#rate').inputValue(),'\u22122','the page shows typographic minus');
-  await p.locator('#monthly').fill('3000');assert(await p.locator('#error').isHidden(),'a negative value from a link must survive other edits');
-  assert.deepEqual(await p.evaluate(()=>[s.rate,s.inflation,s.monthly]),[-2,-1,3000]);
-  // Skyveknappen for avkastning under null.
-  await p.locator('#rateSlider').fill('-5');assert(await p.locator('#error').isHidden());assert.equal(await p.evaluate(()=>s.rate),-5);
-  await p.locator('#years').fill('12');assert(await p.locator('#error').isHidden(),'slider value below zero must survive other edits');assert.equal(await p.evaluate(()=>s.rate),-5);
-  // Skrevet med begge tegn, med og uten desimaler.
-  for(const [typed,expected] of [['-3',-3],['\u22123',-3],['\u22122,5',-2.5],['-0,5',-0.5]]){await p.locator('#rate').fill(typed);await p.locator('#rate').blur();await p.locator('#years').fill('11');assert(await p.locator('#error').isHidden(),typed);assert.equal(await p.evaluate(()=>s.rate),expected,typed);}
-  // Samme resultat med − og -.
-  await p.locator('#rate').fill('-3');const withHyphen=await p.locator('#total').innerText();await p.locator('#rate').fill('\u22123');assert.equal(await p.locator('#total').innerText(),withHyphen);
-  // Ugyldig skrivemåte gir fortsatt feil på riktig felt.
-  await p.locator('#rate').fill('3\u2212');assert(await p.locator('#error').isVisible());assert.equal(await p.locator('#rate').getAttribute('aria-invalid'),'true');await p.locator('#rate').fill('5');
+  // Negativ forventet vekst, prisvekst og bankrente brukes ikke i vanlige regneeksempler. Eldre lenker settes til 0 % med forklaring.
+  p=await open('#activePage=calculator&rate=-2&inflation=-1&growth=-10&monthly=3000');await p.waitForTimeout(300);
+  assert.deepEqual(await p.evaluate(()=>[s.rate,s.inflation,s.growth,s.monthly]),[0,0,-10,3000],'growth may still be negative');
+  assert.equal(await p.locator('#rate').inputValue(),'0');assert.equal(await p.locator('#growth').inputValue(),'\u221210','the page shows typographic minus');
+  const adjustToast=await p.locator('#toast').innerText();
+  assert.match(adjustToast,/«Antatt årlig vekst» fra −2\s%\s*til 0 %/);assert.match(adjustToast,/«Prisvekst per år» fra −1/);assert.match(adjustToast,/Børsfall/);assert.match(adjustToast,/Resten av planen er beholdt/);
+  await p.locator('#monthly').fill('3500');assert(await p.locator('#error').isHidden(),'a negative growth value survives other edits');assert.equal(await p.evaluate(()=>s.growth),-10);
+  // Skyveknappen for avkastning starter på 0 %.
+  assert.equal(await p.locator('#rateSlider').getAttribute('min'),'0');
+  // Skrevet negativ avkastning gir en tydelig feil på riktig felt.
+  await p.locator('#rate').fill('-3');assert(await p.locator('#error').isVisible());assert.match(await p.locator('#error').innerText(),/«Antatt årlig vekst» må være fra 0\s%/);assert.equal(await p.locator('#rate').getAttribute('aria-invalid'),'true');
+  await click(p,'share');assert(!await p.evaluate(()=>document.getElementById('shareDialog').open),'negative return cannot be shared');
+  await p.locator('#rate').fill('0');assert(await p.locator('#error').isHidden());
+  // Minustegn i feltet som fortsatt kan være negativt: begge tegn, med og uten desimaler, gir samme resultat.
+  await p.evaluate(()=>{setLevel('advanced');for(let d=document.getElementById('growth').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});
+  for(const [typed,expected] of [['-3',-3],['\u22123',-3],['\u22122,5',-2.5],['-0,5',-0.5]]){await p.locator('#growth').fill(typed);await p.locator('#growth').blur();await p.locator('#years').fill('11');assert(await p.locator('#error').isHidden(),typed);assert.equal(await p.evaluate(()=>s.growth),expected,typed);}
+  await p.locator('#growth').fill('-3');const withHyphen=await p.locator('#total').innerText();await p.locator('#growth').fill('\u22123');assert.equal(await p.locator('#total').innerText(),withHyphen);
+  await p.locator('#growth').fill('3\u2212');assert(await p.locator('#error').isVisible());assert.equal(await p.locator('#growth').getAttribute('aria-invalid'),'true');await p.locator('#growth').fill('0');
+  assert.match(await p.locator('#growth').evaluate(e=>e.closest('label').querySelector('.field-label').textContent),/endring/i,'growth is labelled as a change, not only an increase');
+  // Tap mot innskuddene vises tydelig, også med positiv eller null vekst.
+  await p.evaluate(()=>setLevel('simple'));
+  await p.locator('#start').fill('0');await p.locator('#monthly').fill('8200');await p.locator('#years').fill('38,5');await p.locator('#rate').fill('0');
+  assert.match(await p.locator('#gainLabel').innerText(),/Tap mot innskuddene/);assert.match(await p.locator('#gain').innerText(),/^−/);
+  assert.match(await p.locator('#secondary').innerText(),/Du har tapt [\d\s]+ kr av pengene du har satt inn\./);assert.match(await p.locator('#mobileResultLabel').innerText(),/Tapt [\d\s]+ kr av innskuddene/);
+  await p.locator('#rate').fill('5');assert.match(await p.locator('#gainLabel').innerText(),/Beregnet vekst/);assert.doesNotMatch(await p.locator('#mobileResultLabel').innerText(),/Tapt|tapt/);
+  // Dagens kroner: tap i kroner omtales som omregnet, og lavere kjøpekraft kalles ikke tap.
+  await p.locator('#rate').fill('0');await p.evaluate(()=>{const r=document.getElementById('real');r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));r.dispatchEvent(new Event('input',{bubbles:true}));});
+  assert.equal(await p.evaluate(()=>s.real),true);
+  assert.match(await p.locator('#gainLabel').innerText(),/Tap mot innskuddene, i dagens kroner/);assert.match(await p.locator('#secondary').innerText(),/Beløpet er i kroner, ikke justert for prisvekst/);
+  // Uavhengig kontroll: 2 000 kr i 10 år, 2 % vekst, 0,2 % kostnad, 2,5 % prisvekst gir 262 492 kr, mer enn 240 000 kr innbetalt,
+  // men 271 948 kr er innskuddene justert for prisvekst. Gapet er 7 387 kr i dagens kroner.
+  await p.evaluate(()=>{for(let d=document.getElementById('inflation').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});await p.locator('#inflation').fill('2,5');await p.locator('#fee').fill('0,2');
+  await p.locator('#monthly').fill('2000');await p.locator('#years').fill('10');await p.locator('#rate').fill('2');
+  assert.match(await p.locator('#gainLabel').innerText(),/^(Beregnet vekst|Avkastning etter kostnader)$/,'a purchasing-power gap is not a loss in kroner');
+  assert.match(await p.locator('#secondary').innerText(),/Pengene har økt i verdi, men ikke holdt følge med prisveksten\. Målt i dagens kroner er verdien 7\s387 kr lavere enn innskuddene justert for prisvekst\./);
+  assert.match(await p.locator('#mobileResultLabel').innerText(),/Lavere kjøpekraft enn innskuddene/);
+  await p.evaluate(()=>{const r=document.getElementById('real');r.checked=false;r.dispatchEvent(new Event('change',{bubbles:true}));r.dispatchEvent(new Event('input',{bubbles:true}));});
+  assert.doesNotMatch(await p.locator('#secondary').innerText(),/ikke holdt følge med prisveksten/,'the purchasing-power note belongs to the today-kroner view');
+  assert.doesNotMatch(await p.locator('#mobileResultLabel').innerText(),/Tapt|kjøpekraft/);
+  // Indeksfond med stort børsfall: verdien blir aldri negativ, heller ikke ved 100 % fall.
+  await p.evaluate(()=>{setLevel('advanced');for(let d=document.getElementById('crash').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});
+  for(const fall of ['50','90','100']){await p.locator('#start').fill('200000');await p.locator('#monthly').fill('3000');await p.locator('#years').fill('20');await p.locator('#rate').fill('7');await p.locator('#crash').fill(fall);await p.locator('#crashYear').fill('5');
+   assert(await p.locator('#error').isHidden(),fall);const minRow=await p.evaluate(()=>Math.min(...rows.map(r=>r.v)));assert(minRow>=0,'fund value never negative at '+fall+' %: '+minRow);
+   assert.doesNotMatch(await p.locator('#total').innerText(),/^−/);}
+  await p.locator('#crashYear').fill('20');await p.locator('#start').fill('500000');await p.locator('#monthly').fill('0');await p.locator('#crash').fill('100');
+  assert.equal(await p.locator('#total').innerText(),'0 kr','a 100 % fall at the end leaves 0 kr, never less');assert.match(await p.locator('#gainLabel').innerText(),/Tap mot innskuddene/);
+  // Tre formuleringer, vurdert på den faktiske verdien i kroner, også i visningen med dagens kroner.
+  const realView=on=>p.evaluate(v=>{const r=document.getElementById('real');r.checked=v;r.dispatchEvent(new Event('change',{bubbles:true}));r.dispatchEvent(new Event('input',{bubbles:true}));},on);
+  const sec=()=>p.locator('#secondary').innerText();
+  for(const real of [false,true]){await realView(real);
+   // 100 % fall helt på slutten: den faktiske verdien er 0 kr.
+   assert.equal(await p.evaluate(()=>E.value(s,s.years)),0);assert.match(await sec(),/Du har tapt alle pengene du har investert\./,'all lost, real='+real);
+   assert.match(await p.locator('#mobileResultLabel').innerText(),/Alle innskuddene er tapt/);
+   // Nesten 100 % fall: noen øre igjen. Skjermen kan vise 0 kr, men det står ikke at alt er tapt.
+   await p.locator('#crash').fill('99,99999');const left=await p.evaluate(()=>E.value(s,s.years));assert(left>0&&left<1,'tiny remainder: '+left);
+   assert.doesNotMatch(await sec(),/tapt alle pengene/,'rounding to 0 kr on screen is not the same as losing everything, real='+real);assert.match(await sec(),/nesten alle pengene du har investert\. Under 1 kr er igjen/);
+   await p.locator('#crash').fill('100');}
+  await realView(false);
+  // Delvis tap: 100 000 kr i 10 år med 0 % vekst og 0,2 % kostnad gir 98 018 kr. Uavhengig kontroll: tap 1 982 kr.
+  await p.locator('#crash').fill('0');await p.locator('#start').fill('100000');await p.locator('#rate').fill('0');await p.locator('#years').fill('10');
+  assert.match(await p.locator('#total').innerText(),/^98\s018 kr$/);assert.match(await sec(),/Du har tapt 1\s982 kr av pengene du har satt inn\./);assert.doesNotMatch(await sec(),/alle pengene/);
+  await realView(true);assert.match(await sec(),/Du har tapt 1\s982 kr av pengene du har satt inn\. Beløpet er i kroner, ikke justert for prisvekst\./,'the loss in kroner is the same in today-kroner view');await realView(false);
+  // Uten innskudd er ingenting tapt.
+  await p.locator('#start').fill('0');await p.locator('#crash').fill('100');await p.locator('#crashYear').fill('10');
+  assert.equal(await p.locator('#total').innerText(),'0 kr');assert.doesNotMatch(await sec(),/tapt/,'no deposits, nothing lost');
+  await realView(true);assert.doesNotMatch(await sec(),/tapt|ikke holdt følge/);await realView(false);
+  await p.locator('#crash').fill('0');await p.evaluate(()=>setLevel('simple'));
   assert.deepEqual(p.errors,[]);
 
   // Tusenskille: feltene viser grupperte tall, beregningen bruker samme tallverdi, og markøren hopper ikke mens brukeren skriver.
@@ -161,8 +214,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // Desimaler og negative tall.
   await p.locator('#rate').fill('2,5');await p.locator('#rate').blur();assert.equal(await p.locator('#rate').inputValue(),'2,5');
   await p.evaluate(()=>{for(let d=document.getElementById('inflation').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});
-  await p.locator('#inflation').fill('-1,25');await p.locator('#inflation').blur();assert.equal(await p.locator('#inflation').inputValue(),'\u22121,25');
-  await p.locator('#years').fill('12');assert(await p.locator('#error').isHidden(),'grouped negative decimal survives other edits');assert.deepEqual(await p.evaluate(()=>[s.rate,s.inflation,s.years]),[2.5,-1.25,12]);
+  await p.locator('#inflation').fill('1,25');await p.locator('#inflation').blur();assert.equal(await p.locator('#inflation').inputValue(),'1,25');
+  await p.locator('#years').fill('12');assert(await p.locator('#error').isHidden(),'grouped decimal survives other edits');assert.deepEqual(await p.evaluate(()=>[s.rate,s.inflation,s.years]),[2.5,1.25,12]);
   // Skyveknappen skriver grupperte tall direkte.
   await p.locator('#startSlider').fill('250000');assert.equal(await p.locator('#start').inputValue(),'250 000');assert.equal(await p.evaluate(()=>s.start),250000);
   await p.locator('#monthlySlider').fill('15000');assert.equal(await p.locator('#monthly').inputValue(),'15 000');
@@ -171,8 +224,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.evaluate(()=>document.getElementById('shareDialog').close());assert.deepEqual(p.errors,[]);
   // Mobil 375 px: store grupperte beløp gir ingen horisontal scrolling.
   {const c=await browser.newContext({viewport:{width:375,height:740},isMobile:true,hasTouch:true});const q=await c.newPage();q.errors=[];q.on('pageerror',e=>q.errors.push(e.message));
-   await q.goto(origin+'#activePage=calculator&start=9999999999&monthly=50000&rate=-3&years=40');await q.waitForTimeout(300);
-   assert.equal(await q.locator('#start').inputValue(),'9 999 999 999');assert.equal(await q.locator('#rate').inputValue(),'\u22123');
+   await q.goto(origin+'#activePage=calculator&start=9999999999&monthly=50000&rate=3&growth=-3&years=40');await q.waitForTimeout(300);
+   assert.equal(await q.locator('#start').inputValue(),'9 999 999 999');assert.equal(await q.locator('#growth').inputValue(),'\u22123');
    assert.equal(await q.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0,'no horizontal scroll at 375 px');assert(await q.locator('#error').isHidden());
    assert((await q.locator('#startSlider').isDisabled())&&(await q.locator('#monthlySlider').isDisabled()),'large valid amounts lock their sliders');assert.deepEqual(q.errors,[]);await c.close();}
 
@@ -200,11 +253,11 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await click(p,'share');assert(await p.evaluate(()=>document.getElementById('shareDialog').open));assert.deepEqual(p.errors,[]);
 
   // Lagrede planer fra før grensene ble innført: ugyldige felt tilbakestilles og nevnes, resten beholdes.
-  {const c=await browser.newContext({viewport:{width:1280,height:900}});await c.addInitScript(()=>{if(!sessionStorage.getItem('seeded')){sessionStorage.setItem('seeded','1');localStorage.setItem('sv-scenarios',JSON.stringify([{name:'Gammel plan',state:{years:500,monthly:4321,rate:6,withdrawMode:'tull'},mode:'explore',view:{}}]));}});
+  {const c=await browser.newContext({viewport:{width:1280,height:900}});await c.addInitScript(()=>{if(!sessionStorage.getItem('seeded')){sessionStorage.setItem('seeded','1');localStorage.setItem('sv-scenarios',JSON.stringify([{name:'Gammel plan',state:{years:500,monthly:4321,rate:6,inflation:-1,withdrawMode:'tull'},mode:'explore',view:{}}]));}});
    const q=await c.newPage();q.errors=[];q.on('pageerror',e=>q.errors.push(e.message));await q.goto(origin+'#start=0&activePage=calculator');await q.waitForTimeout(300);
    await q.evaluate(()=>{document.getElementById('savedDetails').open=true;});await q.locator('button[aria-label="Åpne Gammel plan"]').click();
    assert.equal(await q.locator('#monthly').inputValue(),'4 321');assert.equal(await q.locator('#years').inputValue(),'10');
-   assert.match(await q.locator('#undoText').innerText(),/«Du vil spare i»/);assert(await q.locator('#error').isHidden());assert.deepEqual(q.errors,[]);await c.close();}
+   assert.match(await q.locator('#undoText').innerText(),/«Du vil spare i»/);assert.match(await q.locator('#undoText').innerText(),/«Prisvekst per år» fra −1\s%\s*til 0 %/);assert.equal(await q.evaluate(()=>s.inflation),0);assert(await q.locator('#error').isHidden());assert.deepEqual(q.errors,[]);await c.close();}
   console.log('Passed: invalid input flow, blocked share/save/export with focus, stale marking, large numbers, field-by-field shared links, goal and withdrawal validation, and old saved plans.');
  }finally{if(browser)await browser.close();server.close();}
 })().catch(e=>{console.error(e);process.exit(1);});

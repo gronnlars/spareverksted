@@ -48,9 +48,13 @@ Testene dekker 200 deterministisk genererte spareplaner, nødvendig månedsspari
 
 ## Viktige modellvalg
 
-Effektiv nominell avkastning før kostnader. Netto årlig vekstfaktor er `(1 + avkastning) * (1 - kostnad)`. Innskudd ved månedsslutt. Spareøkning fordeles jevnt over månedene. Uttak skjer én gang ved slutten av hvert år. Inflasjonsøkning på ordinært årsuttak starter i år 2. Ekstrauttak kommer etter vanlig uttak i valgt år.
+Effektiv nominell avkastning før kostnader. Netto årlig vekstfaktor er `(1 + avkastning) * (1 - kostnad)`. Innskudd ved månedsslutt. Årlig endring i månedssparingen (positiv eller negativ) fordeles jevnt over månedene. Uttak skjer én gang ved slutten av hvert år. Inflasjonsøkning på ordinært årsuttak starter i år 2. Ekstrauttak kommer etter vanlig uttak i valgt år.
 
 Spareutviklingen er før skatt. Et separat skatteanslag for uttak bruker enten forenklet ASK med oppgitt gjenstående innskudd og kjent skjerming, eller en brukerdefinert fast skattepliktig andel. Ingen ny skjerming, løpende bankbeskatning, IPS, BSU eller formuesskatt er modellert. Scenarioavvik er en følsomhetsanalyse, ikke et sannsynlighetsintervall. Modellen bruker ikke Monte Carlo. Kildestatistikk er datert 20. oktober 2026 og oppdateres ikke automatisk.
+
+## Regneeksempel og risikoscenario
+
+Forventet årlig vekst, prisvekst og bankrente er minst 0 % i de vanlige beregningene. Det betyr ikke at investeringer ikke kan tape verdi: enkelte år kan gi store tap. Mulige tap vises som risikoscenarioer, ikke som forventningen: «Børsfall», lavere vekst i båndet og stresstestene i Sparemål kan gi negative utfall. Når sluttbeløpet er lavere enn summen av innskuddene, for eksempel på grunn av kostnader eller børsfall, viser siden tapet tydelig («Tap mot innskuddene»). I visningen med dagens kroner er tapet omregnet, og det står. Har sluttbeløpet ikke holdt følge med prisveksten på innskuddene, vises det som lavere kjøpekraft, ikke som tap i kroner. Verdien av et fond blir aldri negativ i modellen; et fall på 100 % gir 0 kr. Eldre lenker og lagrede planer med negative verdier i disse feltene settes til 0 %, og brukeren får beskjed om hva som er endret.
 
 ## Lagring og deling
 
