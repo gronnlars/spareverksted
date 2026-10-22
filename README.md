@@ -73,3 +73,21 @@ og i den vellykkede publiseringsjobben. Eget domene kan settes i Pages-innstilli
 Nye besøkende velger spareutvikling eller sparemål. Alder og risikovalget er valgfrie. 67 år er et redigerbart forslag, ikke en påstand om individuell pensjonsalder. En delt plan åpnes direkte. Startguiden kan åpnes igjen med Startvalg.
 
 Glidere er snarveier; egne tall kan være høyere enn gliderens utgangspunkt. Eksportene er øyeblikksbilder. XLSX inneholder numeriske celler og flere ark, ikke levende formler. CSV følger aktivt verktøy. PDF opprettes gjennom nettleserens utskrift. JSON inneholder gjeldende plan, ikke alle andre lokalt lagrede planer.
+
+## Spør om sparing
+
+`dist/spor.html` er en gratis, lokal veileder med syv temaer og 28 eksempelspørsmål. `veileder-engine.js` ruter spørsmål og setter sammen forhåndsskrevne forklaringer fra eksplisitte skjemavalg. `veileder-ui.js` viser temaer, forutsetninger og kilder. Ukjente spørsmål gir temavalg, ikke et oppdiktet svar. Endrede opplysninger fjerner den gamle vurderingen til brukeren ber om et nytt svar.
+
+Veilederen henter ikke opplysninger fra kalkulatoren, lagrer ikke spørsmål eller profil og bruker ingen eksterne API-er. Frie spørsmål brukes bare til å finne tema. Eksempelspørsmål innen samme tema har samme grunnsvar. Ingen bestemt fondsandel, navngitte fond eller personlige kjøpsanbefalinger foreslås. Satser og detaljregler for IPS omfattes ikke. Se `research/veileder-kilder.md` for kilder, avgrensninger og vedlikehold.
+
+Kontroll av svarlogikken:
+
+```sh
+node tests/veileder.test.cjs
+```
+
+Valgfri nettleserkontroll med Playwright installert, mens lokal server kjører på port 8000:
+
+```sh
+node tests/veileder-browser.cjs
+```

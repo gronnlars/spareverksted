@@ -1,0 +1,17 @@
+// Run against a local static server: node tests/veileder-browser.cjs
+const {chromium}=require('playwright');const assert=require('node:assert/strict');
+(async()=>{const browser=await chromium.launch({headless:true,args:['--no-sandbox']});try{
+const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));const external=[];page.on('request',r=>{if(!r.url().startsWith('http://127.0.0.1:8000'))external.push(r.url());});
+await page.goto('http://127.0.0.1:8000/spor.html');
+await page.locator('#question').fill('Boliglån eller fond?');await page.getByRole('button',{name:'Finn relevant tema'}).click();assert.equal(await page.locator('#matches button').count(),2);
+await page.locator('#matches button').filter({hasText:'Boliglån'}).click();await page.locator('#age').fill('57');await page.locator('#years').fill('3');await page.locator('#buffer').selectOption('no');await page.locator('#fixed').selectOption('yes');await page.locator('#answerButton').click();assert.match(await page.locator('#answer').innerText(),/under fem år/);assert.match(await page.locator('#answer').innerText(),/overkurs/);assert.equal(await page.evaluate(()=>document.activeElement.id),'answerTitle');
+await page.locator('#years').fill('20');assert.match(await page.locator('#answer').innerText(),/må oppdateres|Opplysningene/);await page.locator('#answerButton').click();assert.match(await page.locator('#answer').innerText(),/Lang tid/);
+await page.locator('#question').fill('<img src=x onerror="window.injected=true">');await page.getByRole('button',{name:'Finn relevant tema'}).click();assert.equal(await page.locator('#matches button').count(),0);assert.equal(await page.evaluate(()=>window.injected),undefined);assert.equal(await page.locator('#answerButton').isDisabled(),true);
+await page.locator('details').first().evaluate(e=>{e.open=true;});await page.locator('#topics button').filter({hasText:'Sparing til barn'}).click();await page.locator('#answerButton').click();assert.match(await page.locator('#answer').innerText(),/arkivert/);
+await page.locator('#resetGuidance').click();assert.equal(await page.locator('#age').inputValue(),'');assert.equal(await page.locator('#question').inputValue(),'');assert.equal(await page.locator('#answerButton').isDisabled(),true);
+for(const t of ['Boliglån eller sparing','Studielån','Sparing til barn','Buffer og dyr gjeld','Sparekonto eller fond','Sparing til pensjon','BSU og boligkjøp']){await page.locator('#topics button').getByText(t,{exact:true}).click();await page.locator('#answerButton').click();assert.ok(await page.locator('#answer a').count());}
+for(const width of [360,390,768,1280]){await page.setViewportSize({width,height:850});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`Overflow at ${width}`);await page.screenshot({path:'/tmp/veileder-'+width+'.png',fullPage:true});}
+assert.deepEqual(await page.evaluate(()=>Object.keys(localStorage)),[]);assert.deepEqual(external,[]);assert.deepEqual(errors,[]);
+await page.goto('http://127.0.0.1:8000/index.html');assert.equal(await page.locator('a[href="spor.html"]').count(),2);await page.locator('#chooseGrowth').click(); await page.locator('#beginJourney').click(); assert.equal(await page.locator('#workbench').isVisible(),true);
+console.log('Browser: topics, profile changes, reset, injection, sources, focus, privacy and mobile overflow passed.');
+}finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1);});
