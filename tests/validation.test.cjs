@@ -83,6 +83,10 @@ for(const p of realistic){
  assert(Math.abs(v-c)<=Math.max(1e-6,Math.abs(c)*1e-10),`${JSON.stringify(p)}: ${v} vs ${c}`);
  r=roundTrip(s);assert.deepEqual(r.rejected,[]);assert.equal(E.value(r.state,r.state.years),v,'shared link must reproduce the result exactly');
 }
+// Børsfall i et fond: verdien blir aldri negativ, heller ikke ved 100 % fall.
+for(const crash of [50,90,100])for(const crashYear of [0,5,20]){const s={...E.defaults,start:200000,monthly:3000,years:20,rate:7,fee:0.2,crash,crashYear};
+ for(let m=0;m<=240;m++){const v=E.value(s,m/12);assert(v>=0,`crash ${crash} % at year ${crashYear}, month ${m}: ${v}`);}}
+assert.equal(E.value({...E.defaults,start:500000,monthly:0,years:10,crash:100,crashYear:10},10),0);
 // Standardplanen er låst mot en kjent verdi (305 434 kr på siden i dag).
 assert.equal(Math.round(E.value(E.defaults,E.defaults.years)),305434);
 // Sparemål for standardplanen er uendret: nødvendig sparing gir målet.

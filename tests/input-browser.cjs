@@ -156,6 +156,28 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.match(await p.locator('#gainLabel').innerText(),/Tap mot innskuddene/);assert.match(await p.locator('#gain').innerText(),/^−/);
   assert.match(await p.locator('#secondary').innerText(),/mindre enn du setter inn/);assert.match(await p.locator('#mobileResultLabel').innerText(),/under innskuddene/);
   await p.locator('#rate').fill('5');assert.match(await p.locator('#gainLabel').innerText(),/Beregnet vekst/);assert.doesNotMatch(await p.locator('#mobileResultLabel').innerText(),/under innskuddene/);
+  // Dagens kroner: tap i kroner omtales som omregnet, og lavere kjøpekraft kalles ikke tap.
+  await p.locator('#rate').fill('0');await p.evaluate(()=>{const r=document.getElementById('real');r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));r.dispatchEvent(new Event('input',{bubbles:true}));});
+  assert.equal(await p.evaluate(()=>s.real),true);
+  assert.match(await p.locator('#gainLabel').innerText(),/Tap mot innskuddene, i dagens kroner/);assert.match(await p.locator('#secondary').innerText(),/regnet om til dagens kroner/);
+  // Uavhengig kontroll: 2 000 kr i 10 år, 2 % vekst, 0,2 % kostnad, 2,5 % prisvekst gir 262 492 kr, mer enn 240 000 kr innbetalt,
+  // men 271 948 kr er innskuddene justert for prisvekst. Gapet er 7 387 kr i dagens kroner.
+  await p.evaluate(()=>{for(let d=document.getElementById('inflation').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});await p.locator('#inflation').fill('2,5');await p.locator('#fee').fill('0,2');
+  await p.locator('#monthly').fill('2000');await p.locator('#years').fill('10');await p.locator('#rate').fill('2');
+  assert.match(await p.locator('#gainLabel').innerText(),/^(Beregnet vekst|Avkastning etter kostnader)$/,'a purchasing-power gap is not a loss in kroner');
+  assert.match(await p.locator('#secondary').innerText(),/7\s387 kr lavere enn innskuddene justert for prisvekst\. Det betyr lavere kjøpekraft, ikke færre kroner/);
+  assert.match(await p.locator('#mobileResultLabel').innerText(),/Lavere kjøpekraft enn innskuddene/);
+  await p.evaluate(()=>{const r=document.getElementById('real');r.checked=false;r.dispatchEvent(new Event('change',{bubbles:true}));r.dispatchEvent(new Event('input',{bubbles:true}));});
+  assert.doesNotMatch(await p.locator('#secondary').innerText(),/kjøpekraft, ikke færre kroner/,'the purchasing-power note belongs to the today-kroner view');
+  assert.doesNotMatch(await p.locator('#mobileResultLabel').innerText(),/under innskuddene|kjøpekraft/);
+  // Indeksfond med stort børsfall: verdien blir aldri negativ, heller ikke ved 100 % fall.
+  await p.evaluate(()=>{setLevel('advanced');for(let d=document.getElementById('crash').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});
+  for(const fall of ['50','90','100']){await p.locator('#start').fill('200000');await p.locator('#monthly').fill('3000');await p.locator('#years').fill('20');await p.locator('#rate').fill('7');await p.locator('#crash').fill(fall);await p.locator('#crashYear').fill('5');
+   assert(await p.locator('#error').isHidden(),fall);const minRow=await p.evaluate(()=>Math.min(...rows.map(r=>r.v)));assert(minRow>=0,'fund value never negative at '+fall+' %: '+minRow);
+   assert.doesNotMatch(await p.locator('#total').innerText(),/^−/);}
+  await p.locator('#crashYear').fill('20');await p.locator('#start').fill('500000');await p.locator('#monthly').fill('0');await p.locator('#crash').fill('100');
+  assert.equal(await p.locator('#total').innerText(),'0 kr','a 100 % fall at the end leaves 0 kr, never less');assert.match(await p.locator('#gainLabel').innerText(),/Tap mot innskuddene/);
+  await p.locator('#crash').fill('0');await p.evaluate(()=>setLevel('simple'));
   assert.deepEqual(p.errors,[]);
 
   // Tusenskille: feltene viser grupperte tall, beregningen bruker samme tallverdi, og markøren hopper ikke mens brukeren skriver.
