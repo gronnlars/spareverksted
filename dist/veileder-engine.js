@@ -24,9 +24,10 @@ const topics=[
  {id:'bsu',title:'BSU og boligkjøp',words:[/bsu/,/boligkj[oø]p/,/egenkapital/,/f[oø]rste bolig/],questions:['Bør jeg prioritere BSU?','Kan jeg få BSU-fradrag hvis jeg eier bolig?','Hva hvis jeg betaler lite skatt?','Bør egenkapital til bolig stå i fond?']}
 ];
 function findTopics(text){
- const q=String(text||'').toLocaleLowerCase('nb-NO').slice(0,600);
+ const normalize=value=>String(value||'').toLocaleLowerCase('nb-NO').slice(0,600).trim().replace(/[?!.]+$/,'').replace(/\s+/g,' ');
+ const q=normalize(text);
  if(!q.trim())return [];
- const exact=topics.filter(t=>t.questions.some(x=>x.toLocaleLowerCase('nb-NO')===q.trim())).map(t=>t.id);
+ const exact=topics.filter(t=>t.questions.some(x=>normalize(x)===q)).map(t=>t.id);
  if(exact.length)return exact;
  return topics.map(t=>({id:t.id,score:t.words.reduce((n,re)=>n+(re.test(q)?1:0),0)})).filter(t=>t.score>0).sort((a,b)=>b.score-a.score).map(t=>t.id);
 }
@@ -40,6 +41,10 @@ function validate(p={}){
 }
 function answer(id,profile){
  const t=topics.find(t=>t.id===id);if(!t)throw Error('Velg et av temaene vi dekker.');
+ if(t.entry){
+  const base=answer(t.category,profile),entry=t.entry;
+  return {...base,title:t.title,parts:[{title:t.title,text:entry.intro},...(entry.parts||[]),...base.parts],sources:[...entry.sources,...base.sources].filter((s,i,list)=>list.findIndex(other=>other.url===s.url)===i),checked:entry.checked,baseChecked:base.checked};
+ }
  const p=validate(profile);const parts=[];let refs=[];
  const add=(title,text)=>parts.push({title,text});
  if(p.debt==='yes')add('Dyr gjeld først','Når du har dyr gjeld, er nedbetaling vanligvis et bedre utgangspunkt enn å ta mer investeringsrisiko. Behold samtidig nok til nødvendige utgifter, så neste uforutsette regning ikke gir ny kredittkortgjeld.');
@@ -91,5 +96,12 @@ function answer(id,profile){
  if(p.buffer==='no'||p.debt==='yes')refs.push('mortgage');
  return {title:t.title,parts,sources:[...new Set(refs)].map(k=>({id:k,title:sources[k][0],url:sources[k][1]})),checked,missing:['buffer','debt','income','risk'].filter(k=>!p[k]),profile:p};
 }
-const api={topics,findTopics,answer,validate,checked,sources};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
+function register(entry){
+ if(!entry||!/^q-[a-z0-9-]+$/.test(entry.id)||topics.some(t=>t.id===entry.id))throw Error('Ugyldig eller duplisert spørsmål.');
+ if(!topics.some(t=>t.id===entry.category&&!t.entry)||!entry.title||!entry.intro||!entry.checked||!entry.questions?.length||!entry.words?.length||entry.options?.length!==2||!entry.sources?.length)throw Error('Ufullstendig spørsmål.');
+ for(const o of entry.options)if(!o.title||!o.pros?.length||!o.cons?.length||[...o.pros,...o.cons].some(i=>!i.title||!i.text))throw Error('Ufullstendige fordeler og ulemper.');
+ for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
+ topics.push({id:entry.id,title:entry.title,category:entry.category,questions:entry.questions,words:entry.words,entry});
+}
+const api={topics,findTopics,answer,validate,checked,sources,register};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
 })(typeof window!=='undefined'?window:globalThis);

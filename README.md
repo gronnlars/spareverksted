@@ -100,3 +100,9 @@ Valgfri nettleserkontroll med Playwright og Chromium installert, mens lokal serv
 ```sh
 node tests/veileder-browser.cjs
 ```
+
+### Spørsmålsdatabase
+
+`dist/veileder-knowledge.js` inneholder egne spørsmål under eksisterende kategorier, med kilde, dato, søkeord og fordeler/ulemper. `SpareVeileder.register` validerer at hvert spørsmål har et unikt navn, en eksisterende hovedkategori, kilder og to komplette alternativer. Hovedmenyen beholder sju valg; nye spørsmål vises gjennom søk og relaterte spørsmål under temaet. Se `research/sporsmal-og-prioritering.md` for research og videre arbeidsliste.
+
+Kjør også `node tests/veileder-knowledge.test.cjs` ved endringer i spørsmålsdatabasen. Testen dekker ruting, 225 profilkombinasjoner, reglene for BSU/IPS og separate horisonter for nye spørsmål.
