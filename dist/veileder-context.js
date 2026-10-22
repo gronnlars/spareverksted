@@ -25,5 +25,12 @@ function fromCalculator(state,started,previous){
  out.horizons={};return clean(out);
 }
 function forTopic(context,id){const c=clean(context),p={...c.profile};if(Object.hasOwn(c.horizons,id))p.years=c.horizons[id];else if(id==='children')delete p.years;return p;}
-const api={KEY,empty,clean,read,write,clear,fromCalculator,forTopic};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareContext=api;
+function calculatorPatch(context,hasExplicitPlan){
+ const p=clean(context).profile,patch={};if(hasExplicitPlan)return patch;
+ if(p.age!==undefined){patch.userAge=p.age;patch.ageKnown=true;}
+ if(p.years!==undefined)patch.years=p.years;
+ if(p.risk){patch.stress=p.risk;patch.riskChosen=true;}
+ return patch;
+}
+const api={KEY,empty,clean,read,write,clear,fromCalculator,forTopic,calculatorPatch};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareContext=api;
 })(typeof window!=='undefined'?window:globalThis);
