@@ -5,7 +5,8 @@ function hasStarted(){try{return localStorage.getItem('sv-started')==='1';}catch
 function rememberStart(){try{localStorage.setItem('sv-started','1');}catch{}}
 function stage(showWizard){wizardActive=showWizard;document.body.dataset.stage=showWizard?'welcome':'workbench';$('welcomeWizard').hidden=!showWizard;$('workbench').hidden=showWizard;$('startAgain').hidden=showWizard;if(!showWizard){rememberStart();render();}window.scrollTo({top:0,behavior:'instant'});}
 function inputNumber(id){return parsedNumber($(id).value);}
-function formatInput(value){return new Intl.NumberFormat('nb-NO',{useGrouping:false,maximumFractionDigits:10}).format(value);}
+// Tall som siden selv skriver inn (skyveknapper, startguide, skattevindu), vises med tusenskille som ellers.
+function formatInput(value){return groupedNumber(value);}
 function prepareJourney(kind){journeyKind=kind;$('chooseGrowth').setAttribute('aria-pressed',kind==='growth');$('chooseGoal').setAttribute('aria-pressed',kind==='goal');$('journeyForm').hidden=false;$('onboardGoalLabel').hidden=kind!=='goal';$('journeyTitle').textContent=kind==='goal'?'Hva vil du spare til?':'Hva er utgangspunktet ditt?';$('beginJourney').textContent=kind==='goal'?'Se veien til målet ↗':'Vis spareplanen min ↗';
  const goal=kind==='goal';$('onboardAge').value=s.ageKnown?formatInput(s.userAge):'';$('onboardStart').value=formatInput(goal?s.dreamStart:s.start);$('onboardMonthly').value=formatInput(goal?s.dreamMonthly:s.monthly);$('onboardYears').value=formatInput(goal?s.dreamYears:s.years);$('onboardGoal').value=formatInput(s.dreamCost);$('onboardRisk').value=s.riskChosen?s.stress:'';$('onboardUntil67').checked=s.until67||(!s.ageKnown&&kind==='growth');$('closeJourney').hidden=!hasStarted();$('journeyError').hidden=true;updateHorizon(false);
 }
@@ -22,11 +23,8 @@ $('journeyForm').onsubmit=event=>{event.preventDefault();try{const start=inputNu
  }catch(error){$('journeyError').textContent=error.message;$('journeyError').hidden=false;for(const id of ['onboardStart','onboardMonthly','onboardYears','onboardAge','onboardGoal']){const v=inputNumber(id),limit=id==='onboardYears'?100:id==='onboardAge'?120:Infinity,empty=$(id).value.trim()==='';$(id).setAttribute('aria-invalid',String(!empty&&(!Number.isFinite(v)||v<0||v>limit)));}$('journeyError').scrollIntoView({block:'nearest'});}};
 $('exampleJourney').onclick=()=>{setLevel('simple');s.activePage=journeyKind==='goal'?'dreams':'calculator';stage(false);};
 // Skyveknapper er snarveier, aldri grenser. Skrivefeltet er alltid den gjeldende verdien.
-const SLIDER_SPECS={start:[0,1000000,1000],monthly:[0,10000,100],years:[0,50,.5],rate:[-10,15,.1],spread:[0,5,.1],dreamStart:[0,500000,1000],dreamMonthly:[0,10000,100],dreamYears:[0,30,.5],dreamCost:[0,1000000,1000],annualWithdraw:[0,600000,1000],withdrawPercent:[0,10,.1]};
-// Månedsbeløp har fast område, slik at vanlige beløp er lette å velge presist. De andre utvides
-// til en gyldig verdi brukeren har skrevet, men aldri forbi feltets grense og aldri for ugyldige tall.
-const FIXED_SLIDERS=new Set(['monthly','dreamMonthly']);
-function niceUpper(value){if(!Number.isFinite(value)||value<=0)return 1;const power=10**Math.floor(Math.log10(value));return Math.ceil(value/power)*power;}
+const SLIDER_SPECS={start:[0,1000000,1000],monthly:[0,20000,100],years:[0,50,.5],rate:[-10,15,.1],spread:[0,5,.1],dreamStart:[0,500000,1000],dreamMonthly:[0,20000,100],dreamYears:[0,30,.5],dreamCost:[0,1000000,1000],annualWithdraw:[0,600000,1000],withdrawPercent:[0,10,.1]};
+// Alle skyveknapper har faste, moderate grenser. Skrivefeltet kan ha høyere gyldige verdier.
 function toggleDescribedBy(el,id,on){const ids=(el.getAttribute('aria-describedby')||'').split(' ').filter(x=>x&&x!==id);if(on)ids.push(id);ids.length?el.setAttribute('aria-describedby',ids.join(' ')):el.removeAttribute('aria-describedby');}
 for(const [id,[min,max,step]]of Object.entries(SLIDER_SPECS)){const field=$(id);if(!field)continue;const label=field.closest('label'),wrap=document.createElement('div');wrap.className='range-control';const range=document.createElement('input');range.type='range';range.id=id+'Slider';range.min=min;range.max=max;range.step=step;range.setAttribute('aria-label','Juster '+(label.querySelector('.field-label')?.textContent||id).toLowerCase());range.dataset.field=id;
  // Forklaring og bevisst handling når skrivefeltet har en verdi utenfor skyveknappens område.
@@ -34,11 +32,7 @@ for(const [id,[min,max,step]]of Object.entries(SLIDER_SPECS)){const field=$(id);
  unlock.addEventListener('click',e=>{e.preventDefault();range.dataset.unlockedFor=String(s[id]);syncSliders();range.focus();});
  wrap.append(range,note);field.closest('.fieldbox').after(wrap);range.addEventListener('input',()=>{field.value=formatInput(Number(range.value));if(id==='years'||id==='dreamYears')s.until67=false;delete range.dataset.unlockedFor;read();render();});}
 function syncSliders(){for(const range of document.querySelectorAll('input[type=range][data-field]')){
- const id=range.dataset.field,value=s[id],field=$(id),rule=E.FIELDS[id]||E.DREAM_FIELDS[id],step=Number(range.step),valid=Number.isFinite(value)&&E.fieldError(id,value)===null;
- if(valid&&!FIXED_SLIDERS.has(id)&&rule){
-  if(value>Number(range.max))range.max=Math.min(rule.max,niceUpper(value));
-  if(value<Number(range.min)){let low=Math.max(rule.min,-niceUpper(Math.abs(value)));if(rule.open&&low<=rule.min)low=rule.min+step;range.min=low;}
- }
+ const id=range.dataset.field,value=s[id],field=$(id),valid=Number.isFinite(value)&&E.fieldError(id,value)===null;
  const min=Number(range.min),max=Number(range.max),outside=!Number.isFinite(value)||value<min||value>max,unlocked=outside&&range.dataset.unlockedFor===String(value);
  if(!outside)delete range.dataset.unlockedFor;
  if(Number.isFinite(value))range.value=Math.min(max,Math.max(min,value));

@@ -9,6 +9,7 @@ const axisFormat=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0});
 const axisCompact=x=>big(x,true)||(Math.abs(x)>=1e9?axisFormat.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?axisFormat.format(x/1000)+' tusen':axisFormat.format(x));
 const compact=x=>big(x,true)||(Math.abs(x)>=1e9?dec.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?dec.format(x/1000)+' tusen':nf.format(x));
 const escapeHTML=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const groupedNumber=value=>new Intl.NumberFormat('nb-NO',{maximumFractionDigits:15}).format(value).replace(/[\u00a0\u202f]/g,' ');
 // Godtar tallene slik siden selv viser dem: mellomrom som tusenskille, komma som desimaltegn og
 // typografisk minus (−, U+2212) fra norsk tallformatering. Vanlig bindestrek virker som før.
 const parsedNumber=value=>value.trim()===''?0:Number(value.replace(/[\s\u00a0\u202f]/g,'').replace(/^\u2212/,'-').replace(',','.'));
@@ -21,7 +22,7 @@ if(hash.has('level'))level=hash.get('level');if(!['simple','explore','advanced']
 if(hash.has('mode'))mode=hash.get('mode')==='goal'?'goal':'explore';for(const k in view)if(hash.has(k))view[k]=hash.get(k)==='1';
 const specs={basic:[['start','Du har allerede','kr'],['monthly','Du sparer hver måned','kr'],['years','Du vil spare i','år'],['rate','Antatt årlig vekst','%']],essentialsFields:[['inflation','Prisvekst per år','%'],['fee','Kostnad per år','%']],goalField:[['goal','Beløpet du vil nå','kr']],advanced:[['growth','Økning i sparingen per år','%'],['bank','Bankrente å sammenligne med','%'],['spread','Avvik fra valgt avkastning','%-p']],events:[['extra','Ekstrainnskudd','kr'],['extraYear','Innskudd etter','år'],['crash','Børsfall','%'],['crashYear','Fall etter','år']],retirement:[['annualWithdraw','Årsbeløp før skatt','kr'],['retireYears','År med uttak','år'],['withdrawPercent','Uttak hvert år','%']],extraWithdrawalFields:[['extraWithdraw','Ekstra engangsuttak','kr'],['extraWithdrawYear','Etter uttaksår','år']]};
 for(const [group,fields]of Object.entries(specs))$(group).innerHTML=fields.map(([id,label,unit])=>`<label for="${id}"><span class="field-label">${label}</span><div class="fieldbox"><input id="${id}" type="text" inputmode="decimal" autocomplete="off"><span class="unit">${unit}</span></div></label>`).join('');
-function fill(){for(const b of $('modes').children)b.classList.toggle('active',b.dataset.mode===mode);for(const k in s){const el=$(k);if(!el)continue;if(el.type==='checkbox')el.checked=s[k];else el.value=typeof s[k]==='number'?new Intl.NumberFormat('nb-NO',{maximumFractionDigits:15,useGrouping:false}).format(s[k]):s[k];}for(const k in view)if($(k))$(k).checked=view[k];}
+function fill(){for(const b of $('modes').children)b.classList.toggle('active',b.dataset.mode===mode);for(const k in s){const el=$(k);if(!el)continue;if(el.type==='checkbox')el.checked=s[k];else el.value=typeof s[k]==='number'?groupedNumber(s[k]):s[k];}for(const k in view)if($(k))$(k).checked=view[k];}
 function read(){for(const k in s){if(k.startsWith('tax')||k==='taxableShare')continue;const el=$(k);if(!el)continue;if(el.type==='checkbox')s[k]=el.checked;else if(typeof E.defaults[k]==='number'){s[k]=parsedNumber(el.value);el.setAttribute('aria-invalid',!Number.isFinite(s[k]));}else s[k]=el.value;}}
 function notice(t,ms=4500){$('toast').textContent=t;$('toast').style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$('toast').style.display='none',ms);}
 // Etiketten som faktisk vises ved feltet, ellers standardnavnet fra motoren.
@@ -167,7 +168,9 @@ function syncLevel(){document.body.dataset.level=level;for(const b of $('levels'
 function setLevel(value){level=value;try{localStorage.setItem('sv-level',level);}catch{}syncLevel();if(window.renderDream)window.renderDream();}
 // State changes are read once per user input. Empty numeric fields calculate as zero.
 document.addEventListener('input',event=>{if(!event.target.closest('#taxDialog')&&event.target.id in E.defaults){read();render();}});
-document.addEventListener('focusout',event=>{const el=event.target;if(typeof E.defaults[el.id]==='number'&&el.value.trim()===''){el.value='0';read();render();}});
+// Tusenskille settes når brukeren forlater feltet, ikke mens det skrives, slik at markøren ikke hopper.
+// Startguidens felt grupperes også, men et tomt felt der (for eksempel alder) forblir tomt.
+document.addEventListener('focusout',event=>{const el=event.target;if(el.id?.startsWith('onboard')&&el.inputMode==='decimal'&&el.value.trim()!==''){const v=parsedNumber(el.value);if(Number.isFinite(v))el.value=groupedNumber(v);return;}if(typeof E.defaults[el.id]!=='number')return;if(el.value.trim()===''){el.value='0';read();render();}const value=parsedNumber(el.value);if(Number.isFinite(value))el.value=groupedNumber(value);});
 $('levels').onclick=e=>{const b=e.target.closest('[data-level]');if(b)setLevel(b.dataset.level);};
 $('undo').onclick=()=>{if(!undoState)return;s={...undoState.state};mode=undoState.mode;view={...undoState.view};if(undoState.saved){saved=undoState.saved;selectedPlans=new Set(undoState.selected);persist();}undoState=null;$('undoBar').hidden=true;fill();render();};
 $('modes').onclick=e=>{const b=e.target.closest('[data-mode]');if(!b)return;mode=b.dataset.mode;for(const b of $('modes').children)b.classList.toggle('active',b.dataset.mode===mode);if(mode==='goal')view.showGoal=true;fill();render();};
