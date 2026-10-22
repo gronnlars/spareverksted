@@ -1,0 +1,94 @@
+/* Shared navigation and compact, optional layers of detail. */
+.site-header,.guidance-page .site-header{height:68px;min-height:68px;flex-wrap:nowrap;padding:0 max(24px,calc((100vw - 1280px)/2));gap:12px;background:#fff}
+.brand{font-size:22px;letter-spacing:-.8px;white-space:nowrap}
+.mark{width:32px;height:32px;font-size:24px;border-radius:9px}
+.site-menu{position:relative;flex:0 0 auto;border:0;margin:0;padding:0}
+.site-menu>summary{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-weight:600;list-style:none;cursor:pointer}
+.site-menu>summary::-webkit-details-marker,.display-options>summary::-webkit-details-marker{display:none}
+.site-menu>summary::after,.display-options>summary::after{display:none}
+.site-menu[open]>summary{background:var(--soft)}
+.menu-panel{position:absolute;right:0;top:calc(100% + 10px);width:260px;max-width:calc(100vw - 32px);padding:8px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 12px 36px #183f3626;z-index:40}
+.site-header .site-menu .site-nav{display:flex;flex-direction:column;align-items:stretch;gap:2px;font-size:14px}
+.site-header .site-menu .site-nav a{min-height:44px;padding:10px 12px;font-size:14px;white-space:normal}
+.site-menu .actions{display:flex;flex-direction:column;gap:2px;width:auto;border-top:1px solid var(--line);margin-top:6px;padding-top:6px}
+.site-menu .actions button,.site-menu .actions .guide-return{margin:0;padding:10px 12px;min-height:44px;border:0;background:none;font-size:14px!important;text-align:left;color:var(--ink);font-weight:500;flex:none}
+.site-menu .actions button:hover{background:var(--soft)}
+.intro{align-items:flex-start;gap:16px;margin-bottom:14px}
+.intro h1{font-size:clamp(28px,3.3vw,40px);line-height:1.15;margin:0 0 8px;letter-spacing:-1px}
+.intro #introText{font-size:14px;line-height:1.5;max-width:580px;margin:0;color:var(--muted)}
+.display-options{position:relative;flex-shrink:0;border:0;margin:0;padding:0}
+.display-options>summary{list-style:none;cursor:pointer;padding:8px 10px;min-height:40px;border:1px solid var(--line);border-radius:9px;font-size:13px;white-space:nowrap;background:#fff}
+.display-options .level-control{position:absolute;right:0;top:calc(100% + 8px);z-index:25;min-width:280px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow);margin:0}
+.page-nav{gap:8px;margin-bottom:18px}
+.page-nav button{padding:10px 18px;font-size:14px;min-height:44px}
+.welcome-wizard{margin:8px auto 32px}
+.welcome-intro{margin-bottom:22px}
+.welcome-intro h1{font-size:clamp(32px,4vw,46px);margin:8px 0 12px}
+.welcome-question{display:flex;align-items:center;justify-content:space-between;gap:16px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-top:14px;background:#fff}
+.welcome-question strong{display:block;font-size:15px}
+.welcome-question small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.welcome-question:hover{border-color:var(--green);background:var(--soft)}
+.journey-open .welcome-intro{display:none}
+.journey-open .start-choices{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.journey-open .start-choices button,.journey-open .start-choices button[aria-pressed=true]{display:block;padding:11px 12px;border-radius:10px;text-align:center}
+.journey-open .start-choices .choice-icon,.journey-open .start-choices button>span:last-child{display:none}
+.journey-open .start-choices strong{font-size:14px;line-height:1.4}
+.journey-open .journey-form{margin-top:14px}
+.journey-open .welcome-question,.journey-open .welcome-privacy{display:none}
+.experiments-panel>summary{font-size:16px;font-weight:600}
+.topic-picker{border-top:1px solid var(--line);margin-top:14px;padding-top:12px}
+.topic-picker>summary{font-size:14px;font-weight:600;cursor:pointer}
+.guidance-page .ask-intro{margin-bottom:20px}
+.guidance-page .ask-intro h1{font-size:36px;margin:0 0 8px}
+.guidance-page .ask-intro>p:last-child{font-size:15px;margin-bottom:0}
+.guidance-page .ask-intro .eyebrow{display:none}
+.guidance-page .question-panel{padding:20px}
+.guidance-page .question-row{margin-top:12px}
+.guidance-page #contextSummary:empty{display:none}
+footer{align-items:center;gap:12px}
+@media(max-width:760px){
+ .site-header,.guidance-page .site-header{height:64px;min-height:64px;padding:0 16px;gap:8px}
+ .brand{font-size:20px;gap:8px}.mark{width:30px;height:30px;font-size:22px}
+ main,.guidance-page main{padding:20px 16px 0}
+ .intro{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:10px;margin-bottom:12px}
+ .intro h1{font-size:27px;letter-spacing:-.8px;margin:0 0 6px}
+ .intro #introText{font-size:13px;line-height:1.5}
+ .display-options>summary{font-size:12px;padding:8px}
+ .plan-context{font-size:12px;margin-top:8px!important}
+ .page-nav{margin-bottom:14px;gap:0}
+ .page-nav button{display:block;padding:8px 6px;font-size:14px;min-height:44px}
+ .panel{padding:18px;border-radius:14px;margin-bottom:14px}
+ .plan-inputs .panel-title{margin-bottom:0}.plan-inputs h2{font-size:16px}
+ #basic label{margin-top:12px;font-size:12px}
+ #basic .field-label{min-height:20px;padding-right:24px;line-height:1.4}
+ #basic .fieldbox{margin-top:6px}
+ #basic .help-button{width:22px;height:22px;font-size:11px}
+ body[data-level=simple] #basic .field-description,body[data-level=simple] .input-note{display:none}
+ .range-control{margin-top:2px}.range-control input[type=range]{height:24px}
+ .privacy-note{font-size:11px;margin-bottom:0}
+ .hero-result{padding:20px;border-radius:14px;margin-bottom:14px}
+ .before-tax-badge{margin-bottom:8px}.big{font-size:38px}
+ .hero-result #secondary{font-size:13px}.metrics{gap:8px}.metrics strong{font-size:16px}
+ .chartpanel .panel-title{align-items:flex-start}.chartpanel h2{font-size:16px}
+ .chartpanel .segmented button{font-size:12px;padding:7px 10px}
+ .welcome-wizard{margin:0 auto 24px}.welcome-intro{margin-bottom:18px}
+ .welcome-intro h1{font-size:34px;margin:4px 0 10px}.welcome-intro>p:last-child{font-size:14px}
+ .start-choices{grid-template-columns:1fr;gap:10px}
+ .start-choices button,.start-choices button[aria-pressed=true]{display:grid;grid-template-columns:26px 1fr;column-gap:12px;padding:16px;border-radius:12px}
+ .start-choices .choice-icon{grid-row:1/3;margin:0;font-size:25px}
+ .start-choices strong{font-size:17px;line-height:1.4}
+ .start-choices button>span:last-child{grid-column:2;margin-top:4px;font-size:12px}
+ .journey-fields{grid-template-columns:1fr 1fr;gap:0 12px}
+ .journey-fields label{margin-top:12px;font-size:12px}.journey-fields .optional{display:inline;font-size:10px}
+ .journey-form{padding:18px}.journey-form>.hint{font-size:12px}
+ .journey-form .panel-title h2{font-size:17px}.journey-form .button-row{gap:10px}
+ .journey-risk{margin-top:14px}.journey-risk summary .optional{display:inline}
+ .guidance-page .ask-intro h1{font-size:30px}.guidance-page .ask-intro>p:last-child{font-size:14px}
+ .guidance-page .ask-intro{margin-bottom:16px}.guidance-page .question-panel{padding:18px}
+ .question-row input{font-size:16px}.topic-buttons{gap:6px}.topic-buttons button{font-size:12px;padding:8px 10px;min-height:40px}
+ .option-card{padding:18px}.option-subtitle{margin-bottom:14px}.answer-panel>h2{font-size:24px}
+ footer{align-items:flex-start;font-size:11px;padding-top:18px;padding-bottom:24px;gap:8px}
+ body[data-stage=workbench][data-page=calculator] footer{padding-bottom:100px}
+}
+@media(max-width:350px){.brand{font-size:18px}.site-menu>summary{padding:8px;font-size:13px}.intro h1{font-size:25px}.journey-fields{gap:0 10px}}
+@media print{.site-menu,.display-options,.welcome-question{display:none!important}}

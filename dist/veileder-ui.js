@@ -45,7 +45,7 @@ function render(focus=false){
  out.append(sources);describe();if(focus)$('answerTitle').focus();
 }
 function choose(id,focus=true){
- selected=id;const category=V.topics.find(t=>t.id===id)?.category||id;
+ selected=id;const picker=$('topicPicker');if(picker){picker.open=false;picker.querySelector('summary').textContent='Tema: '+V.topics.find(t=>t.id===id).title;}const category=V.topics.find(t=>t.id===id)?.category||id;
  $('followups').replaceChildren();for(const question of V.topics.filter(t=>t.category===category&&t.id!==id)){const b=button(question.title,()=>choose(question.id));b.dataset.topic=question.id;b.setAttribute('aria-pressed','false');$('followups').append(b);}
  for(const b of document.querySelectorAll('[data-topic]'))b.setAttribute('aria-pressed',String(b.dataset.topic===id));fill();render(focus);
 }
@@ -72,3 +72,4 @@ $('profileForm').addEventListener('change',()=>{if(selected)$('answerPanel').hid
 $('resetGuidance').addEventListener('click',()=>{context=C.empty();C.clear(storage);$('question').value='';$('matches').replaceChildren();$('matchStatus').textContent='Opplysningene er glemt i veilederen. Kalkulatorens egne felter er ikke endret.';fill();$('profileDetails').open=false;render(false);});
 fill();
 })();
+
