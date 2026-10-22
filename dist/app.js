@@ -84,9 +84,14 @@ function render(){
  // og vises separat i visningen med dagens kroner.
  const nominalPaidEnd=nominalPaid(end);lastLoss=mode==='goal'?0:Math.max(0,paid-shown);if(lastLoss<0.5||final>=nominalPaidEnd)lastLoss=0;
  const depositsWithPrices=E.raw(s,end,s.inflation,0),powerGap=mode!=='goal'&&s.real&&!lastLoss?Math.max(0,(depositsWithPrices-final)/inflation(end)):0;
- if(lastLoss)$('secondary').textContent+=s.real?` Det er ${money(lastLoss)} mindre enn du setter inn, regnet om til dagens kroner.`:` Det er ${money(lastLoss)} mindre enn du setter inn.`;
- else if(powerGap>=0.5)$('secondary').textContent+=` Målt i dagens kroner er verdien ${money(powerGap)} lavere enn innskuddene justert for prisvekst. Det betyr lavere kjøpekraft, ikke færre kroner.`;
- $('mobileResultLabel').textContent=mode==='goal'?'Nødvendig per måned · før skatt':lastLoss?`${money(lastLoss)} under innskuddene${s.real?' (dagens kr)':''} · før skatt`:powerGap>=0.5?'Lavere kjøpekraft enn innskuddene · før skatt':s.real?'Dagens kroner · før skatt':'Regneeksempel · før skatt';
+ // Tre tilfeller, vurdert på den faktiske verdien i kroner (ikke avrundet visning, og uavhengig av dagens kroner):
+ // alt tapt, delvis tapt, og ingen tap i kroner men lavere kjøpekraft. Uten innskudd er ingenting tapt.
+ const nominalLoss=lastLoss?nominalPaidEnd-final:0,allLost=lastLoss&&nominalPaidEnd>0&&final<=1e-9,almostAll=lastLoss&&!allLost&&final<1;
+ if(allLost)$('secondary').textContent+=' Du har tapt alle pengene du har investert.';
+ else if(almostAll)$('secondary').textContent+=' Du har tapt nesten alle pengene du har investert. Under 1 kr er igjen.';
+ else if(lastLoss)$('secondary').textContent+=` Du har tapt ${money(nominalLoss)} av pengene du har satt inn.`+(s.real?' Beløpet er i kroner, ikke justert for prisvekst.':'');
+ else if(powerGap>=0.5)$('secondary').textContent+=` Pengene har økt i verdi, men ikke holdt følge med prisveksten. Målt i dagens kroner er verdien ${money(powerGap)} lavere enn innskuddene justert for prisvekst.`;
+ $('mobileResultLabel').textContent=mode==='goal'?'Nødvendig per måned · før skatt':allLost?'Alle innskuddene er tapt · før skatt':lastLoss?`Tapt ${money(nominalLoss)} av innskuddene · før skatt`:powerGap>=0.5?'Lavere kjøpekraft enn innskuddene · før skatt':s.real?'Dagens kroner · før skatt':'Regneeksempel · før skatt';
  $('mobileCurve').hidden=mode==='goal';
  const miniMax=Math.max(1,...rows.map(r=>Math.max(r.v,r.paid)));
  const miniPath=key=>rows.map((r,i)=>(i?'L':'M')+(3+(end?r.t/end:0)*74).toFixed(2)+','+(35-r[key]/miniMax*32).toFixed(2)).join(' ');
