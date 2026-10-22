@@ -25,14 +25,33 @@ jobs:
           node tests/veileder-context.test.cjs
           node tests/veileder-knowledge.test.cjs
           node tests/veileder-relevance.test.cjs
+          node tests/validation.test.cjs
           node --check dist/veileder-ui.js
           node --check dist/veileder-bridge.js
           node --check dist/veileder-facts.js
           node --check dist/app.js
           node --check dist/layout.js
+          node --check dist/engine.js
+          node --check dist/guidance.js
+          node --check dist/journey.js
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright with Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.0
+          npx playwright install --with-deps chromium
+      - name: Browser flows (Chromium)
+        run: |
+          node tests/input-browser.cjs
+          node tests/veileder-browser.cjs
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    needs: checks
+    needs: [checks, browser]
     permissions:
       pages: write
       id-token: write
