@@ -94,6 +94,43 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    assert.equal(await q.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0,'no horizontal scroll at 320 px');
    const box=await q.locator('#monthlySliderUnlock').boundingBox();assert(box.height>=24&&box.width>=24,'unlock button target at least 24 px');
    await q.locator('#monthlySlider').tap({force:true});assert.equal(await q.locator('#monthly').inputValue(),'50000','a tap on a locked slider does nothing');await c.close();}
+  // Universell utforming: etter retting skal feltet ikke lenger være ugyldig eller koblet til en feilmelding.
+  // Andre beskrivelser beholdes, og fokus blir værende i feltet brukeren skriver i.
+  const a11y=(q,id)=>q.evaluate(i=>{const e=document.getElementById(i);return {invalid:e.getAttribute('aria-invalid'),ids:(e.getAttribute('aria-describedby')||'').split(' ').filter(Boolean),focus:document.activeElement.id};},id);
+  const typeIn=async(q,id,v)=>{await q.locator('#'+id).focus();await q.keyboard.press('ControlOrMeta+A');await q.keyboard.type(v);};
+  const fixed=(state,id,messageId,keep=[])=>{assert.notEqual(state.invalid,'true',id+' must not stay invalid');assert(!state.ids.includes(messageId),id+' must not point to '+messageId+': '+state.ids);for(const k of keep)assert(state.ids.includes(k),id+' must keep '+k);assert.equal(state.focus,id,'focus stays in '+id);};
+  // Sparing, ett felt.
+  p=await open('#activePage=calculator');await p.waitForTimeout(300);
+  await typeIn(p,'years','500');let st=await a11y(p,'years');assert.equal(st.invalid,'true');assert(st.ids.includes('error')&&st.ids.includes('yearsDescription'));
+  await typeIn(p,'years','10');fixed(await a11y(p,'years'),'years','error',['yearsDescription']);assert(await p.locator('#error').isHidden());assert.equal(await p.locator('#error').textContent(),'','old message text is removed');
+  // Sparing, to felt: bare feltet meldingen gjelder er koblet til den.
+  await typeIn(p,'years','500');await typeIn(p,'rate','500');await typeIn(p,'years','10');
+  fixed(await a11y(p,'years'),'years','error',['yearsDescription']);st=await a11y(p,'rate');assert.equal(st.invalid,'true');assert(st.ids.includes('error'));assert.match(await p.locator('#error').innerText(),/Antatt årlig vekst/);
+  await typeIn(p,'rate','5');fixed(await a11y(p,'rate'),'rate','error',['rateDescription']);
+  // Tom tekst som ikke kan tolkes, beholder aria-invalid, men ikke koblingen til en melding om et annet felt.
+  await typeIn(p,'years','500');await typeIn(p,'monthly','abc');st=await a11y(p,'monthly');assert.equal(st.invalid,'true');
+  await typeIn(p,'years','10');assert.equal((await a11y(p,'years')).invalid,'false');
+  await typeIn(p,'monthly','2000');fixed(await a11y(p,'monthly'),'monthly','error',['monthlyDescription']);assert(await p.locator('#error').isHidden());
+  // Forklaringen til skyveknappen er en annen, gyldig beskrivelse som skal beholdes.
+  await typeIn(p,'monthly','20000000');st=await a11y(p,'monthly');assert(st.ids.includes('error')&&st.ids.includes('monthlySliderNote'));
+  await typeIn(p,'monthly','50000');fixed(await a11y(p,'monthly'),'monthly','error',['monthlyDescription','monthlySliderNote']);
+  assert.deepEqual(p.errors,[]);
+  // Uttak: felt som kontrolleres av kalkulatoren, og felt som kontrolleres av uttaksberegningen.
+  p=await open('#activePage=withdrawals');await p.waitForTimeout(300);
+  await typeIn(p,'annualWithdraw','2000000000');st=await a11y(p,'annualWithdraw');assert.equal(st.invalid,'true');assert(st.ids.includes('error'));
+  await typeIn(p,'annualWithdraw','24000');fixed(await a11y(p,'annualWithdraw'),'annualWithdraw','error');
+  await typeIn(p,'retireYears','0');st=await a11y(p,'retireYears');assert.equal(st.invalid,'true');assert(st.ids.includes('retirementResult'));
+  await typeIn(p,'retireYears','20');fixed(await a11y(p,'retireYears'),'retireYears','retirementResult');
+  await p.evaluate(()=>{document.getElementById('extraWithdraw').closest('details').open=true;});await typeIn(p,'extraWithdraw','1000');await typeIn(p,'extraWithdrawYear','2,5');st=await a11y(p,'extraWithdrawYear');assert.equal(st.invalid,'true');
+  await typeIn(p,'extraWithdrawYear','3');fixed(await a11y(p,'extraWithdrawYear'),'extraWithdrawYear','retirementResult');
+  assert.deepEqual(p.errors,[]);
+  // Sparemål.
+  p=await open('#activePage=dreams');await p.waitForTimeout(300);
+  await typeIn(p,'dreamYears','500');st=await a11y(p,'dreamYears');assert.equal(st.invalid,'true');assert(st.ids.includes('dreamError'));
+  await typeIn(p,'dreamMonthly','-5');await typeIn(p,'dreamYears','5');
+  fixed(await a11y(p,'dreamYears'),'dreamYears','dreamError');st=await a11y(p,'dreamMonthly');assert.equal(st.invalid,'true');assert(st.ids.includes('dreamError'));
+  await typeIn(p,'dreamMonthly','3000');fixed(await a11y(p,'dreamMonthly'),'dreamMonthly','dreamError');assert(await p.locator('#dreamError').isHidden());assert.equal(await p.locator('#dreamError').textContent(),'');
+  assert.deepEqual(p.errors,[]);
 
   // Sparemål: egne feltnavn, riktig felt markert, og ugyldige mål kan ikke deles, lagres eller eksporteres.
   p=await open('#activePage=dreams');await p.waitForTimeout(300);
