@@ -15,6 +15,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.locator('#chooseGrowth').click();
   await p.locator('#onboardAge').fill('130');await p.locator('#beginJourney').click();
   assert.match(await p.locator('#journeyError').innerText(),/120/);assert.equal(await p.locator('#onboardAge').getAttribute('aria-invalid'),'true');
+  await p.locator('#onboardAge').fill('70');await p.locator('#beginJourney').click();assert.match(await p.locator('#journeyError').innerText(),/67 år eller eldre.*ingen sparetid/,'age 70 with until-67 gives a clear message, not 0 years');
   await p.locator('#onboardAge').fill('35');await p.locator('#onboardStart').fill('250000');await p.locator('#onboardStart').blur();
   assert.equal(await p.locator('#onboardStart').inputValue(),'250 000','start guide amounts are grouped when leaving the field');
   await p.locator('#onboardAge').fill('');await p.locator('#onboardAge').blur();assert.equal(await p.locator('#onboardAge').inputValue(),'','an empty optional age stays empty');
@@ -228,6 +229,24 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    assert.equal(await q.locator('#start').inputValue(),'9 999 999 999');assert.equal(await q.locator('#growth').inputValue(),'\u22123');
    assert.equal(await q.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0,'no horizontal scroll at 375 px');assert(await q.locator('#error').isHidden());
    assert((await q.locator('#startSlider').isDisabled())&&(await q.locator('#monthlySlider').isDisabled()),'large valid amounts lock their sliders');assert.deepEqual(q.errors,[]);await c.close();}
+
+  // Sparetid 0 år gir ingen innskudd og et meningsløst resultat. Minst én måned, også i lenker og på skyveknappen.
+  p=await open('#activePage=calculator&monthly=3000&rate=10');await p.waitForTimeout(300);
+  await p.locator('#years').fill('0');assert(await p.locator('#error').isVisible());assert.match(await p.locator('#error').innerText(),/«Du vil spare i» må være fra én måned/);
+  await click(p,'share');assert(!await p.evaluate(()=>document.getElementById('shareDialog').open),'0 years cannot be shared');
+  assert.equal(await p.locator('#yearsSlider').getAttribute('min'),'0.5');assert(await p.locator('#yearsSlider').isDisabled(),'0 years locks the slider until the user chooses it');await p.locator('#yearsSliderUnlock').click();await p.locator('#yearsSlider').fill('0.5');assert(await p.locator('#error').isHidden(),'the slider minimum is valid');
+  assert.notEqual(await p.locator('#total').innerText(),'0 kr','3 000 kr a month for half a year is more than 0 kr');
+  p=await open('#activePage=calculator&monthly=3000&years=0');await p.waitForTimeout(300);assert.equal(await p.evaluate(()=>s.years),10);assert.match(await p.locator('#toast').innerText(),/«Du vil spare i»/);
+  p=await open('#activePage=dreams');await p.waitForTimeout(300);assert.equal(await p.locator('#dreamYearsSlider').getAttribute('min'),'0.5');await p.locator('#dreamYearsSlider').fill('0.5');assert(await p.locator('#dreamError').isHidden());
+  // Aksetallene er runde og forskjellige, og en tom plan viser en forklaring i stedet for en graf.
+  p=await open('#activePage=calculator');await p.waitForTimeout(300);
+  for(const [start,monthly,years] of [['0','2000','10'],['0','3000','1'],['250000','0','5'],['0','100','0,5'],['1000000','20000','40']]){
+   await p.locator('#start').fill(start);await p.locator('#monthly').fill(monthly);await p.locator('#years').fill(years);
+   const labels=await p.evaluate(()=>[...document.querySelectorAll('#chart svg text[text-anchor="end"]')].map(t=>t.textContent).filter(x=>!/år$/.test(x)));
+   assert.equal(labels.length,5,'five axis labels');assert.equal(new Set(labels).size,5,'axis labels must differ: '+labels.join(' | '));assert.equal(labels[0],'0');}
+  await p.locator('#start').fill('0');await p.locator('#monthly').fill('0');
+  assert(await p.locator('#chart .chart-empty').isVisible(),'empty plan shows an explanation');assert.equal(await p.locator('#chart svg').count(),0);
+  await p.locator('#monthly').fill('2000');assert.equal(await p.locator('#chart svg').count(),1);assert.deepEqual(p.errors,[]);
 
   // Sparemål: egne feltnavn, riktig felt markert, og ugyldige mål kan ikke deles, lagres eller eksporteres.
   p=await open('#activePage=dreams');await p.waitForTimeout(300);
