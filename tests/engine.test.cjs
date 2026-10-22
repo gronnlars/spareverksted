@@ -12,3 +12,6 @@ const w={...E.defaults,rate:0,fee:0,withdrawInflation:false,annualWithdraw:10000
 assert.doesNotThrow(()=>E.withdrawal({...w,extraWithdrawYear:0},100000),'unused extra year may be empty');
 for(const p of E.dreamPlans(E.defaults))near(E.value(p.plan,p.plan.years,p.plan.rate,0,p.required),p.goal,'dream target');
 console.log('Passed: 200 monthly recurrence cases, goal solver, 10000 years, 32 withdrawal combinations and dream targets.');
+for(const [patch,label] of [[{years:101},'years above 100'],[{years:-1},'negative years'],[{monthly:2e7},'huge monthly'],[{rate:101},'rate above 100'],[{monthly:-1},'negative monthly']])assert.throws(()=>E.validate({...E.defaults,...patch}),Error,label);
+for(const patch of [{years:0},{years:100},{rate:-50},{rate:100},{monthly:0}])assert.doesNotThrow(()=>E.validate({...E.defaults,...patch}));
+console.log('Passed: input limits.');

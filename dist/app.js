@@ -2,9 +2,10 @@
 const $=id=>document.getElementById(id), E=Engine;
 let s={...E.defaults},mode='explore',rows=[],saved=[],level='simple',selectedPlans=new Set(),undoState=null,view={showBank:false,showRange:false,showGoal:false};
 const nf=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0}),dec=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:2});
-const money=x=>!Number.isFinite(x)?'Kan ikke beregnes':Math.abs(x)>=1e15?x.toExponential(3)+' kr':nf.format(x)+' kr';
+const big=x=>{const a=Math.abs(x),sign=x<0?'−':'';return a>=1e18?'over '+sign+'1 trillion kr':a>=1e15?sign+dec.format(a/1e15)+' billiarder kr':a>=1e12?sign+dec.format(a/1e12)+' billioner kr':null;};
+const money=x=>!Number.isFinite(x)?'Kan ikke beregnes':big(x)||nf.format(x)+' kr';
 const axisFormat=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0});
-const axisCompact=x=>Math.abs(x)>=1e15?x.toExponential(0):Math.abs(x)>=1e12?axisFormat.format(x/1e12)+' bill.':Math.abs(x)>=1e9?axisFormat.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?axisFormat.format(x/1000)+' tusen':axisFormat.format(x);
+const axisCompact=x=>Math.abs(x)>=1e18?'over 1 trill.':Math.abs(x)>=1e15?dec.format(x/1e15)+' bilj.':Math.abs(x)>=1e12?axisFormat.format(x/1e12)+' bill.':Math.abs(x)>=1e9?axisFormat.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?axisFormat.format(x/1000)+' tusen':axisFormat.format(x);
 const compact=x=>Math.abs(x)>=1e12?dec.format(x/1e12)+' bill.':Math.abs(x)>=1e9?dec.format(x/1e9)+' mrd.':Math.abs(x)>=1e6?dec.format(x/1e6)+' mill.':Math.abs(x)>=1000?dec.format(x/1000)+' tusen':nf.format(x);
 const escapeHTML=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const parsedNumber=value=>value.trim()===''?0:Number(value.replace(/[\s\u00a0\u202f]/g,'').replace(',','.'));
@@ -36,7 +37,7 @@ function render(){
  try{
  E.validate(s);rows=makeRows();const end=endYear(s),final=E.value(s,end),target=E.target(s),need=E.needed(s);
  if(rows.some(r=>Object.values(r).some(x=>!Number.isFinite(x)))||((view.showGoal||mode==='goal')&&!Number.isFinite(target)))throw Error('Tallene er større enn nettleseren kan beregne presist. Prøv kortere tid eller lavere vekst.');
- $('error').hidden=true;const shown=display(final,end),paid=display(nominalPaid(end),end);
+ $('error').hidden=true;$('main').classList.remove('stale');const shown=display(final,end),paid=display(nominalPaid(end),end);
  $('resultLabel').textContent=mode==='goal'?'FOR Å NÅ MÅLET TRENGER DU':`ETTER ${dec.format(end)} ÅR KAN DU HA`;
  $('total').textContent=mode==='goal'?(Number.isFinite(need)?money(Math.ceil(need))+' / mnd.':'Målet kan ikke nås med denne perioden'):money(shown);
  $('secondary').textContent=mode==='goal'?'Første månedsbeløp. Grafen viser fortsatt sparingen du har lagt inn.':s.real?`Målt i dagens kroner. Kontoen viser da ${money(final)} før skatt.`:`Det tilsvarer ${money(final/inflation(end))} med dagens priser. Før skatt.`;
@@ -55,7 +56,7 @@ function render(){
  $('progress').style.width=Math.max(0,Math.min(100,ratio*100))+'%';$('goalAction').replaceChildren();
  if(Number.isFinite(need)){const b=document.createElement('button');b.textContent=`Prøv ${money(Math.ceil(need))} per måned`;b.onclick=()=>changePlan({monthly:Math.ceil(need)},'Månedssparingen er tilpasset målet.');$('goalAction').append(b);}
  chart();table();experiments();plainExplanation(final,end);tips(need);retirement(final,end);$('withdrawCapital').textContent=money(final);drawWithdrawal(final);savedRender();syncLevel();
- }catch(err){$('error').hidden=false;$('error').textContent=err.message+' Resultatene nedenfor er ikke oppdatert.';$('mobileTotal').textContent='Sjekk tallene';$('mobileCurve').hidden=true;}
+ }catch(err){$('main').classList.add('stale');$('error').hidden=false;$('error').textContent=err.message+' Resultatene nedenfor er ikke oppdatert.';$('mobileTotal').textContent='Sjekk tallene';$('mobileCurve').hidden=true;}
  if(window.renderDream)window.renderDream();
 }
 function selectedComparisons(){return saved.map((item,index)=>({item,index})).filter(x=>selectedPlans.has(x.index)&&x.item.state.activePage!=='dreams').map(({item,index})=>{try{const n={...E.defaults,...item.state};E.validate(n);const points=planRows(n);if(points.some(p=>!Number.isFinite(p.v)))return null;return {name:item.name,index,n,points};}catch{return null;}}).filter(Boolean);}
