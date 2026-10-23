@@ -40,6 +40,12 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await page.locator('#chartPanel [data-edit-fields]').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'planInputs');
   // Menus contain the useful actions. Level choice is visible without opening its menu.
   await page.locator('.display-options>summary').click();await page.locator('#levels [data-level=advanced]').click();assert.equal(await page.locator('#displaySummary').innerText(),'Visning: Avansert');
+  // Phone anchor leaves room for a browser toolbar even with the extra cost row.
+  await page.locator('#monthly').scrollIntoViewIfNeeded();await page.waitForFunction(()=>document.getElementById('mobileResultButton').textContent==='Se resultat ↓');await page.locator('#mobileResultButton').click();
+  const mobileTop=(await page.locator('#savingsResult').boundingBox()).y;assert(mobileTop>=-9&&mobileTop<=0);
+  assert((await page.locator('.before-tax-badge').boundingBox()).y>=0,'Badge is not scrolled away');
+  assert((await page.locator('#resultLabel').boundingBox()).y>=0,'Heading is not scrolled away');
+  const nextAction=await page.locator('#seeGraph').boundingBox();assert(nextAction.y+nextAction.height<=712,'Both actions fit above a 100 px browser-toolbar allowance in the 812 px test viewport');
   await page.locator('.site-menu>summary').click();await page.locator('#plansMenu').click();assert.equal(await page.locator('#savedDetails').getAttribute('open'),'');assert.equal(await page.evaluate(()=>document.activeElement.id),'savedHeading');
   // Hidden assumptions and display settings survive editing the start choices.
   await page.evaluate(()=>{s.crash=30;s.crashYear=5;s.extra=50000;s.extraYear=3;view.showBank=true;mode='goal';fill();render();});
@@ -57,6 +63,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert(await page.locator('#journeyFreshNote').isVisible());assert.equal(await page.locator('#onboardStart').inputValue(),'0');await page.locator('#closeJourney').click();assert.equal(await state(),beforeEdit);
   // Desktop uses visible primary navigation, and calculator links keep the current plan.
   await page.setViewportSize({width:1280,height:900});assert(await page.locator('.desktop-nav').isVisible());assert.equal(await page.locator('.site-menu a[href*="github.com"]').count(),0);
+  await page.locator('#monthly').scrollIntoViewIfNeeded();await page.evaluate(()=>document.getElementById('mobileResultButton').click());const desktopTop=(await page.locator('#savingsResult').boundingBox()).y;assert(desktopTop>=19&&desktopTop<=21,'Desktop retains the 20 px margin');
   await page.locator('#withdrawalPage').click();await page.locator('.desktop-nav a[href="index.html"]').click();assert.equal(await page.evaluate(()=>s.monthly),4000);assert.equal(await page.evaluate(()=>document.activeElement.id),'planInputs');
   await page.locator('#dreamPage').click();await page.locator('#dreamPanel .return-fields').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'dreamInputs');
   await page.locator('#withdrawalPage').click();await page.locator('#withdrawalPanel .return-fields').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'withdrawInputs');
