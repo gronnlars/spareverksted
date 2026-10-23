@@ -67,3 +67,10 @@ for(const [rate,fee] of [[0,0],[5,0.2],[2,0.2]]){const s=plan({monthly:2000,rate
 {const s=plan({monthly:2000,years:10.04});near(E.depositsToday(s,10.04),independent(s).today,'avrundet måned',1e-9);}
 
 console.log('Passed: deposits and purchasing power in today’s kroner.');
+// Metodeteksten på siden skal beskrive samme metode som motoren og skille følsomhetsbånd fra utfallsrom.
+{
+ const html=require('node:fs').readFileSync(require('node:path').join(__dirname,'../dist/index.html'),'utf8');
+ assert(!/summen av innskudd delt på samme prisfaktor/.test(html),'Gammel metode for innskudd i dagens kroner står ikke på siden');
+ assert(/prisnivået da hvert innskudd ble satt inn/.test(html),'Metodeteksten beskriver innskudd i dagens kroner');
+ assert(/følsomhetstester/.test(html)&&/95 % utfallsrom/.test(html),'Metodeteksten skiller følsomhetsbånd og utfallsrom');
+}
