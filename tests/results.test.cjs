@@ -47,7 +47,7 @@ assert.equal(E.value(s1,10),250000,'0/0/0: sluttverdi lik innskuddene');
 {const s={...base,start:10000,monthly:2000,years:30,rate:-5,fee:0.2,inflation:2.5};const x=E.explain(s);
  assert.equal(x.cause,'value+fees');assert.ok(E.value({...s,fee:0},30)<x.paid,'tap også uten kostnader');assert.ok(x.costEffect<x.loss,'kostnadene er bare en liten del');
  assert.equal(kr(x.loss),367881);assert.equal(kr(x.costEffect),8282);near(x.final,ref(s),'−5 % mot uavhengig løkke');
- assert.equal(E.explain({...s,fee:0}).cause,'value');assert.throws(()=>E.validate(s),/fra 0 % til 100 %/,'skjemaet stopper negativ forventet vekst');
+ assert.equal(E.explain({...s,fee:0}).cause,'value');assert.doesNotThrow(()=>E.validate(s),'negativ forventet vekst kan skrives inn (beslutning 23.10.2026)');assert.throws(()=>E.validate({...s,rate:-100}),/over −100 %/,'−100 % har ingen månedlig vekst i modellen');
  // Grensetilfelle: −0,1 % vekst og 0,2 % kostnad. Liten negativ vekst gir tap også uten kostnader.
  assert.equal(E.explain({...s,rate:-0.1}).cause,'value+fees');assert.equal(E.explain({...s,rate:0.1}).cause,'fees');}
 // Kostnader større enn vekst: tapet er mindre enn kostnadseffekten, og årsaken er kostnadene.
@@ -64,4 +64,20 @@ assert.notEqual(E.value(B,40),Math.round(E.value(B,40)));
 {const s={...base,start:0,monthly:2000,years:10,rate:5,fee:0,inflation:2.5},rm=1.05**(1/12);
  near(ref(s,true),E.value(s,10)*rm,'månedsstart = månedsslutt × (1 + månedlig vekst)');
  assert.equal(kr(real(E.value(s,10),10,2.5)),241177,'Spareverksted, dagens kroner');assert.equal(kr(real(ref(s,true),10,2.5)),242159,'samme tall som ODIN viste');}
+// Negativ årlig avkastning gjennom hele perioden (beslutning 23.10.2026). Modellen gjør årsveksten om med (1 + r)^(1/12),
+// som er definert for alle r over −100 %. Kontrollert mot månedsløkken, med og uten kostnader, også nær grensen.
+for(const rate of [-0.1,-5,-20,-50,-90,-99,-99.99])for(const fee of [0,0.2,3])for(const years of [1,30,100]){
+ const s={...base,start:100000,monthly:2000,years,rate,fee,inflation:2.5};const v=E.value(s,years);
+ assert.ok(Number.isFinite(v)&&v>=0,`${rate} %, ${fee} %, ${years} år: endelig og aldri negativ`);near(v,ref(s),`${rate} %, ${fee} %, ${years} år`);
+ assert.doesNotThrow(()=>E.validate(s),`${rate} % er gyldig i skjemaet`);}
+for(const rate of [-100,-100.5,-1000])assert.throws(()=>E.validate({...base,rate}),/over −100 %/,`${rate} % er ugyldig`);
+// Et enkelt børsfall og vedvarende negativ avkastning er forskjellige årsaker og nevnes hver for seg.
+{const s={...base,start:0,monthly:2000,years:10,rate:-3,fee:0,inflation:2.5};
+ assert.equal(E.explain(s).cause,'value','bare negativ avkastning');
+ assert.equal(E.explain({...s,rate:5,crash:40,crashYear:9}).cause,'fall','bare børsfall');
+ assert.equal(E.explain({...s,crash:40,crashYear:9}).cause,'fall+value','begge');
+ assert.equal(E.explain({...s,fee:0.2,crash:40,crashYear:9}).cause,'fall+value+fees','begge og kostnader');}
+// Risikovalget endrer aldri beregningen.
+{const s={...base,start:10000,monthly:2000,years:20,rate:5,fee:0.2,inflation:2.5};const v=E.value(s,20);
+ for(const stress of ['low','medium','high'])for(const riskChosen of [true,false])assert.equal(E.value({...s,stress,riskChosen},20),v,'risikovalg '+stress);}
 console.log('Passed: test A–D against an independent monthly loop, loss causes, purchasing power, long horizons, and month-start vs month-end.');

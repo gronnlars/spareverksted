@@ -22,3 +22,5 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 .range-control input[type=range]:disabled{opacity:.45;cursor:not-allowed}
 .range-note{font-size:13px;line-height:1.5;color:var(--muted);font-weight:400;margin:6px 0 0}
 .range-note .text-link{display:inline-block;min-height:32px;padding:6px 0;margin:0;font-weight:600;text-decoration:underline;text-underline-offset:2px}
+
+.metric-note{display:block;font-size:12px;color:#c9d8bd;margin-top:2px}
