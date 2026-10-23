@@ -39,7 +39,9 @@ const all=m=>m.main+' '+m.details.map(d=>d.title+': '+d.text).join(' ')+' '+m.ac
 {const m=build({start:0,monthly:2000,rate:8,fee:0,years:10});assert.doesNotMatch(all(m),/sparekonto|brukskonto|indeksfond/i);}
 // 10. Sparekonto med 8 %: saklig forutsetning, ingen påstand om inflasjon. Lavere rente vises uten å endre tallene.
 {const s={...base,start:0,monthly:2000,rate:8,fee:0,years:10,savingsType:'savings'},m=M.build(E,s,10,f);
- assert.match(m.main,/Beregningen forutsetter 8 % rente på sparekontoen gjennom hele perioden\. Kontroller at renten stemmer med kontovilkårene\. Endres renten, blir resultatet annerledes\./);
+ assert.match(all(m),/Beregningen forutsetter 8 % rente på sparekontoen gjennom hele perioden\. Kontroller at renten stemmer med kontovilkårene\. Endres renten, blir resultatet annerledes\./);
+ assert.doesNotMatch(m.main,/Kontroller at renten/,'kontovilkårene ligger i fordypningen');
+ assert.match(m.main,/Renter beskattes hvert år/,'skatteforbeholdet er fortsatt synlig');
  assert.doesNotMatch(all(m),/inflasjon|uvanlig|høy rente/i);
  const a=m.actions.find(x=>x.id==='lowerRate');assert.match(a.label,/lavere rente/);assert.match(a.text,/Med 6 % rente i stedet for 8 %/);assert.match(a.text,/Tallene dine er ikke endret/);
  assert.equal(s.rate,8,'brukerens tall er uendret');}
