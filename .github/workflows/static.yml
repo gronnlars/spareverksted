@@ -64,6 +64,8 @@ jobs:
           node tests/a11y-browser.cjs
           node tests/akse-browser.cjs
           node tests/polish-browser.cjs
+          SPARE_ENGINE=firefox node tests/polish-browser.cjs
+          SPARE_ENGINE=webkit node tests/polish-browser.cjs
       - name: UI review screenshots
         if: always()
         uses: actions/upload-artifact@v4
