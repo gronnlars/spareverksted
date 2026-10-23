@@ -44,15 +44,14 @@ jobs:
           node --check dist/navigation.js
   browser:
     runs-on: ubuntu-latest
+    # Playwrights eget testbilde har Chromium og systempakkene ferdig installert.
+    # Versjonen må være lik playwright-pakken under.
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.0-noble
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Install Playwright with Chromium
-        run: |
-          npm install --no-save --no-package-lock playwright@1.56.0
-          npx playwright install --with-deps chromium
+      - name: Install Playwright
+        run: npm install --no-save --no-package-lock playwright@1.56.0
       - name: Browser flows (Chromium)
         run: |
           node tests/input-browser.cjs
