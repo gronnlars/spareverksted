@@ -63,6 +63,15 @@ jobs:
           node tests/roundtrip-browser.cjs
           node tests/a11y-browser.cjs
           node tests/akse-browser.cjs
+          node tests/polish-browser.cjs
+      - name: UI review screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-review
+          path: /tmp/spareverksted-ui-review
+          if-no-files-found: ignore
+          retention-days: 7
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: [checks, browser]
