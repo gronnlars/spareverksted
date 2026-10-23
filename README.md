@@ -97,7 +97,13 @@ Grensene for alle tallfelt står i én oversikt i `dist/engine.js`. Deling, lagr
 
 Gjennomgå helst beregninger, numeriske grensetilfeller, tilgjengelighet og mobilflyt før nye funksjoner legges til. Nye finansielle modeller må dokumentere forutsetningene og ha uavhengige kontrollberegninger. Ikke endre en brukers innstillinger stille ved nivåbytte.
 
-Koden er åpen kildekode under [MIT-lisensen](LICENSE). Se [bidragsveiledningen](CONTRIBUTING.md).
+## Lisens og en vennlig oppfordring
+
+Koden er åpen kildekode under [MIT-lisensen](LICENSE). Du kan bruke, endre og dele den fritt, også kommersielt. Se [bidragsveiledningen](CONTRIBUTING.md).
+
+**Bruker du Spareverksted kommersielt**, ber vi deg gi et fast beløp hvert år til en organisasjon som hjelper mennesker, dyr eller natur. Du velger selv organisasjon og beløp. Lisensen krever det ikke, men vi regner med at du gjør det.
+
+Bruker du det privat, er du like velkommen uten å gi noe.
 
 ## GitHub Pages
 

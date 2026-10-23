@@ -1,0 +1,22 @@
+.about-page main{max-width:1120px;padding-top:clamp(28px,6vw,72px)}
+.about-intro{max-width:680px;margin-bottom:56px}
+.about-intro h1{font-size:clamp(34px,5vw,54px);line-height:1.12;letter-spacing:-1.5px;margin:14px 0 24px;font-weight:600}
+.about-intro p,.giving-section>p{font-size:17px;line-height:1.7}
+.about-jump{display:inline-block;padding:12px 0;margin-top:12px;text-underline-offset:4px;font-weight:650}
+.giving-section{border-top:1px solid var(--line);padding-top:32px;scroll-margin-top:24px}
+.giving-section>h2{font-size:clamp(25px,3.5vw,34px);line-height:1.2;max-width:650px}
+.giving-section>p{max-width:680px}
+.giving-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:28px 0 20px}
+.giving-card{display:flex;flex-direction:column;min-width:0;padding:24px;background:var(--surface,#fff);border:1px solid var(--line);border-radius:var(--radius)}
+.giving-card h3{font-size:20px;line-height:1.3}
+.giving-card>p:first-of-type{margin:6px 0 24px;flex:1}
+.give-button{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:52px;padding:12px 16px;background:var(--primary-bg,#183f36);color:var(--on-primary,#fff);border-radius:9px;text-decoration:none;font-weight:650;line-height:1.4}
+.give-button:hover{filter:brightness(.92)}
+.vipps-line{display:flex;align-items:center;flex-wrap:wrap;gap:4px 12px;margin-top:12px;font-size:14px}
+.vipps-line strong{user-select:all;font-variant-numeric:tabular-nums}
+.vipps-line button{min-height:44px;font-size:13px;padding:8px}
+.giving-section .giving-help,.giving-help{font-size:14px;line-height:1.6;color:var(--muted)}
+#copyStatus:empty{display:none}
+@media(max-width:850px){.giving-cards{grid-template-columns:1fr}.giving-card{padding:22px}.giving-card>p:first-of-type{margin-bottom:18px}}
+@media(max-width:480px){.about-page main{padding-inline:20px}.about-intro{margin-bottom:36px}.about-intro p,.giving-section>p{font-size:16px}.about-page footer{flex-direction:column;align-items:flex-start;gap:16px}.give-button{min-height:52px}}
+.use-section{margin-top:48px}
