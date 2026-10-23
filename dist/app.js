@@ -93,13 +93,14 @@ const depositsToday=(t,n=s)=>E.depositsToday(n,t);
 // Innskuddene vises i samme kroneverdi som sluttbeløpet, slik at innskudd + vekst = sluttbeløp i begge visninger.
 const paidShown=(t,n=s)=>s.real?depositsToday(t,n):nominalPaid(t,n);
 function planRows(n){const months=Math.round(n.years*12),count=Math.min(months,600);return Array.from({length:count+1},(_,i)=>{const t=count?Math.round(i*months/count)/12:0;return {t,v:display(E.value(n,t),t,n),paid:paidShown(t,n),paidNominal:nominalPaid(t,n)};});}
-// For indeksfond bruker båndet Finans Norges formelverk (95 % utfallsrom som avhenger av sparetiden). Ellers lavere og høyere vekst.
+// The graph and exports share scenario values. These are not a documented probability interval for the whole plan.
 const indexBand=()=>s.savingsType==='index';
+const scenarioValue=(t,direction)=>indexBand()?E.band(s,t,direction*1.96,Assumptions.index.sigma):E.value(s,t,s.rate+direction*s.spread);
 function makeRows(){
  if(view.showRange&&!indexBand()&&s.rate-s.spread<=-100)throw Error('Lavt scenario må ha avkastning over −100 %. Reduser scenarioavviket eller slå av avkastningsbåndet.');
  return planRows(s).map(r=>({...r,
- low:view.showRange?display(indexBand()?E.band(s,r.t,-1.96,Assumptions.index.sigma):E.value(s,r.t,s.rate-s.spread),r.t):r.v,
- high:view.showRange?display(indexBand()?E.band(s,r.t,1.96,Assumptions.index.sigma):E.value(s,r.t,s.rate+s.spread),r.t):r.v,
+ low:view.showRange?display(scenarioValue(r.t,-1),r.t):r.v,
+ high:view.showRange?display(scenarioValue(r.t,1),r.t):r.v,
  bank:view.showBank?display(E.value({...s,crash:0},r.t,s.bank,0),r.t):r.v,
  goal:(view.showGoal||mode==='goal')?(s.goalReal?display(s.goal*inflation(r.t),r.t):display(s.goal,r.t)):0}));
 }
