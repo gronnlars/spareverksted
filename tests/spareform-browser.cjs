@@ -20,7 +20,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert(await p.locator('#meaning').isVisible());assert.equal(await text(p,'#meaningTitle'),'Dette betyr tallene dine');
   assert.equal(await p.evaluate(()=>document.querySelector('#meaning [aria-live],#meaning[aria-live]')),null,'ingen automatisk opplesning');
   assert.match(await text(p,'#meaningMain'),/^Avkastningen er større enn prisveksten/);
-  assert.equal(await p.evaluate(()=>{const a=document.querySelector('.hero-result'),b=document.getElementById('meaning');return a.nextElementSibling===b;}),true,'seksjonen står rett etter resultatet');
+  assert.equal(await p.evaluate(()=>{const a=document.querySelector('.hero-result'),b=document.getElementById('meaning');return a.nextElementSibling.classList.contains('result-navigation')&&a.nextElementSibling.nextElementSibling===b;}),true,'snarveiene kommer før forklaringen, rett etter resultatet');
   const total=await text(p,'#total'),inputs=await p.evaluate(()=>['start','monthly','years','rate','inflation','fee'].map(k=>document.getElementById(k).value));
 
   // 2. Velg brukskonto: synlige forutsetninger for brukskonto (0 % rente, 0 % kostnad), med melding og angreknapp.
