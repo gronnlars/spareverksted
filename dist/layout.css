@@ -71,7 +71,7 @@ footer{align-items:center;gap:12px}
  #basic label{margin-top:12px;font-size:12px}
  #basic .field-label{min-height:34px;padding-right:24px;line-height:1.4}
  #basic .fieldbox{margin-top:6px}
- #basic .help-button{width:22px;height:22px;font-size:11px}
+ #basic .help-button{width:24px;height:24px;min-width:24px;font-size:12px}
  body[data-level=simple] #basic .field-description,body[data-level=simple] .input-note{display:none}
  .range-control{margin-top:2px}.range-control input[type=range]{height:32px}
  .privacy-note{font-size:11px;margin-bottom:0}

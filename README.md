@@ -36,6 +36,7 @@ Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/packa
 - `tests/validation.test.cjs`: feltgrenser og feltnavn, sparemål, uttaksfelt, delte lenker felt for felt, gamle lagrede planer og realistiske planer mot lukket formel.
 - `tests/results.test.cjs`: kontrolltilfellene A til D mot en uavhengig månedsløkke, årsak til tap (kostnader, børsfall), kjøpekraft, lange perioder og forskjellen mellom innskudd ved månedsslutt og månedsstart.
 - `tests/band.test.cjs`: utfallsrommet for indeksfond mot Finans Norges formel, med lukket formel og egen løkke.
+- `tests/a11y-browser.cjs`: tilgjengelighet i Chromium i alle tre temaer: kontrast (også grafens tekst og linjer), trykkflater (WCAG 2.5.8), navn på kontroller, reflow ved 320 og 640 px, synlig fokus, korte skjermer og hele flyten med bare tastatur. Erstatter ikke kontroll i Safari, Firefox eller med skjermleser.
 - `tests/roundtrip-browser.cjs`: hele planen beholdes til og fra «Spør om sparing», med lenke og tilbakeknapp; endringer i veilederen går til riktig felt; delte lenker vinner.
 - `tests/meaning.test.cjs`: forklaringene følger tallene (0 % rente, 0 % prisvekst, negativ avkastning, fallende prisnivå, løpende innbetalinger), spareformen gjettes aldri og endrer ingen tall.
 - `tests/startflyt-browser.cjs` og `tests/spareform-browser.cjs`: startflyt, tomme felt, spareform, forklaringen ved resultatet og kroner mot kjøpekraft i grafen.
@@ -141,3 +142,9 @@ Valgfri nettleserkontroll med Playwright og Chromium installert. Testen starter 
 node tests/veileder-browser.cjs
 ```
 
+
+### Avgrensning av tilgjengelighetskontrollen
+
+Resultatet omtales som «ingen avvik funnet i de gjennomførte kontrollene». Den egenutviklede Chromium-kontrollen dokumenterer ikke full WCAG-samsvar. Faktisk tekstforstørring, iPhone Safari og skjermlesere må kontrolleres manuelt før fase 2 avsluttes.
+
+Utfallsbåndet har stiplede kantlinjer fra før. Fyllflaten er ikke eneste markør for intervallet. Kantlinjene kontrolleres mot både panelbakgrunnen, båndets fyll og det overlappende arealfyllet, med minst 3:1 kontrast. Natt-temaet har mørkere båndfyll. «Før skatt på uttak» er minst 14 px ved vanlig tekststørrelse; etiketter og forbehold under utfallene er minst 13 px.

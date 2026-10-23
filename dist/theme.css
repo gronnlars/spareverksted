@@ -47,3 +47,10 @@ svg [stroke="#93a18c"]{stroke:#6f8068}
 @media(max-width:420px){.brand .mark{display:none}.site-menu>summary>span{display:none}}
 @media(prefers-reduced-motion:reduce){button{transition:none}}
 @media print{.theme-picker{display:none!important}:root[data-theme]{color-scheme:light;--ink:#183f36;--green:#23654e;--muted:#5f7168;--cream:#fff;--surface:#fff;--soft:#edf2e6;--line:#dce4db;--surface-soft:#edf2e6;--control-border:#ccd8c9;--positive:#23523a;--positive-bg:#edf6ef;--negative:#803d35;--negative-bg:#fcf0ed;--warning:#614818;--warning-bg:#fff1cf;--primary-bg:#183f36;--on-primary:#fff}:root[data-theme=night] svg text{fill:#5f7168}:root[data-theme=night] svg [stroke="#24684f"],:root[data-theme=night] svg [stroke="#28664d"]{stroke:#24684f}:root[data-theme=night] svg [stroke="#7a5a2e"]{stroke:#7a5a2e}}
+
+/* Utfallsrommets grenser må også skilles fra fyllflatene, ikke bare fra panelet. */
+#chart path[stroke="#a77547"]{stroke:#80552f}
+#chart path[stroke="#637ca2"]{stroke:#47618a}
+:root[data-theme=night] #chart path[stroke="#a77547"]{stroke:#efbf86}
+:root[data-theme=night] #chart path[stroke="#637ca2"]{stroke:#aec7f4}
+:root[data-theme=night] #chart path[fill="#c5d9b5"]{fill:#44604f}
