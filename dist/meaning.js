@@ -11,7 +11,7 @@ function build(E,s,end,f,A){
  const final=E.value(s,end),paid=E.raw({...s,rate:0,fee:0},end,0,0),paidToday=E.depositsToday(s,end),real=final/P;
  const growth=final-paid,powerChange=real-paidToday,X=E.explain(s,end),costEffect=Math.max(0,E.value(s,end,s.rate,0)-final);
  const deposits=paid-s.start>0.5,type=TYPES[s.savingsType]||null,d=E.defaults,same=(a,b)=>Math.abs(a-b)<0.5;
- const main=[],details=[],actions=[];
+ const main=[],details=[],actions=[];let rangeExplanation='';
  // 1. Kroner og kjøpekraft. Setningene vises bare når de stemmer med tallene.
  if(paid<=0.5)main.push('Planen har ingen innskudd ennå.');
  else if(s.inflation===0)main.push('Med 0 % prisvekst er kroner og kjøpekraft det samme i denne beregningen.');
@@ -32,8 +32,7 @@ function build(E,s,end,f,A){
   const own=s.riskChosen&&s.stress==='low'?'Du har selv oppgitt at du helst vil unngå store fall. ':'';
   main.push(own+`Et indeksfond kan falle mye i verdi underveis, men beregningen viser en jevn utvikling på ${f.pct(s.rate)} hvert år.`);
   if(A&&A.index&&paid>0.5){const low=E.band(s,end,-1.96,A.index.sigma),years=Math.round(end*12)/12;
-   main.push(low<paid-0.5?`Med ${f.years(years)} sparetid kan verdien også ende under det du har satt inn: i den nedre delen av utfallsrommet blir den ${f.money(low)}.`:`Med ${f.years(years)} sparetid ligger også den nedre delen av utfallsrommet over innskuddene (${f.money(low)}), men det er en modell, ikke en garanti.`);}
-  actions.push({id:'range',label:'Vis utfallsrommet i grafen',hide:'Skjul utfallsrommet i grafen'});
+   rangeExplanation=low<paid-0.5?`Med ${f.years(years)} sparetid kan verdien også ende under det du har satt inn: i den nedre delen av utfallsrommet blir den ${f.money(low)}.`:`Med ${f.years(years)} sparetid ligger også den nedre delen av utfallsrommet over innskuddene (${f.money(low)}), men det er en modell, ikke en garanti.`;}
  }
  if(type&&s.savingsType!=='index'&&s.rate>0&&!(startValues.length)){const lower=Math.max(0,s.rate-2),v=E.value(s,end,lower);
   actions.push({id:'lowerRate',label:'Se hvordan en lavere rente påvirker resultatet',text:`Med ${f.pct(lower)} rente i stedet for ${f.pct(s.rate)} blir sluttbeløpet ${f.money(v)}${s.inflation>0?`, eller ${f.money(v/P)} i dagens kroner`:''}. Tallene dine er ikke endret.`});}
@@ -46,7 +45,7 @@ function build(E,s,end,f,A){
  if(s.rate<0)a+=` ${f.pct(s.rate)} er en nedgang hvert år gjennom hele perioden, ikke ett enkelt fall.`;
  if(s.savingsType==='index')a+=' Forklaringene gjelder aksjeindeksfond, for eksempel et globalt aksjeindeksfond. Andre fond kan svinge mer eller mindre.'+(A&&A.index?` Utfallsrommet bygger på Finans Norges standard for avkastningsprognoser (${f.pct(A.index.realRate)} forventet realavkastning og ${f.pct(A.index.sigma)} årlig svingning for aksjer). Det er et 95 % intervall i modellen: kortere sparetid gir større usikkerhet i snittavkastningen. Modellen er ikke en garanti, og virkeligheten kan havne utenfor.`:'');
  if(!type||s.savingsType==='index')a+=' Du kan velge en avkastning i modellen, men ikke bestemme hva markedet faktisk gir.';
- details.push({title:'Forutsetninger',text:a});
+ details.push({title:'Forutsetninger',text:(rangeExplanation?rangeExplanation+' ':'')+a});
  return {main:main.join(' '),details,actions,numbers:{final,paid,paidToday,real,growth,powerChange}};
 }
 const api={build,TYPES};

@@ -41,24 +41,24 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.locator('#savingsTypes [data-type=index]').click();assert.equal(await p.locator('#savingsTypes [data-type=savings]').getAttribute('aria-pressed'),'false');
   assert.equal(await p.evaluate(()=>s.rate),7.11,'4,5 % realavkastning pluss 2,5 % prisvekst');assert.equal(await p.evaluate(()=>s.fee),0.2,'et indeksfond arver ikke 0 % kostnad fra en konto; kostnaden er en forhåndsutfylt startverdi');assert.equal(await p.evaluate(()=>view.showRange),true);
   assert.match(await text(p,'#startNote'),/Veksten 7,11 % er 4,5 % forventet realavkastning for aksjer \(Finans Norges prognosestandard, februar 2026\)/);
-  assert.match(await text(p,'#meaningMain'),/Et indeksfond kan falle mye i verdi underveis/);assert.match(await text(p,'#meaningMain'),/Med 10 år sparetid/);
+  assert.match(await text(p,'#meaningMain'),/Et indeksfond kan falle mye i verdi underveis/);assert.doesNotMatch(await text(p,'#meaningMain'),/Med 10 år sparetid/);await p.locator('#meaningMore>summary').click();assert.match(await text(p,'#meaningDetails'),/Med 10 år sparetid/);
   assert.match(await p.locator('#chartNote').innerText(),/95 % utfallsrom etter Finans Norges prognosemodell/);assert.match(await p.locator('#chartLegend').innerText(),/95 % utfallsrom \(modell\)/);assert.equal(await p.locator('#showRange').getAttribute('aria-label'),'Vis utfallsrom (95 %)');
   assert(await p.locator('#fanTuning').isHidden(),'avviket i prosentpoeng brukes ikke for indeksfond');
   // Kortere sparetid gir et bredere utfallsrom (målt som årlig snittavkastning) og kan gi tap.
   const lowShare=()=>p.evaluate(()=>E.band(s,s.years,-1.96,Assumptions.index.sigma)/E.raw({...s,rate:0,fee:0},s.years,0,0));
   await p.locator('#years').fill('3');await p.locator('#years').blur();
-  assert.match(await text(p,'#meaningMain'),/Med 3 år sparetid kan verdien også ende under det du har satt inn/);const short=await lowShare();
+  assert.match(await text(p,'#meaningDetails'),/Med 3 år sparetid kan verdien også ende under det du har satt inn/);const short=await lowShare();
   await p.locator('#years').fill('25');await p.locator('#years').blur();const long=await lowShare();
   assert.ok(long>short,`nedre del i forhold til innskuddene er bedre over 25 år (${long.toFixed(2)}) enn over 3 år (${short.toFixed(2)})`);
   // Engangsbeløp over 25 år: også den nedre delen ligger over innskuddet.
   await p.locator('#monthly').fill('0');await p.locator('#start').fill('100000');await p.locator('#start').blur();
-  assert.match(await text(p,'#meaningMain'),/Med 25 år sparetid ligger også den nedre delen av utfallsrommet over innskuddene/);
+  assert.match(await text(p,'#meaningDetails'),/Med 25 år sparetid ligger også den nedre delen av utfallsrommet over innskuddene/);
   await p.locator('#start').fill('0');await p.locator('#monthly').fill('2000');await p.locator('#monthly').blur();
   await p.locator('#years').fill('10');await p.locator('#years').blur();
   // Handlingen skjuler og viser båndet uten å endre tallene, og uten å flytte fokus eller scrolle.
-  const t2=await text(p,'#total');const action=p.locator('#meaningActions button');await action.scrollIntoViewIfNeeded();const scroll=await p.evaluate(()=>scrollY);await action.click();
+  const t2=await text(p,'#total');const action=p.locator('#showRange');await action.scrollIntoViewIfNeeded();const scroll=await p.evaluate(()=>scrollY);await action.click();
   assert.equal(await p.evaluate(()=>view.showRange),false);assert.equal(await text(p,'#total'),t2);assert.equal(await p.evaluate(()=>scrollY),scroll,'ingen automatisk scrolling');
-  await p.locator('#meaningActions button').click();assert.equal(await p.evaluate(()=>view.showRange),true);
+  await p.locator('#showRange').click();assert.equal(await p.evaluate(()=>view.showRange),true);
   // Trykk på valgt knapp igjen fjerner valget uten å endre tallene. «Fjern valget» gjør det samme.
   await p.locator('#savingsTypes [data-type=index]').click();assert.equal(await p.locator('#savingsTypes [aria-pressed=true]').count(),0);assert.equal(await p.evaluate(()=>s.savingsType),'');assert.equal(await p.evaluate(()=>s.rate),7.11,'å fjerne valget endrer ingen tall');
   await p.locator('#savingsTypes [data-type=savings]').click();await p.locator('#clearSavingsType').click();

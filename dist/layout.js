@@ -1,4 +1,7 @@
 'use strict';
+// Main destinations stay visible when the desktop has room for them.
+const siteMenu=document.querySelector('.site-menu'),siteNav=siteMenu?.querySelector('.site-nav');
+if(siteNav){const desktopNav=siteNav.cloneNode(true);desktopNav.classList.add('desktop-nav');siteMenu.before(desktopNav);}
 // Native details keep menus usable with keyboard, touch and without JavaScript.
 const layoutMenus=[...document.querySelectorAll('.site-menu,.display-options')];
 document.addEventListener('click',event=>{
