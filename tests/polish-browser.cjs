@@ -33,6 +33,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // Check at 3 and 25 years, both units, and with/without index-fund scenarios.
   for(const savingsType of ['index','savings'])for(const years of [3,25])for(const real of [false,true]){
    await p.goto(origin+`/index.html#start=100000&monthly=2000&years=${years}&rate=7.11&fee=0.2&savingsType=${savingsType}&showRange=1&real=${real?1:0}`);
+   await p.reload(); // Changing only the fragment does not reload the current document.
    const expected=await p.evaluate(()=>({low:rows.at(-1).low,high:rows.at(-1).high,factor:s.real?inflation(s.years):1,matrix:savingsMatrix()}));
    const csvReady=p.waitForEvent('download');await p.evaluate(()=>document.getElementById('exportCsv').click());
    const download=await csvReady,csv=fs.readFileSync(await download.path(),'utf8').replace(/^\uFEFF/,'');
@@ -44,6 +45,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    near(low,expected.matrix.at(-1).at(-2));near(high,expected.matrix.at(-1).at(-1));
   }
   await p.goto(origin+'/index.html#start=10000&monthly=1000&years=20&savingsType=index&rate=7.11&showRange=1');
+  await p.reload();
   await p.locator('#seeGraph').click();await p.screenshot({path:path.join(shots,'04-mobile-index.png')});
   await p.setViewportSize({width:1280,height:900});await p.evaluate(()=>scrollTo(0,0));
   await p.screenshot({path:path.join(shots,'05-desktop.png')});
