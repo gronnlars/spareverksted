@@ -51,7 +51,7 @@ const all=m=>m.main+' '+m.details.map(d=>d.title+': '+d.text).join(' ')+' '+m.ac
 // 12. Indeksfond: kan falle i verdi, jevn vekst er ikke svingningene, og 5 % er en startverdi. Globalt aksjeindeksfond presiseres.
 {const m=build({savingsType:'index'});
  assert.match(m.main,/Et indeksfond kan falle mye i verdi underveis, men beregningen viser en jevn utvikling på 5 % hvert år\./);assert.match(all(m),/5 % vekst, 0,2 % kostnad og 2,5 % prisvekst er startverdier, ikke anbefalinger\./);assert.match(all(m),/og 2,5 % prisvekst\. Alt er før skatt\./);
- assert.match(all(m),/globalt aksjeindeksfond/);assert.ok(m.actions.some(a=>a.id==='range'));
+ assert.match(all(m),/globalt aksjeindeksfond/);assert.ok(!m.actions.some(a=>a.id==='range'),'utfallsrom styres ved grafen');
  assert.doesNotMatch(all(m),/sikker|garantert/i,'indeksfond framstilles ikke som sikker gevinst');}
 // 13. Risikovalget brukes bare når det gir mening, og omtales som brukerens egen vurdering.
 {assert.match(build({savingsType:'index',riskChosen:true,stress:'low'}).main,/ Du har selv oppgitt at du helst vil unngå store fall\. Et indeksfond/);

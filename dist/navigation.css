@@ -1,0 +1,16 @@
+.result-navigation{display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px;margin:0 0 18px}
+.result-navigation button{min-height:44px}
+.result-navigation .text-link,.return-fields{min-height:44px;padding-block:10px}
+#planInputs,#dreamInputs,#withdrawInputs,#chartPanel,#savedHeading{scroll-margin-block-start:20px}
+#planInputs:focus-visible,#dreamInputs:focus-visible,#withdrawInputs:focus-visible,#chartPanel:focus-visible,#savedHeading:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+.desktop-nav{display:none!important}
+#journeyFreshNote{font-size:13px;color:var(--muted);margin-top:16px}
+@media(min-width:1000px){
+ .site-header .desktop-nav{display:flex!important;flex-direction:row;gap:4px;margin-left:auto}
+ .site-menu .site-nav{display:none!important}
+ .site-header .menu-panel .actions{border-top:0;margin-top:0;padding-top:0}
+ .guidance-page .site-menu{display:none}
+ body[data-stage=welcome] .site-menu{display:none}
+}
+@media(max-width:420px){.display-options>summary{font-size:11px;padding-inline:5px}.workbench-toolbar{gap:5px}.page-nav button{font-size:13px;padding-inline:4px}}
+@media print{.desktop-nav,.result-navigation,.return-fields{display:none!important}}

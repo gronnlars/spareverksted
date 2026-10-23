@@ -37,9 +37,9 @@ for(let i=0;i<200;i++){const s={...base,start:rnd()*1e6,monthly:rnd()*2e4,growth
 // 6. Forklaringen bruker båndet og sparetiden.
 {const f={money:x=>Math.round(x)+' kr',pct:v=>v+' %',years:t=>t+' år'};
  const short=M.build(E,{...base,start:100000,monthly:0,fee:0,rate:7.11,years:3,savingsType:'index'},3,f,A);
- assert.match(short.main,/Med 3 år sparetid kan verdien også ende under det du har satt inn/);
+ assert.match(short.main,/Et indeksfond kan falle mye/);assert.match(short.details.at(-1).text,/Med 3 år sparetid kan verdien også ende under det du har satt inn/);
  const long=M.build(E,{...base,start:100000,monthly:0,fee:0,rate:7.11,years:25,savingsType:'index'},25,f,A);
- assert.match(long.main,/Med 25 år sparetid ligger også den nedre delen av utfallsrommet over innskuddene/);assert.match(long.main,/ikke en garanti/);
+ assert.match(long.details.at(-1).text,/Med 25 år sparetid ligger også den nedre delen av utfallsrommet over innskuddene/);assert.match(long.details.at(-1).text,/ikke en garanti/);
  assert.match(long.details.at(-1).text,/Finans Norges standard for avkastningsprognoser/);
  const none=M.build(E,{...base,start:100000,monthly:0,fee:0,rate:7.11,years:3,savingsType:'savings'},3,f,A);assert.doesNotMatch(none.main,/utfallsrom/);}
 console.log('Passed: index fund outcome range follows the Finans Norge formula and depends on the horizon.');

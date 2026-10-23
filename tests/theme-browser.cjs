@@ -23,7 +23,7 @@ const contrast=(a,b)=>{const lum=c=>{const v=c.match(/[\d.]+/g).slice(0,3).map(N
     assert.equal(await page.locator('html').getAttribute('data-theme'),theme);await overflow();
     await checkContrast('.brand');await checkContrast('.theme-picker [aria-pressed=true]',3);await checkContrast('.theme-picker [aria-pressed=false]',3);
     const boxes=await page.locator('.theme-picker button').evaluateAll(els=>els.map(e=>{const r=e.getBoundingClientRect();return {w:r.width,h:r.height};}));assert(boxes.every(b=>b.w>=24&&b.h>=44));
-    const a=await page.locator('.brand-tools').boundingBox(),b=await page.locator('.site-menu').boundingBox();assert(a.x+a.width<=b.x+1,'Header controls do not overlap');
+    const a=await page.locator('.brand-tools').boundingBox(),b=await page.locator('.site-menu').boundingBox();if(b)assert(a.x+a.width<=b.x+1,'Header controls do not overlap');
    }
   }
   await page.locator('[data-color-theme=light]').focus();await page.keyboard.press('Space');assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
