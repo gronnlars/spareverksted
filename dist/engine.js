@@ -116,5 +116,17 @@ function dreamPlans(s,labelOf){
  if([goal,required,end,stressed,robust].some(v=>!Number.isFinite(v)))throw Error('Målet overstiger tallområdet. Reduser beløp, periode eller vekst.');
  return {id,rate,fall,goal,required,end,stressed,robust,plan:n};});return plans;
 }
-const api={dreamPlans,withdrawal,defaults,raw,value,target,needed,validate,validateDream,fieldError,sanitize,label,sumExp,FIELDS,DREAM_FIELDS};if(typeof module!=='undefined')module.exports=api;else root.Engine=api;
+// Forklarer hva som har påvirket sluttbeløpet, uten å blande kroner og kjøpekraft. Alle beløp er i kroner
+// (nominelle), bortsett fra powerGap, som er i dagens kroner. Kostnadenes effekt er forskjellen mot et ellers
+// identisk scenario uten kostnader, slik at et tap ikke tilskrives kostnadene hvis noe annet også har bidratt.
+function explain(s,t=s.years){
+ const final=value(s,t),paid=raw({...s,rate:0,fee:0},t,0,0),noFee=value(s,t,s.rate,0),months=Math.round(t*12);
+ const fell=s.crash>0&&Math.round(s.crashYear*12)<=months,priceFactor=Math.exp(Math.log1p(s.inflation/100)*months/12);
+ const loss=paid>0&&final<paid&&paid-final>=0.5?paid-final:0,allLost=loss>0&&final<=1e-9,almostAll=loss>0&&!allLost&&final<1;
+ // Uten kostnader ville det ikke vært tap: da er kostnadene hele årsaken. Ellers er det et fall i verdi (børsfall).
+ const cause=!loss?null:noFee>=paid-0.5?'fees':fell?(s.fee>0?'fall+fees':'fall'):'value';
+ const withPrices=raw(s,t,s.inflation,0),powerGap=!loss&&s.inflation>0&&withPrices-final>=0.5*priceFactor?(withPrices-final)/priceFactor:0;
+ return {final,paid,loss,allLost,almostAll,cause,costEffect:Math.max(0,noFee-final),growthOnly:s.rate===0,priceFactor,real:final/priceFactor,noInflation:s.inflation===0,powerGap};
+}
+const api={explain,dreamPlans,withdrawal,defaults,raw,value,target,needed,validate,validateDream,fieldError,sanitize,label,sumExp,FIELDS,DREAM_FIELDS};if(typeof module!=='undefined')module.exports=api;else root.Engine=api;
 })(typeof window!=='undefined'?window:globalThis);

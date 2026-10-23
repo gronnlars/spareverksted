@@ -76,8 +76,12 @@ function render(){
  lastRenderError=null;$('error').hidden=true;$('error').textContent='';$('main').classList.remove('stale');syncFieldErrors(MAIN_KEYS,'error',null);const shown=display(final,end),paid=display(nominalPaid(end),end);
  $('resultLabel').textContent=mode==='goal'?'FOR Å NÅ MÅLET TRENGER DU':`ETTER ${periodText(end).toUpperCase()} KAN DU HA`;
  $('total').textContent=mode==='goal'?(Number.isFinite(need)?money(Math.ceil(need))+' / mnd.':'Målet kan ikke nås med denne perioden'):money(shown);
- $('secondary').textContent=mode==='goal'?'Første månedsbeløp. Grafen viser fortsatt sparingen du har lagt inn.':s.real?`Målt i dagens kroner. Kontoen viser da ${money(final)} før skatt.`:`Det tilsvarer ${money(final/inflation(end))} med dagens priser. Før skatt.`;
- if(mode!=='goal'&&Math.abs(shown)>=1e15)$('secondary').textContent+=' Beløpet er så stort at det mister praktisk mening. Sjekk sparetid og vekst.';
+ // Kroner og kjøpekraft holdes adskilt. Uten prisvekst er dagens kroner lik kroner, og setningen om dagens priser utelates.
+ // «Før skatt» står i merket på resultatkortet og gjentas ikke her.
+ const X=mode==='goal'?null:E.explain(s,end),notes=[];
+ if(mode==='goal')notes.push('Første månedsbeløp. Grafen viser fortsatt sparingen du har lagt inn.');
+ else if(!X.noInflation)notes.push(s.real?`Målt i dagens kroner. Kontoen viser da ${money(final)}.`:`Det tilsvarer ${money(X.real)} med dagens priser.`);
+ if(mode!=='goal'&&Math.abs(shown)>=1e15)notes.push('Beløpet er så stort at det mister praktisk mening. Sjekk sparetid og vekst.');
  $('mobileTotal').textContent=$('total').textContent;$('paid').textContent=money(paid);$('gain').textContent=money(shown-paid);$('cost').textContent=money(display(E.value(s,end,s.rate,0)-final,end));
  // Et sluttbeløp under innskuddene skal aldri se ut som en gevinst. Tapet vises i resultatet og i sammendraget.
  // Tap i kroner: sluttverdien er lavere enn summen av innskuddene. I dagens kroner er begge delt på samme
@@ -88,12 +92,16 @@ function render(){
  const depositsWithPrices=E.raw(s,end,s.inflation,0),powerGap=mode!=='goal'&&s.real&&!lastLoss?Math.max(0,(depositsWithPrices-final)/inflation(end)):0;
  // Tre tilfeller, vurdert på den faktiske verdien i kroner (ikke avrundet visning, og uavhengig av dagens kroner):
  // alt tapt, delvis tapt, og ingen tap i kroner men lavere kjøpekraft. Uten innskudd er ingenting tapt.
- const nominalLoss=lastLoss?nominalPaidEnd-final:0,allLost=lastLoss&&nominalPaidEnd>0&&final<=1e-9,almostAll=lastLoss&&!allLost&&final<1;
- if(allLost)$('secondary').textContent+=' Du har tapt alle pengene du har investert.';
- else if(almostAll)$('secondary').textContent+=' Du har tapt nesten alle pengene du har investert. Under 1 kr er igjen.';
- else if(lastLoss)$('secondary').textContent+=` Du har tapt ${money(nominalLoss)} av pengene du har satt inn.`+(s.real?' Beløpet er i kroner, ikke justert for prisvekst.':'');
- else if(powerGap>=0.5)$('secondary').textContent+=` Pengene har økt i verdi, men ikke holdt følge med prisveksten. Målt i dagens kroner er verdien ${money(powerGap)} lavere enn innskuddene justert for prisvekst.`;
- $('mobileResultLabel').textContent=mode==='goal'?'Nødvendig per måned · før skatt':allLost?'Alle innskuddene er tapt · før skatt':lastLoss?`Tapt ${money(nominalLoss)} av innskuddene · før skatt`:powerGap>=0.5?'Lavere kjøpekraft enn innskuddene · før skatt':s.real?'Dagens kroner · før skatt':'Regneeksempel · før skatt';
+ const nominalLoss=lastLoss?X.loss:0,allLost=lastLoss&&X.allLost,almostAll=lastLoss&&X.almostAll;
+ // Årsaken nevnes. Kostnadene får bare skylden når et ellers likt scenario uten kostnader ikke gir tap.
+ const less=`du har ${money(nominalLoss)} mindre enn du har satt inn.`;
+ if(allLost)notes.push('Du har tapt alle pengene du har investert.');
+ else if(almostAll)notes.push('Du har tapt nesten alle pengene du har investert. Under 1 kr er igjen.');
+ else if(lastLoss)notes.push((X.cause==='fees'?(X.growthOnly?`Kostnadene har redusert sparingen med ${money(nominalLoss)}.`:`Kostnadene på ${money(X.costEffect)} er større enn veksten, så ${less}`):X.cause==='fall'?`Børsfallet gjør at ${less}`:X.cause==='fall+fees'?`Børsfallet og kostnadene gjør at ${less}`:`Verdien har falt, og ${less}`)+(s.real?' Beløpet er i kroner, ikke justert for prisvekst.':''));
+ else if(powerGap>=0.5)notes.push(`Sparingen har ikke holdt følge med prisveksten. Målt i dagens kroner er verdien ${money(powerGap)} lavere enn innskuddene justert for prisvekst.`);
+ else if(X&&X.powerGap)notes.push('Sparingen har ikke holdt følge med prisveksten, så pengene kan kjøpe mindre enn innskuddene kunne da du satte dem inn.');
+ $('secondary').textContent=notes.join(' ');$('secondary').hidden=!notes.length;
+ $('mobileResultLabel').textContent=mode==='goal'?'Nødvendig per måned · før skatt':allLost?'Alle innskuddene er tapt · før skatt':lastLoss?`${money(nominalLoss)} under innskuddene · før skatt`:(powerGap>=0.5||X&&X.powerGap)?'Lavere kjøpekraft enn innskuddene · før skatt':s.real?'Dagens kroner · før skatt':'Regneeksempel · før skatt';
  $('mobileCurve').hidden=mode==='goal';
  const miniMax=Math.max(1,...rows.map(r=>Math.max(r.v,r.paid)));
  const miniPath=key=>rows.map((r,i)=>(i?'L':'M')+(3+(end?r.t/end:0)*74).toFixed(2)+','+(35-r[key]/miniMax*32).toFixed(2)).join(' ');
@@ -184,7 +192,7 @@ function openSavedPlan(item){
 function persist(){try{localStorage.setItem('sv-scenarios',JSON.stringify(saved));return true;}catch{notice('Nettleseren tillater ikke lagring. Bruk Del plan for å beholde tallene.');return false;}}
 function syncLevel(){document.body.dataset.level=level;for(const b of $('levels').children)b.setAttribute('aria-pressed',b.dataset.level===level);$('levelDescription').textContent={simple:'Det viktigste, forklart enkelt.',explore:'Flere valg og forklaringer underveis.',advanced:'Alle forutsetninger og metodedetaljer.'}[level];
  const labels={rate:['Antatt årlig vekst','Årlig avkastning','Årlig avkastning før kostnader'],inflation:['Prisvekst per år','Årlig inflasjon','Årlig inflasjon (KPI-forutsetning)'],fee:['Kostnad per år','Årlig kostnad','Årlig samlet forvaltningskostnad'],growth:['Årlig endring i månedssparingen','Årlig endring i sparingen','Årlig endring i innskudd'],spread:['Lavere og høyere vekst','Avvik i avkastning','Scenarioavvik i prosentpoeng']},i=['simple','explore','advanced'].indexOf(level);
- for(const [key,values]of Object.entries(labels))$(key).closest('label').querySelector('.field-label').textContent=values[i];for(const el of document.querySelectorAll('.fieldbox input')){const label=el.closest('label').querySelector('.field-label');if(label)el.setAttribute('aria-label',label.textContent);}$('realLabel').textContent=level==='simple'?'Vis hva pengene kan kjøpe':level==='explore'?'Vis dagens kjøpekraft':'Realverdi (dagens kroner)';$('gainLabel').textContent=lastLoss>0?(s.real?'Tap mot innskuddene, i dagens kroner':'Tap mot innskuddene'):level==='simple'?'Beregnet vekst':'Avkastning etter kostnader';
+ for(const [key,values]of Object.entries(labels))$(key).closest('label').querySelector('.field-label').textContent=values[i];for(const el of document.querySelectorAll('.fieldbox input')){const label=el.closest('label').querySelector('.field-label');if(label)el.setAttribute('aria-label',label.textContent);}$('realLabel').textContent=level==='simple'?'Vis hva pengene kan kjøpe':level==='explore'?'Vis dagens kjøpekraft':'Realverdi (dagens kroner)';$('gainLabel').textContent=lastLoss>0?(s.real?'Tap mot innskuddene, i dagens kroner':'Tap mot innskuddene'):level==='simple'?(s.fee>0?'Vekst etter kostnader':'Beregnet vekst'):'Avkastning etter kostnader';
  const active=[];if(level==='simple'&&s.growth)active.push(`${dec.format(s.growth)} % årlig endring i månedssparingen`);if(level!=='advanced'&&s.extra)active.push(`${money(s.extra)} ekstra etter ${dec.format(s.extraYear)} år`);if(level!=='advanced'&&s.crash)active.push(`${dec.format(s.crash)} % fall etter ${dec.format(s.crashYear)} år`);if(level!=='advanced'&&s.log)active.push('like prosentsteg i grafen');if(level==='simple'&&view.showBank)active.push(`bank: ${dec.format(s.bank)} %`);if(level==='simple'&&(view.showGoal||mode==='goal'))active.push(`mål: ${money(s.goal)}${s.goalReal?' i dagens kroner':''}`);
  $('hiddenAssumptions').hidden=!active.length;$('hiddenAssumptions').innerHTML=active.length?'Også med i beregningen: '+escapeHTML(active.join(' · '))+'. <button id="revealSettings">Se innstillingene</button>':'';if($('revealSettings'))$('revealSettings').onclick=()=>{setLevel('advanced');$('advancedDetails').open=true;$('eventsDetails').open=true;};}
 function setLevel(value){level=value;try{localStorage.setItem('sv-level',level);}catch{}syncLevel();if(window.renderDream)window.renderDream();}
