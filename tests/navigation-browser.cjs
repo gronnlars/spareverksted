@@ -42,7 +42,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // Menus contain the useful actions. Level choice is visible without opening its menu.
   await page.locator('.display-options>summary').click();await page.locator('#levels [data-level=advanced]').click();assert.equal(await page.locator('#displaySummary').innerText(),'Visning: Avansert');
   // Phone anchor leaves room for a browser toolbar even with the extra cost row.
-  await page.locator('#monthly').scrollIntoViewIfNeeded();await page.waitForFunction(()=>document.getElementById('mobileResultButton').textContent==='Se resultat ↓');await page.locator('#mobileResultButton').click();
+  // Fokus i feltet, slik en bruker som redigerer har. Knappen skjules med vilje når resultatet allerede er synlig.
+  await page.locator('#monthly').focus();await page.waitForFunction(()=>document.getElementById('mobileResultButton').textContent==='Se resultat ↓');await page.locator('#mobileResultButton').click();
   const mobileTop=(await page.locator('#savingsResult').boundingBox()).y;assert(mobileTop>=-9&&mobileTop<=0);
   assert((await page.locator('.before-tax-badge').boundingBox()).y>=0,'Badge is not scrolled away');
   assert((await page.locator('#resultLabel').boundingBox()).y>=0,'Heading is not scrolled away');
