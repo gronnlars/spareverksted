@@ -61,6 +61,7 @@ jobs:
           node tests/spareform-browser.cjs
           node tests/theme-browser.cjs
           node tests/navigation-browser.cjs
+          node tests/roundtrip-browser.cjs
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: [checks, browser]
