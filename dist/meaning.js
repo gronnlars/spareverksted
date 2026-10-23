@@ -6,7 +6,7 @@
 const TYPES={checking:{name:'brukskonto',rate:'rente'},savings:{name:'sparekonto',rate:'rente'},index:{name:'indeksfond',rate:'vekst'}};
 function join(list){return list.length>1?list.slice(0,-1).join(', ')+' og '+list.at(-1):list[0]||'';}
 // E: beregningsmotoren. s: planen. end: år. f: {money, pct} formatterer (nettsiden sender inn sine egne).
-function build(E,s,end,f){
+function build(E,s,end,f,A){
  const months=Math.round(end*12),P=Math.exp(Math.log1p(s.inflation/100)*months/12);
  const final=E.value(s,end),paid=E.raw({...s,rate:0,fee:0},end,0,0),paidToday=E.depositsToday(s,end),real=final/P;
  const growth=final-paid,powerChange=real-paidToday,X=E.explain(s,end),costEffect=Math.max(0,E.value(s,end,s.rate,0)-final);
@@ -26,12 +26,14 @@ function build(E,s,end,f){
  const startValues=[...(s.rate===d.rate?[`${f.pct(d.rate)} vekst`]:[]),...(s.fee===d.fee?[`${f.pct(d.fee)} kostnad`]:[])];
  if(type&&s.savingsType!=='index'&&startValues.length)
   main.push(`Du har valgt ${type.name}, men beregningen bruker fortsatt startverdiene ${join(startValues)}. De er ikke vilkår for en ${type.name}. Legg inn kontoens rente${s.fee===d.fee?' og eventuelle kostnader':''}.`);
- else if(s.savingsType==='savings')main.push(`Beregningen forutsetter ${f.pct(s.rate)} rente på sparekontoen gjennom hele perioden. Kontroller at renten stemmer med kontovilkårene. Endres renten, blir resultatet annerledes.`);
- else if(s.savingsType==='checking')main.push(`Beregningen bruker ${f.pct(s.rate)} rente på brukskontoen gjennom hele perioden. Kontroller kontovilkårene.`);
+ else if(s.savingsType==='savings')main.push(`Beregningen forutsetter ${f.pct(s.rate)} rente på sparekontoen gjennom hele perioden. Kontroller at renten stemmer med kontovilkårene. Endres renten, blir resultatet annerledes. Renter beskattes hvert år, så resultatet etter skatt blir lavere.`);
+ else if(s.savingsType==='checking')main.push(`Beregningen bruker ${f.pct(s.rate)} rente på brukskontoen gjennom hele perioden. Kontroller kontovilkårene.`+(s.rate>0?' Renter beskattes hvert år, så resultatet etter skatt blir lavere.':''));
  else if(s.savingsType==='index'){
   const own=s.riskChosen&&s.stress==='low'?'Du har selv oppgitt at du helst vil unngå store fall. ':'';
   main.push(own+`Et indeksfond kan falle mye i verdi underveis, men beregningen viser en jevn utvikling på ${f.pct(s.rate)} hvert år.`);
-  actions.push({id:'range',label:'Vis lavere og høyere vekst i grafen'});
+  if(A&&A.index&&paid>0.5){const low=E.band(s,end,-1.96,A.index.sigma),years=Math.round(end*12)/12;
+   main.push(low<paid-0.5?`Med ${f.years(years)} sparetid kan verdien også ende under det du har satt inn: i den nedre delen av utfallsrommet blir den ${f.money(low)}.`:`Med ${f.years(years)} sparetid ligger også den nedre delen av utfallsrommet over innskuddene (${f.money(low)}), men det er en modell, ikke en garanti.`);}
+  actions.push({id:'range',label:'Vis utfallsrommet i grafen',hide:'Skjul utfallsrommet i grafen'});
  }
  if(type&&s.savingsType!=='index'&&s.rate>0&&!(startValues.length)){const lower=Math.max(0,s.rate-2),v=E.value(s,end,lower);
   actions.push({id:'lowerRate',label:'Se hvordan en lavere rente påvirker resultatet',text:`Med ${f.pct(lower)} rente i stedet for ${f.pct(s.rate)} blir sluttbeløpet ${f.money(v)}${s.inflation>0?`, eller ${f.money(v/P)} i dagens kroner`:''}. Tallene dine er ikke endret.`});}
@@ -42,7 +44,7 @@ function build(E,s,end,f){
  if(startValues.length||s.inflation===d.inflation)a+=` ${join([...startValues,...(s.inflation===d.inflation?[`${f.pct(d.inflation)} prisvekst`]:[])])} er startverdier, ikke anbefalinger.`;
  if(s.crash>0)a+=` Børsfallet på ${f.pct(s.crash)} er et enkelt fall, ikke en årlig nedgang.`;
  if(s.rate<0)a+=` ${f.pct(s.rate)} er en nedgang hvert år gjennom hele perioden, ikke ett enkelt fall.`;
- if(s.savingsType==='index')a+=' Forklaringene gjelder aksjeindeksfond, for eksempel et globalt aksjeindeksfond. Andre fond kan svinge mer eller mindre.';
+ if(s.savingsType==='index')a+=' Forklaringene gjelder aksjeindeksfond, for eksempel et globalt aksjeindeksfond. Andre fond kan svinge mer eller mindre.'+(A&&A.index?` Utfallsrommet bygger på Finans Norges standard for avkastningsprognoser (${f.pct(A.index.realRate)} forventet realavkastning og ${f.pct(A.index.sigma)} årlig svingning for aksjer). Det er et 95 % intervall i modellen: kortere sparetid gir større usikkerhet i snittavkastningen. Modellen er ikke en garanti, og virkeligheten kan havne utenfor.`:'');
  if(!type||s.savingsType==='index')a+=' Du kan velge en avkastning i modellen, men ikke bestemme hva markedet faktisk gir.';
  details.push({title:'Forutsetninger',text:a});
  return {main:main.join(' '),details,actions,numbers:{final,paid,paidToday,real,growth,powerChange}};

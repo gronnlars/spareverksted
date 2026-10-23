@@ -23,20 +23,44 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.equal(await p.evaluate(()=>{const a=document.querySelector('.hero-result'),b=document.getElementById('meaning');return a.nextElementSibling===b;}),true,'seksjonen står rett etter resultatet');
   const total=await text(p,'#total'),inputs=await p.evaluate(()=>['start','monthly','years','rate','inflation','fee'].map(k=>document.getElementById(k).value));
 
-  // 2. Velg brukskonto: tallene er uendret, og startverdiene sies tydelig.
+  // 2. Velg brukskonto: synlige forutsetninger for brukskonto (0 % rente, 0 % kostnad), med melding og angreknapp.
   await p.locator('#savingsTypes [data-type=checking]').click();
   assert.equal(await p.locator('#savingsTypes [data-type=checking]').getAttribute('aria-pressed'),'true');assert(await p.locator('#clearSavingsType').isVisible());
-  assert.equal(await text(p,'#total'),total);assert.deepEqual(await p.evaluate(()=>['start','monthly','years','rate','inflation','fee'].map(k=>document.getElementById(k).value)),inputs,'feltene er uendret');
-  assert.match(await text(p,'#meaningMain'),/Du har valgt brukskonto, men beregningen bruker fortsatt startverdiene 5 % vekst og 0,2 % kostnad\./);
-  // Sparekonto og indeksfond.
-  await p.locator('#savingsTypes [data-type=index]').click();assert.equal(await p.locator('#savingsTypes [data-type=checking]').getAttribute('aria-pressed'),'false');
-  assert.match(await text(p,'#meaningMain'),/Et indeksfond kan falle mye i verdi underveis/);assert.equal(await text(p,'#total'),total);
-  // Handlingen viser lavere og høyere vekst i grafen uten å endre tallene, og uten å flytte fokus eller scrolle.
-  const action=p.locator('#meaningActions button');await action.scrollIntoViewIfNeeded();const scroll=await p.evaluate(()=>scrollY);await action.click();
-  assert.equal(await p.evaluate(()=>view.showRange),true);assert.equal(await text(p,'#total'),total);assert.equal(await p.evaluate(()=>scrollY),scroll,'ingen automatisk scrolling');
-  await p.locator('#meaningActions button').click();assert.equal(await p.evaluate(()=>view.showRange),false);
-  // Trykk på valgt knapp igjen fjerner valget. «Fjern valget» gjør det samme.
-  await p.locator('#savingsTypes [data-type=index]').click();assert.equal(await p.locator('#savingsTypes [aria-pressed=true]').count(),0);assert.equal(await p.evaluate(()=>s.savingsType),'');
+  assert.deepEqual(await p.evaluate(()=>[s.rate,s.fee,document.getElementById('rate').value,document.getElementById('fee').value]),[0,0,'0','0'],'forutsetningene står synlig i feltene');
+  assert.match(await text(p,'#total'),/^240\s000 kr$/);assert.match(await text(p,'#undoText'),/^Brukskonto: rente 0 % og kostnad 0 %/);assert(await p.locator('#undoBar').isVisible());
+  assert.match(await text(p,'#startNote'),/Renten 0 % er et regneeksempel for brukskonto/);
+  assert.match(await text(p,'#meaningMain'),/^Saldoen øker bare fordi du setter inn nye penger\. Pengene kjøper mindre/);
+  // Angre gir planen tilbake.
+  await p.locator('#undo').click();assert.equal(await text(p,'#total'),total);assert.equal(await p.evaluate(()=>s.savingsType),'');
+  assert.deepEqual(await p.evaluate(()=>['start','monthly','years','rate','inflation','fee'].map(k=>document.getElementById(k).value)),inputs);
+  // Sparekonto: gjennomsnittsrenten fra SSB, med kilde og dato i teksten.
+  await p.locator('#savingsTypes [data-type=savings]').click();
+  assert.deepEqual(await p.evaluate(()=>[s.rate,s.fee]),[2.87,0]);assert.match(await text(p,'#startNote'),/2,87 % er gjennomsnittet for husholdningers innskudd uten binding \(SSB, august 2026\)/);
+  assert.match(await text(p,'#meaningMain'),/Renter beskattes hvert år/);
+  // Indeksfond: Finans Norge-forutsetning og utfallsrom som avhenger av sparetiden.
+  await p.locator('#savingsTypes [data-type=index]').click();assert.equal(await p.locator('#savingsTypes [data-type=savings]').getAttribute('aria-pressed'),'false');
+  assert.equal(await p.evaluate(()=>s.rate),7.11,'4,5 % realavkastning pluss 2,5 % prisvekst');assert.equal(await p.evaluate(()=>view.showRange),true);
+  assert.match(await text(p,'#startNote'),/Veksten 7,11 % er 4,5 % forventet realavkastning for aksjer \(Finans Norges prognosestandard, februar 2026\)/);
+  assert.match(await text(p,'#meaningMain'),/Et indeksfond kan falle mye i verdi underveis/);assert.match(await text(p,'#meaningMain'),/Med 10 år sparetid/);
+  assert.match(await p.locator('#chartNote').innerText(),/95 % utfallsrom etter Finans Norges prognosemodell/);assert.match(await p.locator('#chartLegend').innerText(),/95 % utfallsrom \(modell\)/);assert.equal(await p.locator('#showRange').getAttribute('aria-label'),'Vis utfallsrom (95 %)');
+  assert(await p.locator('#fanTuning').isHidden(),'avviket i prosentpoeng brukes ikke for indeksfond');
+  // Kortere sparetid gir et bredere utfallsrom (målt som årlig snittavkastning) og kan gi tap.
+  const lowShare=()=>p.evaluate(()=>E.band(s,s.years,-1.96,Assumptions.index.sigma)/E.raw({...s,rate:0,fee:0},s.years,0,0));
+  await p.locator('#years').fill('3');await p.locator('#years').blur();
+  assert.match(await text(p,'#meaningMain'),/Med 3 år sparetid kan verdien også ende under det du har satt inn/);const short=await lowShare();
+  await p.locator('#years').fill('25');await p.locator('#years').blur();const long=await lowShare();
+  assert.ok(long>short,`nedre del i forhold til innskuddene er bedre over 25 år (${long.toFixed(2)}) enn over 3 år (${short.toFixed(2)})`);
+  // Engangsbeløp over 25 år: også den nedre delen ligger over innskuddet.
+  await p.locator('#monthly').fill('0');await p.locator('#start').fill('100000');await p.locator('#start').blur();
+  assert.match(await text(p,'#meaningMain'),/Med 25 år sparetid ligger også den nedre delen av utfallsrommet over innskuddene/);
+  await p.locator('#start').fill('0');await p.locator('#monthly').fill('2000');await p.locator('#monthly').blur();
+  await p.locator('#years').fill('10');await p.locator('#years').blur();
+  // Handlingen skjuler og viser båndet uten å endre tallene, og uten å flytte fokus eller scrolle.
+  const t2=await text(p,'#total');const action=p.locator('#meaningActions button');await action.scrollIntoViewIfNeeded();const scroll=await p.evaluate(()=>scrollY);await action.click();
+  assert.equal(await p.evaluate(()=>view.showRange),false);assert.equal(await text(p,'#total'),t2);assert.equal(await p.evaluate(()=>scrollY),scroll,'ingen automatisk scrolling');
+  await p.locator('#meaningActions button').click();assert.equal(await p.evaluate(()=>view.showRange),true);
+  // Trykk på valgt knapp igjen fjerner valget uten å endre tallene. «Fjern valget» gjør det samme.
+  await p.locator('#savingsTypes [data-type=index]').click();assert.equal(await p.locator('#savingsTypes [aria-pressed=true]').count(),0);assert.equal(await p.evaluate(()=>s.savingsType),'');assert.equal(await p.evaluate(()=>s.rate),7.11,'å fjerne valget endrer ingen tall');
   await p.locator('#savingsTypes [data-type=savings]').click();await p.locator('#clearSavingsType').click();
   assert.equal(await p.evaluate(()=>s.savingsType),'');assert.equal(await p.evaluate(()=>document.activeElement.dataset.type),'checking','fokus går til første valg, ikke til body');
   // Tastatur: knappene kan velges med mellomrom.

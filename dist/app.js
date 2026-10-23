@@ -78,23 +78,25 @@ const depositsToday=(t,n=s)=>E.depositsToday(n,t);
 // Innskuddene vises i samme kroneverdi som sluttbeløpet, slik at innskudd + vekst = sluttbeløp i begge visninger.
 const paidShown=(t,n=s)=>s.real?depositsToday(t,n):nominalPaid(t,n);
 function planRows(n){const months=Math.round(n.years*12),count=Math.min(months,600);return Array.from({length:count+1},(_,i)=>{const t=count?Math.round(i*months/count)/12:0;return {t,v:display(E.value(n,t),t,n),paid:paidShown(t,n),paidNominal:nominalPaid(t,n)};});}
+// For indeksfond bruker båndet Finans Norges formelverk (95 % utfallsrom som avhenger av sparetiden). Ellers lavere og høyere vekst.
+const indexBand=()=>s.savingsType==='index';
 function makeRows(){
- if(view.showRange&&s.rate-s.spread<=-100)throw Error('Lavt scenario må ha avkastning over −100 %. Reduser scenarioavviket eller slå av avkastningsbåndet.');
+ if(view.showRange&&!indexBand()&&s.rate-s.spread<=-100)throw Error('Lavt scenario må ha avkastning over −100 %. Reduser scenarioavviket eller slå av avkastningsbåndet.');
  return planRows(s).map(r=>({...r,
- low:view.showRange?display(E.value(s,r.t,s.rate-s.spread),r.t):r.v,
- high:view.showRange?display(E.value(s,r.t,s.rate+s.spread),r.t):r.v,
+ low:view.showRange?display(indexBand()?E.band(s,r.t,-1.96,Assumptions.index.sigma):E.value(s,r.t,s.rate-s.spread),r.t):r.v,
+ high:view.showRange?display(indexBand()?E.band(s,r.t,1.96,Assumptions.index.sigma):E.value(s,r.t,s.rate+s.spread),r.t):r.v,
  bank:view.showBank?display(E.value({...s,crash:0},r.t,s.bank,0),r.t):r.v,
  goal:(view.showGoal||mode==='goal')?(s.goalReal?display(s.goal*inflation(r.t),r.t):display(s.goal,r.t)):0}));
 }
 function changePlan(patch,message){undoState={state:{...s},mode,view:{...view}};Object.assign(s,patch);$('undoText').textContent=message;$('undoBar').hidden=false;fill();render();}
 const pct=v=>(v<0?'−':'')+dec.format(Math.abs(v))+' %';
 function renderMeaning(){const box=$('meaning');if(!box)return;box.classList.remove('meaning-waiting');box.hidden=mode==='goal';if(mode==='goal')return;
- let m;try{m=Meaning.build(E,s,endYear(s),{money,pct});}catch{box.hidden=true;return;}
+ let m;try{m=Meaning.build(E,s,endYear(s),{money,pct,years:t=>periodText(t)},Assumptions);}catch{box.hidden=true;return;}
  if($('meaningMain').textContent!==m.main)$('meaningMain').textContent=m.main;
  $('meaningDetails').innerHTML=m.details.map(d=>`<h3>${escapeHTML(d.title)}</h3><p>${escapeHTML(d.text)}</p>`).join('');
  const shown=$('meaningActionText');const openId=shown.hidden?null:shown.dataset.action;shown.hidden=true;
  $('meaningActions').replaceChildren(...m.actions.map(a=>{const b=document.createElement('button');b.type='button';b.className='text-link';
-  if(a.id==='range'){b.textContent=view.showRange?'Skjul lavere og høyere vekst i grafen':a.label;b.setAttribute('aria-pressed',String(view.showRange));b.onclick=()=>{view.showRange=!view.showRange;if($('showRange'))$('showRange').checked=view.showRange;render();renderMeaning();};}
+  if(a.id==='range'){b.textContent=view.showRange?a.hide:a.label;b.setAttribute('aria-pressed',String(view.showRange));b.onclick=()=>{view.showRange=!view.showRange;if($('showRange'))$('showRange').checked=view.showRange;render();renderMeaning();};}
   else{b.textContent=a.label;b.setAttribute('aria-expanded','false');b.setAttribute('aria-controls','meaningActionText');const showText=()=>{shown.textContent=a.text;shown.dataset.action=a.id;shown.hidden=false;b.setAttribute('aria-expanded','true');};b.onclick=()=>{if(shown.hidden||shown.dataset.action!==a.id)showText();else{shown.hidden=true;b.setAttribute('aria-expanded','false');}};if(openId===a.id)showText();}
   return b;}));
 }
@@ -242,7 +244,13 @@ $('modes').onclick=e=>{const b=e.target.closest('[data-mode]');if(!b)return;mode
 for(const key in view)if($(key))$(key).onchange=()=>{view[key]=$(key).checked;render();};
 // Spareform: frivillig, kan fjernes, og endrer ingen tall. Den styrer bare forklaringene i «Dette betyr tallene dine».
 function syncSavingsType(){for(const b of $('savingsTypes').children)b.setAttribute('aria-pressed',String(b.dataset.type===s.savingsType));$('clearSavingsType').hidden=!s.savingsType;}
-$('savingsTypes').onclick=e=>{const b=e.target.closest('[data-type]');if(!b)return;s.savingsType=s.savingsType===b.dataset.type?'':b.dataset.type;syncSavingsType();render();};
+// Et valg setter synlige forutsetninger for spareformen (med kilde i teksten over feltene) og kan angres.
+// Å fjerne valget endrer ingen tall.
+function savingsPreset(type){const A=Assumptions;if(type==='index')return {patch:{savingsType:type,rate:A.indexRate(s.inflation)},range:true,undo:`Indeksfond: vekst ${pct(A.indexRate(s.inflation))} (${pct(A.index.realRate)} forventet realavkastning for aksjer, Finans Norge, pluss ${pct(s.inflation)} prisvekst), med utfallsrom i grafen.`};return {patch:{savingsType:type,rate:A[type].rate,fee:A[type].fee},range:false,undo:A[type].undo};}
+$('savingsTypes').onclick=e=>{const b=e.target.closest('[data-type]');if(!b)return;
+ if(s.savingsType===b.dataset.type){s.savingsType='';syncSavingsType();render();return;}
+ const p=savingsPreset(b.dataset.type);undoState={state:{...s},mode,view:{...view}};Object.assign(s,p.patch);view.showRange=p.range;if($('showRange'))$('showRange').checked=view.showRange;
+ $('undoText').textContent=p.undo;$('undoBar').hidden=false;fill();syncSavingsType();render();};
 $('clearSavingsType').onclick=()=>{s.savingsType='';syncSavingsType();render();$('savingsTypes').querySelector('button').focus();};
 // Visning av beløpet: kroner, kjøpekraft i dagens kroner, eller begge i samme graf. Ingen tall endres.
 function valueMode(){return view.both&&!s.real?'both':s.real?'real':'nominal';}

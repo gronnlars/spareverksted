@@ -5,6 +5,18 @@ function raw(s,t,rate=s.rate,fee=s.fee,p=s.monthly){const n=Math.round(t*12),a=(
 // Innskudd målt i dagens kroner: hvert innskudd delt på prisnivået da det ble satt inn. Startbeløpet er allerede i dagens kroner.
 function depositsToday(s,t){return raw(s,t,s.inflation,0)/Math.exp(Math.log1p(s.inflation/100)*Math.round(t*12)/12)}
 function value(s,t,rate=s.rate,fee=s.fee,p=s.monthly){let v=raw(s,t,rate,fee,p);const ct=Math.round(s.crashYear*12)/12;if(s.crash>0&&ct<=t){const lost=raw(s,ct,rate,fee,p)*s.crash/100;v-=lost*Math.exp((Math.log1p(rate/100)+Math.log1p(-fee/100))*(Math.round(t*12)/12-ct));}return v}
+// Utfallsrom etter Finans Norges formelverk for avkastningsprognoser (vedlegg 2): hvert innskudd får årlig
+// avkastning r + Z·σ/√(år fra innskudd til slutt), med normalfordelt årsavkastning. Usikkerheten i snittavkastningen
+// er derfor større jo kortere tid pengene står. Formelverket regner i hele år; innskudd som står kortere enn ett år
+// får samme usikkerhet som ett år. Med Z = 0 gir funksjonen samme verdi som value(). Kostnad, månedsøkning,
+// ekstrainnskudd og børsfall behandles som i value(). Å summere grensene for hvert innskudd er en tilnærming,
+// som formelverket også sier.
+function band(s,t,Z,sigma,rate=s.rate){
+ const n=Math.round(t*12),k=Math.log1p(-s.fee/100),b=Math.log1p(s.growth/100)/12,ct=Math.round(s.crashYear*12),hit=s.crash>0&&ct<=n,keep=1-s.crash/100;
+ const f=m=>{const h=(n-m)/12;const fall=hit&&m<=ct?keep:1;if(h<=0)return fall;const r=rate/100+Z*sigma/100/Math.sqrt(Math.max(h,1));return r<=-1?0:Math.exp(h*(Math.log1p(r)+k))*fall;};
+ let v=s.start*f(0);if(s.monthly!==0)for(let m=1;m<=n;m++)v+=s.monthly*Math.exp(b*(m-1))*f(m);
+ const e=Math.round(s.extraYear*12);if(s.extra!==0&&e<=n)v+=s.extra*f(e);return v;
+}
 function target(s){return s.goal*(s.goalReal?Math.exp(Math.log1p(s.inflation/100)*Math.round(s.years*12)/12):1)}
 function needed(s){const base=value(s,s.years,s.rate,s.fee,0),unit=value({...s,start:0,extra:0},s.years,s.rate,s.fee,1);return unit>0?Math.max(0,(target(s)-base)/unit):base>=target(s)?0:Infinity}
 // Én felles oversikt over grenser for alle tallfelt. Etikettene er standardteksten på skjermen;
@@ -132,5 +144,5 @@ function explain(s,t=s.years){
  const withPrices=raw(s,t,s.inflation,0),powerGap=!loss&&s.inflation>0&&withPrices-final>=0.5*priceFactor?(withPrices-final)/priceFactor:0;
  return {final,paid,loss,allLost,almostAll,cause,costEffect:Math.max(0,noFee-final),growthOnly:s.rate===0,priceFactor,real:final/priceFactor,noInflation:s.inflation===0,powerGap};
 }
-const api={explain,dreamPlans,withdrawal,defaults,raw,value,depositsToday,target,needed,validate,validateDream,fieldError,sanitize,label,sumExp,FIELDS,DREAM_FIELDS};if(typeof module!=='undefined')module.exports=api;else root.Engine=api;
+const api={explain,dreamPlans,withdrawal,defaults,raw,value,band,depositsToday,target,needed,validate,validateDream,fieldError,sanitize,label,sumExp,FIELDS,DREAM_FIELDS};if(typeof module!=='undefined')module.exports=api;else root.Engine=api;
 })(typeof window!=='undefined'?window:globalThis);

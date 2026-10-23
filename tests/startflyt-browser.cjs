@@ -89,6 +89,21 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert(await p.evaluate(()=>document.getElementById('dreamPanel').classList.contains('stale')));
   await p.locator('#dreamMonthly').fill('2500');assert(!await p.evaluate(()=>document.getElementById('dreamPanel').classList.contains('stale')));
 
+  // 7. «Start på nytt»: startguiden begynner fra standardverdiene. «Tilbake til planen» endrer ingenting.
+  //    Går brukeren videre, nullstilles hele planen, også skjulte valg, og det kan angres.
+  p=await open('#activePage=calculator&start=800&monthly=2000&years=57&rate=7&crash=30&crashYear=5&extra=50000&extraYear=3&savingsType=index&showRange=1',1280);
+  const kept=await p.evaluate(()=>JSON.stringify(s));
+  await p.evaluate(()=>document.getElementById('startAgain').click());await p.locator('#chooseGrowth').click();
+  assert.equal(await p.locator('#onboardStart').inputValue(),'0');assert.equal(await p.locator('#onboardYears').inputValue(),'10');assert.equal(await p.locator('#onboardAge').inputValue(),'');
+  await p.locator('#closeJourney').click();assert.equal(await p.evaluate(()=>JSON.stringify(s)),kept,'«Tilbake til planen» endrer ingenting');
+  await p.evaluate(()=>document.getElementById('startAgain').click());await p.locator('#chooseGrowth').click();await p.locator('#exampleJourney').click();
+  assert.deepEqual(await p.evaluate(()=>[s.start,s.monthly,s.years,s.rate,s.crash,s.extra,s.savingsType,view.showRange]),[0,2000,10,5,0,0,'',false],'hele planen er nullstilt');
+  assert.equal(await p.locator('#undoText').innerText(),'Planen er nullstilt.');assert.equal(await p.evaluate(()=>location.hash),'');
+  await p.locator('#undo').click();assert.equal(await p.evaluate(()=>JSON.stringify(s)),kept,'kan angres');
+  // Fra startguiden med egne tall: det gamle børsfallet og spareformen følger ikke med.
+  await p.evaluate(()=>document.getElementById('startAgain').click());await p.locator('#chooseGrowth').click();await p.locator('#onboardMonthly').fill('3000');await p.locator('#beginJourney').click();
+  assert.deepEqual(await p.evaluate(()=>[s.monthly,s.crash,s.extra,s.savingsType,s.rate]),[3000,0,0,'',5]);
+  assert.deepEqual(p.errors,[]);
   for(const pg of [p])assert.deepEqual(pg.errors,[]);
   console.log('Passed: start flow, start values note, empty fields while typing, negative return.');
  }finally{if(browser)await browser.close();server.close();}

@@ -26,6 +26,7 @@ Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/packa
 - `dist/guidance.js`: kilder, datagrunnlag, hjelpetekster og mål-alternativer.
 - `dist/journey.js`: startguide, alder, glidere, skattevisning og eksportknapper.
 - `dist/tax.js`: ren beregning av skatteanslag på uttak.
+- `dist/assumptions.js`: forutsetninger per spareform, med kilder og kontrolldato.
 - `dist/meaning.js`: regelbaserte forklaringer i «Dette betyr tallene dine», bygget på resultatet, valgt spareform og tidshorisont. Ren funksjon, testet i Node.
 - `dist/export-kit.js`: CSV og ekte XLSX (OOXML i ZIP), uten eksterne biblioteker.
 - `dist/experience.js`: nivåtilpasset hjelp, maler og utskriftsrapport.
@@ -34,6 +35,7 @@ Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/packa
 - `tests/engine.test.cjs`: uavhengig kontroll mot månedlige og årlige løkker.
 - `tests/validation.test.cjs`: feltgrenser og feltnavn, sparemål, uttaksfelt, delte lenker felt for felt, gamle lagrede planer og realistiske planer mot lukket formel.
 - `tests/results.test.cjs`: kontrolltilfellene A til D mot en uavhengig månedsløkke, årsak til tap (kostnader, børsfall), kjøpekraft, lange perioder og forskjellen mellom innskudd ved månedsslutt og månedsstart.
+- `tests/band.test.cjs`: utfallsrommet for indeksfond mot Finans Norges formel, med lukket formel og egen løkke.
 - `tests/meaning.test.cjs`: forklaringene følger tallene (0 % rente, 0 % prisvekst, negativ avkastning, fallende prisnivå, løpende innbetalinger), spareformen gjettes aldri og endrer ingen tall.
 - `tests/startflyt-browser.cjs` og `tests/spareform-browser.cjs`: startflyt, tomme felt, spareform, forklaringen ved resultatet og kroner mot kjøpekraft i grafen.
 - `tests/input-browser.cjs`: nettleserflyt med ugyldige tall (krever playwright): blokkert deling, lagring og eksport med fokus på feltet, dempede resultater, delte lenker, sparemål, uttak og gamle lagrede planer.
@@ -65,7 +67,15 @@ Vekst, prisvekst og kostnad er forhåndsutfylte startverdier (5 %, 2,5 % og 0,2 
 
 ## Spareform og «Dette betyr tallene dine»
 
-Brukeren kan velge brukskonto, sparekonto eller indeksfond under «Hva vil du regne på?». Valget er frivillig, kan fjernes, og endrer ingen tall: avkastning, kostnad og skatt er det brukeren har skrevet inn. Valget styrer bare forklaringene. Spareformen leses aldri ut fra avkastning eller prisvekst. Står vekst og kostnad fortsatt på startverdiene når en konto er valgt, sier forklaringen det.
+Brukeren kan velge brukskonto, sparekonto eller indeksfond under «Hva vil du regne på?». Valget er frivillig. Et valg setter synlige forutsetninger i feltene, med en melding og «Angre» (beslutning 23.10.2026). Kilder og kontrolldato ligger samlet i `dist/assumptions.js`:
+
+- Brukskonto: 0 % rente og 0 % kostnad. Et regneeksempel; SSB har ingen egen serie for brukskontorente.
+- Sparekonto: 2,87 % rente og 0 % kostnad: gjennomsnittet for husholdningers innskudd uten binding (SSB tabell 11018, august 2026). Ikke beste tilgjengelige rente.
+- Indeksfond: 4,5 % forventet realavkastning for aksjer pluss planens prisvekst (Finans Norge, Avtale om avkastningsprognoser, revidert 04.02.2026). Kostnaden er uendret. Grafen viser et 95 % utfallsrom etter Finans Norges formelverk: hvert innskudd får årlig avkastning r ± 1,96 · 16 % / √(år til slutt). Kort sparetid gir derfor større usikkerhet i snittavkastningen.
+
+Å fjerne valget endrer ingen tall. Brukeren kan alltid skrive egne tall etterpå. Tallene i `dist/assumptions.js` kontrolleres etter Finans Norges årlige revisjon og når SSB publiserer nye renter.
+
+«Start på nytt» åpner startguiden med standardverdiene. Går brukeren videre, nullstilles hele planen (også børsfall, ekstrainnskudd og spareform), og det kan angres. «Tilbake til planen» endrer ingenting.
 
 Seksjonen «Dette betyr tallene dine» står rett etter resultatet. Den viser én kort forklaring og samler utdypingen i tre grupper: innbetalinger og avkastning, kroner og kjøpekraft, og forutsetninger. Kjøpekraft måles mot innskuddene i dagens kroner, regnet om med prisnivået da hvert innskudd ble satt inn. Teksten oppdateres når et felt forlates eller en skyveknapp slippes, ikke ved hvert tastetrykk, og har ingen automatisk opplesning. Ingen regel kaller en rente «uvanlig», fordi det krever en dokumentert og vedlikeholdt referanse.
 
