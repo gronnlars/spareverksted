@@ -179,3 +179,6 @@ button,summary,a,input,select{scroll-margin-block:100px}
 
 .stale .results .hero-result,.stale .results #chart,.stale .results .chart-card{opacity:.4;filter:grayscale(.6)}
 input[aria-invalid=true]{border-color:#b3452c;outline-color:#b3452c}
+.mobile-summary.stale strong,.mobile-summary.stale svg,#dreamPanel.stale #dreamCards,#dreamPanel.stale #dreamSummary{opacity:.4;filter:grayscale(.6)}
+.pending-note{font-size:14px;line-height:1.4;color:var(--muted);margin:6px 0 0}
+.start-note{font-size:14px;line-height:1.45;color:var(--muted);margin:0 0 14px}

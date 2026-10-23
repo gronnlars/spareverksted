@@ -25,7 +25,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await page.goto(origin+'/index.html');
   assert(await page.locator('.welcome-question').isVisible());
   await page.locator('#chooseGrowth').click();await page.locator('#onboardAge').fill('57');await page.locator('#onboardYears').fill('10');
-  await page.locator('.journey-risk>summary').click();await page.locator('#onboardRisk').selectOption('low');await page.locator('#beginJourney').click();
+  await page.locator('#beginJourney').click();
   for(const id of ['start','monthly','years','rate'])assert(await page.locator('#'+id+'Slider').isVisible());
   const slider=page.locator('#monthlySlider');await slider.scrollIntoViewIfNeeded();
   const box=await slider.boundingBox(),before=await page.locator('#total').textContent();

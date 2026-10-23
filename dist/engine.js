@@ -12,7 +12,7 @@ function needed(s){const base=value(s,s.years,s.rate,s.fee,0),unit=value({...s,s
 // [min, maks, enhet, etikett, valg]. open: min er utelukket. minText: egen tekst for minstegrensen.
 const R=(min,max,unit,label,opt={})=>({min,max,unit,label,...opt});
 const FIELDS={
- start:R(0,1e10,' kr','Du har allerede'),monthly:R(0,1e7,' kr','Du sparer hver måned'),years:R(1/24,100,' år','Du vil spare i',{minText:'én måned'}),rate:R(0,100,' %','Antatt årlig vekst'),
+ start:R(0,1e10,' kr','Du har allerede'),monthly:R(0,1e7,' kr','Du sparer hver måned'),years:R(1/24,100,' år','Du vil spare i',{minText:'én måned'}),rate:R(-100,100,' %','Antatt årlig vekst',{open:true}),
  inflation:R(0,100,' %','Prisvekst per år'),fee:R(0,99.99,' %','Kostnad per år'),goal:R(0,1e11,' kr','Beløpet du vil nå'),growth:R(-100,100,' %','Årlig endring i månedssparingen',{open:true}),
  bank:R(0,100,' %','Bankrente å sammenligne med'),spread:R(0,100,' prosentpoeng','Avvik fra valgt avkastning'),extra:R(0,1e10,' kr','Ekstrainnskudd'),extraYear:R(0,100,' år','Innskudd etter'),
  crash:R(0,100,' %','Børsfall'),crashYear:R(0,100,' år','Fall etter'),annualWithdraw:R(0,1e9,' kr','Årsbeløp før skatt'),retireYears:R(0,100,' år','År med uttak'),
@@ -31,10 +31,12 @@ const CHOICES={activePage:[['calculator','dreams','withdrawals'],'Side'],withdra
 // Perioder regnes i hele måneder (avrundet). Nedre grense 1/24 år betyr at alt som avrundes til minst én måned
 // er gyldig, slik at «0,08» og «0,0833» godtas som én måned.
 const RULES={...FIELDS,...DREAM_FIELDS,...OTHER_FIELDS};
-// Vanlige regneeksempler bruker minst 0 % forventet vekst, prisvekst og bankrente. Mulige tap vises som
-// risikoscenarioer (børsfall, lavere vekst, stresstester), ikke som forventningen. Eldre lenker og planer
-// med negative verdier i disse feltene settes til 0 %, og brukeren får beskjed om det.
-const ZERO_FLOOR=new Set(['rate','inflation','bank','dreamInflation','dreamSafe','dreamModerate','dreamRisk']);
+// Prisvekst, bankrente og sparemålets alternativer har 0 % som nedre grense. Eldre lenker og planer med negative
+// verdier i disse feltene settes til 0 %, og brukeren får beskjed om det.
+// Antatt årlig vekst kan være negativ (beslutning 23.10.2026): modellen gjør årsveksten om til månedsvekst med
+// (1 + r)^(1/12), som er definert for alle r over −100 %. Kostnaden ganges inn som (1 − k), så verdien blir aldri
+// negativ. Ved −100 % finnes ingen månedsvekst (ln 0), derfor er grensen åpen. Glidebryteren starter fortsatt på 0 %.
+const ZERO_FLOOR=new Set(['inflation','bank','dreamInflation','dreamSafe','dreamModerate','dreamRisk']);
 function label(key){return RULES[key]?.label||CHOICES[key]?.[1]||key}
 function fail(key,text){const e=new Error(text);e.field=key;throw e}
 const num=new Intl.NumberFormat('nb-NO');
@@ -125,8 +127,8 @@ function explain(s,t=s.years){
  const final=value(s,t),paid=raw({...s,rate:0,fee:0},t,0,0),noFee=value(s,t,s.rate,0),months=Math.round(t*12);
  const fell=s.crash>0&&Math.round(s.crashYear*12)<=months,priceFactor=Math.exp(Math.log1p(s.inflation/100)*months/12);
  const loss=paid>0&&final<paid&&paid-final>=0.5?paid-final:0,allLost=loss>0&&final<=1e-9,almostAll=loss>0&&!allLost&&final<1;
- // Uten kostnader ville det ikke vært tap: da er kostnadene hele årsaken. Ellers er det et fall i verdi (børsfall, eller negativ avkastning når motoren brukes direkte), og kostnadene nevnes i tillegg.
- const cause=!loss?null:noFee>=paid-0.5?'fees':fell?(s.fee>0?'fall+fees':'fall'):(s.fee>0?'value+fees':'value');
+ // Uten kostnader ville det ikke vært tap: da er kostnadene hele årsaken. Ellers er det et fall i verdi: et enkelt børsfall, negativ årlig avkastning gjennom perioden, eller begge (de nevnes hver for seg). Kostnadene nevnes i tillegg.
+ const cause=!loss?null:noFee>=paid-0.5?'fees':fell?(s.rate<0?(s.fee>0?'fall+value+fees':'fall+value'):(s.fee>0?'fall+fees':'fall')):(s.fee>0?'value+fees':'value');
  const withPrices=raw(s,t,s.inflation,0),powerGap=!loss&&s.inflation>0&&withPrices-final>=0.5*priceFactor?(withPrices-final)/priceFactor:0;
  return {final,paid,loss,allLost,almostAll,cause,costEffect:Math.max(0,noFee-final),growthOnly:s.rate===0,priceFactor,real:final/priceFactor,noInflation:s.inflation===0,powerGap};
 }

@@ -23,7 +23,9 @@ for(const patch of [{dreamYears:1/12},{dreamYears:0.0833},{dreamYears:0.08},{dre
  assert.doesNotThrow(()=>E.dreamPlans({...E.defaults,...patch}),JSON.stringify(patch));
 // Sparemålets felt gjenbruker kalkulatorens grenser, slik at den interne kontrollen aldri feiler med feil feltnavn.
 const pairs=[['dreamCost','goal'],['dreamStart','start'],['dreamMonthly','monthly'],['dreamInflation','inflation'],['dreamSafe','rate']];
-for(const [d,m] of pairs)for(const k of ['max','open'])assert.equal(E.DREAM_FIELDS[d][k],E.FIELDS[m][k],`${d}.${k} must match ${m}.${k}`);
+for(const [d,m] of pairs){assert.equal(E.DREAM_FIELDS[d].max,E.FIELDS[m].max,`${d}.max must match ${m}.max`);
+ // Sparemålets område må ligge innenfor kalkulatorens, slik at den interne kontrollen aldri feiler. Avkastningen i kalkulatoren kan være negativ, sparemålets alternativer ikke.
+ assert.ok(E.DREAM_FIELDS[d].min>E.FIELDS[m].min||(E.DREAM_FIELDS[d].min===E.FIELDS[m].min&&!!E.DREAM_FIELDS[d].open===!!E.FIELDS[m].open),`${d} must lie within ${m}`);}
 
 // V4: Etiketten som vises på skjermen brukes når nettsiden oppgir den.
 assert.match(errorOf(()=>E.validate({...E.defaults,rate:150},()=> 'Årlig avkastning')).message,/«Årlig avkastning»/);
@@ -55,11 +57,12 @@ r=roundTrip(E.defaults);assert.deepEqual(r.rejected,[]);assert.deepEqual(r.state
 
 // Eldre lenker med negativ forventet vekst, prisvekst eller bankrente settes til 0 % og rapporteres.
 r=link('rate=-2&inflation=-1&bank=-0.5&growth=-10&dreamRisk=-5&monthly=3000');
-assert.deepEqual(r.adjusted.map(a=>a.key).sort(),['bank','dreamRisk','inflation','rate']);assert.deepEqual(r.adjusted.find(a=>a.key==='rate'),{key:'rate',from:-2});
-assert.deepEqual(r.rejected,[]);assert.deepEqual([r.state.rate,r.state.inflation,r.state.bank,r.state.dreamRisk,r.state.growth,r.state.monthly],[0,0,0,0,-10,3000],'growth may still be negative');
-r=link('rate=-150');assert.equal(r.state.rate,0);assert.deepEqual(r.adjusted,[{key:'rate',from:-150}]);
+assert.deepEqual(r.adjusted.map(a=>a.key).sort(),['bank','dreamRisk','inflation'],'negative return is no longer adjusted (decision 23.10.2026)');
+assert.deepEqual(r.rejected,[]);assert.deepEqual([r.state.rate,r.state.inflation,r.state.bank,r.state.dreamRisk,r.state.growth,r.state.monthly],[-2,0,0,0,-10,3000],'return and growth may be negative');
+r=link('rate=-150');assert.equal(r.state.rate,E.defaults.rate);assert.deepEqual(r.rejected,['rate'],'−100 % or lower is invalid and gets the default, not 0');assert.deepEqual(r.adjusted,[]);
+r=link('rate=-100');assert.deepEqual(r.rejected,['rate']);r=link('rate=-99.5');assert.equal(r.state.rate,-99.5);
 r=link('rate=abc');assert.deepEqual(r.rejected,['rate']);assert.equal(r.state.rate,E.defaults.rate,'unreadable text is still rejected, not set to 0');
-r=E.sanitize({rate:-3,monthly:2500});assert.equal(r.state.rate,0);assert.deepEqual(r.adjusted,[{key:'rate',from:-3}]);assert.equal(r.state.monthly,2500);
+r=E.sanitize({rate:-3,monthly:2500});assert.equal(r.state.rate,-3);assert.deepEqual(r.adjusted,[]);assert.equal(r.state.monthly,2500);
 // Lagrede planer (typede verdier) kontrolleres på samme måte.
 r=E.sanitize({years:500,monthly:4321,rate:'6',withdrawMode:'tull',real:'yes'});
 assert.deepEqual(r.rejected.sort(),['rate','real','withdrawMode','years']);assert.equal(r.state.monthly,4321);

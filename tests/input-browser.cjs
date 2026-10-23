@@ -77,7 +77,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.locator('#start').fill('20000000000');sl=await slider(p,'start');
   assert.equal(sl.max,'1000000');assert(sl.disabled);
   await p.locator('#start').fill('0');await p.locator('#rate').fill('-5');sl=await slider(p,'rate');
-  assert.equal(sl.min,'0');assert(sl.disabled);assert.match(sl.note,/ugyldig/);await p.locator('#rate').fill('5');
+  assert.equal(sl.min,'0');assert(sl.disabled);assert.match(sl.note,/fra 0 til 15/,'negative return is valid: the slider explains its range');assert.equal(await p.locator('#rate').inputValue(),'-5','the slider never rewrites a typed negative value');await p.locator('#rate').fill('5');
   await p.locator('#years').fill('70');assert.equal((await slider(p,'years')).max,'50');
   assert.deepEqual(p.errors,[]);
   p=await open('#activePage=dreams&dreamMonthly=25000&dreamCost=2500000');await p.waitForTimeout(300);
@@ -132,18 +132,23 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   p=await open('#activePage=calculator');await p.waitForTimeout(300);
   assert.deepEqual(await p.evaluate(()=>['−5','-5','−2,5','-2,5','2,5','−1 234,5','1 234','0','−0'].map(parsedNumber)),[-5,-5,-2.5,-2.5,2.5,-1234.5,1234,0,-0]);
   assert.deepEqual(await p.evaluate(()=>['5−','−−5','--5','−','– 5','1−2'].map(v=>Number.isNaN(parsedNumber(v)))),[true,true,true,true,true,true],'malformed minus stays invalid');
-  // Negativ forventet vekst, prisvekst og bankrente brukes ikke i vanlige regneeksempler. Eldre lenker settes til 0 % med forklaring.
+  // Negativ årlig avkastning kan skrives inn (beslutning 23.10.2026). Prisvekst og bankrente har fortsatt 0 % som nedre grense.
   p=await open('#activePage=calculator&rate=-2&inflation=-1&growth=-10&monthly=3000');await p.waitForTimeout(300);
-  assert.deepEqual(await p.evaluate(()=>[s.rate,s.inflation,s.growth,s.monthly]),[0,0,-10,3000],'growth may still be negative');
-  assert.equal(await p.locator('#rate').inputValue(),'0');assert.equal(await p.locator('#growth').inputValue(),'\u221210','the page shows typographic minus');
+  assert.deepEqual(await p.evaluate(()=>[s.rate,s.inflation,s.growth,s.monthly]),[-2,0,-10,3000],'negative return and growth are kept, negative inflation is set to 0');
+  assert.equal(await p.locator('#rate').inputValue(),'\u22122');assert.equal(await p.locator('#growth').inputValue(),'\u221210','the page shows typographic minus');
   const adjustToast=await p.locator('#toast').innerText();
-  assert.match(adjustToast,/«Antatt årlig vekst» fra −2\s%\s*til 0 %/);assert.match(adjustToast,/«Prisvekst per år» fra −1/);assert.match(adjustToast,/Børsfall/);assert.match(adjustToast,/Resten av planen er beholdt/);
+  assert.doesNotMatch(adjustToast,/Antatt årlig vekst/);assert.match(adjustToast,/«Prisvekst per år» fra −1/);assert.match(adjustToast,/Resten av planen er beholdt/);
   await p.locator('#monthly').fill('3500');assert(await p.locator('#error').isHidden(),'a negative growth value survives other edits');assert.equal(await p.evaluate(()=>s.growth),-10);
-  // Skyveknappen for avkastning starter på 0 %.
+  // Skyveknappen for avkastning starter på 0 %, og felt som kan være negative har ikke desimaltastatur (iPhone mangler minus der).
   assert.equal(await p.locator('#rateSlider').getAttribute('min'),'0');
-  // Skrevet negativ avkastning gir en tydelig feil på riktig felt.
-  await p.locator('#rate').fill('-3');assert(await p.locator('#error').isVisible());assert.match(await p.locator('#error').innerText(),/«Antatt årlig vekst» må være fra 0\s%/);assert.equal(await p.locator('#rate').getAttribute('aria-invalid'),'true');
-  await click(p,'share');assert(!await p.evaluate(()=>document.getElementById('shareDialog').open),'negative return cannot be shared');
+  assert.equal(await p.locator('#rate').getAttribute('inputmode'),null);assert.equal(await p.locator('#growth').getAttribute('inputmode'),null);assert.equal(await p.locator('#monthly').getAttribute('inputmode'),'decimal');
+  // Skrevet negativ avkastning er gyldig, kan deles, og forklares som negativ avkastning, ikke som børsfall.
+  await p.locator('#rate').fill('-3');assert(await p.locator('#error').isHidden());assert.notEqual(await p.locator('#rate').getAttribute('aria-invalid'),'true');
+  {const t=await p.locator('#secondary').innerText();assert.match(t,/Negativ avkastning (og kostnadene )?gjør at/);assert.doesNotMatch(t,/Børsfallet/);}
+  await click(p,'share');assert(await p.evaluate(()=>document.getElementById('shareDialog').open),'negative return can be shared');await click(p,'closeDialog');
+  // −100 % og lavere er ugyldig: da finnes ingen månedlig vekst i modellen.
+  await p.locator('#rate').fill('-100');await p.locator('#rate').blur();assert.match(await p.locator('#error').innerText(),/«Antatt årlig vekst» må være over −100\s%/);assert.equal(await p.locator('#rate').getAttribute('aria-invalid'),'true');
+  await click(p,'share');assert(!await p.evaluate(()=>document.getElementById('shareDialog').open),'an invalid return cannot be shared');
   await p.locator('#rate').fill('0');assert(await p.locator('#error').isHidden());
   // Minustegn i feltet som fortsatt kan være negativt: begge tegn, med og uten desimaler, gir samme resultat.
   await p.evaluate(()=>{setLevel('advanced');for(let d=document.getElementById('growth').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});
