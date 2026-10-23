@@ -174,12 +174,13 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.evaluate(()=>{for(let d=document.getElementById('inflation').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});await p.locator('#inflation').fill('2,5');await p.locator('#fee').fill('0,2');
   await p.locator('#monthly').fill('2000');await p.locator('#years').fill('10');await p.locator('#rate').fill('2');
   assert.match(await p.locator('#gainLabel').innerText(),/^Tapt kjøpekraft$/,'a purchasing-power gap is lost purchasing power');assert.doesNotMatch(await p.locator('#gainLabel').innerText(),/Tap mot innskuddene/,'a purchasing-power gap is not a loss in kroner');
-  assert.match(await p.locator('#secondary').innerText(),/Pengene har økt i kroner, men ikke holdt følge med prisveksten\. Målt i dagens kroner er verdien 7\s387 kr lavere enn innskuddene i dagens kroner\./);
+  // Kjøpekraften forklares i «Dette betyr tallene dine», ikke i resultatkortet.
+  assert.doesNotMatch(await p.locator('#secondary').innerText(),/holdt følge/);assert.match((await p.evaluate(()=>{renderMeaning();return document.getElementById('meaningMain').textContent})),/^Saldoen øker av innskuddene og avkastningen, men prisene stiger raskere enn pengene vokser\./);assert.match((await p.evaluate(()=>{renderMeaning();return document.getElementById('meaningDetails').textContent})),/Innskuddene tilsvarer 212\s446 kr i dagens kroner.*Det er 7\s387 kr mindre kjøpekraft enn innskuddene\./);
   assert.match(await p.locator('#mobileResultLabel').innerText(),/Lavere kjøpekraft enn innskuddene/);
   await p.evaluate(()=>{const r=document.getElementById('real');r.checked=false;r.dispatchEvent(new Event('change',{bubbles:true}));r.dispatchEvent(new Event('input',{bubbles:true}));});
   // I kroner: kort setning om kjøpekraft, uten beløp i dagens kroner, og ikke kalt tap.
-  assert.match(await p.locator('#secondary').innerText(),/Sparingen har ikke holdt følge med prisveksten, så pengene kan kjøpe mindre enn innskuddene kunne da du satte dem inn\./);
-  assert.doesNotMatch(await p.locator('#secondary').innerText(),/tapt|lavere enn innskuddene justert/);assert.match(await p.locator('#mobileResultLabel').innerText(),/Lavere kjøpekraft enn innskuddene/);
+  assert.match((await p.evaluate(()=>{renderMeaning();return document.getElementById('meaningMain').textContent})),/prisene stiger raskere enn pengene vokser/,'samme forklaring i begge visninger');
+  assert.doesNotMatch(await p.locator('#secondary').innerText(),/tapt|lavere enn innskuddene justert|holdt følge/);assert.match(await p.locator('#mobileResultLabel').innerText(),/Lavere kjøpekraft enn innskuddene/);
   // Indeksfond med stort børsfall: verdien blir aldri negativ, heller ikke ved 100 % fall.
   await p.evaluate(()=>{setLevel('advanced');for(let d=document.getElementById('crash').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});
   for(const fall of ['50','90','100']){await p.locator('#start').fill('200000');await p.locator('#monthly').fill('3000');await p.locator('#years').fill('20');await p.locator('#rate').fill('7');await p.locator('#crash').fill(fall);await p.locator('#crashYear').fill('5');
@@ -221,12 +222,12 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.equal(await metric('#total'),78120);assert.equal(await metric('#paid'),100000,'start capital keeps its value in today-kroner view');
   assert.equal(await metric('#gain'),-21880);assert.match(await p.locator('#gainLabel').innerText(),/^Tapt kjøpekraft$/);
   assert.match(await p.locator('#paidLabel').innerText(),/Innskudd i dagens kroner/);assert(await p.locator('#paidNote').isHidden(),'no note when the amounts are equal');
-  assert.match(await sec(),/Pengene har ikke økt i kroner, og har derfor ikke holdt følge med prisveksten\. Målt i dagens kroner er verdien 21\s880 kr lavere enn innskuddene/);
+  assert.equal((await p.evaluate(()=>{renderMeaning();return document.getElementById('meaningMain').textContent})),'Beløpet på kontoen er uendret, men pengene kjøper mindre etter hvert som prisene stiger.');assert.match((await p.evaluate(()=>{renderMeaning();return document.getElementById('meaningDetails').textContent})),/Det er 21\s880 kr mindre kjøpekraft enn innskuddene\./);
   assert.doesNotMatch(await sec(),/økt i verdi|tapt [\d\s]+ kr av pengene|samlede tapet/,'standing still in kroner is not growth and not a loss in kroner');
   assert.equal(await p.evaluate(()=>rows[0].paid),100000);assert.equal(Math.round(await p.evaluate(()=>rows.at(-1).paid)),100000,'chart deposit line stays at 100 000 in today kroner');
   // Bankkonto, 0,2 % rente: 102 018 kr på kontoen, 79 696 kr i dagens kroner.
   await p.locator('#rate').fill('0,2');assert.equal(await metric('#total'),79696);assert.equal(await metric('#paid'),100000);assert.equal(await metric('#gain'),-20304);
-  assert.match(await sec(),/Kontoen viser da 102\s018 kr/);assert.match(await sec(),/Pengene har økt i kroner, men ikke holdt følge med prisveksten/);
+  assert.match(await sec(),/Kontoen viser da 102\s018 kr/);assert.equal((await p.evaluate(()=>{renderMeaning();return document.getElementById('meaningMain').textContent})),'Du får flere kroner på kontoen, men prisene stiger raskere enn pengene vokser.');
   // Månedssparing: innskudd + vekst = sluttbeløp i begge visninger, og det faktiske kronebeløpet står under.
   await p.locator('#start').fill('0');await p.locator('#monthly').fill('2000');await p.locator('#rate').fill('2');await p.locator('#fee').fill('0,2');
   assert.equal(await metric('#paid'),212446);assert.match(await p.locator('#paidNote').innerText(),/^Du setter inn 240\s000 kr$/);
@@ -255,7 +256,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.equal(await p.evaluate(()=>s.rate),5);assert.equal(await p.locator('#total').innerText(),typed,'slider and field give the same result');
   // Skjermbilde: 0 % vekst og 3 % prisvekst. Ingen tap i kroner, men lavere kjøpekraft.
   await fillPlan({years:'40',rate:'0',inflation:'3',fee:'0'});
-  assert.match(await sec(),/^Det tilsvarer 297\s360 kr med dagens priser\. Sparingen har ikke holdt følge med prisveksten/);assert.doesNotMatch(await sec(),/tapt|mindre enn du har satt inn/);
+  assert.match(await sec(),/^Det tilsvarer 297\s360 kr med dagens priser\.$/);assert.match((await p.evaluate(()=>{renderMeaning();return document.getElementById('meaningMain').textContent})),/^Saldoen øker bare fordi du setter inn nye penger\./);assert.doesNotMatch(await sec(),/tapt|mindre enn du har satt inn/);
   for(const w of [375,390,430]){await p.setViewportSize({width:w,height:800});assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'no horizontal scroll at '+w);
    assert.equal(await p.evaluate(()=>{const c=document.querySelector('.hero-result');return [...c.querySelectorAll('#total,#secondary,.metrics strong')].every(e=>e.getBoundingClientRect().right<=c.getBoundingClientRect().right+0.5);}),true,'result card text stays inside the card at '+w);}
   await p.setViewportSize({width:1280,height:900});await fillPlan({start:'0',monthly:'2000',years:'10',rate:'5',inflation:'2,5',fee:'0,2'});

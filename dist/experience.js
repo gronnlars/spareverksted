@@ -71,7 +71,7 @@ fill();render();
 
 $('copyLink').onclick=async()=>{try{await navigator.clipboard.writeText($('shareUrl').value);notice('Lenken er kopiert.');$('copyLink').textContent='Kopiert';}catch{$('shareUrl').select();notice('Trykk Ctrl+C eller hold på teksten for å kopiere lenken.');}};
 
-$('mobileResultButton').onclick=()=>{const target=$('chart');target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});target.focus({preventScroll:true});};
+$('mobileResultButton').onclick=()=>{const target=$('savingsResult');target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});target.focus({preventScroll:true});};
 new IntersectionObserver(entries=>$('mobileSummary').classList.toggle('is-visible',!entries[0].isIntersecting),{threshold:.2}).observe(document.querySelector('.hero-result'));
 
 $('share').addEventListener('click',()=>{$('copyLink').textContent='Kopier lenke';});

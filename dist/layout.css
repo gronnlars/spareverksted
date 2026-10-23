@@ -182,3 +182,20 @@ input[aria-invalid=true]{border-color:#b3452c;outline-color:#b3452c}
 .mobile-summary.stale strong,.mobile-summary.stale svg,#dreamPanel.stale #dreamCards,#dreamPanel.stale #dreamSummary{opacity:.4;filter:grayscale(.6)}
 .pending-note{font-size:14px;line-height:1.4;color:var(--muted);margin:6px 0 0}
 .start-note{font-size:14px;line-height:1.45;color:var(--muted);margin:0 0 14px}
+.savings-type{margin:0 0 14px}.savings-type-label{font-size:14px;font-weight:600;margin:0 0 6px;color:var(--ink)}
+.savings-type .segmented,.value-mode .segmented{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.savings-type .segmented button,.value-mode .segmented button{min-height:44px;font-size:14px;padding:8px 2px;white-space:nowrap;min-width:0}
+@media(min-width:761px){.savings-type .segmented button{font-size:13px}}
+.savings-type #clearSavingsType{font-size:14px;margin-top:6px;min-height:44px;padding:0}
+.meaning{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:16px}
+.meaning h2{font-size:18px;margin:0 0 8px}.meaning p{font-size:15px;line-height:1.5;margin:0 0 8px}
+.meaning h3{font-size:15px;margin:12px 0 4px}.meaning details summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:600}
+.meaning-actions{display:flex;flex-wrap:wrap;gap:4px 16px}.meaning-actions button{min-height:44px;font-size:15px;padding:0;text-align:left}
+.meaning-action-text{background:var(--soft);border-radius:10px;padding:10px 12px}
+.meaning-waiting,.stale .results .meaning{opacity:.55}
+.value-mode{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:4px 0 10px}.value-mode>span{font-size:14px;font-weight:600}.value-mode .segmented{flex:1 1 240px}
+.legend .long-dash-key i{background:repeating-linear-gradient(to right,var(--series) 0 8px,transparent 8px 12px)}
+.savings-note{font-size:14px;line-height:1.45;background:var(--soft);border-radius:10px;padding:8px 12px;margin:8px 0 0}.savings-note button{min-height:44px;font-size:14px;padding:0 4px}
+
+#savingsResult{scroll-margin-block-start:20px}
+#savingsResult:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
