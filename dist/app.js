@@ -243,14 +243,16 @@ $('undo').onclick=()=>{if(!undoState)return;s={...undoState.state};mode=undoStat
 $('modes').onclick=e=>{const b=e.target.closest('[data-mode]');if(!b)return;mode=b.dataset.mode;for(const b of $('modes').children)b.classList.toggle('active',b.dataset.mode===mode);if(mode==='goal')view.showGoal=true;fill();render();};
 for(const key in view)if($(key))$(key).onchange=()=>{view[key]=$(key).checked;render();};
 // Spareform: frivillig, kan fjernes, og endrer ingen tall. Den styrer bare forklaringene i «Dette betyr tallene dine».
-function syncSavingsType(){for(const b of $('savingsTypes').children)b.setAttribute('aria-pressed',String(b.dataset.type===s.savingsType));$('clearSavingsType').hidden=!s.savingsType;}
+function syncSavingsType(){for(const b of $('savingsTypes').children)b.setAttribute('aria-pressed',String(b.dataset.type===s.savingsType));$('clearSavingsType').hidden=!s.savingsType;if(!s.savingsType)$('savingsNote').hidden=true;}
 // Et valg setter synlige forutsetninger for spareformen (med kilde i teksten over feltene) og kan angres.
 // Å fjerne valget endrer ingen tall.
-function savingsPreset(type){const A=Assumptions;if(type==='index')return {patch:{savingsType:type,rate:A.indexRate(s.inflation)},range:true,undo:`Indeksfond: vekst ${pct(A.indexRate(s.inflation))} (${pct(A.index.realRate)} forventet realavkastning for aksjer, Finans Norge, pluss ${pct(s.inflation)} prisvekst), med utfallsrom i grafen.`};return {patch:{savingsType:type,rate:A[type].rate,fee:A[type].fee},range:false,undo:A[type].undo};}
+function savingsPreset(type){const A=Assumptions;if(type==='index')return {patch:{savingsType:type,rate:A.indexRate(s.inflation),...(s.fee===0?{fee:E.defaults.fee}:{})},range:true,undo:`Vekst satt til ${pct(A.indexRate(s.inflation))}${s.fee===0?` og kostnad til ${pct(E.defaults.fee)}`:''}. Utfallsrommet vises i grafen.`};return {patch:{savingsType:type,rate:A[type].rate,fee:A[type].fee},range:false,undo:A[type].undo};}
 $('savingsTypes').onclick=e=>{const b=e.target.closest('[data-type]');if(!b)return;
  if(s.savingsType===b.dataset.type){s.savingsType='';syncSavingsType();render();return;}
  const p=savingsPreset(b.dataset.type);undoState={state:{...s},mode,view:{...view}};Object.assign(s,p.patch);view.showRange=p.range;if($('showRange'))$('showRange').checked=view.showRange;
- $('undoText').textContent=p.undo;$('undoBar').hidden=false;fill();syncSavingsType();render();};
+ // Meldingen står rett under knappene, så knappene ikke flytter seg under fingeren (ingen linje over panelet).
+ $('savingsNoteText').textContent=p.undo;$('savingsNote').hidden=false;$('undoBar').hidden=true;fill();syncSavingsType();render();};
+$('savingsUndo').onclick=()=>{$('savingsNote').hidden=true;$('undo').click();syncSavingsType();$('savingsTypes').querySelector('[aria-pressed=true]')?.focus()||$('savingsTypes').querySelector('button').focus();};
 $('clearSavingsType').onclick=()=>{s.savingsType='';syncSavingsType();render();$('savingsTypes').querySelector('button').focus();};
 // Visning av beløpet: kroner, kjøpekraft i dagens kroner, eller begge i samme graf. Ingen tall endres.
 function valueMode(){return view.both&&!s.real?'both':s.real?'real':'nominal';}

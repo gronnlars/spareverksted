@@ -27,11 +27,11 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.locator('#savingsTypes [data-type=checking]').click();
   assert.equal(await p.locator('#savingsTypes [data-type=checking]').getAttribute('aria-pressed'),'true');assert(await p.locator('#clearSavingsType').isVisible());
   assert.deepEqual(await p.evaluate(()=>[s.rate,s.fee,document.getElementById('rate').value,document.getElementById('fee').value]),[0,0,'0','0'],'forutsetningene står synlig i feltene');
-  assert.match(await text(p,'#total'),/^240\s000 kr$/);assert.match(await text(p,'#undoText'),/^Brukskonto: rente 0 % og kostnad 0 %/);assert(await p.locator('#undoBar').isVisible());
+  assert.match(await text(p,'#total'),/^240\s000 kr$/);assert.equal(await text(p,'#savingsNoteText'),'Rente satt til 0 % og kostnad til 0 %.');assert(await p.locator('#savingsNote').isVisible());assert(await p.locator('#undoBar').isHidden(),'ingen linje over panelet som flytter knappene');
   assert.match(await text(p,'#startNote'),/Renten 0 % er et regneeksempel for brukskonto/);
   assert.match(await text(p,'#meaningMain'),/^Saldoen øker bare fordi du setter inn nye penger\. Pengene kjøper mindre/);
   // Angre gir planen tilbake.
-  await p.locator('#undo').click();assert.equal(await text(p,'#total'),total);assert.equal(await p.evaluate(()=>s.savingsType),'');
+  await p.locator('#savingsUndo').click();assert(await p.locator('#savingsNote').isHidden());assert.equal(await text(p,'#total'),total);assert.equal(await p.evaluate(()=>s.savingsType),'');
   assert.deepEqual(await p.evaluate(()=>['start','monthly','years','rate','inflation','fee'].map(k=>document.getElementById(k).value)),inputs);
   // Sparekonto: gjennomsnittsrenten fra SSB, med kilde og dato i teksten.
   await p.locator('#savingsTypes [data-type=savings]').click();
@@ -39,7 +39,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.match(await text(p,'#meaningMain'),/Renter beskattes hvert år/);
   // Indeksfond: Finans Norge-forutsetning og utfallsrom som avhenger av sparetiden.
   await p.locator('#savingsTypes [data-type=index]').click();assert.equal(await p.locator('#savingsTypes [data-type=savings]').getAttribute('aria-pressed'),'false');
-  assert.equal(await p.evaluate(()=>s.rate),7.11,'4,5 % realavkastning pluss 2,5 % prisvekst');assert.equal(await p.evaluate(()=>view.showRange),true);
+  assert.equal(await p.evaluate(()=>s.rate),7.11,'4,5 % realavkastning pluss 2,5 % prisvekst');assert.equal(await p.evaluate(()=>s.fee),0.2,'et indeksfond arver ikke 0 % kostnad fra en konto; kostnaden er en forhåndsutfylt startverdi');assert.equal(await p.evaluate(()=>view.showRange),true);
   assert.match(await text(p,'#startNote'),/Veksten 7,11 % er 4,5 % forventet realavkastning for aksjer \(Finans Norges prognosestandard, februar 2026\)/);
   assert.match(await text(p,'#meaningMain'),/Et indeksfond kan falle mye i verdi underveis/);assert.match(await text(p,'#meaningMain'),/Med 10 år sparetid/);
   assert.match(await p.locator('#chartNote').innerText(),/95 % utfallsrom etter Finans Norges prognosemodell/);assert.match(await p.locator('#chartLegend').innerText(),/95 % utfallsrom \(modell\)/);assert.equal(await p.locator('#showRange').getAttribute('aria-label'),'Vis utfallsrom (95 %)');
