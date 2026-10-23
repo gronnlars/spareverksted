@@ -17,6 +17,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert((await p.locator('#total').boundingBox()).y>=0,'The answer is visible immediately');
   assert((await p.locator('#seeGraph').boundingBox()).y<600,'Graph shortcut precedes the explanation');
   assert.equal(await p.locator('.before-tax-badge').innerText(),'Før skatt');
+  assert.match(await p.locator('#resultAssumptions').innerText(),/5 % årlig vekst, 0,2 % kostnad og 2,5 % prisvekst/);
+  assert(await p.locator('#resultAssumptions').isVisible(),'Assumptions accompany the first answer');
   await p.screenshot({path:path.join(shots,'01-mobile-result.png')});
   await p.locator('.result-navigation [data-edit-fields]').click();
   assert.equal(await p.evaluate(()=>document.activeElement.id),'planInputs');
