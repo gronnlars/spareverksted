@@ -87,11 +87,11 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.locator('#rate').fill('1');
   assert.equal(await text(p,'#meaningMain'),oldMain,'ingen endring mens brukeren skriver');assert(await p.evaluate(()=>document.getElementById('meaning').classList.contains('meaning-waiting')));
   assert.equal(await p.evaluate(()=>document.activeElement.id),'rate','fokus blir i feltet');
-  await p.locator('#rate').blur();assert.match(await text(p,'#meaningMain'),/1 % rente/);assert(!await p.evaluate(()=>document.getElementById('meaning').classList.contains('meaning-waiting')));
+  await p.locator('#rate').blur();assert.match(await p.locator('#meaningDetails').textContent(),/1 % rente/);assert(!await p.evaluate(()=>document.getElementById('meaning').classList.contains('meaning-waiting')));
   // Skyveknappen: oppdateres når den slippes (change).
   await p.evaluate(()=>{const r=document.getElementById('rateSlider');r.value='3';r.dispatchEvent(new Event('input',{bubbles:true}));});
-  assert.match(await text(p,'#meaningMain'),/1 % rente/,'ikke under dra-bevegelsen');
-  await p.evaluate(()=>{document.getElementById('rateSlider').dispatchEvent(new Event('change',{bubbles:true}));});assert.match(await text(p,'#meaningMain'),/3 % rente/);
+  assert.match(await p.locator('#meaningDetails').textContent(),/1 % rente/,'ikke under dra-bevegelsen');
+  await p.evaluate(()=>{document.getElementById('rateSlider').dispatchEvent(new Event('change',{bubbles:true}));});assert.match(await p.locator('#meaningDetails').textContent(),/3 % rente/);
 
   // 5. Kroner, kjøpekraft og begge i grafen.
   await p.locator('#rate').fill('5');await p.locator('#rate').blur();await p.locator('#fee').fill('0,2');await p.locator('#fee').blur();
