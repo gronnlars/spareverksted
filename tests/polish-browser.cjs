@@ -27,6 +27,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.locator('.input-result').click();
   assert.equal(await p.evaluate(()=>document.activeElement.id),'monthly','Invalid input stays at the field');
   await p.locator('#monthly').fill('1500');await p.locator('#savingsTypes [data-type=savings]').click();
+  assert(await p.locator('#toast').isHidden(),'A corrected input dismisses its validation notice');
+  await p.waitForTimeout(150);
   await p.locator('.input-result').click();await p.screenshot({path:path.join(shots,'02-mobile-bank.png')});
   await p.locator('#seeGraph').click();await p.screenshot({path:path.join(shots,'03-mobile-graph.png')});
   // Actual downloaded CSV values must match the graph and the XLSX/JSON source matrix.
