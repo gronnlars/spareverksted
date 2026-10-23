@@ -72,7 +72,7 @@ Brukeren kan velge brukskonto, sparekonto eller indeksfond under «Hva vil du re
 
 - Brukskonto: 0 % rente og 0 % kostnad. Et regneeksempel; SSB har ingen egen serie for brukskontorente.
 - Sparekonto: 2,87 % rente og 0 % kostnad: gjennomsnittet for husholdningers innskudd uten binding (SSB tabell 11018, august 2026). Ikke beste tilgjengelige rente.
-- Indeksfond: 4,5 % forventet realavkastning for aksjer pluss planens prisvekst (Finans Norge, Avtale om avkastningsprognoser, revidert 04.02.2026). Kostnaden er uendret. Grafen viser et 95 % utfallsrom etter Finans Norges formelverk: hvert innskudd får årlig avkastning r ± 1,96 · 16 % / √(år til slutt). Kort sparetid gir derfor større usikkerhet i snittavkastningen.
+- Indeksfond: 4,5 % forventet realavkastning for aksjer pluss planens prisvekst (Finans Norge, Avtale om avkastningsprognoser, revidert 04.02.2026). Kostnaden er uendret. Grafen viser et 95 % utfallsrom etter Finans Norges formelverk: hvert innskudd får årlig avkastning r ± 1,96 · 16 % / √(år til slutt). Kort sparetid gir derfor større usikkerhet i snittavkastningen. Den nedre delen av utfallsrommet sammenlignes med innskuddene i samme kroneverdi: kroner mot kroner, og dagens kroner mot innskuddene i dagens kroner. Ligger den over i kroner, men under i dagens kroner, sies begge deler. Ved grafen vises én linje i kroneverdien grafen viser, bare når nedre del ligger under innskuddene.
 
 Å fjerne valget endrer ingen tall. Brukeren kan alltid skrive egne tall etterpå. Tallene i `dist/assumptions.js` kontrolleres etter Finans Norges årlige revisjon og når SSB publiserer nye renter.
 

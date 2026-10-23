@@ -50,9 +50,16 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.match(await text(p,'#meaningDetails'),/Med 3 år sparetid kan verdien også ende under det du har satt inn/);const short=await lowShare();
   await p.locator('#years').fill('25');await p.locator('#years').blur();const long=await lowShare();
   assert.ok(long>short,`nedre del i forhold til innskuddene er bedre over 25 år (${long.toFixed(2)}) enn over 3 år (${short.toFixed(2)})`);
-  // Engangsbeløp over 25 år: også den nedre delen ligger over innskuddet.
+  // Engangsbeløp over 25 år: nedre del over innskuddet i kroner, men under det målt i dagens kroner.
   await p.locator('#monthly').fill('0');await p.locator('#start').fill('100000');await p.locator('#start').blur();
-  assert.match(await text(p,'#meaningDetails'),/Med 25 år sparetid ligger også den nedre delen av utfallsrommet over innskuddene/);
+  assert.match(await text(p,'#meaningDetails'),/Med 25 år sparetid ligger den nedre delen av utfallsrommet over innskuddene i kroner/);
+  assert.match(await text(p,'#meaningDetails'),/under det du samlet setter inn, målt i dagens kroner/);
+  // Ved båndet: én linje i samme kroneverdi som grafen, bare når båndet vises.
+  const note=()=>p.evaluate(()=>{const n=document.getElementById('fanDepositNote');return n.hidden?'':n.textContent;});
+  await p.evaluate(()=>{const b=document.getElementById('showRange');if(!b.checked)b.click();});
+  assert.match(await note(),/^I kroner ligger den nedre delen av utfallsrommet over innskuddene\. Målt i dagens kroner ligger den under/);
+  await p.evaluate(()=>{const b=document.getElementById('showRange');b.click();});assert.equal(await note(),'','Ingen linje uten bånd');
+  await p.evaluate(()=>{const b=document.getElementById('showRange');b.click();});
   await p.locator('#start').fill('0');await p.locator('#monthly').fill('2000');await p.locator('#monthly').blur();
   await p.locator('#years').fill('10');await p.locator('#years').blur();
   // Handlingen skjuler og viser båndet uten å endre tallene, og uten å flytte fokus eller scrolle.
