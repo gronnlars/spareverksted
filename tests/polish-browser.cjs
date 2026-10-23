@@ -1,13 +1,15 @@
 // First-result flow and export/graph agreement, including nominal versus today's kroner.
-const {chromium}=require('playwright'),assert=require('node:assert/strict');
+const {chromium,firefox,webkit}=require('playwright'),assert=require('node:assert/strict');
 const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
 (async()=>{
- const root=path.resolve(__dirname,'../dist'),shots='/tmp/spareverksted-ui-review';
+ const engine=process.env.SPARE_ENGINE||'chromium',browserType={chromium,firefox,webkit}[engine];
+ assert(browserType,'Unknown test browser');
+ const root=path.resolve(__dirname,'../dist'),shots='/tmp/spareverksted-ui-review/'+engine;
  const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!file.startsWith(root+path.sep)){res.writeHead(403);return res.end();}try{res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':file.endsWith('.png')?'image/png':'text/html');res.end(fs.readFileSync(file));}catch{res.writeHead(404);res.end();}});
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
  let browser;const errors=[];
  try{
-  browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu'],...(process.env.SPARE_BROWSER?{executablePath:process.env.SPARE_BROWSER}:{})});
+  browser=await browserType.launch({headless:true,...(engine==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu'],...(process.env.SPARE_BROWSER?{executablePath:process.env.SPARE_BROWSER}:{})}:{})});
   const p=await browser.newPage({viewport:{width:375,height:812},reducedMotion:'reduce'});p.on('pageerror',e=>errors.push(e.message));
   fs.mkdirSync(shots,{recursive:true});
   await p.goto(origin+'/index.html');await p.locator('#chooseGrowth').click();
@@ -64,6 +66,6 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await fresh.locator('#chooseGrowth').click();await fresh.locator('#exampleJourney').click();
   assert.equal(await fresh.evaluate(()=>document.activeElement.id),'savingsResult');
   assert.deepEqual(errors,[]);
-  console.log('Passed: immediate mobile result, editing and validation, goals and example, CSV/XLSX matrix versus graph for eight scenario/unit combinations.');
+  console.log(engine+': passed immediate mobile result, editing and validation, goals and example, CSV/XLSX matrix versus graph for eight scenario/unit combinations.');
  }finally{if(browser)await browser.close();server.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
