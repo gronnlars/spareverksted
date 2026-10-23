@@ -1,6 +1,6 @@
 'use strict';
 const $=id=>document.getElementById(id), E=Engine;
-let s={...E.defaults},mode='explore',rows=[],saved=[],level='simple',selectedPlans=new Set(),undoState=null,view={showBank:false,showRange:false,showGoal:false};
+let s={...E.defaults},mode='explore',rows=[],saved=[],level='simple',selectedPlans=new Set(),undoState=null,view={showBank:false,showRange:false,showGoal:false,both:false};
 const nf=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0}),dec=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:2});
 const BIG=[[1e18,'trillioner','trill.'],[1e15,'billiarder','bd.'],[1e12,'billioner','bill.']];
 const big=(x,short)=>{const a=Math.abs(x),sign=x<0?'−':'';if(a>=1e21){const bound=x<0?'under −':'over ';return bound+(short?'1 000 trill.':'1 000 trillioner kr');}for(const [limit,word,abbr] of BIG)if(a>=limit)return sign+dec.format(a/limit)+(short?' '+abbr:' '+word+' kr');return null;};
@@ -54,7 +54,7 @@ function syncFieldErrors(keys,messageId,field){for(const k of keys){const el=$(k
 const MAIN_KEYS=Object.keys(E.FIELDS),RETIREMENT_ERROR_KEYS=['retireYears','extraWithdraw','extraWithdrawYear'];
 const WITHDRAW_KEYS=['annualWithdraw','retireYears','withdrawPercent','extraWithdraw','extraWithdrawYear','withdraw'];
 const pageOf=key=>key in E.DREAM_FIELDS?'dreams':WITHDRAW_KEYS.includes(key)?'withdrawals':'calculator';
-let lastRenderError=null,lastLoss=0,lastRealGain=0;
+let lastRenderError=null,lastLoss=0,lastRealGain=0,typingRender=false;
 // Felles kontroll før deling, lagring og eksport: alle felt som følger med planen, og beregningen i aktiv modul.
 function planProblem(){
  try{E.validate(s,fieldLabel);E.validateDream(s,fieldLabel);
@@ -87,6 +87,17 @@ function makeRows(){
  goal:(view.showGoal||mode==='goal')?(s.goalReal?display(s.goal*inflation(r.t),r.t):display(s.goal,r.t)):0}));
 }
 function changePlan(patch,message){undoState={state:{...s},mode,view:{...view}};Object.assign(s,patch);$('undoText').textContent=message;$('undoBar').hidden=false;fill();render();}
+const pct=v=>(v<0?'−':'')+dec.format(Math.abs(v))+' %';
+function renderMeaning(){const box=$('meaning');if(!box)return;box.classList.remove('meaning-waiting');box.hidden=mode==='goal';if(mode==='goal')return;
+ let m;try{m=Meaning.build(E,s,endYear(s),{money,pct});}catch{box.hidden=true;return;}
+ if($('meaningMain').textContent!==m.main)$('meaningMain').textContent=m.main;
+ $('meaningDetails').innerHTML=m.details.map(d=>`<h3>${escapeHTML(d.title)}</h3><p>${escapeHTML(d.text)}</p>`).join('');
+ const shown=$('meaningActionText');const openId=shown.hidden?null:shown.dataset.action;shown.hidden=true;
+ $('meaningActions').replaceChildren(...m.actions.map(a=>{const b=document.createElement('button');b.type='button';b.className='text-link';
+  if(a.id==='range'){b.textContent=view.showRange?'Skjul lavere og høyere vekst i grafen':a.label;b.setAttribute('aria-pressed',String(view.showRange));b.onclick=()=>{view.showRange=!view.showRange;if($('showRange'))$('showRange').checked=view.showRange;render();renderMeaning();};}
+  else{b.textContent=a.label;b.setAttribute('aria-expanded','false');b.setAttribute('aria-controls','meaningActionText');const showText=()=>{shown.textContent=a.text;shown.dataset.action=a.id;shown.hidden=false;b.setAttribute('aria-expanded','true');};b.onclick=()=>{if(shown.hidden||shown.dataset.action!==a.id)showText();else{shown.hidden=true;b.setAttribute('aria-expanded','false');}};if(openId===a.id)showText();}
+  return b;}));
+}
 function render(){
  try{
  E.validate(s,fieldLabel);rows=makeRows();const end=endYear(s),final=E.value(s,end),target=E.target(s),need=E.needed(s);
@@ -116,15 +127,14 @@ function render(){
  if(allLost)notes.push('Du har tapt alle pengene du har investert.');
  else if(almostAll)notes.push('Du har tapt nesten alle pengene du har investert. Under 1 kr er igjen.');
  else if(lastLoss)notes.push((X.cause==='fees'?(X.growthOnly?`Kostnadene har redusert sparingen med ${money(nominalLoss)}.`:`Kostnadene på ${money(X.costEffect)} er større enn veksten, så ${less}`):X.cause==='fall'?`Børsfallet gjør at ${less}`:X.cause==='fall+fees'?`Børsfallet og kostnadene gjør at ${less}`:X.cause==='fall+value'?`Børsfallet og den negative årlige avkastningen gjør at ${less}`:X.cause==='fall+value+fees'?`Børsfallet, den negative årlige avkastningen og kostnadene gjør at ${less}`:X.cause==='value+fees'?`Negativ avkastning og kostnadene gjør at ${less}`:`Negativ avkastning gjør at ${less}`)+(s.real&&!X.noInflation?` Beløpet er i kroner, ikke justert for prisvekst. Målt i dagens kroner er verdien ${money(paid-shown)} lavere enn innskuddene i dagens kroner. Det samlede tapet består av både tapet i kroner og prisveksten.`:''));
- else if(powerGap>=0.5)notes.push((final-nominalPaidEnd>=0.5?'Pengene har økt i kroner, men ikke holdt følge med prisveksten.':'Pengene har ikke økt i kroner, og har derfor ikke holdt følge med prisveksten.')+` Målt i dagens kroner er verdien ${money(powerGap)} lavere enn innskuddene i dagens kroner.`);
- else if(X&&X.powerGap)notes.push('Sparingen har ikke holdt følge med prisveksten, så pengene kan kjøpe mindre enn innskuddene kunne da du satte dem inn.');
+ // Kjøpekraften forklares i «Dette betyr tallene dine», ikke her.
  $('secondary').textContent=notes.join(' ');$('secondary').hidden=!notes.length;
  $('mobileResultLabel').textContent=mode==='goal'?'Nødvendig per måned · før skatt':allLost?'Alle innskuddene er tapt · før skatt':lastLoss?`${money(nominalLoss)} under innskuddene · før skatt`:(powerGap>=0.5||X&&X.powerGap)?'Lavere kjøpekraft enn innskuddene · før skatt':s.real?'Dagens kroner · før skatt':'Regneeksempel · før skatt';
  $('mobileCurve').hidden=mode==='goal';
  const miniMax=Math.max(1,...rows.map(r=>Math.max(r.v,r.paid)));
  const miniPath=key=>rows.map((r,i)=>(i?'L':'M')+(3+(end?r.t/end:0)*74).toFixed(2)+','+(35-r[key]/miniMax*32).toFixed(2)).join(' ');
  $('mobileValueCurve').setAttribute('d',miniPath('v'));$('mobilePaidCurve').setAttribute('d',miniPath('paid'));
- $('chartSubtitle').textContent=s.real?'Beløpene er justert for prisvekst.':'Beløpene viser kroner på det fremtidige tidspunktet.';
+ $('chartSubtitle').textContent=view.both&&!s.real?'Heltrukken linje: kroner på kontoen. Stiplet: hva beløpet kan kjøpe, målt i dagens kroner.':s.real?'Beløpene er justert for prisvekst og vist i dagens kroner.':'Beløpene viser kroner på det fremtidige tidspunktet.';
  $('essentialsValue').textContent=`${dec.format(s.inflation)} % prisvekst · ${dec.format(s.fee)} % kostnad`;
  const ratio=target===0?1:final/target,hit=rows.find(r=>r.v>=r.goal);
  $('goalCard').hidden=!(view.showGoal||mode==='goal');
@@ -132,7 +142,7 @@ function render(){
  $('goalText').textContent=`${dec.format(ratio*100)} % av målet ved slutten av perioden.`+(hit?` Første passering rundt år ${dec.format(hit.t)} i modellen.`:'');
  $('progress').style.width=Math.max(0,Math.min(100,ratio*100))+'%';$('goalAction').replaceChildren();
  if(Number.isFinite(need)){const b=document.createElement('button');b.textContent=`Prøv ${money(Math.ceil(need))} per måned`;b.onclick=()=>changePlan({monthly:Math.ceil(need)},'Månedssparingen er tilpasset målet.');$('goalAction').append(b);}
- chart();table();experiments();plainExplanation(final,end);tips(need);retirement(final,end);$('withdrawCapital').textContent=money(final);drawWithdrawal(final);savedRender();syncLevel();
+ chart();table();experiments();plainExplanation(final,end);tips(need);if(!typingRender)renderMeaning();else $('meaning').classList.add('meaning-waiting');syncSavingsType();syncValueMode();retirement(final,end);$('withdrawCapital').textContent=money(final);drawWithdrawal(final);savedRender();syncLevel();
  }catch(err){lastRenderError=err;$('main').classList.add('stale');
  if(err.field&&err.field===pendingKey()){document.querySelector('.mobile-summary')?.classList.add('stale');syncFieldErrors(MAIN_KEYS,'error',null);$('error').hidden=true;$('error').textContent='';showPending(err.field);return;}
  hidePending(MAIN_KEYS);document.querySelector('.mobile-summary')?.classList.remove('stale');syncFieldErrors(MAIN_KEYS,'error',err.field);$('error').hidden=false;$('error').textContent=err.message+' Resultatene nedenfor er ikke oppdatert.';$('mobileTotal').textContent='Sjekk tallene';$('mobileCurve').hidden=true;}
@@ -142,11 +152,13 @@ function selectedComparisons(){return saved.map((item,index)=>({item,index})).fi
 function chart(){
  const el=$('chart'),W=Math.max(220,Math.round(el.getBoundingClientRect().width)||680),H=W<450?260:320,L=W<450?68:82,R=14,T=25,B=38,w=W-L-R,h=H-T-B;
  const comparisons=selectedComparisons(),colors=['#9b6837','#6879a5','#9b6480'];
- const series=[{name:'Din plan',color:'#24684f',points:rows.map(r=>({t:r.t,v:r.v})),bold:true},{name:s.real?'Innskudd i dagens kroner':'Du setter inn',color:'#93a18c',dash:true,points:rows.map(r=>({t:r.t,v:r.paid}))}];
- if(view.showBank)series.push({name:'Bank',color:'#a57f32',points:rows.map(r=>({t:r.t,v:r.bank}))});
- if(view.showGoal||mode==='goal')series.push({name:'Sparemål',color:'#8c6d88',dash:true,points:rows.map(r=>({t:r.t,v:r.goal}))});
- comparisons.forEach((c,i)=>series.push({name:c.name,color:colors[i%colors.length],points:c.points}));
- const maxTime=Math.max(endYear(s),...comparisons.map(c=>endYear(c.n))),max=Math.max(1,...series.flatMap(a=>a.points.map(p=>p.v)),...(view.showRange?rows.map(r=>r.high):[]));
+ const both=view.both&&!s.real,series=both?[{name:'Beløp i kroner',color:'#24684f',points:rows.map(r=>({t:r.t,v:r.v})),bold:true},{name:'Kjøpekraft i dagens kroner',color:'#7a5a2e',longDash:true,points:rows.map(r=>({t:r.t,v:r.v/inflation(r.t)}))}]:[{name:s.real?'Kjøpekraft i dagens kroner':'Beløp i kroner',color:'#24684f',points:rows.map(r=>({t:r.t,v:r.v})),bold:true},{name:s.real?'Innskudd i dagens kroner':'Du setter inn',color:'#93a18c',dash:true,points:rows.map(r=>({t:r.t,v:r.paid}))}];
+ // «Begge» viser bare beløpet i to målestokker. Innskudd, bank og bånd blandes ikke inn, så linjene som sammenlignes har samme grunnlag.
+ const range=view.showRange&&!both;
+ if(view.showBank&&!both)series.push({name:'Bank',color:'#a57f32',points:rows.map(r=>({t:r.t,v:r.bank}))});
+ if((view.showGoal||mode==='goal')&&!both)series.push({name:'Sparemål',color:'#8c6d88',dash:true,points:rows.map(r=>({t:r.t,v:r.goal}))});
+ if(!both)comparisons.forEach((c,i)=>series.push({name:c.name,color:colors[i%colors.length],points:c.points}));
+ const maxTime=Math.max(endYear(s),...comparisons.map(c=>endYear(c.n))),max=Math.max(1,...series.flatMap(a=>a.points.map(p=>p.v)),...(range?rows.map(r=>r.high):[]));
  // Uten beløp å vise gir en graf med aksetall bare forvirring.
  if(Math.max(0,...series.flatMap(a=>a.points.map(p=>p.v)))<=0){el.onpointermove=null;el.onkeydown=null;el.innerHTML='<p class="hint chart-empty">Ingen beløp å vise ennå. Legg inn et startbeløp eller et beløp du sparer hver måned.</p>';$('chartLegend').innerHTML='';$('chartNote').textContent='';return;}
  // Lineær akse: runde trinn (1, 2, 2,5 eller 5 ganger en tierpotens), slik at aksetallene blir lesbare og ulike.
@@ -154,23 +166,24 @@ function chart(){
  const transform=v=>s.log?Math.log10(1+Math.max(0,v)):v,top=s.log?(Number.isFinite(transform(max)*1.08)?transform(max)*1.08:transform(max)):(Number.isFinite(max*1.04/4)?niceStep(max*1.04/4)*4:max);
  const x=t=>L+(maxTime?t/maxTime:0)*w,y=v=>T+h-transform(v)/top*h;
  const path=points=>points.map((p,i)=>(i?'L':'M')+x(p.t).toFixed(2)+','+y(p.v).toFixed(2)).join(' ');
- let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Spareutvikling i ${s.real?'dagens':'fremtidige'} kroner"><title>Utvikling i sparingen</title><desc>${escapeHTML(series.map(a=>a.name).join(', '))}. År langs vannrett akse, kroner langs loddrett akse.</desc><defs><linearGradient id="spareArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#98b77a" stop-opacity=".32"/><stop offset="1" stop-color="#98b77a" stop-opacity=".03"/></linearGradient><clipPath id="plotClip"><rect x="${L}" y="${T}" width="${w}" height="${h}"/></clipPath></defs>`;
+ const ends=series.filter(a=>a.points.length).map(a=>`${a.name}: ${money(a.points.at(-1).v)}`).join(', ');
+ let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${both?'Beløp i kroner og kjøpekraft i dagens kroner':s.real?'Kjøpekraft i dagens kroner':'Beløp i kroner'} over tid"><title>Utvikling i sparingen</title><desc>${escapeHTML(`Etter ${periodText(maxTime)}: ${ends}. Før skatt. År langs vannrett akse, kroner langs loddrett akse.`)}</desc><defs><linearGradient id="spareArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#98b77a" stop-opacity=".32"/><stop offset="1" stop-color="#98b77a" stop-opacity=".03"/></linearGradient><clipPath id="plotClip"><rect x="${L}" y="${T}" width="${w}" height="${h}"/></clipPath></defs>`;
  for(let i=0;i<5;i++){const yy=T+h-i*h/4,v=s.log?10**(top*i/4)-1:top*i/4;svg+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="#e6ebe1"/><text x="${L-9}" y="${yy+4}" text-anchor="end">${axisCompact(v)}</text>`;}
  const ticks=maxTime===0?1:W<450?4:6;for(let i=0;i<ticks;i++){const pos=ticks===1?0:i/(ticks-1);svg+=`<text x="${L+w*pos}" y="${H-10}" text-anchor="${i===ticks-1?'end':i===0?'start':'middle'}">${maxTime>=1e6?(maxTime*pos).toExponential(1):maxTime>=10?nf.format(maxTime*pos):dec.format(maxTime*pos)} år</text>`;}
  svg+='<g clip-path="url(#plotClip)">';
- if(view.showRange)svg+=`<path d="${path(rows.map(r=>({t:r.t,v:r.high})))} ${rows.slice().reverse().map(r=>'L'+x(r.t)+','+y(r.low)).join(' ')} Z" fill="#c5d9b5" opacity=".5"/>`;
+ if(range)svg+=`<path d="${path(rows.map(r=>({t:r.t,v:r.high})))} ${rows.slice().reverse().map(r=>'L'+x(r.t)+','+y(r.low)).join(' ')} Z" fill="#c5d9b5" opacity=".5"/>`;
  svg+=`<path d="${path(series[0].points)} L${x(rows.at(-1).t)},${T+h} L${L},${T+h} Z" fill="url(#spareArea)"/>`;
- if(view.showRange){for(const [key,color,dash]of [['low','#a77547','6 4'],['high','#637ca2','2 4']])svg+=`<path d="${path(rows.map(r=>({t:r.t,v:r[key]})))}" fill="none" stroke="${color}" stroke-width="1.7" stroke-dasharray="${dash}"/>`;}
- for(const a of series)svg+=`<path d="${path(a.points)}" fill="none" stroke="${a.color}" stroke-width="${a.bold?3:2}" ${a.dash?'stroke-dasharray="5 5"':''}/>`;
+ if(range){for(const [key,color,dash]of [['low','#a77547','6 4'],['high','#637ca2','2 4']])svg+=`<path d="${path(rows.map(r=>({t:r.t,v:r[key]})))}" fill="none" stroke="${color}" stroke-width="1.7" stroke-dasharray="${dash}"/>`;}
+ for(const a of series)svg+=`<path d="${path(a.points)}" fill="none" stroke="${a.color}" stroke-width="${a.bold||a.longDash?3:2}" ${a.dash?'stroke-dasharray="5 5"':a.longDash?'stroke-dasharray="10 6"':''}/>`;
  svg+=`<line id="chartGuide" x1="${L}" x2="${L}" y1="${T}" y2="${T+h}" stroke="#9ba98f" stroke-dasharray="3 3" opacity="0"/></g></svg><div class="chart-readout" id="chartTip">Pek eller trykk på grafen for å lese tall. Piltastene virker også.</div>`;
  el.innerHTML=svg;
- $('chartLegend').innerHTML=series.map(a=>`<span class="${a.dash?'dash-key':''}" style="--series:${a.color}"><i></i>${escapeHTML(a.name)}</span>`).join('')+(view.showRange?'<span class="range-key" style="--series:#91ae79"><i></i>Lavere og høyere vekst</span>':'');
- $('chartNote').textContent=view.showRange?'Båndet viser valgt avkastning ± '+dec.format(s.spread)+' prosentpoeng. Dette er regneeksempler, ikke sannsynligheter. Alt er før skatt.':'Jevn avkastning er et regneeksempel. I virkeligheten vil verdien svinge. Alt er før skatt.';
- let time=0;const show=t=>{time=Math.max(0,Math.min(maxTime,t));const hoverSeries=[...series,...(view.showRange?[{name:'Lavere vekst',points:rows.map(r=>({t:r.t,v:r.low}))},{name:'Høyere vekst',points:rows.map(r=>({t:r.t,v:r.high}))}]:[])];const text=hoverSeries.filter(a=>time<=a.points.at(-1).t+1e-8).map(a=>{const p=a.points;let hi=p.findIndex(r=>r.t>=time);if(hi<0)hi=p.length-1;const lo=Math.max(0,hi-1),d=p[hi].t-p[lo].t,v=d?p[lo].v+(p[hi].v-p[lo].v)*(time-p[lo].t)/d:p[hi].v;return a.name+': '+money(v);});$('chartTip').textContent=`År ${dec.format(time)} · `+text.join(' · ');const line=$('chartGuide');line.setAttribute('x1',x(time));line.setAttribute('x2',x(time));line.setAttribute('opacity','1');};
+ $('chartLegend').innerHTML=series.map(a=>`<span class="${a.dash?'dash-key':a.longDash?'long-dash-key':''}" style="--series:${a.color}"><i></i>${escapeHTML(a.name)}</span>`).join('')+(range?'<span class="range-key" style="--series:#91ae79"><i></i>Lavere og høyere vekst</span>':'');
+ $('chartNote').textContent=both?'Avstanden mellom linjene er hvor mye prisveksten tar av det beløpet kan kjøpe. Innskudd, bank og bånd vises i de andre visningene. Alt er før skatt.':range?'Båndet viser valgt avkastning ± '+dec.format(s.spread)+' prosentpoeng. Dette er regneeksempler, ikke sannsynligheter. Alt er før skatt.':'Jevn avkastning er et regneeksempel. I virkeligheten vil verdien svinge. Alt er før skatt.';
+ let time=0;const show=t=>{time=Math.max(0,Math.min(maxTime,t));const hoverSeries=[...series,...(range?[{name:'Lavere vekst',points:rows.map(r=>({t:r.t,v:r.low}))},{name:'Høyere vekst',points:rows.map(r=>({t:r.t,v:r.high}))}]:[])];const text=hoverSeries.filter(a=>time<=a.points.at(-1).t+1e-8).map(a=>{const p=a.points;let hi=p.findIndex(r=>r.t>=time);if(hi<0)hi=p.length-1;const lo=Math.max(0,hi-1),d=p[hi].t-p[lo].t,v=d?p[lo].v+(p[hi].v-p[lo].v)*(time-p[lo].t)/d:p[hi].v;return a.name+': '+money(v);});$('chartTip').textContent=`År ${dec.format(time)} · `+text.join(' · ');const line=$('chartGuide');line.setAttribute('x1',x(time));line.setAttribute('x2',x(time));line.setAttribute('opacity','1');};
  el.onpointermove=e=>{const box=el.querySelector('svg').getBoundingClientRect();if(e.clientY>box.bottom)return;show(((e.clientX-box.left)/box.width*W-L)/w*maxTime);};
  el.onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();show(e.key==='Home'?0:e.key==='End'?maxTime:time+(e.key==='ArrowRight'?1:-1)/12);}};
 }
-function table(){const selected=rows.filter((r,i)=>i===0||i===rows.length-1||Math.floor(r.t)!==Math.floor(rows[i-1].t));const keys=['v','paid',...(view.showBank?['bank']:[]),...(view.showRange?['low','high']:[])],names={v:'Din plan',paid:s.real?'Innskudd i dagens kr':'Du setter inn',bank:'Bank',low:'Lavere avkastning',high:'Høyere avkastning'};$('tableWrap').innerHTML='<table><caption class="hint">'+(s.real?'Dagens kroner':'Fremtidige kroner')+', før skatt</caption><thead><tr><th>År</th>'+keys.map(k=>'<th>'+names[k]+'</th>').join('')+'</tr></thead><tbody>'+selected.map(r=>`<tr><td>${dec.format(r.t)}</td>${keys.map(k=>`<td>${money(r[k])}</td>`).join('')}</tr>`).join('')+'</tbody></table>';}
+function table(){const selected=rows.filter((r,i)=>i===0||i===rows.length-1||Math.floor(r.t)!==Math.floor(rows[i-1].t));const both=view.both&&!s.real,keys=both?['v','vReal','paid']:['v','paid',...(view.showBank?['bank']:[]),...(view.showRange?['low','high']:[])],names={v:s.real?'Kjøpekraft i dagens kr':'Beløp i kroner',vReal:'Kjøpekraft i dagens kr',paid:s.real?'Innskudd i dagens kr':'Du setter inn',bank:'Bank',low:'Lavere avkastning',high:'Høyere avkastning'};$('tableWrap').innerHTML='<table><caption class="hint">'+(both?'Kroner og dagens kroner':s.real?'Dagens kroner':'Fremtidige kroner')+', før skatt</caption><thead><tr><th>År</th>'+keys.map(k=>'<th>'+names[k]+'</th>').join('')+'</tr></thead><tbody>'+selected.map(r=>`<tr><td>${dec.format(r.t)}</td>${keys.map(k=>`<td>${money(k==='vReal'?r.v/inflation(r.t):r[k])}</td>`).join('')}</tr>`).join('')+'</tbody></table>';}
 function experiments(){const es=[['500 kr mer per måned','monthly',s.monthly+500],['To år mer å spare','years',s.years+2],s.fee>0?['0,2 prosentpoeng lavere kostnad','fee',Math.max(0,s.fee-.2)]:['Ett prosentpoeng lavere vekst','rate',s.rate-1]];const current=display(E.value(s,endYear(s)),endYear(s));$('experiments').replaceChildren();for(const [title,key,value]of es){const n={...s,[key]:value};let result;try{E.validate(n);result=display(E.value(n,endYear(n)),endYear(n),n);}catch{continue;}if(!Number.isFinite(result))continue;const d=document.createElement('div');d.className='experiment';d.innerHTML=`<span>${title}</span><strong>${money(result)}</strong><small>${result>=current?'+':'−'} ${money(Math.abs(result-current))}${s.real?' i dagens kroner':''}</small>`;const b=document.createElement('button');b.textContent='Prøv';b.setAttribute('aria-label','Prøv '+title.toLowerCase());b.onclick=()=>changePlan({[key]:value},title+'.');d.append(b);$('experiments').append(d);}}
 function plainExplanation(final,end){const paid=nominalPaid(end),growth=final-paid;let html=`<p>Du setter inn <b>${money(paid)}</b> i løpet av ${dec.format(end)} år. Med tallene du har valgt, ${growth>=0?'vokser pengene med':'reduseres beløpet med'} <b>${money(Math.abs(growth))}</b> etter kostnader.</p><p><b>Saldo og kjøpekraft er ulike ting.</b> Sluttbeløpet er ${money(final)}, men med ${dec.format(s.inflation)} % årlig prisvekst kan det kjøpe omtrent det samme som ${money(final/inflation(end))} kan kjøpe i dag.</p>`;if(s.growth)html+=`<p>Månedsbeløpet øker underveis. Siste måned setter du inn omtrent <b>${money(s.monthly*Math.pow(1+s.growth/100,Math.max(0,Math.round(end*12)-1)/12))}</b>.</p>`;html+='<p>Det du kan teste selv: beløpet du setter av, tiden du gir planen og kostnadene. Du kan velge en avkastning i modellen, men du kan ikke bestemme hva markedet faktisk gir.</p>';$('plainExplanation').innerHTML=html;}
 function tips(need){const content=[];if(s.years<5||s.purpose==='buffer')content.push(['Når pengene skal brukes snart','En kort eller fast frist gir lite rom for å vente etter et børsfall. Undersøk bankvilkår og innskuddsgaranti for penger du må ha tilgjengelige.']);else content.push(['En plan du kan holde fast ved','Test lavere avkastning før du bestemmer sparebeløpet. Store svingninger kan gjøre en plan vanskelig å følge, selv med lang tid igjen.']);if(view.showGoal||mode==='goal')content.push(['Veien til målet',Number.isFinite(need)?`Modellen trenger ${money(Math.ceil(need))} første måned for å nå målet. Mer tid eller et lavere mål kan være alternativer hvis beløpet er for høyt.`:'Med disse forutsetningene kan målet ikke nås i valgt periode.']);if(s.rate>10)content.push(['En krevende vekstforutsetning','Du har valgt over 10 % årlig avkastning. Prøv vesentlig lavere vekst før du baserer et viktig mål på resultatet.']);content.push(['Se kostnadene samlet','Ta med både fondskostnad og eventuelt plattformgebyr. Lavere kostnad gir mer igjen når alt annet er likt.']);$('tips').innerHTML=content.map(([h,p])=>`<div class="tip"><h3>${h}</h3><p>${p}</p></div>`).join('');}
@@ -206,7 +219,7 @@ function savedRender(){
 function openSavedPlan(item){
  undoState={state:{...s},mode,view:{...view}};
  const checked=E.sanitize(item.state);s=checked.state;mode=item.mode==='goal'?'goal':'explore';
- view={showBank:!!item.view?.showBank,showRange:!!item.view?.showRange,showGoal:!!item.view?.showGoal};
+ view={showBank:!!item.view?.showBank,showRange:!!item.view?.showRange,showGoal:!!item.view?.showGoal,both:!!item.view?.both};
  $('undoText').textContent='Åpnet «'+item.name+'».'+(checked.allReset?' Planen hadde ugyldige tall og er satt til standardverdier.':(checked.adjusted.length?' '+adjustedText(checked.adjusted):'')+(checked.rejected.length?' Ugyldige verdier i '+quoted(checked.rejected)+' er satt til standardverdi.':''));$('undoBar').hidden=false;fill();render();setPage(s.activePage);
 }
 function persist(){try{localStorage.setItem('sv-scenarios',JSON.stringify(saved));return true;}catch{notice('Nettleseren tillater ikke lagring. Bruk Del plan for å beholde tallene.');return false;}}
@@ -217,15 +230,25 @@ function syncLevel(){document.body.dataset.level=level;for(const b of $('levels'
  $('hiddenAssumptions').hidden=!active.length;$('hiddenAssumptions').innerHTML=active.length?'Også med i beregningen: '+escapeHTML(active.join(' · '))+'. <button id="revealSettings">Se innstillingene</button>':'';if($('revealSettings'))$('revealSettings').onclick=()=>{setLevel('advanced');$('advancedDetails').open=true;$('eventsDetails').open=true;};}
 function setLevel(value){level=value;try{localStorage.setItem('sv-level',level);}catch{}syncLevel();if(window.renderDream)window.renderDream();}
 // State changes are read once per user input. An empty field stops the calculation; see pendingKey().
-document.addEventListener('input',event=>{if(!event.target.closest('#taxDialog')&&event.target.id in E.defaults){read();render();}});
+document.addEventListener('input',event=>{if(!event.target.closest('#taxDialog')&&event.target.id in E.defaults){typingRender=true;read();render();typingRender=false;}});
+// «Dette betyr tallene dine» oppdateres når feltet forlates eller skyveknappen slippes (change), ikke ved hvert tastetrykk.
+document.addEventListener('change',event=>{const id=event.target.dataset?.field||event.target.id;if(id in E.defaults&&!lastRenderError)renderMeaning();});
 // Tusenskille settes når brukeren forlater feltet, ikke mens det skrives, slik at markøren ikke hopper.
 // Startguidens felt grupperes også, men et tomt felt der (for eksempel alder) forblir tomt.
 document.addEventListener('focusout',event=>{const el=event.target;if(el.id?.startsWith('onboard')&&el.inputMode==='decimal'&&el.value.trim()!==''){const v=parsedNumber(el.value);if(Number.isFinite(v))el.value=groupedNumber(v);return;}if(typeof E.defaults[el.id]!=='number')return;if(incompleteNumber(el.value)){setTimeout(()=>{read();render();if(window.renderDream)window.renderDream();});return;}const value=parsedNumber(el.value);if(Number.isFinite(value))el.value=groupedNumber(value);});
 $('levels').onclick=e=>{const b=e.target.closest('[data-level]');if(b)setLevel(b.dataset.level);};
 $('undo').onclick=()=>{if(!undoState)return;s={...undoState.state};mode=undoState.mode;view={...undoState.view};if(undoState.saved){saved=undoState.saved;selectedPlans=new Set(undoState.selected);persist();}undoState=null;$('undoBar').hidden=true;fill();render();};
 $('modes').onclick=e=>{const b=e.target.closest('[data-mode]');if(!b)return;mode=b.dataset.mode;for(const b of $('modes').children)b.classList.toggle('active',b.dataset.mode===mode);if(mode==='goal')view.showGoal=true;fill();render();};
-for(const key in view)$(key).onchange=()=>{view[key]=$(key).checked;render();};
-$('reset').onclick=()=>{changePlan({...E.defaults},'Spareplanen er nullstilt til et enkelt eksempel.');mode='explore';view={showBank:false,showRange:false,showGoal:false};selectedPlans.clear();fill();render();history.replaceState(null,'',location.pathname);};
+for(const key in view)if($(key))$(key).onchange=()=>{view[key]=$(key).checked;render();};
+// Spareform: frivillig, kan fjernes, og endrer ingen tall. Den styrer bare forklaringene i «Dette betyr tallene dine».
+function syncSavingsType(){for(const b of $('savingsTypes').children)b.setAttribute('aria-pressed',String(b.dataset.type===s.savingsType));$('clearSavingsType').hidden=!s.savingsType;}
+$('savingsTypes').onclick=e=>{const b=e.target.closest('[data-type]');if(!b)return;s.savingsType=s.savingsType===b.dataset.type?'':b.dataset.type;syncSavingsType();render();};
+$('clearSavingsType').onclick=()=>{s.savingsType='';syncSavingsType();render();$('savingsTypes').querySelector('button').focus();};
+// Visning av beløpet: kroner, kjøpekraft i dagens kroner, eller begge i samme graf. Ingen tall endres.
+function valueMode(){return view.both&&!s.real?'both':s.real?'real':'nominal';}
+function syncValueMode(){const m=valueMode();for(const b of $('valueModes').children)b.setAttribute('aria-pressed',String(b.dataset.valueMode===m));}
+$('valueModes').onclick=e=>{const b=e.target.closest('[data-value-mode]');if(!b)return;const m=b.dataset.valueMode;view.both=m==='both';$('real').checked=m==='real';s.real=m==='real';render();};
+$('reset').onclick=()=>{changePlan({...E.defaults},'Spareplanen er nullstilt til et enkelt eksempel.');mode='explore';view={showBank:false,showRange:false,showGoal:false,both:false};selectedPlans.clear();fill();render();history.replaceState(null,'',location.pathname);};
 $('graphTab').onclick=()=>{$('chart').hidden=false;$('tableWrap').hidden=true;$('graphTab').setAttribute('aria-pressed','true');$('tableTab').setAttribute('aria-pressed','false');chart();};
 $('tableTab').onclick=()=>{$('chart').hidden=true;$('tableWrap').hidden=false;$('graphTab').setAttribute('aria-pressed','false');$('tableTab').setAttribute('aria-pressed','true');};
 function openSave(){if(blockIfInvalid('Rett feltet før du lagrer planen.'))return;$('scenarioName').value=`Plan ${saved.length+1}`;$('saveDescription').textContent=s.activePage==='dreams'?'Lagrer sparemålet og spareplanen. Graf-sammenligning bruker spareplanen. Overfør et mål-alternativ til sparekalkulatoren først hvis du vil sammenligne det.':'Lagrer alle forutsetningene på denne enheten.';$('saveDialog').showModal();$('scenarioName').select();}

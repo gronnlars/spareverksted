@@ -26,6 +26,7 @@ Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/packa
 - `dist/guidance.js`: kilder, datagrunnlag, hjelpetekster og mål-alternativer.
 - `dist/journey.js`: startguide, alder, glidere, skattevisning og eksportknapper.
 - `dist/tax.js`: ren beregning av skatteanslag på uttak.
+- `dist/meaning.js`: regelbaserte forklaringer i «Dette betyr tallene dine», bygget på resultatet, valgt spareform og tidshorisont. Ren funksjon, testet i Node.
 - `dist/export-kit.js`: CSV og ekte XLSX (OOXML i ZIP), uten eksterne biblioteker.
 - `dist/experience.js`: nivåtilpasset hjelp, maler og utskriftsrapport.
 - `dist/style.css`: responsiv utforming og utskriftsstil.
@@ -33,6 +34,8 @@ Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/packa
 - `tests/engine.test.cjs`: uavhengig kontroll mot månedlige og årlige løkker.
 - `tests/validation.test.cjs`: feltgrenser og feltnavn, sparemål, uttaksfelt, delte lenker felt for felt, gamle lagrede planer og realistiske planer mot lukket formel.
 - `tests/results.test.cjs`: kontrolltilfellene A til D mot en uavhengig månedsløkke, årsak til tap (kostnader, børsfall), kjøpekraft, lange perioder og forskjellen mellom innskudd ved månedsslutt og månedsstart.
+- `tests/meaning.test.cjs`: forklaringene følger tallene (0 % rente, 0 % prisvekst, negativ avkastning, fallende prisnivå, løpende innbetalinger), spareformen gjettes aldri og endrer ingen tall.
+- `tests/startflyt-browser.cjs` og `tests/spareform-browser.cjs`: startflyt, tomme felt, spareform, forklaringen ved resultatet og kroner mot kjøpekraft i grafen.
 - `tests/input-browser.cjs`: nettleserflyt med ugyldige tall (krever playwright): blokkert deling, lagring og eksport med fokus på feltet, dempede resultater, delte lenker, sparemål, uttak og gamle lagrede planer.
 
 ## Kontroller beregningene
@@ -59,6 +62,14 @@ Spareutviklingen er før skatt. Et separat skatteanslag for uttak bruker enten f
 Prisvekst og bankrente er minst 0 %. Antatt årlig vekst kan skrives inn som negativ, ned til (men ikke med) −100 %: modellen gjør årsveksten om til månedsvekst med `(1 + r)^(1/12)`, som er definert for alle r over −100 %. Glidebryteren starter på 0 %. Negativ vekst gjennom hele perioden og et enkelt «Børsfall» er forskjellige forutsetninger og nevnes hver for seg i forklaringen. Lavere vekst i båndet og stresstestene i Sparemål er risikoscenarioer, ikke forventninger. Når sluttbeløpet er lavere enn summen av innskuddene, for eksempel på grunn av kostnader eller børsfall, viser siden tapet tydelig («Tap mot innskuddene»). Tapet i kroner er alltid oppgitt i vanlige kroner, også i visningen med dagens kroner, og det står. I visningen med dagens kroner vises innskuddene også i dagens kroner: hvert innskudd regnes om med prisnivået da det ble satt inn, slik at startbeløpet beholder sin verdi. Innskudd og vekst summerer seg da til sluttbeløpet, og det faktiske kronebeløpet du setter inn står under. Er sluttbeløpet i dagens kroner lavere enn innskuddene i dagens kroner, kalles det «Tapt kjøpekraft». Har du også tapt penger i kroner, heter forskjellen «Samlet tap i dagens kroner», og teksten sier at den skyldes både tapet i kroner og prisveksten. Har sluttbeløpet ikke holdt følge med prisveksten på innskuddene, vises det som lavere kjøpekraft, ikke som tap i kroner. Verdien av et fond blir aldri negativ i modellen; et fall på 100 % gir 0 kr. Eldre lenker og lagrede planer med negativ prisvekst eller bankrente settes til 0 %, og brukeren får beskjed om hva som er endret. Negativ vekst beholdes.
 
 Vekst, prisvekst og kostnad er forhåndsutfylte startverdier (5 %, 2,5 % og 0,2 %), ikke anbefalinger, og de passer ikke for alle spareformer. En kort tekst over feltene sier hvilke som fortsatt står på startverdien, og om beløp og tid er eksempeltall. Et tomt felt er ikke 0: mens feltet redigeres står siste resultat igjen, dempet, med «Resultatet er ikke oppdatert». Forlates feltet tomt, vises en feilmelding.
+
+## Spareform og «Dette betyr tallene dine»
+
+Brukeren kan velge brukskonto, sparekonto eller indeksfond under «Hva vil du regne på?». Valget er frivillig, kan fjernes, og endrer ingen tall: avkastning, kostnad og skatt er det brukeren har skrevet inn. Valget styrer bare forklaringene. Spareformen leses aldri ut fra avkastning eller prisvekst. Står vekst og kostnad fortsatt på startverdiene når en konto er valgt, sier forklaringen det.
+
+Seksjonen «Dette betyr tallene dine» står rett etter resultatet. Den viser én kort forklaring og samler utdypingen i tre grupper: innbetalinger og avkastning, kroner og kjøpekraft, og forutsetninger. Kjøpekraft måles mot innskuddene i dagens kroner, regnet om med prisnivået da hvert innskudd ble satt inn. Teksten oppdateres når et felt forlates eller en skyveknapp slippes, ikke ved hvert tastetrykk, og har ingen automatisk opplesning. Ingen regel kaller en rente «uvanlig», fordi det krever en dokumentert og vedlikeholdt referanse.
+
+Grafen kan vise beløpet i kroner, kjøpekraften i dagens kroner, eller begge. I «Begge» vises bare beløpet i to målestokker; innskudd, bank og bånd vises i de andre visningene, slik at linjer med ulikt grunnlag ikke sammenlignes. Linjene skilles med linjestil, og tekstalternativet oppgir sluttverdiene.
 
 ## Lagring og deling
 
