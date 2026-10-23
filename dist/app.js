@@ -71,6 +71,18 @@ function focusField(key){const el=key&&$(key);if(!el)return;if(pageOf(key)!==s.a
 function blockIfInvalid(action){const e=planProblem();if(!e)return false;notice(e.message+' '+action,8000);focusField(e.field);return true;}
 const endYear=n=>Math.round(n.years*12)/12;
 // Perioder under ett år vises i måneder, ikke som «0,08 år».
+// Aksen viser hele år eller hele måneder med like steg, aldri «2,33 år». Sluttidspunktet vises alltid.
+const oneDec=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:1});
+const timeTicks=(maxTime,most)=>{
+ if(!(maxTime>0))return [{t:0,label:'0 år'}];
+ const months=maxTime<2,span=months?Math.round(maxTime*12):maxTime,unit=months?' mnd':' år';
+ // Antall merker med sluttpunktet tatt med. Ligger slutten under tre kvart steg fra forrige merke, erstatter den merket.
+ const count=st=>Math.floor(span/st+1e-9)+1+(span-Math.floor(span/st+1e-9)*st>=st*.75?1:0);
+ const step=(months?[1,2,3,6,12]:[1,2,5,10,20,25,50,100,200,500,1000]).find(st=>count(st)<=most)||Math.ceil(span/(most-1));
+ const out=[];for(let v=0;v<=span+1e-9;v+=step)out.push({t:months?v/12:v,label:nf.format(v)+unit});
+ if(maxTime-out.at(-1).t>1e-9){if(out.length>1&&maxTime-out.at(-1).t<(months?step/12:step)*.75)out.pop();out.push({t:maxTime,label:(months?nf.format(span):oneDec.format(maxTime))+unit});}
+ return out;
+};
 const periodText=t=>{const m=Math.round(t*12);return m<12?m+(m===1?' måned':' måneder'):dec.format(t)+' år';};
 const inflation=(t,n=s)=>Math.exp(Math.log1p(n.inflation/100)*t);
 const display=(v,t,n=s)=>s.real?v/inflation(t,n):v;
@@ -173,7 +185,7 @@ function chart(){
  const ends=series.filter(a=>a.points.length).map(a=>`${a.name}: ${money(a.points.at(-1).v)}`).join(', ');
  let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${both?'Beløp i kroner og kjøpekraft i dagens kroner':s.real?'Kjøpekraft i dagens kroner':'Beløp i kroner'} over tid"><title>Utvikling i sparingen</title><desc>${escapeHTML(`Etter ${periodText(maxTime)}: ${ends}. Før skatt. År langs vannrett akse, kroner langs loddrett akse.`)}</desc><defs><linearGradient id="spareArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#98b77a" stop-opacity=".32"/><stop offset="1" stop-color="#98b77a" stop-opacity=".03"/></linearGradient><clipPath id="plotClip"><rect x="${L}" y="${T}" width="${w}" height="${h}"/></clipPath></defs>`;
  for(let i=0;i<5;i++){const yy=T+h-i*h/4,v=s.log?10**(top*i/4)-1:top*i/4;svg+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="#e6ebe1"/><text x="${L-9}" y="${yy+4}" text-anchor="end">${axisCompact(v)}</text>`;}
- const ticks=maxTime===0?1:W<450?4:6;for(let i=0;i<ticks;i++){const pos=ticks===1?0:i/(ticks-1);svg+=`<text x="${L+w*pos}" y="${H-10}" text-anchor="${i===ticks-1?'end':i===0?'start':'middle'}">${maxTime>=1e6?(maxTime*pos).toExponential(1):maxTime>=10?nf.format(maxTime*pos):dec.format(maxTime*pos)} år</text>`;}
+ for(const tick of timeTicks(maxTime,W<300?3:W<450?4:7)){const pos=maxTime?tick.t/maxTime:0;svg+=`<text x="${L+w*pos}" y="${H-10}" text-anchor="${pos>.97?'end':pos<.03?'start':'middle'}">${tick.label}</text>`;}
  svg+='<g clip-path="url(#plotClip)">';
  if(range)svg+=`<path d="${path(rows.map(r=>({t:r.t,v:r.high})))} ${rows.slice().reverse().map(r=>'L'+x(r.t)+','+y(r.low)).join(' ')} Z" fill="#c5d9b5" opacity=".5"/>`;
  svg+=`<path d="${path(series[0].points)} L${x(rows.at(-1).t)},${T+h} L${L},${T+h} Z" fill="url(#spareArea)"/>`;

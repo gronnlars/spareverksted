@@ -321,7 +321,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   p=await open('#activePage=calculator');await p.waitForTimeout(300);
   for(const [start,monthly,years] of [['0','2000','10'],['0','3000','1'],['250000','0','5'],['0','100','0,5'],['1000000','20000','40']]){
    await p.locator('#start').fill(start);await p.locator('#monthly').fill(monthly);await p.locator('#years').fill(years);
-   const labels=await p.evaluate(()=>[...document.querySelectorAll('#chart svg text[text-anchor="end"]')].map(t=>t.textContent).filter(x=>!/år$/.test(x)));
+   const labels=await p.evaluate(()=>[...document.querySelectorAll('#chart svg text[text-anchor="end"]')].map(t=>t.textContent).filter(x=>!/ (år|mnd)$/.test(x)));
    assert.equal(labels.length,5,'five axis labels');assert.equal(new Set(labels).size,5,'axis labels must differ: '+labels.join(' | '));assert.equal(labels[0],'0');}
   await p.locator('#start').fill('0');await p.locator('#monthly').fill('0');
   assert(await p.locator('#chart .chart-empty').isVisible(),'empty plan shows an explanation');assert.equal(await p.locator('#chart svg').count(),0);
