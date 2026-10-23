@@ -58,7 +58,7 @@ Testene dekker 200 deterministisk genererte spareplaner, nødvendig månedsspari
 
 Effektiv nominell avkastning før kostnader. Netto årlig vekstfaktor er `(1 + avkastning) * (1 - kostnad)`. Innskudd ved månedsslutt. Årlig endring i månedssparingen (positiv eller negativ) fordeles jevnt over månedene. Uttak skjer én gang ved slutten av hvert år. Inflasjonsøkning på ordinært årsuttak starter i år 2. Ekstrauttak kommer etter vanlig uttak i valgt år.
 
-Spareutviklingen er før skatt. Et separat skatteanslag for uttak bruker enten forenklet ASK med oppgitt gjenstående innskudd og kjent skjerming, eller en brukerdefinert fast skattepliktig andel. Ingen ny skjerming, løpende bankbeskatning, IPS, BSU eller formuesskatt er modellert. Scenarioavvik er en følsomhetsanalyse, ikke et sannsynlighetsintervall. Modellen bruker ikke Monte Carlo. Kildestatistikk er datert 20. oktober 2026 og oppdateres ikke automatisk.
+Spareutviklingen er før skatt. Et separat skatteanslag for uttak bruker enten forenklet ASK med oppgitt gjenstående innskudd og kjent skjerming, eller en brukerdefinert fast skattepliktig andel. Ingen ny skjerming, løpende bankbeskatning, IPS, BSU eller formuesskatt er modellert. Båndet i grafen har to betydninger. Uten indeksfond viser det lavere og høyere vekst (valgt avkastning ± et antall prosentpoeng): en følsomhetsanalyse, ikke et sannsynlighetsintervall. Med indeksfond valgt viser det et 95 % utfallsrom etter Finans Norges formelverk (se under), der årsavkastningen antas normalfordelt. Det er en forenklet modell, ikke en simulering. Modellen bruker ikke Monte Carlo. Kildestatistikk er datert 20. oktober 2026 og oppdateres ikke automatisk.
 
 ## Regneeksempel og risikoscenario
 
