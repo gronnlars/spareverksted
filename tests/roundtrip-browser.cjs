@@ -13,6 +13,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   page.on('pageerror',e=>errors.push(e.message));
   const plan=()=>page.evaluate(()=>JSON.stringify({s,mode,view}));
   const result=()=>page.locator('#savingsResult').innerText();
+  const E_DEF={start:0,monthly:2000};
   const toGuide=async()=>{await page.evaluate(()=>document.querySelector('a[href="spor.html"]').click());await page.waitForURL(/spor\.html/);await page.locator('#topicPicker').waitFor();};
   const pick=async id=>{if(!await page.locator('#topicPicker').getAttribute('open'))await page.locator('#topicPicker>summary').click();await page.locator('[data-topic="'+id+'"]').click();};
 
@@ -67,7 +68,27 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await startPage.evaluate(()=>{document.getElementById('workbench').hidden=true;window.dispatchEvent(new Event('pagehide'));});
   assert.equal(await startPage.evaluate(()=>sessionStorage.getItem('sv-working-plan-v1')),null);
 
+  // 7. Nullstilling: en gammel plan skal aldri komme tilbake.
+  const reset=await context.newPage();reset.on('pageerror',e=>errors.push(e.message));
+  const rs=()=>reset.evaluate(()=>({start:s.start,monthly:s.monthly,type:s.savingsType}));
+  const goGuideAndBack=async()=>{await reset.evaluate(()=>document.querySelector('a[href="spor.html"]').click());await reset.waitForURL(/spor\.html/);await reset.locator('a[href="index.html"]').first().click();await reset.waitForURL(/index\.html/);};
+  const makePlan=async()=>{await reset.goto(origin+'/index.html#start=12000&monthly=4000&years=22&savingsType=index&rate=7.11');await reset.evaluate(()=>history.replaceState(null,'',location.pathname));};
+  // a) Nullstill, så til veilederen og tilbake: standardverdier, ikke den gamle planen.
+  await makePlan();await goGuideAndBack();
+  assert.deepEqual(await rs(),{start:12000,monthly:4000,type:'index'},'Utgangspunkt: planen følger med');
+  await reset.locator('#reset').scrollIntoViewIfNeeded();await reset.locator('#reset').click();await goGuideAndBack();
+  assert.deepEqual(await rs(),{start:E_DEF.start,monthly:E_DEF.monthly,type:''},'Etter Nullstill kommer ikke den gamle planen tilbake');
+  // b) Ny beregning fullført med nye tall: de nye tallene følger med, ikke de gamle.
+  await makePlan();
+  await reset.locator('.site-menu>summary').click();await reset.locator('#startAgain').click();await reset.locator('#onboardStart').fill('500');await reset.locator('#onboardMonthly').fill('700');await reset.locator('#onboardYears').fill('8');await reset.locator('#beginJourney').click();
+  await goGuideAndBack();assert.deepEqual(await rs(),{start:500,monthly:700,type:''},'Ny beregning erstatter den gamle planen');
+  // c) Ny beregning åpnet, siden lastet på nytt fra startskjermen: den gamle planen er fjernet.
+  await makePlan();
+  await reset.locator('.site-menu>summary').click();await reset.locator('#startAgain').click();await reset.reload();
+  assert.notDeepEqual(await rs(),{start:12000,monthly:4000,type:'index'},'Gammel plan dukker ikke opp etter Ny beregning og ny lasting');
+  assert.equal(await reset.evaluate(()=>sessionStorage.getItem('sv-working-plan-v1')),null);
+
   assert.deepEqual(errors,[]);
-  console.log('Browser: full plan kept to and from the guide (link and back button), guide edits applied to the right field, invalid stored fields reset with notice, shared links win, start screen clears the plan.');
+  console.log('Browser: full plan kept to and from the guide (link and back button), guide edits applied to the right field, invalid stored fields reset with notice, shared links win, start screen clears the plan, Nullstill and Ny beregning never bring back an old plan.');
  }catch(e){console.error(e);process.exitCode=1;}finally{if(browser)await browser.close();server.close();}
 })();
