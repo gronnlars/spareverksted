@@ -3,7 +3,7 @@ const defaults={userAge:0,ageKnown:false,until67:false,riskChosen:false,taxEnabl
 function sumExp(a,n){return Math.abs(a)<1e-12?n:Math.expm1(n*a)/Math.expm1(a)}
 function raw(s,t,rate=s.rate,fee=s.fee,p=s.monthly){const n=Math.round(t*12),a=(Math.log1p(rate/100)+Math.log1p(-fee/100))/12,b=Math.log1p(s.growth/100)/12;let v=s.start*Math.exp(a*n);if(p!==0&&n>0){const hi=Math.max(a,b),lo=Math.min(a,b);v+=p*Math.exp(hi*(n-1))*sumExp(lo-hi,n);}const e=Math.round(s.extraYear*12);if(s.extra!==0&&e<=n)v+=s.extra*Math.exp(a*(n-e));return v}
 // Innskudd målt i dagens kroner: hvert innskudd delt på prisnivået da det ble satt inn. Startbeløpet er allerede i dagens kroner.
-function depositsToday(s,t){return raw(s,t,s.inflation,0)/Math.exp(Math.log1p(s.inflation/100)*t)}
+function depositsToday(s,t){return raw(s,t,s.inflation,0)/Math.exp(Math.log1p(s.inflation/100)*Math.round(t*12)/12)}
 function value(s,t,rate=s.rate,fee=s.fee,p=s.monthly){let v=raw(s,t,rate,fee,p);const ct=Math.round(s.crashYear*12)/12;if(s.crash>0&&ct<=t){const lost=raw(s,ct,rate,fee,p)*s.crash/100;v-=lost*Math.exp((Math.log1p(rate/100)+Math.log1p(-fee/100))*(Math.round(t*12)/12-ct));}return v}
 function target(s){return s.goal*(s.goalReal?Math.exp(Math.log1p(s.inflation/100)*Math.round(s.years*12)/12):1)}
 function needed(s){const base=value(s,s.years,s.rate,s.fee,0),unit=value({...s,start:0,extra:0},s.years,s.rate,s.fee,1);return unit>0?Math.max(0,(target(s)-base)/unit):base>=target(s)?0:Infinity}
@@ -118,5 +118,17 @@ function dreamPlans(s,labelOf){
  if([goal,required,end,stressed,robust].some(v=>!Number.isFinite(v)))throw Error('Målet overstiger tallområdet. Reduser beløp, periode eller vekst.');
  return {id,rate,fall,goal,required,end,stressed,robust,plan:n};});return plans;
 }
-const api={dreamPlans,withdrawal,defaults,raw,value,depositsToday,target,needed,validate,validateDream,fieldError,sanitize,label,sumExp,FIELDS,DREAM_FIELDS};if(typeof module!=='undefined')module.exports=api;else root.Engine=api;
+// Forklarer hva som har påvirket sluttbeløpet, uten å blande kroner og kjøpekraft. Alle beløp er i kroner
+// (nominelle), bortsett fra powerGap, som er i dagens kroner. Kostnadenes effekt er forskjellen mot et ellers
+// identisk scenario uten kostnader, slik at et tap ikke tilskrives kostnadene hvis noe annet også har bidratt.
+function explain(s,t=s.years){
+ const final=value(s,t),paid=raw({...s,rate:0,fee:0},t,0,0),noFee=value(s,t,s.rate,0),months=Math.round(t*12);
+ const fell=s.crash>0&&Math.round(s.crashYear*12)<=months,priceFactor=Math.exp(Math.log1p(s.inflation/100)*months/12);
+ const loss=paid>0&&final<paid&&paid-final>=0.5?paid-final:0,allLost=loss>0&&final<=1e-9,almostAll=loss>0&&!allLost&&final<1;
+ // Uten kostnader ville det ikke vært tap: da er kostnadene hele årsaken. Ellers er det et fall i verdi (børsfall, eller negativ avkastning når motoren brukes direkte), og kostnadene nevnes i tillegg.
+ const cause=!loss?null:noFee>=paid-0.5?'fees':fell?(s.fee>0?'fall+fees':'fall'):(s.fee>0?'value+fees':'value');
+ const withPrices=raw(s,t,s.inflation,0),powerGap=!loss&&s.inflation>0&&withPrices-final>=0.5*priceFactor?(withPrices-final)/priceFactor:0;
+ return {final,paid,loss,allLost,almostAll,cause,costEffect:Math.max(0,noFee-final),growthOnly:s.rate===0,priceFactor,real:final/priceFactor,noInflation:s.inflation===0,powerGap};
+}
+const api={explain,dreamPlans,withdrawal,defaults,raw,value,depositsToday,target,needed,validate,validateDream,fieldError,sanitize,label,sumExp,FIELDS,DREAM_FIELDS};if(typeof module!=='undefined')module.exports=api;else root.Engine=api;
 })(typeof window!=='undefined'?window:globalThis);

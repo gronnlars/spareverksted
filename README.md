@@ -32,6 +32,7 @@ Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/packa
 - `dist/index.html`: sidens struktur.
 - `tests/engine.test.cjs`: uavhengig kontroll mot månedlige og årlige løkker.
 - `tests/validation.test.cjs`: feltgrenser og feltnavn, sparemål, uttaksfelt, delte lenker felt for felt, gamle lagrede planer og realistiske planer mot lukket formel.
+- `tests/results.test.cjs`: kontrolltilfellene A til D mot en uavhengig månedsløkke, årsak til tap (kostnader, børsfall), kjøpekraft, lange perioder og forskjellen mellom innskudd ved månedsslutt og månedsstart.
 - `tests/input-browser.cjs`: nettleserflyt med ugyldige tall (krever playwright): blokkert deling, lagring og eksport med fokus på feltet, dempede resultater, delte lenker, sparemål, uttak og gamle lagrede planer.
 
 ## Kontroller beregningene
@@ -42,6 +43,7 @@ Med Node.js installert:
 node tests/engine.test.cjs
 node tests/tax-export.test.cjs
 node tests/validation.test.cjs
+node tests/results.test.cjs
 ```
 
 Testene dekker 200 deterministisk genererte spareplaner, nødvendig månedssparing, null rente, svært lange perioder, 32 kombinasjoner av uttaksvalg og mål-alternativer.

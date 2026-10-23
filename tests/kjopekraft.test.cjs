@@ -53,4 +53,17 @@ for(let k=0;k<300;k++){const s=plan({start:rnd()*1e6,monthly:rnd()*2e4,growth:rn
  near(E.raw({...s,rate:0,fee:0},s.years,0,0),c.nominal,'kroner '+k,1e-9);
  assert.ok(E.depositsToday(s,s.years)<=c.nominal+1e-6,'innskudd i dagens kroner er aldri over kronebeløpet når prisveksten er minst 0 % ('+k+')');}
 
+// 8. Kontrolltilfellet fra fase 1-rapporten: 2 000 kr/mnd i 10 år, innskudd ved månedsslutt, 2,5 % prisvekst.
+// Innskuddslinjen avhenger bare av innskudd og prisvekst, ikke av vekst eller kostnad.
+for(const [rate,fee] of [[0,0],[5,0.2],[2,0.2]]){const s=plan({monthly:2000,rate,fee});
+ round(E.depositsToday(s,10),212446,`innskuddenes kjøpekraft ved innbetaling (vekst ${rate} %)`);
+ round(E.raw({...s,rate:0,fee:0},10,0,0)/1.025**10,187488,`nominelle innskudd omregnet med sluttprisnivået (vekst ${rate} %)`);
+ round(independent(s).nominal,240000,'nominelle innskudd');}
+
+// 9. Samme målestokk i resultatteksten (explain) og innskuddslinjen: kjøpekraftsgapet er innskudd i dagens kroner minus sluttverdi i dagens kroner.
+{const s=plan({monthly:2000,rate:2,fee:0.2});const X=E.explain(s,10);near(X.powerGap,E.depositsToday(s,10)-X.real,'powerGap = innskudd i dagens kroner − sluttverdi i dagens kroner',1e-9);}
+
+// 10. Sparetid som ikke er et helt antall måneder: innskudd og prisnivå bruker samme avrundede måned.
+{const s=plan({monthly:2000,years:10.04});near(E.depositsToday(s,10.04),independent(s).today,'avrundet måned',1e-9);}
+
 console.log('Passed: deposits and purchasing power in today’s kroner.');
