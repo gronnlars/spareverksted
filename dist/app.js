@@ -30,7 +30,7 @@ const specs={basic:[['start','Du har allerede','kr'],['monthly','Du sparer hver 
 for(const [group,fields]of Object.entries(specs))$(group).innerHTML=fields.map(([id,label,unit])=>`<label for="${id}"><span class="field-label">${label}</span><div class="fieldbox"><input id="${id}" type="text"${NEGATIVE_OK.has(id)?'':' inputmode="decimal"'} autocomplete="off"><span class="unit">${unit}</span></div></label>`).join('');
 function fill(){for(const b of $('modes').children)b.classList.toggle('active',b.dataset.mode===mode);for(const k in s){const el=$(k);if(!el)continue;if(el.type==='checkbox')el.checked=s[k];else el.value=typeof s[k]==='number'?groupedNumber(s[k]):s[k];}for(const k in view)if($(k))$(k).checked=view[k];}
 function read(){for(const k in s){if(k.startsWith('tax')||k==='taxableShare')continue;const el=$(k);if(!el)continue;if(el.type==='checkbox')s[k]=el.checked;else if(typeof E.defaults[k]==='number'){s[k]=parsedNumber(el.value);el.setAttribute('aria-invalid',!Number.isFinite(s[k])&&k!==pendingKey());}else s[k]=el.value;}}
-function notice(t,ms=4500){$('toast').textContent=t;$('toast').style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$('toast').style.display='none',ms);}
+function notice(t,ms=4500){delete $('toast').dataset.validation;$('toast').textContent=t;$('toast').style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$('toast').style.display='none',ms);}
 // Etiketten som faktisk vises ved feltet, ellers standardnavnet fra motoren.
 function fieldLabel(key){const t=$(key)?.closest('label')?.querySelector('.field-label')?.textContent?.trim();return t||E.label(key);}
 const quoted=keys=>keys.map(k=>'«'+fieldLabel(k)+'»').join(', ');
@@ -68,7 +68,7 @@ function planProblem(){
 }
 // Viser feltet med feil og flytter fokus dit. Bytter side bare når feltet ligger på en annen side.
 function focusField(key){const el=key&&$(key);if(!el)return;if(pageOf(key)!==s.activePage&&typeof setPage==='function')setPage(pageOf(key));for(let d=el.closest('details');d;d=d.parentElement?.closest('details'))d.open=true;markInvalid(key,pageOf(key)==='dreams'?'dreamError':pageOf(key)==='withdrawals'?'retirementResult':'error');el.focus({preventScroll:false});}
-function blockIfInvalid(action){const e=planProblem();if(!e)return false;notice(e.message+' '+action,8000);focusField(e.field);return true;}
+function blockIfInvalid(action){const e=planProblem();if(!e)return false;notice(e.message+' '+action,8000);$('toast').dataset.validation='true';focusField(e.field);return true;}
 const endYear=n=>Math.round(n.years*12)/12;
 // Perioder under ett år vises i måneder, ikke som «0,08 år».
 // Aksen viser hele år eller hele måneder med like steg, aldri «2,33 år». Sluttidspunktet vises alltid.
@@ -247,7 +247,7 @@ function syncLevel(){document.body.dataset.level=level;for(const b of $('levels'
  $('hiddenAssumptions').hidden=!active.length;$('hiddenAssumptions').innerHTML=active.length?'Også med i beregningen: '+escapeHTML(active.join(' · '))+'. <button id="revealSettings">Se innstillingene</button>':'';if($('revealSettings'))$('revealSettings').onclick=()=>{setLevel('advanced');$('advancedDetails').open=true;$('eventsDetails').open=true;};}
 function setLevel(value){level=value;try{localStorage.setItem('sv-level',level);}catch{}syncLevel();if(window.renderDream)window.renderDream();}
 // State changes are read once per user input. An empty field stops the calculation; see pendingKey().
-document.addEventListener('input',event=>{if(!event.target.closest('#taxDialog')&&event.target.id in E.defaults){typingRender=true;read();render();typingRender=false;}});
+document.addEventListener('input',event=>{if(!event.target.closest('#taxDialog')&&event.target.id in E.defaults){typingRender=true;read();render();typingRender=false;if($('toast').dataset.validation&&!planProblem()){clearTimeout(window.toastTimer);$('toast').style.display='none';delete $('toast').dataset.validation;}}});
 // «Dette betyr tallene dine» oppdateres når feltet forlates eller skyveknappen slippes (change), ikke ved hvert tastetrykk.
 document.addEventListener('change',event=>{const id=event.target.dataset?.field||event.target.id;if(id in E.defaults&&!lastRenderError)renderMeaning();});
 // Tusenskille settes når brukeren forlater feltet, ikke mens det skrives, slik at markøren ikke hopper.
