@@ -97,7 +97,7 @@ function render(){
  const less=`du har ${money(nominalLoss)} mindre enn du har satt inn.`;
  if(allLost)notes.push('Du har tapt alle pengene du har investert.');
  else if(almostAll)notes.push('Du har tapt nesten alle pengene du har investert. Under 1 kr er igjen.');
- else if(lastLoss)notes.push((X.cause==='fees'?(X.growthOnly?`Kostnadene har redusert sparingen med ${money(nominalLoss)}.`:`Kostnadene på ${money(X.costEffect)} er større enn veksten, så ${less}`):X.cause==='fall'?`Børsfallet gjør at ${less}`:X.cause==='fall+fees'?`Børsfallet og kostnadene gjør at ${less}`:`Verdien har falt, og ${less}`)+(s.real?' Beløpet er i kroner, ikke justert for prisvekst.':''));
+ else if(lastLoss)notes.push((X.cause==='fees'?(X.growthOnly?`Kostnadene har redusert sparingen med ${money(nominalLoss)}.`:`Kostnadene på ${money(X.costEffect)} er større enn veksten, så ${less}`):X.cause==='fall'?`Børsfallet gjør at ${less}`:X.cause==='fall+fees'?`Børsfallet og kostnadene gjør at ${less}`:X.cause==='value+fees'?`Negativ avkastning og kostnadene gjør at ${less}`:`Negativ avkastning gjør at ${less}`)+(s.real?' Beløpet er i kroner, ikke justert for prisvekst.':''));
  else if(powerGap>=0.5)notes.push(`Sparingen har ikke holdt følge med prisveksten. Målt i dagens kroner er verdien ${money(powerGap)} lavere enn innskuddene justert for prisvekst.`);
  else if(X&&X.powerGap)notes.push('Sparingen har ikke holdt følge med prisveksten, så pengene kan kjøpe mindre enn innskuddene kunne da du satte dem inn.');
  $('secondary').textContent=notes.join(' ');$('secondary').hidden=!notes.length;

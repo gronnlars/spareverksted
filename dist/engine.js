@@ -123,8 +123,8 @@ function explain(s,t=s.years){
  const final=value(s,t),paid=raw({...s,rate:0,fee:0},t,0,0),noFee=value(s,t,s.rate,0),months=Math.round(t*12);
  const fell=s.crash>0&&Math.round(s.crashYear*12)<=months,priceFactor=Math.exp(Math.log1p(s.inflation/100)*months/12);
  const loss=paid>0&&final<paid&&paid-final>=0.5?paid-final:0,allLost=loss>0&&final<=1e-9,almostAll=loss>0&&!allLost&&final<1;
- // Uten kostnader ville det ikke vært tap: da er kostnadene hele årsaken. Ellers er det et fall i verdi (børsfall).
- const cause=!loss?null:noFee>=paid-0.5?'fees':fell?(s.fee>0?'fall+fees':'fall'):'value';
+ // Uten kostnader ville det ikke vært tap: da er kostnadene hele årsaken. Ellers er det et fall i verdi (børsfall, eller negativ avkastning når motoren brukes direkte), og kostnadene nevnes i tillegg.
+ const cause=!loss?null:noFee>=paid-0.5?'fees':fell?(s.fee>0?'fall+fees':'fall'):(s.fee>0?'value+fees':'value');
  const withPrices=raw(s,t,s.inflation,0),powerGap=!loss&&s.inflation>0&&withPrices-final>=0.5*priceFactor?(withPrices-final)/priceFactor:0;
  return {final,paid,loss,allLost,almostAll,cause,costEffect:Math.max(0,noFee-final),growthOnly:s.rate===0,priceFactor,real:final/priceFactor,noInflation:s.inflation===0,powerGap};
 }

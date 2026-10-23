@@ -43,6 +43,13 @@ assert.equal(E.value(s1,10),250000,'0/0/0: sluttverdi lik innskuddene');
  const sf={...s,fee:0.5};assert.equal(E.explain(sf).cause,'fall+fees','fall og kostnader nevnes begge');
  // Kostnadene får ikke hele skylden: uten kostnader er det fortsatt tap.
  assert.ok(E.value({...sf,fee:0},10)<E.explain(sf).paid);}
+// Negativ avkastning (bare mulig via motoren; skjemaet krever minst 0 %): −5 % med 0,2 % kostnad skal ikke tilskrives bare kostnadene.
+{const s={...base,start:10000,monthly:2000,years:30,rate:-5,fee:0.2,inflation:2.5};const x=E.explain(s);
+ assert.equal(x.cause,'value+fees');assert.ok(E.value({...s,fee:0},30)<x.paid,'tap også uten kostnader');assert.ok(x.costEffect<x.loss,'kostnadene er bare en liten del');
+ assert.equal(kr(x.loss),367881);assert.equal(kr(x.costEffect),8282);near(x.final,ref(s),'−5 % mot uavhengig løkke');
+ assert.equal(E.explain({...s,fee:0}).cause,'value');assert.throws(()=>E.validate(s),/fra 0 % til 100 %/,'skjemaet stopper negativ forventet vekst');
+ // Grensetilfelle: −0,1 % vekst og 0,2 % kostnad. Liten negativ vekst gir tap også uten kostnader.
+ assert.equal(E.explain({...s,rate:-0.1}).cause,'value+fees');assert.equal(E.explain({...s,rate:0.1}).cause,'fees');}
 // Kostnader større enn vekst: tapet er mindre enn kostnadseffekten, og årsaken er kostnadene.
 {const s={...s1,rate:0.1,fee:1};const x=E.explain(s);assert.equal(x.cause,'fees');assert.equal(x.growthOnly,false);assert.ok(x.costEffect>x.loss);}
 // Lavere kjøpekraft uten tap i kroner (skjermbilde: 0 % vekst, 3 % prisvekst, 40 år).
