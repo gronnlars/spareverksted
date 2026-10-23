@@ -35,6 +35,18 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.locator('#years').fill('100');await p.locator('#rate').fill('100');
   assert.match(await p.locator('#total').innerText(),/(billioner|billiarder|trillioner) kr|over/);assert.match(await p.locator('#secondary').innerText(),/mister praktisk mening/);
   assert(!/e\+\d/.test(await p.locator('main').innerText()),'no scientific notation');
+  // Én forkortingsregel i resultatkortet: fra 1 milliard forkortes alle beløp. Ingen 10-sifrede tall skrevet ut.
+  assert.deepEqual(await p.evaluate(()=>[money(999999999),money(1e9),money(433725710796),money(5.12e12),money(-2.5e9),money(1e12)]),
+   ['999 999 999 kr','1 milliard kr','433,73 milliarder kr','5,12 billioner kr','−2,5 milliarder kr','1 billion kr'].map(x=>x.replace(/ (?=\d)/g,'\u00a0')));
+  await p.locator('#years').fill('100');await p.locator('#rate').fill('15');await p.locator('#rate').blur();
+  const card=await p.locator('#savingsResult').innerText();
+  assert(!/\d{1,3}(?:[ \u00a0\u202f]\d{3}){3,}/.test(card),'Ingen beløp på milliarder skrevet ut i resultatkortet: '+card);
+  assert.match(card,/milliarder kr|billioner kr/);
+  // Eksakte beløp finnes i tabellvisningen.
+  await p.evaluate(()=>{const b=document.getElementById('showTable')||document.querySelector('[data-view=table]');if(b)b.click();table();});
+  const tableText=await p.evaluate(()=>document.getElementById('tableWrap').textContent);
+  assert.match(tableText,/eksakte beløp/);assert(/\d{1,3}(?:[ \u00a0\u202f]\d{3}){3,} kr/.test(tableText),'Tabellen viser eksakte store beløp');
+  await p.locator('#rate').fill('100');
   // Fortegn beholdes i både kort (akser) og lang form, også over 1 000 trillioner.
   assert.deepEqual(await p.evaluate(()=>[big(2e21,true),big(-2e21,true),big(-2e21),big(-5e18,true),axisCompact(-3e21),money(-2e21)]),
    ['over 1 000 trill.','under −1 000 trill.','under −1 000 trillioner kr','−5 trill.','under −1 000 trill.','under −1 000 trillioner kr']);
