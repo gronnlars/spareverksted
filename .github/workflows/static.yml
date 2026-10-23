@@ -62,6 +62,7 @@ jobs:
           node tests/navigation-browser.cjs
           node tests/roundtrip-browser.cjs
           node tests/a11y-browser.cjs
+          node tests/akse-browser.cjs
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: [checks, browser]
