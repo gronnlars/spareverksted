@@ -11,7 +11,7 @@ function build(E,s,end,f,A){
  const final=E.value(s,end),paid=E.raw({...s,rate:0,fee:0},end,0,0),paidToday=E.depositsToday(s,end),real=final/P;
  const growth=final-paid,powerChange=real-paidToday,X=E.explain(s,end),costEffect=Math.max(0,E.value(s,end,s.rate,0)-final);
  const deposits=paid-s.start>0.5,type=TYPES[s.savingsType]||null,d=E.defaults,same=(a,b)=>Math.abs(a-b)<0.5;
- const main=[],details=[],actions=[];let rangeExplanation='';
+ const main=[],details=[],actions=[];let rangeExplanation='',taxNoted=false;
  // 1. Kroner og kjøpekraft. Setningene vises bare når de stemmer med tallene.
  if(paid<=0.5)main.push('Planen har ingen innskudd ennå.');
  else if(s.inflation===0)main.push('Med 0 % prisvekst er kroner og kjøpekraft det samme i denne beregningen.');
@@ -20,14 +20,21 @@ function build(E,s,end,f,A){
   if(same(growth,0))main.push(deposits?'Saldoen øker bare fordi du setter inn nye penger. Pengene kjøper mindre enn innskuddene kunne da du satte dem inn, fordi prisene stiger.':'Beløpet på kontoen er uendret, men pengene kjøper mindre etter hvert som prisene stiger.');
   else main.push(deposits?'Saldoen øker av innskuddene og avkastningen, men prisene stiger raskere enn pengene vokser. Pengene kjøper mindre enn innskuddene kunne da du satte dem inn.':'Du får flere kroner på kontoen, men prisene stiger raskere enn pengene vokser.');
  }
- else if(powerChange>0.5)main.push(deposits?'Avkastningen er større enn prisveksten, så sluttbeløpet kan kjøpe mer enn innskuddene kunne da du satte dem inn.':'Pengene vokser mer enn prisene, så sluttbeløpet kan kjøpe mer enn startbeløpet kunne da du satte det inn.');
+ else if(powerChange>0.5){
+  const account=s.savingsType==='savings'||s.savingsType==='checking';
+  main.push(deposits?(account?'Renten':'Avkastningen')+' er større enn prisveksten, så sluttbeløpet kan kjøpe mer enn innskuddene kunne da du satte dem inn.':'Pengene vokser mer enn prisene, så sluttbeløpet kan kjøpe mer enn startbeløpet kunne da du satte det inn.');
+  // Renter skattes hvert år. Er renten etter skatt lavere enn prisveksten, snur konklusjonen. Det skal stå her,
+  // ellers lærer siden brukeren at en vanlig sparekonto holder følge med prisene. Forenklet: renten × (1 − skattesats).
+  if(account&&A&&A.tax){const net=s.rate*(1-A.tax.interest/100)-s.fee;
+   if(net<s.inflation&&(taxNoted=true))main.push(`Det gjelder før skatt. Etter ${f.pct(A.tax.interest)} skatt på rentene blir renten omtrent ${f.pct(Math.round(net*100)/100)}, lavere enn prisveksten på ${f.pct(s.inflation)}. Etter skatt kjøper pengene altså mindre over tid.`);}
+ }
  else main.push('Pengene vokser omtrent like mye som prisene, så kjøpekraften er omtrent den samme som for innskuddene.');
  // 2. Spareformen. Startverdiene sies tydelig, slik at et valg aldri ser ut til å gjøre tallene representative.
  const startValues=[...(s.rate===d.rate?[`${f.pct(d.rate)} vekst`]:[]),...(s.fee===d.fee?[`${f.pct(d.fee)} kostnad`]:[])];
  if(type&&s.savingsType!=='index'&&startValues.length)
   main.push(`Du har valgt ${type.name}, men beregningen bruker fortsatt startverdiene ${join(startValues)}. De er ikke vilkår for en ${type.name}. Legg inn kontoens rente${s.fee===d.fee?' og eventuelle kostnader':''}.`);
- else if(s.savingsType==='savings')main.push(`Beregningen forutsetter ${f.pct(s.rate)} rente på sparekontoen gjennom hele perioden. Kontroller at renten stemmer med kontovilkårene. Endres renten, blir resultatet annerledes. Renter beskattes hvert år, så resultatet etter skatt blir lavere.`);
- else if(s.savingsType==='checking')main.push(`Beregningen bruker ${f.pct(s.rate)} rente på brukskontoen gjennom hele perioden. Kontroller kontovilkårene.`+(s.rate>0?' Renter beskattes hvert år, så resultatet etter skatt blir lavere.':''));
+ else if(s.savingsType==='savings')main.push(`Beregningen forutsetter ${f.pct(s.rate)} rente på sparekontoen gjennom hele perioden. Kontroller at renten stemmer med kontovilkårene. Endres renten, blir resultatet annerledes.`+(taxNoted?'':' Renter beskattes hvert år, så resultatet etter skatt blir lavere.'));
+ else if(s.savingsType==='checking')main.push(`Beregningen bruker ${f.pct(s.rate)} rente på brukskontoen gjennom hele perioden. Kontroller kontovilkårene.`+(s.rate>0&&!taxNoted?' Renter beskattes hvert år, så resultatet etter skatt blir lavere.':''));
  else if(s.savingsType==='index'){
   const own=s.riskChosen&&s.stress==='low'?'Du har selv oppgitt at du helst vil unngå store fall. ':'';
   main.push(own+`Et indeksfond kan falle mye i verdi underveis, men beregningen viser en jevn utvikling på ${f.pct(s.rate)} hvert år.`);

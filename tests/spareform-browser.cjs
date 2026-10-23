@@ -36,7 +36,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // Sparekonto: gjennomsnittsrenten fra SSB, med kilde og dato i teksten.
   await p.locator('#savingsTypes [data-type=savings]').click();
   assert.deepEqual(await p.evaluate(()=>[s.rate,s.fee]),[2.87,0]);assert.match(await text(p,'#startNote'),/2,87 % er gjennomsnittet for husholdningers innskudd uten binding \(SSB, august 2026\)/);
-  assert.match(await text(p,'#meaningMain'),/Renter beskattes hvert år/);
+  assert.match(await text(p,'#meaningMain'),/Renter beskattes hvert år|skatt på rentene/);
   // Indeksfond: Finans Norge-forutsetning og utfallsrom som avhenger av sparetiden.
   await p.locator('#savingsTypes [data-type=index]').click();assert.equal(await p.locator('#savingsTypes [data-type=savings]').getAttribute('aria-pressed'),'false');
   assert.equal(await p.evaluate(()=>s.rate),7.11,'4,5 % realavkastning pluss 2,5 % prisvekst');assert.equal(await p.evaluate(()=>s.fee),0.2,'et indeksfond arver ikke 0 % kostnad fra en konto; kostnaden er en forhåndsutfylt startverdi');assert.equal(await p.evaluate(()=>view.showRange),true);
