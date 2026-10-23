@@ -1,6 +1,7 @@
 .result-navigation{display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px;margin:0 0 18px}
 .result-navigation #seeGraph{background:var(--primary-bg);border-color:var(--primary-bg);color:var(--on-primary)}
 .input-result{display:none}
+.hero-result .result-assumptions{font-size:13px;line-height:1.5;color:inherit;margin:10px 0 0}
 .result-navigation button{min-height:44px}
 .result-navigation .text-link,.return-fields{min-height:44px;padding-block:10px}
 #planInputs,#dreamInputs,#withdrawInputs,#chartPanel,#savedHeading{scroll-margin-block-start:20px}
