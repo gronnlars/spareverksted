@@ -36,13 +36,13 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // Sparekonto: gjennomsnittsrenten fra SSB, med kilde og dato i teksten.
   await p.locator('#savingsTypes [data-type=savings]').click();
   assert.deepEqual(await p.evaluate(()=>[s.rate,s.fee]),[2.87,0]);assert.match(await text(p,'#startNote'),/2,87 % er gjennomsnittet for husholdningers innskudd uten binding \(SSB, august 2026\)/);
-  assert.match(await text(p,'#meaningMain'),/Renter beskattes hvert år/);
+  assert.match(await text(p,'#meaningMain'),/Renter beskattes hvert år|skatt på rentene/);
   // Indeksfond: Finans Norge-forutsetning og utfallsrom som avhenger av sparetiden.
   await p.locator('#savingsTypes [data-type=index]').click();assert.equal(await p.locator('#savingsTypes [data-type=savings]').getAttribute('aria-pressed'),'false');
   assert.equal(await p.evaluate(()=>s.rate),7.11,'4,5 % realavkastning pluss 2,5 % prisvekst');assert.equal(await p.evaluate(()=>s.fee),0.2,'et indeksfond arver ikke 0 % kostnad fra en konto; kostnaden er en forhåndsutfylt startverdi');assert.equal(await p.evaluate(()=>view.showRange),true);
   assert.match(await text(p,'#startNote'),/Veksten 7,11 % er 4,5 % forventet realavkastning for aksjer \(Finans Norges prognosestandard, februar 2026\)/);
   assert.match(await text(p,'#meaningMain'),/Et indeksfond kan falle mye i verdi underveis/);assert.doesNotMatch(await text(p,'#meaningMain'),/Med 10 år sparetid/);await p.locator('#meaningMore>summary').click();assert.match(await text(p,'#meaningDetails'),/Med 10 år sparetid/);
-  assert.match(await p.locator('#chartNote').innerText(),/95 % utfallsrom etter Finans Norges prognosemodell/);assert.match(await p.locator('#chartLegend').innerText(),/95 % utfallsrom \(modell\)/);assert.equal(await p.locator('#showRange').getAttribute('aria-label'),'Vis utfallsrom (95 %)');
+  assert.match(await p.locator('#chartNote').innerText(),/lavere og høyere scenario beregnet med Finans Norges formelverk/);assert.match(await p.locator('#chartLegend').innerText(),/Lavere og høyere scenario/);assert.equal(await p.locator('#showRange').getAttribute('aria-label'),'Vis lavere og høyere scenario');
   assert(await p.locator('#fanTuning').isHidden(),'avviket i prosentpoeng brukes ikke for indeksfond');
   // Kortere sparetid gir et bredere utfallsrom (målt som årlig snittavkastning) og kan gi tap.
   const lowShare=()=>p.evaluate(()=>E.band(s,s.years,-1.96,Assumptions.index.sigma)/E.raw({...s,rate:0,fee:0},s.years,0,0));

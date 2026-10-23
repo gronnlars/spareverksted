@@ -72,5 +72,5 @@ console.log('Passed: deposits and purchasing power in today’s kroner.');
  const html=require('node:fs').readFileSync(require('node:path').join(__dirname,'../dist/index.html'),'utf8');
  assert(!/summen av innskudd delt på samme prisfaktor/.test(html),'Gammel metode for innskudd i dagens kroner står ikke på siden');
  assert(/prisnivået da hvert innskudd ble satt inn/.test(html),'Metodeteksten beskriver innskudd i dagens kroner');
- assert(/følsomhetstester/.test(html)&&/95 % utfallsrom/.test(html),'Metodeteksten skiller følsomhetsbånd og utfallsrom');
+ assert(/følsomhetstester/.test(html)&&/lavere og høyere scenario/.test(html),'Metodeteksten skiller følsomhetsbånd og utfallsrom');
 }

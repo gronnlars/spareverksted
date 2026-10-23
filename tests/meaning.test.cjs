@@ -62,4 +62,16 @@ const all=m=>m.main+' '+m.details.map(d=>d.title+': '+d.text).join(' ')+' '+m.ac
  for(const savingsType of ['checking','savings','index'])assert.deepEqual(build({start:5000,monthly:1500,rate:4,fee:0.3,years:15,savingsType}).numbers,plain.numbers);}
 // 15. Ingen tankestreker i teksten.
 for(const over of [{},{savingsType:'checking'},{savingsType:'savings',rate:3,fee:0},{savingsType:'index',rate:-2},{inflation:0},{start:100000,monthly:0,rate:0,fee:0}])assert.doesNotMatch(all(build(over)),/[–—]/);
+// Sparekonto: før skatt over prisveksten, etter skatt under. Forbeholdet skal stå, og «Renten» brukes for konto.
+{const A=require('../dist/assumptions.js'),s={...base,start:0,monthly:2000,rate:2.87,fee:0,years:10,savingsType:'savings'};
+ const m=M.build(E,s,s.years,f,A);
+ assert.match(m.main,/^Renten er større enn prisveksten/);
+ assert.match(m.main,/Det gjelder før skatt\. Etter 22 % skatt på rentene blir renten omtrent 2,24 %, lavere enn prisveksten på 2,5 %/);
+ // Uten forutsetningene (A) vises ikke forbeholdet, og ingen tall gjettes.
+ assert.doesNotMatch(M.build(E,s,s.years,f).main,/Det gjelder før skatt/);
+ // Høy rente: etter skatt fortsatt over prisveksten, ingen forbehold.
+ assert.doesNotMatch(M.build(E,{...s,rate:4},10,f,A).main,/Det gjelder før skatt/);
+ // Indeksfond får ikke kontoforbeholdet.
+ assert.doesNotMatch(M.build(E,{...s,savingsType:'index',rate:7.11,fee:0.2},10,{...f,years:t=>t+' år'},A).main,/Det gjelder før skatt/);}
+
 console.log('Passed: meaning section follows the numbers, the chosen savings type and the horizon.');

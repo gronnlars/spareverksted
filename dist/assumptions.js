@@ -21,6 +21,10 @@ const A={
  // gir et 95 % utfallsrom der hvert innskudd får avkastningen r ± 1,96·σ/√(år til slutt).
  index:{realRate:4.5,sigma:16,
   source:{name:'Finans Norge: Avtale om avkastningsprognoser, revidert 04.02.2026',url:'https://www.finansnorge.no/siteassets/dokumenter/avtaler/avtale-om-avkastningsprognoser_revidert-04.02.2026_ikrafttredelse-11.02.2026.pdf'}},
+ // Skatt på renter og andre kapitalinntekter (alminnelig inntekt) for personer, inntektsåret 2026.
+ // Brukes bare i forklaringstekst, ikke i beregningene. Se beslutningsnotatet om skatt.
+ tax:{interest:22,year:2026,
+  source:{name:'Skatteetaten: satser 2026',url:'https://www.skatteetaten.no/satser/faktor-for-oppjustering-av-gevinsttap-eller-utbytte-pa-aksjer/?year=2026'}},
  // Nominell vekst for indeksfond: realavkastningen lagt til planens prisvekst, avrundet til to desimaler.
  indexRate(inflation){return Math.round(((1+A.index.realRate/100)*(1+inflation/100)-1)*10000)/100;}
 };
