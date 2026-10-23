@@ -31,8 +31,15 @@ function build(E,s,end,f,A){
  else if(s.savingsType==='index'){
   const own=s.riskChosen&&s.stress==='low'?'Du har selv oppgitt at du helst vil unngå store fall. ':'';
   main.push(own+`Et indeksfond kan falle mye i verdi underveis, men beregningen viser en jevn utvikling på ${f.pct(s.rate)} hvert år.`);
-  if(A&&A.index&&paid>0.5){const low=E.band(s,end,-1.96,A.index.sigma),years=Math.round(end*12)/12;
-   rangeExplanation=low<paid-0.5?`Med ${f.years(years)} sparetid kan verdien også ende under det du har satt inn: i den nedre delen av utfallsrommet blir den ${f.money(low)}.`:`Med ${f.years(years)} sparetid ligger også den nedre delen av utfallsrommet over innskuddene (${f.money(low)}), men det er en modell, ikke en garanti.`;}
+  if(A&&A.index&&paid>0.5){
+   // Nedre del av utfallsrommet sammenlignes med innskuddene i samme kroneverdi: kroner mot kroner,
+   // dagens kroner mot innskuddene i dagens kroner. Begge er før skatt.
+   const low=E.band(s,end,-1.96,A.index.sigma),lowReal=low/P,years=Math.round(end*12)/12,span=`Med ${f.years(years)} sparetid`;
+   const belowNom=low<paid-0.5,belowReal=s.inflation!==0&&lowReal<paidToday-0.5,realPart=s.inflation!==0?` Målt i dagens kroner er det ${f.money(lowReal)} mot innskudd på ${f.money(paidToday)}.`:'';
+   if(belowNom)rangeExplanation=`${span} kan verdien også ende under det du har satt inn: i den nedre delen av utfallsrommet blir den ${f.money(low)}, mot ${f.money(paid)} i innskudd.${realPart}`;
+   else if(belowReal)rangeExplanation=`${span} ligger den nedre delen av utfallsrommet over innskuddene i kroner (${f.money(low)} mot ${f.money(paid)}). Men den ligger under det du samlet setter inn, målt i dagens kroner (${f.money(lowReal)} mot ${f.money(paidToday)}). Du kan altså ende med mindre kjøpekraft enn innskuddene dine tilsvarer.`;
+   else rangeExplanation=`${span} ligger også den nedre delen av utfallsrommet over innskuddene (${f.money(low)} mot ${f.money(paid)})${s.inflation!==0?', også målt i dagens kroner':''}.`;
+   rangeExplanation+=' Utfallsrommet er en modell, ikke en garanti.';}
  }
  if(type&&s.savingsType!=='index'&&s.rate>0&&!(startValues.length)){const lower=Math.max(0,s.rate-2),v=E.value(s,end,lower);
   actions.push({id:'lowerRate',label:'Se hvordan en lavere rente påvirker resultatet',text:`Med ${f.pct(lower)} rente i stedet for ${f.pct(s.rate)} blir sluttbeløpet ${f.money(v)}${s.inflation>0?`, eller ${f.money(v/P)} i dagens kroner`:''}. Tallene dine er ikke endret.`});}

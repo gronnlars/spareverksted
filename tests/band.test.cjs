@@ -39,7 +39,22 @@ for(let i=0;i<200;i++){const s={...base,start:rnd()*1e6,monthly:rnd()*2e4,growth
  const short=M.build(E,{...base,start:100000,monthly:0,fee:0,rate:7.11,years:3,savingsType:'index'},3,f,A);
  assert.match(short.main,/Et indeksfond kan falle mye/);assert.match(short.details.at(-1).text,/Med 3 år sparetid kan verdien også ende under det du har satt inn/);
  const long=M.build(E,{...base,start:100000,monthly:0,fee:0,rate:7.11,years:25,savingsType:'index'},25,f,A);
- assert.match(long.details.at(-1).text,/Med 25 år sparetid ligger også den nedre delen av utfallsrommet over innskuddene/);assert.match(long.details.at(-1).text,/ikke en garanti/);
+ // 25 år, 2,5 % prisvekst: over innskuddene i kroner, men under dem målt i dagens kroner. Begge sies, i hver sin kroneverdi.
+ const lt=long.details.at(-1).text;
+ assert.match(lt,/Med 25 år sparetid ligger den nedre delen av utfallsrommet over innskuddene i kroner/);
+ assert.match(lt,/under det du samlet setter inn, målt i dagens kroner/);assert.match(lt,/mindre kjøpekraft enn innskuddene dine tilsvarer/);assert.match(lt,/ikke en garanti/);
+ // Tallene i setningen kontrolleres uavhengig: nedre del i dagens kroner = nominell nedre del / 1,025^25. Startbeløpet er allerede i dagens kroner.
+ {const lowNom=E.band({...base,start:100000,monthly:0,fee:0,rate:7.11,years:25},25,-1.96,sigma),lowReal=lowNom/1.025**25;
+  assert.ok(lowNom>100000&&lowReal<100000,'Kontrolltilfellet ligger over i kroner og under i dagens kroner');
+  assert.ok(lt.includes(f.money(lowNom)+' mot 100000 kr')&&lt.includes(f.money(lowReal)+' mot 100000 kr'),'Begge sammenligninger har riktige tall: '+lt);}
+ // Med 0 % prisvekst finnes bare én kroneverdi, og nedre del ligger over innskuddene.
+ const flat=M.build(E,{...base,start:100000,monthly:0,fee:0,rate:7.11,inflation:0,years:25,savingsType:'index'},25,f,A).details.at(-1).text;
+ assert.match(flat,/ligger også den nedre delen av utfallsrommet over innskuddene \(\d+ kr mot 100000 kr\)\./);assert.doesNotMatch(flat,/dagens kroner/);
+ // Månedssparing i 40 år: innskudd i dagens kroner mot egen løkke (hvert innskudd ved månedsslutt, delt på prisnivået da).
+ {let own=0;for(let m=1;m<=480;m++)own+=2000/1.025**(m/12);
+  const mon=M.build(E,{...base,start:0,monthly:2000,fee:0.2,rate:7.11,years:40,savingsType:'index'},40,f,A).details.at(-1).text;
+  assert.ok(mon.includes('mot '+f.money(own)+')'),'Innskudd i dagens kroner stemmer med egen løkke ('+Math.round(own)+'): '+mon);
+  assert.match(mon,/over innskuddene i kroner/);assert.match(mon,/under det du samlet setter inn, målt i dagens kroner/);}
  assert.match(long.details.at(-1).text,/Finans Norges standard for avkastningsprognoser/);
  const none=M.build(E,{...base,start:100000,monthly:0,fee:0,rate:7.11,years:3,savingsType:'savings'},3,f,A);assert.doesNotMatch(none.main,/utfallsrom/);}
 console.log('Passed: index fund outcome range follows the Finans Norge formula and depends on the horizon.');
