@@ -155,8 +155,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.evaluate(()=>setLevel('simple'));
   await p.locator('#start').fill('0');await p.locator('#monthly').fill('8200');await p.locator('#years').fill('38,5');await p.locator('#rate').fill('0');
   assert.match(await p.locator('#gainLabel').innerText(),/Tap mot innskuddene/);assert.match(await p.locator('#gain').innerText(),/^−/);
-  assert.match(await p.locator('#secondary').innerText(),/Du har tapt [\d\s]+ kr av pengene du har satt inn\./);assert.match(await p.locator('#mobileResultLabel').innerText(),/Tapt [\d\s]+ kr av innskuddene/);
-  await p.locator('#rate').fill('5');assert.match(await p.locator('#gainLabel').innerText(),/Beregnet vekst/);assert.doesNotMatch(await p.locator('#mobileResultLabel').innerText(),/Tapt|tapt/);
+  assert.match(await p.locator('#secondary').innerText(),/Kostnadene har redusert sparingen med [\d\s]+ kr\./,'0 % vekst: kostnadene er årsaken');assert.match(await p.locator('#mobileResultLabel').innerText(),/[\d\s]+ kr under innskuddene/);
+  await p.locator('#rate').fill('5');assert.match(await p.locator('#gainLabel').innerText(),/Vekst etter kostnader/);assert.doesNotMatch(await p.locator('#mobileResultLabel').innerText(),/under innskuddene|tapt/);
   // Dagens kroner: tap i kroner omtales som omregnet, og lavere kjøpekraft kalles ikke tap.
   await p.locator('#rate').fill('0');await p.evaluate(()=>{const r=document.getElementById('real');r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));r.dispatchEvent(new Event('input',{bubbles:true}));});
   assert.equal(await p.evaluate(()=>s.real),true);
@@ -165,12 +165,13 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // men 271 948 kr er innskuddene justert for prisvekst. Gapet er 7 387 kr i dagens kroner.
   await p.evaluate(()=>{for(let d=document.getElementById('inflation').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});await p.locator('#inflation').fill('2,5');await p.locator('#fee').fill('0,2');
   await p.locator('#monthly').fill('2000');await p.locator('#years').fill('10');await p.locator('#rate').fill('2');
-  assert.match(await p.locator('#gainLabel').innerText(),/^(Beregnet vekst|Avkastning etter kostnader)$/,'a purchasing-power gap is not a loss in kroner');
-  assert.match(await p.locator('#secondary').innerText(),/Pengene har økt i verdi, men ikke holdt følge med prisveksten\. Målt i dagens kroner er verdien 7\s387 kr lavere enn innskuddene justert for prisvekst\./);
+  assert.match(await p.locator('#gainLabel').innerText(),/^(Beregnet vekst|Vekst etter kostnader|Avkastning etter kostnader)$/,'a purchasing-power gap is not a loss in kroner');
+  assert.match(await p.locator('#secondary').innerText(),/Sparingen har ikke holdt følge med prisveksten\. Målt i dagens kroner er verdien 7\s387 kr lavere enn innskuddene justert for prisvekst\./);
   assert.match(await p.locator('#mobileResultLabel').innerText(),/Lavere kjøpekraft enn innskuddene/);
   await p.evaluate(()=>{const r=document.getElementById('real');r.checked=false;r.dispatchEvent(new Event('change',{bubbles:true}));r.dispatchEvent(new Event('input',{bubbles:true}));});
-  assert.doesNotMatch(await p.locator('#secondary').innerText(),/ikke holdt følge med prisveksten/,'the purchasing-power note belongs to the today-kroner view');
-  assert.doesNotMatch(await p.locator('#mobileResultLabel').innerText(),/Tapt|kjøpekraft/);
+  // I kroner: kort setning om kjøpekraft, uten beløp i dagens kroner, og ikke kalt tap.
+  assert.match(await p.locator('#secondary').innerText(),/Sparingen har ikke holdt følge med prisveksten, så pengene kan kjøpe mindre enn innskuddene kunne da du satte dem inn\./);
+  assert.doesNotMatch(await p.locator('#secondary').innerText(),/tapt|lavere enn innskuddene justert/);assert.match(await p.locator('#mobileResultLabel').innerText(),/Lavere kjøpekraft enn innskuddene/);
   // Indeksfond med stort børsfall: verdien blir aldri negativ, heller ikke ved 100 % fall.
   await p.evaluate(()=>{setLevel('advanced');for(let d=document.getElementById('crash').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});
   for(const fall of ['50','90','100']){await p.locator('#start').fill('200000');await p.locator('#monthly').fill('3000');await p.locator('#years').fill('20');await p.locator('#rate').fill('7');await p.locator('#crash').fill(fall);await p.locator('#crashYear').fill('5');
@@ -192,13 +193,39 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await realView(false);
   // Delvis tap: 100 000 kr i 10 år med 0 % vekst og 0,2 % kostnad gir 98 018 kr. Uavhengig kontroll: tap 1 982 kr.
   await p.locator('#crash').fill('0');await p.locator('#start').fill('100000');await p.locator('#rate').fill('0');await p.locator('#years').fill('10');
-  assert.match(await p.locator('#total').innerText(),/^98\s018 kr$/);assert.match(await sec(),/Du har tapt 1\s982 kr av pengene du har satt inn\./);assert.doesNotMatch(await sec(),/alle pengene/);
-  await realView(true);assert.match(await sec(),/Du har tapt 1\s982 kr av pengene du har satt inn\. Beløpet er i kroner, ikke justert for prisvekst\./,'the loss in kroner is the same in today-kroner view');await realView(false);
+  assert.match(await p.locator('#total').innerText(),/^98\s018 kr$/);assert.match(await sec(),/Kostnadene har redusert sparingen med 1\s982 kr\./);assert.doesNotMatch(await sec(),/alle pengene/);
+  await realView(true);assert.match(await sec(),/Kostnadene har redusert sparingen med 1\s982 kr\. Beløpet er i kroner, ikke justert for prisvekst\./,'the loss in kroner is the same in today-kroner view');await realView(false);
+  // Børsfall: årsaken nevnes, og kostnadene får ikke hele skylden når fallet også bidrar.
+  await p.locator('#crash').fill('30');await p.locator('#crashYear').fill('5');
+  assert.match(await sec(),/^Det tilsvarer [\d\s]+ kr med dagens priser\. Børsfallet og kostnadene gjør at du har [\d\s]+ kr mindre enn du har satt inn\.$/);
+  await p.locator('#fee').fill('0');assert.match(await sec(),/Børsfallet gjør at du har 30\s000 kr mindre enn du har satt inn\./);await p.locator('#fee').fill('0,2');await p.locator('#crash').fill('0');
   // Uten innskudd er ingenting tapt.
   await p.locator('#start').fill('0');await p.locator('#crash').fill('100');await p.locator('#crashYear').fill('10');
   assert.equal(await p.locator('#total').innerText(),'0 kr');assert.doesNotMatch(await sec(),/tapt/,'no deposits, nothing lost');
   await realView(true);assert.doesNotMatch(await sec(),/tapt|ikke holdt følge/);await realView(false);
   await p.locator('#crash').fill('0');await p.evaluate(()=>setLevel('simple'));
+  // Test A til D fra oppdraget, i enkel visning. Tallene er kontrollert mot en uavhengig månedsløkke i results.test.cjs.
+  const fillPlan=async(v)=>{for(const [id,x] of Object.entries(v)){await p.locator('#'+id).fill(x);}await p.locator('#years').blur();};
+  await fillPlan({start:'10000',monthly:'2000',years:'40',rate:'0',inflation:'0',fee:'0'});
+  assert.match(await p.locator('#total').innerText(),/^970\s000 kr$/);assert.equal(await sec(),'','A: ingen setning om dagens priser når prisveksten er 0 %');assert(await p.locator('#secondary').isHidden());
+  assert.match(await p.locator('#gainLabel').innerText(),/^Beregnet vekst$/);
+  await fillPlan({fee:'0,2'});
+  assert.match(await p.locator('#total').innerText(),/^931\s875 kr$/);assert.match(await sec(),/^Kostnadene har redusert sparingen med 38\s125 kr\.$/,'B');
+  await fillPlan({years:'30',inflation:'2,5'});
+  assert.match(await p.locator('#total').innerText(),/^708\s280 kr$/);assert.match(await sec(),/^Det tilsvarer 337\s667 kr med dagens priser\. Kostnadene har redusert sparingen med 21\s720 kr\.$/,'C');
+  await fillPlan({rate:'5'});
+  assert.match(await p.locator('#total').innerText(),/^1\s612\s393 kr$/);assert.match(await sec(),/^Det tilsvarer 768\s697 kr med dagens priser\.$/,'D');
+  assert.match(await p.locator('#gainLabel').innerText(),/^Vekst etter kostnader$/);assert.match(await p.locator('#gain').innerText(),/^882\s393 kr$/);assert.match(await p.locator('#mobileResultLabel').innerText(),/^Regneeksempel · før skatt$/);
+  // Glidebryter og tallfelt gir samme beregning.
+  const typed=await p.locator('#total').innerText();await p.locator('#rate').fill('0');
+  await p.evaluate(()=>{const r=document.getElementById('rateSlider');r.value='5';r.dispatchEvent(new Event('input',{bubbles:true}));r.dispatchEvent(new Event('change',{bubbles:true}));});
+  assert.equal(await p.evaluate(()=>s.rate),5);assert.equal(await p.locator('#total').innerText(),typed,'slider and field give the same result');
+  // Skjermbilde: 0 % vekst og 3 % prisvekst. Ingen tap i kroner, men lavere kjøpekraft.
+  await fillPlan({years:'40',rate:'0',inflation:'3',fee:'0'});
+  assert.match(await sec(),/^Det tilsvarer 297\s360 kr med dagens priser\. Sparingen har ikke holdt følge med prisveksten/);assert.doesNotMatch(await sec(),/tapt|mindre enn du har satt inn/);
+  for(const w of [375,390,430]){await p.setViewportSize({width:w,height:800});assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'no horizontal scroll at '+w);
+   assert.equal(await p.evaluate(()=>{const c=document.querySelector('.hero-result');return [...c.querySelectorAll('#total,#secondary,.metrics strong')].every(e=>e.getBoundingClientRect().right<=c.getBoundingClientRect().right+0.5);}),true,'result card text stays inside the card at '+w);}
+  await p.setViewportSize({width:1280,height:900});await fillPlan({start:'0',monthly:'2000',years:'10',rate:'5',inflation:'2,5',fee:'0,2'});
   assert.deepEqual(p.errors,[]);
 
   // Tusenskille: feltene viser grupperte tall, beregningen bruker samme tallverdi, og markøren hopper ikke mens brukeren skriver.
