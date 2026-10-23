@@ -36,6 +36,7 @@ Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/packa
 - `tests/validation.test.cjs`: feltgrenser og feltnavn, sparemål, uttaksfelt, delte lenker felt for felt, gamle lagrede planer og realistiske planer mot lukket formel.
 - `tests/results.test.cjs`: kontrolltilfellene A til D mot en uavhengig månedsløkke, årsak til tap (kostnader, børsfall), kjøpekraft, lange perioder og forskjellen mellom innskudd ved månedsslutt og månedsstart.
 - `tests/band.test.cjs`: utfallsrommet for indeksfond mot Finans Norges formel, med lukket formel og egen løkke.
+- `tests/roundtrip-browser.cjs`: hele planen beholdes til og fra «Spør om sparing», med lenke og tilbakeknapp; endringer i veilederen går til riktig felt; delte lenker vinner.
 - `tests/meaning.test.cjs`: forklaringene følger tallene (0 % rente, 0 % prisvekst, negativ avkastning, fallende prisnivå, løpende innbetalinger), spareformen gjettes aldri og endrer ingen tall.
 - `tests/startflyt-browser.cjs` og `tests/spareform-browser.cjs`: startflyt, tomme felt, spareform, forklaringen ved resultatet og kroner mot kjøpekraft i grafen.
 - `tests/input-browser.cjs`: nettleserflyt med ugyldige tall (krever playwright): blokkert deling, lagring og eksport med fokus på feltet, dempede resultater, delte lenker, sparemål, uttak og gamle lagrede planer.
@@ -84,6 +85,8 @@ Grafen kan vise beløpet i kroner, kjøpekraften i dagens kroner, eller begge. I
 ## Lagring og deling
 
 Planer lagres lokalt i nettleseren under `sv-scenarios`. En delt lenke inneholder skjemaverdiene og visningsnivået, men ikke andre lagrede planer. Når en lenke åpnes, kontrolleres hvert felt for seg. Ugyldige felt får standardverdi, gyldige beholdes, og brukeren får beskjed om hvilke felt som er endret. Lagrede planer kontrolleres på samme måte når de åpnes.
+
+Når brukeren går fra kalkulatoren til «Spør om sparing», lagres hele planen i fanens `sessionStorage` (`sv-working-plan-v1`). Kommer brukeren tilbake i samme fane, hentes planen tilbake og kontrolleres som en lagret plan. Bare alder, sparetid og risikovalg som er endret i veilederen, legges oppå; sparetiden går til sparemålets periode når sparemål var åpent. En delt lenke vinner alltid over planen i fanen. Planen forsvinner når fanen lukkes, og fjernes når brukeren går tilbake til startskjermen.
 
 Grensene for alle tallfelt står i én oversikt i `dist/engine.js`. Deling, lagring og eksport kontrollerer alle felt som følger med planen og beregningen i aktiv modul (sparing, sparemål eller uttak). Ved feil flyttes fokus til feltet, og feltet kobles til feilmeldingen med `aria-describedby`. Ingen av beregningene sendes til en kalkulatortjener. Nettstedets driftsleverandør kan behandle vanlig trafikkmetadata.
 

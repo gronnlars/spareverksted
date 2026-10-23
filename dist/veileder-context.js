@@ -25,12 +25,23 @@ function fromCalculator(state,started,previous){
  out.horizons={};return clean(out);
 }
 function forTopic(context,id){const c=clean(context),p={...c.profile};if(Object.hasOwn(c.horizons,id))p.years=c.horizons[id];else if(id==='children')delete p.years;return p;}
-function calculatorPatch(context,hasExplicitPlan){
- const p=clean(context).profile,patch={};if(hasExplicitPlan)return patch;
- if(p.age!==undefined){patch.userAge=p.age;patch.ageKnown=true;}
- if(p.years!==undefined)patch.years=p.years;
- if(p.risk){patch.stress=p.risk;patch.riskChosen=true;}
+// onlyGuide: bare opplysninger brukeren har endret i veilederen. Brukes når hele planen hentes tilbake.
+// Sparetiden går tilbake til feltet den kom fra: sparemålets periode når sparemål var åpent.
+function calculatorPatch(context,hasExplicitPlan,{onlyGuide=false,page='calculator'}={}){
+ const c=clean(context),p=c.profile,patch={};if(hasExplicitPlan)return patch;
+ const use=k=>p[k]!==undefined&&(!onlyGuide||c.origins[k]==='guide');
+ if(use('age')){patch.userAge=p.age;patch.ageKnown=true;}
+ if(use('years'))patch[page==='dreams'?'dreamYears':'years']=p.years;
+ if(use('risk')){patch.stress=p.risk;patch.riskChosen=true;}
  return patch;
 }
-const api={KEY,empty,clean,read,write,clear,fromCalculator,forTopic,calculatorPatch};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareContext=api;
+// Hele arbeidsplanen i samme fane, slik at en tur til «Spør om sparing» ikke endrer tallene.
+// Bare sessionStorage: forsvinner når fanen lukkes, og følger aldri med delte lenker.
+const PLAN_KEY='sv-working-plan-v1';
+function writePlan(storage,state,mode,view){try{storage.setItem(PLAN_KEY,JSON.stringify({state,mode,view}));return true;}catch{return false;}}
+function clearPlan(storage){try{storage.removeItem(PLAN_KEY);}catch{}}
+function readPlan(storage){try{const d=JSON.parse(storage.getItem(PLAN_KEY));if(!d||typeof d!=='object'||!d.state||typeof d.state!=='object'||Array.isArray(d.state))return null;
+ const v=d.view&&typeof d.view==='object'?d.view:{};
+ return {state:d.state,mode:d.mode==='goal'?'goal':'explore',view:{showBank:v.showBank===true,showRange:v.showRange===true,showGoal:v.showGoal===true,both:v.both===true}};}catch{return null;}}
+const api={KEY,PLAN_KEY,writePlan,readPlan,clearPlan,empty,clean,read,write,clear,fromCalculator,forTopic,calculatorPatch};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareContext=api;
 })(typeof window!=='undefined'?window:globalThis);
