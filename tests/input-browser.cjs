@@ -160,7 +160,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // Dagens kroner: tap i kroner omtales som omregnet, og lavere kjøpekraft kalles ikke tap.
   await p.locator('#rate').fill('0');await p.evaluate(()=>{const r=document.getElementById('real');r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));r.dispatchEvent(new Event('input',{bubbles:true}));});
   assert.equal(await p.evaluate(()=>s.real),true);
-  assert.match(await p.locator('#gainLabel').innerText(),/^Tapt kjøpekraft$/,'today-kroner view measures the gain in purchasing power');assert.match(await p.locator('#secondary').innerText(),/Beløpet er i kroner, ikke justert for prisvekst/);
+  assert.match(await p.locator('#gainLabel').innerText(),/^Samlet tap i dagens kroner$/,'a loss in kroner plus price growth is not called only lost purchasing power');assert.match(await p.locator('#secondary').innerText(),/Det samlede tapet består av både tapet i kroner og prisveksten\./);assert.match(await p.locator('#secondary').innerText(),/Beløpet er i kroner, ikke justert for prisvekst/);
   // Uavhengig kontroll: 2 000 kr i 10 år, 2 % vekst, 0,2 % kostnad, 2,5 % prisvekst gir 262 492 kr, mer enn 240 000 kr innbetalt,
   // men 271 948 kr er innskuddene justert for prisvekst. Gapet er 7 387 kr i dagens kroner.
   await p.evaluate(()=>{for(let d=document.getElementById('inflation').closest('details');d;d=d.parentElement?.closest('details'))d.open=true;});await p.locator('#inflation').fill('2,5');await p.locator('#fee').fill('0,2');
@@ -209,7 +209,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.equal(await metric('#gain'),-21880);assert.match(await p.locator('#gainLabel').innerText(),/^Tapt kjøpekraft$/);
   assert.match(await p.locator('#paidLabel').innerText(),/Innskudd i dagens kroner/);assert(await p.locator('#paidNote').isHidden(),'no note when the amounts are equal');
   assert.match(await sec(),/Pengene har ikke økt i kroner, og har derfor ikke holdt følge med prisveksten\. Målt i dagens kroner er verdien 21\s880 kr lavere enn innskuddene/);
-  assert.doesNotMatch(await sec(),/økt i verdi|tapt [\d\s]+ kr av pengene/,'standing still in kroner is not growth and not a loss in kroner');
+  assert.doesNotMatch(await sec(),/økt i verdi|tapt [\d\s]+ kr av pengene|samlede tapet/,'standing still in kroner is not growth and not a loss in kroner');
   assert.equal(await p.evaluate(()=>rows[0].paid),100000);assert.equal(Math.round(await p.evaluate(()=>rows.at(-1).paid)),100000,'chart deposit line stays at 100 000 in today kroner');
   // Bankkonto, 0,2 % rente: 102 018 kr på kontoen, 79 696 kr i dagens kroner.
   await p.locator('#rate').fill('0,2');assert.equal(await metric('#total'),79696);assert.equal(await metric('#paid'),100000);assert.equal(await metric('#gain'),-20304);
