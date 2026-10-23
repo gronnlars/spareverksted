@@ -16,8 +16,18 @@
  }
  jump.onclick=()=>{if(hero.getBoundingClientRect().bottom<=0)go(fields());else go(hero);};
  get('seeGraph').onclick=()=>{get('graphTab').click();go(get('chartPanel'));};
+ // A completed mobile start guide leads to the result, rather than asking users to pass their inputs again.
+ function showCompletedPlan(){
+  if(wizardActive||!matchMedia('(max-width:760px)').matches)return;
+  const target=s.activePage==='dreams'?get('dreamSummary'):hero;
+  if(target&&!target.hasAttribute('tabindex'))target.tabIndex=-1;
+  go(target);
+ }
+ get('journeyForm').addEventListener('submit',showCompletedPlan);
+ get('exampleJourney').addEventListener('click',showCompletedPlan);
  document.addEventListener('click',event=>{
   if(event.target.closest('[data-edit-fields]'))go(fields());
+  if(event.target.closest('[data-show-result]')&&!blockIfInvalid('Rett feltet før du ser resultatet.'))go(hero);
   const link=event.target.closest('.site-header a[href="index.html"]');
   if(link&&link.id!=='brandHome'&&!wizardActive){event.preventDefault();setPage('calculator');go(fields());}
  });
