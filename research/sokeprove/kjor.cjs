@@ -9,17 +9,7 @@ const {motorer}=lag({forstyrr:!!arg('forstyrr'),motorer:arg('motorer')?String(ar
 const filer=sett==='begge'?['utvikling','holdout']:[sett];
 const cases=filer.flatMap(f=>JSON.parse(fs.readFileSync(path.join(__dirname,'testsett',f+'.json'),'utf8')).cases);
 const sp=c=>c.repeat?c.q.repeat(c.repeat):c.q;
-function klass(c,r){
- const f=c.f||[],ok=c.ok||[],nf=c.nf||[],liste=[r.first,...r.others].filter(Boolean);
- if(c.soft){
-  if(r.first&&nf.includes(r.first))return 'WD';
-  const dekket=(c.also||[]).every(x=>liste.includes(x));
-  return dekket?'soft-dekket':'soft-mangler';
- }
- if(c.none){if(!r.first)return r.kind==='choices'?'FS':'CR';return 'WD';}
- if(r.first){if(nf.includes(r.first))return 'WD';if(f.includes(r.first))return 'RF';if(ok.includes(r.first))return 'RFok';return 'WD';}
- return liste.some(x=>f.includes(x)||ok.includes(x))?'RS':'MISS';
-}
+const {klass}=require('./klassifiser.cjs');
 const ut=cases.map(c=>({c,res:Object.fromEntries(motorer.map(m=>{const r=m.search(sp(c));return [m.navn,{...r,k:klass(c,r)}];}))}));
 const nav=motorer.map(m=>m.navn);
 const tell={};for(const n of nav){tell[n]={};for(const u of ut){const k=u.res[n].k;tell[n][k]=(tell[n][k]||0)+1;}}

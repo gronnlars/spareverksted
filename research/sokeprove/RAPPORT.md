@@ -141,6 +141,9 @@ Utfallene er telt hver for seg, slik at «riktig førstevalg» ikke blandes med 
 | Riktig avvisning av 6 | 6 | 6 | 5 | 6 |
 | Skjønnstilfeller der forslagene dekker det forventede, av 5 | 2 | 2 | 2 | 3 |
 
+
+**Slik telles (avklaring av 32/29 mot 33/30).** Det er to tellinger av samme kjøring. «Streng» teller bare riktig førstevalg (RF): holdout 32 for #54 og 29 for kandidaten, utvikling 55 og 59. «Inkl. akseptabelt» legger til førstevalg som er akseptable, men ikke det eksakte dokumentet (RFok): holdout 33 og 30, utvikling 59 og 60. Tabellene i denne rapporten bruker «inkl. akseptabelt». Jeg oppga først den strenge og så den utvidede uten å si det. Ingenting er endret i kandidaten eller i testsettene etter holdout. Rådata ligger i `resultater/utvikling.json` og `resultater/holdout.json`. `node oppsummer.cjs` skriver begge tellingene, og `node oppsummer.cjs --sjekk` feiler hvis tabellene her avviker fra rådataene.
+
 Tolkning:
 - Dagens søk taper mest på «ingen treff» (skrivefeil og særskriving). Det er årsaken til feilen du så.
 - #54 retter dette og er best på holdout. Feilene er fem tilfeller der ordet, eller delene av det, inneholder en kjent stamme: tre skrivefeil og to særskrivinger (se 1 og 7).

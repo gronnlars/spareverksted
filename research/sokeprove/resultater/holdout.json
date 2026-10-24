@@ -1,0 +1,3956 @@
+[
+ {
+  "id": "h01",
+  "q": "Hva er en aksjesparekonto (ASK)?",
+  "group": "eksakt",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [
+     "q-fondskonto",
+     "q-ask-zero",
+     "q-ips-ask",
+     "q-kjopekraft"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h02",
+  "q": "ASK-konto",
+  "group": "eksakt",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [
+     "q-ips-ask",
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [
+     "q-ips-ask",
+     "q-ask-zero"
+    ],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [
+     "q-ips-ask",
+     "q-ask-zero",
+     "q-kjopekraft"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [
+     "q-ips-ask",
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h03",
+  "q": "hva betyr IKZ",
+  "group": "produktnavn",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-bsu-basics",
+     "q-kjopekraft",
+     "q-aksjesparekonto",
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h04",
+  "q": "investeringskonto",
+  "group": "produktnavn",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h05",
+  "q": "fondskonto eller aksjesparekonto",
+  "group": "sammenligning",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-fondskonto",
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-fondskonto",
+     "q-ips-ask"
+    ],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-fondskonto",
+     "q-ips-ask",
+     "funds"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-fondskonto"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-fondskonto"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-fondskonto"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-fondskonto"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-ask-zero",
+     "q-aksjesparekonto",
+     "q-fondskonto"
+    ],
+    "note": "likt rangert",
+    "k": "RS"
+   },
+   "ms-uten-hensikt": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-ask-zero",
+     "q-aksjesparekonto",
+     "q-fondskonto"
+    ],
+    "note": "likt rangert",
+    "k": "RS"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-fondskonto"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-fondskonto"
+    ],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h06",
+  "q": "Hva er forskjellen på aksjesparekonto og",
+  "group": "sammenligning",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-fondskonto",
+     "q-aksjesparekonto",
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-fondskonto",
+     "q-aksjesparekonto",
+     "q-ips-ask"
+    ],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-fondskonto",
+     "q-aksjesparekonto",
+     "q-ips-ask",
+     "q-kjopekraft"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-fondskonto",
+     "q-aksjesparekonto"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-fondskonto",
+     "q-aksjesparekonto"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-fondskonto",
+     "q-aksjesparekonto"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-fondskonto",
+     "q-aksjesparekonto"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-ask-zero",
+     "q-fondskonto",
+     "q-aksjesparekonto",
+     "q-ips-ask"
+    ],
+    "note": "likt rangert",
+    "k": "RS"
+   },
+   "ms-uten-hensikt": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-ask-zero",
+     "q-fondskonto",
+     "q-aksjesparekonto",
+     "q-ips-ask"
+    ],
+    "note": "likt rangert",
+    "k": "RS"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-fondskonto",
+     "q-aksjesparekonto"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-fondskonto",
+     "q-aksjesparekonto"
+    ],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h07",
+  "q": "ASK vs IKZ",
+  "group": "sammenligning",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-fondskonto",
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-fondskonto",
+     "q-ips-ask"
+    ],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [
+     "q-fondskonto",
+     "q-ips-ask",
+     "q-ask-zero"
+    ],
+    "k": "WD"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "q-ips-ask",
+     "q-ask-zero",
+     "q-fondskonto"
+    ],
+    "note": "likt rangert",
+    "k": "RS"
+   },
+   "ms-uten-hensikt": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "q-ask-zero",
+     "q-fondskonto",
+     "q-ips-ask"
+    ],
+    "note": "likt rangert",
+    "k": "RS"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h08",
+  "q": "Hva er inflasjon?",
+  "group": "eksakt",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [
+     "q-bsu-basics",
+     "q-fondskonto",
+     "q-aksjesparekonto",
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h09",
+  "q": "dagens kroner",
+  "group": "eksakt",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "note": "dagens kroner→dagens kroner",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h10",
+  "q": "pengene mister verdi",
+  "group": "eksakt",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "note": "mister verdi→mister verdi",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [
+     "funds"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [
+     "funds"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [
+     "funds"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [
+     "funds"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [
+     "funds"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [
+     "funds"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [
+     "funds"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [
+     "funds"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "note": "svakt treff bare i spørsmålstekst",
+    "k": "MISS"
+   }
+  }
+ },
+ {
+  "id": "h11",
+  "q": "boliglånet",
+  "group": "kontroll",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h12",
+  "q": "bolig lånet",
+  "group": "sammensatte",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   },
+   "pr54": {
+    "kind": "corrected",
+    "first": "mortgage",
+    "others": [],
+    "note": "bolig lånet→boliglånet",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [
+     "mortgage",
+     "q-bsu-basics"
+    ],
+    "k": "WD"
+   },
+   "ms-kandidat": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "RS"
+   },
+   "ms-uten-stemmer": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "RS"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "RS"
+   },
+   "ms-uten-byttet": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "RS"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [],
+    "k": "WD"
+   },
+   "ms-uten-hensikt": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "RS"
+   },
+   "ms-uten-negasjon": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "RS"
+   },
+   "ms-uten-uskarp": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "RS"
+   }
+  }
+ },
+ {
+  "id": "h13",
+  "q": "huslån",
+  "group": "kontroll",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h14",
+  "q": "hus lån",
+  "group": "sammensatte",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   },
+   "pr54": {
+    "kind": "corrected",
+    "first": "mortgage",
+    "others": [],
+    "note": "hus lån→huslån",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [
+     "student",
+     "bsu",
+     "children"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "student",
+     "buffer"
+    ],
+    "note": "samlebegrep",
+    "k": "RS"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h15",
+  "q": "boligløn",
+  "group": "skrivefeil",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   },
+   "pr54": {
+    "kind": "corrected",
+    "first": "mortgage",
+    "others": [],
+    "note": "boligløn→boliglån",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [
+     "mortgage"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-stemmer": {
+    "kind": "corrected",
+    "first": "mortgage",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [
+     "mortgage"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [
+     "mortgage"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [
+     "mortgage"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [
+     "mortgage"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [
+     "mortgage"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [
+     "mortgage"
+    ],
+    "k": "WD"
+   }
+  }
+ },
+ {
+  "id": "h17",
+  "q": "inflsjon",
+  "group": "skrivefeil",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   },
+   "pr54": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "note": "inflsjon→inflasjon",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   }
+  }
+ },
+ {
+  "id": "h18",
+  "q": "kjøpkraft",
+  "group": "skrivefeil",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   },
+   "pr54": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "note": "kjøpkraft→kjøpekraft",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   }
+  }
+ },
+ {
+  "id": "h19",
+  "q": "prisvekts",
+  "group": "skrivefeil",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   },
+   "pr54": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "note": "prisvekts→prisvekst",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "dym",
+    "first": null,
+    "others": [
+     "q-kjopekraft"
+    ],
+    "k": "RS"
+   },
+   "ms-uten-register": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "corrected",
+    "first": "q-kjopekraft",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h20",
+  "q": "fondkonto",
+  "group": "skrivefeil",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "funds",
+    "others": [],
+    "k": "WD"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "funds",
+    "others": [],
+    "note": "",
+    "k": "WD"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "corrected",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "corrected",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "corrected",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "corrected",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "corrected",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "corrected",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "corrected",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   }
+  }
+ },
+ {
+  "id": "h21",
+  "q": "akjsesparekonto",
+  "group": "skrivefeil",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   },
+   "pr54": {
+    "kind": "corrected",
+    "first": "q-aksjesparekonto",
+    "others": [
+     "q-ips-ask",
+     "q-ask-zero"
+    ],
+    "note": "akjsesparekonto→aksjesparekonto",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "dym",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "funds",
+     "q-ask-zero"
+    ],
+    "k": "RS"
+   },
+   "ms-uten-stemmer": {
+    "kind": "corrected",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "dym",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "funds",
+     "q-ask-zero"
+    ],
+    "k": "RS"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "funds",
+    "others": [
+     "q-aksjesparekonto"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-register": {
+    "kind": "dym",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "funds",
+     "q-ask-zero"
+    ],
+    "k": "RS"
+   },
+   "ms-uten-hensikt": {
+    "kind": "dym",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "funds",
+     "q-ask-zero"
+    ],
+    "k": "RS"
+   },
+   "ms-uten-negasjon": {
+    "kind": "dym",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "funds",
+     "q-ask-zero"
+    ],
+    "k": "RS"
+   },
+   "ms-uten-uskarp": {
+    "kind": "dym",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "funds",
+     "q-ask-zero"
+    ],
+    "k": "RS"
+   }
+  }
+ },
+ {
+  "id": "h22",
+  "q": "pensjonssparing",
+  "group": "kontroll",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "pension",
+    "others": [],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "pension",
+    "others": [],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "pension"
+    ],
+    "k": "WD"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "pension"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "pension"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "pension"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "pension"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "pension"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "pension"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "pension"
+    ],
+    "k": "WD"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "pension"
+    ],
+    "k": "WD"
+   }
+  }
+ },
+ {
+  "id": "h23",
+  "q": "pensjosn",
+  "group": "skrivefeil",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   },
+   "pr54": {
+    "kind": "corrected",
+    "first": "pension",
+    "others": [],
+    "note": "pensjosn→pensjon",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "pension",
+    "others": [
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "corrected",
+    "first": "pension",
+    "others": [
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "corrected",
+    "first": "pension",
+    "others": [
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "corrected",
+    "first": "pension",
+    "others": [
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "corrected",
+    "first": "pension",
+    "others": [
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "corrected",
+    "first": "pension",
+    "others": [
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "corrected",
+    "first": "pension",
+    "others": [
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "corrected",
+    "first": "pension",
+    "others": [
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   }
+  }
+ },
+ {
+  "id": "h24",
+  "q": "studielån",
+  "group": "kontroll",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h25",
+  "q": "studie lån",
+  "group": "sammensatte",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   },
+   "pr54": {
+    "kind": "corrected",
+    "first": "student",
+    "others": [],
+    "note": "studie lån→studielån",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "student",
+    "others": [
+     "bsu",
+     "children",
+     "mortgage"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "student",
+     "buffer"
+    ],
+    "note": "samlebegrep",
+    "k": "RS"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "student",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h26",
+  "q": "kredittkortgjeld",
+  "group": "kontroll",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h27",
+  "q": "buffer",
+  "group": "kontroll",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h28",
+  "q": "Hvor stor buffer trenger jeg",
+  "group": "kontroll",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [
+     "funds",
+     "pension",
+     "q-kjopekraft",
+     "student"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "buffer",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h29",
+  "q": "BSU eller ASK?",
+  "group": "flertydig",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [
+     "q-aksjesparekonto",
+     "q-bsu-basics",
+     "q-ips-ask",
+     "q-ask-zero"
+    ],
+    "k": "soft-dekket"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [
+     "q-aksjesparekonto",
+     "q-bsu-basics",
+     "q-ips-ask",
+     "q-ask-zero"
+    ],
+    "note": "",
+    "k": "soft-dekket"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "q-ask-zero",
+     "q-bsu-basics",
+     "q-aksjesparekonto",
+     "bsu"
+    ],
+    "k": "WD"
+   },
+   "ms-kandidat": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "q-bsu-basics",
+     "q-ips-ask",
+     "q-ask-zero",
+     "bsu"
+    ],
+    "note": "flere begreper, ingen sammenligning",
+    "k": "soft-dekket"
+   },
+   "ms-uten-stemmer": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "q-bsu-basics",
+     "q-ips-ask",
+     "q-ask-zero",
+     "bsu"
+    ],
+    "note": "flere begreper, ingen sammenligning",
+    "k": "soft-dekket"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "q-bsu-basics",
+     "q-ips-ask",
+     "q-ask-zero",
+     "bsu"
+    ],
+    "note": "flere begreper, ingen sammenligning",
+    "k": "soft-dekket"
+   },
+   "ms-uten-byttet": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "q-bsu-basics",
+     "q-ips-ask",
+     "q-ask-zero",
+     "bsu"
+    ],
+    "note": "flere begreper, ingen sammenligning",
+    "k": "soft-dekket"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "q-bsu-basics",
+    "others": [
+     "q-aksjesparekonto",
+     "q-ips-ask",
+     "q-ask-zero",
+     "bsu"
+    ],
+    "k": "soft-dekket"
+   },
+   "ms-uten-hensikt": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "q-bsu-basics",
+     "bsu",
+     "q-ips-ask",
+     "q-ask-zero"
+    ],
+    "note": "flere begreper, ingen sammenligning",
+    "k": "soft-dekket"
+   },
+   "ms-uten-negasjon": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "q-bsu-basics",
+     "q-ips-ask",
+     "q-ask-zero",
+     "bsu"
+    ],
+    "note": "flere begreper, ingen sammenligning",
+    "k": "soft-dekket"
+   },
+   "ms-uten-uskarp": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-aksjesparekonto",
+     "q-bsu-basics",
+     "q-ips-ask",
+     "q-ask-zero",
+     "bsu"
+    ],
+    "note": "flere begreper, ingen sammenligning",
+    "k": "soft-dekket"
+   }
+  }
+ },
+ {
+  "id": "h30",
+  "q": "IPS",
+  "group": "korte",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "pension",
+    "others": [
+     "q-ips-ask"
+    ],
+    "k": "RFok"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "pension",
+    "others": [
+     "q-ips-ask"
+    ],
+    "note": "",
+    "k": "RFok"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h31",
+  "q": "Hva er IPS?",
+  "group": "eksakt",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "q-kjopekraft",
+     "q-bsu-basics",
+     "q-fondskonto",
+     "q-aksjesparekonto"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h33",
+  "q": "tipset",
+  "group": "korte",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "pr54": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "note": "",
+    "k": "CR"
+   },
+   "ms-naiv": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-kandidat": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-stemmer": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-byttet": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-register": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-hensikt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-negasjon": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-uskarp": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   }
+  }
+ },
+ {
+  "id": "h35",
+  "q": "askeladden",
+  "group": "korte",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "pr54": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "note": "",
+    "k": "CR"
+   },
+   "ms-naiv": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-kandidat": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-stemmer": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-byttet": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-register": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-hensikt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-negasjon": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-uskarp": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   }
+  }
+ },
+ {
+  "id": "h36",
+  "q": "bilforsikring",
+  "group": "mangler",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "pr54": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "note": "",
+    "k": "CR"
+   },
+   "ms-naiv": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-kandidat": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-stemmer": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-byttet": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-register": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-hensikt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-negasjon": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-uskarp": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   }
+  }
+ },
+ {
+  "id": "h37",
+  "q": "hva koster en reise til Spania",
+  "group": "mangler",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "pr54": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "note": "",
+    "k": "CR"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-aksjesparekonto",
+     "q-ips-ask",
+     "children",
+     "pension"
+    ],
+    "k": "WD"
+   },
+   "ms-kandidat": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-stemmer": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-byttet": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-register": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-hensikt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-negasjon": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-uskarp": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   }
+  }
+ },
+ {
+  "id": "h38",
+  "q": "ETF",
+  "group": "flertydig",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "pr54": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "note": "",
+    "k": "soft-mangler"
+   },
+   "ms-naiv": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-kandidat": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-stemmer": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-byttet": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-register": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-hensikt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-negasjon": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-uskarp": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   }
+  }
+ },
+ {
+  "id": "h39",
+  "q": "BOLIG LÅN",
+  "group": "inndata",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   },
+   "pr54": {
+    "kind": "corrected",
+    "first": "mortgage",
+    "others": [],
+    "note": "bolig lån→boliglån",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [
+     "mortgage",
+     "q-bsu-basics",
+     "student",
+     "children"
+    ],
+    "k": "WD"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [
+     "bsu"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [
+     "bsu"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "student",
+     "buffer",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "RS"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [
+     "bsu"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "bsu",
+     "mortgage",
+     "q-bsu-basics"
+    ],
+    "note": "likt rangert",
+    "k": "RS"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [
+     "bsu"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [
+     "bsu"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [
+     "bsu"
+    ],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h40",
+  "q": "bolig  lån",
+  "group": "inndata",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "MISS"
+   },
+   "pr54": {
+    "kind": "corrected",
+    "first": "mortgage",
+    "others": [],
+    "note": "bolig lån→boliglån",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [
+     "mortgage",
+     "q-bsu-basics",
+     "student",
+     "children"
+    ],
+    "k": "WD"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [
+     "bsu"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [
+     "bsu"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "student",
+     "buffer",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "RS"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [
+     "bsu"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "bsu",
+     "mortgage",
+     "q-bsu-basics"
+    ],
+    "note": "likt rangert",
+    "k": "RS"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [
+     "bsu"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [
+     "bsu"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "mortgage",
+    "others": [
+     "bsu"
+    ],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h41",
+  "q": "Hva er FONDSKONTO?",
+  "group": "inndata",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero",
+     "q-kjopekraft",
+     "q-bsu-basics",
+     "q-aksjesparekonto"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h42",
+  "q": "ÆØÅ",
+  "group": "inndata",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "pr54": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "note": "",
+    "k": "CR"
+   },
+   "ms-naiv": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-kandidat": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-stemmer": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-byttet": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-register": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-hensikt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-negasjon": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-uskarp": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   }
+  }
+ },
+ {
+  "id": "h43",
+  "q": "1234567",
+  "group": "inndata",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "pr54": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "note": "",
+    "k": "CR"
+   },
+   "ms-naiv": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-kandidat": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-stemmer": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-byttet": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-register": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-hensikt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-negasjon": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   },
+   "ms-uten-uskarp": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "CR"
+   }
+  }
+ },
+ {
+  "id": "h44",
+  "q": "ASK ASK ASK ASK",
+  "group": "inndata",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [
+     "q-ips-ask",
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [
+     "q-ips-ask",
+     "q-ask-zero"
+    ],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [
+     "q-ips-ask",
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-register": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [
+     "q-ips-ask",
+     "q-ask-zero"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-aksjesparekonto",
+    "others": [],
+    "k": "RF"
+   }
+  }
+ },
+ {
+  "id": "h45",
+  "q": "Hva er ASK og IPS",
+  "group": "flertydig",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "pension",
+     "q-aksjesparekonto",
+     "q-ask-zero"
+    ],
+    "k": "soft-dekket"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "pension",
+     "q-aksjesparekonto",
+     "q-ask-zero"
+    ],
+    "note": "",
+    "k": "soft-dekket"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "q-aksjesparekonto",
+     "q-ask-zero",
+     "q-kjopekraft",
+     "q-bsu-basics"
+    ],
+    "k": "soft-dekket"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "q-aksjesparekonto"
+    ],
+    "k": "soft-dekket"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "q-aksjesparekonto"
+    ],
+    "k": "soft-dekket"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "q-aksjesparekonto"
+    ],
+    "k": "soft-dekket"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "q-aksjesparekonto"
+    ],
+    "k": "soft-dekket"
+   },
+   "ms-uten-register": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-ips-ask",
+     "q-aksjesparekonto",
+     "q-ask-zero"
+    ],
+    "note": "likt rangert",
+    "k": "soft-dekket"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "q-aksjesparekonto"
+    ],
+    "k": "soft-dekket"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "q-aksjesparekonto"
+    ],
+    "k": "soft-dekket"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-ips-ask",
+    "others": [
+     "q-aksjesparekonto"
+    ],
+    "k": "soft-dekket"
+   }
+  }
+ },
+ {
+  "id": "h46",
+  "q": "ikke ASK, men fondskonto",
+  "group": "negasjon",
+  "res": {
+   "idag": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-fondskonto",
+     "q-ips-ask"
+    ],
+    "k": "RF"
+   },
+   "pr54": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-aksjesparekonto",
+     "q-fondskonto",
+     "q-ips-ask"
+    ],
+    "note": "",
+    "k": "RF"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-aksjesparekonto",
+     "q-ask-zero",
+     "q-ips-ask",
+     "buffer"
+    ],
+    "k": "RFok"
+   },
+   "ms-kandidat": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RFok"
+   },
+   "ms-uten-stemmer": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RFok"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RFok"
+   },
+   "ms-uten-byttet": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RFok"
+   },
+   "ms-uten-register": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "q-fondskonto",
+     "q-aksjesparekonto",
+     "q-ask-zero",
+     "q-ips-ask"
+    ],
+    "note": "likt rangert",
+    "k": "RS"
+   },
+   "ms-uten-hensikt": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RFok"
+   },
+   "ms-uten-negasjon": {
+    "kind": "direct",
+    "first": "q-ask-zero",
+    "others": [
+     "q-fondskonto",
+     "q-aksjesparekonto"
+    ],
+    "k": "RF"
+   },
+   "ms-uten-uskarp": {
+    "kind": "direct",
+    "first": "q-fondskonto",
+    "others": [
+     "q-ask-zero"
+    ],
+    "k": "RFok"
+   }
+  }
+ },
+ {
+  "id": "h47",
+  "q": "gjeldsrådgivning",
+  "group": "sammensatte",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "pr54": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "note": "",
+    "k": "soft-mangler"
+   },
+   "ms-naiv": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-kandidat": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-stemmer": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-byttet": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-register": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-hensikt": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-negasjon": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "ms-uten-uskarp": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   }
+  }
+ },
+ {
+  "id": "h48",
+  "q": "bolig gjeld",
+  "group": "sammensatte",
+  "res": {
+   "idag": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "k": "soft-mangler"
+   },
+   "pr54": {
+    "kind": "none",
+    "first": null,
+    "others": [],
+    "note": "",
+    "k": "soft-mangler"
+   },
+   "ms-naiv": {
+    "kind": "direct",
+    "first": "bsu",
+    "others": [
+     "mortgage",
+     "buffer",
+     "q-bsu-basics"
+    ],
+    "k": "soft-dekket"
+   },
+   "ms-kandidat": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "student",
+     "buffer",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "soft-dekket"
+   },
+   "ms-uten-stemmer": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "student",
+     "buffer",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "soft-dekket"
+   },
+   "ms-uten-sammensatt": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "student",
+     "buffer",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "soft-dekket"
+   },
+   "ms-uten-byttet": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "student",
+     "buffer",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "soft-dekket"
+   },
+   "ms-uten-register": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "bsu",
+     "buffer",
+     "mortgage",
+     "q-bsu-basics"
+    ],
+    "note": "likt rangert",
+    "k": "soft-dekket"
+   },
+   "ms-uten-hensikt": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "student",
+     "buffer",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "soft-dekket"
+   },
+   "ms-uten-negasjon": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "student",
+     "buffer",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "soft-dekket"
+   },
+   "ms-uten-uskarp": {
+    "kind": "choices",
+    "first": null,
+    "others": [
+     "mortgage",
+     "student",
+     "buffer",
+     "bsu",
+     "q-bsu-basics"
+    ],
+    "note": "samlebegrep",
+    "k": "soft-dekket"
+   }
+  }
+ }
+]
