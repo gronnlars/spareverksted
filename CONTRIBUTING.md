@@ -9,7 +9,7 @@ Alle som skriver eller endrer tekst, også KI-verktøy, skal følge
 og Avansert, samt knapper, feilmeldinger, grafer og eksport.
 Beskriv hvilken uklarhet en tekstendring retter, og hvordan betydningen er kontrollert.
 
-1. Fork prosjektet og opprett en egen gren.
+1. Fork prosjektet og opprett en egen gren. Les BESLUTNINGER.md først: der står hva som er valgt, hva som er valgt bort og hvorfor. Legg til en ny oppføring når en viktig avveining endres.
 2. Kjør lokalt som beskrevet i README.
 3. Gjør en avgrenset endring og forklar hvordan den hjelper brukeren.
 4. Kjør begge testfilene med Node.js.
