@@ -23,7 +23,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // Startguiden gir brukerens egne beløp, men vekst, prisvekst og kostnad er fortsatt forhåndsutfylt.
   let note=await text(p,'#startNote');
   assert.doesNotMatch(note,/eksempeltall/,'tall fra startguiden er brukerens egne');
-  assert.equal(note,'Vekst, prisvekst og kostnad er forhåndsutfylt, ikke anbefalt eller beregnet fra svarene dine. På sparekonto: bruk kontoens rente og 0 % kostnad.');
+  assert.equal(note,'Vekst, prisvekst og kostnad er forhåndsutfylt, ikke anbefalt eller beregnet fra svarene dine. På sparekonto: velg renten du vil regne med gjennom hele perioden, og 0 % kostnad.');
 
   // 2. Risikovalget endrer aldri beregningen, og gjentas ikke under overskriften.
   const total=await text(p,'#total');
