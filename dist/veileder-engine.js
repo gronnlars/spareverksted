@@ -34,7 +34,7 @@ BROAD.boligsparing=['q-bsu-basics','bsu','mortgage'];
 // Fjern raden når svaret dekker spørsmålet. `covers` brukes av testen til å oppdage at hullet er lukket.
 const GAPS=[
  {id:'barnesparing-skatt',when:[/barn/,/skatt/],topics:['children'],near:['children'],label:'skatt på barnesparing',covers:/skatt/i},
- {id:'bsu-flytting',when:[/flytt/],topics:['bsu','q-bsu-basics'],near:['q-bsu-basics'],label:'BSU når du flytter',covers:/flytt/i},
+ {id:'bsu-flytting',when:[/flytt/,/\bbsu\b|boligsparing for ungdom/],topics:['bsu','q-bsu-basics'],near:['q-bsu-basics'],label:'BSU når du flytter',covers:/flytt/i},
  {id:'renters-rente',when:[/rente(?:rs?|s) ?rente/],topics:['funds','mortgage','pension'],near:['funds'],label:'renters rente',covers:/rente(?:rs?|s) ?rente/i}
 ];
 const GENERIC=['spare','sparer','sparing','sparingen','penger','pengene','økonomi','økonomien','råd','tips','hjelp'];

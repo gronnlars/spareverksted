@@ -70,7 +70,7 @@ Rett tema, men svaret besvarer ikke spørsmålet. Før sluttkontrollen åpnet s�
 | Hull (`GAPS`) | Søkene som rammes | Hvorfor |
 |---|---|---|
 | `barnesparing-skatt` | «kan jeg spare til barnet uten å bli skattlagt», «skatt på barnesparing» | Barnesvaret nevner ikke skatt |
-| `bsu-flytting` | «hva skjer med BSU hvis jeg flytter» | BSU-svarene sier ingenting om flytting |
+| `bsu-flytting` | «hva skjer med BSU hvis jeg flytter». Krever at spørsmålet nevner BSU (eller «boligsparing for ungdom»), så «jeg flytter og skal kjøpe bolig» ikke rammes | BSU-svarene sier ingenting om flytting |
 | `renters-rente` | «hvordan fungerer renters rente» | Ingen post forklarer renters rente |
 
 Slik lukkes et hull: skriv svaret, og fjern raden fra `GAPS`. Testen `veileder-sok-rettinger.test.cjs` feiler hvis svaret allerede nevner begrepet mens raden står igjen (`covers`), så hullet ikke blir hengende. Et hull rammer ikke ferdig formulerte spørsmål (kind `question`) og bare når alle treffene er blant temaene i raden. Å skrive svarene er innholdsarbeid og ligger hos spørsmålskøen.
