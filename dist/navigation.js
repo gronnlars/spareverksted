@@ -14,7 +14,13 @@
   if(jump.textContent!==text)jump.textContent=text;
   jump.setAttribute('aria-controls',above?'planInputs':'savingsResult');
  }
- jump.onclick=()=>{if(hero.getBoundingClientRect().bottom<=0)go(fields());else go(hero);};
+ jump.onclick=()=>{if(hero.getBoundingClientRect().bottom<=0)go(fields());else if(!blockIfInvalid('Rett feltet før du ser resultatet.'))go(hero);};
+ // Keep an incomplete field focused until click validation. Otherwise its blur error can move
+ // the button between pointerdown and pointerup in Firefox. The action still waits for click,
+ // so dragging away cancels it and keyboard activation keeps its normal behavior.
+ document.addEventListener('pointerdown',event=>{
+  if(event.target.closest('[data-show-result],#mobileResultButton')&&pendingKey())event.preventDefault();
+ });
  get('seeGraph').onclick=()=>{get('graphTab').click();go(get('chartPanel'));};
  // A completed mobile start guide leads to the result, rather than asking users to pass their inputs again.
  function showCompletedPlan(){
