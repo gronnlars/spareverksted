@@ -3,6 +3,12 @@
 Forslag, feilrapporter og pull requests er velkomne. Beskriv forventet resultat,
 faktisk resultat og hvordan feilen kan gjenskapes. Bruk oppdiktede tall.
 
+Les [BESLUTNINGER.md](BESLUTNINGER.md) før du foreslår større endringer.
+Alle som skriver eller endrer tekst, også KI-verktøy, skal følge
+[SPRAKREGLER.md](SPRAKREGLER.md). Standarden gjelder nivåene Enkel, Utforsk
+og Avansert, samt knapper, feilmeldinger, grafer og eksport.
+Beskriv hvilken uklarhet en tekstendring retter, og hvordan betydningen er kontrollert.
+
 1. Fork prosjektet og opprett en egen gren.
 2. Kjør lokalt som beskrevet i README.
 3. Gjør en avgrenset endring og forklar hvordan den hjelper brukeren.
