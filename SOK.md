@@ -12,7 +12,7 @@ Fem utfall, og ingen av dem skal late som noe annet enn det er:
 |---|---|---|
 | Direkte svar (`answer`) | Entydig treff på et registrert navn, et ferdig spørsmål eller et ord med én eier | Svaret åpnes, med begrunnelse i statusfeltet |
 | Valg (`choose`) | Like gode treff i ulike svarfamilier | Ingenting åpnes. Brukeren velger |
-| Forslag (`suggest`) | Skrivefeil, bredt ord («lån», «skatt») eller usikkert treff | «Mente du …?» eller merkede forslag. Ingenting åpnes |
+| Forslag (`suggest`) | Skrivefeil, bredt ord («lån», «skatt») eller usikkert treff | «Mente du» eller merkede forslag. Ingenting åpnes |
 | Nekting (`negated`) | Brukeren avviser et tema («Jeg vil ikke ha fond») | Ingenting åpnes. Nektingen nevnes. Nærmeste temaer vises som nærmeste, ikke som svar |
 | Ingen treff (`none`) | Innholdet dekker det ikke | Ærlig beskjed og temavelger |
 
@@ -51,12 +51,12 @@ Ikke testet: iPhone Safari, VoiceOver, skjermleser, zoom 200 og 400 %, brukertes
 Rettet i denne omgangen:
 - «fonds konto», «fond konto» og «aksje spare konto» ga fond-svaret, mens «fondskonto» og «aksjesparekonto» ga ASK. Nå gir alle samme svar. «individuell pensjons sparing» gir nå IPS først.
 - «Jeg vil ikke spare i aksjer» og «hva er best bortsett fra fond» ble svart på som vanlige ønsker om fond. De gir nå nekting.
-- `tests/veileder-browser.cjs` feilet i omtrent hver tredje kjøring, også på main, fordi `pick()` leste siden før den var lastet. Nå venter den på elementet. Seks av seks kjøringer ok etter rettingen. Før rettingen feilet ett av fire forsøk.
+- `tests/veileder-browser.cjs` feilet i 4 av 7 kjøringer før rettingen, også uten mine søkeendringer, fordi `pick()` leste siden før den var lastet. Nå venter den på elementet. Seks av seks kjøringer ok etter rettingen. Det er et lite utvalg, og flakiness kan komme tilbake.
 
 Kjente begrensninger i søket:
 - Nekting er bare testet på korte setninger. «Jeg vil ha fond, men ikke aksjer» behandles som fond med en notert nekting av «aksjer».
 - Nekting av et ord uten eget tema (f.eks. «ikke betalt») gjør ingenting, og det er med vilje.
-- Tekstene «Du skriver (ordet) med nekting …» er ikke godkjent av Lars.
+- Tekstene «Du skriver (ordet) med nekting» er ikke godkjent av Lars.
 - «hvordan fungerer renters rente» gir forslag på boliglån og fond. Ingen post forklarer renters rente.
 
 Innholdshull som søket ikke kan rette (rett tema, men svaret besvarer ikke spørsmålet). Gis videre til spørsmålskøen:
