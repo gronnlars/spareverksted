@@ -8,13 +8,13 @@ const A={
  nextReview:'februar 2027',
  // Brukskonto: SSB har ingen egen serie for brukskontorente. 0 % er et regneeksempel, ikke en statistikk.
  checking:{rate:0,fee:0,
-  note:'Renten 0 % er et regneeksempel for brukskonto. Bruk kontoens rente hvis du kjenner den.',
+  note:'Renten 0 % er et regneeksempel for brukskonto. Den valgte renten brukes gjennom hele regneeksempelet. Du kan skrive inn en annen rente.',
   undo:'Rente satt til 0 % og kostnad til 0 %.'},
  // Sparekonto: gjennomsnittlig rente på ikke-bundne innskudd for husholdninger. Et gjennomsnitt for hele
  // beholdningen ved månedsslutt, ikke den beste sparekontoen, og ikke bare sparekontoer.
  savings:{rate:2.87,fee:0,period:'august 2026',
   source:{name:'SSB tabell 11018: renter på ikke-bundne innskudd, husholdninger',url:'https://www.ssb.no/statbank/table/11018/',updated:'25.09.2026'},
-  note:'Renten 2,87 % er gjennomsnittet for husholdningers innskudd uten binding (SSB, august 2026), ikke beste tilgjengelige rente. Bruk kontoens rente hvis du kjenner den.',
+  note:'Renten 2,87 % er gjennomsnittet for husholdningers innskudd uten binding (SSB, august 2026), ikke beste tilgjengelige rente. Den valgte renten brukes gjennom hele regneeksempelet. Dagens kontorente eller et datert SSB-gjennomsnitt er ingen prognose for flere tiår. Du kan skrive inn en annen rente.',
   undo:'Rente satt til 2,87 % og kostnad til 0 %.'},
  // Indeksfond: Finans Norges avtale om avkastningsprognoser, revidert 04.02.2026, gjeldende fra 11.02.2026.
  // Aksjer: 4,5 % forventet realavkastning (geometrisk) og 16 % årlig standardavvik. Formelverket (vedlegg 2)

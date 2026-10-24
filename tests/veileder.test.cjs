@@ -34,5 +34,17 @@ for(const t of V.topics){
   const a=V.answer(t.id,{age,years,buffer});assert.ok(a.parts.length);assert.ok(a.sources.length);assert.equal(new Set(a.sources.map(s=>s.id)).size,a.sources.length);for(const s of a.sources)assert.ok(s.url.startsWith('https://'));
  }
 }
+// «Hva krever det av deg?»: teksten om å spare i stedet for å betale ekstra hører bare til temaer med et lån.
+// Fond og pensjon skal ikke nevne avdrag eller nedbetaling. Studielån skal ikke bruke boliglånsordet «avdrag».
+{const effort=(id,p)=>V.answer(id,p).parts.find(x=>x.title==='Hva krever det av deg?')?.text||'';
+ for(const discipline of ['','flexible','automatic'])for(const debt of ['','no','yes']){
+  const p={discipline,debt};
+  assert.ok(effort('mortgage',p),'boliglån har teksten');
+  if(discipline!=='automatic')assert.match(effort('mortgage',p),/ekstra avdrag/);
+  for(const id of ['funds','pension'])assert.doesNotMatch(effort(id,p),/avdrag|nedbetal|lån/i,id+' nevner lån: '+effort(id,p));
+  assert.doesNotMatch(effort('student',p),/avdrag/i,'studielån bruker boliglånsord');
+  if(discipline!=='automatic')assert.match(effort('student',p),/studielånet/);
+  for(const id of ['children','buffer','bsu'])assert.equal(effort(id,p),'',id+' skal ikke ha teksten');
+ }}
 console.log('Veileder: routing, safety boundaries, validation and 588 profile combinations passed.');
 

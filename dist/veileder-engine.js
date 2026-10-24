@@ -10,19 +10,19 @@ const sources={
  fixed:['Husbanken: ekstra innbetaling og fastrente','https://husbanken.no/kunde-i-husbanken/ekstraordinaer-betaling-paa-laan/'],
  student:['Lånekassen: renter og gebyrer','https://lanekassen.no/nb-NO/gjeld-og-betaling/renter-og-gebyrer/'],
  grant:['Lånekassen: omgjøring til stipend','https://lanekassen.no/nb-NO/stipend-og-lan/omgjoring-av-basislan/'],
- child:['Statsforvalteren: vergemål for mindreårige','https://www.statsforvalteren.no/contentassets/7168664f484549a0a1796764559441e0/vergemal-for-mindrearige---17.02.2023.pdf'],
- adult:['Statsforvalteren: barns råderett over egen økonomi',F.data.adultAge.source],
+ child:['Statsforvalteren: forvaltning av finansielle eiendeler for mindreårige (2026)','https://www.statsforvalteren.no/siteassets/fm-oslo-og-viken/vergemal/informasjonsskriv/nr.-2-forvaltning-finansielle-eiendeler-og-bruk-av-kapital-for-mindrearig-2026.pdf'],
+ adult:['Vergemålsloven § 8: personer under 18 år er mindreårige (lovvedtak, Stortinget)',F.data.adultAge.source],
  nav:['Nav: økonomi- og gjeldsrådgivning','https://www.nav.no/okonomi-gjeld'],
  bsu:['Skatteetaten: BSU','https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/'],
  risk:['Finanstilsynet: informasjon om verdipapirfond','https://www.finanstilsynet.no/forbrukerinformasjon/verdipapirforetak-verdipapirfond-og-alternative-investeringsfond/']
 };
 const topics=[
- {id:'mortgage',title:'Boliglån eller sparing',words:[/boligl[aå]n/,/husl[aå]n/,/fastrente/,/avdrag/,/nedbetal.*l[aå]n/],questions:['Bør jeg betale ned boliglånet eller spare i fond?','Hva hvis jeg har fastrente?','Er lavere gjeld viktigere enn høyere avkastning?','Kan jeg spare og betale ekstra avdrag samtidig?']},
+ {id:'mortgage',title:'Boliglån eller sparing',words:[/boligl[aå]n/,/husl[aå]n/,/fastrente/,/avdrag/,/nedbetal\w*\s+(?:av\s+)?(?:bolig|hus)?l[aå]n/,/betale ned (?:bolig|hus)?l[aå]n/],not:[/^(?!.*(?:ekstra|avdrag|nedbetal|betale ned)).*(?:fast(?:rente)? eller flytende|flytende eller fast)/],questions:['Bør jeg betale ned boliglånet eller spare i fond?','Hva hvis jeg har fastrente?','Er lavere gjeld viktigere enn høyere avkastning?','Kan jeg spare og betale ekstra avdrag samtidig?']},
  {id:'student',title:'Studielån',words:[/studiel[aå]n/,/l[aå]nekassen/,/stipend/,/student/],questions:['Bør jeg ta opp studielån selv om jeg har sparepenger?','Bør jeg investere studielånet?','Bør jeg betale ned studielånet raskere?','Kan sparing påvirke stipendet mitt?']},
  {id:'children',title:'Sparing til barn',words:[/barn/,/gavebrev/,/statsforvalter/],questions:['Bør jeg spare i mitt eller barnets navn?',F.expand('Hva skjer når barnet fyller {{adultAge}} år?'),'Kan sparepengene påvirke barnets stipend?','Bør barnas sparepenger stå i fond?']},
- {id:'buffer',title:'Buffer og dyr gjeld',words:[/buffer/,/kredittkort/,/forbruksl[aå]n/,/inkasso/,/regning/,/dyr gjeld/],questions:['Hvor stor buffer trenger jeg?','Bør jeg spare når jeg har kredittkortgjeld?','Hva gjør jeg hvis jeg ikke får betalt regningene?','Hvor bør bufferen stå?']},
- {id:'funds',title:'Sparekonto eller fond',words:[/fond/,/aksj/,/indeks/,/sparekonto/,/risiko/,/b[oø]rs/],questions:['Bør jeg velge sparekonto eller fond?','Hvor mye risiko bør jeg ta?','Hva hvis jeg trenger pengene om tre år?','Hvordan unngår jeg å selge i panikk?']},
- {id:'pension',title:'Sparing til pensjon',words:[/pensjon/,/uttak/,/ips\b/],questions:['Bør jeg redusere risiko før pensjon?','Må alle sparepengene ut av fond når jeg pensjoneres?','Hvordan planlegger jeg uttak over mange år?','Hva bør jeg sjekke før jeg velger pensjonssparing?']},
+ {id:'buffer',title:'Buffer og dyr gjeld',words:[/buffer/,/kredittkort/,/forbruksl[aå]n/,/inkasso/,/regning/,/dyr gjeld/,/uvente[td]|uforutsett|i tilfelle noe/],questions:['Hvor stor buffer trenger jeg?','Bør jeg spare når jeg har kredittkortgjeld?','Hva gjør jeg hvis jeg ikke får betalt regningene?','Hvor bør bufferen stå?']},
+ {id:'funds',title:'Sparekonto eller fond',words:[/fond/,/aksj(?!esparekonto)/,/indeks/,/(?<!aksje)sparekonto/,/risiko/,/b[oø]rs/,/\bi banken\b|bankkonto|bankinnskudd/,/trenger pengene|hvor bør (?:pengene|de) stå/],not:[/skattlagt|skattlegg|skattes\b|beskatt|skatt(?:en)? (?:på|av|ved|hvis|når)|unng[aå]r? (?:jeg )?skatt|formuesskatt/],questions:['Bør jeg velge sparekonto eller fond?','Hvor mye risiko bør jeg ta?','Hva hvis jeg trenger pengene om tre år?','Hvordan unngår jeg å selge i panikk?']},
+ {id:'pension',title:'Sparing til pensjon',words:[/pensjon/,/uttak/,/\bips\b/,/pensjonist|g[aå]r? av med pensjon/],not:[/skattlagt|skattlegg|skattes\b|beskatt|skatt(?:en)? (?:på|av|ved|hvis|når)|unng[aå]r? (?:jeg )?skatt|formuesskatt/],questions:['Bør jeg redusere risiko før pensjon?','Må alle sparepengene ut av fond når jeg pensjoneres?','Hvordan planlegger jeg uttak over mange år?','Hva bør jeg sjekke før jeg velger pensjonssparing?']},
  {id:'bsu',title:'BSU og boligkjøp',words:[/bsu/,/boligkj[oø]p/,/egenkapital/,/f[oø]rste bolig/],questions:['Bør jeg prioritere BSU?','Kan jeg få BSU-fradrag hvis jeg eier bolig?','Hva hvis jeg betaler lite skatt?','Bør egenkapital til bolig stå i fond?']}
 ];
 function findTopics(text){
@@ -31,7 +31,7 @@ function findTopics(text){
  if(!q.trim())return [];
  const exact=topics.filter(t=>t.questions.some(x=>normalize(x)===q)).map(t=>t.id);
  if(exact.length)return exact;
- return topics.map(t=>({id:t.id,score:t.words.reduce((n,re)=>n+(re.test(q)?1:0),0)})).filter(t=>t.score>0).sort((a,b)=>b.score-a.score).map(t=>t.id);
+ return topics.filter(t=>!(t.not||[]).some(re=>re.test(q))).map(t=>({id:t.id,score:t.words.reduce((n,re)=>n+(re.test(q)?1:0),0)})).filter(t=>t.score>0).sort((a,b)=>b.score-a.score).map(t=>t.id);
 }
 function number(v,min,max,name){if(v===''||v===undefined||v===null)return null; const n=Number(String(v).replace(',','.'));if(!Number.isFinite(n)||n<min||n>max)throw Error(name+' må være et tall mellom '+min+' og '+max+'.');return n;}
 function validate(p={}){
@@ -74,10 +74,10 @@ function answer(id,profile){
  if(p.income==='uncertain')add('Ta høyde for inntektsfall','Med usikker inntekt er tilgjengelige penger ekstra viktige. Velg et sparebeløp som også tåler svakere måneder uten ny dyr gjeld.',true);
  const base={
  mortgage:['Det kommer an på hva du trenger mest','Ekstra nedbetaling reduserer gjeld og framtidige renteutgifter. Fond kan gi høyere avkastning, men også tap. Penger du har betalt inn på boliglånet, er normalt ikke fritt tilgjengelige uten en ny avtale med banken.','mortgage','pension','fixed'],
- student:['Skill mellom trygghet og investering','Studielån kan gi rom i studentøkonomien, men er fortsatt gjeld. Å beholde en reserve på konto og å investere lånte penger i aksjefond er to forskjellige valg. Fondsverdien kan falle mens lånet består.','student','grant'],
- children:['Hvem skal eie pengene?','I barnets navn tilhører pengene barnet. I ditt navn beholder du råderetten, men pengene inngår i din økonomi. Arv, kreditorer og et eventuelt samlivsbrudd kan få betydning. Bruk tid på eierskapet før du velger spareprodukt.','child','adult','grant'],
+ student:['Skill mellom trygghet og investering','Studielån kan gi rom i studentøkonomien, men er fortsatt gjeld. Å beholde en reserve på konto og å investere lånte penger i aksjefond er to forskjellige valg. Faller fondet, blir lånet stående likevel.','student','grant'],
+ children:['Hvem skal eie pengene?','Sparer du i barnets navn, eier barnet pengene, og du kan ikke ta dem tilbake. Sparer du i ditt navn, bestemmer du selv, men pengene er dine: arv, kreditorer og et eventuelt samlivsbrudd kan få betydning. Velg eierskap før du velger konto eller fond.','child','adult','grant'],
  buffer:['Begynn med utgiftene dine','En buffer skal dekke uforutsette, nødvendige utgifter. Ta utgangspunkt i bolig, transport, forsørgeransvar og inntekt. Det finnes ikke ett riktig antall månedslønner for alle. En tilgjengelig sparekonto passer bedre til dette formålet enn aksjefond.','mortgage','nav'],
- funds:['Når trenger du pengene?','Sparekonto og aksjefond løser ulike behov. Konto gir mer forutsigbarhet. Et bredt aksjefond sprer risikoen mellom selskaper, men kan likevel falle mye. Se på samlede kostnader, også eventuelle plattformgebyrer.','funds','risk'],
+ funds:['Når trenger du pengene?','Sparekonto og aksjefond løser ulike behov. Saldoen på en sparekonto svinger ikke slik et aksjefond gjør, men kan øke i kroner og likevel kjøpe mindre hvis renten etter skatt er lavere enn prisveksten. Et bredt aksjefond eier mange selskaper, men kan likevel falle mye. Se på samlede kostnader, også eventuelle plattformgebyrer.','funds','risk'],
  pension:['Planlegg for uttakene, ikke bare pensjonsdagen','Mange reduserer risiko når uttakene nærmer seg. Det kan begrense faren for å måtte selge mye etter et børsfall. Samtidig kan deler av pengene ha lang tid igjen i markedet når pensjonen begynner.','pension','mortgage','funds'],
  bsu:['Sjekk vilkårene før du binder pengene','BSU kan være gunstig for boligsparing når du oppfyller vilkårene og betaler nok skatt til å bruke fradraget. Pengene er bundet til godkjente boligformål. Les reglene før du setter inn eller tar ut penger.','bsu']
  }[id];
@@ -85,22 +85,27 @@ function answer(id,profile){
  if(['mortgage','children','bsu'].includes(id))refs.push('funds');
  if(horizonRelevant(id)&&fundRelevant(id,p)){
  if(p.years===null)add('Dette mangler jeg','Oppgi når akkurat disse pengene skal brukes. Alder alene forteller ikke om aksjefond passer. Tidshorisonten gjelder pengene i dette spørsmålet, ikke nødvendigvis all sparingen din.');
- else if(p.years<F.value('fundMinYears'))add('Pengene skal brukes snart','Forbrukerrådet anbefaler minst {{fundMinYears}} års sparehorisont for aksjefond. Med kortere tid er det begrenset rom for å hente inn et fall. For et fast og viktig kjøp taler det for forutsigbarhet. Dette er en anbefaling, ikke en regel eller garanti.');
+ else if(p.years<F.value('fundMinYears'))add('Pengene skal brukes snart','Forbrukerrådet anbefaler minst {{fundMinYears}} års sparehorisont for aksjefond. Faller fondet tidlig, er det lite tid igjen til å hente det inn. Trenger du pengene til et fast og viktig kjøp, taler det for en mer forutsigbar plassering, som en sparekonto. Anbefalingen er ingen regel og ingen garanti.');
  else add('Lang tid hjelper, men er ikke nok alene','Forbrukerrådets anbefaling om minst {{fundMinYears}} år er ingen garanti for gevinst. Avklar hvor fast bruksdatoen er, hvor mye tap økonomien tåler, og om pengene kan stå gjennom en nedtur.');
  }
  if(p.risk==='low'&&fundRelevant(id,p))add('Uro teller også','Store verdifall kan gjøre en fondsplan vanskelig å følge. Vurder en mer forutsigbar plassering for penger som ikke tåler slike svingninger.');
- if(['mortgage','funds','student','pension'].includes(id))add('Hva krever det av deg?',p.discipline==='automatic'?'Et fast trekk kan gjøre det lettere å gjennomføre sparingen. Det fjerner hverken tapsrisiko eller behovet for å tilpasse beløpet når økonomien endrer seg.':'Hvis du velger sparing framfor ekstra avdrag, må pengene faktisk bli spart. Et automatisk trekk kan hjelpe. Hvis sparebeløpet ofte brukes opp, kan ekstra nedbetaling gi mer forutsigbar framdrift. Behold en buffer først.');
+ // Teksten om å spare i stedet for å betale ekstra gjelder bare temaer med et lån å betale ned.
+ const effort={mortgage:'Hvis du velger sparing framfor ekstra avdrag, må pengene faktisk bli spart. Et automatisk trekk kan hjelpe. Hvis sparebeløpet ofte brukes opp, kan ekstra nedbetaling gi mer forutsigbar framdrift. Behold en buffer først.',
+  student:'Hvis du velger sparing framfor ekstra innbetaling på studielånet, må pengene faktisk bli spart. Et automatisk trekk kan hjelpe. Hvis sparebeløpet ofte brukes opp, kan ekstra innbetaling gi mer forutsigbar framdrift. Behold en buffer først.',
+  funds:'En spareplan virker bare hvis den blir fulgt. Et automatisk trekk kan gjøre det lettere å spare jevnlig. Velg et beløp du klarer også i trangere måneder, og behold en buffer først.',
+  pension:'Pensjonssparing varer ofte i mange år. Et automatisk trekk kan gjøre det lettere å holde planen. Velg et beløp du klarer over tid, og behold en buffer først.'};
+ if(Object.hasOwn(effort,id))add('Hva krever det av deg?',p.discipline==='automatic'?'Et fast trekk kan gjøre det lettere å gjennomføre sparingen. Det fjerner hverken tapsrisiko eller behovet for å tilpasse beløpet når økonomien endrer seg.':effort[id]);
  if(id==='mortgage'){
- add('Sammenlign på samme grunnlag','Sammenlign spart rente etter virkningen av rentefradrag med fondsavkastning etter kostnader og skatt. En forventet fondsavkastning er usikker. En kombinasjon av sparing og ekstra avdrag kan også være aktuell.');
- add(p.fixed==='yes'?'Du har fastrente':'Har du fastrente?', 'Ved fastrente kan ekstra innbetaling utløse overkurs eller underkurs. Be banken regne ut kostnaden og forklare avtalen før du bestemmer deg. Ved flytende rente vil rentebesparelsen endre seg når renten endres.');
+ add('Sammenlign på samme grunnlag','Sammenlign renten du sparer, etter rentefradrag, med forventet fondsavkastning etter kostnader og skatt. Fondsavkastningen er usikker. En kombinasjon av sparing og ekstra avdrag kan også være aktuell.');
+ add(p.fixed==='yes'?'Du har fastrente':'Har du fastrente?', 'Betaler du ekstra mens renten er bundet, kan det gi overkurs eller underkurs. Overkurs betyr at du betaler bankens rentetap hvis rentene har falt. Underkurs betyr at banken kan godskrive deg en gevinst hvis rentene har steget. Be banken regne ut kostnaden og forklare avtalen før du bestemmer deg. Ved flytende rente endres rentebesparelsen når renten endres.');
  }
  if(id==='student'){
  add('Renter og stipend','Lånet er normalt rentefritt mens du får støtte til fulltidsutdanning. Andre studiesituasjoner kan ha andre regler. Inntekt, nettoformue og studieprogresjon påvirker om lån blir stipend. Sjekk vilkårene hos Lånekassen.');
  add('Før du låner mer eller betaler ekstra','Penger på konto og avkastning kan påvirke skatteoppgjøret som Lånekassen bruker. Lån reduserer normalt nettoformuen, så et lånebeløp på konto betyr ikke automatisk mindre stipend. Se også på betalingslettelser og eventuelle ordninger for gjeldssletting før ekstra nedbetaling.');
  }
  if(id==='children'){
- add('Råderett og forvaltning','Barnet får som hovedregel råderett ved {{adultAge}} år. Større finansielle eiendeler kan omfattes av Statsforvalterens forvaltning. Gavebrev og testament kan ha betydning. Avklar dagens regler og eventuelle unntak før store overføringer.');
- add('Når barnet blir student','Formue i barnets navn kan senere påvirke retten til stipend. Vurder eierskap, tid til bruk og barnets situasjon sammen. Et separat fond i ditt navn gjør ikke barnet til juridisk eier.');
+ add('Råderett og forvaltning','Fra {{adultAge}} år kan barnet som hovedregel bestemme over pengene selv. Et gavebrev eller testament kan si noe annet. Er formuen stor, forvalter Statsforvalteren den til barnet er myndig. Avklar dagens regler og eventuelle unntak før store overføringer.');
+ add('Når barnet blir student','Penger barnet eier, kan gi mindre stipend senere. Penger du eier, teller normalt ikke med for barnet. Vurder eierskap, tid til bruk og barnets situasjon sammen. Et eget fond i ditt navn gjør ikke barnet til eier.');
  }
  if(id==='pension')add('Få oversikt før du binder mer','Undersøk forventet pensjonsinntekt og behovet for egne uttak. Se på kostnader, skatteregler og binding før du velger pensjonsprodukter. Denne veilederen beregner ikke pensjonsrettigheter eller IPS-regler.');
  if(id==='bsu'){
