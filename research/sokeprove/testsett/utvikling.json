@@ -1,0 +1,717 @@
+{
+ "beskrivelse": "Utviklingssett. Håndskrevne forventninger, uavhengig av motor. Brukes til å stille inn kandidaten.",
+ "cases": [
+  {
+   "id": "d01",
+   "group": "eksakt",
+   "q": "ASK",
+   "f": [
+    "q-aksjesparekonto"
+   ],
+   "also": [
+    "q-ask-zero"
+   ]
+  },
+  {
+   "id": "d02",
+   "group": "eksakt",
+   "q": "aksjesparekonto",
+   "f": [
+    "q-aksjesparekonto"
+   ]
+  },
+  {
+   "id": "d03",
+   "group": "eksakt",
+   "q": "Hva betyr ASK?",
+   "f": [
+    "q-aksjesparekonto"
+   ],
+   "nf": [
+    "q-ask-zero"
+   ]
+  },
+  {
+   "id": "d04",
+   "group": "eksakt",
+   "q": "hva er en aksjesparekonto",
+   "f": [
+    "q-aksjesparekonto"
+   ]
+  },
+  {
+   "id": "d05",
+   "group": "eksakt",
+   "q": "Hva er kjøpekraft?",
+   "f": [
+    "q-kjopekraft"
+   ]
+  },
+  {
+   "id": "d06",
+   "group": "eksakt",
+   "q": "prisvekst",
+   "f": [
+    "q-kjopekraft"
+   ]
+  },
+  {
+   "id": "d07",
+   "group": "eksakt",
+   "q": "inflasjon",
+   "f": [
+    "q-kjopekraft"
+   ]
+  },
+  {
+   "id": "d08",
+   "group": "eksakt",
+   "q": "Hva er BSU?",
+   "f": [
+    "q-bsu-basics"
+   ]
+  },
+  {
+   "id": "d10",
+   "group": "produktnavn",
+   "q": "Hva er IKZ?",
+   "f": [
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "d11",
+   "group": "produktnavn",
+   "q": "Hva er Investeringskonto Zero?",
+   "f": [
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "d12",
+   "group": "produktnavn",
+   "q": "Investeringskonto Zero",
+   "f": [
+    "q-fondskonto"
+   ],
+   "ok": [
+    "q-ask-zero"
+   ]
+  },
+  {
+   "id": "d13",
+   "group": "produktnavn",
+   "q": "kapitalforsikring",
+   "f": [
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "d14",
+   "group": "produktnavn",
+   "q": "unit link",
+   "f": [
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "d15",
+   "group": "produktnavn",
+   "q": "Zero",
+   "f": [
+    "q-fondskonto"
+   ],
+   "ok": [
+    "q-ask-zero"
+   ]
+  },
+  {
+   "id": "d20",
+   "group": "sammenligning",
+   "q": "ASK eller fondskonto?",
+   "f": [
+    "q-ask-zero"
+   ],
+   "nf": [
+    "q-aksjesparekonto",
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "d21",
+   "group": "sammenligning",
+   "q": "ASK eller Zero?",
+   "f": [
+    "q-ask-zero"
+   ],
+   "nf": [
+    "q-aksjesparekonto",
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "d22",
+   "group": "sammenligning",
+   "q": "Hva er forskjellen på ASK og fondskonto?",
+   "f": [
+    "q-ask-zero"
+   ],
+   "nf": [
+    "q-aksjesparekonto",
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "d23",
+   "group": "sammenligning",
+   "q": "aksjesparekonto vs fondskonto",
+   "f": [
+    "q-ask-zero"
+   ],
+   "nf": [
+    "q-aksjesparekonto",
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "d24",
+   "group": "sammenligning",
+   "q": "IPS eller ASK?",
+   "f": [
+    "q-ips-ask"
+   ]
+  },
+  {
+   "id": "d25",
+   "group": "sammenligning",
+   "q": "Hva er forskjellen på IPS og ASK",
+   "f": [
+    "q-ips-ask"
+   ]
+  },
+  {
+   "id": "d26",
+   "group": "sammenligning",
+   "q": "sammenlign ASK og IKZ",
+   "f": [
+    "q-ask-zero"
+   ],
+   "nf": [
+    "q-aksjesparekonto",
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "d30",
+   "group": "begrepsskille",
+   "q": "fondskonto",
+   "f": [
+    "q-fondskonto"
+   ],
+   "nf": [
+    "funds"
+   ]
+  },
+  {
+   "id": "d31",
+   "group": "begrepsskille",
+   "q": "fond",
+   "f": [
+    "funds"
+   ],
+   "nf": [
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "d32",
+   "group": "begrepsskille",
+   "q": "sparekonto",
+   "f": [
+    "funds"
+   ]
+  },
+  {
+   "id": "d33",
+   "group": "begrepsskille",
+   "q": "indeksfond",
+   "f": [
+    "funds"
+   ]
+  },
+  {
+   "id": "d34",
+   "group": "begrepsskille",
+   "q": "aksjefond",
+   "f": [
+    "funds"
+   ],
+   "nf": [
+    "q-aksjesparekonto"
+   ]
+  },
+  {
+   "id": "d35",
+   "group": "begrepsskille",
+   "q": "Hva er forskjellen på sparekonto og fond?",
+   "f": [
+    "funds"
+   ]
+  },
+  {
+   "id": "d36",
+   "group": "begrepsskille",
+   "q": "aksjer",
+   "f": [
+    "funds"
+   ],
+   "nf": [
+    "q-aksjesparekonto"
+   ]
+  },
+  {
+   "id": "d40",
+   "group": "kontroll",
+   "q": "boliglån",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "d41",
+   "group": "kontroll",
+   "q": "Bør jeg betale ned boliglånet?",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "d42",
+   "group": "kontroll",
+   "q": "boliglånet mitt",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "d43",
+   "group": "kontroll",
+   "q": "fastrente",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "d50",
+   "group": "sammensatte",
+   "q": "bolig lån",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "d51",
+   "group": "sammensatte",
+   "q": "hva er bolig lån",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "d52",
+   "group": "sammensatte",
+   "q": "gjeld rådgivning",
+   "soft": true,
+   "also": [
+    "buffer"
+   ],
+   "note": "Ingen eget innhold om gjeldsrådgivning. Buffer og dyr gjeld er nærmeste tema."
+  },
+  {
+   "id": "d53",
+   "group": "sammensatte",
+   "q": "student lån",
+   "f": [
+    "student"
+   ]
+  },
+  {
+   "id": "d54",
+   "group": "sammensatte",
+   "q": "kreditt kort gjeld",
+   "f": [
+    "buffer"
+   ]
+  },
+  {
+   "id": "d55",
+   "group": "sammensatte",
+   "q": "spare konto",
+   "f": [
+    "funds"
+   ]
+  },
+  {
+   "id": "d56",
+   "group": "sammensatte",
+   "q": "indeks fond",
+   "f": [
+    "funds"
+   ]
+  },
+  {
+   "id": "d57",
+   "group": "sammensatte",
+   "q": "aksje spare konto",
+   "f": [
+    "q-aksjesparekonto"
+   ],
+   "note": "Tre ledd. Kjent begrensning: sammensetning begrenses til naboord."
+  },
+  {
+   "id": "d58",
+   "group": "sammensatte",
+   "q": "fonds konto",
+   "f": [
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "d60",
+   "group": "skrivefeil",
+   "q": "boligflån",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "d61",
+   "group": "skrivefeil",
+   "q": "bloiglån",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "d62",
+   "group": "skrivefeil",
+   "q": "inlfasjon",
+   "f": [
+    "q-kjopekraft"
+   ]
+  },
+  {
+   "id": "d63",
+   "group": "skrivefeil",
+   "q": "aksjesparekonot",
+   "f": [
+    "q-aksjesparekonto"
+   ]
+  },
+  {
+   "id": "d64",
+   "group": "skrivefeil",
+   "q": "fondskotno",
+   "f": [
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "d65",
+   "group": "skrivefeil",
+   "q": "kjøpekrat",
+   "f": [
+    "q-kjopekraft"
+   ]
+  },
+  {
+   "id": "d66",
+   "group": "skrivefeil",
+   "q": "pensjn",
+   "f": [
+    "pension"
+   ]
+  },
+  {
+   "id": "d67",
+   "group": "skrivefeil",
+   "q": "studielan",
+   "f": [
+    "student"
+   ]
+  },
+  {
+   "id": "d68",
+   "group": "skrivefeil",
+   "q": "bufer",
+   "f": [
+    "buffer"
+   ]
+  },
+  {
+   "id": "d70",
+   "group": "korte",
+   "q": "ask",
+   "f": [
+    "q-aksjesparekonto"
+   ]
+  },
+  {
+   "id": "d71",
+   "group": "korte",
+   "q": "IPS",
+   "f": [
+    "q-ips-ask"
+   ],
+   "ok": [
+    "pension"
+   ]
+  },
+  {
+   "id": "d72",
+   "group": "korte",
+   "q": "BSU",
+   "f": [
+    "q-bsu-basics"
+   ],
+   "ok": [
+    "bsu"
+   ]
+  },
+  {
+   "id": "d73",
+   "group": "korte",
+   "q": "bsu",
+   "f": [
+    "q-bsu-basics"
+   ],
+   "ok": [
+    "bsu"
+   ]
+  },
+  {
+   "id": "d74",
+   "group": "korte",
+   "q": "BSUU",
+   "f": [
+    "q-bsu-basics"
+   ],
+   "ok": [
+    "bsu"
+   ],
+   "note": "Fire bokstaver. Rettes ikke av #54."
+  },
+  {
+   "id": "d76",
+   "group": "korte",
+   "q": "AS",
+   "none": true,
+   "note": "Aksjeselskap er ikke dekket. «as» skal ikke gi ASK."
+  },
+  {
+   "id": "d77",
+   "group": "korte",
+   "q": "tips",
+   "none": true
+  },
+  {
+   "id": "d78",
+   "group": "korte",
+   "q": "IP",
+   "none": true
+  },
+  {
+   "id": "d80",
+   "group": "mangler",
+   "q": "bilreparasjon",
+   "none": true
+  },
+  {
+   "id": "d81",
+   "group": "mangler",
+   "q": "Hvordan lager jeg pannekaker?",
+   "none": true
+  },
+  {
+   "id": "d82",
+   "group": "mangler",
+   "q": "kryptovaluta",
+   "none": true
+  },
+  {
+   "id": "d83",
+   "group": "mangler",
+   "q": "Hva er skatt på utleie?",
+   "none": true
+  },
+  {
+   "id": "d84",
+   "group": "mangler",
+   "q": "passord",
+   "none": true
+  },
+  {
+   "id": "d85",
+   "group": "mangler",
+   "q": "formuesskatt",
+   "none": true,
+   "note": "Skatteinnhold er ikke skrevet ennå (fase 4)."
+  },
+  {
+   "id": "d90",
+   "group": "inndata",
+   "q": "",
+   "none": true
+  },
+  {
+   "id": "d91",
+   "group": "inndata",
+   "q": "???",
+   "none": true
+  },
+  {
+   "id": "d92",
+   "group": "inndata",
+   "q": "!!! ....",
+   "none": true
+  },
+  {
+   "id": "d93",
+   "group": "inndata",
+   "q": "boliglån ",
+   "repeat": 80,
+   "f": [
+    "mortgage"
+   ],
+   "note": "Lang tekst, 720 tegn."
+  },
+  {
+   "id": "d94",
+   "group": "inndata",
+   "q": "BOLIGLÅN",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "d95",
+   "group": "inndata",
+   "q": "AKSJESPAREKONTO",
+   "f": [
+    "q-aksjesparekonto"
+   ]
+  },
+  {
+   "id": "d96",
+   "group": "inndata",
+   "q": "BOLIGLÅN???",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "d97",
+   "group": "inndata",
+   "q": "KJØPEKRAFT",
+   "f": [
+    "q-kjopekraft"
+   ]
+  },
+  {
+   "id": "d98",
+   "group": "inndata",
+   "q": "   boliglån   ",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "d99",
+   "group": "inndata",
+   "q": "boliglan",
+   "f": [
+    "mortgage"
+   ],
+   "note": "Uten å."
+  },
+  {
+   "id": "d100",
+   "group": "negasjon",
+   "q": "ASK, men ikke fondskonto",
+   "f": [
+    "q-ask-zero"
+   ],
+   "ok": [
+    "q-aksjesparekonto"
+   ],
+   "nf": [
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "d101",
+   "group": "negasjon",
+   "q": "Jeg vil ikke ha fond",
+   "f": [
+    "funds"
+   ],
+   "nf": [
+    "q-fondskonto",
+    "q-aksjesparekonto"
+   ]
+  },
+  {
+   "id": "d102",
+   "group": "negasjon",
+   "q": "ikke boliglån",
+   "soft": true,
+   "also": [
+    "mortgage"
+   ],
+   "note": "Negasjon kan ikke leses av noen av motorene. Beskrives bare."
+  },
+  {
+   "id": "d103",
+   "group": "flertydig",
+   "q": "lån",
+   "soft": true,
+   "also": [
+    "mortgage",
+    "student",
+    "buffer"
+   ]
+  },
+  {
+   "id": "d104",
+   "group": "flertydig",
+   "q": "bolig",
+   "soft": true,
+   "also": [
+    "mortgage",
+    "bsu"
+   ]
+  },
+  {
+   "id": "d105",
+   "group": "flertydig",
+   "q": "sparing",
+   "soft": true,
+   "also": [
+    "funds",
+    "pension",
+    "children"
+   ]
+  },
+  {
+   "id": "d106",
+   "group": "flertydig",
+   "q": "konto",
+   "soft": true,
+   "also": [
+    "funds",
+    "q-aksjesparekonto",
+    "q-fondskonto"
+   ]
+  }
+ ]
+}

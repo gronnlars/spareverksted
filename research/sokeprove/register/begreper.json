@@ -1,0 +1,43 @@
+{
+ "versjon": 1,
+ "merknad": "Prototype. Ett begrep har ett hjemmedokument. Likeverdige navn, produktnavn og beslektede begreper er egne relasjoner. Rettskriving og skrivefeil hører ikke hjemme her: nye skrivefeil blir testtilfeller.",
+ "begreper": [
+  { "id": "ask", "type": "definisjon", "dokument": "q-aksjesparekonto",
+    "navn": ["aksjesparekonto", "ASK"], "produktnavn": [],
+    "beslektet": [ { "til": "fondskonto", "relasjon": "sammenlignes-med" }, { "til": "ips", "relasjon": "sammenlignes-med" } ] },
+  { "id": "fondskonto", "type": "definisjon", "dokument": "q-fondskonto",
+    "navn": ["fondskonto", "kapitalforsikring", "investeringskonto"],
+    "produktnavn": ["Investeringskonto Zero", "IKZ", "Zero", "unit link"],
+    "beslektet": [ { "til": "ask", "relasjon": "sammenlignes-med" } ] },
+  { "id": "kjopekraft", "type": "definisjon", "dokument": "q-kjopekraft",
+    "navn": ["kjøpekraft", "prisvekst", "inflasjon", "dagens kroner"], "produktnavn": [], "beslektet": [] },
+  { "id": "bsu", "type": "definisjon", "dokument": "q-bsu-basics",
+    "navn": ["BSU", "boligsparing for ungdom"], "produktnavn": [],
+    "beslektet": [ { "til": "boliglan", "relasjon": "relatert" } ] },
+  { "id": "ips", "type": "definisjon", "dokument": "q-ips-ask",
+    "navn": ["IPS", "individuell pensjonssparing", "individuell sparing til pensjon"], "produktnavn": [],
+    "beslektet": [ { "til": "ask", "relasjon": "sammenlignes-med" } ] },
+  { "id": "boliglan", "type": "definisjon", "dokument": "mortgage",
+    "navn": ["boliglån", "huslån", "fastrente", "avdrag"], "produktnavn": [], "beslektet": [] },
+  { "id": "studielan", "type": "definisjon", "dokument": "student",
+    "navn": ["studielån", "Lånekassen", "stipend", "student"], "produktnavn": [], "beslektet": [] },
+  { "id": "barnesparing", "type": "definisjon", "dokument": "children",
+    "navn": ["barnesparing", "barn", "gavebrev", "Statsforvalteren"], "produktnavn": [], "beslektet": [] },
+  { "id": "buffer", "type": "definisjon", "dokument": "buffer",
+    "navn": ["buffer", "kredittkort", "forbrukslån", "inkasso", "regning", "dyr gjeld"], "produktnavn": [], "beslektet": [] },
+  { "id": "fond", "type": "definisjon", "dokument": "funds",
+    "navn": ["fond", "indeksfond", "aksjefond", "aksje", "sparekonto", "risiko", "børs"], "produktnavn": [], "beslektet": [] },
+  { "id": "pensjon", "type": "definisjon", "dokument": "pension",
+    "navn": ["pensjon", "uttak"], "produktnavn": [], "beslektet": [] },
+  { "id": "egenkapital", "type": "definisjon", "dokument": "bsu",
+    "navn": ["boligkjøp", "egenkapital", "første bolig"], "produktnavn": [], "beslektet": [] },
+  { "id": "lan", "type": "samlebegrep", "navn": ["lån", "gjeld"], "forslag": ["mortgage", "student", "buffer"] },
+  { "id": "bolig", "type": "samlebegrep", "navn": ["bolig"], "forslag": ["mortgage", "bsu", "q-bsu-basics"] },
+  { "id": "sparing", "type": "samlebegrep", "navn": ["sparing", "spare"], "forslag": ["funds", "pension", "children"] },
+  { "id": "konto", "type": "samlebegrep", "navn": ["konto"], "forslag": ["q-aksjesparekonto", "q-fondskonto", "funds"] }
+ ],
+ "sammenligninger": [
+  { "dokument": "q-ask-zero", "begreper": ["ask", "fondskonto"] },
+  { "dokument": "q-ips-ask", "begreper": ["ips", "ask"] }
+ ]
+}
