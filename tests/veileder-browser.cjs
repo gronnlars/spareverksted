@@ -119,6 +119,39 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    assert.ok(await page.locator('#answer .option-card').count()>0);
    assert.deepEqual(eerrors,[]);await ectx.close();
   }
+  // Søk med skrivefeil og særskriving, og ærlig bom med veier videre.
+  for(const width of [320,390]){
+   const sctx=await browser.newContext({viewport:{width,height:844},isMobile:true,hasTouch:true}),page=await sctx.newPage(),serrors=[];
+   page.setDefaultTimeout(10000);page.on('pageerror',e=>serrors.push(e.message));
+   const search=async value=>{if(!await page.evaluate(()=>document.getElementById('searchBox').open))await page.locator('#searchBox>summary').click();await page.locator('#question').fill(value);await page.locator('#questionForm button').click();};
+   const noOverflow=async()=>assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Horizontal scrolling');
+   await page.goto(origin+'/spor.html');
+   for(const [typed,read] of [['boligflån','«boligflån» som «boliglån»'],['bolig lån','«bolig lån» som «boliglån»']]){
+    await search(typed);await page.locator('#answerTitle').waitFor();
+    assert.equal(await page.locator('#answerTitle').textContent(),'Boliglån eller sparing',typed);
+    assert.match(await page.locator('#matchStatus').textContent(),new RegExp('Leste '+read),'siden skal si hva den leste');
+   }
+   await search('boliglån');assert.equal(await page.locator('#answerTitle').textContent(),'Boliglån eller sparing');
+   assert.equal(await page.locator('#matchStatus').textContent(),'','riktig skrevet ord skal ikke få merknad');
+   // Bom: ingen svar presenteres, og knappene sies å være veier videre.
+   await search('husleie');
+   assert.equal(await page.locator('#answerPanel').isHidden(),true,'ingen svar ved bom');
+   assert.match(await page.locator('#matchStatus').textContent(),/Vi har ikke et svar på dette ennå/);
+   assert.match(await page.locator('#matchStatus').textContent(),/ikke svar på spørsmålet ditt/);
+   assert.equal(await page.locator('#matches button').count(),7,'de sju temaene');
+   assert.equal(await page.locator('#matchStatus').getAttribute('role'),'status');
+   await noOverflow();
+   // Forslag to endringer unna: tilbys, ikke brukt som svar. Tastatur: Enter på knappen.
+   await search('boligen');
+   assert.equal(await page.locator('#answerPanel').isHidden(),true);
+   const mente=page.locator('#matches button',{hasText:'Mente du «boliglån»?'});
+   assert.equal(await mente.count(),1);await mente.focus();await page.keyboard.press('Enter');
+   await page.locator('#answerTitle').waitFor();assert.equal(await page.locator('#answerTitle').textContent(),'Boliglån eller sparing');
+   // Et tema fra bom-listen åpner det temaet.
+   await search('husleie');await page.locator('#matches button',{hasText:'Studielån'}).click();
+   assert.equal(await page.locator('#answerTitle').textContent(),'Studielån');
+   assert.deepEqual(serrors,[]);await sctx.close();
+  }
   assert.deepEqual(errors,[]);
   console.log('Browser: mobile touch, live result and curve, keyboard, profile relevance, independent horizons, preserved hidden fields, disclosure, privacy and responsive layouts passed.');
  }finally{if(browser)await browser.close();server.close();}

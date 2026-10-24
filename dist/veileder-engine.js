@@ -25,14 +25,68 @@ const topics=[
  {id:'pension',title:'Sparing til pensjon',words:[/pensjon/,/uttak/,/ips\b/],questions:['Bør jeg redusere risiko før pensjon?','Må alle sparepengene ut av fond når jeg pensjoneres?','Hvordan planlegger jeg uttak over mange år?','Hva bør jeg sjekke før jeg velger pensjonssparing?']},
  {id:'bsu',title:'BSU og boligkjøp',words:[/bsu/,/boligkj[oø]p/,/egenkapital/,/f[oø]rste bolig/],questions:['Bør jeg prioritere BSU?','Kan jeg få BSU-fradrag hvis jeg eier bolig?','Hva hvis jeg betaler lite skatt?','Bør egenkapital til bolig stå i fond?']}
 ];
-function findTopics(text){
- const normalize=value=>String(value||'').toLocaleLowerCase('nb-NO').slice(0,600).trim().replace(/[?!.]+$/,'').replace(/\s+/g,' ');
- const q=normalize(text);
- if(!q.trim())return [];
- const exact=topics.filter(t=>t.questions.some(x=>normalize(x)===q)).map(t=>t.id);
- if(exact.length)return exact;
- return topics.map(t=>({id:t.id,score:t.words.reduce((n,re)=>n+(re.test(q)?1:0),0)})).filter(t=>t.score>0).sort((a,b)=>b.score-a.score).map(t=>t.id);
+// Søk. Treffene kommer fra ordlistene (words) til temaene. For å tåle vanlige skrivefeil og særskriving gjøres tre
+// ting, alle deterministiske og uten KI: (1) æ, ø og å tåles også som a, o og a, (2) to ord som står hver for seg
+// kan leses som ett sammensatt ord («bolig lån» som «boliglån»), og (3) et ukjent ord som ligger én endring fra et
+// ord som utløser et tema, leses som det ordet («boligflån» som «boliglån»). Rettelsene legges til søketeksten og
+// returneres, slik at siden kan si hva den leste. Ord som ligger to endringer unna, foreslås bare.
+const fold=s=>String(s).replace(/å/g,'a').replace(/ø/g,'o').replace(/æ/g,'ae');
+const normalize=value=>String(value||'').toLocaleLowerCase('nb-NO').slice(0,600).trim().replace(/[?!.]+$/,'').replace(/\s+/g,' ');
+const tokens=q=>q.split(/[^a-zæøåäö0-9]+/).filter(Boolean);
+const hits=(re,q)=>re.test(q)||re.test(fold(q));
+const triggers=word=>topics.some(t=>t.words.some(re=>hits(re,word)));
+function distance(a,b){ // Damerau-Levenshtein (nabobytte teller som én endring)
+ const d=Array.from({length:a.length+1},(_,i)=>[i,...Array(b.length).fill(0)]);for(let j=1;j<=b.length;j++)d[0][j]=j;
+ for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++){
+  d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  if(i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1])d[i][j]=Math.min(d[i][j],d[i-2][j-2]+1);
+ }
+ return d[a.length][b.length];
 }
+// Ord som utløser et tema: ord fra titler og spørsmål, og ordene regexene selv staver ut (for eksempel «boliglån»).
+function literals(re){
+ let s=re.source.replace(/\\b/g,'');if(/[()*+?.|\\^$]/.test(s.replace(/\[[^\]]*\]/g,'')))return [];
+ let out=[''];for(const part of s.split(/(\[[^\]]*\])/)){if(!part)continue;const opts=part.startsWith('[')?[...part.slice(1,-1)]:[part];out=out.flatMap(o=>opts.map(x=>o+x));if(out.length>8)return [];}
+ return out;
+}
+function vocabulary(){
+ const map=new Map(),add=w=>{if(w.length<4||!triggers(w))return;const key=fold(w);if(!map.has(key)||/[æøå]/.test(w))map.set(key,w);};
+ for(const t of topics){for(const x of [t.title,...t.questions])for(const w of tokens(normalize(x)))add(w);for(const re of t.words)for(const w of literals(re))add(w);}
+ return map;
+}
+function nearest(word,vocab,max){
+ const w=fold(word);let best=Infinity,found=[];
+ for(const [key,display] of vocab){if(Math.abs(key.length-w.length)>max)continue;const dist=distance(w,key);if(dist===0)return null;if(dist<best){best=dist;found=[display];}else if(dist===best&&!found.includes(display))found.push(display);}
+ return best<=max&&found.length===1?{word:found[0],distance:best}:null;
+}
+function interpret(text){
+ const q=normalize(text);
+ if(!q.trim())return {ids:[],applied:[],suggestions:[]};
+ const exact=topics.filter(t=>t.questions.some(x=>normalize(x)===q)).map(t=>t.id);
+ if(exact.length)return {ids:exact,applied:[],suggestions:[]};
+ const toks=tokens(q),vocab=vocabulary(),applied=[],suggestions=[],extra=[];
+ const known=w=>triggers(w);
+ // Sammensetningen teller bare hvis den utløser noe som ingen av delene gjør hver for seg.
+ const newly=(j,a,b)=>topics.some(t=>t.words.some(re=>hits(re,j)&&!hits(re,a)&&!hits(re,b)));
+ // (2) Særskriving: to ord som sammen er et ord som utløser et tema, eller ligger én endring fra et.
+ const joinedAt=new Set();
+ for(let i=0;i+1<toks.length;i++){
+  const a=toks[i],b=toks[i+1];if(a.length<3||b.length<3)continue;const j=a+b;
+  if(newly(j,a,b)){if(!extra.includes(j)){extra.push(j);applied.push({from:a+' '+b,to:j,kind:'join'});joinedAt.add(i).add(i+1);}continue;}
+  if(j.length>=8){const n=nearest(j,vocab,1);if(n){extra.push(n.word);applied.push({from:a+' '+b,to:n.word,kind:'join'});joinedAt.add(i).add(i+1);}}
+ }
+ // (3) Skrivefeil: ukjente ord på minst fem bokstaver som ligger én endring fra et ord som utløser et tema.
+ toks.forEach((w,i)=>{
+  if(joinedAt.has(i)||w.length<5||known(w)||/\d/.test(w))return;
+  const n=nearest(w,vocab,1);
+  if(n){extra.push(n.word);applied.push({from:w,to:n.word,kind:'typo'});return;}
+  if(w.length>=6){const m=nearest(w,vocab,2);if(m)suggestions.push({from:w,to:m.word});}
+ });
+ const full=extra.length?q+' '+extra.join(' '):q;
+ const ids=topics.map(t=>({id:t.id,score:t.words.reduce((n,re)=>n+(hits(re,full)?1:0),0)})).filter(t=>t.score>0).sort((a,b)=>b.score-a.score).map(t=>t.id);
+ return {ids,applied,suggestions};
+}
+function findTopics(text){return interpret(text).ids;}
 function number(v,min,max,name){if(v===''||v===undefined||v===null)return null; const n=Number(String(v).replace(',','.'));if(!Number.isFinite(n)||n<min||n>max)throw Error(name+' må være et tall mellom '+min+' og '+max+'.');return n;}
 function validate(p={}){
  const out={age:number(p.age,0,110,'Alder'),years:number(p.years,0,80,'Tidshorisont')};
@@ -136,5 +190,5 @@ function register(entry){
  for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
  topics.push({id:entry.id,title:entry.title,category:entry.category,questions:entry.questions,words:entry.words,entry});
 }
-const api={topics,findTopics,answer,validate,checked,sources,register,category,isExplainer,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
+const api={topics,findTopics,interpret,answer,validate,checked,sources,register,category,isExplainer,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
 })(typeof window!=='undefined'?window:globalThis);

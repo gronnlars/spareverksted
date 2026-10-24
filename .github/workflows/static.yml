@@ -24,6 +24,7 @@ jobs:
           node tests/veileder.test.cjs
           node tests/veileder-context.test.cjs
           node tests/veileder-knowledge.test.cjs
+          node tests/veileder-sok.test.cjs
           node tests/veileder-relevance.test.cjs
           node tests/validation.test.cjs
           node tests/kjopekraft.test.cjs
