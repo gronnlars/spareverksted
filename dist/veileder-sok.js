@@ -64,10 +64,12 @@ function nearKeys(folded,vocab,maxDistance){
  }
  return found;
 }
-const NEGATION=new Set(['ikke','uten','aldri','ingen','slipper']);
+const NEGATION=new Set(['ikke','uten','aldri','ingen','slipper','bortsett']);
 const BREAK=new Set(['men','og','eller','samt','bare']);
-// Indekser (i rawTokens) for ordet som står under en negasjon: det første ordet med innhold etter «ikke» eller «uten».
+// Indekser (i rawTokens) for ordet som står under en negasjon: det første ordet med innhold etter «ikke», «uten» eller «bortsett».
+// Småord, stoppord og verb som «spare» og «investere» hoppes over, så «ikke spare i aksjer» rammer «aksjer». «Ikke råd» rammer bare «råd».
 // Bare ett ord, så «hvis jeg ikke får betalt regningene» fortsatt finner regningene.
+const NEG_VERBS=new Set(['spare','sparer','investere','investerer','kjøpe','kjøper','satse','satser','bruke','bruker','plassere','plasserer','putte','putter']);
 function negatedIndexes(tokens){
  const out=new Set();
  tokens.forEach((tok,i)=>{
@@ -75,20 +77,28 @@ function negatedIndexes(tokens){
   let taken=0;
   for(let j=i+1;j<tokens.length&&taken<1;j++){
    if(BREAK.has(tokens[j])||NEGATION.has(tokens[j]))break;
-   if(STOP.has(tokens[j]))continue;
+   if(STOP.has(tokens[j])||NEG_VERBS.has(tokens[j])||tokens[j].length<3)continue;
    out.add(j);taken++;
   }
  });
  return out;
 }
-function join(tokens,vocab){
- const out=[];
+// Slår sammen to nabord til ett registrert ord («bolig lån», «fonds konto»). Et sammensatt ord som er registrert som navn
+// er entydig, så det slås sammen også når første del alene er et kjent ord. Andre sammenslåinger krever at første del er ukjent.
+// Gjentas til ingenting endres, slik at «aksje spare konto» blir «aksjesparekonto».
+function joinOnce(tokens,vocab){
+ const out=[];let changed=false;
  for(let i=0;i<tokens.length;i++){
   const a=tokens[i],b=tokens[i+1];let joined=null;
-  if(b&&a.length>=3&&b.length>=2)for(const link of ['','s']){const candidate=a+link+b;if(known(candidate,vocab)&&!known(a,vocab)){joined=candidate;break;}}
-  if(joined){out.push(joined);i++;}else out.push(a);
+  if(b&&a.length>=3&&b.length>=2)for(const link of ['','s']){const candidate=a+link+b;if(vocab.has(fold(candidate))||(known(candidate,vocab)&&!known(a,vocab))){joined=candidate;break;}}
+  if(joined){out.push(joined);i++;changed=true;}else out.push(a);
  }
- return out;
+ return {out,changed};
+}
+function join(tokens,vocab){
+ let cur=tokens;
+ for(let round=0;round<3;round++){const r=joinOnce(cur,vocab);cur=r.out;if(!r.changed)break;}
+ return cur;
 }
 const clip=s=>s.length>40?s.slice(0,40):s;
 function search(text,topics,config={}){

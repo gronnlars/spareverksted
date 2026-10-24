@@ -64,4 +64,27 @@ for(const [q,first] of [['barnesparinng','children'],['studentlån','student'],[
   assert.equal(r.mode,'answer');
   assert.ok(r.negated.length===0);
 }
+
+// 4. Særskrevne navn som er registrert (sluttkontroll 2026-10-24): samme svar som det sammensatte ordet.
+for(const [q,first] of [['fonds konto','q-ask-zero'],['fond konto','q-ask-zero'],['aksje spare konto','q-ask-zero'],['individuell pensjons sparing','q-ips-ask']]){
+  const r=V.search(q);
+  assert.equal(r.mode,'answer',q);
+  assert.equal(ids(r)[0],first,q+': skal gi samme svar som det sammensatte ordet');
+}
+// Sammenslåing skal ikke ta fra eksisterende treff.
+for(const [q,first] of [['bolig lån','mortgage'],['studie lån','student'],['spare konto','funds'],['barne sparing','children'],['kjøpe kraft','q-kjopekraft'],['aksje fond','funds'],['fond bank konto','funds']]){
+  const r=V.search(q);
+  assert.equal(r.mode,'answer',q);
+  assert.equal(ids(r)[0],first,q);
+}
+// 5. Negasjon over verb og småord, men ikke over «ikke råd».
+for(const q of ['jeg vil ikke spare i aksjer','hva er best bortsett fra fond']){
+  const r=V.search(q);
+  assert.equal(r.mode,'negated',q);
+  assert.ok(r.hits.every(h=>h.kind==='negated'),q);
+}
+for(const q of ['jeg har ikke råd til å spare til pensjon','hva gjør jeg hvis jeg ikke klarer å betale boliglånet','jeg vil ikke betale mer skatt på barnesparing']){
+  const r=V.search(q);
+  assert.equal(r.mode,'answer',q+': nektingen skal ikke ta bort temaet');
+}
 console.log('veileder-sok-rettinger: ok');
