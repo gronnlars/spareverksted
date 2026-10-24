@@ -131,6 +131,11 @@ for(const [q,want,removed] of FILTER_CONTROL){
  assert.deepEqual(gone,removed?[removed]:[],`Filterkontroll: «${q}» skal fjerne ${removed??'ingenting'}, fjernet ${gone.join(',')||'ingenting'}`);
 }
 
+// Kjente hull i filteret: misvisende treff som mønstrene ikke fanger. Dette er ikke godkjente svar. Testen sier fra
+// når et hull er tettet, så lista kan krympe. Løses ordentlig først med «ærlig bom».
+const KNOWN_FILTER_GAPS=[['Hvor mye skatt betaler jeg på fond?','funds']];
+for(const [q,now] of KNOWN_FILTER_GAPS)assert.equal(V.findTopics(q)[0]??null,now,'Kjent hull er endret, oppdater KNOWN_FILTER_GAPS: '+q);
+
 // 3. Skatt på fond skal aldri regnes som besvart av det generelle fondssvaret.
 assert.equal(V.findTopics('Hvordan blir fond skattlagt?')[0]??null,null,'Det generelle fondssvaret godkjennes ikke som svar på skatt på fond');
 assert.doesNotMatch(answerText('funds'),/37,84|skjerming|gevinstskatt|skattes ved salg/i,'Fondssvaret har fått skatteregler. Vurder testsettet på nytt.');
