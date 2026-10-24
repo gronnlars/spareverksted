@@ -26,7 +26,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    const tapTargets=async what=>{for(const b of await page.locator('#matches button').all())if(await b.isVisible())assert.ok((await b.boundingBox()).height>=44,engine+' '+label+': trykkflate under 44 px ('+what+')');};
 
    // 1. Skrivefeil som inneholder kjente stammer: «Mente du», ikke et svar og ikke fond.
-   for(const [typo,expect] of [['fondskotno',/ASK/],['aksjesparekonot',/ASK/],['fondkonto',/ASK/]]){
+   for(const [typo,expect] of [['fondskotno',/Hva er en fondskonto\?/],['aksjesparekonot',/Hva er en aksjesparekonto \(ASK\)\?/],['fondkonto',/Hva er en fondskonto\?/]]){
     await ask(typo);
     assert.ok(!await answerOpen(),engine+' '+label+': «'+typo+'» skal ikke åpne et svar');
     assert.match(await status(),/Mente du «(aksje|fonds?)(spare)?konto»\? Velg et svar nedenfor\./);

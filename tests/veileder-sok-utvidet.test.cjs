@@ -24,8 +24,12 @@ row('delord','skatt','suggest',null,'«skatt»');
 for(const q of ['boliglån','bolig lån','bolig-lån','Bolig  Lån','BOLIGLÅN'])row('sammensatt',q,'answer','mortgage','boliglån');
 for(const q of ['studielån','studie lån','studie-lån'])row('sammensatt',q,'answer','student','studielån');
 for(const q of ['sparekonto','spare konto','spare-konto'])row('sammensatt',q,'answer','funds','sparekonto');
-row('sammensatt','aksjesparekonto','answer','q-ask-zero',null);
-row('sammensatt','aksje sparekonto','answer','q-ask-zero',null);
+row('sammensatt','aksjesparekonto','answer','q-aksjesparekonto',null);
+row('sammensatt','aksje sparekonto','answer','q-aksjesparekonto',null);
+row('sammensatt','aksje spare konto','answer','q-aksjesparekonto',null);
+row('sammensatt','fondskonto','answer','q-fondskonto',null);
+row('sammensatt','fonds konto','answer','q-fondskonto',null);
+row('sammensatt','fond konto','answer','q-fondskonto',null);
 // Synonymer og hverdagsord.
 row('synonym','huslån','answer','mortgage',null);
 row('synonym','krisepenger','answer','buffer',null);
@@ -56,7 +60,7 @@ row('naturlig','Hvordan sparer jeg til barnet mitt?','answer','children',null);
 row('naturlig','Er det lurt å spare i fond?','answer','funds',null);
 // Like søk med ulike svar: skal ikke slås sammen.
 row('likt','ips','answer','q-ips-ask',null);
-row('likt','ask','choose','q-ips-ask',null);
+row('likt','ask','answer','q-aksjesparekonto',null);
 row('likt','pensjon','answer','pension',null);
 row('likt','mindre verdt på sparekontoen','choose','q-kjopekraft',null);
 // Korte og tvetydige søk.

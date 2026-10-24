@@ -58,7 +58,7 @@ function render(focus=false){
   if(a.next){const p=el('p','','explain-next'),link=el('a',a.next.text);link.href=a.next.href;p.append(link);out.append(p);}
   const deep=el('details','','full-answer');deep.append(el('summary','Fordypning'));
   for(const part of a.parts)deep.append(partSection(part));out.append(deep);
-  const src=el('details','','answer-sources');src.append(el('summary','Kilder og forbehold'),el('p','Tall i eksempler er regneeksempler, ikke prognoser. Tall og regler kan endres.','hint'));
+  const src=el('details','','answer-sources');src.append(el('summary','Kilder og forbehold'),el('p','Tall i eksempler er regneeksempler, ikke prognoser. Tall og regler kan endres.'+(a.caveat?' '+a.caveat:''),'hint'));
   const sl=el('ul','','source-list');
   for(const s of a.sources){const li=el('li'),link=el('a',s.title);link.href=s.url;link.target='_blank';link.rel='noopener noreferrer';li.append(link);sl.append(li);}
   src.append(sl);out.append(src);

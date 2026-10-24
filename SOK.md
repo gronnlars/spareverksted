@@ -75,17 +75,25 @@ Rett tema, men svaret besvarer ikke spørsmålet. Før sluttkontrollen åpnet s�
 
 Slik lukkes et hull: skriv svaret, og fjern raden fra `GAPS`. Testen `veileder-sok-rettinger.test.cjs` feiler hvis svaret allerede nevner begrepet mens raden står igjen (`covers`), så hullet ikke blir hengende. Et hull rammer ikke ferdig formulerte spørsmål (kind `question`) og bare når alle treffene er blant temaene i raden. Å skrive svarene er innholdsarbeid og ligger hos spørsmålskøen.
 
-## #53 (ASK og fondskonto) mot dagens søk
+## ASK og fondskonto (fra #53)
 
-Tilstand: utkast, konflikter mot main, base er eldre enn main. Ikke gjort her, bare beskrevet.
+Status: gjort på grenen `feat/ask-fondskonto-forklaringer`, utkast-PR. #53 er ikke merget og skal ikke merges.
 
-Dette er det som skiller #53 fra main og skal tas med: de to nye forklaringene `q-aksjesparekonto` og `q-fondskonto` med tester og visning.
+Eierskap til navn (avgjort av Lars):
 
-Dette skal ikke føres tilbake: endringene i `words` for `funds` og `pension` i `veileder-engine.js` (negative framoversyn som `fond(?!skonto)`). Dagens søk skiller ASK og fondskonto via `keys` og sammenslåing, ikke via regex.
+| Forklaring | Nøkler (`keys`) |
+|---|---|
+| `q-aksjesparekonto` | `ask`, `aksjesparekonto` |
+| `q-fondskonto` | `fondskonto`, `investeringskonto`, `kapitalforsikring`, `zero`, `ikz` |
+| `q-ask-zero` (sammenligningen) | ingen |
 
-Slik tilpasses de:
-1. Ta en ny gren fra main og legg bare inn de to forklaringene. Ikke merge #53 slik den står.
-2. Gi hver forklaring `keys` og fordel eierskapet slik (avgjort av Lars): `q-aksjesparekonto` får `aksjesparekonto` og `ask`. `q-fondskonto` får `fondskonto`, `investeringskonto` og `kapitalforsikring`, og produktnavn som `zero` og `ikz` hører dit også. `q-ask-zero` (sammenligningen) beholder ingen enkeltnavn. Et enkelt kontonavn skal ikke åpne sammenligningen. Spørsmål som nevner både ASK og fondskonto eller investeringskonto skal gi sammenligningen, via `words` på `q-ask-zero` og eventuelt en rad i søketesten. I dag står alle fire nøklene på `q-ask-zero`, så dette må flyttes samtidig, ellers får brukeren valg på hvert søk.
-3. Legg inn søkerader: hvert navn, én skrivefeil, én særskriving og spørsmålet «forskjellen på ASK og fondskonto».
-4. Kjør de 126 tilfellene i `research/sokeprove` på nytt. 30 av dem ble utelatt mot main fordi de krever disse forklaringene.
-5. Ingen endring i `veileder-sok.js`.
+Regler:
+1. Et enkelt kontonavn åpner sin egen forklaring. `words` bruker `alone(navn, andre)`: treffet teller bare når spørsmålet ikke nevner den andre kontotypen.
+2. Sammenligningen nås med regexen `both` (ASK-navn og fondskonto-navn i samme spørsmål, i begge rekkefølger). Den har ingen `keys`, så et enkelt navn aldri åpner den.
+3. Produktnavn (for eksempel Investeringskonto Zero) forklares med tilbyder, uten anbefaling.
+4. `fond(?!skonto)` i `funds` og `/\bask\b/` fjernet fra `q-ips-ask` er data i samme stil som `aksj(?!esparekonto)`. Søkemotoren `veileder-sok.js` er uendret.
+5. Ny forklaring med eget navn: legg navnet i `keys`, bruk `alone()` mot de andre kontonavnene, og legg inn en rad i søketestene.
+
+Innhold: kontrollert mot Skatteetatens norske sider og Nordnets FAQ 24. oktober 2026. Sidene oppgir ingen oppdateringsdato, bortsett fra rettledningen (revidert oktober 2025). Påstander som ikke lot seg bekrefte ble tatt ut. Forbeholdet vises under «Kilder og forbehold». Intro-endringene #53 gjorde i `q-ips-ask` og `q-ask-zero` er ikke tatt med.
+
+Kontroll mot norske primærkilder (24. oktober 2026): rene rentefond kan ikke ligge på ASK, og aksjer og aksjefond må være hjemmehørende i EØS. Siden sier ikke hvor et aksjefond må investere, så påstanden om at et EØS-fond kan investere utenfor Europa er tatt ut av `q-ask-zero`. Kjent rest: spørsmålet «konto» alene gir ingen treff.
