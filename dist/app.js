@@ -291,5 +291,7 @@ $('csv').onclick=()=>{
 fill();render();
 // Varselet vises når alle felt finnes, slik at feltnavnene er de som står på skjermen.
 document.addEventListener('DOMContentLoaded',()=>{if(linkCheck.allReset){notice('Lenken hadde ugyldige tall. Du ser standardverdiene i stedet.',15000);return;}const parts=[];if(linkCheck.adjusted.length)parts.push('Lenken hadde negative verdier som kalkulatoren ikke bruker lenger. '+adjustedText(linkCheck.adjusted));if(linkCheck.rejected.length)parts.push('Lenken hadde ugyldige verdier i '+quoted(linkCheck.rejected)+'. Disse er satt til standardverdi.');if(parts.length)notice(parts.join(' ')+' Resten av planen er beholdt.',20000);});
-let lastChartWidth=0;new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width>0&&Math.abs(width-lastChartWidth)>2){lastChartWidth=width;if(rows.length)chart();}}).observe($('chart'));
+// Redraw in the next frame, outside ResizeObserver's measurement cycle. Writing SVG here
+// synchronously can resize the observed element again and report an observer loop in WebKit.
+let lastChartWidth=0,chartResizeFrame=0;new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width>0&&Math.abs(width-lastChartWidth)>2){lastChartWidth=width;if(!chartResizeFrame)chartResizeFrame=requestAnimationFrame(()=>{chartResizeFrame=0;if(rows.length)chart();});}}).observe($('chart'));
 
