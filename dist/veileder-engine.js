@@ -11,7 +11,7 @@ const sources={
  student:['Lånekassen: renter og gebyrer','https://lanekassen.no/nb-NO/gjeld-og-betaling/renter-og-gebyrer/'],
  grant:['Lånekassen: omgjøring til stipend','https://lanekassen.no/nb-NO/stipend-og-lan/omgjoring-av-basislan/'],
  child:['Statsforvalteren: forvaltning av finansielle eiendeler for mindreårige (2026)','https://www.statsforvalteren.no/siteassets/fm-oslo-og-viken/vergemal/informasjonsskriv/nr.-2-forvaltning-finansielle-eiendeler-og-bruk-av-kapital-for-mindrearig-2026.pdf'],
- adult:['Statsforvalteren: barns råderett over egen økonomi',F.data.adultAge.source],
+ adult:['Vergemålsloven § 8: personer under 18 år er mindreårige (lovvedtak, Stortinget)',F.data.adultAge.source],
  nav:['Nav: økonomi- og gjeldsrådgivning','https://www.nav.no/okonomi-gjeld'],
  bsu:['Skatteetaten: BSU','https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/'],
  risk:['Finanstilsynet: informasjon om verdipapirfond','https://www.finanstilsynet.no/forbrukerinformasjon/verdipapirforetak-verdipapirfond-og-alternative-investeringsfond/']

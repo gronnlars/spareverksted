@@ -9,7 +9,7 @@ const data={
  year:record(year,'inntektsår',bsu),
  bsuMaxAge:record(33,'år',bsu),bsuAnnual:record(27500,'kr',bsu),bsuTotal:record(300000,'kr',bsu),bsuPercent:record(10,'prosent',bsu),bsuMaxDeduction:record(2750,'kr',bsu),
  ipsAnnual:record(25000,'kr',ips),ipsStartAge:record(62,'år',ips),ipsEndAge:record(80,'år',ips),ipsMinYears:record(10,'år',ips),ipsIntroduced:record(2017,'årstall',ips),
- adultAge:record(18,'år','https://www.statsforvalteren.no/contentassets/d753fae5ad9842839799794e6f903cd2/svar-pa-sporsmal-om-inntektsberekning-av-barns-stipend-i-saka-til-foreldra.pdf'),
+ adultAge:record(18,'år','https://stortinget.no/no/Saker-og-publikasjoner/Vedtak/Beslutninger/Lovvedtak/2009-2010/vedtak-200910-036/'),
  grantSingleAssets:record(534225,'kr','https://lanekassen.no/nb-NO/stipend-og-lan/omgjoring-av-basislan/'),
  fundMinYears:record(5,'år','https://www.forbrukerradet.no/sparing-i-fond-og-spareprofiler/','source-recommendation')
 };

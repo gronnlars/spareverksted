@@ -35,7 +35,7 @@ Kontrollert 24. oktober 2026:
 **Ikke bekreftet:**
 - Om aksjer og fond må selges og settes på kapitalkonto når Statsforvalteren forvalter. Verken skrivet fra 2023, skrivet fra 2026 eller lovvedtaket fra 2023 (Stortinget, vedtak 2022-2023 nr. 44) sier ja eller nei. Påstanden er derfor fjernet, ikke myknet. Hvis den var riktig, har brukeren mistet en konkret opplysning. Kan legges inn igjen når en primærkilde (vergemålsloven kapittel 7 eller Statsforvalterens veiledning) bekrefter den.
 - Beløpsgrensen. Skrivet oppgir 2 G, men bare i kroner for 2025. Svaret nevner fortsatt ingen grense, som beslutningen i `veileder-kilder.md` sier.
-- Kilden til «18 år» (`adultAge` i `veileder-facts.js`) er et Statsforvalter-dokument om *inntektsberegning av barns stipend*. Det er en svak kilde til myndighetsalder. Ikke kontrollert. Bør byttes til lovteksten.
+- **Avklart 24.10:** Kilden til «18 år» (`adultAge`) var et Statsforvalter-dokument om inntektsberegning av barns stipend. Byttet til vergemålsloven § 8 («Personer som ikke har fylt 18 år, er mindreårige»), lest i Stortingets lovvedtak 2009-2010 nr. 36. Det er lovteksten slik den ble vedtatt, ikke Lovdatas konsoliderte versjon. Myndighetsalderen er ikke endret i lovvedtaket fra 2023 (nr. 44), som ble lest for å sjekke dette.
 - At penger som forelderen eier, ikke teller i barnets nettoformue. Lånekassen-siden omtaler bare egen formue. Formuleringen med «normalt» er beholdt fra før.
 
 ## Andre emner, foreløpig bare notert
