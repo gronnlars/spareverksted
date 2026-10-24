@@ -118,7 +118,7 @@ const FILTER_CONTROL=[
  ['Hvordan skattlegges IPS?',['q-ips-ask'],'pension'],
  ['Får jeg skattefradrag for BSU?',['bsu','q-bsu-basics'],null],
  ['Bør jeg betale ned boliglånet når jeg får rentefradrag på skatten?',['mortgage'],null],
- ['Må barnet betale skatt av sparepengene sine?',['children'],null],
+ // «Må barnet betale skatt av sparepengene sine?» ligger i GAPS (barnesparing-skatt): barnesvaret dekker ikke skatt, så søket viser det ikke som svar. Se veileder-sok-rettinger.test.cjs.
  ['Påvirker studielånet skatten min?',['student'],null],
  // Rentetype: skjules bare når valget av fast eller flytende rente er selve spørsmålet.
  ['Bør jeg velge fast eller flytende rente på huslånet?',[null],'mortgage'],

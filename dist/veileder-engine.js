@@ -28,12 +28,22 @@ const topics=[
 ];
 // Brede ord gir bare forslag. Svært generelle ord gir en oppfordring til å velge tema eller skrive mer.
 const BROAD={'lån':['mortgage','student','buffer'],'gjeld':['buffer','mortgage','student'],'rente':['mortgage','funds'],'renter':['mortgage','funds'],'renten':['mortgage','funds'],'skatt':['q-ask-zero','q-ips-ask','q-bsu-basics'],'bolig':['bsu','mortgage'],'hus':['mortgage','bsu'],'bank':['funds'],'banken':['funds']};
+// «Boligsparing» er bredere enn BSU: det kan også sparing uten BSU. Ordet gir derfor forslag, ikke ett svar.
+BROAD.boligsparing=['q-bsu-basics','bsu','mortgage'];
+// Kjente hull i innholdet. Søket viser ikke et eksisterende svar som dekkende for disse spørsmålene.
+// Fjern raden når svaret dekker spørsmålet. `covers` brukes av testen til å oppdage at hullet er lukket.
+const GAPS=[
+ {id:'barnesparing-skatt',when:[/barn/,/skatt/],topics:['children'],near:['children'],label:'skatt på barnesparing',covers:/skatt/i},
+ {id:'bsu-flytting',when:[/flytt/,/\bbsu\b|boligsparing for ungdom/],topics:['bsu','q-bsu-basics'],near:['q-bsu-basics'],label:'BSU når du flytter',covers:/flytt/i},
+ {id:'renters-rente',when:[/rente(?:rs?|s) ?rente/],topics:['funds','mortgage','pension'],near:['funds'],label:'renters rente',covers:/rente(?:rs?|s) ?rente/i}
+];
 const GENERIC=['spare','sparer','sparing','sparingen','penger','pengene','økonomi','økonomien','råd','tips','hjelp'];
 // Hver registrering gir ny innholdsversjon, slik at søket bygger ordlisten om bare da.
 let contentVersion=0;
-function search(text){return S.search(text,topics,{broad:BROAD,generic:GENERIC,version:contentVersion});}
+function search(text){return S.search(text,topics,{broad:BROAD,gaps:GAPS,generic:GENERIC,version:contentVersion});}
 // Sikre treff, i rangert rekkefølge. Forslag (tastefeil, brede ord) ligger i search().suggestions.
-function findTopics(text){return search(text).hits.map(h=>h.id);}
+// Bare treff som er svar. «Nærmeste» (kjent hull) og nektede temaer er aldri svar.
+function findTopics(text){return search(text).hits.filter(h=>h.kind!=='nearest'&&h.kind!=='negated').map(h=>h.id);}
 function number(v,min,max,name){if(v===''||v===undefined||v===null)return null; const n=Number(String(v).replace(',','.'));if(!Number.isFinite(n)||n<min||n>max)throw Error(name+' må være et tall mellom '+min+' og '+max+'.');return n;}
 function validate(p={}){
  const out={age:number(p.age,0,110,'Alder'),years:number(p.years,0,80,'Tidshorisont')};
@@ -144,5 +154,5 @@ function register(entry){
  if((entry.keys||[]).some(x=>!/^[a-zæøå0-9]+$/.test(x)))throw Error('Ugyldig søkeord.');
  topics.push({id:entry.id,title:entry.title,category:entry.category,questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});contentVersion++;
 }
-const api={topics,findTopics,search,reason:S.reason,answer,validate,checked,sources,register,category,isExplainer,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
+const api={topics,findTopics,search,gaps:GAPS,reason:S.reason,answer,validate,checked,sources,register,category,isExplainer,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
 })(typeof window!=='undefined'?window:globalThis);

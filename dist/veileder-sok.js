@@ -64,10 +64,12 @@ function nearKeys(folded,vocab,maxDistance){
  }
  return found;
 }
-const NEGATION=new Set(['ikke','uten','aldri','ingen','slipper']);
+const NEGATION=new Set(['ikke','uten','aldri','ingen','slipper','bortsett']);
 const BREAK=new Set(['men','og','eller','samt','bare']);
-// Indekser (i rawTokens) for ordet som står under en negasjon: det første ordet med innhold etter «ikke» eller «uten».
+// Indekser (i rawTokens) for ordet som står under en negasjon: det første ordet med innhold etter «ikke», «uten» eller «bortsett».
+// Småord, stoppord og verb som «spare» og «investere» hoppes over, så «ikke spare i aksjer» rammer «aksjer». «Ikke råd» rammer bare «råd».
 // Bare ett ord, så «hvis jeg ikke får betalt regningene» fortsatt finner regningene.
+const NEG_VERBS=new Set(['spare','sparer','investere','investerer','kjøpe','kjøper','satse','satser','bruke','bruker','plassere','plasserer','putte','putter']);
 function negatedIndexes(tokens){
  const out=new Set();
  tokens.forEach((tok,i)=>{
@@ -75,20 +77,28 @@ function negatedIndexes(tokens){
   let taken=0;
   for(let j=i+1;j<tokens.length&&taken<1;j++){
    if(BREAK.has(tokens[j])||NEGATION.has(tokens[j]))break;
-   if(STOP.has(tokens[j]))continue;
+   if(STOP.has(tokens[j])||NEG_VERBS.has(tokens[j])||tokens[j].length<3)continue;
    out.add(j);taken++;
   }
  });
  return out;
 }
-function join(tokens,vocab){
- const out=[];
+// Slår sammen to nabord til ett registrert ord («bolig lån», «fonds konto»). Et sammensatt ord som er registrert som navn
+// er entydig, så det slås sammen også når første del alene er et kjent ord. Andre sammenslåinger krever at første del er ukjent.
+// Gjentas til ingenting endres, slik at «aksje spare konto» blir «aksjesparekonto».
+function joinOnce(tokens,vocab){
+ const out=[];let changed=false;
  for(let i=0;i<tokens.length;i++){
   const a=tokens[i],b=tokens[i+1];let joined=null;
-  if(b&&a.length>=3&&b.length>=2)for(const link of ['','s']){const candidate=a+link+b;if(known(candidate,vocab)&&!known(a,vocab)){joined=candidate;break;}}
-  if(joined){out.push(joined);i++;}else out.push(a);
+  if(b&&a.length>=3&&b.length>=2)for(const link of ['','s']){const candidate=a+link+b;if(vocab.has(fold(candidate))||(known(candidate,vocab)&&!known(a,vocab))){joined=candidate;break;}}
+  if(joined){out.push(joined);i++;changed=true;}else out.push(a);
  }
- return out;
+ return {out,changed};
+}
+function join(tokens,vocab){
+ let cur=tokens;
+ for(let round=0;round<3;round++){const r=joinOnce(cur,vocab);cur=r.out;if(!r.changed)break;}
+ return cur;
 }
 const clip=s=>s.length>40?s.slice(0,40):s;
 function search(text,topics,config={}){
@@ -182,6 +192,23 @@ function search(text,topics,config={}){
   result.mode=rival?'choose':'answer';
  }else if(result.suggestions.length)result.mode='suggest';
  else result.mode=allGeneric?'broad':'none';
+ return applyGaps(result,q,config.gaps||[]);
+}
+// Kjente hull: spørsmål der temaet finnes, men svaret ikke dekker det brukeren spør om. Da vises ikke svaret som om det dekket spørsmålet.
+// Hvert hull har `when` (alle uttrykkene må treffe søket), `topics` (treffene må være blant disse) og `near` (nærmeste temaer å vise).
+// Et ferdig spørsmål (kind «question») rammes aldri. Fjern hullet når svaret dekker det.
+function applyGaps(result,q,gaps){
+ if(result.mode==='negated')return result;
+ for(const g of gaps){
+  if(!g.when.every(re=>re.test(q)))continue;
+  if(result.hits.some(h=>h.kind==='question'))continue;
+  const allowed=new Set(g.topics||[]);
+  if(result.hits.some(h=>!allowed.has(h.id)))continue;
+  result.uncovered={id:g.id,label:g.label};
+  result.hits=(g.near||[]).map(id=>({id,score:1,kind:'nearest',via:''}));
+  result.suggestions=[];result.mode='uncovered';
+  return result;
+ }
  return result;
 }
 // Kort begrunnelse som vises til brukeren under hvert treff.
@@ -189,6 +216,7 @@ function reason(item){
  if(item.kind==='question')return 'Samme spørsmål som i svaret';
  if(item.kind==='related')return 'Ordet «'+item.via+'» kan høre til her';
  if(item.kind==='typo')return 'Mente du «'+item.via+'»?';
+ if(item.kind==='nearest')return 'Ligger nærmest, men svarer ikke på spørsmålet ditt';
  if(item.kind==='negated')return 'Nevner «'+item.via+'», men er ikke svar på det du ikke vil ha';
  return item.via?'Treff på «'+item.via+'»':'Treff på søket ditt';
 }
