@@ -1,0 +1,254 @@
+{
+ "idag": {
+  "alle": 1127,
+  "riktig": 114,
+  "forslag": 0,
+  "fp": 0,
+  "ukjente": 39,
+  "per": {
+   "sletting / 8+ bokstaver": {
+    "n": 214,
+    "riktig": 29,
+    "forslag": 0,
+    "feil": 17
+   },
+   "ombytting / 8+ bokstaver": {
+    "n": 207,
+    "riktig": 24,
+    "forslag": 0,
+    "feil": 15
+   },
+   "bytte / 8+ bokstaver": {
+    "n": 230,
+    "riktig": 29,
+    "forslag": 0,
+    "feil": 17
+   },
+   "innsetting / 8+ bokstaver": {
+    "n": 239,
+    "riktig": 29,
+    "forslag": 0,
+    "feil": 17
+   },
+   "sletting / 5-7 bokstaver": {
+    "n": 75,
+    "riktig": 0,
+    "forslag": 0,
+    "feil": 0
+   },
+   "ombytting / 5-7 bokstaver": {
+    "n": 55,
+    "riktig": 0,
+    "forslag": 0,
+    "feil": 0
+   },
+   "bytte / 5-7 bokstaver": {
+    "n": 69,
+    "riktig": 1,
+    "forslag": 0,
+    "feil": 0
+   },
+   "innsetting / 5-7 bokstaver": {
+    "n": 28,
+    "riktig": 1,
+    "forslag": 0,
+    "feil": 0
+   },
+   "sletting / 3-4 bokstaver": {
+    "n": 10,
+    "riktig": 1,
+    "forslag": 0,
+    "feil": 0
+   }
+  }
+ },
+ "pr54": {
+  "alle": 1127,
+  "riktig": 970,
+  "forslag": 0,
+  "fp": 0,
+  "ukjente": 39,
+  "per": {
+   "sletting / 8+ bokstaver": {
+    "n": 214,
+    "riktig": 179,
+    "forslag": 0,
+    "feil": 17
+   },
+   "ombytting / 8+ bokstaver": {
+    "n": 207,
+    "riktig": 173,
+    "forslag": 0,
+    "feil": 15
+   },
+   "bytte / 8+ bokstaver": {
+    "n": 230,
+    "riktig": 195,
+    "forslag": 0,
+    "feil": 17
+   },
+   "innsetting / 8+ bokstaver": {
+    "n": 239,
+    "riktig": 206,
+    "forslag": 0,
+    "feil": 17
+   },
+   "sletting / 5-7 bokstaver": {
+    "n": 75,
+    "riktig": 75,
+    "forslag": 0,
+    "feil": 0
+   },
+   "ombytting / 5-7 bokstaver": {
+    "n": 55,
+    "riktig": 51,
+    "forslag": 0,
+    "feil": 0
+   },
+   "bytte / 5-7 bokstaver": {
+    "n": 69,
+    "riktig": 65,
+    "forslag": 0,
+    "feil": 0
+   },
+   "innsetting / 5-7 bokstaver": {
+    "n": 28,
+    "riktig": 25,
+    "forslag": 0,
+    "feil": 0
+   },
+   "sletting / 3-4 bokstaver": {
+    "n": 10,
+    "riktig": 1,
+    "forslag": 0,
+    "feil": 0
+   }
+  }
+ },
+ "ms-naiv": {
+  "alle": 1127,
+  "riktig": 1071,
+  "forslag": 1,
+  "fp": 0,
+  "ukjente": 39,
+  "per": {
+   "sletting / 8+ bokstaver": {
+    "n": 214,
+    "riktig": 214,
+    "forslag": 0,
+    "feil": 0
+   },
+   "ombytting / 8+ bokstaver": {
+    "n": 207,
+    "riktig": 207,
+    "forslag": 0,
+    "feil": 0
+   },
+   "bytte / 8+ bokstaver": {
+    "n": 230,
+    "riktig": 230,
+    "forslag": 0,
+    "feil": 0
+   },
+   "innsetting / 8+ bokstaver": {
+    "n": 239,
+    "riktig": 239,
+    "forslag": 0,
+    "feil": 0
+   },
+   "sletting / 5-7 bokstaver": {
+    "n": 75,
+    "riktig": 75,
+    "forslag": 0,
+    "feil": 0
+   },
+   "ombytting / 5-7 bokstaver": {
+    "n": 55,
+    "riktig": 0,
+    "forslag": 0,
+    "feil": 0
+   },
+   "bytte / 5-7 bokstaver": {
+    "n": 69,
+    "riktig": 69,
+    "forslag": 0,
+    "feil": 0
+   },
+   "innsetting / 5-7 bokstaver": {
+    "n": 28,
+    "riktig": 28,
+    "forslag": 0,
+    "feil": 0
+   },
+   "sletting / 3-4 bokstaver": {
+    "n": 10,
+    "riktig": 9,
+    "forslag": 1,
+    "feil": 0
+   }
+  }
+ },
+ "ms-kandidat": {
+  "alle": 1127,
+  "riktig": 1072,
+  "forslag": 47,
+  "fp": 0,
+  "ukjente": 39,
+  "per": {
+   "sletting / 8+ bokstaver": {
+    "n": 214,
+    "riktig": 204,
+    "forslag": 10,
+    "feil": 0
+   },
+   "ombytting / 8+ bokstaver": {
+    "n": 207,
+    "riktig": 197,
+    "forslag": 10,
+    "feil": 0
+   },
+   "bytte / 8+ bokstaver": {
+    "n": 230,
+    "riktig": 217,
+    "forslag": 13,
+    "feil": 0
+   },
+   "innsetting / 8+ bokstaver": {
+    "n": 239,
+    "riktig": 229,
+    "forslag": 10,
+    "feil": 0
+   },
+   "sletting / 5-7 bokstaver": {
+    "n": 75,
+    "riktig": 72,
+    "forslag": 3,
+    "feil": 0
+   },
+   "ombytting / 5-7 bokstaver": {
+    "n": 55,
+    "riktig": 55,
+    "forslag": 0,
+    "feil": 0
+   },
+   "bytte / 5-7 bokstaver": {
+    "n": 69,
+    "riktig": 69,
+    "forslag": 0,
+    "feil": 0
+   },
+   "innsetting / 5-7 bokstaver": {
+    "n": 28,
+    "riktig": 28,
+    "forslag": 0,
+    "feil": 0
+   },
+   "sletting / 3-4 bokstaver": {
+    "n": 10,
+    "riktig": 1,
+    "forslag": 1,
+    "feil": 0
+   }
+  }
+ }
+}

@@ -1,0 +1,26 @@
+'use strict';
+// Tester for validatoren og indeksbyggeren. Kjøres: node research/sokeprove/test-register.cjs
+const assert=require('assert'),fs=require('fs'),path=require('path');
+const {valider}=require('./valider-register.cjs');
+const {lesDokumenter,bygg}=require('./bygg-indeks.cjs');
+const {docs}=lesDokumenter();
+const reg=()=>JSON.parse(fs.readFileSync(path.join(__dirname,'register/begreper.json'),'utf8'));
+const feil=r=>valider(r,docs).feil.join(' | ');
+let n=0;const t=(navn,f)=>{f();n++;console.log('ok  '+navn);};
+t('det virkelige registeret har ingen feil og ingen advarsler',()=>{const v=valider(reg(),docs);assert.deepStrictEqual(v,{feil:[],advarsler:[]});});
+t('dobbel id fanges',()=>{const r=reg();r.begreper.push({...r.begreper[0]});assert.match(feil(r),/id brukes to ganger/);});
+t('ukjent dokument fanges',()=>{const r=reg();r.begreper[0].dokument='finnes-ikke';assert.match(feil(r),/finnes ikke/);});
+t('samme navn på to begreper fanges, også med annen skrivemåte (Zero / zero)',()=>{const r=reg();r.begreper.find(b=>b.id==='ask').produktnavn.push('ZERO');assert.match(feil(r),/peker til flere begreper/);});
+t('navn med æøå og uten (boliglån / boliglan) regnes som samme navn',()=>{const r=reg();r.begreper.find(b=>b.id==='studielan').navn.push('boliglan');assert.match(feil(r),/boliglan/);});
+t('ukjent relasjonstype fanges',()=>{const r=reg();r.begreper[0].beslektet[0].relasjon='lignende';assert.match(feil(r),/ukjent relasjon/);});
+t('relasjon til ukjent begrep fanges',()=>{const r=reg();r.begreper[0].beslektet[0].til='ingen';assert.match(feil(r),/finnes ikke/);});
+t('manglende type og tomt navn fanges',()=>{const r=reg();r.begreper[1].type='x';r.begreper[2].navn=[];assert.match(feil(r),/ukjent type/);assert.match(feil(r),/ikke-tom liste/);});
+t('sammenligning med ett begrep fanges',()=>{const r=reg();r.sammenligninger[0].begreper=['ask'];assert.match(feil(r),/minst to kjente begreper/);});
+t('samlebegrep uten forslag fanges',()=>{const r=reg();r.begreper.find(b=>b.type==='samlebegrep').forslag=[];assert.match(feil(r),/trenger forslag/);});
+t('manglende symmetri gir advarsel, ikke feil',()=>{const r=reg();r.begreper.find(b=>b.id==='fondskonto').beslektet=[];const v=valider(r,docs);assert.strictEqual(v.feil.length,0);assert.ok(v.advarsler.some(a=>/mangler relasjonen/.test(a)));});
+t('dokument uten begrep gir advarsel',()=>{const r=reg();r.begreper=r.begreper.filter(b=>b.id!=='buffer');const v=valider(r,docs);assert.ok(v.advarsler.some(a=>/dokument buffer/.test(a)));});
+t('indeksbyggeren nekter å bygge med feil',()=>{const r=reg();r.begreper[0].dokument='finnes-ikke';assert.throws(()=>bygg(r,docs),/Registeret har feil/);});
+t('indeksbyggingen er deterministisk (samme sjekksum to ganger)',()=>{assert.strictEqual(bygg(reg(),docs).sjekksum,bygg(reg(),docs).sjekksum);});
+t('sjekksummen endres når en tekst endres',()=>{const d2=JSON.parse(JSON.stringify(docs));d2[0].tittel+=' x';assert.notStrictEqual(bygg(reg(),docs).sjekksum,bygg(reg(),d2).sjekksum);});
+t('hvert dokument får navn fra registeret i indeksen',()=>{const ix=bygg(reg(),docs);const d=ix.dokumenter.find(d=>d.id==='q-fondskonto');assert.ok(d.produktnavn.includes('IKZ')&&d.navn.includes('fondskonto'));});
+console.log(n+' tester bestått');

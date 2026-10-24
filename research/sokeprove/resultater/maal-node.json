@@ -1,0 +1,123 @@
+{
+ "miljo": {
+  "node": "v22.23.4",
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "kjerner": 2,
+  "os": "Linux 6.18.44-fc-v153"
+ },
+ "storrelse": {
+  "veileder-engine.js på main": {
+   "byte": 17791,
+   "gzip": 6871
+  },
+  "veileder-engine.js i #54": {
+   "byte": 21814,
+   "gzip": 8557
+  },
+  "MiniSearch 7.2.0 (minifisert)": {
+   "byte": 18170,
+   "gzip": 6089
+  },
+  "kandidatlag (uminifisert)": {
+   "byte": 9560,
+   "gzip": 3748
+  },
+  "kandidatlag (minifisert)": {
+   "byte": 6794,
+   "gzip": 2853
+  },
+  "register (begreper.json)": {
+   "byte": 3262,
+   "gzip": 878
+  },
+  "avledet indeks (JSON)": {
+   "byte": 6535,
+   "gzip": 1639
+  },
+  "veileder-knowledge.js (innhold)": {
+   "byte": 18564,
+   "gzip": 6352
+  },
+  "tillegg kandidat totalt (bibliotek + lag + indeks, minifisert, gzip)": 10581
+ },
+ "datamengde": {
+  "dokumenter": 13,
+  "sporsmal": 55,
+  "tekstbyte": 2078
+ },
+ "soketid": {
+  "idag": {
+   "antallSok": 1620,
+   "median_ms": 0.0388,
+   "p95_ms": 0.0689,
+   "maks_ms": 0.358
+  },
+  "pr54": {
+   "antallSok": 1620,
+   "median_ms": 1.9295,
+   "p95_ms": 3.156,
+   "maks_ms": 26.204
+  },
+  "ms-naiv": {
+   "antallSok": 1620,
+   "median_ms": 0.035,
+   "p95_ms": 0.1344,
+   "maks_ms": 3.8
+  },
+  "ms-kandidat": {
+   "antallSok": 1620,
+   "median_ms": 0.0277,
+   "p95_ms": 0.0965,
+   "maks_ms": 7.441
+  }
+ },
+ "oppstart": {
+  "kandidat: bygg indeks (varm), ms": {
+   "median": 0.478,
+   "p95": 1.134
+  },
+  "naiv: bygg indeks (varm), ms": {
+   "median": 0.485,
+   "p95": 0.613
+  },
+  "pr54: første interpret med vokabular (hver gang), ms": {
+   "median": 2.084
+  },
+  "kald prosess: last innhold + bygg + første søk, kandidat (median av 15), ms": 33.4,
+  "kald prosess: last innhold + første søk, pr54 (median av 15), ms": 34.8
+ },
+ "skalering": {
+  "13 dokumenter (syntetisk)": {
+   "kandidat_bygg_ms": 0.7,
+   "kandidat_median_ms": 0.022,
+   "kandidat_p95_ms": 0.075,
+   "pr54_median_ms": 2.026,
+   "pr54_p95_ms": 3.047,
+   "indeksdata_json_kb": 6.4
+  },
+  "130 dokumenter (syntetisk)": {
+   "kandidat_bygg_ms": 4.6,
+   "kandidat_median_ms": 0.084,
+   "kandidat_p95_ms": 0.277,
+   "pr54_median_ms": 55.549,
+   "pr54_p95_ms": 82.883,
+   "indeksdata_json_kb": 45.4
+  },
+  "1300 dokumenter (syntetisk)": {
+   "kandidat_bygg_ms": 51.6,
+   "kandidat_median_ms": 1.063,
+   "kandidat_p95_ms": 4.911,
+   "pr54_median_ms": 777.244,
+   "pr54_p95_ms": 944.04,
+   "indeksdata_json_kb": 433.8
+  },
+  "13000 dokumenter (syntetisk)": {
+   "kandidat_bygg_ms": 621.1,
+   "kandidat_median_ms": 6.894,
+   "kandidat_p95_ms": 29.55,
+   "pr54_median_ms": 35.661,
+   "pr54_p95_ms": 7720.363,
+   "indeksdata_json_kb": 4332.8
+  }
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+ "forste_bygg_ms": 7.1,
+ "bygg_median_ms": 1.6,
+ "bygg_p95_ms": 3.2,
+ "sok_n": 1620,
+ "sok_median_ms": 0,
+ "sok_p95_ms": 0.2,
+ "sok_maks_ms": 3.8,
+ "pakke_byte": 31366,
+ "pakke_gzip": 10402,
+ "merknad": "Headless Chromium via Playwright. performance.now() har grov oppløsning, derfor median 0 ms på søk. Pakken inneholder MiniSearch, kandidatlaget og indeksdata."
+}
