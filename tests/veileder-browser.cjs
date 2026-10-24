@@ -113,6 +113,21 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    assert.equal(await page.evaluate(()=>document.activeElement.tagName),'SUMMARY','fokus blir på knappen');
    await page.keyboard.press('Enter');assert.equal(await deep.getAttribute('open'),null,'Enter lukker igjen');
    await noOverflow();
+   // ASK og fondskonto: forklaringer foran sammenligningene, og uavklart står som uavklart.
+   await search('ASK');await page.locator('#answerTitle').waitFor();
+   assert.equal(await page.locator('#answerTitle').textContent(),'Hva er en aksjesparekonto (ASK)?');
+   assert.equal(await page.locator('#answer .option-card').count(),0);
+   await search('Hva er Investeringskonto Zero?');
+   assert.equal(await page.locator('#answerTitle').textContent(),'Hva er en fondskonto?');
+   assert.equal(await page.locator('#answer .explain-terms dt').count(),5);
+   assert.equal(await page.locator('#answer .option-card').count(),0);
+   await page.locator('#answer details.answer-sources summary').focus();await page.keyboard.press('Enter');
+   assert.match(await page.locator('#answer details.answer-sources').textContent(),/ikke kontrollert her/);
+   assert.equal(await page.locator('#answer details.answer-sources a').count(),3);
+   await noOverflow();
+   await search('ASK eller fondskonto?');
+   assert.equal(await page.locator('#answerTitle').textContent(),'ASK eller fondskonto?');
+   assert.equal(await page.locator('#answer .option-card').count(),2);
    // Tilbake til et sammenligningssvar: profilfeltene kommer tilbake.
    await search('sparekonto');
    assert.equal(await page.locator('#contextPanel').isHidden(),false);

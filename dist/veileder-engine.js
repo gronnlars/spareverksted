@@ -21,7 +21,7 @@ const topics=[
  {id:'student',title:'Studielån',words:[/studiel[aå]n/,/l[aå]nekassen/,/stipend/,/student/],questions:['Bør jeg ta opp studielån selv om jeg har sparepenger?','Bør jeg investere studielånet?','Bør jeg betale ned studielånet raskere?','Kan sparing påvirke stipendet mitt?']},
  {id:'children',title:'Sparing til barn',words:[/barn/,/gavebrev/,/statsforvalter/],questions:['Bør jeg spare i mitt eller barnets navn?',F.expand('Hva skjer når barnet fyller {{adultAge}} år?'),'Kan sparepengene påvirke barnets stipend?','Bør barnas sparepenger stå i fond?']},
  {id:'buffer',title:'Buffer og dyr gjeld',words:[/buffer/,/kredittkort/,/forbruksl[aå]n/,/inkasso/,/regning/,/dyr gjeld/],questions:['Hvor stor buffer trenger jeg?','Bør jeg spare når jeg har kredittkortgjeld?','Hva gjør jeg hvis jeg ikke får betalt regningene?','Hvor bør bufferen stå?']},
- {id:'funds',title:'Sparekonto eller fond',words:[/fond/,/aksj(?!esparekonto)/,/indeks/,/\bsparekonto/,/risiko/,/b[oø]rs/],questions:['Bør jeg velge sparekonto eller fond?','Hvor mye risiko bør jeg ta?','Hva hvis jeg trenger pengene om tre år?','Hvordan unngår jeg å selge i panikk?']},
+ {id:'funds',title:'Sparekonto eller fond',words:[/fond(?!skonto)/,/aksj(?!esparekonto)/,/indeks/,/\bsparekonto/,/risiko/,/b[oø]rs/],questions:['Bør jeg velge sparekonto eller fond?','Hvor mye risiko bør jeg ta?','Hva hvis jeg trenger pengene om tre år?','Hvordan unngår jeg å selge i panikk?']},
  {id:'pension',title:'Sparing til pensjon',words:[/pensjon/,/uttak/,/\bips\b/],questions:['Bør jeg redusere risiko før pensjon?','Må alle sparepengene ut av fond når jeg pensjoneres?','Hvordan planlegger jeg uttak over mange år?','Hva bør jeg sjekke før jeg velger pensjonssparing?']},
  {id:'bsu',title:'BSU og boligkjøp',words:[/bsu/,/boligkj[oø]p/,/egenkapital/,/f[oø]rste bolig/],questions:['Bør jeg prioritere BSU?','Kan jeg få BSU-fradrag hvis jeg eier bolig?','Hva hvis jeg betaler lite skatt?','Bør egenkapital til bolig stå i fond?']}
 ];
@@ -65,7 +65,7 @@ function answer(id,profile){
  const t=topics.find(t=>t.id===id);if(!t)throw Error('Velg et av temaene vi dekker.');
  if(t.entry&&t.entry.kind==='explainer'){
   const e=t.entry;
-  return F.resolve({title:t.title,kind:'explainer',terms:e.terms,example:e.example,next:e.next||null,parts:e.parts,sources:e.sources,checked:e.checked,missing:[],profile:validate(profile)});
+  return F.resolve({title:t.title,kind:'explainer',terms:e.terms,example:e.example,next:e.next||null,caveat:e.caveat||'',parts:e.parts,sources:e.sources,checked:e.checked,missing:[],profile:validate(profile)});
  }
  if(t.entry){
   const base=answer(t.category,profile),entry=t.entry;
