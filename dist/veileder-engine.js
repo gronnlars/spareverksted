@@ -89,7 +89,12 @@ function answer(id,profile){
  else add('Lang tid hjelper, men er ikke nok alene','Forbrukerrådets anbefaling om minst {{fundMinYears}} år er ingen garanti for gevinst. Avklar hvor fast bruksdatoen er, hvor mye tap økonomien tåler, og om pengene kan stå gjennom en nedtur.');
  }
  if(p.risk==='low'&&fundRelevant(id,p))add('Uro teller også','Store verdifall kan gjøre en fondsplan vanskelig å følge. Vurder en mer forutsigbar plassering for penger som ikke tåler slike svingninger.');
- if(['mortgage','funds','student','pension'].includes(id))add('Hva krever det av deg?',p.discipline==='automatic'?'Et fast trekk kan gjøre det lettere å gjennomføre sparingen. Det fjerner hverken tapsrisiko eller behovet for å tilpasse beløpet når økonomien endrer seg.':'Hvis du velger sparing framfor ekstra avdrag, må pengene faktisk bli spart. Et automatisk trekk kan hjelpe. Hvis sparebeløpet ofte brukes opp, kan ekstra nedbetaling gi mer forutsigbar framdrift. Behold en buffer først.');
+ // Teksten om å spare i stedet for å betale ekstra gjelder bare temaer med et lån å betale ned.
+ const effort={mortgage:'Hvis du velger sparing framfor ekstra avdrag, må pengene faktisk bli spart. Et automatisk trekk kan hjelpe. Hvis sparebeløpet ofte brukes opp, kan ekstra nedbetaling gi mer forutsigbar framdrift. Behold en buffer først.',
+  student:'Hvis du velger sparing framfor ekstra innbetaling på studielånet, må pengene faktisk bli spart. Et automatisk trekk kan hjelpe. Hvis sparebeløpet ofte brukes opp, kan ekstra innbetaling gi mer forutsigbar framdrift. Behold en buffer først.',
+  funds:'En spareplan virker bare hvis den blir fulgt. Et automatisk trekk kan gjøre det lettere å spare jevnlig. Velg et beløp du klarer også i trangere måneder, og behold en buffer først.',
+  pension:'Pensjonssparing varer ofte i mange år. Et automatisk trekk kan gjøre det lettere å holde planen. Velg et beløp du klarer over tid, og behold en buffer først.'};
+ if(Object.hasOwn(effort,id))add('Hva krever det av deg?',p.discipline==='automatic'?'Et fast trekk kan gjøre det lettere å gjennomføre sparingen. Det fjerner hverken tapsrisiko eller behovet for å tilpasse beløpet når økonomien endrer seg.':effort[id]);
  if(id==='mortgage'){
  add('Sammenlign på samme grunnlag','Sammenlign spart rente etter virkningen av rentefradrag med fondsavkastning etter kostnader og skatt. En forventet fondsavkastning er usikker. En kombinasjon av sparing og ekstra avdrag kan også være aktuell.');
  add(p.fixed==='yes'?'Du har fastrente':'Har du fastrente?', 'Ved fastrente kan ekstra innbetaling utløse overkurs eller underkurs. Be banken regne ut kostnaden og forklare avtalen før du bestemmer deg. Ved flytende rente vil rentebesparelsen endre seg når renten endres.');
