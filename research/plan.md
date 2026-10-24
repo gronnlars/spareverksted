@@ -4,6 +4,22 @@
 
 Redaksjonell arbeidsliste for enkeltspørsmål ligger i `research/sporsmal-og-prioritering.md`. Denne filen sier hva som skal gjøres og i hvilken rekkefølge.
 
+## 0. Sparekalkulatoren er fryst (24.10.2026)
+
+Kalkulatoren er ferdig og er grunnmuren i Spareverksted.
+
+- Ingen nye funksjoner, ingen ombygging, ingen kosmetisk finpuss.
+- Endringer krever en av disse begrunnelsene: dokumentert regnefeil, alvorlig brukshindring, nødvendig kildeoppdatering (satser, renter, forutsetninger i `dist/assumptions.js`) eller tilgjengelighetsfeil.
+- Gjenstående kontroller er kvalitetssikring. Funn som ikke faller inn under begrunnelsene over, parkeres.
+- Nye ideer går til parkeringslisten (punkt 9). De får ikke automatisk plass i planen.
+- Andre deler kan lenke til kalkulatoren med delingslenker som finnes i dag, uten å endre den.
+
+Offentlig beskriver vi bare det vi kan dokumentere: hvilke beregninger som er uavhengig kontrollert, hvilke tester som kjøres, og hva som ikke er testet. Ingen påstander om å være best.
+
+Universell utforming følger hele nettstedet. Krav, begrunnelser og gjennomførte kontroller står i `research/universell-utforming.md` og gjelder hver ny del fra første utkast.
+
+Videre arbeid gjelder helheten rundt kalkulatoren: lære, finne svar, utforske og teste forståelsen.
+
 ## 1. Status
 
 | Punkt | Funn | Hvordan |
@@ -18,7 +34,9 @@ Redaksjonell arbeidsliste for enkeltspørsmål ligger i `research/sporsmal-og-pr
 
 Kriteriene er oppfylt: uavhengige kontrollberegninger, grensetilfeller, validering, lenker og lagrede planer er testet, og testene er grønne.
 
-## 3. Fase 2: kan avsluttes etter én kort manuell runde
+## 3. Fase 2: avsluttes som kvalitetssikring
+
+Funn i denne runden rettes bare hvis de faller inn under begrunnelsene i punkt 0.
 
 Kontrollert automatisk (Chromium, og hovedflyten også i Firefox og WebKit):
 - Svaret vises straks etter startguiden, med «Før skatt» og forutsetningene. «Se graf» kommer før forklaringen.
@@ -78,11 +96,11 @@ Type: **T** = trenger tekst, **B** = trenger beregning, **G** = kan gjenbruke de
 1. **Søketestsett.** 30 realistiske spørsmål, hvert med forventet tema eller «ikke dekket». Låses i en test. Dagens resultat er utgangspunktet.
 2. **Søkeord for temaene som finnes.** For eksempel «betale ned lån» til boliglån eller sparing, «flytte hjemmefra» til buffer.
 3. **Ærlig bom.** Når et spørsmål nevner noe som ikke er dekket (samlivsbrudd, arv, formuesskatt), sier siden det tydelig, i stedet for å vise et svar som bare treffer et ord.
-4. **Ny svarform «Forklaring».** Kort svar, konkret eksempel, lenke til egne tall i kalkulatoren. Krever ikke to alternativer med fordeler og ulemper. Første tre: renters rente, kjøpekraft, kostnader. Gjenbruker tekst som finnes.
+4. **Ny svarform «Forklaring».** Kort svar, konkret eksempel, lenke til et ferdig eksempel i kalkulatoren (dagens delingslenker, ingen endring i kalkulatoren). Krever ikke to alternativer med fordeler og ulemper. Første tre: renters rente, kjøpekraft, kostnader. Gjenbruker tekst som finnes.
 
 Ikke med i første leveranse: spareform fra kalkulatoren til veilederen, nye temaer, lagring av spørsmål, analyseverktøy.
 
-Ferdig når: søketestsettet består, ingen spørsmål i settet gir et misvisende svar, og de tre forklaringene har kilde og kontrolldato.
+Ferdig når: søketestsettet består, ingen spørsmål i settet gir et misvisende svar, de tre forklaringene har kilde og kontrolldato, og kravene i `research/universell-utforming.md` er kontrollert for det som er nytt.
 
 ## 6. Fase 4: bred dekning, én del av kartet om gangen
 
@@ -97,3 +115,17 @@ Versjon 1: annuitet, serielån, restgjeld, renteendring og ekstra innbetaling. R
 - Brukerpanel er ikke et krav. Fase 2 kan avsluttes etter tekniske og manuelle kontroller, med ærlig forbehold om forståelse.
 - Ingen egen bank-fond-prototype nå.
 - «10 til 12 svar» var en første leveranse, ikke et tak. Målet er bred dekning.
+- Sparekalkulatoren er fryst (punkt 0).
+
+## 9. Parkert
+
+Ideer uten plass i planen. Et punkt flyttes inn bare ved en egen beslutning.
+
+| Idé | Kilde |
+| --- | --- |
+| Historiske eksempler med SSB-data (rente og prisvekst) | Historikknotat 23.10 |
+| Visning etter skatt i kalkulatoren (Utforsk og Avansert) | Skattenotat 23.10 |
+| Kompakt resultat nær feltene på mobil, egen handlingsmeny på pc | Del B 23.10 |
+| Spareform fra kalkulatoren til veilederen | Dekningsoversikten 24.10 |
+| Standard prisvekst 2,0 % i stedet for 2,5 % | Spareformbeslutning 23.10. Kan bli en kildeoppdatering hvis Lars vil |
+| Gjøre `polish-browser.cjs` robust mot tidsfeil | Status 24.10. Testendring, ikke kalkulatorendring |
