@@ -176,3 +176,33 @@ Feilen om ekstra avdrag (hull 5) kan rettes i samme runde hvis Lars vil, men er 
 - Prioriteringen i punkt 6 er en faglig vurdering, ikke et brukertestresultat.
 - Publisert side, iPhone og skjermleser er ikke kontrollert i denne runden.
 - Tidsavhengige fakta utenom stipendgrensen er ikke kontrollert på nytt (se punkt 2).
+
+## 10. Oppfølging 24. oktober (senere samme dag)
+
+Arbeidet etter kartleggingen. Ingenting er slått sammen. PR-ene venter på gjennomgang.
+
+| PR | Hva | Status |
+| --- | --- | --- |
+| #35 | Hull 5: avdragsteksten vises bare der det finnes et lån. For studielån var poenget riktig, men ordet «avdrag» var feil (se punkt 4.1) | Til gjennomgang |
+| #36 | Hull 2: søketestsett med 30 spørsmål og søkeord for eksisterende svar. Anbefalt neste oppgave i punkt 8. Bygger på #35 | Til gjennomgang |
+| #37 | Dokumentasjon av CI-feilen på main etter PR #34 | Til gjennomgang |
+| #38 | Retting av inntastingsfeil fra PR #34 i kalkulatoren | Til gjennomgang |
+
+### Søket (PR #36, kontrollert i Node)
+- **Før:** 17 av 23 dekkede spørsmål ga riktig tema, 2 ga feil tema og 4 ga ingen treff. 2 av 7 udekkede ga misvisende treff.
+- **Etter:** 23 av 23 gir riktig tema. Ingen misvisende treff i settet.
+- **To gamle søkefeil funnet underveis:** `ips` traff inni «tips», og «nedbetale studielånet» ga boliglånssvaret.
+- **Filter:** Fond og pensjon skjules når skatt er selve spørsmålet. Boliglån skjules når valget mellom fast og flytende rente er selve spørsmålet. Den første, brede versjonen skjulte relevante svar, blant annet «fond eller sparekonto med tanke på skatt» og uttak av pensjon med tanke på skatt. Den er snevret inn og kontrollert med 22 spørsmål utenfor settet.
+- **Kjent hull:** «Hvor mye skatt betaler jeg på fond?» gir fortsatt fondssvaret. Filtre kan bare redusere slike treff. Det som løser dem, er et ærlig svar om at temaet ikke er dekket (planens fase 3, punkt 3). Det styrker prioriteringen av den oppgaven.
+- **Svakhet:** Testsettet og søkeordene er laget av samme person (Claude). Søket er ikke testet med ekte spørsmål.
+
+### Inntastingsfeil i kalkulatoren (PR #38, kontrollert)
+PR #34 skulle hindre at «2 000» pluss 8 ble 20 008, men innførte en ny feil. På en treg nettleser kunne «500» skrevet i vekstfeltet bli «00». Feilen er gjenskapt kontrollert ved å forsinke nettleserens tidsur. Den kom inn med `235c388` og ligger på main og den publiserte siden (`ac0c446`). PR #38 retter den, med en regresjonstest som feiler før rettingen og består etterpå.
+
+Lærdom for kartleggingen: Tester som fyller ut felt med én kommando, ser ikke hvordan mennesker skriver. Det gjelder også tester av veilederens skjema.
+
+### CI-feilen etter PR #34 (PR #37)
+Å kalle den tilfeldig hadde ikke belegg. Steget varte 7 sekunder, og `input-browser.cjs` feiler lokalt på samme linje med PR #34, men ikke før. Det peker sterkt mot inntastingsfeilen over. **Loggen er ikke lest**, fordi lagringsadressen er blokkert, så årsaken er ikke endelig avklart.
+
+### Endret prioritering
+Hull 2 (søk) og hull 5 (avdragstekst) er behandlet. Neste anbefalte oppgave er nå **ærlig bom**: søket skal si tydelig når et spørsmål ikke er dekket. Begrunnelsen er de gjenstående misvisende treffene og at filtrene bare dekker de spørsmålene noen har tenkt på.
