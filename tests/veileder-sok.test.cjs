@@ -92,6 +92,45 @@ for(const [q] of KNOWN_MISLEADING)assert.ok(report.misleading.includes(q),'Rette
 
 for(const [q,want] of EXTRA)assert.equal(V.findTopics(q)[0]??null,want,'Utenfor settet: '+q);
 
+// Kontroll av filtrene (not) utenfor settet. Et filter skal bare skjule et svar når spørsmålet gjelder noe svaret
+// ikke dekker. Det skal ikke skjule et relevant svar bare fordi spørsmålet nevner skatt eller rentetype.
+// want: godkjente første treff (null = ingen treff). removed: svaret filteret fjerner (null = filteret gjør ingenting).
+const withoutFilter=q=>{const saved=V.topics.map(t=>[t,t.not]);for(const t of V.topics)delete t.not;try{return V.findTopics(q);}finally{for(const [t,n] of saved)if(n)t.not=n;}};
+const FILTER_CONTROL=[
+ // Skatt er selve spørsmålet. Fond og pensjon har ingen skatteregler, så de skjules.
+ ['Hvordan blir fond skattlagt?',[null],'funds'],
+ ['Hva skjer med skatten hvis jeg selger fond?',[null],'funds'],
+ ['Hvordan unngår jeg skatt på fondsgevinst?',[null],'funds'],
+ ['Skal jeg ha pengene i fond eller i banken når jeg betaler formuesskatt?',[null],'funds'],
+ ['Skatt på sparekonto',[null],'funds'],
+ ['Hvordan blir pensjonen skattlagt?',[null],'pension'],
+ // Skatt er en del av et spørsmål svaret dekker. Svaret skal vises.
+ ['Hvordan påvirker skatt valget mellom sparekonto og fond?',['funds'],null],
+ ['Bør jeg velge fond eller sparekonto med tanke på skatt?',['funds'],null],
+ ['Er indeksfond lurt når man tenker på skatt?',['funds'],null],
+ ['Gir renter på sparekonto skatt?',['funds'],null],       // tynt: én setning om rente etter skatt
+ ['Hvordan bør jeg ta ut pensjonssparingen med tanke på skatt?',['pension'],null],
+ ['Når jeg blir pensjonist, hvordan tar jeg ut pengene uten å betale for mye skatt?',['pension'],null],
+ ['Bør jeg spare i BSU eller fond med tanke på skatt?',['bsu','funds','q-bsu-basics'],null], // likt antall treff
+ // Temaer med skatt i svaret har ikke filter og skal fortsatt treffe.
+ ['Hvordan blir fond skattlagt på aksjesparekonto?',['q-ask-zero'],'funds'],
+ ['Hvordan skattlegges IPS?',['q-ips-ask'],'pension'],
+ ['Får jeg skattefradrag for BSU?',['bsu','q-bsu-basics'],null],
+ ['Bør jeg betale ned boliglånet når jeg får rentefradrag på skatten?',['mortgage'],null],
+ ['Må barnet betale skatt av sparepengene sine?',['children'],null],
+ ['Påvirker studielånet skatten min?',['student'],null],
+ // Rentetype: skjules bare når valget av fast eller flytende rente er selve spørsmålet.
+ ['Bør jeg velge fast eller flytende rente på huslånet?',[null],'mortgage'],
+ ['Fastrente eller flytende, hva er best når jeg skal betale ekstra på boliglånet?',['mortgage'],null],
+ ['Har du fastrente, kan du betale ekstra avdrag?',['mortgage'],null]
+];
+for(const [q,want,removed] of FILTER_CONTROL){
+ const top=V.findTopics(q)[0]??null,before=withoutFilter(q);
+ assert.ok(want.includes(top),`Filterkontroll: «${q}» ga ${top}, forventet ${want.join(' eller ')}`);
+ const gone=before.filter(id=>!V.findTopics(q).includes(id));
+ assert.deepEqual(gone,removed?[removed]:[],`Filterkontroll: «${q}» skal fjerne ${removed??'ingenting'}, fjernet ${gone.join(',')||'ingenting'}`);
+}
+
 // 3. Skatt på fond skal aldri regnes som besvart av det generelle fondssvaret.
 assert.equal(V.findTopics('Hvordan blir fond skattlagt?')[0]??null,null,'Det generelle fondssvaret godkjennes ikke som svar på skatt på fond');
 assert.doesNotMatch(answerText('funds'),/37,84|skjerming|gevinstskatt|skattes ved salg/i,'Fondssvaret har fått skatteregler. Vurder testsettet på nytt.');
