@@ -90,6 +90,35 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   const shared=new URLSearchParams(new URL(await desktop.locator('#shareUrl').inputValue()).hash.slice(1));
   assert.equal(shared.get('monthly'),'50000');
   for(const key of ['userAge','ageKnown','riskChosen','stress','ageGroup','purpose','buffer','debt','income','discipline'])assert.equal(shared.has(key),false,'Private field in shared URL: '+key);
+  // Forklaring: søk på «inflasjon» gir en forklaring uten alternativkort, med tastatur, uten sideveis scrolling.
+  for(const width of [320,390]){
+   const ectx=await browser.newContext({viewport:{width,height:844},isMobile:true,hasTouch:true}),page=await ectx.newPage(),eerrors=[];
+   page.setDefaultTimeout(10000);page.on('pageerror',e=>eerrors.push(e.message));
+   const search=async value=>{if(!await page.evaluate(()=>document.getElementById('searchBox').open))await page.locator('#searchBox>summary').click();await page.locator('#question').fill(value);await page.locator('#questionForm button').click();};
+   const noOverflow=async()=>assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Horizontal scrolling');
+   await page.goto(origin+'/spor.html');
+   await search('inflasjon');
+   await page.locator('#answerTitle').waitFor();
+   assert.equal(await page.locator('#answerTitle').textContent(),'Hva er kjøpekraft?');
+   assert.equal(await page.locator('#answer .option-card').count(),0,'forklaring skal ikke ha alternativkort');
+   assert.equal(await page.locator('#contextPanel').isHidden(),true,'profilfeltene skal ikke vises for en ren forklaring');
+   assert.match(await page.locator('#answer .answer-lead').textContent(),/inflasjon/);
+   assert.match(await page.locator('#answer .explain-example').textContent(),/ikke en prognose/);
+   assert.equal(await page.locator('#answer .explain-terms dt').count(),3);
+   assert.equal(await page.evaluate(()=>document.activeElement.id),'answerTitle','fokus skal flyttes til svaret');
+   const deep=page.locator('#answer details.full-answer');
+   assert.equal(await deep.getAttribute('open'),null,'fordypning er lukket til brukeren åpner den');
+   await deep.locator('summary').focus();await page.keyboard.press('Enter');
+   assert.notEqual(await deep.getAttribute('open'),null,'Enter åpner fordypning');
+   assert.equal(await page.evaluate(()=>document.activeElement.tagName),'SUMMARY','fokus blir på knappen');
+   await page.keyboard.press('Enter');assert.equal(await deep.getAttribute('open'),null,'Enter lukker igjen');
+   await noOverflow();
+   // Tilbake til et sammenligningssvar: profilfeltene kommer tilbake.
+   await search('sparekonto');
+   assert.equal(await page.locator('#contextPanel').isHidden(),false);
+   assert.ok(await page.locator('#answer .option-card').count()>0);
+   assert.deepEqual(eerrors,[]);await ectx.close();
+  }
   assert.deepEqual(errors,[]);
   console.log('Browser: mobile touch, live result and curve, keyboard, profile relevance, independent horizons, preserved hidden fields, disclosure, privacy and responsive layouts passed.');
  }finally{if(browser)await browser.close();server.close();}

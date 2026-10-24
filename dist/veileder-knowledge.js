@@ -7,6 +7,7 @@ const bsu={id:'tax-bsu',title:'Skatteetaten: BSU og vilkår',url:'https://www.sk
 const ask={id:'tax-ask',title:'Skatteetaten: aksjesparekonto',url:'https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/aksjar-og-verdipapir/om/aksjesparekonto-ask/'};
 const ips={id:'tax-ips',title:'Skatteetaten: individuell sparing til pensjon, ny ordning',url:'https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid-trygd-og-pensjon/pensjon-og-uforetrygd/ny-ordning-for-skattefavorisert-individuell-sparing-til-pensjon/'};
 const zeroTax={id:'tax-fondskonto',title:'Skatteetaten: skatt på fondskonto',url:'https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/aksjer-og-verdipapirer/om/skatteregler-investere-i-aksjer-og-andre-verdipapirer-gjennom-kapitalforsikring-fondskonto/'};
+const ssb={id:'ssb-inflasjon',title:'SSB: Hva er inflasjon?',url:'https://www.ssb.no/priser-og-prisindekser/konsumpriser/artikler/hva-er-inflasjon'};
 const i=(title,text)=>({title,text});
 const entries=[
  {notice:p=>p.age!==null&&p.age>F.value('bsuMaxAge')?'Nye BSU-innskudd kan gjøres til og med året du fyller {{bsuMaxAge}}. En eksisterende konto kan fortsatt brukes etter reglene.':p.owner==='yes'?'Boligeierskap ved årets slutt betyr at du ikke får BSU-fradrag for året.':'',id:'q-bsu-basics',category:'bsu',title:'Hva er BSU?',checked:date,words:[/\bbsu\b/,/boligsparing for ungdom/],questions:['Hva er BSU?','Hva betyr BSU?','Hvordan fungerer boligsparing for ungdom?'],
@@ -23,7 +24,24 @@ const entries=[
  intro:'ASK og forsikringsbasert fondskonto har ulike regler for skatt og uttak. Investeringskonto Zero er et produktnavn for en fondskonto. Her sammenlignes kontotypene, ikke bestemte tilbydere.',sources:[ask,zeroTax],
  parts:[i('Ulik skatt ved uttak','På ASK tas innskudd normalt ut før skattepliktig gevinst. Fra fondskonto består et uttak forholdsmessig av innskudd og gevinst eller tap. Kontoene er derfor ikke skattemessig like ved deluttak.')],
  options:[{title:'ASK',subtitle:'For kvalifiserte aksjer og aksjefond.',poorFit:'du trenger investeringer som faller utenfor ASK-reglene.',pros:[i('Innskudd ut før gevinst','Kan være nyttig hvis du vil hente ut en del av sparingen uten å utløse gevinstskatt ennå.'),i('Utsatt skatt innenfor ordningen','Kjøp og salg på kontoen utløser normalt ikke løpende gevinstskatt.')],cons:[i('Ikke alle investeringer er tillatt','Rene rentefond og direkte kjøp av amerikanske aksjer faller utenfor. Et EØS-registrert globalt aksjefond kan likevel investere utenfor Europa.'),i('Tap kommer ikke straks til fradrag','På ASK får du normalt først fradrag for samlet tap når kontoen avsluttes.')]},
- {title:'Forsikringsbasert fondskonto',subtitle:'En kontotype med kapitalforsikring.',poorFit:'du vil ta ut bare innskudd først eller ikke ønsker en forsikringsavtale.',pros:[i('Kan romme flere investeringer','Utvalget avhenger av avtalen og kan være bredere enn på ASK. Kontroller hva tilbyderen tillater.'),i('Utsatt skatt på avkastning','Avkastning skattlegges normalt ved uttak, ikke ved hvert kjøp og salg inne på kontoen.')],cons:[i('Deluttak kan utløse skatt','Du tar ut en forholdsmessig del av gevinst eller tap sammen med innskuddet. Du kan ikke ta ut bare innskuddet først som på ASK.'),i('Andre vilkår og kostnader','Kontroller forsikringsvilkår, eierskap, samlede kostnader og hva som skjer ved flytting.')]}]}
+ {title:'Forsikringsbasert fondskonto',subtitle:'En kontotype med kapitalforsikring.',poorFit:'du vil ta ut bare innskudd først eller ikke ønsker en forsikringsavtale.',pros:[i('Kan romme flere investeringer','Utvalget avhenger av avtalen og kan være bredere enn på ASK. Kontroller hva tilbyderen tillater.'),i('Utsatt skatt på avkastning','Avkastning skattlegges normalt ved uttak, ikke ved hvert kjøp og salg inne på kontoen.')],cons:[i('Deluttak kan utløse skatt','Du tar ut en forholdsmessig del av gevinst eller tap sammen med innskuddet. Du kan ikke ta ut bare innskuddet først som på ASK.'),i('Andre vilkår og kostnader','Kontroller forsikringsvilkår, eierskap, samlede kostnader og hva som skjer ved flytting.')]}]},
+
+ // Forklaring («hva er dette?»): kort svar, begreper, eksempel, fordypning. Ingen alternativkort.
+ {kind:'explainer',id:'q-kjopekraft',title:'Hva er kjøpekraft?',checked:'2026-10-24',
+ questions:['Hva er kjøpekraft?','Hva er prisvekst?','Hva er inflasjon?','Hva betyr dagens kroner?','Hvorfor blir pengene mindre verdt på konto?'],
+ words:[/kj[øo]pekraft/,/prisvekst/,/inflasjon/,/dagens kroner/,/mindre verdt/,/mister verdi/],
+ intro:'Kjøpekraft er hvor mye du kan kjøpe for pengene. Når prisene stiger, rekker det samme kronebeløpet til mindre. Prisveksten kalles også inflasjon.',
+ terms:[
+  {term:'kjøpekraft',text:'Hvor mye du kan kjøpe for et beløp.'},
+  {term:'prisvekst',alsoCalled:'inflasjon',text:'At prisene på varer og tjenester stiger over tid. Oppgis ofte i prosent per år.'},
+  {term:'dagens kroner',text:'Et beløp i framtiden regnet om til hva det tilsvarer med dagens priser. Da kan du sammenligne beløp fra ulike år.'}],
+ example:i('Eksempel: ti år med 2,5 % prisvekst','Anta at prisene stiger 2,5 % hvert år. Det du i dag kan kjøpe for 100 000 kroner, koster da omtrent 128 000 kroner om ti år. Pengene må altså vokse til 128 000 kroner bare for å kjøpe det samme. Sett fra den andre siden: 100 000 kroner som ligger uten rente i ti år, kjøper det som 78 000 kroner kjøper i dag. Dette er et regneeksempel, ikke en prognose for prisveksten.'),
+ next:{text:'Se hvordan prisveksten slår ut på dine egne tall i kalkulatoren.',href:'index.html'},
+ sources:[ssb],
+ parts:[
+  i('Færre kroner er noe annet enn mindre kjøpekraft','Får du tilbake færre kroner enn du satte inn, er det et tap i kroner. Får du flere kroner, men prisene har steget mer enn pengene, har du likevel mistet kjøpekraft. Det er to ulike ting, og de må ikke forveksles.'),
+  i('Renten må følge med prisene','Er renten på en konto lavere enn prisveksten, øker saldoen, men pengene kjøper likevel mindre. Saldoen sier derfor ikke alene om du har det bedre.'),
+  i('Prisveksten er et gjennomsnitt','SSB måler prisveksten med konsumprisindeksen, som er et gjennomsnitt av prisendringene på mange varer og tjenester. Det du selv kjøper, kan stige mer eller mindre enn gjennomsnittet. Prisveksten varierer også fra år til år.')]}
 ];
 if(typeof module!=='undefined'&&module.exports)module.exports=entries;
 else {for(const entry of entries)root.SpareVeileder.register(entry);}
