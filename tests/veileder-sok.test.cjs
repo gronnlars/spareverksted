@@ -35,7 +35,7 @@ const SET=[
  {q:'Lønner det seg å betale ned studielånet fortere?',expect:'student',proof:/Låne mindre eller betale ekstra/},
  {q:'Bør jeg redusere risikoen før jeg blir pensjonist?',expect:'pension',proof:/Mange reduserer risiko når uttakene nærmer seg/},
  {q:'Hva er forskjellen på IPS og ASK?',expect:'q-ips-ask',proof:/IPS er bundet pensjonssparing/},
- {q:'Hva er en aksjesparekonto?',expect:'q-ask-zero',also:['q-ips-ask'],proof:/På ASK tas innskudd normalt ut før skattepliktig gevinst|ASK gir mer tilgang til pengene/},
+ {q:'Hva er en aksjesparekonto?',expect:'q-aksjesparekonto',proof:/Du betaler ikke skatt på gevinst mens verdiene står på kontoen/},
  // Ikke dekket. Et treff her er misvisende: brukeren får et svar på noe annet enn det hen spurte om.
  {q:'Hvordan blir fond skattlagt?',expect:null,why:'Fondssvaret har ingen skatteregler for fond. ASK-svaret forklarer bare forskjellen mellom to kontotyper.'},
  {q:'Er det dumt å ha alle sparepengene på brukskonto?',expect:null,why:'Ingen svar sammenligner brukskonto med sparekonto.'},
@@ -61,7 +61,9 @@ const EXTRA=[
  ['Skatt på sparekonto',null],
  ['Fast eller flytende rente på boliglånet?',null],
  ['Hva skjer hvis banken går konkurs?',null],
- ['Skatt på ASK','q-ips-ask'],                              // ASK-svarene har skatt og skal fortsatt treffe
+ ['Skatt på ASK','q-aksjesparekonto'],                      // ASK-forklaringen har skatt ved uttak og skal treffe
+ ['Hva er en fondskonto?','q-fondskonto'],
+ ['Hva er forskjellen på aksjesparekonto og fondskonto?','q-ask-zero'],
  ['Skal jeg ha aksjesparekonto eller IPS?','q-ips-ask']
 ];
 
@@ -114,7 +116,7 @@ const FILTER_CONTROL=[
  ['Når jeg blir pensjonist, hvordan tar jeg ut pengene uten å betale for mye skatt?',['pension'],null],
  ['Bør jeg spare i BSU eller fond med tanke på skatt?',['bsu','funds','q-bsu-basics'],null], // likt antall treff
  // Temaer med skatt i svaret har ikke filter og skal fortsatt treffe.
- ['Hvordan blir fond skattlagt på aksjesparekonto?',['q-ask-zero'],'funds'],
+ ['Hvordan blir fond skattlagt på aksjesparekonto?',['q-aksjesparekonto'],'funds'],
  ['Hvordan skattlegges IPS?',['q-ips-ask'],'pension'],
  ['Får jeg skattefradrag for BSU?',['bsu','q-bsu-basics'],null],
  ['Bør jeg betale ned boliglånet når jeg får rentefradrag på skatten?',['mortgage'],null],

@@ -25,10 +25,10 @@ const sug=r=>r.suggestions.map(s=>s.id);
 }
 
 // 2. Skrivefeil med kjente stammer: forslag, ikke automatisk svar, og ikke noe fondssvar.
-for(const [q,expect] of [['aksjesparekonot','q-ask-zero'],['fondskotno','q-ask-zero'],['fondkonto','q-ask-zero']]){
+for(const [q,expect] of [['aksjesparekonot','q-aksjesparekonto'],['fondskotno','q-fondskonto'],['fondkonto','q-fondskonto']]){
   const r=V.search(q);
   assert.equal(r.mode,'suggest',q+': skal gi «Mente du»');
-  assert.ok(sug(r).includes(expect),q+': skal foreslå aksjesparekonto');
+  assert.ok(sug(r).includes(expect),q+': skal foreslå riktig forklaring');
   assert.ok(!ids(r).includes('funds'),q+': skal ikke åpne fond-svaret');
 }
 // Eksisterende treff skal ikke svekkes.
@@ -66,7 +66,7 @@ for(const [q,first] of [['barnesparinng','children'],['studentlån','student'],[
 }
 
 // 4. Særskrevne navn som er registrert (sluttkontroll 2026-10-24): samme svar som det sammensatte ordet.
-for(const [q,first] of [['fonds konto','q-ask-zero'],['fond konto','q-ask-zero'],['aksje spare konto','q-ask-zero'],['individuell pensjons sparing','q-ips-ask']]){
+for(const [q,first] of [['fonds konto','q-fondskonto'],['fond konto','q-fondskonto'],['aksje spare konto','q-aksjesparekonto'],['individuell pensjons sparing','q-ips-ask']]){
   const r=V.search(q);
   assert.equal(r.mode,'answer',q);
   assert.equal(ids(r)[0],first,q+': skal gi samme svar som det sammensatte ordet');

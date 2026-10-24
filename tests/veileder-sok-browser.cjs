@@ -81,7 +81,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    await noOverflow('Vis flere');
 
    // 4. Valg mellom likeverdige svar: ingenting åpnes automatisk.
-   await ask('ask');
+   await ask('mindre verdt på sparekontoen');
    assert.ok(!await answerOpen(),label+': uavgjort åpner ikke et svar');
    assert.match(await status(),/Flere svar/);
    assert.ok(await page.locator('#matches .match-list button').count()>=2);

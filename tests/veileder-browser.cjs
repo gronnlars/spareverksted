@@ -113,6 +113,32 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    assert.equal(await page.evaluate(()=>document.activeElement.tagName),'SUMMARY','fokus blir på knappen');
    await page.keyboard.press('Enter');assert.equal(await deep.getAttribute('open'),null,'Enter lukker igjen');
    await noOverflow();
+   // ASK og fondskonto: egne forklaringer, sammenligningen for spørsmål om begge, og uavklart står som uavklart.
+   const titleFor=async q=>{await search(q);await page.locator('#answerTitle').waitFor();return page.locator('#answerTitle').textContent();};
+   assert.equal(await titleFor('ASK'),'Hva er en aksjesparekonto (ASK)?');
+   assert.equal(await page.locator('#answer .option-card').count(),0);
+   assert.equal(await titleFor('aksje spare konto'),'Hva er en aksjesparekonto (ASK)?');
+   assert.equal(await titleFor('Hva er Investeringskonto Zero?'),'Hva er en fondskonto?');
+   assert.equal(await titleFor('fonds konto'),'Hva er en fondskonto?');
+   assert.equal(await page.locator('#answer .explain-terms dt').count(),5);
+   assert.equal(await page.locator('#answer .option-card').count(),0);
+   await page.locator('#answer details.answer-sources summary').focus();await page.keyboard.press('Enter');
+   const sourcesText=await page.locator('#answer details.answer-sources').textContent();
+   assert.match(sourcesText,/ikke kontrollert her/);assert.match(sourcesText,/ingen oppdateringsdato/);assert.match(sourcesText,/24\. oktober 2026/);
+   assert.equal(await page.locator('#answer details.answer-sources a').count(),3);
+   await noOverflow();
+   assert.equal(await titleFor('forskjellen på ASK og fondskonto'),'ASK eller fondskonto?');
+   assert.equal(await page.locator('#answer .option-card').count(),2);
+   // Skrivefeil gir et merket forslag, ikke et svar. Valg av forslaget åpner forklaringen.
+   await search('fondskotno');
+   assert.equal(await page.locator('#answerPanel').isVisible(),false,'skrivefeil åpner ikke et svar');
+   const sug=page.locator('#matches .match-list button').first();
+   assert.equal(await page.locator('#matchStatus').innerText(),'Mente du «fondskonto»? Velg et svar nedenfor.');
+   assert.match(await sug.innerText(),/Hva er en fondskonto\?/);
+   assert.ok((await sug.boundingBox()).height>=44,'forslaget har stor nok trykkflate');
+   await sug.focus();await page.keyboard.press('Enter');await page.locator('#answerTitle').waitFor();
+   assert.equal(await page.locator('#answerTitle').textContent(),'Hva er en fondskonto?');
+   await noOverflow();
    // Tilbake til et sammenligningssvar: profilfeltene kommer tilbake.
    await search('sparekonto');
    assert.equal(await page.locator('#contextPanel').isHidden(),false);
