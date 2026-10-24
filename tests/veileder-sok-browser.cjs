@@ -40,9 +40,9 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    // 2. Tastefeil: bare forslag. Svaret åpnes ikke, og forslaget er merket.
    await ask('bloiglån');
    assert.ok(!await answerOpen(),label+': tastefeil åpner ikke et svar');
-   assert.match(await status(),/forslag/i);
+   assert.match(await status(),/Mente du «boliglån»\? Velg et svar nedenfor\./);
    const suggestion=page.locator('#matches .match-list button').first();
-   assert.match(await suggestion.innerText(),/Mente du «boliglån»\?/);
+   assert.equal(await suggestion.locator('.match-why').count(),0,'rettelsen står bare i statusfeltet');
    assert.ok((await suggestion.boundingBox()).height>=44,label+': forslaget har stor nok trykkflate');
    assert.ok(await suggestion.evaluate(b=>b.classList.contains('match-suggest')),'forslaget har egen stil');
    await noOverflow('tastefeil');

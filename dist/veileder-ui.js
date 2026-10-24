@@ -90,13 +90,14 @@ function clearChoice(){
 }
 const titleOf=id=>V.topics.find(t=>t.id===id).title;
 // Få, tydelige treff først. Hvert treff sier hvorfor det vises. Forslag (tastefeil, brede ord) er merket som forslag.
-function showMatches(items,visible=3){
+function showMatches(items,visible=3,sharedTypo=false){
  const box=$('matches');box.replaceChildren();if(!items.length)return;
  const list=el('ul','','match-list');
  items.forEach((m,i)=>{
   const li=el('li');if(i>=visible)li.hidden=true;
   const b=button('',()=>{$('matches').replaceChildren();choose(m.id);});
-  b.append(el('span',titleOf(m.id),'match-title'),el('span',V.reason(m),'match-why'));
+  b.append(el('span',titleOf(m.id),'match-title'));
+  if(!sharedTypo)b.append(el('span',V.reason(m),'match-why'));
   if(m.kind==='typo'||m.kind==='related'||m.kind==='negated')b.classList.add('match-suggest');
   li.append(b);list.append(li);
  });
@@ -121,7 +122,11 @@ function search(){
  }
  clearChoice();$('searchBox').open=true;
  if(r.mode==='choose'){status.textContent=negNote(r)+'Flere svar kan passe. Velg det du mener:';showMatches([...r.hits,...r.suggestions]);return;}
- if(r.mode==='suggest'){status.textContent=negNote(r)+'Fant ingen eksakte treff. Dette er forslag, ikke sikre svar:';showMatches(r.suggestions);return;}
+ if(r.mode==='suggest'){
+  const sharedTypo=r.suggestions.length>0&&r.suggestions.every(s=>s.kind==='typo'&&s.via===r.suggestions[0].via);
+  status.textContent=negNote(r)+(sharedTypo?'Mente du «'+r.suggestions[0].via+'»? Velg et svar nedenfor.':'Dette er forslag til temaer. Velg det du mener:');
+  showMatches(r.suggestions,3,sharedTypo);return;
+ }
  if(r.mode==='negated'){$('topicPicker').open=true;status.textContent='Du skriver «'+r.negated.join(' ')+'» med nekting. Vi har ikke et eget svar på det ennå. Temaene under ligger nærmest, men er ikke svar på spørsmålet ditt:';showMatches(r.hits);return;}
  $('topicPicker').open=true;
  status.textContent=r.mode==='broad'?'Spørsmålet er bredt. Velg et tema, eller skriv litt mer, for eksempel «sparing til barn».':'Vi har ikke et ferdig svar på dette ennå. Velg et tema, eller prøv andre ord.';
