@@ -308,10 +308,12 @@ let lastChartWidth=0,chartResizeFrame=0;new ResizeObserver(entries=>{const width
 // Uten dette havnet markøren bak tallet, og «2 000» pluss 8 ble stille til 20 008. Et nytt trykk i et felt
 // som allerede har fokus, plasserer markøren som vanlig, så det går fortsatt an å rette ett siffer.
 // Første mouseup etter fokus stoppes, ellers fjerner nettleseren markeringen igjen (Chromium, Safari).
-// Den forsinkede markeringen skjer bare hvis ingenting er skrevet ennå. Ellers kunne raske tastetrykk bli overskrevet.
+// Den forsinkede markeringen avbrytes av første tastetrykk eller inntasting etter fokus. Å sammenligne verdien holdt ikke:
+// skrev man «500» i et felt med «5», så feltet uendret ut etter første siffer, og resten erstattet det (ble «00»).
 const NUMBER_FIELD='input[inputmode="decimal"],.fieldbox input[type="text"]';
-let freshNumberField=null;
+let freshNumberField=null,pendingNumberSelect=null;
 function selectNumber(el){if(document.activeElement===el&&el.value)try{el.setSelectionRange(0,el.value.length);}catch{}}
-document.addEventListener('focusin',event=>{const el=event.target;if(!el.matches?.(NUMBER_FIELD))return;freshNumberField=el;selectNumber(el);const before=el.value;setTimeout(()=>{if(el.value===before)selectNumber(el);},0);});
+document.addEventListener('focusin',event=>{const el=event.target;if(!el.matches?.(NUMBER_FIELD))return;freshNumberField=el;selectNumber(el);pendingNumberSelect=el;setTimeout(()=>{if(pendingNumberSelect===el){pendingNumberSelect=null;selectNumber(el);}},0);});
+for(const type of ['keydown','beforeinput'])document.addEventListener(type,()=>{pendingNumberSelect=null;freshNumberField=null;},true);
 document.addEventListener('mouseup',event=>{if(event.target!==freshNumberField)return;freshNumberField=null;event.preventDefault();selectNumber(event.target);});
 document.addEventListener('focusout',event=>{if(event.target===freshNumberField)freshNumberField=null;});
