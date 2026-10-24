@@ -94,6 +94,6 @@ Regler:
 4. `fond(?!skonto)` i `funds` og `/\bask\b/` fjernet fra `q-ips-ask` er data i samme stil som `aksj(?!esparekonto)`. Søkemotoren `veileder-sok.js` er uendret.
 5. Ny forklaring med eget navn: legg navnet i `keys`, bruk `alone()` mot de andre kontonavnene, og legg inn en rad i søketestene.
 
-Innhold: kontrollert mot Skatteetatens sider og Nordnets FAQ 24. oktober 2026. Sidene oppgir ingen oppdateringsdato, bortsett fra rettledningen (revidert oktober 2025). Påstander som ikke lot seg bekrefte ble tatt ut. Forbeholdet vises under «Kilder og forbehold». Intro-endringene #53 gjorde i `q-ips-ask` og `q-ask-zero` er ikke tatt med.
+Innhold: kontrollert mot Skatteetatens norske sider og Nordnets FAQ 24. oktober 2026. Sidene oppgir ingen oppdateringsdato, bortsett fra rettledningen (revidert oktober 2025). Påstander som ikke lot seg bekrefte ble tatt ut. Forbeholdet vises under «Kilder og forbehold». Intro-endringene #53 gjorde i `q-ips-ask` og `q-ask-zero` er ikke tatt med.
 
-Kjente rester: `q-ask-zero` har fortsatt den ukontrollerte setningen om rentefond og amerikanske aksjer. Spørsmålet «konto» alene gir ingen treff.
+Kontroll mot norske primærkilder (24. oktober 2026): rene rentefond kan ikke ligge på ASK, og aksjer og aksjefond må være hjemmehørende i EØS. Siden sier ikke hvor et aksjefond må investere, så påstanden om at et EØS-fond kan investere utenfor Europa er tatt ut av `q-ask-zero`. Kjent rest: spørsmålet «konto» alene gir ingen treff.

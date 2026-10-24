@@ -103,9 +103,19 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
   assert.match(x.caveat,/Kontrollert mot side(?:n|ne) 24\. oktober 2026/,'kontrolldato og at kildene mangler oppdateringsdato skal stå i forbeholdet');
   assert.match(x.caveat,/ingen oppdateringsdato/);
   // Ingen satser, og ingen påstander vi ikke har kontrollert mot kildene.
-  assert.doesNotMatch(JSON.stringify(x),/37,84|\b22 ?%|\b101 ?%|rentefond|utenfor Europa|amerikanske/);
+  assert.doesNotMatch(JSON.stringify(x),/37,84|\b22 ?%|\b101 ?%|pengemarkedsfond|utenfor Europa|amerikanske/);
  }
  assert.match(a.intro,/aksjesparekonto \(ASK\)/);
+ {
+  // Presiseringer fra kontrollen mot Skatteetatens norske sider, 24. oktober 2026.
+  const txt=JSON.stringify(a.parts);
+  assert.match(txt,/aksjefond som er hjemmehørende i EØS/);assert.match(txt,/over 80 prosent aksjeandel ved inntektsårets begynnelse/);assert.match(txt,/Rene rentefond kan ikke ligge på kontoen/);
+  assert.match(f.example.text,/20 000 kroner er innskudd og 10 000 kroner er gevinst/);assert.match(f.example.text,/ser bort fra skjermingsfradraget/);
+  assert.ok(a.sources.every(x=>/^https:\/\/www\.skatteetaten\.no\/person\//.test(x.url)),'ASK bruker norsk primærkilde');
+  assert.ok(f.sources[0].url.startsWith('https://www.skatteetaten.no/person/'),'fondskonto bruker norsk primærkilde');
+  const z=JSON.stringify(Cards.build('q-ask-zero',{}).options);
+  assert.doesNotMatch(z,/kan likevel investere utenfor Europa/);assert.match(z,/ikke noe om hvor fondet må investere/);
+ }
  // Regneeksemplene stemmer.
  assert.match(a.example.text,/150 000/);assert.match(a.example.text,/50 000/);assert.equal(150000-100000,50000);
  const out=30000,paidIn=100000,value=150000,innskuddsandel=out*paidIn/value,gevinstandel=out-innskuddsandel;
