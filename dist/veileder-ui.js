@@ -97,7 +97,7 @@ function showMatches(items,visible=3){
   const li=el('li');if(i>=visible)li.hidden=true;
   const b=button('',()=>{$('matches').replaceChildren();choose(m.id);});
   b.append(el('span',titleOf(m.id),'match-title'),el('span',V.reason(m),'match-why'));
-  if(m.kind==='typo'||m.kind==='related')b.classList.add('match-suggest');
+  if(m.kind==='typo'||m.kind==='related'||m.kind==='negated')b.classList.add('match-suggest');
   li.append(b);list.append(li);
  });
  box.append(list);
@@ -108,18 +108,21 @@ function showMatches(items,visible=3){
   box.append(more);
  }
 }
+// Negerte ord brukes ikke til å velge treff. Brukeren får beskjed.
+const negNote=r=>r.negated&&r.negated.length?'«'+r.negated.join(' ')+'» er ikke brukt til å velge treff, fordi du skrev det med nekting. ':'';
 function search(){
  $('matches').replaceChildren();
  const r=V.search($('question').value),status=$('matchStatus');
  if(r.mode==='answer'){
   const [lead,...rest]=r.hits,others=[...rest,...r.suggestions];
   choose(lead.id);
-  status.textContent=(lead.kind==='question'?'Svar på spørsmålet ditt.':V.reason(lead)+'.')+(others.length?' Andre svar som kan passe:':'');
+  status.textContent=negNote(r)+(lead.kind==='question'?'Svar på spørsmålet ditt.':V.reason(lead)+'.')+(others.length?' Andre svar som kan passe:':'');
   showMatches(others);return;
  }
  clearChoice();$('searchBox').open=true;
- if(r.mode==='choose'){status.textContent='Flere svar kan passe. Velg det du mener:';showMatches([...r.hits,...r.suggestions]);return;}
- if(r.mode==='suggest'){status.textContent='Fant ingen eksakte treff. Dette er forslag, ikke sikre svar:';showMatches(r.suggestions);return;}
+ if(r.mode==='choose'){status.textContent=negNote(r)+'Flere svar kan passe. Velg det du mener:';showMatches([...r.hits,...r.suggestions]);return;}
+ if(r.mode==='suggest'){status.textContent=negNote(r)+'Fant ingen eksakte treff. Dette er forslag, ikke sikre svar:';showMatches(r.suggestions);return;}
+ if(r.mode==='negated'){$('topicPicker').open=true;status.textContent='Du skriver «'+r.negated.join(' ')+'» med nekting. Vi har ikke et eget svar på det ennå. Temaene under ligger nærmest, men er ikke svar på spørsmålet ditt:';showMatches(r.hits);return;}
  $('topicPicker').open=true;
  status.textContent=r.mode==='broad'?'Spørsmålet er bredt. Velg et tema, eller skriv litt mer, for eksempel «sparing til barn».':'Vi har ikke et ferdig svar på dette ennå. Velg et tema, eller prøv andre ord.';
 }

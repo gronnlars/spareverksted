@@ -27,6 +27,7 @@ jobs:
           node tests/veileder-relevance.test.cjs
           node tests/veileder-sok.test.cjs
           node tests/veileder-sok-utvidet.test.cjs
+          node tests/veileder-sok-rettinger.test.cjs
           node tests/validation.test.cjs
           node tests/kjopekraft.test.cjs
           node tests/results.test.cjs
@@ -64,6 +65,9 @@ jobs:
           node tests/input-browser.cjs
           node tests/veileder-browser.cjs
           node tests/veileder-sok-browser.cjs
+          node tests/veileder-sok-rettinger-browser.cjs
+          SPARE_ENGINE=firefox node tests/veileder-sok-rettinger-browser.cjs
+          SPARE_ENGINE=webkit node tests/veileder-sok-rettinger-browser.cjs
           node tests/startflyt-browser.cjs
           node tests/spareform-browser.cjs
           node tests/theme-browser.cjs
