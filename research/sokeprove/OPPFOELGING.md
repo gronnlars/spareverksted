@@ -76,9 +76,9 @@ Vurdering: ta bare inn `navn`, `produktnavn` og `beslektet` som data med validat
 
 | | Gjort | Ikke gjort |
 |---|---|---|
-| Node | 14 testfiler på #56 (inkl. ny `veileder-sok-rettinger.test.cjs`), grønne lokalt. `checks` grønn i CI på e534810 | |
+| Node | 14 testfiler på #56 (inkl. ny `veileder-sok-rettinger.test.cjs`), grønne lokalt. `checks` og `browser` grønne i CI på e534810 | |
 | Chromium | Lokalt 320, 390 og 1280 px: forslag, nekting, trykkflater ≥ 44 px, ingen vannrett scrolling, ingen sidefeil, ingen eksterne forespørsler. Også `veileder-sok-browser`, `veileder-browser`, `a11y-browser` | |
-| Firefox og WebKit | Lagt i CI-oppsettet for den nye nettlesertesten | Ikke kjørt av meg. Resultat fra CI må leses av. WebKit er ikke iPhone Safari |
+| Firefox og WebKit | Den nye nettlesertesten kjører i Firefox og WebKit i CI. `browser`-jobben på e534810 er grønn (lest av GitHub, ikke kjørt lokalt av meg) | WebKit er ikke iPhone Safari. Jeg har ikke sett skjermbilder fra Firefox eller WebKit |
 | iPhone Safari | | Ikke testet |
 | Skjermleser, zoom 200/400 % | | Ikke testet |
 | Brukertest | | Ikke gjort. Testsettene er skrevet av Claude |
@@ -96,7 +96,7 @@ Lukkes eller beholdes som dokumentasjon: #54 (erstattet av #52), #47 (dekket av 
 
 ## 8. Før M7 kan godkjennes
 
-- #52 og #56 gjennomgått av Lars og CI grønn, inkludert Firefox og WebKit.
+- #52 og #56 gjennomgått av Lars. CI er grønn på begge (inkludert Firefox og WebKit for #56).
 - Sjekket på iPhone Safari av Lars (min WebKit-test erstatter ikke det).
 - Beslutning om negasjonsformuleringen i #56 («Du skriver (ordene) med nekting. Vi har ikke et eget svar på det ennå»).
 - Avklart om `boligsparing` skal være nøkkelord på begge BSU-temaene.
