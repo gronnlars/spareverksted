@@ -33,7 +33,7 @@ function build(E,s,end,f,A){
  let accountAssumption='';
  const startValues=[...(s.rate===d.rate?[`${f.pct(d.rate)} vekst`]:[]),...(s.fee===d.fee?[`${f.pct(d.fee)} kostnad`]:[])];
  if(type&&s.savingsType!=='index'&&startValues.length)
-  main.push(`Du har valgt ${type.name}, men beregningen bruker fortsatt startverdiene ${join(startValues)}. De er ikke vilkår for en ${type.name}. Legg inn kontoens rente${s.fee===d.fee?' og eventuelle kostnader':''}.`);
+  main.push(`Du har valgt ${type.name}, men beregningen bruker fortsatt startverdiene ${join(startValues)}. De er ikke vilkår for en ${type.name}. Legg inn renten du vil regne med${s.fee===d.fee?' og eventuelle kostnader':''}.`);
  else if(s.savingsType==='savings'){
   accountAssumption=`Beregningen forutsetter ${f.pct(s.rate)} rente på sparekontoen gjennom hele perioden. Kontroller at renten stemmer med kontovilkårene. Endres renten, blir resultatet annerledes.`;
   if(s.rate>0&&!taxNoted)main.push('Renter beskattes hvert år, så resultatet etter skatt blir lavere.');

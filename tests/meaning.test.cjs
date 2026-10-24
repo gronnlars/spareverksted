@@ -47,7 +47,7 @@ const all=m=>m.main+' '+m.details.map(d=>d.title+': '+d.text).join(' ')+' '+m.ac
  assert.equal(s.rate,8,'brukerens tall er uendret');}
 // 11. Brukskonto mens vekst og kostnad står på startverdiene: sies tydelig, ikke framstilt som representativt.
 {const m=build({savingsType:'checking'});
- assert.match(m.main,/Du har valgt brukskonto, men beregningen bruker fortsatt startverdiene 5 % vekst og 0,2 % kostnad\. De er ikke vilkår for en brukskonto\. Legg inn kontoens rente og eventuelle kostnader\./);
+ assert.match(m.main,/Du har valgt brukskonto, men beregningen bruker fortsatt startverdiene 5 % vekst og 0,2 % kostnad\. De er ikke vilkår for en brukskonto\. Legg inn renten du vil regne med og eventuelle kostnader\./);
  assert.ok(!m.actions.some(a=>a.id==='lowerRate'),'ingen sammenligning før egne tall er lagt inn');
  assert.doesNotMatch(all(m),/tap/,'brukskonto framstilles ikke som et automatisk tap');}
 // 12. Indeksfond: kan falle i verdi, jevn vekst er ikke svingningene, og 5 % er en startverdi. Globalt aksjeindeksfond presiseres.
