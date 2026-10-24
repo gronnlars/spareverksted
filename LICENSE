@@ -1,4 +1,48 @@
-MIT License
+Spareverksted: licensing notice, effective 24 October 2026
+
+Copyright (c) 2026 Lars Kjelkenes Giæver and respective contributors.
+
+NEW CONTRIBUTIONS
+
+Original contributions first published in this repository after commit
+8392d9adb934533ceca9627a93b768c223a1b704 are offered under the
+PolyForm Noncommercial License 1.0.0. Its complete terms are incorporated
+by reference and are available at:
+https://polyformproject.org/licenses/noncommercial/1.0.0
+
+The software offered under these terms includes its accompanying original
+documentation and website text, to the extent the licensors hold rights.
+
+Required Notice: Copyright (c) 2026 Lars Kjelkenes Giæver and respective contributors (https://github.com/gronnlars/spareverksted)
+
+Additional permission: anyone, including an employee of a commercial
+organization, may use and test the published calculator free of charge for
+their own personal finances or to provide feedback to this project.
+Personal savings, investment returns and other benefits to the user's own
+finances do not make that use commercial. This permission does not extend
+to selling advice or reports produced with the software, integrating it
+into commercial products, or using it to market products or services.
+Commercial reuse of these new contributions requires separate permission
+from the applicable rights holders. A donation is not such permission.
+
+This notice grants only rights the respective licensors can grant. It
+does not claim exclusive rights over ideas, facts, mathematical formulas,
+third-party material or material that is not protected by copyright.
+Third-party works remain subject to their own applicable terms. AI
+assistance does not establish ownership or clear third-party rights.
+
+PREVIOUS MIT RELEASES
+
+Material published through commit
+8392d9adb934533ceca9627a93b768c223a1b704 remains available under the MIT
+License below, including when that material is carried into later versions.
+The new terms apply only to new contributions, not retroactively to the
+MIT baseline. Git history identifies that baseline and subsequent changes.
+Earlier contributors' rights and license grants are not revoked.
+In particular, the pre-existing calculator can still be reused commercially
+under MIT. This change does not prevent someone from building on it.
+
+MIT License (historical material)
 
 Copyright (c) 2026 Lars Kjelkenes Giæver
 

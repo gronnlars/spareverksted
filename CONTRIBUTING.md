@@ -12,4 +12,11 @@ faktisk resultat og hvordan feilen kan gjenskapes. Bruk oppdiktede tall.
 
 Endringer i finansielle modeller må dokumentere forutsetningene og kontrolleres
 mot uavhengige beregninger. Hold enkel modus lett å forstå og legg fordypning bak hjelp.
-Bidrag publiseres under prosjektets MIT-lisens.
+Nye originale bidrag tilbys under PolyForm Noncommercial 1.0.0 med
+tilleggstillatelsen for personlig bruk og testing i LICENSE. Historisk
+MIT-materiale og tredjepartsmateriale beholder sine vilkår. Oppgi opphav,
+lisens og eventuelle endringer for materiale du gjenbruker, og opplys om
+KI-verktøy som har bidratt. Ikke fjern andres opphavsrettsmerknader.
+Send bare bidrag du har rett til å dele på disse vilkårene. En pull request
+overfører ikke opphavsretten og gir ikke prosjektet rett til å tilby ditt
+bidrag kommersielt uten din tillatelse.
