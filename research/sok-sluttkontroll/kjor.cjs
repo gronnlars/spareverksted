@@ -33,5 +33,7 @@ if(process.argv.includes('--detaljer')){
  for(const r of rader){if(['RF','RFok','CR','soft-dekket'].includes(r.kl))continue;
   p(`| ${r.c.id} | ${JSON.stringify(r.c.q.slice(0,40))} | ${r.c.modus||(r.c.none?'ingen':r.c.soft?'skjønn '+(r.c.also||[]):(r.c.f||[]).join('/'))} | ${r.mode} | ${r.kl} | ${[...r.hits,...r.sug.map(x=>'?'+x)].slice(0,4).join(', ')||'-'} |`);}
 }
+// Etterjusterte forventninger vises med opprinnelig forventning og resultat.
+for(const r of rader)if(r.c.opprinnelig){const o={...r.c,...r.c.opprinnelig};delete o.f;delete o.ok;p(`\nOpprinnelig forventning for ${r.c.id} (${JSON.stringify(r.c.q)}): ${r.c.opprinnelig.begrunnelse} Resultat med opprinnelig forventning: ${klass(o,r.adapt)}. Resultat med justert forventning: ${r.kl}.`);}
 console.log(ut.join('\n'));
 if(process.argv.includes('--json'))fs.writeFileSync(path.join(__dirname,'resultat.json'),JSON.stringify(rader.map(r=>({id:r.c.id,q:r.c.q,mode:r.mode,kl:r.kl,topp3:r.topp3})),null,1));

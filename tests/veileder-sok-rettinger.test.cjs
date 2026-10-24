@@ -135,3 +135,14 @@ for(const q of ['boligsparing','hva er boligsparing','bolig sparing','boligspari
 assert.equal(V.search('boligsparing for ungdom').mode,'answer');
 assert.equal(V.search('boligsparnig').mode,'suggest');
 console.log('veileder-sok-rettinger: ok');
+
+// 7. Ord som bare inneholder «aksj», «børs» eller «indeks» midt i ordet, eller er selskapsrett, skal ikke åpne fondssvaret (sluttkontroll 2026-10-24).
+for(const q of ['aksjeselskap','hva er et aksjeselskap','aksjonær','aksjekapital','aksjeeier','aksjeopsjon','reaksjon','transaksjon','aksjon','tannbørste','indeksregulering']){
+  const r=V.search(q);
+  assert.equal(r.mode,'none',q+': skal ikke åpne fondssvaret');
+  assert.deepEqual(V.findTopics(q),[],q);
+}
+for(const q of ['aksje','aksjer','aksjefond','aksjefondet','aksjekjøp','aksjemarked','børs','børsfall','børsnotert','indeks','indeksfond']){
+  const r=V.search(q);
+  assert.equal(r.mode,'answer',q);assert.equal(r.hits[0].id,'funds',q);
+}

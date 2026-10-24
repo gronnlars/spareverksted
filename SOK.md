@@ -44,7 +44,7 @@ En ny post trenger `words` (regulære uttrykk), `questions` og `keys` (små boks
 | Hva | Resultat |
 |---|---|
 | Node: 14 testfiler | Grønne lokalt, med nye rader for kjente hull, boligsparing og nekting |
-| 151 tilfeller (126 fra #55 og 25 tillegg), `node research/sok-sluttkontroll/kjor.cjs . --detaljer` | Feil direkte svar: 0. Relevant svar eller valg blant de tre første: 115 av 115 prioriterte søk. Se rapporten for forbehold |
+| 156 tilfeller (126 fra #55 og 30 tillegg), `node research/sok-sluttkontroll/kjor.cjs . --detaljer` | Feil direkte svar: 0. Relevant svar eller valg blant de tre første: 115 av 115 prioriterte søk. Se rapporten for forbehold |
 | Chromium lokalt, 320, 390 og 1280 px | Forslag, nekting, trykkflater ≥ 44 px, ingen vannrett scrolling, ingen sidefeil, ingen eksterne forespørsler |
 | Firefox og WebKit | Bare i CI. WebKit er ikke iPhone Safari |
 

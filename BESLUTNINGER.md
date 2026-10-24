@@ -342,7 +342,7 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 
 **Alternativer:** A: Fortsette å justere søket mot egne testsett. B: Bytte til MiniSearch (#55). C: Avslutte nå og gå til kontrollert innholdspåfyll. Anbefaler C. A gir overtilpasning til sett vi selv har skrevet. B ga ikke nok bedre resultat til å forsvare ny avhengighet og endret oppførsel.
 
-**Begrunnelse:** 0 misvisende direkte svar i 151 tilfeller. 115 av 115 prioriterte søk har relevant svar eller valg blant de tre første. Se `research/sok-sluttkontroll/RAPPORT.md`.
+**Begrunnelse:** 0 misvisende direkte svar i 156 tilfeller (1 hvis forventningen for «bolig spare konto» ikke justeres, se rapporten). 115 av 115 prioriterte søk har relevant svar eller valg blant de tre første. Se `research/sok-sluttkontroll/RAPPORT.md`.
 
 **Akseptert ulempe:** Testsettene er skrevet av Claude og holdout er brukt. Ikke testet: iPhone Safari, skjermleser, brukere. «konto» alene og enkelte «aksj»-sammensetninger gir svak veiledning.
 
