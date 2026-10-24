@@ -60,6 +60,7 @@ Kolonnene er de fem behovene. **Ja** = finnes og virker etter gjennomgangen. **D
 ### Dokumenterte feil (kontrollert)
 
 1. **Feil tekst på tre temaer.** «Hva krever det av deg?» viser teksten om ekstra avdrag på boliglån også på Sparekonto eller fond, Sparing til pensjon og Studielån, når brukeren ikke har valgt fast trekk. Kontrollert ved å kjøre `answer()` for hvert tema. Kilde: `veileder-engine.js`, linjen med `['mortgage','funds','student','pension']`.
+   *Korrigert 24.10:* Bare delvis riktig. For fond og pensjon er teksten feilplassert. Studielånssvaret har alternativet «Låne mindre eller betale ekstra», så poenget hører hjemme der. Det som var feil der, er boliglånsordet «avdrag». Rettet i PR #35.
 2. **Eksempelspørsmål lover mer enn svaret leverer.** De fire spørsmålene under hvert tema gir nøyaktig samme svar (kontrollert). «Hva hvis jeg trenger pengene om tre år?» gir et svar som ber brukeren oppgi når pengene skal brukes, fordi tall i spørsmålet ikke tolkes. `research/veileder-kilder.md` sier at dette opplyses i grensesnittet. Det gjør det ikke i dag.
 3. **Kildeetikett som lover for mye.** «Forbrukerrådet: lån og sparing» lenker til `forbrukerradet.no/finansportalen/`, ikke en side om lån og sparing.
 
@@ -123,7 +124,7 @@ Veilederen oppleves ikke som en samtalerobot i dag: temaene er synlige, svarene 
 | 2 | **Søket finner ikke det som finnes.** 11 av 25 vanlige spørsmål bommer på innhold som finnes | Den som ikke kan fagordet, får beskjed om at svaret ikke finnes | Søketestsett låst i test, og søkeord for temaene som finnes. Er planens fase 3, punkt 1 og 2 | Nei |
 | 3 | **Grunnbegrepene har ingen kort forklaring.** Renters rente, kjøpekraft, kostnader | De er kjernen i «fra tall til forståelse» og står bare inne i kalkulatoren | Planens svarform «Forklaring» (fase 3, punkt 4) for disse tre | Nei |
 | 4 | **Eksempelspørsmål gir samme grunnsvar.** | Brukeren tror hen har fått svar på sitt spørsmål | Enten én setning som sier at spørsmålene leder til samme tema, eller færre og mer generelle eksempler | Nei |
-| 5 | **Feil tekst om ekstra avdrag** på tre temaer | Liten, men faktisk feil i et svar | Vis avdragsteksten bare for boliglån | Nei |
+| 5 | **Feil tekst om ekstra avdrag** på to temaer, feil ord på ett (rettet i PR #35) | Liten, men faktisk feil i et svar | Vis avdragsteksten bare for boliglån | Nei |
 | 6 | **Uforklarte fagord** | Brudd på eget språkkrav i universell utforming | Én bisetning der ordet brukes. I kalkulatoren bare etter beslutning om punkt 0 | Ja, for fire av ordene |
 | 7 | **Svar uten egen adresse** | Kan ikke deles, bokmerkes eller lenkes fra kalkulatoren | Vent. Vurderes etter 1 til 3 | Nei |
 | 8 | **Kildekontroll** (punkt 4.3 til 4.6) | Etterprøvbarhet | Én faktasjekkrunde mot primærkilder med dato per kilde | Nei |
