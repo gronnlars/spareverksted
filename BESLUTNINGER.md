@@ -335,3 +335,17 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Vurder på nytt når:** Arbeidsflyten er prøvd på små innholdsleveranser og kvaliteten er dokumentert. Valgomatens mål om nedlastbart hverdagsbudsjett tas med i separat planlegging.
 
 **Status:** Vedtatt av Lars i oppdraget 24. oktober 2026. Dette er ingen generell fullmakt for nattoppgaven til å slå sammen eller publisere.
+
+## Sluttkontroll av søket (24. oktober 2026)
+
+**Valg:** Claude anbefaler å avslutte utviklingsrunden for søket på main `4022c94`, med to nye kjente hull (utbytte, rentefond). Videre arbeid med søket begrenses til feil svar, hindringer i betjeningen og gjentakende problemer fra faktisk bruk. Andre ønsker går i `SPORSMALSKO.md`.
+
+**Alternativer:** A: Fortsette å justere søket mot egne testsett. B: Bytte til MiniSearch (#55). C: Avslutte nå og gå til kontrollert innholdspåfyll. Anbefaler C. A gir overtilpasning til sett vi selv har skrevet. B ga ikke nok bedre resultat til å forsvare ny avhengighet og endret oppførsel.
+
+**Begrunnelse:** 0 misvisende direkte svar i 156 tilfeller (1 hvis forventningen for «bolig spare konto» ikke justeres, se rapporten). 115 av 115 prioriterte søk har relevant svar eller valg blant de tre første. Se `research/sok-sluttkontroll/RAPPORT.md`.
+
+**Akseptert ulempe:** Testsettene er skrevet av Claude og holdout er brukt. Ikke testet: iPhone Safari, skjermleser, brukere. «konto» alene og enkelte «aksj»-sammensetninger gir svak veiledning.
+
+**Vurder på nytt når:** Faktisk bruk viser feil svar eller gjentakende problemer, innhold endrer hvilke ord som har én eier, eller iPhone- og skjermlesertesting avdekker hindringer.
+
+**Status:** Anbefalt, ikke vedtatt. Lars avgjør.

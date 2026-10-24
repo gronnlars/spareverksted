@@ -1,6 +1,6 @@
 # Søket i «Spør om sparing»: status og regler
 
-Sist kontrollert 24. oktober 2026 mot main addf40b (inneholder #52, #56 og #58). Denne filen beskriver det som gjelder. Forsøksdokumentasjonen om MiniSearch og gamle søkelinjer ligger i #55 og skal ikke slås sammen.
+Sist kontrollert 24. oktober 2026 mot main 4022c94 (inneholder #52, #56, #58, #59 og #61). Sluttkontrollen med anbefaling står i [research/sok-sluttkontroll/RAPPORT.md](research/sok-sluttkontroll/RAPPORT.md). Denne filen beskriver det som gjelder. Forsøksdokumentasjonen om MiniSearch og gamle søkelinjer ligger i #55 og skal ikke slås sammen.
 
 ## Hva søket gjør
 
@@ -44,7 +44,7 @@ En ny post trenger `words` (regulære uttrykk), `questions` og `keys` (små boks
 | Hva | Resultat |
 |---|---|
 | Node: 14 testfiler | Grønne lokalt, med nye rader for kjente hull, boligsparing og nekting |
-| 96 tilfeller mot main (fra #55, `research/sokeprove`) | Samme resultat før og etter sluttkontrollen. Feil direkte svar: 0 |
+| 156 tilfeller (126 fra #55 og 30 tillegg), `node research/sok-sluttkontroll/kjor.cjs . --detaljer` | Feil direkte svar: 0. Relevant svar eller valg blant de tre første: 115 av 115 prioriterte søk. Se rapporten for forbehold |
 | Chromium lokalt, 320, 390 og 1280 px | Forslag, nekting, trykkflater ≥ 44 px, ingen vannrett scrolling, ingen sidefeil, ingen eksterne forespørsler |
 | Firefox og WebKit | Bare i CI. WebKit er ikke iPhone Safari |
 
@@ -72,12 +72,14 @@ Rett tema, men svaret besvarer ikke spørsmålet. Før sluttkontrollen åpnet s�
 | `barnesparing-skatt` | «kan jeg spare til barnet uten å bli skattlagt», «skatt på barnesparing» | Barnesvaret nevner ikke skatt |
 | `bsu-flytting` | «hva skjer med BSU hvis jeg flytter». Krever at spørsmålet nevner BSU (eller «boligsparing for ungdom»), så «jeg flytter og skal kjøpe bolig» ikke rammes | BSU-svarene sier ingenting om flytting |
 | `renters-rente` | «hvordan fungerer renters rente» | Ingen post forklarer renters rente |
+| `utbytte` | «aksjeutbytte», «hva er utbytte fra fond» | Sparekonto eller fond nevner ikke utbytte. Funnet i sluttkontrollen |
+| `rentefond` | «hva er et rentefond» | Sparekonto eller fond nevner ikke rentefond. Funnet i sluttkontrollen |
 
 Slik lukkes et hull: skriv svaret, og fjern raden fra `GAPS`. Testen `veileder-sok-rettinger.test.cjs` feiler hvis svaret allerede nevner begrepet mens raden står igjen (`covers`), så hullet ikke blir hengende. Et hull rammer ikke ferdig formulerte spørsmål (kind `question`) og bare når alle treffene er blant temaene i raden. Å skrive svarene er innholdsarbeid og ligger hos spørsmålskøen.
 
 ## ASK og fondskonto (fra #53)
 
-Status: gjort på grenen `feat/ask-fondskonto-forklaringer`, utkast-PR. #53 er ikke merget og skal ikke merges.
+Status: på main via #61. #53 er ikke merget og skal ikke merges.
 
 Eierskap til navn (avgjort av Lars):
 
