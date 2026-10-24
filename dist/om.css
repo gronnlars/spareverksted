@@ -22,3 +22,5 @@
 .use-section{margin-top:48px}
 
 .giving-section>h3{font-size:21px;line-height:1.3;margin-top:28px}
+
+.giving-choice{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}.giving-choice a,.time-action{display:inline-flex;align-items:center;min-height:48px;padding:10px 16px;border:1px solid var(--line);border-radius:9px;font-weight:600;text-underline-offset:3px;box-sizing:border-box}#tid,#gaver{scroll-margin-top:24px}
