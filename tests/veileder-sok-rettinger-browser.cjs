@@ -26,12 +26,23 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    const tapTargets=async what=>{for(const b of await page.locator('#matches button').all())if(await b.isVisible())assert.ok((await b.boundingBox()).height>=44,engine+' '+label+': trykkflate under 44 px ('+what+')');};
 
    // 1. Skrivefeil som inneholder kjente stammer: «Mente du», ikke et svar og ikke fond.
-   for(const [typo,expect] of [['fondskotno',/ASK[\s\S]*Mente du «(aksje|fonds?)(spare)?konto»\?/],['aksjesparekonot',/ASK[\s\S]*Mente du «(aksje|fonds?)(spare)?konto»\?/],['fondkonto',/ASK[\s\S]*Mente du «(aksje|fonds?)(spare)?konto»\?/]]){
+   for(const [typo,expect] of [['fondskotno',/ASK/],['aksjesparekonot',/ASK/],['fondkonto',/ASK/]]){
     await ask(typo);
     assert.ok(!await answerOpen(),engine+' '+label+': «'+typo+'» skal ikke åpne et svar');
-    assert.match(await status(),/forslag/i);
+    assert.match(await status(),/Mente du «(aksje|fonds?)(spare)?konto»\? Velg et svar nedenfor\./);
+    assert.equal(await page.locator('#matches .match-why').count(),0,'felles rettelse gjentas ikke');
     assert.match(await page.locator('#matches .match-list button').first().innerText(),expect);
     await tapTargets(typo);await noOverflow(typo);
+   }
+
+   // Samme rettelse for to BSU-temaer vises én gang, også med flere ord i søket.
+   for(const query of ['Boligparing','Boligparing ungdom']){
+    await ask(query);
+    assert.equal(await status(),'Mente du «boligsparing»? Velg et svar nedenfor.');
+    assert.equal(await page.locator('#matches .match-list button').count(),2);
+    assert.equal(await page.locator('#matches .match-why').count(),0);
+    assert.ok(!await answerOpen());
+    await tapTargets(query);await noOverflow(query);
    }
 
    // 2. Negasjon: ingenting åpnes, brukeren får vite at nektingen er lagt merke til, og nærmeste temaer er merket som det.
