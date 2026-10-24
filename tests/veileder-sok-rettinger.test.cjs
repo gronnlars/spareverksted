@@ -104,6 +104,14 @@ for(const q of ['Vi skal flytte sammen og kjøpe leilighet, hvordan sparer vi eg
   assert.ok(!r.uncovered,q);
   assert.ok(r.hits.length>0&&r.hits.every(h=>h.kind!=='nearest'),q+': skal gi vanlige treff');
 }
+// «Flytte» alene (uten BSU og uten boligkontekst) skal verken utløse BSU-hullet eller peke på BSU. Før rettingen ga alle fire «BSU når du flytter».
+for(const q of ['jeg flytter','hva koster flytting','flytte strømavtale','flytte til utlandet']){
+  const r=V.search(q);
+  assert.notEqual(r.mode,'uncovered',q+': skal ikke utløse BSU-hullet');
+  assert.ok(!r.uncovered,q);
+  const all=[...r.hits,...r.suggestions].map(h=>h.id);
+  assert.ok(!all.includes('bsu')&&!all.includes('q-bsu-basics'),q+': BSU skal ikke vises som relevant på grunnlag av flytteordet alene');
+}
 // Hull uten tematreff (renters rente) skal fortsatt fanges.
 assert.equal(V.search('hva er renters rente').mode,'uncovered');
 // Spørsmål om det samme temaet uten selve hullet skal fortsatt få svar.
