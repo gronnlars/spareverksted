@@ -38,6 +38,23 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
     assert(!(await selected(monthly)),name+': andre klikk skal ikke markere alt');}
    await page.close();
   }
-  console.log('felt-browser ('+engine+'): trykk og klikk markerer tallet, andre klikk plasserer markøren');
+  // Kontrollert gjenskaping av en treg nettleser: 0-millisekunders tidsur forsinkes til 150 ms, slik at den sene
+  // markeringen kommer etter første tastetrykk. Før rettingen ble «500» i vekstfeltet (som står på «5») til «00».
+  {const ctx=await browser.newContext({viewport:{width:1280,height:900}});
+   await ctx.addInitScript(()=>{const original=window.setTimeout;window.setTimeout=(fn,ms,...args)=>original(fn,ms?ms:150,...args);});
+   const page=await ctx.newPage();await page.goto(origin+'/index.html#activePage=calculator');await page.waitForTimeout(500);
+   const slow=async(id,keys)=>{const f=page.locator('#'+id);await page.evaluate(()=>document.activeElement?.blur());await page.waitForTimeout(300);await f.click();for(const k of keys){if(k.length>1)await page.keyboard.press(k);else await page.keyboard.type(k);await page.waitForTimeout(250);}return f.inputValue();};
+   // Erstatte: det første sifferet er likt hele det gamle tallet.
+   assert.equal(await page.locator('#rate').inputValue(),'5');
+   assert.equal(await slow('rate',['5','0','0']),'500','treg: «500» i et felt med «5»');
+   assert.equal(await slow('monthly',['3','0','0','0']),'3000','treg: erstatte «2 000»');
+   // Redigere: markøren bak tallet og et nytt siffer. Før rettingen markerte den sene markeringen «5» igjen etter End,
+   // så «0» erstattet tallet og ga «0» i stedet for «50».
+   await slow('rate',['5']);
+   assert.equal(await slow('rate',['End','0']),'50','treg: legge til et siffer uten å miste det som står');
+   assert.equal(await slow('rate',['End','Backspace','7']),'57','treg: rette siste siffer');
+   assert.equal(await slow('years',['End','Backspace','2']),'12','treg: endre siste siffer i sparetiden');
+   await ctx.close();}
+  console.log('felt-browser ('+engine+'): trykk og klikk markerer tallet, andre klikk plasserer markøren, og raske tastetrykk overlever en treg nettleser');
  }finally{if(browser)await browser.close();server.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
