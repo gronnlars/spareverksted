@@ -10,8 +10,8 @@ const sources={
  fixed:['Husbanken: ekstra innbetaling og fastrente','https://husbanken.no/kunde-i-husbanken/ekstraordinaer-betaling-paa-laan/'],
  student:['Lånekassen: renter og gebyrer','https://lanekassen.no/nb-NO/gjeld-og-betaling/renter-og-gebyrer/'],
  grant:['Lånekassen: omgjøring til stipend','https://lanekassen.no/nb-NO/stipend-og-lan/omgjoring-av-basislan/'],
- child:['Statsforvalteren: vergemål for mindreårige','https://www.statsforvalteren.no/contentassets/7168664f484549a0a1796764559441e0/vergemal-for-mindrearige---17.02.2023.pdf'],
- adult:['Statsforvalteren: barns råderett over egen økonomi',F.data.adultAge.source],
+ child:['Statsforvalteren: forvaltning av finansielle eiendeler for mindreårige (2026)','https://www.statsforvalteren.no/siteassets/fm-oslo-og-viken/vergemal/informasjonsskriv/nr.-2-forvaltning-finansielle-eiendeler-og-bruk-av-kapital-for-mindrearig-2026.pdf'],
+ adult:['Vergemålsloven § 8: personer under 18 år er mindreårige (lovvedtak, Stortinget)',F.data.adultAge.source],
  nav:['Nav: økonomi- og gjeldsrådgivning','https://www.nav.no/okonomi-gjeld'],
  bsu:['Skatteetaten: BSU','https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/'],
  risk:['Finanstilsynet: informasjon om verdipapirfond','https://www.finanstilsynet.no/forbrukerinformasjon/verdipapirforetak-verdipapirfond-og-alternative-investeringsfond/']
@@ -75,7 +75,7 @@ function answer(id,profile){
  const base={
  mortgage:['Det kommer an på hva du trenger mest','Ekstra nedbetaling reduserer gjeld og framtidige renteutgifter. Fond kan gi høyere avkastning, men også tap. Penger du har betalt inn på boliglånet, er normalt ikke fritt tilgjengelige uten en ny avtale med banken.','mortgage','pension','fixed'],
  student:['Skill mellom trygghet og investering','Studielån kan gi rom i studentøkonomien, men er fortsatt gjeld. Å beholde en reserve på konto og å investere lånte penger i aksjefond er to forskjellige valg. Fondsverdien kan falle mens lånet består.','student','grant'],
- children:['Hvem skal eie pengene?','I barnets navn tilhører pengene barnet. I ditt navn beholder du råderetten, men pengene inngår i din økonomi. Arv, kreditorer og et eventuelt samlivsbrudd kan få betydning. Bruk tid på eierskapet før du velger spareprodukt.','child','adult','grant'],
+ children:['Hvem skal eie pengene?','Sparer du i barnets navn, eier barnet pengene, og du kan ikke ta dem tilbake. Sparer du i ditt navn, bestemmer du selv, men pengene er dine: arv, kreditorer og et eventuelt samlivsbrudd kan få betydning. Velg eierskap før du velger konto eller fond.','child','adult','grant'],
  buffer:['Begynn med utgiftene dine','En buffer skal dekke uforutsette, nødvendige utgifter. Ta utgangspunkt i bolig, transport, forsørgeransvar og inntekt. Det finnes ikke ett riktig antall månedslønner for alle. En tilgjengelig sparekonto passer bedre til dette formålet enn aksjefond.','mortgage','nav'],
  funds:['Når trenger du pengene?','Sparekonto og aksjefond løser ulike behov. Konto gir mer forutsigbarhet. Et bredt aksjefond sprer risikoen mellom selskaper, men kan likevel falle mye. Se på samlede kostnader, også eventuelle plattformgebyrer.','funds','risk'],
  pension:['Planlegg for uttakene, ikke bare pensjonsdagen','Mange reduserer risiko når uttakene nærmer seg. Det kan begrense faren for å måtte selge mye etter et børsfall. Samtidig kan deler av pengene ha lang tid igjen i markedet når pensjonen begynner.','pension','mortgage','funds'],
@@ -99,8 +99,8 @@ function answer(id,profile){
  add('Før du låner mer eller betaler ekstra','Penger på konto og avkastning kan påvirke skatteoppgjøret som Lånekassen bruker. Lån reduserer normalt nettoformuen, så et lånebeløp på konto betyr ikke automatisk mindre stipend. Se også på betalingslettelser og eventuelle ordninger for gjeldssletting før ekstra nedbetaling.');
  }
  if(id==='children'){
- add('Råderett og forvaltning','Barnet får som hovedregel råderett ved {{adultAge}} år. Større finansielle eiendeler kan omfattes av Statsforvalterens forvaltning. Gavebrev og testament kan ha betydning. Avklar dagens regler og eventuelle unntak før store overføringer.');
- add('Når barnet blir student','Formue i barnets navn kan senere påvirke retten til stipend. Vurder eierskap, tid til bruk og barnets situasjon sammen. Et separat fond i ditt navn gjør ikke barnet til juridisk eier.');
+ add('Råderett og forvaltning','Fra {{adultAge}} år kan barnet som hovedregel bestemme over pengene selv. Et gavebrev eller testament kan si noe annet. Er formuen stor, forvalter Statsforvalteren den til barnet er myndig. Avklar dagens regler og eventuelle unntak før store overføringer.');
+ add('Når barnet blir student','Penger barnet eier, kan gi mindre stipend senere. Penger du eier, teller normalt ikke med for barnet. Vurder eierskap, tid til bruk og barnets situasjon sammen. Et eget fond i ditt navn gjør ikke barnet til eier.');
  }
  if(id==='pension')add('Få oversikt før du binder mer','Undersøk forventet pensjonsinntekt og behovet for egne uttak. Se på kostnader, skatteregler og binding før du velger pensjonsprodukter. Denne veilederen beregner ikke pensjonsrettigheter eller IPS-regler.');
  if(id==='bsu'){
