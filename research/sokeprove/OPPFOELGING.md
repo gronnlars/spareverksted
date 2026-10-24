@@ -15,7 +15,7 @@ Utviklingssettet (81): streng 55 og 59, utvidet 59 og 60. Rapporten bruker utvid
 
 ## 2. #54, #52 og #45
 
-Lest fra PR-differanser og kode (REST, ikke GraphQL). `node sammenlign-prer.cjs main=… p54=… p52=…` kjører de tre mot de samme tilfellene.
+Lest fra PR-differanser og kode (REST, ikke GraphQL). `node sammenlign-prer.cjs main=<sti> p54=<sti> p52=<sti>` kjører de tre mot de samme tilfellene.
 
 | | Hva det er | Søkemotor? | Filer som kolliderer |
 |---|---|---|---|
@@ -98,7 +98,7 @@ Lukkes eller beholdes som dokumentasjon: #54 (erstattet av #52), #47 (dekket av 
 
 - #52 og #56 gjennomgått av Lars og CI grønn, inkludert Firefox og WebKit.
 - Sjekket på iPhone Safari av Lars (min WebKit-test erstatter ikke det).
-- Beslutning om negasjonsformuleringen i #56 («Du skriver … med nekting. Vi har ikke et eget svar på det ennå»).
+- Beslutning om negasjonsformuleringen i #56 («Du skriver (ordene) med nekting. Vi har ikke et eget svar på det ennå»).
 - Avklart om `boligsparing` skal være nøkkelord på begge BSU-temaene.
 - #53 rebaset og med `keys`.
 - IPS og BSU står fortsatt som uferdige og er ikke med i det som godkjennes.
