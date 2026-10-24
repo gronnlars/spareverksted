@@ -295,3 +295,15 @@ document.addEventListener('DOMContentLoaded',()=>{if(linkCheck.allReset){notice(
 // synchronously can resize the observed element again and report an observer loop in WebKit.
 let lastChartWidth=0,chartResizeFrame=0;new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width>0&&Math.abs(width-lastChartWidth)>2){lastChartWidth=width;if(!chartResizeFrame)chartResizeFrame=requestAnimationFrame(()=>{chartResizeFrame=0;if(rows.length)chart();});}}).observe($('chart'));
 
+
+// Trykk eller klikk i et tallfelt markerer hele tallet, slik at det du skriver erstatter det som står der.
+// Uten dette havnet markøren bak tallet, og «2 000» pluss 8 ble stille til 20 008. Et nytt trykk i et felt
+// som allerede har fokus, plasserer markøren som vanlig, så det går fortsatt an å rette ett siffer.
+// Første mouseup etter fokus stoppes, ellers fjerner nettleseren markeringen igjen (Chromium, Safari).
+// Den forsinkede markeringen skjer bare hvis ingenting er skrevet ennå. Ellers kunne raske tastetrykk bli overskrevet.
+const NUMBER_FIELD='input[inputmode="decimal"],.fieldbox input[type="text"]';
+let freshNumberField=null;
+function selectNumber(el){if(document.activeElement===el&&el.value)try{el.setSelectionRange(0,el.value.length);}catch{}}
+document.addEventListener('focusin',event=>{const el=event.target;if(!el.matches?.(NUMBER_FIELD))return;freshNumberField=el;selectNumber(el);const before=el.value;setTimeout(()=>{if(el.value===before)selectNumber(el);},0);});
+document.addEventListener('mouseup',event=>{if(event.target!==freshNumberField)return;freshNumberField=null;event.preventDefault();selectNumber(event.target);});
+document.addEventListener('focusout',event=>{if(event.target===freshNumberField)freshNumberField=null;});
