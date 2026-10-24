@@ -2,6 +2,7 @@
 (function(root){
 'use strict';
 const F=typeof module!=='undefined'&&module.exports?require('./veileder-facts.js'):root.SpareFacts;
+const S=typeof module!=='undefined'&&module.exports?require('./veileder-sok.js'):root.SpareSearch;
 const checked=F.checked;
 const sources={
  funds:['Forbrukerrådet: fond og spareprofiler','https://www.forbrukerradet.no/sparing-i-fond-og-spareprofiler/'],
@@ -17,22 +18,20 @@ const sources={
  risk:['Finanstilsynet: informasjon om verdipapirfond','https://www.finanstilsynet.no/forbrukerinformasjon/verdipapirforetak-verdipapirfond-og-alternative-investeringsfond/']
 };
 const topics=[
- {id:'mortgage',title:'Boliglån eller sparing',words:[/boligl[aå]n/,/husl[aå]n/,/fastrente/,/avdrag/,/nedbetal\w*\s+(?:av\s+)?(?:bolig|hus)?l[aå]n/,/betale ned (?:bolig|hus)?l[aå]n/],not:[/^(?!.*(?:ekstra|avdrag|nedbetal|betale ned)).*(?:fast(?:rente)? eller flytende|flytende eller fast)/],questions:['Bør jeg betale ned boliglånet eller spare i fond?','Hva hvis jeg har fastrente?','Er lavere gjeld viktigere enn høyere avkastning?','Kan jeg spare og betale ekstra avdrag samtidig?']},
- {id:'student',title:'Studielån',words:[/studiel[aå]n/,/l[aå]nekassen/,/stipend/,/student/],questions:['Bør jeg ta opp studielån selv om jeg har sparepenger?','Bør jeg investere studielånet?','Bør jeg betale ned studielånet raskere?','Kan sparing påvirke stipendet mitt?']},
- {id:'children',title:'Sparing til barn',words:[/barn/,/gavebrev/,/statsforvalter/],questions:['Bør jeg spare i mitt eller barnets navn?',F.expand('Hva skjer når barnet fyller {{adultAge}} år?'),'Kan sparepengene påvirke barnets stipend?','Bør barnas sparepenger stå i fond?']},
- {id:'buffer',title:'Buffer og dyr gjeld',words:[/buffer/,/kredittkort/,/forbruksl[aå]n/,/inkasso/,/regning/,/dyr gjeld/,/uvente[td]|uforutsett|i tilfelle noe/],questions:['Hvor stor buffer trenger jeg?','Bør jeg spare når jeg har kredittkortgjeld?','Hva gjør jeg hvis jeg ikke får betalt regningene?','Hvor bør bufferen stå?']},
- {id:'funds',title:'Sparekonto eller fond',words:[/fond/,/aksj(?!esparekonto)/,/indeks/,/(?<!aksje)sparekonto/,/risiko/,/b[oø]rs/,/\bi banken\b|bankkonto|bankinnskudd/,/trenger pengene|hvor bør (?:pengene|de) stå/],not:[/skattlagt|skattlegg|skattes\b|beskatt|skatt(?:en)? (?:på|av|ved|hvis|når)|unng[aå]r? (?:jeg )?skatt|formuesskatt/],questions:['Bør jeg velge sparekonto eller fond?','Hvor mye risiko bør jeg ta?','Hva hvis jeg trenger pengene om tre år?','Hvordan unngår jeg å selge i panikk?']},
- {id:'pension',title:'Sparing til pensjon',words:[/pensjon/,/uttak/,/\bips\b/,/pensjonist|g[aå]r? av med pensjon/],not:[/skattlagt|skattlegg|skattes\b|beskatt|skatt(?:en)? (?:på|av|ved|hvis|når)|unng[aå]r? (?:jeg )?skatt|formuesskatt/],questions:['Bør jeg redusere risiko før pensjon?','Må alle sparepengene ut av fond når jeg pensjoneres?','Hvordan planlegger jeg uttak over mange år?','Hva bør jeg sjekke før jeg velger pensjonssparing?']},
- {id:'bsu',title:'BSU og boligkjøp',words:[/bsu/,/boligkj[oø]p/,/egenkapital/,/f[oø]rste bolig/],questions:['Bør jeg prioritere BSU?','Kan jeg få BSU-fradrag hvis jeg eier bolig?','Hva hvis jeg betaler lite skatt?','Bør egenkapital til bolig stå i fond?']}
+ {id:'mortgage',title:'Boliglån eller sparing',keys:['boliglån','huslån','fastrente','avdrag','nedbetaling','renteutgifter'],words:[/boligl[aå]n/,/husl[aå]n/,/fastrente/,/avdrag/,/nedbetal\w*\s+(?:av\s+)?(?:bolig|hus)?l[aå]n/,/betale ned (?:bolig|hus)?l[aå]n/],not:[/^(?!.*(?:ekstra|avdrag|nedbetal|betale ned)).*(?:fast(?:rente)? eller flytende|flytende eller fast)/],questions:['Bør jeg betale ned boliglånet eller spare i fond?','Hva hvis jeg har fastrente?','Er lavere gjeld viktigere enn høyere avkastning?','Kan jeg spare og betale ekstra avdrag samtidig?']},
+ {id:'student',title:'Studielån',keys:['studielån','lånekassen','stipend','student'],words:[/studiel[aå]n/,/l[aå]nekassen/,/stipend/,/student/],questions:['Bør jeg ta opp studielån selv om jeg har sparepenger?','Bør jeg investere studielånet?','Bør jeg betale ned studielånet raskere?','Kan sparing påvirke stipendet mitt?']},
+ {id:'children',title:'Sparing til barn',keys:['barnesparing','barnekonto','gavebrev','barnebarn','statsforvalter'],words:[/barn/,/\bunge(?:r|ne)\b|tenåring/,/gavebrev/,/statsforvalter/],questions:['Bør jeg spare i mitt eller barnets navn?',F.expand('Hva skjer når barnet fyller {{adultAge}} år?'),'Kan sparepengene påvirke barnets stipend?','Bør barnas sparepenger stå i fond?']},
+ {id:'buffer',title:'Buffer og dyr gjeld',keys:['buffer','kredittkort','forbrukslån','inkasso','regninger','nødfond','krisepenger','reservekonto'],words:[/buffer/,/n[øo]dfond|krisepenger|n[øo]dpenger/,/betale ned (?:dyr )?(?:gjeld|kreditt)|nedbetal\w* (?:av )?(?:dyr )?gjeld/,/kredittkort/,/forbruksl[aå]n/,/inkasso/,/regning/,/dyr gjeld/,/uvente[td]|uforutsett|i tilfelle noe/],questions:['Hvor stor buffer trenger jeg?','Bør jeg spare når jeg har kredittkortgjeld?','Hva gjør jeg hvis jeg ikke får betalt regningene?','Hvor bør bufferen stå?']},
+ {id:'funds',title:'Sparekonto eller fond',keys:['fond','sparekonto','aksjefond','indeksfond','børs','risiko'],words:[/(?<!n[øo]d)fond/,/\betf(?:er)?\b/,/aksj(?!esparekonto)/,/indeks/,/(?<!aksje)sparekonto/,/risiko/,/b[oø]rs/,/\bi banken\b|bankkonto|bankinnskudd/,/trenger pengene|hvor bør (?:pengene|de) stå/],not:[/skattlagt|skattlegg|skattes\b|beskatt|skatt(?:en)? (?:på|av|ved|hvis|når)|unng[aå]r? (?:jeg )?skatt|formuesskatt|hvor mye skatt|skatt (?:betaler|må) jeg/],questions:['Bør jeg velge sparekonto eller fond?','Hvor mye risiko bør jeg ta?','Hva hvis jeg trenger pengene om tre år?','Hvordan unngår jeg å selge i panikk?']},
+ {id:'pension',title:'Sparing til pensjon',keys:['pensjon','pensjonist','pensjonssparing','alderspensjon'],words:[/pensjon/,/alderdom|(?:blir|er) gammel/,/uttak/,/\bips\b/,/pensjonist|g[aå]r? av med pensjon/],not:[/skattlagt|skattlegg|skattes\b|beskatt|skatt(?:en)? (?:på|av|ved|hvis|når)|unng[aå]r? (?:jeg )?skatt|formuesskatt|hvor mye skatt|skatt (?:betaler|må) jeg/],questions:['Bør jeg redusere risiko før pensjon?','Må alle sparepengene ut av fond når jeg pensjoneres?','Hvordan planlegger jeg uttak over mange år?','Hva bør jeg sjekke før jeg velger pensjonssparing?']},
+ {id:'bsu',title:'BSU og boligkjøp',keys:['boligkjøp','egenkapital','boligsparing'],words:[/bsu/,/kj[øo]pe (?:en |ei |seg )?(?:leilighet|bolig|hus)|leilighet/,/boligkj[oø]p/,/egenkapital/,/f[oø]rste bolig/],questions:['Bør jeg prioritere BSU?','Kan jeg få BSU-fradrag hvis jeg eier bolig?','Hva hvis jeg betaler lite skatt?','Bør egenkapital til bolig stå i fond?']}
 ];
-function findTopics(text){
- const normalize=value=>String(value||'').toLocaleLowerCase('nb-NO').slice(0,600).trim().replace(/[?!.]+$/,'').replace(/\s+/g,' ');
- const q=normalize(text);
- if(!q.trim())return [];
- const exact=topics.filter(t=>t.questions.some(x=>normalize(x)===q)).map(t=>t.id);
- if(exact.length)return exact;
- return topics.filter(t=>!(t.not||[]).some(re=>re.test(q))).map(t=>({id:t.id,score:t.words.reduce((n,re)=>n+(re.test(q)?1:0),0)})).filter(t=>t.score>0).sort((a,b)=>b.score-a.score).map(t=>t.id);
-}
+// Brede ord gir bare forslag. Svært generelle ord gir en oppfordring til å velge tema eller skrive mer.
+const BROAD={'lån':['mortgage','student','buffer'],'gjeld':['buffer','mortgage','student'],'rente':['mortgage','funds'],'renter':['mortgage','funds'],'renten':['mortgage','funds'],'skatt':['q-ask-zero','q-ips-ask','q-bsu-basics'],'bolig':['bsu','mortgage'],'hus':['mortgage','bsu'],'bank':['funds'],'banken':['funds']};
+const GENERIC=['spare','sparer','sparing','sparingen','penger','pengene','økonomi','økonomien','råd','tips','hjelp'];
+function search(text){return S.search(text,topics,{broad:BROAD,generic:GENERIC});}
+// Sikre treff, i rangert rekkefølge. Forslag (tastefeil, brede ord) ligger i search().suggestions.
+function findTopics(text){return search(text).hits.map(h=>h.id);}
 function number(v,min,max,name){if(v===''||v===undefined||v===null)return null; const n=Number(String(v).replace(',','.'));if(!Number.isFinite(n)||n<min||n>max)throw Error(name+' må være et tall mellom '+min+' og '+max+'.');return n;}
 function validate(p={}){
  const out={age:number(p.age,0,110,'Alder'),years:number(p.years,0,80,'Tidshorisont')};
@@ -133,13 +132,15 @@ function register(entry){
   if(!entry.parts?.length||entry.parts.some(x=>!x.title||!x.text))throw Error('En forklaring trenger fordypning.');
   if(entry.next&&(!entry.next.text||!entry.next.href))throw Error('Ufullstendig lenke videre.');
   for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
-  topics.push({id:entry.id,title:entry.title,category:'explain',questions:entry.questions,words:entry.words,entry});
+  if((entry.keys||[]).some(x=>!/^[a-zæøå0-9]+$/.test(x)))throw Error('Ugyldig søkeord.');
+  topics.push({id:entry.id,title:entry.title,category:'explain',questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});
   return;
  }
  if(!topics.some(t=>t.id===entry.category&&!t.entry)||!entry.title||!entry.intro||!entry.checked||!entry.questions?.length||!entry.words?.length||entry.options?.length!==2||!entry.sources?.length)throw Error('Ufullstendig spørsmål.');
  for(const o of entry.options)if(!o.title||!o.poorFit||!(o.pros?.length>=2)||!(o.cons?.length>=2)||[...o.pros,...o.cons].some(i=>!i.title||!i.text))throw Error('Hvert alternativ trenger minst to fordeler, to ulemper og når det passer dårlig.');
  for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
- topics.push({id:entry.id,title:entry.title,category:entry.category,questions:entry.questions,words:entry.words,entry});
+ if((entry.keys||[]).some(x=>!/^[a-zæøå0-9]+$/.test(x)))throw Error('Ugyldig søkeord.');
+ topics.push({id:entry.id,title:entry.title,category:entry.category,questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});
 }
-const api={topics,findTopics,answer,validate,checked,sources,register,category,isExplainer,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
+const api={topics,findTopics,search,reason:S.reason,answer,validate,checked,sources,register,category,isExplainer,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
 })(typeof window!=='undefined'?window:globalThis);

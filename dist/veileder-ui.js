@@ -88,11 +88,40 @@ function clearChoice(){
  for(const b of document.querySelectorAll('[data-topic]'))b.setAttribute('aria-pressed','false');
  fill();suggestions();
 }
+const titleOf=id=>V.topics.find(t=>t.id===id).title;
+// Få, tydelige treff først. Hvert treff sier hvorfor det vises. Forslag (tastefeil, brede ord) er merket som forslag.
+function showMatches(items,visible=3){
+ const box=$('matches');box.replaceChildren();if(!items.length)return;
+ const list=el('ul','','match-list');
+ items.forEach((m,i)=>{
+  const li=el('li');if(i>=visible)li.hidden=true;
+  const b=button('',()=>{$('matches').replaceChildren();choose(m.id);});
+  b.append(el('span',titleOf(m.id),'match-title'),el('span',V.reason(m),'match-why'));
+  if(m.kind==='typo'||m.kind==='related')b.classList.add('match-suggest');
+  li.append(b);list.append(li);
+ });
+ box.append(list);
+ if(items.length>visible){
+  const more=button('Vis flere ('+(items.length-visible)+')',()=>{
+   const hidden=[...list.querySelectorAll('li[hidden]')];for(const li of hidden)li.hidden=false;more.remove();hidden[0].querySelector('button').focus();
+  });
+  box.append(more);
+ }
+}
 function search(){
- $('matches').replaceChildren();const ids=V.findTopics($('question').value);
- if(!ids.length){clearChoice();$('searchBox').open=true;$('matchStatus').textContent='Fant ikke et passende svar. Prøv andre ord eller velg et tema.';return;}
- choose(ids[0]);$('matchStatus').textContent=ids.length>1?'Andre temaer som kan passe:':'';
- for(const id of ids.slice(1)){const t=V.topics.find(t=>t.id===id);$('matches').append(button(t.title,()=>{$('matches').replaceChildren();choose(id);}));}
+ $('matches').replaceChildren();
+ const r=V.search($('question').value),status=$('matchStatus');
+ if(r.mode==='answer'){
+  const [lead,...rest]=r.hits,others=[...rest,...r.suggestions];
+  choose(lead.id);
+  status.textContent=(lead.kind==='question'?'Svar på spørsmålet ditt.':V.reason(lead)+'.')+(others.length?' Andre svar som kan passe:':'');
+  showMatches(others);return;
+ }
+ clearChoice();$('searchBox').open=true;
+ if(r.mode==='choose'){status.textContent='Flere svar kan passe. Velg det du mener:';showMatches([...r.hits,...r.suggestions]);return;}
+ if(r.mode==='suggest'){status.textContent='Fant ingen eksakte treff. Dette er forslag, ikke sikre svar:';showMatches(r.suggestions);return;}
+ $('topicPicker').open=true;
+ status.textContent=r.mode==='broad'?'Spørsmålet er bredt. Velg et tema, eller skriv litt mer, for eksempel «sparing til barn».':'Vi har ikke et ferdig svar på dette ennå. Velg et tema, eller prøv andre ord.';
 }
 for(const t of V.topics.filter(t=>!t.category)){const b=button(t.title,()=>{$('matches').replaceChildren();choose(t.id);});b.dataset.topic=t.id;b.setAttribute('aria-pressed','false');$('topics').append(b);}
 $('questionForm').addEventListener('submit',e=>{e.preventDefault();search();});

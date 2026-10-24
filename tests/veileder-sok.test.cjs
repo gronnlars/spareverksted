@@ -23,8 +23,8 @@ const SET=[
  {q:'Bør jeg ha pengene i fond eller på sparekonto?',expect:'funds',proof:/Sparekonto og aksjefond løser ulike behov/},
  {q:'Kan jeg tape penger på fond?',expect:'funds',proof:/Verdien kan falle mye/},
  {q:'Jeg trenger pengene om tre år, hvor bør de stå?',expect:'funds',proof:/Velg ut fra når pengene trengs/},
- // Dekket med én setning under «Ulemper» for sparekonto. Tynt, men et svar.
- {q:'Hvorfor blir pengene mindre verdt på sparekontoen?',expect:'funds',proof:/Renten etter skatt kan være lavere enn prisveksten/},
+ // Forklaringen «Hva er kjøpekraft?» svarer best. Sparekonto-svaret har bare én setning om temaet og godtas som alternativ.
+ {q:'Hvorfor blir pengene mindre verdt på sparekontoen?',expect:'q-kjopekraft',also:['funds'],proof:/Kjøpekraft er hvor mye du kan kjøpe for pengene|Renten etter skatt kan være lavere enn prisveksten/},
  {q:'Hva er BSU?',expect:'q-bsu-basics',proof:/boligsparing for ungdom/},
  {q:'Får jeg BSU-fradrag hvis jeg allerede eier leilighet?',expect:'q-bsu-basics',also:['bsu'],proof:/Eier du bolig ved årets slutt|ikke eier bolig ved årets slutt/},
  {q:'Vi skal kjøpe leilighet om to år, hvordan bør vi spare egenkapitalen?',expect:'bsu',also:['funds'],proof:/uegnet nær boligkjøp|tilgjengelige til en fast, nær dato/},
@@ -99,6 +99,7 @@ const withoutFilter=q=>{const saved=V.topics.map(t=>[t,t.not]);for(const t of V.
 const FILTER_CONTROL=[
  // Skatt er selve spørsmålet. Fond og pensjon har ingen skatteregler, så de skjules.
  ['Hvordan blir fond skattlagt?',[null],'funds'],
+ ['Hvor mye skatt betaler jeg på fond?',[null],'funds'],
  ['Hva skjer med skatten hvis jeg selger fond?',[null],'funds'],
  ['Hvordan unngår jeg skatt på fondsgevinst?',[null],'funds'],
  ['Skal jeg ha pengene i fond eller i banken når jeg betaler formuesskatt?',[null],'funds'],
@@ -132,8 +133,9 @@ for(const [q,want,removed] of FILTER_CONTROL){
 }
 
 // Kjente hull i filteret: misvisende treff som mønstrene ikke fanger. Dette er ikke godkjente svar. Testen sier fra
-// når et hull er tettet, så lista kan krympe. Løses ordentlig først med «ærlig bom».
-const KNOWN_FILTER_GAPS=[['Hvor mye skatt betaler jeg på fond?','funds']];
+// når et hull er tettet, så lista kan krympe. «Hvor mye skatt betaler jeg på fond?» er tettet med et snevert mønster.
+// Andre formuleringer av skatt på fond kan fortsatt slippe gjennom. Se tests/veileder-sok-utvidet.test.cjs.
+const KNOWN_FILTER_GAPS=[];
 for(const [q,now] of KNOWN_FILTER_GAPS)assert.equal(V.findTopics(q)[0]??null,now,'Kjent hull er endret, oppdater KNOWN_FILTER_GAPS: '+q);
 
 // 3. Skatt på fond skal aldri regnes som besvart av det generelle fondssvaret.
