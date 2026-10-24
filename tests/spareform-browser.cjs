@@ -20,7 +20,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert(await p.locator('#meaning').isVisible());assert.equal(await text(p,'#meaningTitle'),'Dette betyr tallene dine');
   assert.equal(await p.evaluate(()=>document.querySelector('#meaning [aria-live],#meaning[aria-live]')),null,'ingen automatisk opplesning');
   assert.match(await text(p,'#meaningMain'),/^Avkastningen er større enn prisveksten/);
-  assert.equal(await p.evaluate(()=>{const a=document.querySelector('.hero-result'),b=document.getElementById('meaning');return a.nextElementSibling===b;}),true,'seksjonen står rett etter resultatet');
+  assert.equal(await p.evaluate(()=>{const a=document.querySelector('.hero-result'),b=document.getElementById('meaning');return a.nextElementSibling.classList.contains('result-navigation')&&a.nextElementSibling.nextElementSibling===b;}),true,'snarveiene kommer før forklaringen, rett etter resultatet');
   const total=await text(p,'#total'),inputs=await p.evaluate(()=>['start','monthly','years','rate','inflation','fee'].map(k=>document.getElementById(k).value));
 
   // 2. Velg brukskonto: synlige forutsetninger for brukskonto (0 % rente, 0 % kostnad), med melding og angreknapp.
@@ -76,7 +76,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // 3. Sparekonto med 8 % og egne tall: saklig forklaring, og lavere rente vises uten å endre tallene.
   await p.locator('#rate').fill('8');await p.locator('#rate').blur();
   await p.evaluate(()=>{document.getElementById('essentials').open=true});await p.locator('#fee').fill('0');await p.locator('#fee').blur();
-  assert.match(await text(p,'#meaningMain'),/Beregningen forutsetter 8 % rente på sparekontoen gjennom hele perioden\. Kontroller at renten stemmer med kontovilkårene\./);
+  assert.match(await p.locator('#meaningDetails').textContent(),/Beregningen forutsetter 8 % rente på sparekontoen gjennom hele perioden\. Kontroller at renten stemmer med kontovilkårene\./);
+  assert.match(await text(p,'#meaningMain'),/Renter beskattes hvert år/);
   const before8=await text(p,'#total');
   await p.locator('#meaningActions button').click();assert.match(await text(p,'#meaningActionText'),/Med 6 % rente i stedet for 8 %/);
   assert.equal(await p.locator('#meaningActions button').getAttribute('aria-expanded'),'true');assert.equal(await p.evaluate(()=>s.rate),8);assert.equal(await text(p,'#total'),before8);
@@ -86,11 +87,11 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.locator('#rate').fill('1');
   assert.equal(await text(p,'#meaningMain'),oldMain,'ingen endring mens brukeren skriver');assert(await p.evaluate(()=>document.getElementById('meaning').classList.contains('meaning-waiting')));
   assert.equal(await p.evaluate(()=>document.activeElement.id),'rate','fokus blir i feltet');
-  await p.locator('#rate').blur();assert.match(await text(p,'#meaningMain'),/1 % rente/);assert(!await p.evaluate(()=>document.getElementById('meaning').classList.contains('meaning-waiting')));
+  await p.locator('#rate').blur();assert.match(await p.locator('#meaningDetails').textContent(),/1 % rente/);assert(!await p.evaluate(()=>document.getElementById('meaning').classList.contains('meaning-waiting')));
   // Skyveknappen: oppdateres når den slippes (change).
   await p.evaluate(()=>{const r=document.getElementById('rateSlider');r.value='3';r.dispatchEvent(new Event('input',{bubbles:true}));});
-  assert.match(await text(p,'#meaningMain'),/1 % rente/,'ikke under dra-bevegelsen');
-  await p.evaluate(()=>{document.getElementById('rateSlider').dispatchEvent(new Event('change',{bubbles:true}));});assert.match(await text(p,'#meaningMain'),/3 % rente/);
+  assert.match(await p.locator('#meaningDetails').textContent(),/1 % rente/,'ikke under dra-bevegelsen');
+  await p.evaluate(()=>{document.getElementById('rateSlider').dispatchEvent(new Event('change',{bubbles:true}));});assert.match(await p.locator('#meaningDetails').textContent(),/3 % rente/);
 
   // 5. Kroner, kjøpekraft og begge i grafen.
   await p.locator('#rate').fill('5');await p.locator('#rate').blur();await p.locator('#fee').fill('0,2');await p.locator('#fee').blur();
@@ -118,7 +119,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // 6. Åpne en delt lenke med spareform og begge-visning.
   p=await open('#activePage=calculator&start=100000&monthly=0&rate=0&fee=0&years=10&savingsType=checking&both=1',1280);pages.push(p);
   assert.equal(await p.locator('#savingsTypes [data-type=checking]').getAttribute('aria-pressed'),'true');assert.equal(await p.locator('#valueModes [data-value-mode=both]').getAttribute('aria-pressed'),'true');
-  assert.equal(await text(p,'#meaningMain'),'Beløpet på kontoen er uendret, men pengene kjøper mindre etter hvert som prisene stiger. Beregningen bruker 0 % rente på brukskontoen gjennom hele perioden. Kontroller kontovilkårene.');
+  assert.equal(await text(p,'#meaningMain'),'Beløpet på kontoen er uendret, men pengene kjøper mindre etter hvert som prisene stiger.');
+  assert.match(await p.locator('#meaningDetails').textContent(),/Beregningen bruker 0 % rente på brukskontoen gjennom hele perioden\. Kontroller kontovilkårene\./);
   // Ugyldig spareform i lenke blir ikke valgt.
   p=await open('#activePage=calculator&savingsType=aksjer',1280);pages.push(p);assert.equal(await p.evaluate(()=>s.savingsType),'');
 

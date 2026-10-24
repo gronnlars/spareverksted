@@ -1,4 +1,7 @@
 .result-navigation{display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px;margin:0 0 18px}
+.result-navigation #seeGraph{background:var(--primary-bg);border-color:var(--primary-bg);color:var(--on-primary)}
+.input-result{display:none}
+.hero-result .result-assumptions{font-size:13px;line-height:1.5;color:inherit;margin:10px 0 0}
 .result-navigation button{min-height:44px}
 .result-navigation .text-link,.return-fields{min-height:44px;padding-block:10px}
 #planInputs,#dreamInputs,#withdrawInputs,#chartPanel,#savedHeading{scroll-margin-block-start:20px}
@@ -7,7 +10,12 @@
 #journeyFreshNote{font-size:13px;color:var(--muted);margin-top:16px}
 /* On phones, move 28 px further than the desktop anchors. Only the empty top
    edges may leave view; badges and headings remain visible. */
-@media(max-width:760px){#savingsResult,#chartPanel{scroll-margin-block-start:-8px}}
+@media(max-width:760px){
+ #savingsResult,#chartPanel{scroll-margin-block-start:-8px}
+ .input-result{display:block;width:100%;min-height:44px;margin-top:16px}
+ .result-navigation{gap:8px 16px;margin-bottom:14px}
+ .result-navigation #seeGraph{flex:1}
+}
 @media(min-width:1000px){
  .site-header .desktop-nav{display:flex!important;flex-direction:row;gap:4px;margin-left:auto}
  .site-menu .site-nav{display:none!important}

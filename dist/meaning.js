@@ -30,11 +30,18 @@ function build(E,s,end,f,A){
  }
  else main.push('Pengene vokser omtrent like mye som prisene, så kjøpekraften er omtrent den samme som for innskuddene.');
  // 2. Spareformen. Startverdiene sies tydelig, slik at et valg aldri ser ut til å gjøre tallene representative.
+ let accountAssumption='';
  const startValues=[...(s.rate===d.rate?[`${f.pct(d.rate)} vekst`]:[]),...(s.fee===d.fee?[`${f.pct(d.fee)} kostnad`]:[])];
  if(type&&s.savingsType!=='index'&&startValues.length)
   main.push(`Du har valgt ${type.name}, men beregningen bruker fortsatt startverdiene ${join(startValues)}. De er ikke vilkår for en ${type.name}. Legg inn kontoens rente${s.fee===d.fee?' og eventuelle kostnader':''}.`);
- else if(s.savingsType==='savings')main.push(`Beregningen forutsetter ${f.pct(s.rate)} rente på sparekontoen gjennom hele perioden. Kontroller at renten stemmer med kontovilkårene. Endres renten, blir resultatet annerledes.`+(taxNoted?'':' Renter beskattes hvert år, så resultatet etter skatt blir lavere.'));
- else if(s.savingsType==='checking')main.push(`Beregningen bruker ${f.pct(s.rate)} rente på brukskontoen gjennom hele perioden. Kontroller kontovilkårene.`+(s.rate>0&&!taxNoted?' Renter beskattes hvert år, så resultatet etter skatt blir lavere.':''));
+ else if(s.savingsType==='savings'){
+  accountAssumption=`Beregningen forutsetter ${f.pct(s.rate)} rente på sparekontoen gjennom hele perioden. Kontroller at renten stemmer med kontovilkårene. Endres renten, blir resultatet annerledes.`;
+  if(s.rate>0&&!taxNoted)main.push('Renter beskattes hvert år, så resultatet etter skatt blir lavere.');
+ }
+ else if(s.savingsType==='checking'){
+  accountAssumption=`Beregningen bruker ${f.pct(s.rate)} rente på brukskontoen gjennom hele perioden. Kontroller kontovilkårene.`;
+  if(s.rate>0&&!taxNoted)main.push('Renter beskattes hvert år, så resultatet etter skatt blir lavere.');
+ }
  else if(s.savingsType==='index'){
   const own=s.riskChosen&&s.stress==='low'?'Du har selv oppgitt at du helst vil unngå store fall. ':'';
   main.push(own+`Et indeksfond kan falle mye i verdi underveis, men beregningen viser en jevn utvikling på ${f.pct(s.rate)} hvert år.`);
@@ -54,6 +61,7 @@ function build(E,s,end,f,A){
  details.push({title:'Innbetalinger og avkastning',text:`Du setter inn ${f.money(paid)}. ${growth>=-0.5?'Avkastning':'Nedgang'} etter kostnader: ${f.money(Math.abs(growth))}.`+(costEffect>=0.5?` Uten kostnader ville sluttbeløpet vært ${f.money(costEffect)} høyere.`:'')+(deposits?' En høyere saldo viser ikke alene at kjøpekraften er bevart, fordi mye av økningen er nye innbetalinger.':'')});
  if(s.inflation!==0)details.push({title:'Kroner og kjøpekraft',text:`Med ${f.pct(s.inflation)} årlig prisvekst tilsvarer sluttbeløpet ${f.money(real)} i dagens kroner. Innskuddene tilsvarer ${f.money(paidToday)} i dagens kroner, regnet om med prisnivået da hvert innskudd ble satt inn. ${Math.abs(powerChange)<0.5?'Kjøpekraften er omtrent uendret.':`Det er ${f.money(Math.abs(powerChange))} ${powerChange>0?'mer':'mindre'} kjøpekraft enn innskuddene.`}`});
  let a=`Beregningen bygger på ${f.pct(s.rate)} ${type?type.rate:'vekst'} og ${f.pct(s.fee)} kostnad hvert år gjennom hele perioden, og ${f.pct(s.inflation)} prisvekst. Alt er før skatt.`;
+ if(accountAssumption)a+=' '+accountAssumption;
  if(startValues.length||s.inflation===d.inflation)a+=` ${join([...startValues,...(s.inflation===d.inflation?[`${f.pct(d.inflation)} prisvekst`]:[])])} er startverdier, ikke anbefalinger.`;
  if(s.crash>0)a+=` Børsfallet på ${f.pct(s.crash)} er et enkelt fall, ikke en årlig nedgang.`;
  if(s.rate<0)a+=` ${f.pct(s.rate)} er en nedgang hvert år gjennom hele perioden, ikke ett enkelt fall.`;

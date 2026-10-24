@@ -52,6 +52,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Playwright
         run: npm install --no-save --no-package-lock playwright@1.56.0
+      # Actions mounts /github/home with the host runner's uid; the container runs as root.
+      # Firefox requires the home directory to belong to the browser's current user.
+      - name: Match CI home ownership for Firefox
+        run: chown "$(id -u):$(id -g)" /github/home
       - name: Browser flows (Chromium)
         run: |
           node tests/input-browser.cjs
@@ -63,6 +67,17 @@ jobs:
           node tests/roundtrip-browser.cjs
           node tests/a11y-browser.cjs
           node tests/akse-browser.cjs
+          node tests/polish-browser.cjs
+          SPARE_ENGINE=firefox node tests/polish-browser.cjs
+          SPARE_ENGINE=webkit node tests/polish-browser.cjs
+      - name: UI review screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-review
+          path: /tmp/spareverksted-ui-review
+          if-no-files-found: ignore
+          retention-days: 7
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: [checks, browser]

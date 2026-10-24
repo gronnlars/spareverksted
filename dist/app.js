@@ -30,7 +30,7 @@ const specs={basic:[['start','Du har allerede','kr'],['monthly','Du sparer hver 
 for(const [group,fields]of Object.entries(specs))$(group).innerHTML=fields.map(([id,label,unit])=>`<label for="${id}"><span class="field-label">${label}</span><div class="fieldbox"><input id="${id}" type="text"${NEGATIVE_OK.has(id)?'':' inputmode="decimal"'} autocomplete="off"><span class="unit">${unit}</span></div></label>`).join('');
 function fill(){for(const b of $('modes').children)b.classList.toggle('active',b.dataset.mode===mode);for(const k in s){const el=$(k);if(!el)continue;if(el.type==='checkbox')el.checked=s[k];else el.value=typeof s[k]==='number'?groupedNumber(s[k]):s[k];}for(const k in view)if($(k))$(k).checked=view[k];}
 function read(){for(const k in s){if(k.startsWith('tax')||k==='taxableShare')continue;const el=$(k);if(!el)continue;if(el.type==='checkbox')s[k]=el.checked;else if(typeof E.defaults[k]==='number'){s[k]=parsedNumber(el.value);el.setAttribute('aria-invalid',!Number.isFinite(s[k])&&k!==pendingKey());}else s[k]=el.value;}}
-function notice(t,ms=4500){$('toast').textContent=t;$('toast').style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$('toast').style.display='none',ms);}
+function notice(t,ms=4500){delete $('toast').dataset.validation;$('toast').textContent=t;$('toast').style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$('toast').style.display='none',ms);}
 // Etiketten som faktisk vises ved feltet, ellers standardnavnet fra motoren.
 function fieldLabel(key){const t=$(key)?.closest('label')?.querySelector('.field-label')?.textContent?.trim();return t||E.label(key);}
 const quoted=keys=>keys.map(k=>'«'+fieldLabel(k)+'»').join(', ');
@@ -68,7 +68,7 @@ function planProblem(){
 }
 // Viser feltet med feil og flytter fokus dit. Bytter side bare når feltet ligger på en annen side.
 function focusField(key){const el=key&&$(key);if(!el)return;if(pageOf(key)!==s.activePage&&typeof setPage==='function')setPage(pageOf(key));for(let d=el.closest('details');d;d=d.parentElement?.closest('details'))d.open=true;markInvalid(key,pageOf(key)==='dreams'?'dreamError':pageOf(key)==='withdrawals'?'retirementResult':'error');el.focus({preventScroll:false});}
-function blockIfInvalid(action){const e=planProblem();if(!e)return false;notice(e.message+' '+action,8000);focusField(e.field);return true;}
+function blockIfInvalid(action){const e=planProblem();if(!e)return false;notice(e.message+' '+action,8000);$('toast').dataset.validation='true';focusField(e.field);return true;}
 const endYear=n=>Math.round(n.years*12)/12;
 // Perioder under ett år vises i måneder, ikke som «0,08 år».
 // Aksen viser hele år eller hele måneder med like steg, aldri «2,33 år». Sluttidspunktet vises alltid.
@@ -93,13 +93,14 @@ const depositsToday=(t,n=s)=>E.depositsToday(n,t);
 // Innskuddene vises i samme kroneverdi som sluttbeløpet, slik at innskudd + vekst = sluttbeløp i begge visninger.
 const paidShown=(t,n=s)=>s.real?depositsToday(t,n):nominalPaid(t,n);
 function planRows(n){const months=Math.round(n.years*12),count=Math.min(months,600);return Array.from({length:count+1},(_,i)=>{const t=count?Math.round(i*months/count)/12:0;return {t,v:display(E.value(n,t),t,n),paid:paidShown(t,n),paidNominal:nominalPaid(t,n)};});}
-// For indeksfond bruker båndet Finans Norges formelverk (95 % utfallsrom som avhenger av sparetiden). Ellers lavere og høyere vekst.
+// The graph and exports share scenario values. These are not a documented probability interval for the whole plan.
 const indexBand=()=>s.savingsType==='index';
+const scenarioValue=(t,direction)=>indexBand()?E.band(s,t,direction*1.96,Assumptions.index.sigma):E.value(s,t,s.rate+direction*s.spread);
 function makeRows(){
  if(view.showRange&&!indexBand()&&s.rate-s.spread<=-100)throw Error('Lavt scenario må ha avkastning over −100 %. Reduser scenarioavviket eller slå av avkastningsbåndet.');
  return planRows(s).map(r=>({...r,
- low:view.showRange?display(indexBand()?E.band(s,r.t,-1.96,Assumptions.index.sigma):E.value(s,r.t,s.rate-s.spread),r.t):r.v,
- high:view.showRange?display(indexBand()?E.band(s,r.t,1.96,Assumptions.index.sigma):E.value(s,r.t,s.rate+s.spread),r.t):r.v,
+ low:view.showRange?display(scenarioValue(r.t,-1),r.t):r.v,
+ high:view.showRange?display(scenarioValue(r.t,1),r.t):r.v,
  bank:view.showBank?display(E.value({...s,crash:0},r.t,s.bank,0),r.t):r.v,
  goal:(view.showGoal||mode==='goal')?(s.goalReal?display(s.goal*inflation(r.t),r.t):display(s.goal,r.t)):0}));
 }
@@ -145,6 +146,7 @@ function render(){
  else if(lastLoss)notes.push((X.cause==='fees'?(X.growthOnly?`Kostnadene har redusert sparingen med ${money(nominalLoss)}.`:`Kostnadene på ${money(X.costEffect)} er større enn veksten, så ${less}`):X.cause==='fall'?`Børsfallet gjør at ${less}`:X.cause==='fall+fees'?`Børsfallet og kostnadene gjør at ${less}`:X.cause==='fall+value'?`Børsfallet og den negative årlige avkastningen gjør at ${less}`:X.cause==='fall+value+fees'?`Børsfallet, den negative årlige avkastningen og kostnadene gjør at ${less}`:X.cause==='value+fees'?`Negativ avkastning og kostnadene gjør at ${less}`:`Negativ avkastning gjør at ${less}`)+(s.real&&!X.noInflation?` Beløpet er i kroner, ikke justert for prisvekst. Målt i dagens kroner er verdien ${money(paid-shown)} lavere enn innskuddene i dagens kroner. Det samlede tapet består av både tapet i kroner og prisveksten.`:''));
  // Kjøpekraften forklares i «Dette betyr tallene dine», ikke her.
  $('secondary').textContent=notes.join(' ');$('secondary').hidden=!notes.length;
+ $('resultAssumptions').textContent=`Regneeksempel: ${pct(s.rate)} årlig ${['checking','savings'].includes(s.savingsType)?'rente':'vekst'}, ${pct(s.fee)} kostnad og ${pct(s.inflation)} prisvekst.`;
  $('mobileResultLabel').textContent=mode==='goal'?'Nødvendig per måned · før skatt':allLost?'Alle innskuddene er tapt · før skatt':lastLoss?`${money(nominalLoss)} under innskuddene · før skatt`:(powerGap>=0.5||X&&X.powerGap)?'Lavere kjøpekraft enn innskuddene · før skatt':s.real?'Dagens kroner · før skatt':'Regneeksempel · før skatt';
  $('mobileCurve').hidden=mode==='goal';
  const miniMax=Math.max(1,...rows.map(r=>Math.max(r.v,r.paid)));
@@ -246,7 +248,7 @@ function syncLevel(){document.body.dataset.level=level;for(const b of $('levels'
  $('hiddenAssumptions').hidden=!active.length;$('hiddenAssumptions').innerHTML=active.length?'Også med i beregningen: '+escapeHTML(active.join(' · '))+'. <button id="revealSettings">Se innstillingene</button>':'';if($('revealSettings'))$('revealSettings').onclick=()=>{setLevel('advanced');$('advancedDetails').open=true;$('eventsDetails').open=true;};}
 function setLevel(value){level=value;try{localStorage.setItem('sv-level',level);}catch{}syncLevel();if(window.renderDream)window.renderDream();}
 // State changes are read once per user input. An empty field stops the calculation; see pendingKey().
-document.addEventListener('input',event=>{if(!event.target.closest('#taxDialog')&&event.target.id in E.defaults){typingRender=true;read();render();typingRender=false;}});
+document.addEventListener('input',event=>{if(!event.target.closest('#taxDialog')&&event.target.id in E.defaults){typingRender=true;read();render();typingRender=false;if($('toast').dataset.validation&&!planProblem()){clearTimeout(window.toastTimer);$('toast').style.display='none';delete $('toast').dataset.validation;}}});
 // «Dette betyr tallene dine» oppdateres når feltet forlates eller skyveknappen slippes (change), ikke ved hvert tastetrykk.
 document.addEventListener('change',event=>{const id=event.target.dataset?.field||event.target.id;if(id in E.defaults&&!lastRenderError)renderMeaning();});
 // Tusenskille settes når brukeren forlater feltet, ikke mens det skrives, slik at markøren ikke hopper.
@@ -289,5 +291,7 @@ $('csv').onclick=()=>{
 fill();render();
 // Varselet vises når alle felt finnes, slik at feltnavnene er de som står på skjermen.
 document.addEventListener('DOMContentLoaded',()=>{if(linkCheck.allReset){notice('Lenken hadde ugyldige tall. Du ser standardverdiene i stedet.',15000);return;}const parts=[];if(linkCheck.adjusted.length)parts.push('Lenken hadde negative verdier som kalkulatoren ikke bruker lenger. '+adjustedText(linkCheck.adjusted));if(linkCheck.rejected.length)parts.push('Lenken hadde ugyldige verdier i '+quoted(linkCheck.rejected)+'. Disse er satt til standardverdi.');if(parts.length)notice(parts.join(' ')+' Resten av planen er beholdt.',20000);});
-let lastChartWidth=0;new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width>0&&Math.abs(width-lastChartWidth)>2){lastChartWidth=width;if(rows.length)chart();}}).observe($('chart'));
+// Redraw in the next frame, outside ResizeObserver's measurement cycle. Writing SVG here
+// synchronously can resize the observed element again and report an observer loop in WebKit.
+let lastChartWidth=0,chartResizeFrame=0;new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width>0&&Math.abs(width-lastChartWidth)>2){lastChartWidth=width;if(!chartResizeFrame)chartResizeFrame=requestAnimationFrame(()=>{chartResizeFrame=0;if(rows.length)chart();});}}).observe($('chart'));
 
