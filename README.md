@@ -97,13 +97,15 @@ Grensene for alle tallfelt står i én oversikt i `dist/engine.js`. Deling, lagr
 
 Gjennomgå helst beregninger, numeriske grensetilfeller, tilgjengelighet og mobilflyt før nye funksjoner legges til. Nye finansielle modeller må dokumentere forutsetningene og ha uavhengige kontrollberegninger. Ikke endre en brukers innstillinger stille ved nivåbytte.
 
-## Lisens og en vennlig oppfordring
+## Lisens, opphav og viderebruk
 
-Koden er åpen kildekode under [MIT-lisensen](LICENSE). Du kan bruke, endre og dele den fritt, også kommersielt. Se [bidragsveiledningen](CONTRIBUTING.md).
+Alle kan bruke den publiserte kalkulatoren gratis til egen økonomi og teste den for å gi tilbakemelding, også ansatte i kommersielle virksomheter. Egen sparing og avkastning er tillatt.
 
-**Bruker du Spareverksted kommersielt**, ber vi deg gi et fast beløp hvert år til en organisasjon som hjelper mennesker, dyr eller natur. Du velger selv organisasjon og beløp. Lisensen krever det ikke, men vi regner med at du gjør det.
+Fra 24. oktober 2026 tilbys nye originale bidrag etter commit `8392d9adb934533ceca9627a93b768c223a1b704` under PolyForm Noncommercial 1.0.0, med tilleggstillatelsen i [LICENSE](LICENSE). Kommersiell viderebruk av disse bidragene krever egen avtale med de aktuelle rettighetshaverne. Dette gjelder blant annet salg av tjenester, kommersiell integrasjon og markedsføring. En donasjon gir ingen kommersiell lisens. Kildekoden er tilgjengelig, men de nye vilkårene er ikke en åpen kildekode-lisens.
 
-Bruker du det privat, er du like velkommen uten å gi noe.
+**Den tidligere kalkulatoren er fortsatt MIT-lisensiert.** Materialet til og med commiten ovenfor kan fortsatt brukes kommersielt under MIT, også når det inngår i en nyere utgave. Endringen trekker ikke tilbake tidligere tillatelser. Git-historikken skiller grunnlaget fra senere bidrag. Andres materiale følger sine egne vilkår; vi kan bare lisensiere rettigheter vi faktisk har.
+
+Prosjektet er utviklet av Lars med hjelp fra ChatGPT og Claude, med innspill fra Gemini. KI har bidratt til kode, tekst, feilsøking og forslag. Se [PROVENANCE.md](PROVENANCE.md) for avgrensninger og kilder og [CONTRIBUTING.md](CONTRIBUTING.md) for nye bidrag. Gaver er frivillige og er aldri et vilkår for personlig bruk.
 
 ## GitHub Pages
 

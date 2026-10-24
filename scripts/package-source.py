@@ -3,7 +3,7 @@ from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
 root = Path(__file__).resolve().parent.parent
 output = root / 'dist' / 'spareverksted-kildekode.zip'
-files = [root / name for name in ('README.md', 'LICENSE', 'CONTRIBUTING.md')]
+files = [root / name for name in ('README.md', 'LICENSE', 'CONTRIBUTING.md', 'PROVENANCE.md')]
 for folder in ('dist', 'tests', 'scripts', 'research', '.github'):
     files += [p for p in (root / folder).rglob('*')
               if p.is_file() and p.suffix in ('.html', '.css', '.js', '.cjs', '.py', '.json', '.yml', '.md')
