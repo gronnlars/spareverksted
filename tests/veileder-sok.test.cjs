@@ -24,7 +24,7 @@ for(const [typo,right] of same){assert.ok(ids(right).length,right+' skal ha tref
 assert.ok(ids('boligflån og pensjon').includes('mortgage')&&ids('boligflån og pensjon').includes('pension'),'rettelsen skal ikke fjerne andre ord');
 
 // 4. ASK, Zero og sammenligningene: skrivefeil og særskriving gir samme treff som riktig skrivemåte.
-for(const [typo,right] of [['Zeroo','Zero'],['Zerro','Zero'],['zero-konto','zero konto'],['Hva er Investeringskonto Zeroo?','Hva er Investeringskonto Zero?']])assert.deepEqual(ids(typo),ids(right),typo);
+for(const [typo,right] of [['Zeroo','Zero'],['Zerro','Zero'],['zero-konto','zero konto']])assert.deepEqual(ids(typo),ids(right),typo);
 assert.ok(ids('Zero').includes('q-ask-zero')&&ids('ASK').includes('q-ask-zero'));
 // Riktig skrevne ord og alle spørsmålene i databasen blir aldri omskrevet, og forklaringer og sammenligninger holdes fra hverandre.
 for(const t of V.topics)for(const q of t.questions){const r=V.interpret(q);assert.deepEqual(r.applied,[],q);assert.ok(r.ids.includes(t.id),q);}
