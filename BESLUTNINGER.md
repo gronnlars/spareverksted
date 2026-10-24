@@ -79,6 +79,20 @@ En begrunnelse er ikke et vern mot kritikk. Faktiske regnefeil, utilgjengelige k
 
 **Vurder på nytt når:** Faktiske spørsmål viser hull i ruting eller innhold. Utvid kvalitetssikret dekning i riktig fase.
 
+## Søk som tåler skrivefeil og særskriving
+
+**Problem:** «boligflån» og «bolig lån» ga ingen treff, selv om «boliglån» finner svaret. Søket matchet ordlistene mot hele teksten, så én feil bokstav eller ett mellomrom stoppet det.
+
+**Valg:** Faste regler, uten KI. To ord leses som ett sammensatt ord («bolig lån» som «boliglån»). Et ukjent ord på minst fem bokstaver som ligger én endring fra et ord som utløser et tema, leses som det ordet. Ord to endringer unna foreslås bare («Mente du …?»). Siden sier alltid hva den leste. Ved bom vises ingen svar, bare forslag og temaene, merket som at de ikke er svar på spørsmålet.
+
+**Alternativ:** Legge inn hver feilskriving som eget søkeord. Det treffer bare dem vi har tenkt på og må vedlikeholdes for alltid. Å la en språkmodell tolke spørsmålet strider mot valget over.
+
+**Begrunnelse:** Små regler kan testes, forklares for brukeren og vedlikeholdes sammen med temaene. Vanlige skrivefeil skal ikke føre til at siden later som den mangler innhold den har.
+
+**Akseptert ulempe:** Et ord kan bli rettet til noe brukeren ikke mente, for eksempel «buffet» til «buffer». Derfor står det synlig hva siden leste. Ord på fire bokstaver eller færre rettes ikke, og søket forstår fortsatt ikke alle formuleringer.
+
+**Vurder på nytt når:** Faktiske søk viser rettelser som ofte er feil, eller ord uten treff som tydelig ligger nær et tema.
+
 ## Kvalitet før flere funksjoner
 
 **Valg:** Avgrensede endringer, uavhengige kontrollberegninger og kontroller av flyt og tilgjengelighet. Kalkulatorens ferdige deler skal få ro før vi bygger videre.

@@ -88,10 +88,19 @@ function clearChoice(){
  for(const b of document.querySelectorAll('[data-topic]'))b.setAttribute('aria-pressed','false');
  fill();suggestions();
 }
+function listWords(items){return items.length>1?items.slice(0,-1).join(', ')+' og '+items.at(-1):items[0]||'';}
 function search(){
- $('matches').replaceChildren();const ids=V.findTopics($('question').value);
- if(!ids.length){clearChoice();$('searchBox').open=true;$('matchStatus').textContent='Fant ikke et passende svar. Prøv andre ord eller velg et tema.';return;}
- choose(ids[0]);$('matchStatus').textContent=ids.length>1?'Andre temaer som kan passe:':'';
+ $('matches').replaceChildren();const r=V.interpret($('question').value),ids=r.ids;
+ const read=r.applied.length?'Leste '+listWords(r.applied.map(a=>'«'+a.from+'» som «'+a.to+'»'))+'. ':'';
+ if(!ids.length){
+  // Ærlig bom: si det tydelig. Forslagene under er ikke svar på spørsmålet, bare veier videre.
+  clearChoice();$('searchBox').open=true;
+  $('matchStatus').textContent='Vi har ikke et svar på dette ennå. Knappene under er ikke svar på spørsmålet ditt. De viser '+(r.suggestions.length?'andre ord du kan søke på, og ':'')+'temaene vi har i dag.';
+  for(const s of r.suggestions)$('matches').append(button('Mente du «'+s.to+'»?',()=>{const box=$('question');box.value=box.value.replace(new RegExp(s.from,'i'),s.to);search();}));
+  for(const t of V.topics.filter(t=>!t.category))$('matches').append(button(t.title,()=>{$('matches').replaceChildren();choose(t.id);}));
+  return;
+ }
+ choose(ids[0]);$('matchStatus').textContent=read+(ids.length>1?'Andre temaer som kan passe:':'');
  for(const id of ids.slice(1)){const t=V.topics.find(t=>t.id===id);$('matches').append(button(t.title,()=>{$('matches').replaceChildren();choose(id);}));}
 }
 for(const t of V.topics.filter(t=>!t.category)){const b=button(t.title,()=>{$('matches').replaceChildren();choose(t.id);});b.dataset.topic=t.id;b.setAttribute('aria-pressed','false');$('topics').append(b);}
