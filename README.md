@@ -156,3 +156,7 @@ node tests/veileder-browser.cjs
 Resultatet omtales som «ingen avvik funnet i de gjennomførte kontrollene». Den egenutviklede Chromium-kontrollen dokumenterer ikke full WCAG-samsvar. Faktisk tekstforstørring, iPhone Safari og skjermlesere må kontrolleres manuelt før fase 2 avsluttes.
 
 Utfallsbåndet har stiplede kantlinjer fra før. Fyllflaten er ikke eneste markør for intervallet. Kantlinjene kontrolleres mot både panelbakgrunnen, båndets fyll og det overlappende arealfyllet, med minst 3:1 kontrast. Natt-temaet har mørkere båndfyll. «Før skatt på uttak» er minst 14 px ved vanlig tekststørrelse; etiketter og forbehold under utfallene er minst 13 px.
+
+## Arbeidsgrunnlag og innhold
+
+Start med [arbeidsreglene](AGENTS.md), [faseplanen](research/plan.md) og [spørsmålkøen](SPORSMALSKO.md). [Daglig oppgave](research/DAGLIG-OPPGAVE.md) gir avgrenset upublisert research. Kontrollert innholdspåfyll følger faseplanens punkt 6. Valgomaten venter.
