@@ -35,7 +35,9 @@ BROAD.boligsparing=['q-bsu-basics','bsu','mortgage'];
 const GAPS=[
  {id:'barnesparing-skatt',when:[/barn/,/skatt/],topics:['children'],near:['children'],label:'skatt på barnesparing',covers:/skatt/i},
  {id:'bsu-flytting',when:[/flytt/,/\bbsu\b|boligsparing for ungdom/],topics:['bsu','q-bsu-basics'],near:['q-bsu-basics'],label:'BSU når du flytter',covers:/flytt/i},
- {id:'renters-rente',when:[/rente(?:rs?|s) ?rente/],topics:['funds','mortgage','pension'],near:['funds'],label:'renters rente',covers:/rente(?:rs?|s) ?rente/i}
+ {id:'renters-rente',when:[/rente(?:rs?|s) ?rente/],topics:['funds','mortgage','pension'],near:['funds'],label:'renters rente',covers:/rente(?:rs?|s) ?rente/i},
+ {id:'utbytte',when:[/utbytte/],topics:['funds'],near:['funds'],label:'utbytte fra aksjer og fond',covers:/utbytte/i},
+ {id:'rentefond',when:[/rentefond/],topics:['funds'],near:['funds'],label:'rentefond',covers:/rentefond/i}
 ];
 const GENERIC=['spare','sparer','sparing','sparingen','penger','pengene','økonomi','økonomien','råd','tips','hjelp'];
 // Hver registrering gir ny innholdsversjon, slik at søket bygger ordlisten om bare da.

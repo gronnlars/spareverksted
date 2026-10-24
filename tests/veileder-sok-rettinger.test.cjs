@@ -90,7 +90,7 @@ for(const q of ['jeg har ikke råd til å spare til pensjon','hva gjør jeg hvis
 
 // 6. Kjente hull (sluttkontroll 2026-10-24): rett tema, men svaret dekker ikke spørsmålet. Da vises ikke svaret som om det gjorde det.
 const text=id=>{const t=V.topics.find(x=>x.id===id);return JSON.stringify(t.entry||V.answer(id,{}));};
-for(const [q,gap] of [['kan jeg spare til barnet uten å bli skattlagt','barnesparing-skatt'],['skatt på barnesparing','barnesparing-skatt'],['hva skjer med BSU hvis jeg flytter','bsu-flytting'],['hva skjer med BSU-kontoen hvis jeg flytter til utlandet','bsu-flytting'],['hva skjer med boligsparing for ungdom hvis jeg flytter','bsu-flytting'],['hvordan fungerer renters rente','renters-rente'],['hva er renters rente','renters-rente']]){
+for(const [q,gap] of [['aksjeutbytte','utbytte'],['hva er utbytte fra fond','utbytte'],['rentefond','rentefond'],['hva er et rentefond','rentefond'],['kan jeg spare til barnet uten å bli skattlagt','barnesparing-skatt'],['skatt på barnesparing','barnesparing-skatt'],['hva skjer med BSU hvis jeg flytter','bsu-flytting'],['hva skjer med BSU-kontoen hvis jeg flytter til utlandet','bsu-flytting'],['hva skjer med boligsparing for ungdom hvis jeg flytter','bsu-flytting'],['hvordan fungerer renters rente','renters-rente'],['hva er renters rente','renters-rente']]){
   const r=V.search(q);
   assert.equal(r.mode,'uncovered',q);
   assert.equal(r.uncovered.id,gap,q);

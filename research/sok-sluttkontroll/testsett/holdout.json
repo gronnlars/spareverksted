@@ -1,0 +1,389 @@
+{
+ "beskrivelse": "Holdout. Skal bare kjøres i sluttkontrollen. Andre ord og skrivefeil enn utviklingssettet.",
+ "cases": [
+  {
+   "id": "h01",
+   "group": "eksakt",
+   "q": "Hva er en aksjesparekonto (ASK)?",
+   "f": [
+    "q-aksjesparekonto"
+   ]
+  },
+  {
+   "id": "h02",
+   "group": "eksakt",
+   "q": "ASK-konto",
+   "f": [
+    "q-aksjesparekonto"
+   ]
+  },
+  {
+   "id": "h03",
+   "group": "produktnavn",
+   "q": "hva betyr IKZ",
+   "f": [
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "h04",
+   "group": "produktnavn",
+   "q": "investeringskonto",
+   "f": [
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "h05",
+   "group": "sammenligning",
+   "q": "fondskonto eller aksjesparekonto",
+   "f": [
+    "q-ask-zero"
+   ],
+   "nf": [
+    "q-aksjesparekonto",
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "h06",
+   "group": "sammenligning",
+   "q": "Hva er forskjellen på aksjesparekonto og Investeringskonto Zero?",
+   "f": [
+    "q-ask-zero"
+   ],
+   "nf": [
+    "q-aksjesparekonto",
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "h07",
+   "group": "sammenligning",
+   "q": "ASK vs IKZ",
+   "f": [
+    "q-ask-zero"
+   ],
+   "nf": [
+    "q-aksjesparekonto",
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "h08",
+   "group": "eksakt",
+   "q": "Hva er inflasjon?",
+   "f": [
+    "q-kjopekraft"
+   ]
+  },
+  {
+   "id": "h09",
+   "group": "eksakt",
+   "q": "dagens kroner",
+   "f": [
+    "q-kjopekraft"
+   ]
+  },
+  {
+   "id": "h10",
+   "group": "eksakt",
+   "q": "pengene mister verdi",
+   "f": [
+    "q-kjopekraft"
+   ]
+  },
+  {
+   "id": "h11",
+   "group": "kontroll",
+   "q": "boliglånet",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "h12",
+   "group": "sammensatte",
+   "q": "bolig lånet",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "h13",
+   "group": "kontroll",
+   "q": "huslån",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "h14",
+   "group": "sammensatte",
+   "q": "hus lån",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "h15",
+   "group": "skrivefeil",
+   "q": "boligløn",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "h17",
+   "group": "skrivefeil",
+   "q": "inflsjon",
+   "f": [
+    "q-kjopekraft"
+   ]
+  },
+  {
+   "id": "h18",
+   "group": "skrivefeil",
+   "q": "kjøpkraft",
+   "f": [
+    "q-kjopekraft"
+   ]
+  },
+  {
+   "id": "h19",
+   "group": "skrivefeil",
+   "q": "prisvekts",
+   "f": [
+    "q-kjopekraft"
+   ]
+  },
+  {
+   "id": "h20",
+   "group": "skrivefeil",
+   "q": "fondkonto",
+   "f": [
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "h21",
+   "group": "skrivefeil",
+   "q": "akjsesparekonto",
+   "f": [
+    "q-aksjesparekonto"
+   ]
+  },
+  {
+   "id": "h22",
+   "group": "kontroll",
+   "q": "pensjonssparing",
+   "f": [
+    "pension"
+   ]
+  },
+  {
+   "id": "h23",
+   "group": "skrivefeil",
+   "q": "pensjosn",
+   "f": [
+    "pension"
+   ]
+  },
+  {
+   "id": "h24",
+   "group": "kontroll",
+   "q": "studielån",
+   "f": [
+    "student"
+   ]
+  },
+  {
+   "id": "h25",
+   "group": "sammensatte",
+   "q": "studie lån",
+   "f": [
+    "student"
+   ]
+  },
+  {
+   "id": "h26",
+   "group": "kontroll",
+   "q": "kredittkortgjeld",
+   "f": [
+    "buffer"
+   ]
+  },
+  {
+   "id": "h27",
+   "group": "kontroll",
+   "q": "buffer",
+   "f": [
+    "buffer"
+   ]
+  },
+  {
+   "id": "h28",
+   "group": "kontroll",
+   "q": "Hvor stor buffer trenger jeg",
+   "f": [
+    "buffer"
+   ]
+  },
+  {
+   "id": "h29",
+   "group": "flertydig",
+   "q": "BSU eller ASK?",
+   "soft": true,
+   "also": [
+    "q-bsu-basics",
+    "q-aksjesparekonto"
+   ],
+   "nf": [
+    "q-ips-ask"
+   ],
+   "note": "Ingen sammenligning finnes. Forslag til begge begrepene er riktig oppførsel."
+  },
+  {
+   "id": "h30",
+   "group": "korte",
+   "q": "IPS",
+   "f": [
+    "q-ips-ask"
+   ],
+   "ok": [
+    "pension"
+   ]
+  },
+  {
+   "id": "h31",
+   "group": "eksakt",
+   "q": "Hva er IPS?",
+   "f": [
+    "q-ips-ask"
+   ],
+   "ok": [
+    "pension"
+   ]
+  },
+  {
+   "id": "h33",
+   "group": "korte",
+   "q": "tipset",
+   "none": true
+  },
+  {
+   "id": "h35",
+   "group": "korte",
+   "q": "askeladden",
+   "none": true
+  },
+  {
+   "id": "h36",
+   "group": "mangler",
+   "q": "bilforsikring",
+   "none": true
+  },
+  {
+   "id": "h37",
+   "group": "mangler",
+   "q": "hva koster en reise til Spania",
+   "none": true
+  },
+  {
+   "id": "h38",
+   "group": "flertydig",
+   "q": "ETF",
+   "soft": true,
+   "also": [
+    "funds"
+   ],
+   "note": "Ingen ETF-forklaring. Fond er nærmeste tema."
+  },
+  {
+   "id": "h39",
+   "group": "inndata",
+   "q": "BOLIG LÅN",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "h40",
+   "group": "inndata",
+   "q": "bolig  lån",
+   "f": [
+    "mortgage"
+   ]
+  },
+  {
+   "id": "h41",
+   "group": "inndata",
+   "q": "Hva er FONDSKONTO?",
+   "f": [
+    "q-fondskonto"
+   ]
+  },
+  {
+   "id": "h42",
+   "group": "inndata",
+   "q": "ÆØÅ",
+   "none": true
+  },
+  {
+   "id": "h43",
+   "group": "inndata",
+   "q": "1234567",
+   "none": true
+  },
+  {
+   "id": "h44",
+   "group": "inndata",
+   "q": "ASK ASK ASK ASK",
+   "f": [
+    "q-aksjesparekonto"
+   ]
+  },
+  {
+   "id": "h45",
+   "group": "flertydig",
+   "q": "Hva er ASK og IPS",
+   "soft": true,
+   "also": [
+    "q-aksjesparekonto",
+    "q-ips-ask"
+   ]
+  },
+  {
+   "id": "h46",
+   "group": "negasjon",
+   "q": "ikke ASK, men fondskonto",
+   "f": [
+    "q-ask-zero"
+   ],
+   "ok": [
+    "q-fondskonto"
+   ],
+   "nf": [
+    "q-aksjesparekonto"
+   ]
+  },
+  {
+   "id": "h47",
+   "group": "sammensatte",
+   "q": "gjeldsrådgivning",
+   "soft": true,
+   "also": [
+    "buffer"
+   ]
+  },
+  {
+   "id": "h48",
+   "group": "sammensatte",
+   "q": "bolig gjeld",
+   "soft": true,
+   "also": [
+    "mortgage"
+   ]
+  }
+ ]
+}
