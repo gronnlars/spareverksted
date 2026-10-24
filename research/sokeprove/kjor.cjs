@@ -37,6 +37,6 @@ if(arg('detaljer')||arg('json')){
  const sym={RF:'✓',RFok:'✓~',RS:'forslag',MISS:'ingen',WD:'FEIL',CR:'✓avvist',FS:'feil-forslag','soft-dekket':'✓','soft-mangler':'mangler'};
  console.log('\n## Tilfeller\n\n| id | søk | forventet | '+nav.join(' | ')+' |\n|---|---|---|'+nav.map(()=>'---').join('|')+'|');
  for(const u of ut){const c=u.c;const forv=c.none?'ingen svar':c.soft?'skjønn: '+(c.also||[]).join(', '):(c.f||[]).join('/')+(c.ok?' (ok: '+c.ok.join('/')+')':'');
-  console.log(`| ${c.id} | ${JSON.stringify(c.repeat?c.q.slice(0,20)+'…×'+c.repeat:c.q)} | ${forv} | `+nav.map(n=>{const r=u.res[n];return `${sym[r.k]}: ${r.first||'-'}/${r.kind}${r.others.length?' +'+r.others.slice(0,3).join(','):''}`;}).join(' | ')+' |');}
+  console.log(`| ${c.id} | ${JSON.stringify(c.repeat?c.q.slice(0,20)+' x'+c.repeat:c.q)} | ${forv} | `+nav.map(n=>{const r=u.res[n];return `${sym[r.k]}: ${r.first||'-'}/${r.kind}${r.others.length?' +'+r.others.slice(0,3).join(','):''}`;}).join(' | ')+' |');}
 }
 if(typeof arg('json')==='string')fs.writeFileSync(arg('json'),JSON.stringify(ut.map(u=>({id:u.c.id,q:u.c.q.slice(0,40),group:u.c.group,res:u.res})),null,1));
