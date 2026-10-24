@@ -6,7 +6,7 @@ Sist kontrollert 24. oktober 2026 mot main addf40b (inneholder #52, #56 og #58).
 
 Søket er lokalt og forhåndsskrevet. Ingen KI, ingen innsending av det brukeren skriver. Koden ligger i `dist/veileder-sok.js`. `dist/veileder-engine.js` setter opp temaene og de brede ordene (`BROAD`, `GENERIC`).
 
-Fem utfall, og ingen av dem skal late som noe annet enn det er:
+Seks utfall, og ingen av dem skal late som noe annet enn det er:
 
 | Utfall | Når | Hva brukeren ser |
 |---|---|---|
@@ -14,6 +14,7 @@ Fem utfall, og ingen av dem skal late som noe annet enn det er:
 | Valg (`choose`) | Like gode treff i ulike svarfamilier | Ingenting åpnes. Brukeren velger |
 | Forslag (`suggest`) | Skrivefeil, bredt ord («lån», «skatt») eller usikkert treff | «Mente du» eller merkede forslag. Ingenting åpnes |
 | Nekting (`negated`) | Brukeren avviser et tema («Jeg vil ikke ha fond») | Ingenting åpnes. Nektingen nevnes. Nærmeste temaer vises som nærmeste, ikke som svar |
+| Kjent hull (`uncovered`) | Temaet finnes, men svaret dekker ikke det brukeren spør om (se «Kjente hull») | Ingenting åpnes. Brukeren får vite at vi ikke har eget svar på akkurat det. Nærmeste tema vises som nærmeste, ikke som svar |
 | Ingen treff (`none`) | Innholdet dekker det ikke | Ærlig beskjed og temavelger |
 
 ## Varige regler
@@ -26,11 +27,14 @@ Fem utfall, og ingen av dem skal late som noe annet enn det er:
 6. Et tema som ikke dekkes skal gi «ingen treff» med nærmeste temaer, ikke et svakt treff.
 7. Ordlisten bygges én gang per innholdsversjon (økes i `register()`).
 8. Ingen eksterne forespørsler, ingen logging av søk.
+9. Et eksisterende svar presenteres ikke som dekkende hvis det ikke dekker spørsmålet. Kjente hull står i `GAPS` i `veileder-engine.js` og gir modus `uncovered`.
+10. «Boligsparing» er bredere enn BSU, siden man kan spare til bolig uten BSU. Ordet gir forslag (`BROAD.boligsparing`), ikke ett svar. Ordet står fortsatt som nøkkel på BSU-temaene, bare slik at skrivefeil gir «Mente du».
+11. Når `veileder-sok.js`, `veileder-engine.js` eller `veileder-ui.js` endres, økes `?v=` for den filen i `spor.html`, ellers kan nettleseren vise gammel kode. Dette ble glemt for `veileder-sok.js` ved #52 og #56 (sto på `v=1`).
 
 ## Slik legges nytt innhold inn
 
 En ny post trenger `words` (regulære uttrykk), `questions` og `keys` (små bokstaver og tall, bare `[a-zæøå0-9]`). Normalt skal det ikke kreves endring i `veileder-sok.js`. Regler:
-- Hvert navn skal ha én eier. Står samme nøkkel i to temaer, får brukeren valg eller forslag. Eksisterende tilfelle: `boligsparing` står både på `bsu` og `q-bsu-basics`. Veit itte om det er bevisst.
+- Hvert navn skal ha én eier. Står samme nøkkel i to temaer, får brukeren valg eller forslag. Unntaket er `boligsparing`, som er et bredt ord (regel 10).
 - Nye brede ord legges i `BROAD` med temaene de peker til.
 - Nye fellesord som ikke skal gi treff alene legges i `GENERIC`.
 - Legg til rader i `tests/veileder-sok-utvidet.test.cjs` for hvert nytt navn og én skrivefeil.
@@ -39,7 +43,7 @@ En ny post trenger `words` (regulære uttrykk), `questions` og `keys` (små boks
 
 | Hva | Resultat |
 |---|---|
-| Node: 14 testfiler | Grønne lokalt |
+| Node: 14 testfiler | Grønne lokalt, med nye rader for kjente hull, boligsparing og nekting |
 | 96 tilfeller mot main (fra #55, `research/sokeprove`) | Samme resultat før og etter sluttkontrollen. Feil direkte svar: 0 |
 | Chromium lokalt, 320, 390 og 1280 px | Forslag, nekting, trykkflater ≥ 44 px, ingen vannrett scrolling, ingen sidefeil, ingen eksterne forespørsler |
 | Firefox og WebKit | Bare i CI. WebKit er ikke iPhone Safari |
@@ -59,10 +63,17 @@ Kjente begrensninger i søket:
 - Tekstene «Du skriver (ordet) med nekting» er ikke godkjent av Lars.
 - «hvordan fungerer renters rente» gir forslag på boliglån og fond. Ingen post forklarer renters rente.
 
-Innholdshull som søket ikke kan rette (rett tema, men svaret besvarer ikke spørsmålet). Gis videre til spørsmålskøen:
-- «kan jeg spare til barnet uten å bli skattlagt»: treffer barnesparing, men svaret nevner ikke skatt.
-- «hva skjer med BSU hvis jeg flytter»: treffer BSU, men svaret sier ingenting om flytting.
-- «hvordan fungerer renters rente»: ingen egen forklaring.
+## Kjente hull
+
+Rett tema, men svaret besvarer ikke spørsmålet. Før sluttkontrollen åpnet søket likevel svaret. Nå gir det modus `uncovered`: «Vi har ikke et eget svar på … ennå», med nærmeste tema merket som nærmeste.
+
+| Hull (`GAPS`) | Søkene som rammes | Hvorfor |
+|---|---|---|
+| `barnesparing-skatt` | «kan jeg spare til barnet uten å bli skattlagt», «skatt på barnesparing» | Barnesvaret nevner ikke skatt |
+| `bsu-flytting` | «hva skjer med BSU hvis jeg flytter» | BSU-svarene sier ingenting om flytting |
+| `renters-rente` | «hvordan fungerer renters rente» | Ingen post forklarer renters rente |
+
+Slik lukkes et hull: skriv svaret, og fjern raden fra `GAPS`. Testen `veileder-sok-rettinger.test.cjs` feiler hvis svaret allerede nevner begrepet mens raden står igjen (`covers`), så hullet ikke blir hengende. Et hull rammer ikke ferdig formulerte spørsmål (kind `question`) og bare når alle treffene er blant temaene i raden. Å skrive svarene er innholdsarbeid og ligger hos spørsmålskøen.
 
 ## #53 (ASK og fondskonto) mot dagens søk
 
@@ -74,7 +85,7 @@ Dette skal ikke føres tilbake: endringene i `words` for `funds` og `pension` i 
 
 Slik tilpasses de:
 1. Ta en ny gren fra main og legg bare inn de to forklaringene. Ikke merge #53 slik den står.
-2. Gi hver forklaring `keys`. I dag står `aksjesparekonto`, `fondskonto`, `investeringskonto` og `kapitalforsikring` som nøkler på `q-ask-zero`. Når de nye forklaringene kommer må eierskapet deles: `q-aksjesparekonto` får `aksjesparekonto` og `ask`, `q-fondskonto` får `fondskonto` og `kapitalforsikring`, `q-ask-zero` beholder `investeringskonto`. Ellers får brukeren valg på hvert søk.
+2. Gi hver forklaring `keys` og fordel eierskapet slik (avgjort av Lars): `q-aksjesparekonto` får `aksjesparekonto` og `ask`. `q-fondskonto` får `fondskonto`, `investeringskonto` og `kapitalforsikring`, og produktnavn som `zero` og `ikz` hører dit også. `q-ask-zero` (sammenligningen) beholder ingen enkeltnavn. Et enkelt kontonavn skal ikke åpne sammenligningen. Spørsmål som nevner både ASK og fondskonto eller investeringskonto skal gi sammenligningen, via `words` på `q-ask-zero` og eventuelt en rad i søketesten. I dag står alle fire nøklene på `q-ask-zero`, så dette må flyttes samtidig, ellers får brukeren valg på hvert søk.
 3. Legg inn søkerader: hvert navn, én skrivefeil, én særskriving og spørsmålet «forskjellen på ASK og fondskonto».
 4. Kjør de 126 tilfellene i `research/sokeprove` på nytt. 30 av dem ble utelatt mot main fordi de krever disse forklaringene.
 5. Ingen endring i `veileder-sok.js`.

@@ -83,8 +83,38 @@ for(const q of ['jeg vil ikke spare i aksjer','hva er best bortsett fra fond']){
   assert.equal(r.mode,'negated',q);
   assert.ok(r.hits.every(h=>h.kind==='negated'),q);
 }
-for(const q of ['jeg har ikke råd til å spare til pensjon','hva gjør jeg hvis jeg ikke klarer å betale boliglånet','jeg vil ikke betale mer skatt på barnesparing']){
+for(const q of ['jeg har ikke råd til å spare til pensjon','hva gjør jeg hvis jeg ikke klarer å betale boliglånet','jeg vil ikke bruke barnesparing til noe annet enn barnet']){
   const r=V.search(q);
   assert.equal(r.mode,'answer',q+': nektingen skal ikke ta bort temaet');
 }
+
+// 6. Kjente hull (sluttkontroll 2026-10-24): rett tema, men svaret dekker ikke spørsmålet. Da vises ikke svaret som om det gjorde det.
+const text=id=>{const t=V.topics.find(x=>x.id===id);return JSON.stringify(t.entry||V.answer(id,{}));};
+for(const [q,gap] of [['kan jeg spare til barnet uten å bli skattlagt','barnesparing-skatt'],['skatt på barnesparing','barnesparing-skatt'],['hva skjer med BSU hvis jeg flytter','bsu-flytting'],['hvordan fungerer renters rente','renters-rente'],['hva er renters rente','renters-rente']]){
+  const r=V.search(q);
+  assert.equal(r.mode,'uncovered',q);
+  assert.equal(r.uncovered.id,gap,q);
+  assert.ok(r.hits.length>=1&&r.hits.every(h=>h.kind==='nearest'),q+': nærmeste temaer, ikke svar');
+  assert.deepEqual(V.findTopics(q),[],q+': ingenting regnes som svar');
+}
+// Spørsmål om det samme temaet uten selve hullet skal fortsatt få svar.
+for(const [q,first] of [['hva er barnesparing','children'],['hvem eier pengene på barnesparing','children'],['Hva er BSU?','q-bsu-basics'],['BSU','q-bsu-basics'],['bør jeg flytte penger til fond','funds']]){
+  const r=V.search(q);
+  assert.equal(r.mode,'answer',q);
+  assert.equal(ids(r)[0],first,q);
+}
+// Hvert hull skal fortsatt være et hull. Hvis svaret nå dekker det, skal raden fjernes fra GAPS.
+for(const g of V.gaps){
+  const topicIds=g.topics.length?g.topics:V.topics.map(t=>t.id);
+  for(const id of topicIds)assert.ok(!g.covers.test(text(id)),'Hullet «'+g.id+'» ser ut til å være dekket av '+id+'. Fjern raden fra GAPS.');
+}
+// 7. «Boligsparing» er bredere enn BSU: forslag, ikke ett svar. Skrivefeil gir «Mente du».
+for(const q of ['boligsparing','hva er boligsparing','bolig sparing','boligsparing uten BSU']){
+  const r=V.search(q);
+  assert.equal(r.mode,'suggest',q);
+  assert.deepEqual(r.hits,[],q);
+  assert.ok(sug(r).includes('q-bsu-basics')&&sug(r).includes('bsu'),q);
+}
+assert.equal(V.search('boligsparing for ungdom').mode,'answer');
+assert.equal(V.search('boligsparnig').mode,'suggest');
 console.log('veileder-sok-rettinger: ok');

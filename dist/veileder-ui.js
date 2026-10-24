@@ -98,7 +98,7 @@ function showMatches(items,visible=3,sharedTypo=false){
   const b=button('',()=>{$('matches').replaceChildren();choose(m.id);});
   b.append(el('span',titleOf(m.id),'match-title'));
   if(!sharedTypo)b.append(el('span',V.reason(m),'match-why'));
-  if(m.kind==='typo'||m.kind==='related'||m.kind==='negated')b.classList.add('match-suggest');
+  if(m.kind==='typo'||m.kind==='related'||m.kind==='negated'||m.kind==='nearest')b.classList.add('match-suggest');
   li.append(b);list.append(li);
  });
  box.append(list);
@@ -127,6 +127,7 @@ function search(){
   status.textContent=negNote(r)+(sharedTypo?'Mente du «'+r.suggestions[0].via+'»? Velg et svar nedenfor.':'Dette er forslag til temaer. Velg det du mener:');
   showMatches(r.suggestions,3,sharedTypo);return;
  }
+ if(r.mode==='uncovered'){$('topicPicker').open=true;status.textContent='Vi har ikke et eget svar på «'+r.uncovered.label+'» ennå. Temaet under ligger nærmest, men svarer ikke på spørsmålet ditt:';showMatches(r.hits);return;}
  if(r.mode==='negated'){$('topicPicker').open=true;status.textContent='Du skriver «'+r.negated.join(' ')+'» med nekting. Vi har ikke et eget svar på det ennå. Temaene under ligger nærmest, men er ikke svar på spørsmålet ditt:';showMatches(r.hits);return;}
  $('topicPicker').open=true;
  status.textContent=r.mode==='broad'?'Spørsmålet er bredt. Velg et tema, eller skriv litt mer, for eksempel «sparing til barn».':'Vi har ikke et ferdig svar på dette ennå. Velg et tema, eller prøv andre ord.';

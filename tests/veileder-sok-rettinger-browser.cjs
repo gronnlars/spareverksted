@@ -54,6 +54,23 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    assert.ok(await page.locator('#matches .match-list button.match-suggest').count()>=1,'nærmeste temaer har forslagsstil');
    await tapTargets('negasjon');await noOverflow('negasjon');
 
+   // 2b. Kjente hull: temaet finnes, men svaret dekker ikke spørsmålet. Ingenting åpnes, og brukeren får vite det.
+   for(const [q,label] of [['hvordan fungerer renters rente','renters rente'],['kan jeg spare til barnet uten å bli skattlagt','skatt på barnesparing'],['hva skjer med BSU hvis jeg flytter','BSU når du flytter']]){
+    await ask(q);
+    assert.ok(!await answerOpen(),engine+' '+label+': kjent hull åpner ikke et svar');
+    const t=await status();
+    assert.ok(t.includes('Vi har ikke et eget svar på «'+label+'» ennå'),engine+' '+label+': status var «'+t+'»');
+    assert.match(t,/svarer ikke på spørsmålet ditt/);
+    assert.ok(await page.locator('#matches .match-list button.match-suggest').count()>=1,'nærmeste tema har forslagsstil');
+    await tapTargets(q);await noOverflow(q);
+   }
+   // 2c. «Boligsparing» er bredere enn BSU: forslag, ikke ett svar.
+   await ask('boligsparing');
+   assert.ok(!await answerOpen(),engine+' '+label+': boligsparing åpner ikke ett svar');
+   assert.match(await status(),/forslag/i);
+   assert.ok(await page.locator('#matches .match-list button').count()>=2,'flere forslag for boligsparing');
+   await tapTargets('boligsparing');await noOverflow('boligsparing');
+
    // 3. Et vanlig søk virker fortsatt etterpå.
    await ask('boliglån');
    assert.ok(await answerOpen(),engine+' '+label+': vanlig søk åpner svar etter negasjon');
