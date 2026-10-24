@@ -18,6 +18,7 @@ assert.ok(V.suggestions({fixed:'yes'}).some(x=>x.id==='mortgage'));
 let count=0;
 for(const t of V.topics)for(const debt of ['yes','no',''])for(const buffer of ['yes','no',''])for(const income of ['stable','uncertain',''])for(const risk of ['low','high','']){
  const answer=Cards.build(t.id,{debt,buffer,income,risk,years:3});
+ if(V.isExplainer(t.id)){assert.deepEqual(answer.options,[],t.id);assert.doesNotMatch(JSON.stringify(answer),/[\u2013\u2014]|\{\{/);count++;continue;}
  for(const option of answer.options){assert.ok(option.pros.length>=2,t.id);assert.ok(option.cons.length>=2,t.id);assert.ok(option.poorFit?.length>10,t.id);}
  assert.doesNotMatch(JSON.stringify(answer),/[\u2013\u2014]|\{\{|Du har oppgitt/);
  if(debt==='yes'&&buffer==='no'){assert.ok(!answer.parts.some(x=>x.title==='Uro teller også'));assert.equal(answer.options[0].title,'Bygge en tilgjengelig buffer');}

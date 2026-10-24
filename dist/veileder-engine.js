@@ -42,6 +42,7 @@ function validate(p={}){
  return out;
 }
 function category(id){return topics.find(t=>t.id===id)?.category||id;}
+function isExplainer(id){return topics.find(t=>t.id===id)?.entry?.kind==='explainer';}
 function horizonRelevant(id){return ['funds','children','pension'].includes(category(id));}
 function fundRelevant(id,p={}){return ['mortgage','funds','pension','children','bsu'].includes(category(id))&&!(p.debt==='yes'&&p.buffer==='no');}
 function suggestions(profile={},current){
@@ -62,6 +63,10 @@ function suggestions(profile={},current){
 }
 function answer(id,profile){
  const t=topics.find(t=>t.id===id);if(!t)throw Error('Velg et av temaene vi dekker.');
+ if(t.entry&&t.entry.kind==='explainer'){
+  const e=t.entry;
+  return F.resolve({title:t.title,kind:'explainer',terms:e.terms,example:e.example,next:e.next||null,parts:e.parts,sources:e.sources,checked:e.checked,missing:[],profile:validate(profile)});
+ }
  if(t.entry){
   const base=answer(t.category,profile),entry=t.entry;
   const priority=base.parts.filter(p=>p.priority),rest=base.parts.filter(p=>!p.priority);
@@ -115,10 +120,21 @@ function answer(id,profile){
 }
 function register(entry){
  if(!entry||!/^q-[a-z0-9-]+$/.test(entry.id)||topics.some(t=>t.id===entry.id))throw Error('Ugyldig eller duplisert spørsmål.');
+ if(entry.kind==='explainer'){
+  // Forklaring: «hva er dette?». Ingen alternativkort. Kort svar (intro), begreper, eksempel, fordypning og kilder.
+  if(!entry.title||!entry.intro||!entry.checked||!entry.questions?.length||!entry.words?.length||!entry.sources?.length||entry.options)throw Error('Ufullstendig forklaring.');
+  if(!entry.terms?.length||entry.terms.some(x=>!x.term||!x.text))throw Error('En forklaring trenger begreper med forklaring.');
+  if(!entry.example?.title||!entry.example?.text)throw Error('En forklaring trenger et eksempel.');
+  if(!entry.parts?.length||entry.parts.some(x=>!x.title||!x.text))throw Error('En forklaring trenger fordypning.');
+  if(entry.next&&(!entry.next.text||!entry.next.href))throw Error('Ufullstendig lenke videre.');
+  for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
+  topics.push({id:entry.id,title:entry.title,category:'explain',questions:entry.questions,words:entry.words,entry});
+  return;
+ }
  if(!topics.some(t=>t.id===entry.category&&!t.entry)||!entry.title||!entry.intro||!entry.checked||!entry.questions?.length||!entry.words?.length||entry.options?.length!==2||!entry.sources?.length)throw Error('Ufullstendig spørsmål.');
  for(const o of entry.options)if(!o.title||!o.poorFit||!(o.pros?.length>=2)||!(o.cons?.length>=2)||[...o.pros,...o.cons].some(i=>!i.title||!i.text))throw Error('Hvert alternativ trenger minst to fordeler, to ulemper og når det passer dårlig.');
  for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
  topics.push({id:entry.id,title:entry.title,category:entry.category,questions:entry.questions,words:entry.words,entry});
 }
-const api={topics,findTopics,answer,validate,checked,sources,register,category,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
+const api={topics,findTopics,answer,validate,checked,sources,register,category,isExplainer,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
 })(typeof window!=='undefined'?window:globalThis);
