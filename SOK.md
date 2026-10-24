@@ -65,7 +65,7 @@ Kjente begrensninger i søket:
 
 ## Kjente hull
 
-Rett tema, men svaret besvarer ikke spørsmålet. Før sluttkontrollen åpnet søket likevel svaret. Nå gir det modus `uncovered`: «Vi har ikke et eget svar på … ennå», med nærmeste tema merket som nærmeste.
+Rett tema, men svaret besvarer ikke spørsmålet. Før sluttkontrollen åpnet søket likevel svaret. Nå gir det modus `uncovered`: «Vi har ikke et eget svar på (emnet) ennå», med nærmeste tema merket som nærmeste.
 
 | Hull (`GAPS`) | Søkene som rammes | Hvorfor |
 |---|---|---|
