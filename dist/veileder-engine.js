@@ -29,7 +29,9 @@ const topics=[
 // Brede ord gir bare forslag. Svært generelle ord gir en oppfordring til å velge tema eller skrive mer.
 const BROAD={'lån':['mortgage','student','buffer'],'gjeld':['buffer','mortgage','student'],'rente':['mortgage','funds'],'renter':['mortgage','funds'],'renten':['mortgage','funds'],'skatt':['q-ask-zero','q-ips-ask','q-bsu-basics'],'bolig':['bsu','mortgage'],'hus':['mortgage','bsu'],'bank':['funds'],'banken':['funds']};
 const GENERIC=['spare','sparer','sparing','sparingen','penger','pengene','økonomi','økonomien','råd','tips','hjelp'];
-function search(text){return S.search(text,topics,{broad:BROAD,generic:GENERIC});}
+// Hver registrering gir ny innholdsversjon, slik at søket bygger ordlisten om bare da.
+let contentVersion=0;
+function search(text){return S.search(text,topics,{broad:BROAD,generic:GENERIC,version:contentVersion});}
 // Sikre treff, i rangert rekkefølge. Forslag (tastefeil, brede ord) ligger i search().suggestions.
 function findTopics(text){return search(text).hits.map(h=>h.id);}
 function number(v,min,max,name){if(v===''||v===undefined||v===null)return null; const n=Number(String(v).replace(',','.'));if(!Number.isFinite(n)||n<min||n>max)throw Error(name+' må være et tall mellom '+min+' og '+max+'.');return n;}
@@ -133,14 +135,14 @@ function register(entry){
   if(entry.next&&(!entry.next.text||!entry.next.href))throw Error('Ufullstendig lenke videre.');
   for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
   if((entry.keys||[]).some(x=>!/^[a-zæøå0-9]+$/.test(x)))throw Error('Ugyldig søkeord.');
-  topics.push({id:entry.id,title:entry.title,category:'explain',questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});
+  topics.push({id:entry.id,title:entry.title,category:'explain',questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});contentVersion++;
   return;
  }
  if(!topics.some(t=>t.id===entry.category&&!t.entry)||!entry.title||!entry.intro||!entry.checked||!entry.questions?.length||!entry.words?.length||entry.options?.length!==2||!entry.sources?.length)throw Error('Ufullstendig spørsmål.');
  for(const o of entry.options)if(!o.title||!o.poorFit||!(o.pros?.length>=2)||!(o.cons?.length>=2)||[...o.pros,...o.cons].some(i=>!i.title||!i.text))throw Error('Hvert alternativ trenger minst to fordeler, to ulemper og når det passer dårlig.');
  for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
  if((entry.keys||[]).some(x=>!/^[a-zæøå0-9]+$/.test(x)))throw Error('Ugyldig søkeord.');
- topics.push({id:entry.id,title:entry.title,category:entry.category,questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});
+ topics.push({id:entry.id,title:entry.title,category:entry.category,questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});contentVersion++;
 }
 const api={topics,findTopics,search,reason:S.reason,answer,validate,checked,sources,register,category,isExplainer,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
 })(typeof window!=='undefined'?window:globalThis);
