@@ -36,11 +36,11 @@ const entries=[
   {term:'prisvekst',alsoCalled:'inflasjon',text:'At prisene på varer og tjenester stiger over tid. Oppgis ofte i prosent per år.'},
   {term:'dagens kroner',text:'Et beløp i framtiden regnet om til hva det tilsvarer med dagens priser. Da kan du sammenligne beløp fra ulike år.'}],
  example:i('Eksempel: ti år med 2,5 % prisvekst','Anta at prisene stiger 2,5 % hvert år. Det du i dag kan kjøpe for 100 000 kroner, koster da omtrent 128 000 kroner om ti år. Pengene må altså vokse til 128 000 kroner bare for å kjøpe det samme. Sett fra den andre siden: 100 000 kroner som ligger uten rente i ti år, kjøper det som 78 000 kroner kjøper i dag. Dette er et regneeksempel, ikke en prognose for prisveksten.'),
- next:{text:'Se hvordan prisveksten slår ut på dine egne tall i kalkulatoren.',href:'index.html'},
+ next:{text:'Prøv med dine egne tall i kalkulatoren',href:'index.html'},
  sources:[ssb],
  parts:[
   i('Færre kroner er noe annet enn mindre kjøpekraft','Får du tilbake færre kroner enn du satte inn, er det et tap i kroner. Får du flere kroner, men prisene har steget mer enn pengene, har du likevel mistet kjøpekraft. Det er to ulike ting, og de må ikke forveksles.'),
-  i('Renten må følge med prisene','Er renten på en konto lavere enn prisveksten, øker saldoen, men pengene kjøper likevel mindre. Saldoen sier derfor ikke alene om du har det bedre.'),
+  i('Renten må følge med prisene','Med positiv rente som er lavere enn prisveksten, kan saldoen øke samtidig som pengene kjøper mindre. Saldoen sier derfor ikke alene om du har det bedre.'),
   i('Prisveksten er et gjennomsnitt','SSB måler prisveksten med konsumprisindeksen, som er et gjennomsnitt av prisendringene på mange varer og tjenester. Det du selv kjøper, kan stige mer eller mindre enn gjennomsnittet. Prisveksten varierer også fra år til år.')]}
 ];
 if(typeof module!=='undefined'&&module.exports)module.exports=entries;
