@@ -57,4 +57,21 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
  // Registreringskrav for forklaringer.
  const ok={kind:'explainer',id:'q-test-x',title:'t',intro:'i',checked:'2026-10-24',questions:['q'],words:[/x/],terms:[{term:'a',text:'b'}],example:{title:'e',text:'t'},parts:[{title:'p',text:'t'}],sources:[{title:'s',url:'https://example.org'}]};
  for(const bad of [{terms:[]},{example:null},{parts:[]},{sources:[]},{sources:[{title:'s',url:'http://x'}]},{options:[]},{intro:''}])assert.throws(()=>V.register({...ok,...bad}),/forklaring|kilde|Ufullstendig/,JSON.stringify(Object.keys(bad)));
+// Søk på ord, ikke på ordslutt: «aksjesparekonto» skal gi ASK-svar, «tips» skal ikke treffe IPS.
+{
+ const ask=['q-ips-ask','q-ask-zero'];
+ for(const q of ['aksjesparekonto','Hva er aksjesparekonto?','Hva er en aksjesparekonto?','Skatt på aksjesparekonto']){
+  const r=V.findTopics(q);
+  assert.ok(r.length&&r.every(id=>ask.includes(id)),q+' skal bare gi ASK-svar, fikk '+r);
+  assert.ok(Cards.build(r[0],{}).title.includes('ASK'),q+' skal vise et svar om ASK');
+ }
+ for(const q of ['tips','Har du tips til sparing?','Noen tips?']){
+  const r=V.findTopics(q);
+  assert.ok(!r.includes('pension')&&!r.includes('q-ips-ask'),q+' skal ikke treffe IPS, fikk '+r);
+ }
+ for(const q of ['IPS','ips','Hva er IPS?','Bør jeg spare i IPS','IPS eller ASK?'])assert.ok(V.findTopics(q).some(id=>id==='q-ips-ask'||id==='pension'),q+' skal fortsatt treffe IPS');
+ assert.equal(V.findTopics('IPS')[0],'pension');
+ assert.equal(V.findTopics('Hva er IPS?')[0],'q-ips-ask');
+ for(const q of ['sparekonto','Skatt på sparekonto','aksjefond','Hva er et aksjefond?','indeksfond'])assert.equal(V.findTopics(q)[0],'funds',q+' skal fortsatt gi «Sparekonto eller fond»');
+ assert.equal(V.findTopics('ASK')[0],'q-ips-ask');
 }
