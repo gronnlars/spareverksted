@@ -1,5 +1,5 @@
 // Personvern: hva som lagres, når, og at sletting bare rører Spareverksteds egne nøkler.
-// Kjøres uten nettleser. Nettleserflyten dekkes i tests/roundtrip-browser.cjs og tests/polish-browser.cjs.
+// Kjøres uten nettleser. Hele flyten i ekte nettleser står i tests/personvern-browser.cjs.
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const dist=f=>fs.readFileSync(path.join(__dirname,'..','dist',f),'utf8');
 
@@ -18,13 +18,21 @@ for(const c of calls){
  assert(/remember:false/.test(c),'Automatisk nivåskifte skal ikke lagres: '+c);
 }
 {
- const local=new Store();const ctx={localStorage:local,level:'simple',syncLevel(){},window:{}};vm.createContext(ctx);
- const src=app.match(/function setLevel\([\s\S]*?\n/)[0];vm.runInContext(src+';this.setLevel=setLevel;',ctx);
- ctx.setLevel('simple',{remember:false});assert.equal(local.getItem('sv-level'),null);
- ctx.setLevel('advanced');assert.equal(local.getItem('sv-level'),'advanced');
- ctx.setLevel('advanced',{remember:false});assert.equal(local.getItem('sv-level'),null,'automatisk skifte fjerner lagret valg');
- ctx.setLevel('explore');ctx.setLevel('simple');assert.equal(local.getItem('sv-level'),null,'«Enkel» er standard og lagres ikke');
+ // Funksjonene kobles sammen slik nettsiden gjør: app.js definerer setLevel, journey.js pakker den inn.
+ // Innpakningen må sende videre alle argumentene, ellers går {remember:false} tapt (feil funnet i kontroll 25.10.2026).
+ const local=new Store();const ctx={localStorage:local,level:'simple',syncLevel(){},syncSliders(){},window:{}};vm.createContext(ctx);
+ const def=app.match(/function setLevel\([\s\S]*?\n/)[0];
+ const wrappers=journey.match(/const previousSetLevel=setLevel;setLevel=function[^\n]*/g)||[];
+ assert.equal(wrappers.length,1,'forventet én innpakning av setLevel i journey.js');
+ vm.runInContext('var setLevel;'+def.replace('function setLevel','setLevel=function')+';'+wrappers[0]+';this.call=(...a)=>setLevel(...a);',ctx);
+ ctx.call('simple',{remember:false});assert.equal(local.getItem('sv-level'),null);
+ ctx.call('advanced');assert.equal(local.getItem('sv-level'),'advanced');
+ ctx.call('advanced',{remember:false});assert.equal(local.getItem('sv-level'),null,'automatisk skifte gjennom innpakningen fjerner lagret valg');
+ ctx.call('explore');ctx.call('simple');assert.equal(local.getItem('sv-level'),null,'«Enkel» er standard og lagres ikke');
+ for(const w of (journey+app).match(/setLevel=function\([^)]*\)\{[^}]*\}/g)||[])assert(/\(\.\.\.args\)/.test(w),'Innpakning må sende videre alle argumenter: '+w);
 }
+// Ved lasting skrives ingenting, heller ikke ved delt lenke.
+assert(/stage\(!\(hasStarted\(\)\|\|sharedPlan\),\{remember:false\}\)/.test(journey),'lasting skal ikke skrive sv-started');
 
 // 3. Broen til veilederen: ingenting skrives før brukeren går til «Spør om sparing».
 function bridge(session,{started=true}={}){

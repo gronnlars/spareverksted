@@ -41,7 +41,7 @@ Kodefunn. Linjenumre gjelder grenen `fix/personvern-lokal-lagring`.
 | `sv-scenarios` (localStorage) | `app.js:21` les, `app.js:243` skriv | Navn på plan, hele `state` (beløp, sparetid, avkastning, alder hvis oppgitt, m.m.), `mode`, `view` | Ved «Lagre plan», sletting av plan, angre | Ved lasting av kalkulatoren | «Lagre plan» | Å finne planen igjen senere | Ingen utløpstid | «Slett» per plan, sletteknapp på personvernsiden, nettleserens innstillinger | Ingen. Blir i nettleseren | Sterkest: uttrykkelig valg om å lagre på enheten |
 | `sv-level` (localStorage) | `app.js:21` les, `app.js:251` skriv | `explore` eller `advanced` | Bare ved trykk på nivåknapp. «Enkel» fjerner nøkkelen | Ved lasting | Trykk på Utforsk eller Avansert | Huske visningsvalg | Ingen utløpstid | Velg «Enkel», sletteknapp, nettleser | Ingen | **Uavklart.** Brukeren trykker selv, men «husk på tvers av besøk» er ikke uttrykkelig bedt om |
 | `sv-color-theme` (localStorage) | `theme.js:6` les, `theme.js:24` skriv | `neutral`, `light` eller `night` | Bare ved trykk på tema | Før stiler lastes | Trykk på tema | Huske tema | Ingen utløpstid | Sletteknapp, nettleser | Ingen | **Uavklart**, samme som nivå |
-| `sv-started` (sessionStorage) | `journey.js:7–8` | `'1'` | Når startguiden forlates (også ved åpnet delt lenke) | Ved lasting | Gå videre fra startguiden | Unngå at startguiden vises igjen ved tur til veilederen og tilbake | Fanen. Kan gjenopprettes med faneøkten | Lukke fanen, sletteknapp | Ingen | Teknisk nødvendig for flyten i fanen |
+| `sv-started` (sessionStorage) | `journey.js:7–8` | `'1'` | Når brukeren trykker seg videre fra startguiden. Ikke ved lasting eller delt lenke | Ved lasting | Gå videre fra startguiden | Unngå at startguiden vises igjen ved tur til veilederen og tilbake | Fanen. Kan gjenopprettes med faneøkten | Lukke fanen, sletteknapp | Ingen | Teknisk nødvendig for flyten i fanen |
 | `sv-started` (localStorage, gammel) | `journey.js:6` fjernes | `'1'` | Skrives ikke lenger | – | – | – | Fjernes ved neste besøk | Automatisk | Ingen | – |
 | `sv-working-plan-v1` (sessionStorage) | `veileder-context.js:40–45`, `veileder-bridge.js:6, 25–28` | Hele `state` med beløp, `mode`, `view` | Ved klikk på lenke til `spor.html`. Deretter ved `pagehide` bare hvis nøkkelen finnes | Ved lasting av kalkulatoren uten `#` | Klikk til «Spør om sparing» | At planen er uendret når brukeren kommer tilbake | Fanen. Kan gjenopprettes | Tilbake til startskjermen, lukke fanen, sletteknapp | Ingen | Sterk: brukeren navigerer selv, og formålet er å bevare det brukeren holder på med |
 | `sv-guidance-tab-v2` (sessionStorage) | `veileder-context.js:4, 15–17`, `veileder-ui.js:9, 151`, `veileder-bridge.js:25` | Alder, sparetid, risiko, buffer, dyr gjeld, inntekt, sparemåte, fastrente, boligeier, skatt (BSU), sparetid per tema, opphav. Ingen beløp, navn eller fritekst | Klikk til veilederen fra en startet plan; «Oppdater vurderingen» | I veilederen og ved retur til kalkulatoren | Klikk til veilederen eller «Oppdater vurderingen» | Tilpasse forklaringene uten å spørre igjen | Fanen. Kan gjenopprettes | «Glem opplysningene mine», sletteknapp | Ingen | Sterk for «Oppdater vurderingen». Merk: opplysningene om gjeld, buffer og inntekt sier noe om brukerens økonomi |
@@ -56,7 +56,19 @@ Kodefunn. Linjenumre gjelder grenen `fix/personvern-lokal-lagring`.
 2. Ved å forlate kalkulatorsiden (`pagehide`, også lukking av fanen eller lenke til Om) ble veilederkonteksten skrevet til `sessionStorage`, og arbeidsplanen med alle beløp hvis planen var startet. Dette skjedde selv om brukeren aldri gikk til veilederen.
 3. «Vis spareplanen min» og «Se et eksempel» skrev `sv-level=simple` permanent.
 
-**Etter rettingene:** Ingen skriving ved lasting. Første besøk uten handling gir ingen nøkler. Kontrollert i `tests/personvern-lagring.test.cjs` for broen, i kode for resten. **Ikke kontrollert i nettleser.**
+**Etter rettingene:** Ingen skriving ved lasting, heller ikke når en delt lenke åpnes. Kontrollert i `tests/personvern-browser.cjs` (Chromium, Firefox og WebKit i GitHub Actions) og `tests/personvern-lagring.test.cjs`.
+
+Merk: at lagring skjer etter et trykk, er ikke i seg selv et lovkrav eller et samtykke. Det er en minimering. Om hver lagring faller inn under unntaket i ekomloven § 3-15, er fortsatt en egen vurdering (se åpne spørsmål).
+
+## Sletting og andre faner
+
+Sletteknappen fjerner Spareverksteds nøkler i `localStorage` for hele nettstedet, men `sessionStorage` bare i fanen der knappen trykkes. Andre åpne faner beholder sin arbeidsplan og veilederkontekst i fanen og i minnet til de lukkes. Lagrede planer kommer ikke tilbake: kalkulatoren lytter på `storage`-hendelsen og leser planene på nytt når de endres i en annen fane (`app.js:245`). Kontrollert i `tests/personvern-browser.cjs`.
+
+`localStorage` har ingen innebygd utløpstid, men nettleseren kan fjerne data, for eksempel ved lite lagringsplass eller når brukeren sletter nettstedsdata.
+
+## Feil funnet i kontroll av PR #78
+
+GPT fant 25.10.2026 at `journey.js` pakker inn `setLevel` og bare sendte videre nivået. Innstillingen `{remember:false}` gikk tapt, slik at automatiske nivåskifter likevel kunne lagres. Rettet ved å sende videre alle argumenter. Testen kobler nå funksjonene sammen slik siden gjør, og feiler mot den gamle innpakningen. Den første testen kontrollerte `setLevel` isolert og fanget ikke feilen.
 
 ## Nettleverandøren
 
@@ -88,7 +100,7 @@ Kodefunn. Linjenumre gjelder grenen `fix/personvern-lokal-lagring`.
 
 ## Kjente begrensninger
 
-- Ingen nettlesertest kjørt i denne runden. Eksisterende nettlesertester (`roundtrip`, `polish`, `a11y` m.fl.) kjøres i GitHub Actions på PR-en. `polish-browser.cjs` er tilpasset at `sv-started` nå ligger i `sessionStorage`.
+- Nettlesertestene kjøres bare i GitHub Actions (Chromium, Firefox og WebKit i Linux). Arbeidsmiljøet har ingen nettleser. Safari på iPhone er ikke testet. Den publiserte siden er ikke kontrollert.
 - Går brukeren til «Spør om sparing» via adressefeltet eller Om-siden, følger ikke planen med lenger.
 - Personvernsiden har inline CSS og punkter merket «Avklares». Den er `noindex` til den er ferdig.
 - Åpen PR #75 legger til `tilgjengelighet.html`; den siden må også få lenke til personvernsiden hvis begge slås sammen.
