@@ -24,10 +24,10 @@ For hver rad gjelder foreløpig **fagkontroll: ikke nykontrollert; søketest: ik
 
 | Rekkefølge | Fast ID | Spørsmål | Først / overlapp / andre formuleringer | Foreløpig dekning | Arbeidsstatus | Utkast og kontroll |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | SV-031 | Hva er en aksjesparekonto (ASK)? | Ingen registrert | Delvis: q-ips-ask / q-ask-zero | Kø | Ikke opprettet |
-| 2 | SV-035 | Hva er et indeksfond? | Ingen registrert | Delvis: funds | Kø | Ikke opprettet |
-| 3 | SV-017 | Hva er forskjellen på sparing og investering? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
-| 4 | SV-022 | Hva er renters rente? | rentes rente | Ikke kontrollert | Kø | Ikke opprettet |
+| 1 | SV-031 | Hva er en aksjesparekonto (ASK)? | Ingen registrert | Eget svar: q-aksjesparekonto, integrert via #61 | Avventer | Dekning lest 25.10.2026, main 4022c94; ingen ny ASK-fagkontroll. Gjenbruk svaret. |
+| 2 | SV-035 | Hva er et indeksfond? | Ingen registrert | Delvis: funds; indeks og passiv forvaltning mangler | Integrert, avventer publisering | [SV-035](research/svarutkast/SV-035.md), selvkontroll 25.10.2026; søk ikke testet |
+| 3 | SV-017 | Hva er forskjellen på sparing og investering? | Ingen registrert | Delvis: funds; intet eget begrepssvar | Integrert, avventer publisering | [SV-017](research/svarutkast/SV-017.md), selvkontroll 25.10.2026; søk ikke testet |
+| 4 | SV-022 | Hva er renters rente? | rentes rente; hvordan fungerer renters rente; GAPS renters-rente | Mangler egen forklaring; GAPS finnes på main | Kø | Kode lest 25.10.2026, main 4022c94; ingen ny fagkontroll |
 | 5 | SV-023 | Hvordan påvirker inflasjon sparepengene mine i banken? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
 | 6 | SV-001 | Hvor mye bør jeg ha på bufferkontoen? | Ingen registrert | Delvis: buffer | Kø | Ikke opprettet |
 | 7 | SV-025 | Bør jeg spare før jeg betaler ned kredittkortgjeld? | Ingen registrert | Delvis: buffer | Kø | Ikke opprettet |
@@ -49,10 +49,10 @@ For hver rad gjelder foreløpig **fagkontroll: ikke nykontrollert; søketest: ik
 | 23 | SV-005 | Kan jeg bruke BSU på oppussing? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
 | 24 | SV-133 | Hva er BSU, og hvordan fungerer ordningen? | Ingen registrert | Eget svar: q-bsu-basics | Kø | Ikke opprettet |
 | 25 | SV-134 | Får jeg BSU-fradrag hvis jeg betaler lite skatt eller eier bolig? | Ingen registrert | Delvis: q-bsu-basics | Kø | Ikke opprettet |
-| 26 | SV-135 | Hva kan BSU brukes til, og hva skjer ved feil bruk? | Først SV-133 | Ikke kontrollert | Kø | Ikke opprettet |
+| 26 | SV-135 | Hva kan BSU brukes til, og hva skjer ved feil bruk? | Først SV-133; hva skjer med BSU hvis jeg flytter; GAPS bsu-flytting | BSU finnes, men flytting besvares ikke | Kø | Kode lest 25.10.2026, main 4022c94; flyttebetydning må avklares i utkast, ingen ny fagkontroll |
 | 27 | SV-136 | Bør jeg prioritere buffer, BSU eller annen sparing til bolig? | Først SV-001, SV-133 | Delvis: bsu / buffer | Kø | Ikke opprettet |
 | 28 | SV-007 | Bør barnesparing stå i barnets eller foreldrenes navn? | Ingen registrert | Delvis: children | Kø | Ikke opprettet |
-| 29 | SV-006 | Hvordan sparer jeg best til barna? | Ingen registrert | Delvis: children | Kø | Ikke opprettet |
+| 29 | SV-006 | Hvordan sparer jeg best til barna? | Delspørsmål: skatt på barnesparing; GAPS barnesparing-skatt; se også SV-007 | Delvis: children; beskatning ikke forklart | Kø | Kode lest 25.10.2026, main 4022c94; ingen ny fagkontroll |
 | 30 | SV-033 | Hva skjer med skatten når jeg tar ut penger fra ASK? | Først SV-031 | Delvis: q-ask-zero | Kø | Ikke opprettet |
 | 31 | SV-032 | Kan jeg ha rentefond på ASK? | Først SV-031, SV-061 | Delvis: q-ips-ask / q-ask-zero | Kø | Ikke opprettet |
 | 32 | SV-122 | Hva kan fondskonto bety, og hvordan skiller det seg fra et fond? | vanlig fondskonto; aksje- og fondskonto; kapitalforsikring | Ikke kontrollert | Kø | Ikke opprettet |
@@ -185,3 +185,28 @@ Integrasjon i nettsted, søkeord, treffkontroll, brukerforståelse og tilgjengel
 Den opprinnelige startrekkefølgen var SV-031 og SV-035. ASK- og fondskontoforklaringer finnes nå på main etter #61. Neste kjøring må først oppdatere dekningen mot faktisk kode, og gjenbruke de eksisterende svarene. De prøver grunnforklaringer som flere senere sammenligninger trenger. Les aktuell dekning før du skriver. Fortsett deretter i køen, og forklar avvik i loggen. Bolig/lån prioriteres tidlig uten at vi åpner for nye kalkulatorfunksjoner.
 
 Køen kan utvides med faktiske brukerspørsmål. Oppgi hvor spørsmålet kommer fra uten å lagre personopplysninger eller brukerens private økonomi.
+
+## Dekningskontroll 25. oktober 2026, PR #64
+
+Kontrollert kodegrunnlag: `4022c94e29a361c3ac079a7bcbe095238fe5f88c`. Main er autoritativt; #48 er fortsatt åpen, men kø/instruks/logg er allerede samlet gjennom #62. #53 er lukket, ikke merget, og erstattet av #61. SV-031 settes til Avventer for ny fagkontroll av eksisterende forklaring, ikke som et nytt skriveoppdrag. SV-035 og SV-017 får upubliserte utkast i PR #64. Neste uferdige grunnbegrep i køen er SV-022.
+
+Barneskatt registreres under SV-006, med kobling til eierskap i SV-007. BSU ved flytting registreres under SV-135. Renters rente har allerede SV-022. Ingen nye ID-er opprettes. Registreringen er ikke ny faktasjekk av disse tre hullene. «Flytting» må ved senere research skille bankbytte, boligbytte og flytting til utlandet før et svar kan kalles dekkende.
+
+Kontrolltilfeller som skal følge en senere overlevering av BSU-flytteregelen, så lenge innholdshullet består:
+
+| Søk | Forventet resultat ved senere kontroll |
+| --- | --- |
+| jeg flytter | Skal ikke utløse BSU-hullet eller bli BSU-relevant på grunn av flytteordet alene |
+| hva koster flytting | Skal ikke utløse BSU-hullet eller bli BSU-relevant på grunn av flytteordet alene |
+| flytte strømavtale | Skal ikke utløse BSU-hullet eller bli BSU-relevant på grunn av flytteordet alene |
+| flytte til utlandet | Skal ikke utløse BSU-hullet eller bli BSU-relevant på grunn av flytteordet alene |
+| hva skjer med BSU hvis jeg flytter | Skal gi uncovered så lenge svaret ikke dekker spørsmålet |
+| hvordan fungerer renters rente | Skal kunne gi uncovered uten ordinære tematreff så lenge forklaringen mangler |
+
+Dette er videreført forventning, ikke en kodekontroll utført i researchøkten. Ingen GAPS-rader endres. En rad skal først fjernes når innholdet faktisk dekker spørsmålet. Bare å nevne fagordet er utilstrekkelig.
+
+PR #63 er lest som åpent forslag, head `435db45bd1a913b9be492629fdd07fe00dcd0118`. Den foreslår blant annet hullhåndtering for utbytte og rentefond. Det er ikke på main og er ikke testet her. Senere research på SV-050, SV-051 eller SV-061 må lese fersk status; denne økten endrer ikke deres prioritet eller fagstatus.
+
+## Integrasjon 25. oktober 2026
+
+Lars har bestilt publisering. SV-035 og SV-017 er integrert som q-indeksfond og q-sparing-investering i #64 etter ny kildekontroll. Indeksfond eies nå av egen forklaring; de to gamle søketilfellene d33/d56 er oppdatert til det nye svaret. Ingen kalkulatorendring. 15 Node-testfiler og 156 sammenligningstilfeller består lokalt. Nettleserkontroll kjøres i CI; lokalt mangler nettleserbinæren. Skjermleser og forståelsestest står åpne. Faktisk publisering bekreftes av deploy-jobben etter sammenslåing.

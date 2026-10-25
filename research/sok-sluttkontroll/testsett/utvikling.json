@@ -236,8 +236,9 @@
    "group": "begrepsskille",
    "q": "indeksfond",
    "f": [
-    "funds"
-   ]
+    "q-indeksfond"
+   ],
+   "note": "Oppdatert 25.10.2026: egen indeksfondforklaring erstatter generelt fondssvar etter integrasjon av SV-035."
   },
   {
    "id": "d34",
@@ -356,8 +357,9 @@
    "group": "sammensatte",
    "q": "indeks fond",
    "f": [
-    "funds"
-   ]
+    "q-indeksfond"
+   ],
+   "note": "Oppdatert 25.10.2026: egen indeksfondforklaring erstatter generelt fondssvar etter integrasjon av SV-035."
   },
   {
    "id": "d57",

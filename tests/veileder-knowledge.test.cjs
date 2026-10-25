@@ -2,7 +2,7 @@ const assert=require('node:assert/strict');
 const V=require('../dist/veileder-engine.js'),Cards=require('../dist/veileder-cards.js'),C=require('../dist/veileder-context.js');
 const entries=require('../dist/veileder-knowledge.js');
 for(const e of entries)V.register(e);
-assert.equal(V.topics.length,13);assert.equal(V.topics.filter(t=>!t.category).length,7,'new entries must not turn into more main choices');
+assert.equal(V.topics.length,15);assert.equal(V.topics.filter(t=>!t.category).length,7,'new entries must not turn into more main choices');
 for(const e of entries){
  for(const q of e.questions)assert.equal(V.findTopics(q)[0],e.id,q);
  if(e.kind==='explainer'){assert.throws(()=>V.register(e),/duplisert/);continue;}
@@ -92,7 +92,7 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
  // IPS og «Sparekonto eller fond» er uberørt.
  for(const q of ['IPS eller ASK?','Hva er IPS?','Hva er forskjellen på IPS og ASK?'])assert.equal(V.findTopics(q)[0],'q-ips-ask',q);
  assert.ok(V.findTopics('IPS').includes('q-ips-ask')&&V.findTopics('IPS').includes('pension'));
- for(const q of ['fond','sparekonto','aksjefond','indeksfond','Hva er et aksjefond?','sparekonto eller fond'])assert.equal(V.findTopics(q)[0],'funds',q);
+ for(const q of ['fond','sparekonto','aksjefond','Hva er et aksjefond?','sparekonto eller fond'])assert.equal(V.findTopics(q)[0],'funds',q);
  assert.ok(!V.findTopics('fondskonto').includes('funds'));
  // Innhold.
  const a=Cards.build('q-aksjesparekonto',{}),f=Cards.build('q-fondskonto',{});

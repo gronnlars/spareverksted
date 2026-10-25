@@ -110,7 +110,7 @@ const FILTER_CONTROL=[
  // Skatt er en del av et spørsmål svaret dekker. Svaret skal vises.
  ['Hvordan påvirker skatt valget mellom sparekonto og fond?',['funds'],null],
  ['Bør jeg velge fond eller sparekonto med tanke på skatt?',['funds'],null],
- ['Er indeksfond lurt når man tenker på skatt?',['funds'],null],
+ ['Er indeksfond lurt når man tenker på skatt?',['q-indeksfond'],null],
  ['Gir renter på sparekonto skatt?',['funds'],null],       // tynt: én setning om rente etter skatt
  ['Hvordan bør jeg ta ut pensjonssparingen med tanke på skatt?',['pension'],null],
  ['Når jeg blir pensjonist, hvordan tar jeg ut pengene uten å betale for mye skatt?',['pension'],null],

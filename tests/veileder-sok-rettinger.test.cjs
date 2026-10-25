@@ -142,7 +142,7 @@ for(const q of ['aksjeselskap','hva er et aksjeselskap','aksjonær','aksjekapita
   assert.equal(r.mode,'none',q+': skal ikke åpne fondssvaret');
   assert.deepEqual(V.findTopics(q),[],q);
 }
-for(const q of ['aksje','aksjer','aksjefond','aksjefondet','aksjekjøp','aksjemarked','børs','børsfall','børsnotert','indeks','indeksfond']){
+for(const q of ['aksje','aksjer','aksjefond','aksjefondet','aksjekjøp','aksjemarked','børs','børsfall','børsnotert','indeks']){
   const r=V.search(q);
   assert.equal(r.mode,'answer',q);assert.equal(r.hits[0].id,'funds',q);
 }
