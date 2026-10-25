@@ -373,3 +373,14 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Akseptert ulempe:** Brukeren må velge på nytt neste dag og i hver ny fane. Gamle permanente verdier fjernes og leses ikke.
 
 **Ikke avgjort:** Fanelagring er ikke garantert slettet ved lukking, siden nettlesere kan gjenopprette faner. Det avgjør ikke alene om ekomloven § 3-15 gjelder. Spørsmålet ligger hos Nkom.
+
+## Hvorfor KI-informasjonen ble publisert mens prosjektet er på pause (26. oktober 2026)
+
+**Beslutning:** Lars godkjente 26.10.2026 at PR #80 («Synlig KI-informasjon på forside og søkeside») ble slått sammen og publisert (main `b2eada7c7805b428835025d6d729218b5367a888`). Publiseringskjøringen gikk grønt. Etter dette gjøres ingen nye publiseringer før svar fra Domene.no og Nkom foreligger.
+
+**Begrunnelse (Lars):** Endringen handlet ikke om generelle finansielle spørsmål. Den handlet om åpenhet om hvordan innholdet lages, og om personvern og etterrettelighet, som har vært grunnmuren i prosjektet fra start. GPT vurderte at den ikke berører det som er spurt Finanstilsynet om. Finanstilsynet er ikke spurt om akkurat denne endringen, og vurderingen er ikke en uttalelse fra dem.
+
+**Hva som ble publisert:** Én linje på forsiden, en tilsvarende tekst ved «Spør om sparing» og en seksjon på Om-siden. Ingen endring i beregninger, spørsmål, kunnskapsbase eller eksempler. Ingen lagring er endret i denne publiseringen.
+
+**Ikke publisert:** PR #78 (personvernside, kontaktknapper, fanelagring av tema og nivå). Den venter på svar og på at kontaktadressene er mottakstestet.
+
