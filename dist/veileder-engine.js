@@ -58,6 +58,38 @@ function category(id){return topics.find(t=>t.id===id)?.category||id;}
 function isExplainer(id){return topics.find(t=>t.id===id)?.entry?.kind==='explainer';}
 function horizonRelevant(id){return ['funds','children','pension'].includes(category(id));}
 function fundRelevant(id,p={}){return ['mortgage','funds','pension','children','bsu'].includes(category(id))&&!(p.debt==='yes'&&p.buffer==='no');}
+// Målgruppe for et forslag. Alder angis som tall eller faktanøkkel (for eksempel 'adultAge'). Ukjent opplysning
+// betyr aldri «passer ikke»: de innebygde forslagene vises da som før (strict=false), mens forslag fra nye
+// spørsmål og svar bare vises når profilen faktisk oppfyller kravene (strict=true). Vi gjetter aldri alder.
+const AUDIENCE_KEYS=['fromAge','belowAge','owner','fixed','tax','fromYears','belowYears'];
+function limit(v){return typeof v==='string'?F.value(v):v;}
+function fits(audience,p,strict){
+ if(!audience)return !strict;
+ const known=v=>v!==null&&v!==undefined&&v!=='';
+ const test=(value,ok)=>known(value)?ok(value):!strict;
+ if(audience.fromAge!==undefined&&!test(p.age,a=>a>=limit(audience.fromAge)))return false;
+ if(audience.belowAge!==undefined&&!test(p.age,a=>a<limit(audience.belowAge)))return false;
+ if(audience.fromYears!==undefined&&!test(p.years,y=>y>=limit(audience.fromYears)))return false;
+ if(audience.belowYears!==undefined&&!test(p.years,y=>y<limit(audience.belowYears)))return false;
+ for(const k of ['owner','fixed','tax'])if(audience[k]!==undefined&&!test(p[k],v=>v===audience[k]))return false;
+ return true;
+}
+function checkAudience(audience){
+ if(!audience||typeof audience!=='object'||Array.isArray(audience))throw Error('Ugyldig målgruppe.');
+ const keys=Object.keys(audience);
+ if(!keys.length||keys.some(k=>!AUDIENCE_KEYS.includes(k)))throw Error('Ukjent målgruppenøkkel.');
+ for(const k of ['fromAge','belowAge','fromYears','belowYears'])if(audience[k]!==undefined){const v=limit(audience[k]);if(!Number.isFinite(v)||v<0)throw Error('Ugyldig grense i målgruppen.');}
+ for(const k of ['owner','fixed','tax'])if(audience[k]!==undefined&&!['yes','no'].includes(audience[k]))throw Error('Ugyldig valg i målgruppen.');
+}
+// Innebygde forslag. Rekkefølgen er prioritet. Alder avgjør hva som passer: pensjon som binding gjelder før første
+// uttak, uttaksplanlegging fra første uttak, og sparing i barnets navn gjelder voksne som ikke allerede tar ut pensjon.
+// Grensene kommer fra datofestede fakta (adultAge, ipsStartAge). Se BESLUTNINGER.md.
+const CORE=[
+ {id:'pension',title:'Hva bør jeg sjekke før jeg binder penger til pensjon?',audience:{fromAge:'adultAge',belowAge:'ipsStartAge'}},
+ {id:'pension',title:'Hvordan planlegger jeg uttak over mange år?',audience:{fromAge:'ipsStartAge'}},
+ {id:'funds',title:'Når passer sparekonto, og når kan fond passe?'},
+ {id:'children',title:'Bør jeg spare i mitt eller barnets navn?',audience:{fromAge:'adultAge',belowAge:'ipsStartAge'}}
+];
 function suggestions(profile={},current){
  const p=validate(profile),list=[];
  const add=(id,title)=>{if(id!==current&&!list.some(x=>x.id===id))list.push({id,title});};
@@ -68,9 +100,10 @@ function suggestions(profile={},current){
  if(!urgent&&p.age!==null&&p.age<=F.value('bsuMaxAge')&&p.owner==='no')add('q-bsu-basics',p.tax==='no'?'Hva gir BSU når jeg betaler lite skatt?':'Kan BSU passe til boligplanene mine?');
  if(!urgent&&(p.fixed==='yes'||p.owner==='yes'))add('mortgage',p.fixed==='yes'?'Hva bør jeg sjekke før ekstra avdrag med fastrente?':'Hvordan sammenligne boliglån og sparing?');
  if(!urgent&&(p.years!==null||p.risk==='low'))add('funds',p.years!==null&&p.years<F.value('fundMinYears')?'Hvor bør penger til et nært mål stå?':p.risk==='low'?'Hvordan spare uten store verdisvingninger?':'Hva bør jeg vurdere før sparing i fond?');
- if(!urgent)add('pension','Hva bør jeg sjekke før jeg binder penger til pensjon?');
- if(!urgent)add('funds','Når passer sparekonto, og når kan fond passe?');
- if(!urgent)add('children','Bør jeg spare i mitt eller barnets navn?');
+ // Nye spørsmål og svar kan melde seg som forslag med `suggest:{title,audience}`. De er mer spesifikke enn de
+ // innebygde generelle forslagene og kommer derfor først, men bare når profilen oppfyller målgruppen.
+ if(!urgent)for(const t of topics)if(t.entry?.suggest&&fits(t.entry.suggest.audience,p,true))add(t.id,t.entry.suggest.title);
+ if(!urgent)for(const c of CORE)if(fits(c.audience,p,false))add(c.id,c.title);
  // Important topics stay accessible in the topic picker, even when not suggested.
  return list.slice(0,3);
 }
@@ -136,6 +169,12 @@ function answer(id,profile){
  if(id==='pension')add('Penger til de første uttaksårene','Skill mellom penger som skal brukes først og penger som kan stå lenger. Pensjonsstart betyr ikke at hele sparebeløpet skal tas ut samtidig.');
  return F.resolve({title:t.title,parts,sources:[...new Set(refs)].map(k=>({id:k,title:sources[k][0],url:sources[k][1]})),checked,missing:['buffer','debt','income','risk'].filter(k=>!p[k]),profile:p});
 }
+function checkSuggest(entry){
+ if(entry.suggest===undefined)return;
+ const s=entry.suggest;
+ if(!s||typeof s.title!=='string'||s.title.length<8||!s.title.endsWith('?')||/[\u2013\u2014]/.test(s.title))throw Error('Ugyldig forslagstittel. Skriv et spørsmål som slutter med spørsmålstegn.');
+ checkAudience(s.audience);
+}
 function register(entry){
  if(!entry||!/^q-[a-z0-9-]+$/.test(entry.id)||topics.some(t=>t.id===entry.id))throw Error('Ugyldig eller duplisert spørsmål.');
  if(entry.kind==='explainer'){
@@ -147,6 +186,7 @@ function register(entry){
   if(entry.next&&(!entry.next.text||!entry.next.href))throw Error('Ufullstendig lenke videre.');
   for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
   if((entry.keys||[]).some(x=>!/^[a-zæøå0-9]+$/.test(x)))throw Error('Ugyldig søkeord.');
+  checkSuggest(entry);
   topics.push({id:entry.id,title:entry.title,category:'explain',questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});contentVersion++;
   return;
  }
@@ -154,7 +194,8 @@ function register(entry){
  for(const o of entry.options)if(!o.title||!o.poorFit||!(o.pros?.length>=2)||!(o.cons?.length>=2)||[...o.pros,...o.cons].some(i=>!i.title||!i.text))throw Error('Hvert alternativ trenger minst to fordeler, to ulemper og når det passer dårlig.');
  for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
  if((entry.keys||[]).some(x=>!/^[a-zæøå0-9]+$/.test(x)))throw Error('Ugyldig søkeord.');
+ checkSuggest(entry);
  topics.push({id:entry.id,title:entry.title,category:entry.category,questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});contentVersion++;
 }
-const api={topics,findTopics,search,gaps:GAPS,reason:S.reason,answer,validate,checked,sources,register,category,isExplainer,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
+const api={topics,findTopics,search,gaps:GAPS,reason:S.reason,answer,validate,checked,sources,register,fits,category,isExplainer,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
 })(typeof window!=='undefined'?window:globalThis);

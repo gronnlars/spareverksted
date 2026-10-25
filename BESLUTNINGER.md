@@ -207,6 +207,24 @@ Kildenotatene ligger i prosjektmappen «claude/» (ikke i repoet). PR-nummer st�
 
 **Status:** Vedtatt 23.10.2026. PR #15, nedre del mot innskuddene i PR #23.
 
+### Alder styrer Veilederens forslag
+
+**Valg:** Spørsmålsforslagene i Veilederen får en målgruppe. Pensjon som binding av penger vises fra 18 år til første uttak (62 år, `ipsStartAge`). Fra 62 år vises i stedet «Hvordan planlegger jeg uttak over mange år?». Sparing i barnets navn vises fra 18 til 61 år. Under 18 år vises hverken pensjon eller barnesparing. Ukjent alder gir de samme tre generelle forslagene som før. Nye spørsmål og svar kan melde seg for en målgruppe med `suggest` (se README), og vises da bare når profilen oppfyller den.
+
+**Alternativer:**
+- A: Beholde dagens liste for alle og bare endre overskriften. Forkastet: 14-åringer og 70-åringer fikk fortsatt forslag som ikke passer.
+- B (valgt): Målgruppe per forslag, med grenser fra datofestede fakta. Skjule i stedet for å finne på nye forslag.
+- C: Skrive hele forslagslisten som én matrise med alle kombinasjoner av alder og situasjon. Forkastet: vokser raskt og blir vanskelig å vedlikeholde når databasen vokser.
+- D: La forslag stå i en egen prioritert kø per aldersgruppe. Forkastet av samme grunn, og aldersgruppene i kalkulatoren er ikke ment som regler for innhold.
+
+**Begrunnelse:** Overskriften «Prioritert etter opplysningene dine» lovet tilpasning som listen ikke ga. Siden skal bare påstå det den kan dokumentere. Grensen 18 år er `adultAge`, og 62 år er tidligste uttak i IPS (`ipsStartAge`). Grensene er redaksjonelle valg for hva som vises først, ikke råd om hva noen bør gjøre. Alle temaer er fortsatt tilgjengelige i temavalget og søket.
+
+**Akseptert ulempe:** For 14-åringer vises bare ett forslag, fordi vi ikke har forslag laget for dem. For 62 år og eldre vises ingen forslag om sparing til barn eller barnebarn, selv om en del vil ha nytte av det. Mer målrettede forslag krever nye spørsmål og svar med kilder, og det er innholdsarbeid, ikke teknikk. Grensene er enkle og tar ikke hensyn til at folk går av med pensjon ulikt.
+
+**Vurder på nytt når:** Spørsmålskøen har egne svar for unge og eldre (legg dem inn med `suggest`), brukere melder at forslagene fortsatt ikke passer, eller reglene for tidligste uttak endres.
+
+**Status:** Foreslått 25.10.2026 på branch `feature/veileder-alder-tilpasning`. Ikke publisert. **Ikke testet på iPhone.** Overskriften over forslagene er endret til «Forslagene tar hensyn til opplysningene du har oppgitt». Gjelder ikke kalkulatoren.
+
 ### Risikospørsmålet ut av startflyten
 
 **Valg:** Spørsmålet «Hvor store svingninger tåler du?» er tatt ut av startflyten, og ekkoet «Du tåler store svingninger» under overskriften er fjernet.
