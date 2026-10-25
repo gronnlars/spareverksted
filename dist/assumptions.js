@@ -21,6 +21,11 @@ const A={
  // gir et 95 % utfallsrom der hvert innskudd får avkastningen r ± 1,96·σ/√(år til slutt).
  index:{realRate:4.5,sigma:16,
   source:{name:'Finans Norge: Avtale om avkastningsprognoser, revidert 04.02.2026',url:'https://www.finansnorge.no/siteassets/dokumenter/avtaler/avtale-om-avkastningsprognoser_revidert-04.02.2026_ikrafttredelse-11.02.2026.pdf'}},
+ // Sparehorisont for aksjefond: anbefalingen fra Forbrukerrådet (seksjonen Fondstyper: «Minimum anbefalt
+ // sparehorisont 5 år»). Samme verdi som fundMinYears i veileder-facts.js; en test sjekker at de er like.
+ // Brukes bare i forklaringstekst. Det er en anbefaling, ikke en regel.
+ horizon:{fundMinYears:5,checked:'25.10.2026',
+  source:{name:'Forbrukerrådet: Sparing i fond og spareprofiler',url:'https://www.forbrukerradet.no/sparing-i-fond-og-spareprofiler/'}},
  // Skatt på renter og andre kapitalinntekter (alminnelig inntekt) for personer, inntektsåret 2026.
  // Brukes bare i forklaringstekst, ikke i beregningene. Se beslutningsnotatet om skatt.
  tax:{interest:22,year:2026,

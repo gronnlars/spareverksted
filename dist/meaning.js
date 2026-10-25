@@ -45,6 +45,8 @@ function build(E,s,end,f,A){
  else if(s.savingsType==='index'){
   const own=s.riskChosen&&s.stress==='low'?'Du har selv oppgitt at du helst vil unngå store fall. ':'';
   main.push(own+`Et indeksfond kan falle mye i verdi underveis, men beregningen viser en jevn utvikling på ${f.pct(s.rate)} hvert år.`);
+  // Planen er kortere enn Forbrukerrådets anbefalte minste sparehorisont for aksjefond. Bare sitat og forbehold, ikke eget råd.
+  if(A&&A.horizon&&end<A.horizon.fundMinYears-1e-9)main.push(`${A.horizon.source.name.split(':')[0]} anbefaler minst ${A.horizon.fundMinYears} års sparehorisont for aksjefond, og planen din er kortere. Dette er en anbefaling, ikke en regel eller garanti.`);
   if(A&&A.index&&paid>0.5){
    // Nedre del av utfallsrommet sammenlignes med innskuddene i samme kroneverdi: kroner mot kroner,
    // dagens kroner mot innskuddene i dagens kroner. Begge er før skatt.
