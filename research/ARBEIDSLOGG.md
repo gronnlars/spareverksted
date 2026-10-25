@@ -7,7 +7,9 @@ Felles overlevering for ChatGPT/Codex og Claude. Tid oppgis i Europe/Oslo.
 | ID-er | Aktør | Start | Utløp | Gren/PR |
 | --- | --- | --- | --- | --- |
 
-Ingen aktive reservasjoner fra denne økten. SV-035 og SV-017 avsluttet ved leveranse i PR #64.
+| SV-022, SV-023 | ChatGPT/Codex | 2026-10-25 08:30 Europe/Oslo | 2026-10-25 12:30 Europe/Oslo | feat/content-2026-10-25 |
+
+Dagsoppdrag 25.10: integrer nye svar i små puljer etter prosjektreglene. Separat fra nattoppgavens researchfullmakt.
 
 Les gren/PR før en utløpt reservasjon overtas. ASK er allerede forklart på main gjennom #61; #53 er lukket og erstattet. Ingen konkurrerende researchreservasjon funnet i main eller siste logg på docs/sporsmalsko-og-nattarbeid.
 
