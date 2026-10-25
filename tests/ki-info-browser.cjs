@@ -1,4 +1,6 @@
-// KI-informasjonen er synlig på forsiden og ved «Spør om sparing», lenker til Om-siden og er lesbar på mobil.
+// KI-informasjonen: teksten finnes, er ikke skjult, har riktig ordlyd, går ikke utenfor skjermbredden (360 og 1280 px),
+// gir ingen horisontal scrolling, har skrift på minst 14 px og lenker til Om-siden.
+// Testen beviser IKKE at teksten ligger innenfor første skjermbilde, eller at kontrasten er god (det er sett på skjermbilde, ikke målt).
 const {chromium,firefox,webkit}=require('playwright'),http=require('http'),fs=require('fs'),path=require('path');
 const engine=process.env.SPARE_ENGINE||'chromium',types={'.html':'text/html;charset=utf-8','.js':'text/javascript','.css':'text/css','.png':'image/png'};
 const dist=path.join(__dirname,'..','dist');
@@ -19,5 +21,5 @@ const srv=http.createServer((q,r)=>{let p=decodeURIComponent(q.url.split('?')[0]
    if(!(await page.locator('#ki').isVisible()))throw Error('Om-seksjonen mangler');
   }
  }
- await b.close();srv.close();console.log(engine+': KI-info passed: synlig på forsiden og spørsmålssiden, lenke til Om, ingen horisontal scrolling, lesbar skriftstørrelse.');
+ await b.close();srv.close();console.log(engine+': KI-info passed: tekst ikke skjult og med riktig ordlyd, innenfor skjermbredden, ingen horisontal scrolling, skrift minst 14 px, lenke til Om. Plassering i første skjermbilde og kontrast er ikke testet.');
 })().catch(e=>{console.error(e);process.exit(1);});
