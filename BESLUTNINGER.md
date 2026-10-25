@@ -349,3 +349,15 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Vurder på nytt når:** Faktisk bruk viser feil svar eller gjentakende problemer, innhold endrer hvilke ord som har én eier, eller iPhone- og skjermlesertesting avdekker hindringer.
 
 **Status:** Anbefalt, ikke vedtatt. Lars avgjør.
+
+## Dagsoppdrag med små innholdspuljer, 25. oktober 2026
+
+**Valg:** Normalt 1–2 spørsmål per PR, ett ved kompliserte lover/regler. Gjenbruk eksisterende svar når det dekker samme spørsmål.
+
+**Alternativer:** A (valgt): små kontrollerte puljer. B: stor masseimport av køen. C: bare research. Lars har nå bestilt innlegging; A gjør kilder, språk og søkeregresjoner etterprøvbare.
+
+**Akseptert ulempe:** Lavere antall svar per økt og flere PR-er.
+
+**Vurder på nytt når:** Gjentatte puljer har dokumentert kvalitet og større puljer ikke svekker kontrollen.
+
+**Status:** Arbeidsvalg innenfor Lars sitt dagsoppdrag. Ingen generell publiseringsfullmakt eller endring av kalkulatorfrysen.

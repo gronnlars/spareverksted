@@ -7,7 +7,7 @@ Felles overlevering for ChatGPT/Codex og Claude. Tid oppgis i Europe/Oslo.
 | ID-er | Aktør | Start | Utløp | Gren/PR |
 | --- | --- | --- | --- | --- |
 
-| SV-022, SV-023 | ChatGPT/Codex | 2026-10-25 08:30 Europe/Oslo | 2026-10-25 12:30 Europe/Oslo | feat/content-2026-10-25 |
+Ingen aktive reservasjoner. SV-022/SV-023 avsluttet i dagsoppdragets første PR.
 
 Dagsoppdrag 25.10: integrer nye svar i små puljer etter prosjektreglene. Separat fra nattoppgavens researchfullmakt.
 
@@ -34,3 +34,11 @@ Les gren/PR før en utløpt reservasjon overtas. ASK er allerede forklart på ma
 ### Integrasjon etter nytt oppdrag 25. oktober
 
 Lars bestilte publisering. Dette erstatter researchoppgavens avgrensning for denne leveransen. ChatGPT/Codex har kontrollert kildene på nytt og integrert SV-035/SV-017 i eksisterende forklaringsvisning. 15 Node-testfiler og 156 søketilfeller består lokalt. Nye nettleserkontroller ved 320/390 px i eksisterende test, kjøres i CI. Lokal nettleser mangler. Ingen kalkulatorendring. PR #63 er nå på main og er bevart. Neste research: SV-022.
+
+### Dagsoppdrag 25. oktober, første pulje
+
+Lest main f9c553aa668fd0bf96ce14d6930f5ec02897abd6. Nytt oppdrag fra Lars: bruk dagen på grundig innholdspåfyll etter prosjektreglene, med kilder, søkbarhet og språk etter nivå. Fullmakt brukt til integrasjon og tester i PR, ikke sammenslåing eller publisering. Normalt 1–2 spørsmål per PR; komplekse regelspørsmål alene. Store puljer velges bort fordi kilde- og søkeregresjoner blir vanskeligere å etterprøve.
+
+SV-022 får eget svar. SV-023 gjenbruker kjøpekraft, med forbehold ved kortsvaret og kontoeksempel. Faktisk kildekontroll 25.10.2026 i lenkede kontrollnotater, egen korrektur og angrepsflater. Alle 15 Node-testfiler bestått lokalt. Nettleserkravet utvidet; lokal Chromium mangler, CI gjenstår. Utestet: faktisk iPhone, skjermleser og brukerforståelse. Kalkulatoren urørt. Reservasjonen var pushet og fjernlest før skriving av innhold.
+
+Ekstra arbeidsøkter lagt til eksisterende nattoppgave via RDATE kl. 12, 16 og 20 Europe/Oslo bare 25.10.2026. Ordinær nattresearch fra 26.10 er beholdt. Neste økt skal først kontrollere denne PR-en og eventuell CI-feil, deretter neste kø-ID etter fersk dekningskontroll. Kjent søkebegrensning: «renters renet» gir for generelle forslag. Den er dokumentert, ikke løst ved spesialalias.

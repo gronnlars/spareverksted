@@ -19,6 +19,81 @@ const alone=(name,other)=>new RegExp('(?<!(?:'+other+').*)(?:'+name+')(?!.*(?:'+
 const both=new RegExp('(?:'+ASKNAVN+').*(?:'+FONDNAVN+')|(?:'+FONDNAVN+').*(?:'+ASKNAVN+')');
 const i=(title,text)=>({title,text});
 const entries=[
+{
+ "kind": "explainer",
+ "id": "q-renters-rente",
+ "category": "funds",
+ "title": "Hva er renters rente?",
+ "checked": "2026-10-25",
+ "keys": [
+  "rentersrente",
+  "rentesrente"
+ ],
+ "questions": [
+  "Hva er renters rente?",
+  "Hvordan fungerer renters rente?",
+  "Hva er rentes rente?",
+  "Hva betyr rente på rente?",
+  "Får jeg renter på rentene?"
+ ],
+ "intro": "Renters rente betyr at du får renter også på renter du har fått tidligere. Når rentene blir stående på kontoen, blir beløpet som kan gi nye renter større. Hvor mye pengene vokser, avhenger av renten og hvor lenge de står.",
+ "terms": [
+  {
+   "term": "renters rente",
+   "text": "Renter beregnet også av tidligere opptjente renter som blir stående på kontoen."
+  },
+  {
+   "term": "avkastning",
+   "text": "Det du tjener eller taper på en investering. I fond varierer avkastningen og kan være negativ."
+  }
+ ],
+ "example": {
+  "title": "Eksempel: 10 000 kr i to år",
+  "text": "Du setter inn 10 000 kr og får 5 % rente hvert år. Etter ett år har du 10 500 kr. Det andre året får du 525 kr i renter, og har 11 025 kr. Av rentene det andre året kommer 25 kr fra rentene du fikk det første året. Eksempelet forutsetter at rentene legges til én gang i året, ingen nye innskudd eller uttak og uendret rente. Tallene er før skatt, kostnader og prisvekst. 5 % er et valgt eksempeltall, ikke et rentetilbud eller en prognose."
+ },
+ "parts": [
+  {
+   "title": "Hvis du tar ut rentene",
+   "text": "Tar du ut rentene etter hvert år, gir de ikke nye renter på denne kontoen. I eksempelet får du da 500 kr hvert år. Etter to år har du 10 000 kr på kontoen og har fått utbetalt 1 000 kr, før skatt og kostnader."
+  },
+  {
+   "title": "I fond er veksten ujevn",
+   "text": "Også avkastning som blir investert, kan gi videre avkastning. Fond gir likevel ikke en fast kontorente. En verdi på 10 000 kr som først stiger 10 % og deretter faller 10 %, ender på 9 900 kr. Dette regneeksempelet ser bort fra innskudd, uttak, kostnader og skatt."
+  },
+  {
+   "title": "Slik kan du regne selv",
+   "text": "Med fast årlig rente, årlig rentetillegg og uten innskudd eller uttak: sluttbeløp = startbeløp × (1 + rente / 100) opphøyd i antall år. I eksempelet: 10 000 × 1,05 × 1,05 = 11 025 kr. Kontovilkårene avgjør når renter legges til."
+  },
+  {
+   "title": "Flere kroner er ikke alltid mer kjøpekraft",
+   "text": "Skatt og kostnader reduserer det du sitter igjen med. Stiger prisene mer enn pengene dine vokser etter skatt og kostnader, kan du kjøpe mindre selv om kronebeløpet øker. Les også forklaringen om kjøpekraft."
+  }
+ ],
+ "sources": [
+  {"id":"finanstilsynet-fond","title":"Finanstilsynet: Verdipapirfond og risiko","url":"https://www.finanstilsynet.no/forbrukerinformasjon/verdipapirforetak-verdipapirfond-og-alternative-investeringsfond/"},
+  {
+   "id": "dnb-renters-rente",
+   "title": "DNB: Innskuddsrente (kommersiell kilde)",
+   "url": "https://www.dnb.no/sparing/sparing-pa-konto/innskuddsrente"
+  },
+  {
+   "id": "ssb-inflasjon",
+   "title": "SSB: Hva er inflasjon?",
+   "url": "https://www.ssb.no/priser-og-prisindekser/konsumpriser/artikler/hva-er-inflasjon"
+  },
+  {
+   "id": "skatt-rente",
+   "title": "Skatteetaten: Skattekort, lån og renter",
+   "url": "https://www.skatteetaten.no/person/skatt/skattekort/bestille-endre/"
+  }
+ ],
+ "caveat": "Kontrollert 25. oktober 2026. Eksemplene er egne beregninger og bruker ingen skattesats. Neste kildekontroll senest 25. januar 2027. Fondseksempelet viser prosentregning, ikke forventet avkastning.",
+ "next": {
+  "text": "Prøv med egne tall i kalkulatoren",
+  "href": "index.html"
+ }
+,
+ words:[/rente(?:rs?|s) ?rente/,/rente på rente/,/renter på rentene/]},
 {"kind": "explainer", "id": "q-indeksfond", "category": "funds", "title": "Hva er et indeksfond?", "checked": "2026-10-25", "keys": ["indeksfond", "passivforvaltning"], "questions": ["Hva er et indeksfond?", "Hva er indeksfond?", "Hva betyr indeksfond?", "Hvordan fungerer indeksfond?", "Hva betyr passiv forvaltning?", "Hva betyr passivt forvaltet fond?"], "intro": "Et indeksfond forsøker å følge utviklingen i en bestemt indeks. En aksjeindeks måler utviklingen i et utvalg aksjer. Du kjøper fondsandeler og lar fondet investere for deg. Et indeksfond som investerer i aksjer, kan falle mye i verdi selv om det har lave kostnader.", "terms": [{"term": "indeks", "text": "Et mål på utviklingen i et utvalg verdipapirer. Her bruker vi en aksjeindeks som eksempel."}, {"term": "passiv forvaltning", "text": "Forvalteren forsøker å følge indeksen framfor å velge aksjer som skal gjøre det bedre enn den. Dette kalles passiv forvaltning. Ordet beskriver forvaltningsmåten, ikke hvor trygge pengene er."}], "example": {"title": "Eksempel: ulik vekt i indeksen", "text": "Tenk deg en forenklet indeks med 50 % i selskap A, 30 % i B og 20 % i C. Et fond som kopierer denne fordelingen, vil plassere omtrent 500 kr, 300 kr og 200 kr av en investering på 1 000 kr. Dette er en illustrasjon av vekting, ikke et virkelig fond, en tilstrekkelig spredning eller en forventning om avkastning. Faktiske fond kan avvike fra indeksen; undersøk fondets dokumentasjon."}, "parts": [{"title": "Forvaltning og risiko", "text": "Forvalteren forsøker å følge indeksen framfor å velge aksjer som skal gjøre det bedre enn den. Dette kalles passiv forvaltning. Ordet beskriver forvaltningsmåten, ikke hvor trygge pengene er."}, {"title": "Hvilken indeks følger fondet?", "text": "Se etter hvilken indeks fondet følger. Et fond rettet mot ett land eller én bransje gir en annen fordeling enn et bredt globalt fond. At fondet følger en indeks, betyr hverken at alle selskaper veier like mye eller at alle indeksfond har samme risiko."}, {"title": "Sjekk samlet pris", "text": "Indeksfond har vanligvis lavere forvaltningskostnader enn aktivt forvaltede fond. Sjekk likevel den samlede prisen hos tilbyderen, inkludert eventuelt plattformgebyr. Samme fond kan koste ulikt hos forskjellige tilbydere."}, {"title": "Les nøkkelinformasjonen", "text": "Les fondets nøkkelinformasjon før du velger. Der finner du blant annet risiko og kostnader. Lang sparetid fjerner ikke muligheten for tap. Penger til en nødvendig regning eller et nært kjøp må vurderes ut fra når de skal brukes og hvor mye tap du tåler."}, {"title": "Avgrensning", "text": "Denne forklaringen bruker aksjebaserte indeksfond som eksempel. Den gjør ikke «indeksfond» til et generelt løfte om lave kostnader, bred spredning eller en bestemt investering. Skatt, kontovalg og anbefaling av enkeltfond er egne spørsmål."}], "sources": [{"id": "q-indeksfond-0", "title": "Forbrukerrådet: Sparing i fond og spareprofiler", "url": "https://www.forbrukerradet.no/sparing-i-fond-og-spareprofiler/"}, {"id": "q-indeksfond-1", "title": "DNB: Indeksfond", "url": "https://www.dnb.no/sparing/fond/indeksfond"}, {"id": "q-indeksfond-2", "title": "Finanstilsynet: Verdipapirforetak, verdipapirfond og alternative investeringsfond", "url": "https://www.finanstilsynet.no/forbrukerinformasjon/verdipapirforetak-verdipapirfond-og-alternative-investeringsfond/"}, {"id": "q-indeksfond-3", "title": "Forbrukerrådet: Nå kan du sjekke om du betaler for mye for fondet ditt", "url": "https://www.forbrukerradet.no/siste-nytt/na-kan-du-sjekke-om-du-betaler-for-mye-for-fondet-ditt/"}], "caveat": "Fagbeskrivelse kontrollert mot kildene 25. oktober 2026. Ingen bestemt avkastning eller produktpris er forutsatt. Neste kildekontroll senest 25. januar 2027.",
  words:[/\bindeksfond\b/,/passiv(?:t)? (?:forvaltning|forvaltet fond)/]},
 {"kind": "explainer", "id": "q-sparing-investering", "category": "funds", "title": "Hva er forskjellen på sparing og investering?", "checked": "2026-10-25", "keys": [], "questions": ["Hva er forskjellen på sparing og investering?", "Er fond sparing?", "Er investering det samme som sparing?", "Må jeg investere for å spare?"], "intro": "Å spare betyr å sette av penger til senere. Å investere betyr å plassere penger med mål om avkastning, for eksempel i fond eller aksjer, med risiko for tap. Du kan derfor spare både på bankkonto og gjennom investeringer.", "terms": [{"term": "sparing", "text": "Å sette av penger til senere, på konto eller gjennom investeringer."}, {"term": "investering", "text": "Å plassere penger med mål om avkastning og med risiko for tap."}], "example": {"title": "Eksempel: ulike behov", "text": "En uventet reparasjon kan kreve penger nå. Et mål uten fast dato langt fram i tid kan gi større rom for svingninger. Det betyr ikke at all langsiktig sparing bør investeres, eller at tid garanterer gevinst."}, "parts": [{"title": "Start med formålet", "text": "Hva pengene skal brukes til, er et bedre utgangspunkt enn hva spareformen heter. En reserve til en uventet regning og penger til et mål langt fram i tid kan trenge ulik plassering."}, {"title": "Penger på konto", "text": "På en sparekonto får du rente etter bankens vilkår. Undersøk uttaksregler og hvilken innskuddsgaranti som gjelder. Garantien beskytter ikke mot at prisvekst svekker kjøpekraften."}, {"title": "Penger i aksjefond", "text": "Når du kjøper aksjefond, kjøper du fondsandeler som kan stige og falle i verdi. Et verdifall kan bety at du får mindre tilbake enn du satte inn, særlig hvis du må selge når verdien er lav. Fondsandelene er ikke omfattet av bankenes innskuddsgaranti."}, {"title": "Del pengene etter behov", "text": "Du trenger ikke velge én plassering for alle pengene. Et mulig opplegg er en tilgjengelig reserve på konto og separat, langsiktig sparing i investeringer som tåler verdifall. Dette er en måte å dele behov på, ikke en anbefalt fordeling for alle. Hvor mye du trenger tilgjengelig, avhenger av din økonomi."}, {"title": "Avgrensning", "text": "«Sparing» brukes her som formål og «investering» som plassering. Dette er en pedagogisk avgrensning for privatøkonomi, ikke en lovdefinisjon eller nasjonalregnskapets definisjon av sparing. Skatt og bestemte kontotyper behandles i egne svar. Teksten gir hverken en fast spareprosent eller en universell tidshorisont."}], "sources": [{"id": "q-sparing-investering-0", "title": "Finanstilsynet: Verdipapirforetak, verdipapirfond og alternative investeringsfond", "url": "https://www.finanstilsynet.no/forbrukerinformasjon/verdipapirforetak-verdipapirfond-og-alternative-investeringsfond/"}, {"id": "q-sparing-investering-1", "title": "Bankenes sikringsfond: Hvem gjelder garantien for?", "url": "https://www.bankenessikringsfond.no/om-garantien/hvem-gjelder-garantien-for/"}, {"id": "q-sparing-investering-2", "title": "Finanstilsynet: Sikringsordningar og garantiordningar", "url": "https://www.finanstilsynet.no/forbrukerinformasjon/sikringsordninger-og-garantier/"}, {"id": "q-sparing-investering-3", "title": "SSB: Hva er inflasjon?", "url": "https://www.ssb.no/priser-og-prisindekser/konsumpriser/artikler/hva-er-inflasjon"}], "caveat": "Fagbeskrivelse kontrollert mot kildene 25. oktober 2026. Ingen bestemt avkastning eller produktpris er forutsatt. Neste kildekontroll senest 25. januar 2027.",
@@ -76,20 +151,21 @@ const entries=[
  {title:'Forsikringsbasert fondskonto',subtitle:'En kontotype med kapitalforsikring.',poorFit:'du vil ta ut bare innskudd først eller ikke ønsker en forsikringsavtale.',pros:[i('Kan romme flere investeringer','Utvalget avhenger av avtalen og kan være bredere enn på ASK. Kontroller hva tilbyderen tillater.'),i('Utsatt skatt på avkastning','Avkastning skattlegges normalt ved uttak, ikke ved hvert kjøp og salg inne på kontoen.')],cons:[i('Deluttak kan utløse skatt','Du tar ut en forholdsmessig del av gevinst eller tap sammen med innskuddet. Du kan ikke ta ut bare innskuddet først som på ASK.'),i('Andre vilkår og kostnader','Kontroller forsikringsvilkår, eierskap, samlede kostnader og hva som skjer ved flytting.')]}]},
 
  // Forklaring («hva er dette?»): kort svar, begreper, eksempel, fordypning. Ingen alternativkort.
- {kind:'explainer',id:'q-kjopekraft',title:'Hva er kjøpekraft?',checked:'2026-10-24',keys:['kjøpekraft','inflasjon','prisvekst'],
- questions:['Hva er kjøpekraft?','Hva er prisvekst?','Hva er inflasjon?','Hva betyr dagens kroner?','Hvorfor blir pengene mindre verdt på konto?'],
- words:[/kj[øo]pekraft/,/prisvekst/,/inflasjon/,/dagens kroner/,/mindre verdt/,/mister verdi/],
- intro:'Kjøpekraft er hvor mye du kan kjøpe for pengene. Når prisene stiger, rekker det samme kronebeløpet til mindre. Prisveksten kalles også inflasjon.',
+ {kind:'explainer',id:'q-kjopekraft',title:'Hva er kjøpekraft?',checked:'2026-10-25',keys:['kjøpekraft','inflasjon','prisvekst'],
+ questions:['Hvordan påvirker inflasjon sparepengene mine i banken?','Hvorfor får jeg mindre for sparepengene?','Hva er kjøpekraft?','Hva er prisvekst?','Hva er inflasjon?','Hva betyr dagens kroner?','Hvorfor blir pengene mindre verdt på konto?'],
+ words:[/kj[øo]pekraft/,/prisvekst/,/inflasjon/,/dagens kroner/,/mindre verdt/,/mister verdi/,/mindre for sparepengene/],
+ intro:'Kjøpekraft er hvor mye du kan kjøpe for pengene. Når prisene stiger, rekker det samme kronebeløpet til mindre. Prisveksten kalles også inflasjon. På en bankkonto kan beløpet vokse i kroner samtidig som kjøpekraften faller, hvis veksten etter skatt og kostnader er lavere enn prisveksten.',
  terms:[
   {term:'kjøpekraft',text:'Hvor mye du kan kjøpe for et beløp.'},
   {term:'prisvekst',alsoCalled:'inflasjon',text:'At prisene på varer og tjenester stiger over tid. Oppgis ofte i prosent per år.'},
   {term:'dagens kroner',text:'Et beløp i framtiden regnet om til hva det tilsvarer med dagens priser. Da kan du sammenligne beløp fra ulike år.'}],
  example:i('Eksempel: ti år med 2,5 % prisvekst','Anta at prisene stiger 2,5 % hvert år. Det du i dag kan kjøpe for 100 000 kroner, koster da omtrent 128 000 kroner om ti år. Pengene må altså vokse til 128 000 kroner bare for å kjøpe det samme. Sett fra den andre siden: 100 000 kroner som ligger uten rente i ti år, kjøper det som 78 000 kroner kjøper i dag. Dette er et regneeksempel, ikke en prognose for prisveksten.'),
  next:{text:'Prøv med dine egne tall i kalkulatoren',href:'index.html'},
- sources:[ssb],
+ sources:[ssb,{id:"skatt-rente",title:"Skatteetaten: Skattekort, lån og renter",url:"https://www.skatteetaten.no/person/skatt/skattekort/bestille-endre/"}],
+ caveat:"Kontrollert 25. oktober 2026. Eksemplene er egne beregninger, ikke prognoser. Ingen skattesats er brukt. Neste kildekontroll senest 25. januar 2027.",
  parts:[
   i('Færre kroner er noe annet enn mindre kjøpekraft','Får du tilbake færre kroner enn du satte inn, er det et tap i kroner. Får du flere kroner, men prisene har steget mer enn pengene, har du likevel mistet kjøpekraft. Det er to ulike ting, og de må ikke forveksles.'),
-  i('Renten må følge med prisene','Med positiv rente som er lavere enn prisveksten, kan saldoen øke samtidig som pengene kjøper mindre. Saldoen sier derfor ikke alene om du har det bedre.'),
+  i('Renten må følge med prisene','Sammenlign veksten etter skatt og kostnader med prisveksten. Med 10 000 kr, 3 % rente og 4 % prisvekst i ett år får du 10 300 kr før skatt og kostnader. Beløpet kjøper det samme som omtrent 9 904 kr gjorde ved starten av året: 10 300 / 1,04. Du har flere kroner, men mindre kjøpekraft allerede før eventuell skatt. Dette er et regneeksempel, ikke dagens bankrente eller prisvekst.'),
   i('Prisveksten er et gjennomsnitt','SSB måler prisveksten med konsumprisindeksen, som er et gjennomsnitt av prisendringene på mange varer og tjenester. Det du selv kjøper, kan stige mer eller mindre enn gjennomsnittet. Prisveksten varierer også fra år til år.')]}
 ];
 if(typeof module!=='undefined'&&module.exports)module.exports=entries;

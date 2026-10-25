@@ -90,7 +90,7 @@ for(const q of ['jeg har ikke råd til å spare til pensjon','hva gjør jeg hvis
 
 // 6. Kjente hull (sluttkontroll 2026-10-24): rett tema, men svaret dekker ikke spørsmålet. Da vises ikke svaret som om det gjorde det.
 const text=id=>{const t=V.topics.find(x=>x.id===id);return JSON.stringify(t.entry||V.answer(id,{}));};
-for(const [q,gap] of [['aksjeutbytte','utbytte'],['hva er utbytte fra fond','utbytte'],['rentefond','rentefond'],['hva er et rentefond','rentefond'],['kan jeg spare til barnet uten å bli skattlagt','barnesparing-skatt'],['skatt på barnesparing','barnesparing-skatt'],['hva skjer med BSU hvis jeg flytter','bsu-flytting'],['hva skjer med BSU-kontoen hvis jeg flytter til utlandet','bsu-flytting'],['hva skjer med boligsparing for ungdom hvis jeg flytter','bsu-flytting'],['hvordan fungerer renters rente','renters-rente'],['hva er renters rente','renters-rente']]){
+for(const [q,gap] of [['aksjeutbytte','utbytte'],['hva er utbytte fra fond','utbytte'],['rentefond','rentefond'],['hva er et rentefond','rentefond'],['kan jeg spare til barnet uten å bli skattlagt','barnesparing-skatt'],['skatt på barnesparing','barnesparing-skatt'],['hva skjer med BSU hvis jeg flytter','bsu-flytting'],['hva skjer med BSU-kontoen hvis jeg flytter til utlandet','bsu-flytting'],['hva skjer med boligsparing for ungdom hvis jeg flytter','bsu-flytting']]){
   const r=V.search(q);
   assert.equal(r.mode,'uncovered',q);
   assert.equal(r.uncovered.id,gap,q);
@@ -112,8 +112,8 @@ for(const q of ['jeg flytter','hva koster flytting','flytte strømavtale','flytt
   const all=[...r.hits,...r.suggestions].map(h=>h.id);
   assert.ok(!all.includes('bsu')&&!all.includes('q-bsu-basics'),q+': BSU skal ikke vises som relevant på grunnlag av flytteordet alene');
 }
-// Hull uten tematreff (renters rente) skal fortsatt fanges.
-assert.equal(V.search('hva er renters rente').mode,'uncovered');
+// Nytt faglig svar lukker det tidligere innholdshullet.
+assert.equal(V.search('hva er renters rente').hits[0].id,'q-renters-rente');
 // Spørsmål om det samme temaet uten selve hullet skal fortsatt få svar.
 for(const [q,first] of [['hva er barnesparing','children'],['hvem eier pengene på barnesparing','children'],['Hva er BSU?','q-bsu-basics'],['BSU','q-bsu-basics'],['bør jeg flytte penger til fond','funds']]){
   const r=V.search(q);

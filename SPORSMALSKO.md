@@ -27,8 +27,8 @@ For hver rad gjelder foreløpig **fagkontroll: ikke nykontrollert; søketest: ik
 | 1 | SV-031 | Hva er en aksjesparekonto (ASK)? | Ingen registrert | Eget svar: q-aksjesparekonto, integrert via #61 | Avventer | Dekning lest 25.10.2026, main 4022c94; ingen ny ASK-fagkontroll. Gjenbruk svaret. |
 | 2 | SV-035 | Hva er et indeksfond? | Ingen registrert | Delvis: funds; indeks og passiv forvaltning mangler | Integrert, avventer publisering | [SV-035](research/svarutkast/SV-035.md), selvkontroll 25.10.2026; søk ikke testet |
 | 3 | SV-017 | Hva er forskjellen på sparing og investering? | Ingen registrert | Delvis: funds; intet eget begrepssvar | Integrert, avventer publisering | [SV-017](research/svarutkast/SV-017.md), selvkontroll 25.10.2026; søk ikke testet |
-| 4 | SV-022 | Hva er renters rente? | rentes rente; hvordan fungerer renters rente; GAPS renters-rente | Mangler egen forklaring; GAPS finnes på main | Kø | Kode lest 25.10.2026, main 4022c94; ingen ny fagkontroll |
-| 5 | SV-023 | Hvordan påvirker inflasjon sparepengene mine i banken? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
+| 4 | SV-022 | Hva er renters rente? | rentes rente; rente på rente; renter på rentene | Egen forklaring på arbeidsgren: q-renters-rente | Integrert i PR, ikke publisert | [SV-022](research/svarutkast/SV-022.md), kildekontroll 25.10.2026; Node-søk bestått, nettleser venter CI |
+| 5 | SV-023 | Hvordan påvirker inflasjon sparepengene mine i banken? | mindre for sparepengene; kjøpekraft | Gjenbruker q-kjopekraft med kontoeksempel | Integrert i PR, ikke publisert | [SV-023](research/svarutkast/SV-023.md), kildekontroll 25.10.2026; Node-søk bestått, nettleser venter CI |
 | 6 | SV-001 | Hvor mye bør jeg ha på bufferkontoen? | Ingen registrert | Delvis: buffer | Kø | Ikke opprettet |
 | 7 | SV-025 | Bør jeg spare før jeg betaler ned kredittkortgjeld? | Ingen registrert | Delvis: buffer | Kø | Ikke opprettet |
 | 8 | SV-013 | Hvordan setter jeg opp et enkelt budsjett? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
