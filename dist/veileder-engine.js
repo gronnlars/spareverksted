@@ -35,7 +35,6 @@ BROAD.boligsparing=['q-bsu-basics','bsu','mortgage'];
 const GAPS=[
  {id:'barnesparing-skatt',when:[/barn/,/skatt/],topics:['children'],near:['children'],label:'skatt på barnesparing',covers:/skatt/i},
  {id:'bsu-flytting',when:[/flytt/,/\bbsu\b|boligsparing for ungdom/],topics:['bsu','q-bsu-basics'],near:['q-bsu-basics'],label:'BSU når du flytter',covers:/flytt/i},
- {id:'renters-rente',when:[/rente(?:rs?|s) ?rente/],topics:['funds','mortgage','pension'],near:['funds'],label:'renters rente',covers:/rente(?:rs?|s) ?rente/i},
  {id:'utbytte',when:[/utbytte/],topics:['funds'],near:['funds'],label:'utbytte fra aksjer og fond',covers:/utbytte/i},
  {id:'rentefond',when:[/rentefond/],topics:['funds'],near:['funds'],label:'rentefond',covers:/rentefond/i}
 ];
@@ -145,6 +144,7 @@ function register(entry){
   if(!entry.example?.title||!entry.example?.text)throw Error('En forklaring trenger et eksempel.');
   if(!entry.parts?.length||entry.parts.some(x=>!x.title||!x.text))throw Error('En forklaring trenger fordypning.');
   if(entry.next&&(!entry.next.text||!entry.next.href))throw Error('Ufullstendig lenke videre.');
+  if(entry.next?.more&&(!Array.isArray(entry.next.more)||entry.next.more.some(x=>!x.text||!x.href)))throw Error('Ufullstendig ekstra lenke videre.');
   for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
   if((entry.keys||[]).some(x=>!/^[a-zæøå0-9]+$/.test(x)))throw Error('Ugyldig søkeord.');
   topics.push({id:entry.id,title:entry.title,category:'explain',questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});contentVersion++;

@@ -27,7 +27,7 @@ For hver rad gjelder foreløpig **fagkontroll: ikke nykontrollert; søketest: ik
 | 1 | SV-031 | Hva er en aksjesparekonto (ASK)? | Ingen registrert | Eget svar: q-aksjesparekonto, integrert via #61 | Avventer | Dekning lest 25.10.2026, main 4022c94; ingen ny ASK-fagkontroll. Gjenbruk svaret. |
 | 2 | SV-035 | Hva er et indeksfond? | Ingen registrert | Delvis: funds; indeks og passiv forvaltning mangler | Integrert, avventer publisering | [SV-035](research/svarutkast/SV-035.md), selvkontroll 25.10.2026; søk ikke testet |
 | 3 | SV-017 | Hva er forskjellen på sparing og investering? | Ingen registrert | Delvis: funds; intet eget begrepssvar | Integrert, avventer publisering | [SV-017](research/svarutkast/SV-017.md), selvkontroll 25.10.2026; søk ikke testet |
-| 4 | SV-022 | Hva er renters rente? | rentes rente; hvordan fungerer renters rente; GAPS renters-rente | Mangler egen forklaring; GAPS finnes på main | Kø | Kode lest 25.10.2026, main 4022c94; ingen ny fagkontroll |
+| 4 | SV-022 | Hva er renters rente? | rentes rente; hvordan fungerer renters rente; GAPS renters-rente | Mangler egen forklaring; GAPS finnes på main | Utkast med forbehold | [Utkast](research/svarutkast/SV-022.md), selvkontroll 25.10.2026; lokal søkeprøve, ikke integrert |
 | 5 | SV-023 | Hvordan påvirker inflasjon sparepengene mine i banken? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
 | 6 | SV-001 | Hvor mye bør jeg ha på bufferkontoen? | Ingen registrert | Delvis: buffer | Kø | Ikke opprettet |
 | 7 | SV-025 | Bør jeg spare før jeg betaler ned kredittkortgjeld? | Ingen registrert | Delvis: buffer | Kø | Ikke opprettet |
@@ -49,10 +49,10 @@ For hver rad gjelder foreløpig **fagkontroll: ikke nykontrollert; søketest: ik
 | 23 | SV-005 | Kan jeg bruke BSU på oppussing? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
 | 24 | SV-133 | Hva er BSU, og hvordan fungerer ordningen? | Ingen registrert | Eget svar: q-bsu-basics | Kø | Ikke opprettet |
 | 25 | SV-134 | Får jeg BSU-fradrag hvis jeg betaler lite skatt eller eier bolig? | Ingen registrert | Delvis: q-bsu-basics | Kø | Ikke opprettet |
-| 26 | SV-135 | Hva kan BSU brukes til, og hva skjer ved feil bruk? | Først SV-133; hva skjer med BSU hvis jeg flytter; GAPS bsu-flytting | BSU finnes, men flytting besvares ikke | Kø | Kode lest 25.10.2026, main 4022c94; flyttebetydning må avklares i utkast, ingen ny fagkontroll |
+| 26 | SV-135 | Hva kan BSU brukes til, og hva skjer ved feil bruk? | Først SV-133; hva skjer med BSU hvis jeg flytter; GAPS bsu-flytting | BSU finnes, men flytting besvares ikke | Utkast med forbehold | [Utkast](research/svarutkast/SV-135.md), selvkontroll 25.10.2026; lokal søkeprøve, ikke integrert |
 | 27 | SV-136 | Bør jeg prioritere buffer, BSU eller annen sparing til bolig? | Først SV-001, SV-133 | Delvis: bsu / buffer | Kø | Ikke opprettet |
 | 28 | SV-007 | Bør barnesparing stå i barnets eller foreldrenes navn? | Ingen registrert | Delvis: children | Kø | Ikke opprettet |
-| 29 | SV-006 | Hvordan sparer jeg best til barna? | Delspørsmål: skatt på barnesparing; GAPS barnesparing-skatt; se også SV-007 | Delvis: children; beskatning ikke forklart | Kø | Kode lest 25.10.2026, main 4022c94; ingen ny fagkontroll |
+| 29 | SV-006 | Hvordan sparer jeg best til barna? | Delspørsmål: skatt på barnesparing; GAPS barnesparing-skatt; se også SV-007 | Delvis: children; beskatning ikke forklart | Utkast med forbehold | [Utkast](research/svarutkast/SV-006.md), selvkontroll 25.10.2026; lokal søkeprøve, ikke integrert |
 | 30 | SV-033 | Hva skjer med skatten når jeg tar ut penger fra ASK? | Først SV-031 | Delvis: q-ask-zero | Kø | Ikke opprettet |
 | 31 | SV-032 | Kan jeg ha rentefond på ASK? | Først SV-031, SV-061 | Delvis: q-ips-ask / q-ask-zero | Kø | Ikke opprettet |
 | 32 | SV-122 | Hva kan fondskonto bety, og hvordan skiller det seg fra et fond? | vanlig fondskonto; aksje- og fondskonto; kapitalforsikring | Ikke kontrollert | Kø | Ikke opprettet |
@@ -101,8 +101,8 @@ For hver rad gjelder foreløpig **fagkontroll: ikke nykontrollert; søketest: ik
 | 75 | SV-047 | Hva betyr det å time markedet? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
 | 76 | SV-048 | Hva gjør jeg med fondene mine ved et børskrakk? | Ingen registrert | Delvis: funds | Kø | Ikke opprettet |
 | 77 | SV-049 | Bør jeg selge fond når børsen går ned? | Se også SV-048; behold som søkeinngang | Delvis: funds | Kø | Ikke opprettet |
-| 78 | SV-050 | Hva er utbytteaksjer? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
-| 79 | SV-051 | Må jeg betale skatt av aksjeutbytte? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
+| 78 | SV-050 | Hva er utbytteaksjer? | Ingen registrert | Ikke kontrollert | Utkast med forbehold | [Utkast](research/svarutkast/SV-050.md), selvkontroll 25.10.2026; lokal søkeprøve, ikke integrert |
+| 79 | SV-051 | Må jeg betale skatt av aksjeutbytte? | Ingen registrert | Ikke kontrollert | Utkast med forbehold | [Utkast](research/svarutkast/SV-050.md), selvkontroll 25.10.2026; lokal søkeprøve, ikke integrert |
 | 80 | SV-052 | Hva er skjermingsfradrag? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
 | 81 | SV-053 | Hvordan beregnes skjermingsfradraget i praksis? | Først SV-052 | Ikke kontrollert | Kø | Ikke opprettet |
 | 82 | SV-054 | Hva betyr ESG og grønne investeringer? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
@@ -112,7 +112,7 @@ For hver rad gjelder foreløpig **fagkontroll: ikke nykontrollert; søketest: ik
 | 86 | SV-058 | Hva er risikoen i fremvoksende markeder? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
 | 87 | SV-059 | Bør jeg valutasikre globale fond? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
 | 88 | SV-060 | Hva er forskjellen på vekstaksjer og verdiaksjer? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
-| 89 | SV-061 | Hva er et rentefond? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
+| 89 | SV-061 | Hva er et rentefond? | Ingen registrert | Ikke kontrollert | Utkast med forbehold | [Utkast](research/svarutkast/SV-061.md), selvkontroll 25.10.2026; lokal søkeprøve, ikke integrert |
 | 90 | SV-062 | Hva er forskjellen på likviditetsfond og høyrentefond? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
 | 91 | SV-063 | Når kan rentefond passe framfor bankinnskudd? | Først SV-008, SV-010, SV-061, SV-062 | Ikke kontrollert | Kø | Ikke opprettet |
 | 92 | SV-064 | Kan rentefond dempe risikoen i porteføljen? | Først SV-061, SV-062 | Ikke kontrollert | Kø | Ikke opprettet |
@@ -210,3 +210,25 @@ PR #63 er lest som åpent forslag, head `435db45bd1a913b9be492629fdd07fe00dcd011
 ## Integrasjon 25. oktober 2026
 
 Lars har bestilt publisering. SV-035 og SV-017 er integrert som q-indeksfond og q-sparing-investering i #64 etter ny kildekontroll. Indeksfond eies nå av egen forklaring; de to gamle søketilfellene d33/d56 er oppdatert til det nye svaret. Ingen kalkulatorendring. 15 Node-testfiler og 156 sammenligningstilfeller består lokalt. Nettleserkontroll kjøres i CI; lokalt mangler nettleserbinæren. Skjermleser og forståelsestest står åpne. Faktisk publisering bekreftes av deploy-jobben etter sammenslåing.
+
+
+## Upubliserte GAPS-utkast 25. oktober 2026
+
+Lest main `f9c553aa668fd0bf96ce14d6930f5ec02897abd6`. Eget oppdrag fra Lars prioriterer hullene foran ordinær kørekkefølge. Lokal gren `draft/gaps-2026-10-25`, ingen push eller publisering. Ingen GAPS-rader er fjernet; innholdet er ikke integrert i nettstedet.
+
+| ID | Utkast | Faktisk dekning og forbehold |
+| --- | --- | --- |
+| SV-022 | [Renters rente](research/svarutkast/SV-022.md) | Gjenbruker PR #65, head 2385ddb. Kilder nyåpnet 25.10.2026. Kildedato ved DNBs fagavsnitt må avklares etter foreslått K3. Ingen konkurrerende implementering. |
+| SV-006, se også SV-007 | [Skatt på barnesparing](research/svarutkast/SV-006.md) | Bare skattedelen; ikke hele spørsmålet om hvordan man sparer best eller alle følger av eierskap. |
+| SV-135 | [BSU ved flytting](research/svarutkast/SV-135.md) | Bankbytte og boligformål; utenlandsflytting er uttrykkelig uavklart. Ikke fullstendig lukket hull. |
+| SV-050, SV-051 | [Utbytte](research/svarutkast/SV-050.md) | Begrep, skjerming og kontoforskjeller; ingen skattesats eller individuell beregning. |
+| SV-061 | [Rentefond](research/svarutkast/SV-061.md) | Begrep, typer, risiko og garanti; ingen generell anbefaling, skattesats eller fondsvalg. |
+
+Status: kontrollerte utkast med angitte forbehold, selvkontroll. Uavhengig fagkontroll og godkjenning gjenstår. Søkeprøve og begrensninger står i [leveranserapporten](research/svarutkast/GAPS-RAPPORT-2026-10-25.md). Tabellen endrer ikke fagstatus for andre kø-ID-er.
+
+
+SV-022 revidert etter KI-kontroll fra Claude, videresendt av Lars 25.10.2026: [kilde- og testkontroll](research/svarutkast/SV-022-KONTROLL.md). DNB tatt ut, kilder nyåpnet, matematikk merket egen illustrasjon. JSON er fasit, Markdown genereres. Uavhengig kildekontroll og faktisk visningstest gjenstår. Fremdeles upublisert utkast.
+
+Rettelse etter videresendt Claude-kontroll: kontrollregningen og kildevurderingen er fra Claude, ikke Lars. Ingen menneskelig fagkontroll er dokumentert. SV-022 har nå skattepåstand i svarteksten, presisert kildedato og kontrastlenke med 2 % rente / 2,5 % prisvekst. [Gjeldende kontrollstatus](research/svarutkast/SV-022-KONTROLL.md). Menneskelig kildekontroll og nettleserprøve gjenstår før integrasjon.
+
+SV-022: Lars har bekreftet egen kildekontroll og godkjent push 25.10.2026. Han har ikke regnet. Claude og programtester har kontrollert utregningene. SV-022 er integrert i kontrollgrenen med begge eksempellenkene, avventer CI/publisering. De fire andre GAPS-svarene er fortsatt utkast. BSU ved utenlandsflytting beholdes som hull.

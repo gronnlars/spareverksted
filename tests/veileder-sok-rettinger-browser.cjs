@@ -55,7 +55,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    await tapTargets('negasjon');await noOverflow('negasjon');
 
    // 2b. Kjente hull: temaet finnes, men svaret dekker ikke spørsmålet. Ingenting åpnes, og brukeren får vite det.
-   for(const [q,label] of [['hvordan fungerer renters rente','renters rente'],['kan jeg spare til barnet uten å bli skattlagt','skatt på barnesparing'],['hva skjer med BSU hvis jeg flytter','BSU når du flytter']]){
+   for(const [q,label] of [['kan jeg spare til barnet uten å bli skattlagt','skatt på barnesparing'],['hva skjer med BSU hvis jeg flytter','BSU når du flytter']]){
     await ask(q);
     assert.ok(!await answerOpen(),engine+' '+label+': kjent hull åpner ikke et svar');
     const t=await status();

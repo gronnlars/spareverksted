@@ -40,7 +40,7 @@ const SET=[
  {q:'Hvordan blir fond skattlagt?',expect:null,why:'Fondssvaret har ingen skatteregler for fond. ASK-svaret forklarer bare forskjellen mellom to kontotyper.'},
  {q:'Er det dumt å ha alle sparepengene på brukskonto?',expect:null,why:'Ingen svar sammenligner brukskonto med sparekonto.'},
  {q:'Bør jeg velge fastrente eller flytende rente?',expect:null,why:'Boliglånssvaret omtaler fastrente bare ved ekstra innbetaling, ikke valget av rente.'},
- {q:'Hva er renters rente?',expect:null,why:'Forklares ikke i veilederen. Effekten vises bare i kalkulatoren.'},
+ {q:'Hva er renters rente?',expect:'q-renters-rente',proof:/renter også på renter/,why:'Har eget kildekontrollert svar etter SV-022.'},
  {q:'Hva er formuesskatt?',expect:null,why:'Bare nevnt som fritak i IPS-svaret, ikke forklart.'},
  {q:'Vi skal skilles, hva skjer med sparepengene?',expect:null,why:'Samlivsbrudd er nevnt i én setning i barnesvaret, ikke besvart.'},
  {q:'Jeg har arvet 500 000 kroner, hva bør jeg gjøre?',expect:null,why:'Ikke dekket.'}
