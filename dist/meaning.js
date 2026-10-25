@@ -59,11 +59,6 @@ function build(E,s,end,f,A){
  }
  if(type&&s.savingsType!=='index'&&s.rate>0&&!(startValues.length)){const lower=Math.max(0,s.rate-2),v=E.value(s,end,lower);
   actions.push({id:'lowerRate',label:'Se hvordan en lavere rente påvirker resultatet',text:`Med ${f.pct(lower)} rente i stedet for ${f.pct(s.rate)} blir sluttbeløpet ${f.money(v)}${s.inflation>0?`, eller ${f.money(v/P)} i dagens kroner`:''}. Tallene dine er ikke endret.`});}
- // Kontoplan som er lang nok til at Forbrukerrådets anbefaling for aksjefond ikke utelukker fond. Ingen råd om å bytte:
- // vi nevner anbefalingen og viser at Indeksfond kan velges for å se forskjellen. Gjeld og buffer nevnes ikke
- // før vi har en offentlig kilde for det (beslutning 25.10.2026).
- if(A&&A.horizon&&(s.savingsType==='savings'||s.savingsType==='checking')&&paid>0.5&&end>=A.horizon.fundMinYears-1e-9)
-  details.push({title:'Konto eller fond?',text:`${A.horizon.source.name.split(':')[0]} anbefaler minst ${A.horizon.fundMinYears} års sparehorisont for aksjefond, og planen din er minst så lang. Velger du Indeksfond, ser du hva samme plan kan gi med den forutsetningen. Et fond kan falle mye i verdi underveis, og beregningen viser ingen garanti.`});
  // 3. Utdyping, samlet i tre grupper.
  details.push({title:'Innbetalinger og avkastning',text:`Du setter inn ${f.money(paid)}. ${growth>=-0.5?'Avkastning':'Nedgang'} etter kostnader: ${f.money(Math.abs(growth))}.`+(costEffect>=0.5?` Uten kostnader ville sluttbeløpet vært ${f.money(costEffect)} høyere.`:'')+(deposits?' En høyere saldo viser ikke alene at kjøpekraften er bevart, fordi mye av økningen er nye innbetalinger.':'')});
  if(s.inflation!==0)details.push({title:'Kroner og kjøpekraft',text:`Med ${f.pct(s.inflation)} årlig prisvekst tilsvarer sluttbeløpet ${f.money(real)} i dagens kroner. Innskuddene tilsvarer ${f.money(paidToday)} i dagens kroner, regnet om med prisnivået da hvert innskudd ble satt inn. ${Math.abs(powerChange)<0.5?'Kjøpekraften er omtrent uendret.':`Det er ${f.money(Math.abs(powerChange))} ${powerChange>0?'mer':'mindre'} kjøpekraft enn innskuddene.`}`});
