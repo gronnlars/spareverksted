@@ -227,21 +227,35 @@ Kildenotatene ligger i prosjektmappen «claude/» (ikke i repoet). PR-nummer st�
 
 ### Kildenivå for påstander og råd
 
-**Valg:** Når en tekst på siden bygger på en kilde, brukes offentlige kilder først. Rekkefølge: 1) lov, forskrift og tilsyn (for eksempel Skatteetaten, Finanstilsynet, SSB), 2) Forbrukerrådet og Finansportalen, 3) Smarte penger, 4) norske bank- og finansinstitusjoner (for eksempel Finans Norge, banker og forsikringsselskaper) med åpne, offentlige sider, 5) andre, for eksempel nettaviser og blogger. Siden gir ikke råd der vi ikke har en solid og oppdatert kilde. Kilden skal være funnet og datert, og teksten skal skille mellom det kilden sier og det vi forklarer. Bank- og finansinstitusjoner regnes som tryggere enn nettaviser fordi de svarer for produkter og vilkår og har åpne sider med egen dato. Regelen om oppdatering gjelder særlig dem: siden må ha en synlig dato eller versjon, vi oppgir kontrolldatoen vår, og en institusjon brukes for sine egne produkter og vilkår, ikke som eneste kilde til generelle råd, fordi de også selger produktene.
+**Valg:** Når en tekst på siden bygger på en kilde, brukes offentlige kilder først. Rekkefølge:
+1. Lov, forskrift og tilsyn (for eksempel Skatteetaten, Finanstilsynet, SSB).
+2. Forbrukerrådet og Finansportalen.
+3. Norske bank- og finansinstitusjoner med åpne, offentlige sider (for eksempel Finans Norge, banker og forsikringsselskaper).
+4. Medier med redaksjonelt ansvar.
+5. Alt annet, inkludert sider uten tydelig avsender og blogger.
+
+Siden gir ikke råd der vi ikke har en solid og oppdatert kilde. Kilden skal være funnet og datert, og teksten skal skille mellom det kilden sier og det vi forklarer.
+
+**Bank- og finansinstitusjoner** regnes som tryggere enn nettaviser fordi de svarer for produkter og vilkår og har åpne sider med egen dato. Siden må ha en synlig dato eller versjon, vi oppgir kontrolldatoen vår, og en institusjon brukes for sine egne produkter og vilkår, ikke som eneste kilde til generelle råd, fordi de også selger produktene.
+
+**Medier med redaksjonelt ansvar** er medier som har ansvarlig redaktør, følger Vær varsom-plakaten og kan klages inn for Pressens Faglige Utvalg. De brukes til å finne og forstå en sak, og som veiviser til primærkilden. De brukes ikke som eneste kilde til tall, regler eller råd. Vi navngir ikke bestemte medier som «solide» her før vi har kontrollert hvert enkelt mot kriteriene og har en dato for kontrollen. Eksempler legges inn når den kontrollen er gjort.
+
+**Smarte penger** har ikke eget nivå. Vi har ikke avklart hvem som står bak siden eller hvilket redaksjonelt ansvar den har, så den regnes ikke som bedre kilde enn medier med redaksjonelt ansvar. Når den refererer til en primærkilde (for eksempel Forbrukerrådet), bruker vi primærkilden.
 
 **Alternativer:**
 - A: Bruke den kilden som er lettest tilgjengelig. Forkastet: bransjetekster og bloggere kan være gamle eller ha egne interesser.
-- B (valgt): Fast rekkefølge, og «ikke avklart» der vi ikke har kilde.
+- B (valgt): Fast rekkefølge med kriterier for hvert nivå, og «ikke avklart» der vi ikke har kilde.
 - C: Sette institusjonene på samme nivå som Forbrukerrådet. Forkastet: de har salgsinteresse i produktene sine.
-- D: Alltid vise flere kilder. Forkastet som regel: nyttig ved uenighet, men ikke et krav for hver påstand.
+- D: Ha Smarte penger som eget nivå mellom Forbrukerrådet og institusjonene. Forkastet 25.10.2026: avsender og redaktøransvar er ikke avklart, og vi har ikke grunnlag for å si at den er bedre enn medier med redaksjonelt ansvar.
+- E: Alltid vise flere kilder. Forkastet som regel: nyttig ved uenighet, men ikke et krav for hver påstand.
 
 **Begrunnelse:** Passer med «public claims only what can be documented» og med regelen om at tidsavhengige regler trenger primærkilde, regelår og kontrolldato (SPRAKREGLER.md, punkt 5). Eksempel 25.10.2026: Forbrukerrådet oppgir 5 år som minste sparehorisont for aksjefond, mens andre aktører oppgir 3 til 10 år. Vi bruker Forbrukerrådet. Dyr gjeld og buffer før fond står ikke på Forbrukerrådets fondsside, så den påstanden er ikke tilskrevet dem.
 
-**Akseptert ulempe:** Institusjonenes sider kan endres uten varsel og kan farges av salg. Noen nyttige råd må vente til vi har kilde, og tekster kan føles forsiktige. Primærkilder oppdateres sjelden, så kontrolldatoer må følges opp.
+**Akseptert ulempe:** Institusjonenes sider kan endres uten varsel og kan farges av salg. Noen nyttige råd må vente til vi har kilde, og tekster kan føles forsiktige. Primærkilder oppdateres sjelden, så kontrolldatoer må følges opp. Å kontrollere medier ett og ett tar tid, og til det er gjort finnes ingen navngitte eksempler.
 
-**Vurder på nytt når:** Vi får flere kilder med samme status, eller en kilde endrer synspunkt.
+**Vurder på nytt når:** Vi har kontrollert aktuelle medier og kan navngi eksempler, vi avklarer hvem som står bak Smarte penger, vi får flere kilder med samme status, eller en kilde endrer synspunkt.
 
-**Status:** Vedtatt 25.10.2026 etter prosjekteiers prioritering. Presisert samme dag: norske bank- og finansinstitusjoner hører til de åpne kildene, under Smarte penger og over nettaviser.
+**Status:** Vedtatt 25.10.2026 etter prosjekteiers prioritering. Presisert samme dag: bank- og finansinstitusjoner hører til de åpne kildene, og Smarte penger har ikke eget nivå.
 
 ### Risikospørsmålet ut av startflyten
 
