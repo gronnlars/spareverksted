@@ -35,6 +35,16 @@ Disse oppheves ikke av at pausen avsluttes:
 2. Lars har lest og vurdert svaret, og eventuelt tilpasset funksjoner og tekst.
 3. Lars har gitt uttrykkelig beskjed om oppstart. Ingen bidragsyter kan åpne prosjektet ut fra at tid har gått.
 
+## Konkret eksempel som skal stå urørt: omtale av Nordnet og Investeringskonto Zero
+
+Dette kan sendes til Finanstilsynet som oppfølging hvis de ber om konkrete eksempler på omtale av navngitte produkter og tilbydere. Teksten skal ikke skrives om før svaret er vurdert, slik at det som vurderes, er det som faktisk er publisert.
+
+- **Hvor:** ordlisten og to svar i `dist/veileder-knowledge.js`, spørsmål 33 i `SPORSMALSKO.md` og `research/sporsmal-og-prioritering.md`.
+- **Hva:** Nordnet er navngitt som tilbyder av produktet Investeringskonto Zero (kapitalforsikring), brukt som eksempel for å forklare forskjellen mellom ASK og forsikringsbasert fondskonto.
+- **To roller:** Nordnet er både eksempel på produktnavn og kilde til produktfakta (eierskap til aksjene, utbetaling til begunstigede ved død). Nordnets side er en kommersiell kilde og merket slik.
+- **Slik teksten står i dag:** produktet er nevnt «som eksempel for gjenkjenning, ikke som anbefaling». Ingen påstand om at Zero er kostnadsfritt.
+- **Mulig tiltak etter svar, ikke vedtatt:** bruke den generelle betegnelsen «forsikringsbasert fondskonto» i selve teksten og la tilbyderen stå bare i kildelisten.
+
 ## Personvern
 
 Original e-post fra eller til Finanstilsynet og personopplysninger skal ikke legges i dette repoet. Originalene oppbevares privat hos Lars. Henvendelser til Finanstilsynet er underlagt offentleglova og kan bli etterspurt av andre.
