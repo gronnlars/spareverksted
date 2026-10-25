@@ -7,9 +7,10 @@ Les før arbeid:
 1. [CONTRIBUTING.md](CONTRIBUTING.md): bidrag, lisens og selvstendige overleveringer.
 2. [BESLUTNINGER.md](BESLUTNINGER.md): valgene, alternativene og begrunnelsene.
 3. [SPRAKREGLER.md](SPRAKREGLER.md): språk og faglig presisjon.
-4. [research/plan.md](research/plan.md): faser, kalkulatorfrys og åpning for kontrollert innholdspåfyll.
-5. [research/universell-utforming.md](research/universell-utforming.md): krav og åpne kontroller.
-6. [SPORSMALSKO.md](SPORSMALSKO.md), [daglig oppgave](research/DAGLIG-OPPGAVE.md) og [arbeidslogg](research/ARBEIDSLOGG.md) ved innholdsarbeid.
+4. [KILDEREGLER.md](KILDEREGLER.md): kilder, datoer, foreslått mot vedtatt og når en regel må brytes.
+5. [research/plan.md](research/plan.md): faser, kalkulatorfrys og åpning for kontrollert innholdspåfyll.
+6. [research/universell-utforming.md](research/universell-utforming.md): krav og åpne kontroller.
+7. [SPORSMALSKO.md](SPORSMALSKO.md), [daglig oppgave](research/DAGLIG-OPPGAVE.md) og [arbeidslogg](research/ARBEIDSLOGG.md) ved innholdsarbeid.
 
 Main er autoritativt arbeidsgrunnlag. Hent fersk status og les åpne PR-er før endring. Ikke anta at en samtale eller usammenslått gren er kjent for neste bidragsyter. Ikke overskriv andres arbeid eller opprett konkurrerende køer. Dokumenter viktige beslutninger og hva som kan få oss til å revurdere dem.
 
