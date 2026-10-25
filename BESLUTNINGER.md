@@ -209,19 +209,27 @@ Kildenotatene ligger i prosjektmappen «claude/» (ikke i repoet). PR-nummer st�
 
 ### Sparehorisont og Forbrukerrådets anbefaling
 
-**Valg:** I «Dette betyr tallene dine» vises Forbrukerrådets anbefalte minste sparehorisont for aksjefond (5 år). Ved Indeksfond og sparetid under 5 år står det i hovedteksten. Ved Brukskonto eller Sparekonto med innskudd og minst 5 års sparetid står en nøytral gruppe «Konto eller fond?» i utdypingen. Sparetid under ett år og i måneder er fortsatt gyldig, også for Indeksfond: varselet gjelder da på samme måte.
+**Valg:** Når Indeksfond er valgt og sparetiden er under 5 år, står det i hovedteksten i «Dette betyr tallene dine»: «Forbrukerrådet anbefaler minst 5 års sparehorisont for aksjefond, og planen din er kortere. Dette er en anbefaling, ikke en regel eller garanti.» Varselet gjelder også sparetid i måneder. Det følger Forbrukerrådets formulering og er verken bredere eller smalere. Ingen annen tekst er lagt til.
+
+**Avvik fra kalkulatorfrysen (K-regelen om avvik):**
+- Hva: ett varsel i teksten under resultatet. Kun tekst, ingen tall og ingen beregning er endret.
+- Hvorfor: en glatt kurve for Indeksfond på for eksempel 6 måneder uten dette forbeholdet formidler at valget er trygt og forutsigbart, og det motsies av Forbrukerrådet. Taushet er her ikke nøytral. Avviket passer ikke i en av de fire begrunnelsene i planen (regnefeil, alvorlig brukshindring, kildeoppdatering, tilgjengelighet), så det er et avvik og ikke en tolkning av dem.
+- Godkjent av: foreslått av Claude og Vibe 25.10.2026, bekreftes av Lars ved sammenslåing av PR #67.
+- Utløper: 31.01.2027, etter kontrollen før 1. januar. Må da fornyes eller fjernes.
+- Tre krav som neste forespørsel om unntak måles mot: (1) kun tekst, ingen tall, (2) kun direkte gjengivelse av en kilde på nivå 1 eller 2, (3) kun fordi taushet i seg selv kan villede. Oppfyller en idé ikke alle tre, avvises den.
 
 **Alternativer:**
-- A: Bare i Veilederen («Pengene skal brukes snart»), som før.
-- B (valgt): Tekst i resultatet, regelbasert og uten nye beregninger.
-- C: Begrense eller advare i selve sparetidsfeltet. Forkastet: korte mål som ferie er gyldige, og et felt som nekter eller advarer ville blandet inn spareformen, som feltet ikke kjenner.
-- D: Råd om dyr gjeld og buffer i samme tekst. Utsatt: vi har ingen offentlig kilde som sier det, og Forbrukerrådets fondsside nevner det ikke (kontrollert av oss 25.10.2026). Siden oppgir ingen egen oppdateringsdato som vi har sett, så kildens dato er ikke avklart.
+- A: Fullt unntak med varselet og en gruppe «Konto eller fond?» for konto med minst 5 år. Forkastet: gruppen mangler offentlig kilde for gjeld og buffer og kan leses som et dytt mot fond.
+- B: Parkere hele endringen, siden Veilederen har varselet «Pengene skal brukes snart». Forkastet: forsiden av produktet blir da taus om et kjent og kildelagt forbehold.
+- C (valgt): Bare varselet for Indeksfond under 5 år.
+- D: Råd om dyr gjeld og buffer før fond. Utsatt: ingen offentlig kilde, og Forbrukerrådets fondsside nevner det ikke (kontrollert av oss 25.10.2026).
+- E: Advare eller begrense i selve sparetidsfeltet. Forkastet: korte mål som ferie er gyldige, og feltet kjenner ikke spareformen.
 
-**Begrunnelse:** Anbefalingen kan siteres fra en offentlig kilde (Forbrukerrådet, Fondstyper: «Minimum anbefalt sparehorisont 5 år»). Teksten oppgir at det er en anbefaling, ikke en regel eller garanti. Kalkulatoren er fryst, og dette endrer ingen tall, bare forklaringen. Kildenivå for nye påstander er beskrevet i oppføringen «Kildenivå for påstander og råd» (PR #69): offentlige kilder først, med norske bank- og finansinstitusjoner under Forbrukerrådet og medier med redaksjonelt ansvar nedenfor. Der vi ikke har en solid og oppdatert kilde, gir vi ikke råd.
+**Begrunnelse:** Anbefalingen er et direkte sitat fra en nivå 2-kilde (Forbrukerrådet, Fondstyper: «Minimum anbefalt sparehorisont 5 år»). Teksten oppgir at det er en anbefaling, ikke en regel eller garanti. Kildenivå er beskrevet i «Kildenivå for påstander og råd» (PR #69).
 
-**Akseptert ulempe:** Kalkulatoren kjenner ikke gjeld, buffer eller hva pengene skal brukes til, så «Konto eller fond?» sier bare at anbefalingen ikke utelukker fond ved lang sparetid. Andre aktører oppgir 3 til 10 år. Vi bruker bare Forbrukerrådet.
+**Akseptert ulempe:** Det er et unntak og kan brukes som presedens, men de tre kravene over gjør det smalt. Kalkulatoren kjenner ikke gjeld, buffer eller hva pengene skal brukes til, så varselet sier ikke mer enn kilden. Andre aktører oppgir 3 til 10 år. Vi bruker bare Forbrukerrådet. Siden oppgir ingen egen oppdateringsdato som vi har sett, så kildens dato er ikke avklart.
 
-**Vurder på nytt når:** Forbrukerrådet endrer anbefalingen (tallet står i `assumptions.js` og `veileder-facts.js`, og en test krever at de er like), vi finner offentlig kilde for gjeld og buffer, eller brukere leser teksten som et råd om å bytte til fond.
+**Vurder på nytt når:** Forbrukerrådet endrer anbefalingen (tallet står i `assumptions.js` og `veileder-facts.js`, og en test krever at de er like), avviket utløper 31.01.2027, vi finner offentlig kilde for gjeld og buffer, eller brukere leser teksten som et råd om å bytte produkt.
 
 **Status:** Foreslått 25.10.2026 på branch `feature/sparehorisont-varsel`. Ikke publisert. **Ikke testet på iPhone.** Gjelder ikke Sparemål-siden, som har egen hjelpetekst for tid til kjøpet.
 
