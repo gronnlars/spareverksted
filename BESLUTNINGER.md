@@ -213,7 +213,7 @@ Kildenotatene ligger i prosjektmappen «claude/» (ikke i repoet). PR-nummer st�
 
 **Alternativer:**
 - A: Bare i Veilederen («Pengene skal brukes snart»), som før.
-- B (valgt): Tekst i resultatet, regelbasert og uten nye beregninger. Siste ledd i «Forutsetninger» uendret.
+- B (valgt): Tekst i resultatet, regelbasert og uten nye beregninger.
 - C: Begrense eller advare i selve sparetidsfeltet. Forkastet: korte mål som ferie er gyldige, og et felt som nekter eller advarer ville blandet inn spareformen, som feltet ikke kjenner.
 - D: Råd om dyr gjeld og buffer i samme tekst. Utsatt: vi har ingen offentlig kilde som sier det, og Forbrukerrådets fondsside nevner det ikke (sjekket 25.10.2026).
 
