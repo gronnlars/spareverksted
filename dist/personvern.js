@@ -1,8 +1,8 @@
 // Sletter bare Spareverksteds egne nøkler. Andre nettsteders data og andre nøkler på samme domene røres ikke.
 (function(root){
  'use strict';
- const LOCAL=['sv-scenarios','sv-level','sv-color-theme','sv-started'];
- const SESSION=['sv-working-plan-v1','sv-guidance-tab-v2','sv-started'];
+ const LOCAL=['sv-scenarios','sv-level','sv-color-theme','sv-started'];// sv-level og sv-color-theme ligger nå i sessionStorage; de gamle localStorage-nøklene ryddes også
+ const SESSION=['sv-working-plan-v1','sv-guidance-tab-v2','sv-started','sv-level','sv-color-theme'];
  function planCount(local){try{const d=JSON.parse(local.getItem('sv-scenarios')||'[]');return Array.isArray(d)?d.length:0;}catch{return 0;}}
  function stored(local,session){const found=[];for(const k of LOCAL)try{if(local&&local.getItem(k)!==null)found.push(k);}catch{}for(const k of SESSION)try{if(session&&session.getItem(k)!==null&&!found.includes(k))found.push(k);}catch{}return found;}
  function clearAll(local,session){let ok=true;for(const k of LOCAL)try{local&&local.removeItem(k);}catch{ok=false;}for(const k of SESSION)try{session&&session.removeItem(k);}catch{ok=false;}return ok;}

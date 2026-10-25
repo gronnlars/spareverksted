@@ -38,9 +38,9 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.deepEqual(await keys(page),{local:[],session:['sv-started']});
   // 3. Eget nivåvalg lagres. Automatisk tilbakestilling gjennom startguiden fjerner det.
   await page.evaluate(()=>document.querySelector('#levels [data-level=advanced]').click());
-  assert.equal(await page.evaluate(()=>localStorage.getItem('sv-level')),'advanced');
+  assert.equal(await page.evaluate(()=>sessionStorage.getItem('sv-level')),'advanced');assert.equal(await page.evaluate(()=>localStorage.getItem('sv-level')),null,'nivå skal ikke i permanent lagring');
   await page.evaluate(()=>document.getElementById('startAgain').click());await page.locator('#chooseGrowth').click();await page.locator('#exampleJourney').click();
-  assert.equal(await page.evaluate(()=>localStorage.getItem('sv-level')),null,'automatisk «Enkel» skal ikke lagres og fjerner gammelt valg');
+  assert.equal(await page.evaluate(()=>sessionStorage.getItem('sv-level')),null,'automatisk «Enkel» skal ikke lagres og fjerner gammelt valg');
   assert.equal(await page.evaluate(()=>level),'simple');
 
   // 4. Lagre en plan, åpne en fane til, slett fra personvernsiden.

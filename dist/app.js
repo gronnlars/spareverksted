@@ -18,7 +18,8 @@ const groupedNumber=value=>new Intl.NumberFormat('nb-NO',{maximumFractionDigits:
 // Et tomt felt er ikke 0. Det gir NaN, og beregningen stopper til feltet er fylt inn.
 const parsedNumber=value=>value.trim()===''?NaN:Number(value.replace(/[\s\u00a0\u202f]/g,'').replace(/^\u2212/,'-').replace(',','.'));
 const hash=new URLSearchParams(location.hash.slice(1));
-try{const data=JSON.parse(localStorage.getItem('sv-scenarios')||'[]');saved=Array.isArray(data)?data.filter(x=>x&&typeof x.name==='string'&&x.state&&typeof x.state==='object'):[];level=localStorage.getItem('sv-level')||'simple';}catch{}
+try{const data=JSON.parse(localStorage.getItem('sv-scenarios')||'[]');saved=Array.isArray(data)?data.filter(x=>x&&typeof x.name==='string'&&x.state&&typeof x.state==='object'):[];}catch{}
+try{localStorage.removeItem('sv-level');level=sessionStorage.getItem('sv-level')||'simple';if(!['simple','explore','advanced'].includes(level))level='simple';}catch{}
 // Delte lenker kontrolleres felt for felt. Gyldige verdier beholdes, ugyldige felt får standardverdi.
 const linkInput={};for(const k in s)if(hash.has(k))linkInput[k]=hash.get(k);
 const linkCheck=E.sanitize(linkInput,{text:true});s=linkCheck.state;
@@ -251,7 +252,7 @@ function syncLevel(){document.body.dataset.level=level;for(const b of $('levels'
  $('hiddenAssumptions').hidden=!active.length;$('hiddenAssumptions').innerHTML=active.length?'Også med i beregningen: '+escapeHTML(active.join(' · '))+'. <button id="revealSettings">Se innstillingene</button>':'';if($('revealSettings'))$('revealSettings').onclick=()=>{setLevel('advanced',{remember:false});$('advancedDetails').open=true;$('eventsDetails').open=true;};}
 // Visningsnivået lagres bare når brukeren selv velger nivå med nivåknappene. Automatiske tilbakestillinger lagrer ingenting.
 // «Enkel» er standard og lagres aldri; et lagret valg fjernes i stedet.
-function setLevel(value,{remember=true}={}){level=value;try{if(remember&&value!=='simple')localStorage.setItem('sv-level',level);else localStorage.removeItem('sv-level');}catch{}syncLevel();if(window.renderDream)window.renderDream();}
+function setLevel(value,{remember=true}={}){level=value;try{if(remember&&value!=='simple')sessionStorage.setItem('sv-level',level);else sessionStorage.removeItem('sv-level');}catch{}syncLevel();if(window.renderDream)window.renderDream();}
 // State changes are read once per user input. An empty field stops the calculation; see pendingKey().
 document.addEventListener('input',event=>{if(!event.target.closest('#taxDialog')&&event.target.id in E.defaults){typingRender=true;read();render();typingRender=false;if($('toast').dataset.validation&&!planProblem()){clearTimeout(window.toastTimer);$('toast').style.display='none';delete $('toast').dataset.validation;}}});
 // «Dette betyr tallene dine» oppdateres når feltet forlates eller skyveknappen slippes (change), ikke ved hvert tastetrykk.

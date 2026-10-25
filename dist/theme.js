@@ -3,7 +3,9 @@
  'use strict';
  const key='sv-color-theme',themes=['neutral','light','night'];
  let current='neutral';
- try{const saved=localStorage.getItem(key);if(themes.includes(saved))current=saved;}catch{}
+ // Valget gjelder bare i denne fanen (sessionStorage). Den gamle permanente nøkkelen fjernes uten å leses.
+ try{localStorage.removeItem(key);}catch{}
+ try{const saved=sessionStorage.getItem(key);if(themes.includes(saved))current=saved;}catch{}
  const root=document.documentElement;
  function apply(theme){
   current=theme;root.dataset.theme=theme;
@@ -21,11 +23,9 @@
    const button=document.createElement('button');button.type='button';button.dataset.colorTheme=theme;
    button.setAttribute('aria-label',names[theme]);button.title=names[theme];
    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+icons[theme]+'</svg>';
-   button.addEventListener('click',()=>{apply(theme);try{localStorage.setItem(key,theme);}catch{}});
+   button.addEventListener('click',()=>{apply(theme);try{sessionStorage.setItem(key,theme);}catch{}});
    group.append(button);
   }
   wrapper.append(group);apply(current);
  });
- // Keep already open tabs consistent. A blocked store never disables the controls.
- addEventListener('storage',event=>{if(event.key===key||event.key===null)apply(themes.includes(event.newValue)?event.newValue:'neutral');});
 })();

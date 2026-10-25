@@ -363,3 +363,13 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Vurder på nytt når:** Nkom eller Datatilsynet svarer, ansvarlig og kontakt er avklart, eller hostingen endres.
 
 **Status:** Foreslått i PR, ikke vedtatt. Lars avgjør. Gjort på eget oppdrag fra Lars under pausen (docs/regulatorisk.md).
+
+## Tema og nivå huskes bare i fanen (26. oktober 2026)
+
+**Beslutning:** Lars vedtok alternativ B i `docs/personvern-lagring.md`: fargetema (`sv-color-theme`) og visningsnivå (`sv-level`) lagres i `sessionStorage` og ikke i `localStorage`. (Bokstavene følger dokumentet; i oppføringen over fra 25. oktober har B og C andre betydninger.)
+
+**Begrunnelse:** Mindre permanent lagring uten å fjerne funksjonen. Valget gjelder så lenge fanen brukes, og huskes ikke til neste besøk.
+
+**Akseptert ulempe:** Brukeren må velge på nytt neste dag og i hver ny fane. Gamle permanente verdier fjernes og leses ikke.
+
+**Ikke avgjort:** Fanelagring er ikke garantert slettet ved lukking, siden nettlesere kan gjenopprette faner. Det avgjør ikke alene om ekomloven § 3-15 gjelder. Spørsmålet ligger hos Nkom.

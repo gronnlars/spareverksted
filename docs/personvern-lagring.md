@@ -36,39 +36,46 @@ Fravær av dette i kildekoden beviser ikke at den publiserte siden ikke kommunis
 | Nøkkel / mekanisme | Fil | Felt | Skrives | Leses | Brukerhandling | Nødvendig for | Varighet | Sletting | Mottaker | Status |
 |---|---|---|---|---|---|---|---|---|---|---|
 | `sv-scenarios` (localStorage) | `app.js` (les ved lasting, `persist`) | Navn og hele planen (beløp, sparetid, avkastning, alder hvis oppgitt, visning) | Ved «Lagre plan», sletting av plan, angre | Ved lasting av kalkulatoren | «Lagre plan» | Å finne planen igjen. Dette er det brukeren ber om. | Ingen innebygd utløpstid | «Slett» per plan, sletteknappen på personvernsiden, nettleserens innstillinger | Ingen | Sterkest grunnlag |
-| `sv-level` (localStorage) | `app.js` | `explore` eller `advanced` | Bare ved trykk på nivåknapp. «Enkel» fjerner nøkkelen | Ved lasting | Trykk på Utforsk eller Avansert | At siden åpner på valgt nivå | Ingen innebygd utløpstid | Velg «Enkel», sletteknappen | Ingen | **Uavklart** (permanent husking) |
-| `sv-color-theme` (localStorage) | `theme.js` | `neutral`, `light` eller `night` | Bare ved trykk på tema | Før stiler lastes | Trykk på tema | At temaet er likt neste gang og ikke blinker | Ingen innebygd utløpstid | Sletteknappen | Ingen | **Uavklart** (permanent husking) |
+| `sv-level` (sessionStorage) | `app.js` | `explore` eller `advanced` | Bare ved trykk på nivåknapp. «Enkel» fjerner nøkkelen | Ved lasting | Trykk på Utforsk eller Avansert | At siden står på nivået du valgte mens du bruker den | Fanen. Kan gjenopprettes av nettleseren | «Enkel», sletteknappen | Ingen | Fanelagring vedtatt (alternativ B). Samtykkespørsmålet er ikke avgjort av det |
+| `sv-color-theme` (sessionStorage) | `theme.js` | `neutral`, `light` eller `night` | Bare ved trykk på tema | Før stiler lastes | Trykk på tema | At temaet er likt mellom sidene i fanen og ikke blinker | Fanen. Kan gjenopprettes av nettleseren | Sletteknappen | Ingen | Fanelagring vedtatt (alternativ B). Samtykkespørsmålet er ikke avgjort av det |
+| `sv-level`, `sv-color-theme` (localStorage, gamle) | `app.js`, `theme.js` | ingen | Skrives ikke lenger | Leses ikke | ingen | ingen | ingen | Fjernes ved besøk | ingen | Opprydding av tidligere versjon. Valg fra tidligere besøk går tapt |
 | `sv-started` (sessionStorage) | `journey.js` | `'1'` | Når brukeren trykker seg videre fra startguiden. **Ikke** ved lasting, delt lenke eller «Tilbake til planen» | Ved lasting | Gå videre fra startguiden | At startguiden ikke vises igjen ved tur til veilederen og tilbake | Fanen, kan gjenopprettes | Sletteknappen, tilbake til startskjermen | Ingen | Vurderes som del av flyten |
-| `sv-started` (localStorage, gammel) | `journey.js` | `'1'` | Skrives ikke lenger | – | – | – | – | Fjernes (`removeItem`) ved hvert besøk | – | Opprydding av tidligere versjon |
+| `sv-started` (localStorage, gammel) | `journey.js` | `'1'` | Skrives ikke lenger | ingen | ingen | ingen | ingen | Fjernes (`removeItem`) ved hvert besøk | ingen | Opprydding av tidligere versjon |
 | `sv-working-plan-v1` (sessionStorage) | `veileder-context.js`, `veileder-bridge.js` | Hele planen med beløp, modus, visning | Når brukeren klikker lenke til `spor.html`; deretter ved `pagehide` bare hvis nøkkelen finnes | Ved lasting av kalkulatoren uten `#` | Klikk til «Spør om sparing» | At planen er uendret ved retur | Fanen. Kan gjenopprettes av nettleseren | Tilbake til startskjermen, sletteknappen (i denne fanen) | Ingen | Vurderes som del av flyten |
 | `sv-guidance-tab-v2` (sessionStorage) | `veileder-context.js`, `veileder-ui.js`, `veileder-bridge.js` | Alder, sparetid, risiko, buffer, dyr gjeld, inntekt, sparemåte, fastrente, boligeier, skatt (BSU), sparetid per tema. Ingen beløp, navn eller fritekst | Ved klikk til veilederen fra en startet plan; «Oppdater vurderingen» | I veilederen og ved retur | Klikk til veilederen eller «Oppdater vurderingen» | At du slipper å fylle inn det samme to ganger | Fanen. Kan gjenopprettes | «Glem opplysningene mine», sletteknappen | Ingen | Vurderes som del av flyten. Opplysningene sier noe om økonomien din |
-| Utklippstavle | `experience.js`, `om.js`, `kontakt.js` | Delingslenke, Vipps-nummer, e-postadresse | Bare ved eget trykk på «Kopier» | – | Trykk | Å kopiere | Styres av operativsystemet | – | Ingen | Ikke vurdert som lagring etter § 3-15 |
-| Nettleserens vanlige cache | Ikke egen kode | Sider, skript, bilder | Nettleseren | Nettleseren | Besøk | Raskere lasting | Styres av nettleser og serverens hoder | Nettleser | – | Ikke egendefinert datalagring. Serverens `Cache-Control` er ikke kontrollert |
+| Utklippstavle | `experience.js`, `om.js`, `kontakt.js` | Delingslenke, Vipps-nummer, e-postadresse | Bare ved eget trykk på «Kopier» | ingen | Trykk | Å kopiere | Styres av operativsystemet | ingen | Ingen | Ikke vurdert som lagring etter § 3-15 |
+| Nettleserens vanlige cache | Ikke egen kode | Sider, skript, bilder | Nettleseren | Nettleseren | Besøk | Raskere lasting | Styres av nettleser og serverens hoder | Nettleser | ingen | Ikke egendefinert datalagring. Serverens `Cache-Control` er ikke kontrollert |
 
 ### Hva som skjer før første brukerhandling
 
 **Før rettingene (main `04eed8e`):** `sv-started` ble skrevet permanent ved åpning av en delt lenke. Veilederkonteksten og (hvis planen var startet) arbeidsplanen med beløp ble skrevet til sessionStorage ved hver `pagehide`, også uten tur til veilederen. `sv-level=simple` ble skrevet permanent ved «Vis spareplanen min» og «Se et eksempel».
 
-**Etter rettingene (kodefunn):** Å åpne siden eller en delt lenke skriver ingenting. Siden **leser** `sv-scenarios`, `sv-level`, `sv-color-theme`, `sv-started` (session) og `sv-working-plan-v1` (session) hvis de finnes, og den **sletter** den gamle nøkkelen `sv-started` i localStorage (en skriveoperasjon som bare fjerner). Lokal observasjon bekrefter at et første besøk og en delt lenke gir tomme lagringsområder (`tests/personvern-browser.cjs`, Chromium; Firefox og WebKit i CI).
+**Etter rettingene (kodefunn):** Å åpne siden eller en delt lenke skriver ingenting. Siden **leser** `sv-scenarios` (localStorage), `sv-level`, `sv-color-theme`, `sv-started` (session) og `sv-working-plan-v1` (session) hvis de finnes, og den **sletter** de gamle nøklene `sv-started`, `sv-level` og `sv-color-theme` i localStorage uten å lese dem (en skriveoperasjon som bare fjerner). Lokal observasjon bekrefter at et første besøk og en delt lenke gir tomme lagringsområder (`tests/personvern-browser.cjs`, Chromium; Firefox og WebKit i CI).
 
 Dette er ikke et argument for at lagring etter et trykk er lovlig. Det er en minimering.
 
-## Permanent husking av tema og nivå: alternativer
+## Husking av tema og nivå: vedtatt alternativ B
 
-Uavklart punkt. Vi bygger ikke en samtykkeboks og fjerner ikke funksjonen for å lukke punktet.
+**Vedtatt av Lars 26.10.2026: alternativ B, husking bare i fanen (`sessionStorage`).** GPT anbefalte B. Hvorfor: det reduserer permanent lagring uten å fjerne funksjonen, og vi trenger ikke vente på Nkom for å velge mindre lagring.
 
-| Alternativ | Hva det betyr | Konsekvens |
+Hva B betyr, og ikke betyr:
+- Valget huskes når du går mellom sidene i samme fane. Det huskes ikke til neste besøk, og følger ikke med til en ny fane.
+- Det er ikke garantert slettet når nettleseren lukkes. Nettlesere kan gjenopprette faner og dermed økten og valgene.
+- Det avgjør ikke alene om § 3-15-unntaket gjelder. Spørsmålet står åpent hos Nkom.
+- Gamle verdier fra tidligere besøk i `localStorage` leses ikke og fjernes. Brukere som hadde valgt Natt eller Avansert, må velge på nytt.
+
+| Alternativ | Hva det betyr | Status |
 |---|---|---|
-| A. Som nå | Husk valget i localStorage etter trykk, uten utløpstid | Mest brukervennlig. Forutsetter at § 3-15-unntaket for «uttrykkelig ønsket tjeneste» holder, noe vi ikke har fått bekreftet |
-| B. Bare i økten | Flytt til sessionStorage | Mindre inngrep, og valget går tapt når nettleseren lukkes. Skriftlig forklaring på siden er enklere. Brukeren må velge på nytt neste dag |
-| C. Ingen husking | Bruk standard hver gang (tema følger operativsystemets innstilling via CSS `prefers-color-scheme` er en mulighet) | Ingen lagring. Svakere tilpasning, og tema kan ikke velges varig |
-| D. Samtykke | Vise valg om å lagre | Bygges ikke før noe krever det |
+| A. Permanent etter aktivt valg | `localStorage`, ingen utløpstid | Ikke valgt. Forutsetter at unntaket i § 3-15 holder |
+| **B. Bare i fanen** | `sessionStorage` | **Valgt 26.10.2026** |
+| C. Ingen husking | Standard hver gang (tema kan følge operativsystemet via `prefers-color-scheme`) | Ikke valgt. Mulig senere, hvis Nkom sier at heller ikke B holder |
+| D. Samtykke | Egen boks | Bygges ikke før noe krever det |
 
-Spørsmålet er ikke avgjort av grønn CI eller av at brukeren trykker. Det er formulert som spørsmål til Nkom (utkast levert til Lars, ikke sendt).
+Merk: henvendelsen til Nkom (se loggen) ble sendt før dette og beskriver permanent lagring i `localStorage`. Svaret må leses mot at løsningen i PR #78 nå er B.
 
 ## Sletting og andre faner
 
-Sletteknappen på `personvern.html` fjerner Spareverksteds nøkler i `localStorage` for hele nettstedet, men `sessionStorage` bare i fanen der knappen trykkes. Andre åpne faner beholder sin arbeidsplan og veilederkontekst i fanen og i minnet til de lukkes. Dette er ikke endret og lovet ikke annet. Lagrede planer kommer ikke tilbake: kalkulatoren lytter på `storage`-hendelsen og leser planene på nytt når de endres i en annen fane (`app.js`). Kontrollert i `tests/personvern-browser.cjs`.
+Sletteknappen på `personvern.html` fjerner Spareverksteds nøkler i `localStorage` for hele nettstedet, men `sessionStorage` (arbeidsplan, veilederkontekst, nivå, tema) bare i fanen der knappen trykkes. Andre åpne faner beholder da sitt nivå og tema. Andre åpne faner beholder sin arbeidsplan og veilederkontekst i fanen og i minnet til de lukkes. Dette er ikke endret og lovet ikke annet. Lagrede planer kommer ikke tilbake: kalkulatoren lytter på `storage`-hendelsen og leser planene på nytt når de endres i en annen fane (`app.js`). Kontrollert i `tests/personvern-browser.cjs`.
 
 Knappen: forklarer og krever bekreftelse når det finnes lagrede planer («kan ikke angres»), rører bare nøklene i listen (`personvern.js`), melder fra hvis noe ikke kunne slettes, og viser ingen knapp og en forklaring hvis nettleseren blokkerer lagring.
 
@@ -84,7 +91,7 @@ Kjørt 25.10.2026 med `scripts/produksjonskontroll.cjs --local` (Chromium 153, r
 
 - 64 forespørsler, alle til samme opprinnelse. Ingen til andre verter. Ingen forespørsler med annen metode enn GET. Ingen omdirigeringer. Ingen WebSocket.
 - Ingen `Set-Cookie`. `context.cookies()` tom etter alle trinn.
-- Lagring etter trinn: tom → `sv-started` (session) → `sv-level`, `sv-color-theme` → `sv-scenarios` → (veileder) `sv-working-plan-v1`, `sv-guidance-tab-v2` → tom etter sletting.
+- Lagring etter trinn: tom → `sv-started` (session) → `sv-level`, `sv-color-theme` (session) → `sv-scenarios` (local) → (veileder) `sv-working-plan-v1`, `sv-guidance-tab-v2` → tom etter sletting.
 
 Dette gjelder en lokal server uten CDN og uten leverandørens hoder. Det sier ingenting om hva hostingen sender.
 
@@ -126,6 +133,8 @@ Spørsmål som er sendt:
 - **Domene.no (fem):** hvilken avtale eller vilkår som gjelder for videresending, og om den er en databehandleravtale; lagring i kø, retur og sikkerhetskopi og hvor lenge; e-postlogger og oppbevaring; hvor e-posten behandles og underleverandører; sletting og behandling utenfor EØS.
 - **Nkom (to):** om lagring av tema og visningsnivå i localStorage etter aktivt valg er strengt nødvendig etter § 3-15, eller bør gjelde bare økten; om arbeidsplanen og veilederkonteksten i sessionStorage ved tur fra kalkulatoren til veiledningen faller under unntaket. Vedlagt var den korte lagringstabellen.
 
+Merk: Nkom-henvendelsen beskriver permanent lagring av tema og nivå. Lars vedtok 26.10.2026 alternativ B (fane); PR #78 er endret deretter. Ingen ny e-post er sendt for dette.
+
 De reviderte utkastene (25.10.2026) er historikk, ikke ventende utsendinger. Ingen ny e-post trengs for presiseringene alene.
 
 Ikke sendt: spørsmål til GitHub Support og til Datatilsynet. Utkast finnes hos Lars.
@@ -137,7 +146,7 @@ Hva logginnslagene betyr:
 
 ## Åpne spørsmål for myndighetsveiledning
 
-- Nkom: Er lagring av tema og visningsnivå i `localStorage` etter aktivt valg «strengt nødvendig for en tjeneste brukeren uttrykkelig har bedt om», eller bør det bare gjelde økten? Er en tur fra kalkulatoren til veiledningen i samme fane nok til at arbeidsplanen i `sessionStorage` faller inn under unntaket?
+- Nkom (spørsmålet som er sendt, formulert før valg av B): Er lagring av tema og visningsnivå i `localStorage` etter aktivt valg «strengt nødvendig for en tjeneste brukeren uttrykkelig har bedt om», eller bør det bare gjelde økten? Løsningen er nå B. Gjenstår: holder også fanelagring av valgene som unntak? Er en tur fra kalkulatoren til veiledningen i samme fane nok til at arbeidsplanen i `sessionStorage` faller inn under unntaket?
 - Datatilsynet: Hvordan bør behandlingsansvar og informasjonsplikt vurderes for GitHubs IP-logger på en gratis Pages-side? Er lokal lagring av økonomiske opplysninger som operatøren aldri mottar, en behandling operatøren er ansvarlig for? Hvordan skilles lokal behandling fra e-postkontakt i personverninformasjonen?
 
 ## Kjente begrensninger

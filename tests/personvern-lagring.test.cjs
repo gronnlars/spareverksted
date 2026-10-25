@@ -11,6 +11,11 @@ assert(!/localStorage\.setItem\(\s*'sv-started'/.test(journey+app),'sv-started s
 assert(/sessionStorage\.setItem\('sv-started','1'\)/.test(journey));
 assert(/localStorage\.removeItem\('sv-started'\)/.test(journey),'gammel permanent nøkkel ryddes');
 
+// 1b. Alternativ B (vedtatt 26.10.2026): tema og nivå skrives aldri til permanent lagring, og gamle nøkler leses ikke.
+assert(!/localStorage\.setItem\(\s*(key|'sv-level'|'sv-color-theme')/.test(dist('theme.js')+app),'tema og nivå skal ikke i localStorage');
+assert(/localStorage\.removeItem\(key\)/.test(dist('theme.js'))&&!/localStorage\.getItem\(key\)/.test(dist('theme.js')),'gammel tema-nøkkel ryddes, leses ikke');
+assert(!/localStorage\.getItem\('sv-level'\)/.test(app),'gammel nivånøkkel leses ikke');
+
 // 2. Visningsnivå: bare nivåknappene lagrer. Automatiske tilbakestillinger og «Se innstillingene» lagrer ikke.
 const calls=(journey+app).match(/setLevel\([^)]*\)/g);
 for(const c of calls){
@@ -20,15 +25,15 @@ for(const c of calls){
 {
  // Funksjonene kobles sammen slik nettsiden gjør: app.js definerer setLevel, journey.js pakker den inn.
  // Innpakningen må sende videre alle argumentene, ellers går {remember:false} tapt (feil funnet i kontroll 25.10.2026).
- const local=new Store();const ctx={localStorage:local,level:'simple',syncLevel(){},syncSliders(){},window:{}};vm.createContext(ctx);
+ const local=new Store({'sv-level':'advanced'}),session=new Store();const ctx={localStorage:local,sessionStorage:session,level:'simple',syncLevel(){},syncSliders(){},window:{}};vm.createContext(ctx);
  const def=app.match(/function setLevel\([\s\S]*?\n/)[0];
  const wrappers=journey.match(/const previousSetLevel=setLevel;setLevel=function[^\n]*/g)||[];
  assert.equal(wrappers.length,1,'forventet én innpakning av setLevel i journey.js');
  vm.runInContext('var setLevel;'+def.replace('function setLevel','setLevel=function')+';'+wrappers[0]+';this.call=(...a)=>setLevel(...a);',ctx);
- ctx.call('simple',{remember:false});assert.equal(local.getItem('sv-level'),null);
- ctx.call('advanced');assert.equal(local.getItem('sv-level'),'advanced');
- ctx.call('advanced',{remember:false});assert.equal(local.getItem('sv-level'),null,'automatisk skifte gjennom innpakningen fjerner lagret valg');
- ctx.call('explore');ctx.call('simple');assert.equal(local.getItem('sv-level'),null,'«Enkel» er standard og lagres ikke');
+ ctx.call('simple',{remember:false});assert.equal(session.getItem('sv-level'),null);
+ ctx.call('advanced');assert.equal(session.getItem('sv-level'),'advanced');assert.equal(local.getItem('sv-level'),'advanced','setLevel rører ikke gammel permanent nøkkel');
+ ctx.call('advanced',{remember:false});assert.equal(session.getItem('sv-level'),null,'automatisk skifte gjennom innpakningen fjerner lagret valg');
+ ctx.call('explore');ctx.call('simple');assert.equal(session.getItem('sv-level'),null,'«Enkel» er standard og lagres ikke');
  for(const w of (journey+app).match(/setLevel=function\([^)]*\)\{[^}]*\}/g)||[])assert(/\(\.\.\.args\)/.test(w),'Innpakning må sende videre alle argumenter: '+w);
 }
 // «Tilbake til planen» må finnes når planen er åpnet fra delt lenke, uten at noe lagres.
