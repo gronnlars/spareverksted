@@ -240,6 +240,8 @@ Siden gir ikke råd der vi ikke har en solid og oppdatert kilde. Kilden skal væ
 
 **Medier med redaksjonelt ansvar** er medier som har ansvarlig redaktør, følger Vær varsom-plakaten og kan klages inn for Pressens Faglige Utvalg. De brukes til å finne og forstå en sak, og som veiviser til primærkilden. De brukes ikke som eneste kilde til tall, regler eller råd. Vi navngir ikke bestemte medier som «solide» her før vi har kontrollert hvert enkelt mot kriteriene og har en dato for kontrollen. Eksempler legges inn når den kontrollen er gjort.
 
+**Tre ulike datoer.** Vi skiller mellom: (1) kildens egen dato, versjon eller regelår, altså når siden vi viser til sist ble oppdatert eller hvilket år reglene gjelder for, (2) vår kontrolldato, altså når vi leste og kontrollerte kilden, og (3) når teksten ble lagt ut på nettsiden. Vår kontrolldato sier ikke at kilden er ny, og kildens dato sier ikke at vi har kontrollert den. Hver kilde skal ha både kildens dato og vår kontrolldato. Har siden ingen synlig dato, skriver vi «ingen dato oppgitt på siden» i stedet for å bruke vår kontrolldato som om den var kildens. Nivå 3 og 4 krever kildedato. Eksempel som allerede følger dette: SSB-renten i `assumptions.js` har både `updated` (kildens dato) og `checked` (vår). Veilederen viser i dag bare «Sist sjekket», så kildens dato mangler der.
+
 **Smarte penger** har ikke eget nivå. Vi har ikke avklart hvem som står bak siden eller hvilket redaksjonelt ansvar den har, så den brukes ikke som kilde før det er avklart. Da kommer den på nivå 3 eller 4, etter hvem som står bak. Når den refererer til en primærkilde (for eksempel Forbrukerrådet), bruker vi primærkilden.
 
 **Alternativer:**
@@ -256,7 +258,7 @@ Siden gir ikke råd der vi ikke har en solid og oppdatert kilde. Kilden skal væ
 
 **Vurder på nytt når:** Vi har kontrollert aktuelle medier og kan navngi eksempler, vi avklarer hvem som står bak Smarte penger, vi får flere kilder med samme status, eller en kilde endrer synspunkt.
 
-**Status:** Vedtatt 25.10.2026 etter prosjekteiers prioritering. Presisert samme dag: bank- og finansinstitusjoner hører til de åpne kildene, og Smarte penger har ikke eget nivå.
+**Status:** Vedtatt 25.10.2026 etter prosjekteiers prioritering. Presisert samme dag: bank- og finansinstitusjoner hører til de åpne kildene, Smarte penger har ikke eget nivå, og kildens dato skilles fra vår kontrolldato og publiseringsdato.
 
 ### Risikospørsmålet ut av startflyten
 
