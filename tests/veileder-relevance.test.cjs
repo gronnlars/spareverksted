@@ -33,7 +33,7 @@ for(const name of fs.readdirSync(path.join(__dirname,'../dist')).filter(x=>/\.(h
  assert.notDeepEqual(ids(14),ids(70));assert.notDeepEqual(ids(14),ids(35));assert.notDeepEqual(ids(35),ids(70));
  for(const age of [0,14,adult-1]){const all=titles(age).join(' ');assert.doesNotMatch(all,/pensjon|barnets navn|uttak/,'under '+adult+' år, alder '+age);assert.ok(titles(age).length>=1);}
  for(const age of [adult,35,first-1])assert.match(titles(age).join(' '),/binder penger til pensjon/,'alder '+age);
- for(const age of [first,70,95]){const all=titles(age).join(' ');assert.match(all,/uttak over mange år/);assert.doesNotMatch(all,/binder penger til pensjon|barnets navn/,'alder '+age);}
+ for(const age of [first,70,95]){const all=titles(age).join(' ');assert.match(all,/uttak over mange år/);assert.doesNotMatch(all,/binder penger til pensjon|barnets navn/,'alder '+age);assert.match(all,/barn eller barnebarn/,'barnesparing skjules ikke for eldre, alder '+age);}
  assert.deepEqual(titles(null),['Hva bør jeg sjekke før jeg binder penger til pensjon?','Når passer sparekonto, og når kan fond passe?','Bør jeg spare i mitt eller barnets navn?'],'ukjent alder gjetter ikke');
  // Alle forslag peker til et eksisterende tema og har ingen tankestrek.
  for(const age of [null,0,14,18,35,62,70])for(const owner of ['','yes','no'])for(const s of V.suggestions({age,owner})){assert.ok(V.topics.some(x=>x.id===s.id),s.id);assert.doesNotMatch(s.title,/[\u2013\u2014]/);assert.ok(s.title.endsWith('?'));}

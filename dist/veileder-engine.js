@@ -82,13 +82,15 @@ function checkAudience(audience){
  for(const k of ['owner','fixed','tax'])if(audience[k]!==undefined&&!['yes','no'].includes(audience[k]))throw Error('Ugyldig valg i målgruppen.');
 }
 // Innebygde forslag. Rekkefølgen er prioritet. Alder avgjør hva som passer: pensjon som binding gjelder før første
-// uttak, uttaksplanlegging fra første uttak, og sparing i barnets navn gjelder voksne som ikke allerede tar ut pensjon.
+// uttak og uttaksplanlegging fra første uttak. Sparing til barn gjelder alle voksne, men fra første uttak handler det oftere om
+// barn og barnebarn som allerede er voksne eller har andre foreldre, så spørsmålet om eierskap står i stedet.
 // Grensene kommer fra datofestede fakta (adultAge, ipsStartAge). Se BESLUTNINGER.md.
 const CORE=[
  {id:'pension',title:'Hva bør jeg sjekke før jeg binder penger til pensjon?',audience:{fromAge:'adultAge',belowAge:'ipsStartAge'}},
  {id:'pension',title:'Hvordan planlegger jeg uttak over mange år?',audience:{fromAge:'ipsStartAge'}},
  {id:'funds',title:'Når passer sparekonto, og når kan fond passe?'},
- {id:'children',title:'Bør jeg spare i mitt eller barnets navn?',audience:{fromAge:'adultAge',belowAge:'ipsStartAge'}}
+ {id:'children',title:'Bør jeg spare i mitt eller barnets navn?',audience:{fromAge:'adultAge',belowAge:'ipsStartAge'}},
+ {id:'children',title:'Hvem skal eie pengene når jeg sparer til barn eller barnebarn?',audience:{fromAge:'ipsStartAge'}}
 ];
 function suggestions(profile={},current){
  const p=validate(profile),list=[];

@@ -209,7 +209,7 @@ Kildenotatene ligger i prosjektmappen «claude/» (ikke i repoet). PR-nummer st�
 
 ### Alder styrer Veilederens forslag
 
-**Valg:** Spørsmålsforslagene i Veilederen får en målgruppe. Pensjon som binding av penger vises fra 18 år til første uttak (62 år, `ipsStartAge`). Fra 62 år vises i stedet «Hvordan planlegger jeg uttak over mange år?». Sparing i barnets navn vises fra 18 til 61 år. Under 18 år vises hverken pensjon eller barnesparing. Ukjent alder gir de samme tre generelle forslagene som før. Nye spørsmål og svar kan melde seg for en målgruppe med `suggest` (se README), og vises da bare når profilen oppfyller den.
+**Valg:** Spørsmålsforslagene i Veilederen får en målgruppe. Pensjon som binding av penger vises fra 18 år til første uttak (62 år, `ipsStartAge`). Fra 62 år vises i stedet «Hvordan planlegger jeg uttak over mange år?». Sparing i barnets navn vises fra 18 til 61 år. Fra 62 år står i stedet «Hvem skal eie pengene når jeg sparer til barn eller barnebarn?», fordi barnesparing fortsatt er aktuelt for mange eldre, men spørsmålet er et annet. Under 18 år vises hverken pensjon eller barnesparing. Ukjent alder gir de samme tre generelle forslagene som før. Nye spørsmål og svar kan melde seg for en målgruppe med `suggest` (se README), og vises da bare når profilen oppfyller den.
 
 **Alternativer:**
 - A: Beholde dagens liste for alle og bare endre overskriften. Forkastet: 14-åringer og 70-åringer fikk fortsatt forslag som ikke passer.
@@ -219,7 +219,7 @@ Kildenotatene ligger i prosjektmappen «claude/» (ikke i repoet). PR-nummer st�
 
 **Begrunnelse:** Overskriften «Prioritert etter opplysningene dine» lovet tilpasning som listen ikke ga. Siden skal bare påstå det den kan dokumentere. Grensen 18 år er `adultAge`, og 62 år er tidligste uttak i IPS (`ipsStartAge`). Grensene er redaksjonelle valg for hva som vises først, ikke råd om hva noen bør gjøre. Alle temaer er fortsatt tilgjengelige i temavalget og søket.
 
-**Akseptert ulempe:** For 14-åringer vises bare ett forslag, fordi vi ikke har forslag laget for dem. For 62 år og eldre vises ingen forslag om sparing til barn eller barnebarn, selv om en del vil ha nytte av det. Mer målrettede forslag krever nye spørsmål og svar med kilder, og det er innholdsarbeid, ikke teknikk. Grensene er enkle og tar ikke hensyn til at folk går av med pensjon ulikt.
+**Akseptert ulempe:** For 14-åringer vises bare ett forslag, fordi vi ikke har forslag laget for dem. For 62 år og eldre dekker svaret bare eierskap og gavebrev kort. Gaver og forskudd på arv til barn og barnebarn har ikke eget svar ennå, og trenger kilder (Skatteetaten har en side om at arveavgiften er fjernet fra 2014, men forskudd på arv hører til arveloven og er ikke gjennomgått). Mer målrettede forslag krever nye spørsmål og svar med kilder, og det er innholdsarbeid, ikke teknikk. Grensene er enkle og tar ikke hensyn til at folk går av med pensjon ulikt.
 
 **Vurder på nytt når:** Spørsmålskøen har egne svar for unge og eldre (legg dem inn med `suggest`), brukere melder at forslagene fortsatt ikke passer, eller reglene for tidligste uttak endres.
 
