@@ -126,7 +126,7 @@ Opplysningene er gitt av Lars. Selve e-postene ligger hos ham i Gmail. Private a
 
 | Mottaker | Sendt | Status (26.10.2026) | Referanse |
 |---|---|---|---|
-| Domene.no | E-post 1, uendret fra utkastet (versjonen med rettingene 25.10.2026) | Mottak bekreftet 25.10.2026 kl. 23.58. Venter på svar | Sak 39138152 |
+| Domene.no | E-post 1, uendret fra utkastet (versjonen med rettingene 25.10.2026) | Mottak bekreftet 25.10.2026 kl. 23.58. 26.10.2026: KI-generert svar mottatt. De sentrale spørsmålene om videresending er fortsatt uavklarte, og saken er videresendt til teamet. Venter på svar fra Domene.no | Sak 39138152 |
 | Nkom | E-post 2, uendret fra utkastet | Mottak bekreftet 26.10.2026 kl. 00.01. Venter på svar | Saksnummer ikke oppgitt i bekreftelsen |
 
 Spørsmål som er sendt:
@@ -138,6 +138,8 @@ Merk: Nkom-henvendelsen beskriver permanent lagring av tema og nivå. Lars vedto
 De reviderte utkastene (25.10.2026) er historikk, ikke ventende utsendinger. Ingen ny e-post trengs for presiseringene alene.
 
 Ikke sendt: spørsmål til GitHub Support og til Datatilsynet. Utkast finnes hos Lars.
+
+Svaret fra Domene.no 26.10.2026 er et automatisk, KI-generert mottaksvar. Det besvarer ingen av de fem spørsmålene, og det kan ikke brukes som bekreftelse på databehandleravtale, lagringstid, logger, underleverandører eller overføring utenfor EØS. Ordlyden er gjengitt av Lars.
 
 Hva logginnslagene betyr:
 - Mottaksbekreftelsene er ikke faglige svar eller godkjenninger.
