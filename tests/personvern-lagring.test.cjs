@@ -31,6 +31,8 @@ for(const c of calls){
  ctx.call('explore');ctx.call('simple');assert.equal(local.getItem('sv-level'),null,'«Enkel» er standard og lagres ikke');
  for(const w of (journey+app).match(/setLevel=function\([^)]*\)\{[^}]*\}/g)||[])assert(/\(\.\.\.args\)/.test(w),'Innpakning må sende videre alle argumenter: '+w);
 }
+// «Tilbake til planen» må finnes når planen er åpnet fra delt lenke, uten at noe lagres.
+assert(/\$\('closeJourney'\)\.hidden=!\(hasStarted\(\)\|\|planShown\)/.test(journey),'Tilbake til planen må vises når planen er åpen');
 // Ved lasting skrives ingenting, heller ikke ved delt lenke.
 assert(/stage\(!\(hasStarted\(\)\|\|sharedPlan\),\{remember:false\}\)/.test(journey),'lasting skal ikke skrive sv-started');
 
