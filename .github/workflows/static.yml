@@ -74,6 +74,9 @@ jobs:
           SPARE_ENGINE=firefox node tests/veileder-sok-rettinger-browser.cjs
           SPARE_ENGINE=webkit node tests/veileder-sok-rettinger-browser.cjs
           node tests/startflyt-browser.cjs
+          node tests/ki-info-browser.cjs
+          SPARE_ENGINE=firefox node tests/ki-info-browser.cjs
+          SPARE_ENGINE=webkit node tests/ki-info-browser.cjs
           node tests/spareform-browser.cjs
           node tests/theme-browser.cjs
           node tests/navigation-browser.cjs
