@@ -15,7 +15,7 @@
 .vipps-line{display:flex;align-items:center;flex-wrap:wrap;gap:4px 12px;margin-top:12px;font-size:14px}
 .vipps-line strong{user-select:all;font-variant-numeric:tabular-nums}
 .vipps-line button{min-height:44px;font-size:13px;padding:8px}
-.giving-section .giving-help,.giving-help{font-size:14px;line-height:1.6;color:var(--muted)}
+.ki-section{max-width:680px;margin:0 0 56px}.ki-section h2{font-size:24px;margin-bottom:14px}.ki-section p{font-size:17px;line-height:1.7}.giving-section .giving-help,.giving-help{font-size:14px;line-height:1.6;color:var(--muted)}
 #copyStatus:empty{display:none}
 @media(max-width:850px){.giving-cards{grid-template-columns:1fr}.giving-card{padding:22px}.giving-card>p:first-of-type{margin-bottom:18px}}
 @media(max-width:480px){.about-page main{padding-inline:20px}.about-intro{margin-bottom:36px}.about-intro p,.giving-section>p{font-size:16px}.about-page footer{flex-direction:column;align-items:flex-start;gap:16px}.give-button{min-height:52px}}
