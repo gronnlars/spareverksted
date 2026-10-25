@@ -376,9 +376,9 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 
 ## Hvorfor KI-informasjonen ble publisert mens prosjektet er på pause (26. oktober 2026)
 
-**Beslutning:** Lars godkjente 26.10.2026 at PR #80 («Synlig KI-informasjon på forside og søkeside») ble slått sammen og publisert (main `b2eada7c7805b428835025d6d729218b5367a888`). Publiseringskjøringen gikk grønt. Etter dette gjøres ingen nye publiseringer før svar fra Domene.no og Nkom foreligger.
+**Beslutning:** Lars godkjente 26.10.2026 at PR #80 («Synlig KI-informasjon på forside og søkeside») ble slått sammen og publisert (main `b2eada7c7805b428835025d6d729218b5367a888`). Publiseringskjøringen gikk grønt. Lars bekreftet med skjermbilde (Safari på iPhone, 26.10.2026) at KI-linjen vises på forsiden; Om-siden og søkesiden er ikke sett på iPhone, og nettverkstrafikk, HTTP-hoder og servercookies er ikke kontrollert. Etter dette gjøres ingen nye publiseringer før svar fra Domene.no og Nkom foreligger.
 
-**Begrunnelse (Lars):** Endringen handlet ikke om generelle finansielle spørsmål. Den handlet om åpenhet om hvordan innholdet lages, og om personvern og etterrettelighet, som har vært grunnmuren i prosjektet fra start. GPT vurderte at den ikke berører det som er spurt Finanstilsynet om. Finanstilsynet er ikke spurt om akkurat denne endringen, og vurderingen er ikke en uttalelse fra dem.
+**Begrunnelse (Lars):** Endringen handlet ikke om generelle finansielle spørsmål. Den handlet om åpenhet om hvordan innholdet lages, og om personvern og etterrettelighet, som har vært grunnmuren i prosjektet fra start. GPT vurderte at den ikke berører det som er spurt Finanstilsynet om. Den vurderingen er en KI-vurdering av endringens omfang, ikke en juridisk godkjenning. Finanstilsynet er ikke spurt om akkurat denne endringen, og vurderingen er ikke en uttalelse fra dem.
 
 **Hva som ble publisert:** Én linje på forsiden, en tilsvarende tekst ved «Spør om sparing» og en seksjon på Om-siden. Ingen endring i beregninger, spørsmål, kunnskapsbase eller eksempler. Ingen lagring er endret i denne publiseringen.
 
