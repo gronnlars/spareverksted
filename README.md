@@ -137,6 +137,20 @@ Veilederen bruker fanens `sessionStorage` under `sv-guidance-tab-v2`, uten navn,
 
 Ingen eksterne KI-kall, bestemte aksjeandeler eller navngitte fondsanbefalinger. Svarene er generelle, med kildelenker og datoforbehold. Se `research/veileder-kilder.md` for bakgrunn og `research/ux-2026-10-22.md` for endringer, faktaliste og manuell testliste. Delingslenker fra kalkulatoren utelater alder, risikovalg og andre personlige profilvalg.
 
+### Slik gjør du et nytt svar tilpasset
+
+Et nytt spørsmål og svar kan melde seg som forslag for en målgruppe med feltet `suggest` i oppføringen:
+
+```js
+suggest:{title:'Hva bør jeg vite om gaver til barnebarn?',audience:{fromAge:'ipsStartAge'}}
+```
+
+- `title`: et spørsmål som slutter med spørsmålstegn, uten tankestrek.
+- `audience`: nøkler `fromAge` (alder fra og med), `belowAge` (alder under), `owner`, `fixed`, `tax` (`yes` eller `no`), `fromYears` og `belowYears` (sparetid). Alder og sparetid kan skrives som tall eller som navn på et datofestet faktum i `veileder-facts.js`, for eksempel `adultAge` eller `ipsStartAge`.
+- Forslaget vises bare når brukeren faktisk har oppgitt det målgruppen krever. Ukjent alder eller ukjent boligstatus regnes som «vet ikke», aldri som en gjetning. Spesifikke forslag kommer før de generelle, og dyr gjeld og manglende buffer går alltid foran.
+- Uten `suggest` finnes svaret fortsatt i temavalget og søket, bare ikke som automatisk forslag.
+- Ugyldige målgrupper avvises ved registrering, og testen i `tests/veileder-relevance.test.cjs` viser hvordan.
+
 Kontroller logikk og overføring:
 
 ```sh

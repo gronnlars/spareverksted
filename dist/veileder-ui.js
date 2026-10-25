@@ -37,7 +37,7 @@ function group(label,items,kind){
 function suggestions(){
  const p=profile(),items=V.suggestions(p,selected);
  $('suggestedTitle').textContent=selected?'Neste spørsmål':'Spørsmål du kan starte med';
- $('suggestedHelp').textContent=Object.keys(context.profile).length?'Prioritert etter opplysningene dine. Alle temaer er fortsatt tilgjengelige.':'Velg et spørsmål, eller søk med egne ord.';
+ $('suggestedHelp').textContent=Object.keys(context.profile).length?'Forslagene tar hensyn til opplysningene du har oppgitt. Alle temaer er fortsatt tilgjengelige.':'Velg et spørsmål, eller søk med egne ord.';
  $('suggestedQuestions').replaceChildren();
  for(const item of items)$('suggestedQuestions').append(button(item.title,()=>choose(item.id)));
  $('suggestedPanel').hidden=items.length===0;
