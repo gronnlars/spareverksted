@@ -227,20 +227,21 @@ Kildenotatene ligger i prosjektmappen «claude/» (ikke i repoet). PR-nummer st�
 
 ### Kildenivå for påstander og råd
 
-**Valg:** Når en tekst på siden bygger på en kilde, brukes offentlige kilder først. Rekkefølge: lov, forskrift og tilsyn (for eksempel Skatteetaten, Finanstilsynet, SSB), deretter Forbrukerrådet og Finansportalen, deretter Smarte penger, deretter andre. Siden gir ikke råd der vi ikke har en solid og oppdatert kilde. Kilden skal være funnet og datert, og teksten skal skille mellom det kilden sier og det vi forklarer.
+**Valg:** Når en tekst på siden bygger på en kilde, brukes offentlige kilder først. Rekkefølge: 1) lov, forskrift og tilsyn (for eksempel Skatteetaten, Finanstilsynet, SSB), 2) Forbrukerrådet og Finansportalen, 3) Smarte penger, 4) norske bank- og finansinstitusjoner (for eksempel Finans Norge, banker og forsikringsselskaper) med åpne, offentlige sider, 5) andre, for eksempel nettaviser og blogger. Siden gir ikke råd der vi ikke har en solid og oppdatert kilde. Kilden skal være funnet og datert, og teksten skal skille mellom det kilden sier og det vi forklarer. Bank- og finansinstitusjoner regnes som tryggere enn nettaviser fordi de svarer for produkter og vilkår og har åpne sider med egen dato. Regelen om oppdatering gjelder særlig dem: siden må ha en synlig dato eller versjon, vi oppgir kontrolldatoen vår, og en institusjon brukes for sine egne produkter og vilkår, ikke som eneste kilde til generelle råd, fordi de også selger produktene.
 
 **Alternativer:**
 - A: Bruke den kilden som er lettest tilgjengelig. Forkastet: bransjetekster og bloggere kan være gamle eller ha egne interesser.
 - B (valgt): Fast rekkefølge, og «ikke avklart» der vi ikke har kilde.
-- C: Alltid vise flere kilder. Forkastet som regel: nyttig ved uenighet, men ikke et krav for hver påstand.
+- C: Sette institusjonene på samme nivå som Forbrukerrådet. Forkastet: de har salgsinteresse i produktene sine.
+- D: Alltid vise flere kilder. Forkastet som regel: nyttig ved uenighet, men ikke et krav for hver påstand.
 
 **Begrunnelse:** Passer med «public claims only what can be documented» og med regelen om at tidsavhengige regler trenger primærkilde, regelår og kontrolldato (SPRAKREGLER.md, punkt 5). Eksempel 25.10.2026: Forbrukerrådet oppgir 5 år som minste sparehorisont for aksjefond, mens andre aktører oppgir 3 til 10 år. Vi bruker Forbrukerrådet. Dyr gjeld og buffer før fond står ikke på Forbrukerrådets fondsside, så den påstanden er ikke tilskrevet dem.
 
-**Akseptert ulempe:** Noen nyttige råd må vente til vi har kilde, og tekster kan føles forsiktige. Primærkilder oppdateres sjelden, så kontrolldatoer må følges opp.
+**Akseptert ulempe:** Institusjonenes sider kan endres uten varsel og kan farges av salg. Noen nyttige råd må vente til vi har kilde, og tekster kan føles forsiktige. Primærkilder oppdateres sjelden, så kontrolldatoer må følges opp.
 
 **Vurder på nytt når:** Vi får flere kilder med samme status, eller en kilde endrer synspunkt.
 
-**Status:** Vedtatt 25.10.2026 etter prosjekteiers prioritering.
+**Status:** Vedtatt 25.10.2026 etter prosjekteiers prioritering. Presisert samme dag: norske bank- og finansinstitusjoner hører til de åpne kildene, under Smarte penger og over nettaviser.
 
 ### Risikospørsmålet ut av startflyten
 
