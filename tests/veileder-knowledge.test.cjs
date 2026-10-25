@@ -2,7 +2,7 @@ const assert=require('node:assert/strict');
 const V=require('../dist/veileder-engine.js'),Cards=require('../dist/veileder-cards.js'),C=require('../dist/veileder-context.js');
 const entries=require('../dist/veileder-knowledge.js');
 for(const e of entries)V.register(e);
-assert.equal(V.topics.length,15);assert.equal(V.topics.filter(t=>!t.category).length,7,'new entries must not turn into more main choices');
+assert.equal(V.topics.length,16);assert.equal(V.topics.filter(t=>!t.category).length,7,'new entries must not turn into more main choices');
 for(const e of entries){
  for(const q of e.questions)assert.equal(V.findTopics(q)[0],e.id,q);
  if(e.kind==='explainer'){assert.throws(()=>V.register(e),/duplisert/);continue;}
@@ -47,7 +47,7 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
  assert.match(a.intro,/kjøpekraft/i);assert.match(a.intro,/inflasjon/);
  assert.ok(a.terms.some(x=>x.term==='prisvekst'&&x.alsoCalled==='inflasjon'));
  assert.match(a.example.text,/ikke en prognose/);
- assert.ok(a.sources.length&&a.sources.every(s=>s.url.startsWith('https://')));assert.equal(a.checked,'2026-10-24');
+ assert.ok(a.sources.length&&a.sources.every(s=>s.url.startsWith('https://')));assert.equal(a.checked,'2026-10-25');
  // Regneeksemplet i teksten stemmer.
  const later=100000*1.025**10,today=100000/1.025**10;
  assert.ok(Math.abs(later-128000)<500,String(later));assert.ok(Math.abs(today-78000)<500,String(today));

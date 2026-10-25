@@ -71,7 +71,6 @@ Rett tema, men svaret besvarer ikke spørsmålet. Før sluttkontrollen åpnet s�
 |---|---|---|
 | `barnesparing-skatt` | «kan jeg spare til barnet uten å bli skattlagt», «skatt på barnesparing» | Barnesvaret nevner ikke skatt |
 | `bsu-flytting` | «hva skjer med BSU hvis jeg flytter». Krever at spørsmålet nevner BSU (eller «boligsparing for ungdom»), så «jeg flytter og skal kjøpe bolig» ikke rammes | BSU-svarene sier ingenting om flytting |
-| `renters-rente` | «hvordan fungerer renters rente» | Ingen post forklarer renters rente |
 | `utbytte` | «aksjeutbytte», «hva er utbytte fra fond» | Sparekonto eller fond nevner ikke utbytte. Funnet i sluttkontrollen |
 | `rentefond` | «hva er et rentefond» | Sparekonto eller fond nevner ikke rentefond. Funnet i sluttkontrollen |
 
@@ -99,3 +98,7 @@ Regler:
 Innhold: kontrollert mot Skatteetatens norske sider og Nordnets FAQ 24. oktober 2026. Sidene oppgir ingen oppdateringsdato, bortsett fra rettledningen (revidert oktober 2025). Påstander som ikke lot seg bekrefte ble tatt ut. Forbeholdet vises under «Kilder og forbehold». Intro-endringene #53 gjorde i `q-ips-ask` og `q-ask-zero` er ikke tatt med.
 
 Kontroll mot norske primærkilder (24. oktober 2026): rene rentefond kan ikke ligge på ASK, og aksjer og aksjefond må være hjemmehørende i EØS. Siden sier ikke hvor et aksjefond må investere, så påstanden om at et EØS-fond kan investere utenfor Europa er tatt ut av `q-ask-zero`. Kjent rest: spørsmålet «konto» alene gir ingen treff.
+
+## Renters rente og kjøpekraft, 25. oktober 2026
+
+SV-022 får egen forklaring `q-renters-rente`; GAPS-raden fjernes fordi kortsvar og eksempel nå dekker begrepet. SV-023 gjenbruker `q-kjopekraft`, med kontoeksempel og forbehold om skatt ved kortsvaret. Bare innholdsdata og relevante forventninger endres, ikke rangeringen. Historisk sluttkontroll beholdes som historikk.
