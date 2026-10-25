@@ -79,8 +79,8 @@ Grunnlag: Uu-tilsynets regelverkssider (se kilder). Dette er ingen juridisk vurd
 **Åpent**
 - Ikke testet: iPhone Safari, VoiceOver, NVDA, Firefox og Edge med bare tekstforstørring. Sjekkliste: `claude/manuell-sjekkliste-2026-10-23.md` i prosjektet.
 - Ikke gjennomgått kriterium for kriterium: manuelle kriterier som informasjon og relasjoner (1.3.1), formål med lenker (2.4.4) og forutsigbarhet (3.2.x). De automatiske testene dekker dem ikke fullt ut.
-- Forsiden har to `h1`. Ikke sjekket om begge vises samtidig.
-- Ingen tilgjengelighetsside eller lenke til en slik fra menyen.
+- Forsiden har to `h1`, men de vises aldri samtidig (kontrollert 25.10.2026). I steget med skjemaet for utgangspunktet er ingen `h1` synlig. Ikke endret, siden kalkulatoren er fryst.
+- Tilgjengelighetsside finnes i PR #75, lenket fra Om-siden. Ikke lagt i hovedmenyen eller kalkulatorens bunntekst. Lars avgjør.
 - Lenkevarselet (toast) forsvinner av seg selv. Ikke vurdert mot 2.2.1.
 - Ingen test med brukere som har funksjonsnedsettelser.
 - Automatisk verktøy som axe-core er ikke kjørt (ikke tilgjengelig i arbeidsmiljøet).
