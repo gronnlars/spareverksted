@@ -19,7 +19,7 @@ Hver påstand om tall, grenser, regler og anbefalinger har en kilde med URL, kil
 4. Medier med redaksjonelt ansvar. De viser vei til primærkilden og er ikke eneste kilde til tall, regler eller råd. Vi navngir ikke bestemte medier som solide før de er kontrollert mot kriteriene.
 5. Alt annet. Brukes aldri.
 
-En kilde høyere opp går foran en lavere når de er uenige. Vi går ned ett nivå bare når nivået over ikke dekker spørsmålet. Er kildene uenige på samme nivå, viser vi begge med kildehenvisning, eller vi skriver «ikke avklart». Vi velger aldri stille mellom dem.
+En kilde høyere opp går foran en lavere når de er uenige. Vi går ned ett nivå bare når nivået over ikke dekker spørsmålet. Kilden til en norsk regel eller et norsk forhold er den norske versjonen. En engelsk side kan vise vei til den norske, men er ikke selv kilde. Finnes det ikke norsk versjon, står påstanden som «ikke avklart» til noen har lest en norsk kilde. Er kildene uenige på samme nivå, viser vi begge med kildehenvisning, eller vi skriver «ikke avklart». Vi velger aldri stille mellom dem.
 
 ## K3. Tre datoer, hver for seg
 
