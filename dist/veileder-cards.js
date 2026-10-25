@@ -49,16 +49,16 @@ const poorFits={
 };
 function build(id,profile){
  const full=V.answer(id,profile),p=full.profile,topic=V.topics.find(t=>t.id===id);if(topic.entry&&topic.entry.kind==='explainer')return F.resolve({...full,intro:topic.entry.intro,note:'',options:[],steps:[]});
- let c=content[id]||topic.entry;const category=topic.category||id;let note='';
+ let c=content[id]||topic.entry;const category=topic.category||id;let note='',covered=[];
  if(p.debt==='yes')note='Prioriter nødvendige utgifter, en liten reserve og nedbetaling av dyr gjeld før mer binding eller risiko.';
  else if(p.buffer==='no')note='Uten buffer kan en uventet regning føre til nye lån. Sett av en tilgjengelig reserve før du binder mer.';
  else if(p.income==='uncertain')note='Med usikker inntekt er tilgjengelige penger ekstra viktige.';
- else if(typeof c.notice==='function'&&c.notice(p))note=c.notice(p);
+ else if(typeof c.notice==='function'&&c.notice(p)){note=c.notice(p);if(typeof c.noticeCovers==='function')covered=c.noticeCovers(p);}
  else if(V.horizonRelevant(id)&&p.years!==null&&p.years<F.value('fundMinYears'))note='For et viktig, nært mål bør pengene være tilgjengelige uten at du må tåle et børsfall.';
  if(p.debt==='yes'&&p.buffer==='no'&&category!=='buffer')c={...content.buffer,intro:c.intro+' Før mer binding eller investeringsrisiko bør reserve og dyr gjeld avklares.'};
  const options=c.options.map((o,index)=>({...o,poorFit:o.poorFit||(c.options===content.buffer.options?poorFits.buffer:poorFits[category])[index]}));
  const steps=p.debt==='yes'&&p.buffer==='no'?['Dekk nødvendige utgifter og sett av en liten startbuffer.','Betal ned dyr gjeld. Behold startbufferen til nødvendige overraskelser.','Bygg en større buffer tilpasset utgifter og inntekt.']:category==='buffer'&&p.buffer!=='yes'?['Finn ut hvilke uventede utgifter økonomien må tåle.','Sett et overkommelig beløp på en tilgjengelig konto.','Juster reserven når utgifter eller inntekt endrer seg.']:[];
- return F.resolve({...full,intro:c.intro,note,options,steps});
+ return F.resolve({...full,parts:full.parts.filter(x=>!covered.includes(x.title)),intro:c.intro,note,options,steps});
 }
 const api={build,content};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareCards=api;
 })(typeof window!=='undefined'?window:globalThis);
