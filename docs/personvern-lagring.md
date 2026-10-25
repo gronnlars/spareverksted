@@ -126,6 +126,8 @@ Spørsmål som er sendt:
 - **Domene.no (fem):** hvilken avtale eller vilkår som gjelder for videresending, og om den er en databehandleravtale; lagring i kø, retur og sikkerhetskopi og hvor lenge; e-postlogger og oppbevaring; hvor e-posten behandles og underleverandører; sletting og behandling utenfor EØS.
 - **Nkom (to):** om lagring av tema og visningsnivå i localStorage etter aktivt valg er strengt nødvendig etter § 3-15, eller bør gjelde bare økten; om arbeidsplanen og veilederkonteksten i sessionStorage ved tur fra kalkulatoren til veiledningen faller under unntaket. Vedlagt var den korte lagringstabellen.
 
+De reviderte utkastene (25.10.2026) er historikk, ikke ventende utsendinger. Ingen ny e-post trengs for presiseringene alene.
+
 Ikke sendt: spørsmål til GitHub Support og til Datatilsynet. Utkast finnes hos Lars.
 
 Hva logginnslagene betyr:
