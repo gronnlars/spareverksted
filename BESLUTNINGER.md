@@ -215,7 +215,7 @@ Kildenotatene ligger i prosjektmappen «claude/» (ikke i repoet). PR-nummer st�
 - A: Bare i Veilederen («Pengene skal brukes snart»), som før.
 - B (valgt): Tekst i resultatet, regelbasert og uten nye beregninger.
 - C: Begrense eller advare i selve sparetidsfeltet. Forkastet: korte mål som ferie er gyldige, og et felt som nekter eller advarer ville blandet inn spareformen, som feltet ikke kjenner.
-- D: Råd om dyr gjeld og buffer i samme tekst. Utsatt: vi har ingen offentlig kilde som sier det, og Forbrukerrådets fondsside nevner det ikke (sjekket 25.10.2026).
+- D: Råd om dyr gjeld og buffer i samme tekst. Utsatt: vi har ingen offentlig kilde som sier det, og Forbrukerrådets fondsside nevner det ikke (kontrollert av oss 25.10.2026). Siden oppgir ingen egen oppdateringsdato som vi har sett, så kildens dato er ikke avklart.
 
 **Begrunnelse:** Anbefalingen kan siteres fra en offentlig kilde (Forbrukerrådet, Fondstyper: «Minimum anbefalt sparehorisont 5 år»). Teksten oppgir at det er en anbefaling, ikke en regel eller garanti. Kalkulatoren er fryst, og dette endrer ingen tall, bare forklaringen. Kildenivå for nye påstander er beskrevet i oppføringen «Kildenivå for påstander og råd» (PR #69): offentlige kilder først, med norske bank- og finansinstitusjoner under Forbrukerrådet og medier med redaksjonelt ansvar nedenfor. Der vi ikke har en solid og oppdatert kilde, gir vi ikke råd.
 
