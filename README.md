@@ -34,6 +34,8 @@ Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/packa
 - `dist/index.html`: sidens struktur.
 - `tests/engine.test.cjs`: uavhengig kontroll mot månedlige og årlige løkker.
 - `tests/personvern-browser.cjs`: i Chromium, Firefox og WebKit: ingen lagring ved lasting eller delt lenke, nivå bare ved eget valg, sletting, ingen gjenoppstått plan fra en annen fane, ingen cookies og ingen forespørsler til andre domener.
+- `tests/kontakt-browser.cjs`: i Chromium, Firefox og WebKit: kontaktknappene viser adressen først ved trykk, kopiering bare ved eget trykk, tastatur, fallback ved blokkert utklippstavle, ingen komplett adresse i HTML.
+- `scripts/produksjonskontroll.cjs`: observerer forespørsler, cookies og lagring i en ren nettleser (`--local` mot `dist/`, eller en https-adresse). Brukes på en maskin med tilgang til den publiserte siden. Se docs/personvern-lagring.md.
 - `tests/personvern-lagring.test.cjs`: hva som lagres og når, at veilederbroen bare skriver ved tur til veilederen, og at slettingen bare rører Spareverksteds egne nøkler.
 - `tests/validation.test.cjs`: feltgrenser og feltnavn, sparemål, uttaksfelt, delte lenker felt for felt, gamle lagrede planer og realistiske planer mot lukket formel.
 - `tests/results.test.cjs`: kontrolltilfellene A til D mot en uavhengig månedsløkke, årsak til tap (kostnader, børsfall), kjøpekraft, lange perioder og forskjellen mellom innskudd ved månedsslutt og månedsstart.
@@ -100,7 +102,7 @@ Spareverksted lagrer ingenting før brukeren gjør noe. Det finnes tre ulike tin
 
 Andre valg: fargetema (`localStorage`, `sv-color-theme`) lagres når brukeren trykker på et tema. Visningsnivå (`localStorage`, `sv-level`) lagres bare når brukeren selv velger Utforsk eller Avansert med nivåknappene. «Enkel» er standard og lagres ikke, og automatiske tilbakestillinger lagrer ingenting. At brukeren har trykket seg videre fra startguiden, huskes bare i fanen (`sessionStorage`, `sv-started`). Å åpne siden eller en delt lenke skriver ingenting. Den gamle permanente nøkkelen `sv-started` i `localStorage` fjernes ved neste besøk.
 
-Siden `personvern.html` viser dette for brukeren og har en knapp som sletter alle nøklene over, og bare dem. Den når `localStorage` for hele nettstedet, men bare `sessionStorage` i sin egen fane. Andre åpne faner leser planene på nytt når de endres (`storage`-hendelsen), så slettede planer skrives ikke tilbake. Full kartlegging med fil og linje står i [docs/personvern-lagring.md](docs/personvern-lagring.md).
+Siden `personvern.html` viser dette for brukeren og har en knapp som sletter alle nøklene over, og bare dem. Den når `localStorage` for hele nettstedet, men bare `sessionStorage` i sin egen fane. Andre åpne faner leser planene på nytt når de endres (`storage`-hendelsen), så slettede planer skrives ikke tilbake. E-postkontakt er en egen behandling: se [docs/kontakt-epost.md](docs/kontakt-epost.md). Delen av en delt lenke etter `#` sendes ikke i selve HTTP-forespørselen, men sidens skript leser den, og tjenester du deler lenken gjennom kan se den. Full kartlegging med fil og linje står i [docs/personvern-lagring.md](docs/personvern-lagring.md).
 
 En delt lenke inneholder skjemaverdiene og visningsnivået etter `#`, men ikke alder, risikovalg eller andre lagrede planer. Delen etter `#` sendes ikke til nettstedet i HTTP-forespørselen. Når en lenke åpnes, kontrolleres hvert felt for seg. Ugyldige felt får standardverdi, gyldige beholdes, og brukeren får beskjed om hvilke felt som er endret. Lagrede planer kontrolleres på samme måte når de åpnes.
 

@@ -1,106 +1,132 @@
-# Personvern og lokal lagring: kartlegging 25. oktober 2026
+# Personvern og lokal lagring: kartlegging
 
-Utført av Claude på oppdrag fra Lars (via GPT), under prosjektpausen. Arbeidsnotat, ikke juridisk vurdering. Ingenting her betyr at siden er «godkjent» etter GDPR eller ekomloven.
+Arbeidsnotat utført av Claude på oppdrag fra Lars, 25. oktober 2026. Ikke juridisk vurdering. Ingenting her betyr at siden er «godkjent» etter GDPR eller ekomloven. Prosjektet er på vent (se `docs/regulatorisk.md` på grenen `docs/regulatorisk-pause`); dette er avgrenset personvernarbeid på eget oppdrag.
 
-## Grunnlag
+## Grunnlag og kildekategorier
 
-- Repo: `gronnlars/spareverksted`
-- Main: `04eed8e278d672bd4aae31213b346b8befc5e6a5` (25.10.2026 14:06, «Publiser kildekontrollert renters rente (#76)»)
-- Gren for rettingene: `fix/personvern-lokal-lagring`
-- Publisering: `.github/workflows/static.yml` bygger `dist/` og publiserer med `actions/deploy-pages` ved push til main. `dist/` har ingen `CNAME`-fil; egendomenet må da være satt i Pages-innstillingene.
-- Testmiljø: Linux-arbeidsområde med Node 22. **Ingen nettleser var tilgjengelig**, og nettverket slapp ikke gjennom til `spareverksted.no`, `gronnlars.github.io` eller DNS-oppslag. Den publiserte siden, HTTP-hodene og DNS er derfor **ikke kontrollert**. Avvik mellom kildekode og publisert versjon er **ikke undersøkt**.
+- Repo: `gronnlars/spareverksted`. Main da kartleggingen startet: `04eed8e278d672bd4aae31213b346b8befc5e6a5`. Rettingene ligger på grenen `fix/personvern-lokal-lagring` (PR #78). Full commit-ID på siste head oppgis i PR-en.
+- Publisering: `.github/workflows/static.yml` bygger `dist/` og publiserer med `actions/deploy-pages` ved push til main. `dist/` har ingen `CNAME`-fil.
 
-## Hva som er kontrollert, og hvordan
+Hver opplysning under har én av disse kategoriene. De skal ikke blandes.
 
-| Område | Status | Metode |
-|---|---|---|
-| Lagringsnøkler i egen kode | Kontrollert | Søk etter `localStorage`, `sessionStorage`, `indexedDB`, `document.cookie`, `caches`, `serviceWorker` i alle filer i `dist/` |
-| Nettverkskall i egen kode | Kontrollert i kildekode | Søk etter `fetch`, `XMLHttpRequest`, `sendBeacon`, `WebSocket`, skjema med `action`, eksterne `src`/`href` i `<script>`, `<link>`, `<img>`, `<iframe>`, CSS `url()` og `@import` |
-| Publisert nettverkstrafikk | **Ikke kontrollert** | Ingen nettleser og ingen tilgang til domenet |
-| Cookies fra server eller CDN | **Ikke kontrollert** | Krever HTTP-hoder fra publisert side |
-| Hosting og leverandører | Delvis | Deployoppsett lest. Pages-innstillinger, DNS og eventuell proxy ikke tilgjengelig |
-| Serverlogger | Ikke tilgjengelig | Se «Nettleverandøren» |
+| Kategori | Hva det betyr |
+|---|---|
+| **Kodefunn** | Lest i kildekoden på grenen. Viser hva koden gjør, ikke hva som er publisert. |
+| **Lokal observasjon** | Målt i nettleser mot dist/ fra grenen (ikke publisert). Chromium 153 via Playwright 1.63.0, Linux. CI kjører i tillegg Chromium, Firefox og WebKit (Playwright 1.56.0). WebKit i CI er ikke en fysisk iPhone. |
+| **Observasjon fra publisert side** | **Ingen.** Arbeidsmiljøet har ikke tilgang til `spareverksted.no` eller `gronnlars.github.io` (egress-proxyen avviser vertene). |
+| **Leverandørens opplysninger** | Fra leverandørens egne sider, med lesedato. |
+| **Ukjent** | Ikke undersøkt eller ikke tilgjengelig. Gjettes ikke. |
 
-## Funn i kildekoden
+## Kodefunn
 
-- Ingen `fetch`, XHR, `sendBeacon`, WebSocket, `indexedDB`, Cache Storage, service worker eller `document.cookie`.
-- Ingen eksterne skript, stilark, skrifter eller bilder. Alle `https://`-adresser er vanlige lenker brukeren selv må klikke, eller `canonical`/`og:`-metadata som ikke lastes av nettleseren.
+- Ingen `fetch`, XHR, `sendBeacon`, WebSocket, `indexedDB`, Cache Storage, service worker eller `document.cookie` i `dist/`.
+- Ingen eksterne skript, stilark, skrifter eller bilder. Alle `https://`-adresser i HTML og JS er lenker brukeren selv må åpne, eller `canonical`/`og:`-metadata.
 - Skjemaene (`journeyForm`, `saveForm`, `questionForm`, `profileForm`) har ingen `action` og stoppes med `preventDefault`. De behandles lokalt.
-- «Del plan» legger tallene etter `#`. Fragmentet sendes ikke i HTTP-forespørselen eller i `Referer`. Alder, risikovalg, aldersgruppe og formål holdes utenfor (`app.js:283`).
-- Nedlasting lages med `Blob` og `URL.createObjectURL` (`journey.js`), PDF via `window.print()`. Ingenting sendes.
+- Delingslenken legger tallene etter `#` (`app.js`, `share`). Alder, risikovalg, aldersgruppe og formål holdes utenfor.
+- Nedlasting lages med `Blob` og `URL.createObjectURL` (`journey.js`), PDF via `window.print()`.
 - Søketeksten i «Spør om sparing» legges ikke i URL og lagres ikke.
+- E-postadressene settes sammen i nettleseren først når brukeren trykker (`kontakt.js`). Ingen ferdig adresse i HTML, attributter eller metadata. Bitene ligger i `kontakt.js` og kan hentes ut av den som leser filen. Dette er ikke sikker beskyttelse.
 
 Fravær av dette i kildekoden beviser ikke at den publiserte siden ikke kommuniserer med andre, eller at leverandøren ikke setter cookies.
 
-## Lagringstabell etter rettingene
+## Lagringstabell (kodefunn, grenen)
 
-Kodefunn. Linjenumre gjelder grenen `fix/personvern-lokal-lagring`.
+«Nødvendig for» er vår begrunnelse for hvorfor lagringen hører til en funksjon brukeren ber om. Den er et forslag til vurdering, ikke en konklusjon. Ekomloven § 3-15 gjelder også lagring som ikke er personopplysninger. At lagringen er kort, lokal eller etter et trykk, gjør den ikke automatisk unntatt.
 
-| Nøkkel / mekanisme | Fil og linje | Felt | Skrives | Leses | Brukerhandling | Formål | Varighet | Sletting | Mottaker | Foreslått begrunnelse |
+| Nøkkel / mekanisme | Fil | Felt | Skrives | Leses | Brukerhandling | Nødvendig for | Varighet | Sletting | Mottaker | Status |
 |---|---|---|---|---|---|---|---|---|---|---|
-| `sv-scenarios` (localStorage) | `app.js:21` les, `app.js:243` skriv | Navn på plan, hele `state` (beløp, sparetid, avkastning, alder hvis oppgitt, m.m.), `mode`, `view` | Ved «Lagre plan», sletting av plan, angre | Ved lasting av kalkulatoren | «Lagre plan» | Å finne planen igjen senere | Ingen utløpstid | «Slett» per plan, sletteknapp på personvernsiden, nettleserens innstillinger | Ingen. Blir i nettleseren | Sterkest: uttrykkelig valg om å lagre på enheten |
-| `sv-level` (localStorage) | `app.js:21` les, `app.js:251` skriv | `explore` eller `advanced` | Bare ved trykk på nivåknapp. «Enkel» fjerner nøkkelen | Ved lasting | Trykk på Utforsk eller Avansert | Huske visningsvalg | Ingen utløpstid | Velg «Enkel», sletteknapp, nettleser | Ingen | **Uavklart.** Brukeren trykker selv, men «husk på tvers av besøk» er ikke uttrykkelig bedt om |
-| `sv-color-theme` (localStorage) | `theme.js:6` les, `theme.js:24` skriv | `neutral`, `light` eller `night` | Bare ved trykk på tema | Før stiler lastes | Trykk på tema | Huske tema | Ingen utløpstid | Sletteknapp, nettleser | Ingen | **Uavklart**, samme som nivå |
-| `sv-started` (sessionStorage) | `journey.js:7–8` | `'1'` | Når brukeren trykker seg videre fra startguiden. Ikke ved lasting eller delt lenke | Ved lasting | Gå videre fra startguiden | Unngå at startguiden vises igjen ved tur til veilederen og tilbake | Fanen. Kan gjenopprettes med faneøkten | Lukke fanen, sletteknapp | Ingen | Teknisk nødvendig for flyten i fanen |
-| `sv-started` (localStorage, gammel) | `journey.js:6` fjernes | `'1'` | Skrives ikke lenger | – | – | – | Fjernes ved neste besøk | Automatisk | Ingen | – |
-| `sv-working-plan-v1` (sessionStorage) | `veileder-context.js:40–45`, `veileder-bridge.js:6, 25–28` | Hele `state` med beløp, `mode`, `view` | Ved klikk på lenke til `spor.html`. Deretter ved `pagehide` bare hvis nøkkelen finnes | Ved lasting av kalkulatoren uten `#` | Klikk til «Spør om sparing» | At planen er uendret når brukeren kommer tilbake | Fanen. Kan gjenopprettes | Tilbake til startskjermen, lukke fanen, sletteknapp | Ingen | Sterk: brukeren navigerer selv, og formålet er å bevare det brukeren holder på med |
-| `sv-guidance-tab-v2` (sessionStorage) | `veileder-context.js:4, 15–17`, `veileder-ui.js:9, 151`, `veileder-bridge.js:25` | Alder, sparetid, risiko, buffer, dyr gjeld, inntekt, sparemåte, fastrente, boligeier, skatt (BSU), sparetid per tema, opphav. Ingen beløp, navn eller fritekst | Klikk til veilederen fra en startet plan; «Oppdater vurderingen» | I veilederen og ved retur til kalkulatoren | Klikk til veilederen eller «Oppdater vurderingen» | Tilpasse forklaringene uten å spørre igjen | Fanen. Kan gjenopprettes | «Glem opplysningene mine», sletteknapp | Ingen | Sterk for «Oppdater vurderingen». Merk: opplysningene om gjeld, buffer og inntekt sier noe om brukerens økonomi |
-| Utklippstavle | `experience.js:72`, `om.js:11` | Delingslenke, Vipps-nummer | Ved «Kopier» | – | Trykk | Kopiere | Styres av operativsystemet | – | Ingen | Skjer bare ved trykk. Ikke vurdert om dette regnes som lagring etter § 3-15 |
+| `sv-scenarios` (localStorage) | `app.js` (les ved lasting, `persist`) | Navn og hele planen (beløp, sparetid, avkastning, alder hvis oppgitt, visning) | Ved «Lagre plan», sletting av plan, angre | Ved lasting av kalkulatoren | «Lagre plan» | Å finne planen igjen. Dette er det brukeren ber om. | Ingen innebygd utløpstid | «Slett» per plan, sletteknappen på personvernsiden, nettleserens innstillinger | Ingen | Sterkest grunnlag |
+| `sv-level` (localStorage) | `app.js` | `explore` eller `advanced` | Bare ved trykk på nivåknapp. «Enkel» fjerner nøkkelen | Ved lasting | Trykk på Utforsk eller Avansert | At siden åpner på valgt nivå | Ingen innebygd utløpstid | Velg «Enkel», sletteknappen | Ingen | **Uavklart** (permanent husking) |
+| `sv-color-theme` (localStorage) | `theme.js` | `neutral`, `light` eller `night` | Bare ved trykk på tema | Før stiler lastes | Trykk på tema | At temaet er likt neste gang og ikke blinker | Ingen innebygd utløpstid | Sletteknappen | Ingen | **Uavklart** (permanent husking) |
+| `sv-started` (sessionStorage) | `journey.js` | `'1'` | Når brukeren trykker seg videre fra startguiden. **Ikke** ved lasting, delt lenke eller «Tilbake til planen» | Ved lasting | Gå videre fra startguiden | At startguiden ikke vises igjen ved tur til veilederen og tilbake | Fanen, kan gjenopprettes | Sletteknappen, tilbake til startskjermen | Ingen | Vurderes som del av flyten |
+| `sv-started` (localStorage, gammel) | `journey.js` | `'1'` | Skrives ikke lenger | – | – | – | – | Fjernes (`removeItem`) ved hvert besøk | – | Opprydding av tidligere versjon |
+| `sv-working-plan-v1` (sessionStorage) | `veileder-context.js`, `veileder-bridge.js` | Hele planen med beløp, modus, visning | Når brukeren klikker lenke til `spor.html`; deretter ved `pagehide` bare hvis nøkkelen finnes | Ved lasting av kalkulatoren uten `#` | Klikk til «Spør om sparing» | At planen er uendret ved retur | Fanen. Kan gjenopprettes av nettleseren | Tilbake til startskjermen, sletteknappen (i denne fanen) | Ingen | Vurderes som del av flyten |
+| `sv-guidance-tab-v2` (sessionStorage) | `veileder-context.js`, `veileder-ui.js`, `veileder-bridge.js` | Alder, sparetid, risiko, buffer, dyr gjeld, inntekt, sparemåte, fastrente, boligeier, skatt (BSU), sparetid per tema. Ingen beløp, navn eller fritekst | Ved klikk til veilederen fra en startet plan; «Oppdater vurderingen» | I veilederen og ved retur | Klikk til veilederen eller «Oppdater vurderingen» | At du slipper å fylle inn det samme to ganger | Fanen. Kan gjenopprettes | «Glem opplysningene mine», sletteknappen | Ingen | Vurderes som del av flyten. Opplysningene sier noe om økonomien din |
+| Utklippstavle | `experience.js`, `om.js`, `kontakt.js` | Delingslenke, Vipps-nummer, e-postadresse | Bare ved eget trykk på «Kopier» | – | Trykk | Å kopiere | Styres av operativsystemet | – | Ingen | Ikke vurdert som lagring etter § 3-15 |
 | Nettleserens vanlige cache | Ikke egen kode | Sider, skript, bilder | Nettleseren | Nettleseren | Besøk | Raskere lasting | Styres av nettleser og serverens hoder | Nettleser | – | Ikke egendefinert datalagring. Serverens `Cache-Control` er ikke kontrollert |
 
-## Hva som skjer før første brukerhandling
+### Hva som skjer før første brukerhandling
 
-**Før rettingene (main `04eed8e`):**
+**Før rettingene (main `04eed8e`):** `sv-started` ble skrevet permanent ved åpning av en delt lenke. Veilederkonteksten og (hvis planen var startet) arbeidsplanen med beløp ble skrevet til sessionStorage ved hver `pagehide`, også uten tur til veilederen. `sv-level=simple` ble skrevet permanent ved «Vis spareplanen min» og «Se et eksempel».
 
-1. Ved åpning av en delt lenke ble `sv-started` skrevet permanent til `localStorage` uten noe trykk (`journey.js:120` → `stage(false)` → `rememberStart()`).
-2. Ved å forlate kalkulatorsiden (`pagehide`, også lukking av fanen eller lenke til Om) ble veilederkonteksten skrevet til `sessionStorage`, og arbeidsplanen med alle beløp hvis planen var startet. Dette skjedde selv om brukeren aldri gikk til veilederen.
-3. «Vis spareplanen min» og «Se et eksempel» skrev `sv-level=simple` permanent.
+**Etter rettingene (kodefunn):** Å åpne siden eller en delt lenke skriver ingenting. Siden **leser** `sv-scenarios`, `sv-level`, `sv-color-theme`, `sv-started` (session) og `sv-working-plan-v1` (session) hvis de finnes, og den **sletter** den gamle nøkkelen `sv-started` i localStorage (en skriveoperasjon som bare fjerner). Lokal observasjon bekrefter at et første besøk og en delt lenke gir tomme lagringsområder (`tests/personvern-browser.cjs`, Chromium; Firefox og WebKit i CI).
 
-**Etter rettingene:** Ingen skriving ved lasting, heller ikke når en delt lenke åpnes. Kontrollert i `tests/personvern-browser.cjs` (Chromium, Firefox og WebKit i GitHub Actions) og `tests/personvern-lagring.test.cjs`.
+Dette er ikke et argument for at lagring etter et trykk er lovlig. Det er en minimering.
 
-Merk: at lagring skjer etter et trykk, er ikke i seg selv et lovkrav eller et samtykke. Det er en minimering. Om hver lagring faller inn under unntaket i ekomloven § 3-15, er fortsatt en egen vurdering (se åpne spørsmål).
+## Permanent husking av tema og nivå: alternativer
+
+Uavklart punkt. Vi bygger ikke en samtykkeboks og fjerner ikke funksjonen for å lukke punktet.
+
+| Alternativ | Hva det betyr | Konsekvens |
+|---|---|---|
+| A. Som nå | Husk valget i localStorage etter trykk, uten utløpstid | Mest brukervennlig. Forutsetter at § 3-15-unntaket for «uttrykkelig ønsket tjeneste» holder, noe vi ikke har fått bekreftet |
+| B. Bare i økten | Flytt til sessionStorage | Mindre inngrep, og valget går tapt når nettleseren lukkes. Skriftlig forklaring på siden er enklere. Brukeren må velge på nytt neste dag |
+| C. Ingen husking | Bruk standard hver gang (tema følger operativsystemets innstilling via CSS `prefers-color-scheme` er en mulighet) | Ingen lagring. Svakere tilpasning, og tema kan ikke velges varig |
+| D. Samtykke | Vise valg om å lagre | Bygges ikke før noe krever det |
+
+Spørsmålet er ikke avgjort av grønn CI eller av at brukeren trykker. Det er formulert som spørsmål til Nkom (utkast levert til Lars, ikke sendt).
 
 ## Sletting og andre faner
 
-Sletteknappen fjerner Spareverksteds nøkler i `localStorage` for hele nettstedet, men `sessionStorage` bare i fanen der knappen trykkes. Andre åpne faner beholder sin arbeidsplan og veilederkontekst i fanen og i minnet til de lukkes. Lagrede planer kommer ikke tilbake: kalkulatoren lytter på `storage`-hendelsen og leser planene på nytt når de endres i en annen fane (`app.js:245`). Kontrollert i `tests/personvern-browser.cjs`.
+Sletteknappen på `personvern.html` fjerner Spareverksteds nøkler i `localStorage` for hele nettstedet, men `sessionStorage` bare i fanen der knappen trykkes. Andre åpne faner beholder sin arbeidsplan og veilederkontekst i fanen og i minnet til de lukkes. Dette er ikke endret og lovet ikke annet. Lagrede planer kommer ikke tilbake: kalkulatoren lytter på `storage`-hendelsen og leser planene på nytt når de endres i en annen fane (`app.js`). Kontrollert i `tests/personvern-browser.cjs`.
 
-`localStorage` har ingen innebygd utløpstid, men nettleseren kan fjerne data, for eksempel ved lite lagringsplass eller når brukeren sletter nettstedsdata.
+Knappen: forklarer og krever bekreftelse når det finnes lagrede planer («kan ikke angres»), rører bare nøklene i listen (`personvern.js`), melder fra hvis noe ikke kunne slettes, og viser ingen knapp og en forklaring hvis nettleseren blokkerer lagring.
 
-## Feil funnet i kontroll av PR #78
+`localStorage` har ingen innebygd utløpstid, men nettleseren kan fjerne data. `sessionStorage` forsvinner vanligvis når fanen lukkes, men nettlesere som gjenoppretter faner kan gjenopprette den. Produkttekst lover derfor ikke sletting ved lukking.
 
-GPT fant 25.10.2026 at `journey.js` pakker inn `setLevel` og bare sendte videre nivået. Innstillingen `{remember:false}` gikk tapt, slik at automatiske nivåskifter likevel kunne lagres. Rettet ved å sende videre alle argumenter. Testen kobler nå funksjonene sammen slik siden gjør, og feiler mot den gamle innpakningen. Den første testen kontrollerte `setLevel` isolert og fanget ikke feilen.
+## Delte lenker
 
-## Nettleverandøren
+Delen etter `#` sendes ikke i selve HTTP-forespørselen til nettstedet. Sidens skript leser den. Tjenester brukeren deler lenken gjennom (e-post, meldingsapper) kan se og lagre hele lenken. Vi skriver ikke at fragmentet «aldri» kan sendes.
 
-- Publisering skjer med GitHub Pages (workflow-fil). At egendomenet går direkte til GitHub uten annen proxy eller CDN, er **ikke bekreftet**: DNS var ikke tilgjengelig.
-- GitHub skriver at besøkendes IP-adresse logges og lagres av sikkerhetshensyn, også for besøkende som ikke er logget inn ([What is GitHub Pages?](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages), lest 25.10.2026).
-- GitHubs generelle personvernerklæring (ikrafttredelse 27. april 2026) nevner ikke Pages særskilt, oppgir ingen lagringstid for slike logger, oppgir GitHub, Inc. og GitHub B.V. som behandlingsansvarlige, og viser til standard personvernbestemmelser og EU-US Data Privacy Framework for overføring ([GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement), lest 25.10.2026). Ingen avtale mellom Lars og GitHub om databehandling er kjent.
-- Serverlogger: **ikke tilgjengelig**. GitHub gir ikke Pages-eiere tilgang til besøkslogger, så vidt dokumentasjonen viser. Lagringstid er ikke gjettet.
+## Lokal observasjon av PR-versjonen
 
-### Spørsmål til GitHub Support
+Kjørt 25.10.2026 med `scripts/produksjonskontroll.cjs --local` (Chromium 153, ren profil, dist/ fra grenen, oppdiktede tall: 1 000 kr start, 500 og 750 kr per måned). Åtte trinn: første besøk, start, endre beløp/nivå/tema, lagre plan, gjenåpne, tur til veilederen med søk, personvernside med sletting, feilside.
 
-1. Hvilke opplysninger logges for besøk på en Pages-side med eget domene (IP, tidspunkt, URL, user agent, referer)?
-2. Hvor lenge lagres disse loggene, og hvor (region)?
-3. Behandler GitHub disse loggene som egen behandlingsansvarlig eller på vegne av siden? Finnes det en databehandleravtale som gjelder Pages for en gratis personlig konto?
-4. Settes det informasjonskapsler eller brukes annen lagring i nettleseren for besøkende på Pages-sider?
-5. Går trafikk til Pages via en tredjeparts CDN, og i så fall hvilken?
+- 64 forespørsler, alle til samme opprinnelse. Ingen til andre verter. Ingen forespørsler med annen metode enn GET. Ingen omdirigeringer. Ingen WebSocket.
+- Ingen `Set-Cookie`. `context.cookies()` tom etter alle trinn.
+- Lagring etter trinn: tom → `sv-started` (session) → `sv-level`, `sv-color-theme` → `sv-scenarios` → (veileder) `sv-working-plan-v1`, `sv-guidance-tab-v2` → tom etter sletting.
 
-## Handlinger for kontoeier (Lars)
+Dette gjelder en lokal server uten CDN og uten leverandørens hoder. Det sier ingenting om hva hostingen sender.
 
-1. Bekreft i GitHub → Settings → Pages: kilde («GitHub Actions»), eget domene, «Enforce HTTPS».
-2. Bekreft hos domeneregistrar hvem som leverer DNS for spareverksted.no, og at det ikke ligger en proxy (for eksempel Cloudflare) foran.
-3. Avklar hvem som er ansvarlig og hvilken kontaktadresse personvernsiden skal ha. Ikke publiser siden før det er gjort.
-4. Åpne spareverksted.no i en privat nettleserfane med utviklerverktøy (Nettverk + Lagring/Application) og bekreft: ingen forespørsler til andre domener enn spareverksted.no, ingen `Set-Cookie`, ingen lagring før første trykk. Gjør dette etter publisering av rettingene, også på iPhone.
-5. Send spørsmålene over til GitHub Support hvis svarene trengs før publisering.
+## Observasjon fra publisert side
+
+**Ikke utført.** Egress-proxyen i arbeidsmiljøet avviser tilkobling til `spareverksted.no`, `gronnlars.github.io` og DNS-oppslag. Ikke omgått. Kort kontroll for en maskin med tilgang:
+
+```
+node scripts/produksjonskontroll.cjs https://spareverksted.no > produksjon.json
+curl -sIL https://spareverksted.no/        # omdirigeringer, HTTPS, hoder
+curl -sI http://spareverksted.no/          # skal gå til https
+curl -sI https://www.spareverksted.no/
+dig +short spareverksted.no A AAAA CNAME NS; dig +short www.spareverksted.no CNAME
+```
+
+Se i `sammendrag`: `forespørslerTilAndreVerter`, `Set_Cookie`, `ikkeGET_ellerMedBody`, `omdirigeringer`, `førsteDokument` (server, via, hsts, cache) og `lagringEtterHvertTrinn`. GitHub Pages kjenner man igjen på `server: GitHub.com` og `x-github-request-id`. Hvis andre verter dukker opp (proxy/CDN), gjelder leverandørspørsmålene også dem. Gjenta etter eventuell senere publisering for å bekrefte at riktig versjon er ute. Nettleserens logg viser ikke hva leverandøren lagrer på serveren.
+
+## Nettleverandøren (leverandørens opplysninger, lest 25.10.2026)
+
+- Sidene publiseres med GitHub Pages (workflow-fil). At egendomenet går direkte til GitHub uten annen proxy eller CDN er **ukjent**.
+- GitHub skriver at besøkendes IP-adresse logges og lagres av sikkerhetshensyn, også for besøkende som ikke er logget inn ([What is GitHub Pages?](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)).
+- GitHubs generelle personvernerklæring (ikrafttredelse 27. april 2026) nevner ikke Pages særskilt, oppgir ingen lagringstid for slike logger, oppgir GitHub, Inc. og GitHub B.V. som behandlingsansvarlige og viser til standard kontraktsklausuler og EU-US Data Privacy Framework for overføring ([GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)). Ingen avtale mellom Lars og GitHub om databehandling er kjent. Roller avgjøres ut fra faktisk forhold og avtale, ikke ut av overskriften i en erklæring.
+- Serverlogger: **ikke tilgjengelig**. Lagringstid er ikke gjettet. Spørsmål til GitHub Support ligger som usendt utkast.
+
+## E-post
+
+E-post til oss er en egen behandling. Se `docs/kontakt-epost.md`.
 
 ## Åpne spørsmål for myndighetsveiledning
 
-- Nkom: Er lagring av tema og visningsnivå i `localStorage` etter at brukeren trykker på valget, «strengt nødvendig for en tjeneste brukeren uttrykkelig har bedt om», eller bør det bare gjelde økten? Er en tur fra kalkulatoren til veiledningen i samme fane nok til at arbeidsplanen i `sessionStorage` faller inn under unntaket?
-- Datatilsynet: Hvordan bør behandlingsansvar og informasjonsplikt vurderes for GitHubs IP-logger på en gratis Pages-side? Er lokal lagring av økonomiske opplysninger som operatøren aldri mottar, en behandling operatøren er ansvarlig for?
+- Nkom: Er lagring av tema og visningsnivå i `localStorage` etter aktivt valg «strengt nødvendig for en tjeneste brukeren uttrykkelig har bedt om», eller bør det bare gjelde økten? Er en tur fra kalkulatoren til veiledningen i samme fane nok til at arbeidsplanen i `sessionStorage` faller inn under unntaket?
+- Datatilsynet: Hvordan bør behandlingsansvar og informasjonsplikt vurderes for GitHubs IP-logger på en gratis Pages-side? Er lokal lagring av økonomiske opplysninger som operatøren aldri mottar, en behandling operatøren er ansvarlig for? Hvordan skilles lokal behandling fra e-postkontakt i personverninformasjonen?
 
 ## Kjente begrensninger
 
-- Nettlesertestene kjøres bare i GitHub Actions (Chromium, Firefox og WebKit i Linux). Arbeidsmiljøet har ingen nettleser. Safari på iPhone er ikke testet. Den publiserte siden er ikke kontrollert.
-- Går brukeren til «Spør om sparing» via adressefeltet eller Om-siden, følger ikke planen med lenger.
-- Personvernsiden har inline CSS og punkter merket «Avklares». Den er `noindex` til den er ferdig.
-- Åpen PR #75 legger til `tilgjengelighet.html`; den siden må også få lenke til personvernsiden hvis begge slås sammen.
+- Nettlesertestene kjører i Chromium (lokalt og i CI), Firefox og WebKit (bare CI). Safari på iPhone er ikke testet. Den publiserte siden er ikke kontrollert.
+- Går brukeren til «Spør om sparing» via adressefeltet eller Om-siden, følger ikke planen med.
+- `personvern.html` har inline CSS, punkter merket «Avklares» og er `noindex`. `noindex` er ingen tilgangskontroll og gjør ikke en uferdig erklæring publiseringsklar.
+- PR #75 legger til `tilgjengelighet.html`. Den siden må få lenke til personvernsiden hvis begge slås sammen. Se PR-en for status.
+
+## Feil funnet i kontroll av PR #78
+
+1. `journey.js` pakket inn `setLevel` og sendte bare nivået videre, så `{remember:false}` gikk tapt. Rettet; testen kobler funksjonene sammen som på siden og feiler mot gammel innpakning.
+2. «Tilbake til planen» ble skjult for planer åpnet fra delt lenke etter at `sv-started` ikke lenger ble skrevet (`startflyt-browser.cjs:98`). Rettet med `planShown` i minnet. «Tilbake til planen» skriver ingenting.
+3. Påstander om utløpstid, «ingenting lagres» og fullstendig sletting ble gjort presise.

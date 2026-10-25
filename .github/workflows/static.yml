@@ -37,6 +37,7 @@ jobs:
           node tests/band.test.cjs
           node tests/personvern-lagring.test.cjs
           node --check dist/personvern.js
+          node --check dist/kontakt.js
           node --check dist/veileder-ui.js
           node --check dist/veileder-sok.js
           node --check dist/veileder-bridge.js
@@ -89,6 +90,9 @@ jobs:
           node tests/personvern-browser.cjs
           SPARE_ENGINE=firefox node tests/personvern-browser.cjs
           SPARE_ENGINE=webkit node tests/personvern-browser.cjs
+          node tests/kontakt-browser.cjs
+          SPARE_ENGINE=firefox node tests/kontakt-browser.cjs
+          SPARE_ENGINE=webkit node tests/kontakt-browser.cjs
           SPARE_ENGINE=firefox node tests/felt-browser.cjs
           SPARE_ENGINE=webkit node tests/felt-browser.cjs
       - name: UI review screenshots

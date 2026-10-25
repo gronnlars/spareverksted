@@ -11,16 +11,18 @@
  root.SparePrivacy=api;
  document.addEventListener('DOMContentLoaded',()=>{
   let local,session;try{local=localStorage;}catch{}try{session=sessionStorage;}catch{}
+  const blocked=!local&&!session;
   const button=document.getElementById('deleteAll'),summary=document.getElementById('deleteSummary'),status=document.getElementById('deleteStatus');
   if(!button)return;
   function describe(){const n=planCount(local),any=stored(local,session).length>0;
+   if(blocked){summary.textContent='Nettleseren gir ikke Spareverksted tilgang til lagring. Da lagres ingenting her, og det er ikke noe å slette.';button.hidden=true;return;}
    summary.textContent=!any?'Spareverksted har ikke lagret noe i denne nettleseren nå.':n?`Du har ${n} lagret${n===1?' plan':'e planer'} her. Slettingen kan ikke angres.`:'Det er lagret valg, men ingen planer. Slettingen kan ikke angres.';
    button.hidden=!any;}
   button.addEventListener('click',()=>{const n=planCount(local);
    if(n&&!confirm(`Slette Spareverksteds data i denne nettleseren, også ${n} lagret${n===1?' plan':'e planer'}? Dette kan ikke angres.`))return;
-   const ok=clearAll(local,session);
+   const ok=clearAll(local,session),left=stored(local,session);
    document.documentElement.dataset.theme='neutral';document.querySelectorAll('[data-color-theme]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.colorTheme==='neutral')));
-   status.textContent=ok?'Slettet. Lukk andre faner med Spareverksted for å fjerne det de har åpent.':'Noe kunne ikke slettes. Slett nettstedsdata for spareverksted.no i nettleserens innstillinger.';
+   status.textContent=ok&&!left.length?'Slettet i denne nettleseren og denne fanen. Andre åpne faner kan fortsatt ha en arbeidsplan i minnet. Lukk dem for å fjerne det.':'Noe kunne ikke slettes. Slett nettstedsdata for spareverksted.no i nettleserens innstillinger.';
    describe();status.tabIndex=-1;status.focus();});
   describe();
  });

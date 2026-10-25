@@ -23,6 +23,13 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await first.goto(origin+'/index.html#start=500&monthly=100&years=3');await first.reload();
   assert(await first.locator('#workbench').isVisible(),'delt lenke åpner planen');
   assert.deepEqual(await keys(first),{local:[],session:[]},'delt lenke lagrer ingenting');
+  // «Start på nytt» kan avbrytes tilbake til den delte planen, uten tap av tall og uten ny lagring.
+  const planBefore=await first.evaluate(()=>JSON.stringify(s));
+  await first.evaluate(()=>document.getElementById('startAgain').click());
+  await first.locator('#closeJourney').click();
+  assert.equal(await first.evaluate(()=>JSON.stringify(s)),planBefore,'tallene er uendret etter avbrutt «Start på nytt»');
+  assert(await first.locator('#workbench').isVisible());
+  assert.deepEqual(await keys(first),{local:[],session:[]},'avbrutt «Start på nytt» lagrer ingenting');
   await first.close();
 
   // 2. Start: bare fanen husker det. Standardnivået lagres ikke.
@@ -57,6 +64,14 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await other.evaluate(()=>document.querySelector('a[href="spor.html"]').click());await other.waitForURL(/spor\.html/);
   const s=await keys(other);assert(s.session.includes('sv-working-plan-v1')&&s.session.includes('sv-guidance-tab-v2'));
   assert(!/"(start|monthly)"/.test(await other.evaluate(()=>sessionStorage.getItem('sv-guidance-tab-v2'))),'veilederkonteksten har ikke beløp');
+
+  // 5b. Blokkert lagring: personvernsiden sier det rett ut og viser ingen sletteknapp.
+  const blockedCtx=await browser.newContext();
+  await blockedCtx.addInitScript(()=>{for(const name of ['localStorage','sessionStorage'])Object.defineProperty(window,name,{get(){throw new DOMException('blocked','SecurityError');}});});
+  const blockedPage=await blockedCtx.newPage();blockedPage.on('pageerror',e=>errors.push(e.message));await blockedPage.goto(origin+'/personvern.html');
+  assert(await blockedPage.locator('#deleteAll').isHidden());
+  assert.match(await blockedPage.locator('#deleteSummary').innerText(),/ikke Spareverksted tilgang til lagring/);
+  await blockedCtx.close();
 
   // 6. Ingen informasjonskapsler og ingen forespørsler til andre domener.
   assert.deepEqual(await context.cookies(),[],'ingen informasjonskapsler');

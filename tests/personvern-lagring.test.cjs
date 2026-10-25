@@ -80,6 +80,25 @@ function bridge(session,{started=true}={}){
  for(const k of new Set(code.match(/'sv-[a-z0-9-]+'/g).map(x=>x.slice(1,-1))))assert(all.has(k),'Mangler i slettelisten: '+k);
 }
 
+// 5b. Kontaktadresser: ingen komplett adresse i filer som publiseres, og privatadressen finnes ikke i produktfilene.
+{
+ const K=require('../dist/kontakt.js'),AT=String.fromCharCode(64),priv='giaever'+'.com';
+ assert.deepEqual(K.kinds.sort(),['generell','personvern']);
+ assert.equal(K.address('personvern'),'personvern'+AT+'spareverksted.no');assert.equal(K.address('generell'),'post'+AT+'spareverksted.no');
+ assert.equal(K.address('annet'),'');
+ const texts={};for(const f of fs.readdirSync(path.join(__dirname,'..','dist')))if(/\.(html|js|css|json|txt|xml|webmanifest)$/.test(f))texts['dist/'+f]=dist(f);
+ for(const f of ['README.md','AGENTS.md','PROVENANCE.md','CONTRIBUTING.md','docs/personvern-lagring.md','docs/kontakt-epost.md','docs/utkast-henvendelser.md'])try{texts[f]=fs.readFileSync(path.join(__dirname,'..',f),'utf8');}catch{}
+ for(const [f,txt] of Object.entries(texts)){
+  for(const kind of K.kinds)assert(!txt.includes(K.address(kind)),f+' inneholder komplett adresse');
+  assert(!txt.includes(AT+'spareverksted.no'),f+' inneholder @spareverksted.no');
+  assert(!txt.toLowerCase().includes(priv),f+' inneholder privatadressen');
+  assert(!/mailto:[^'"\s+<]+/.test(txt),f+' inneholder statisk mailto-lenke');
+ }
+}
+
 // 6. Sidene lenker til personvernsiden.
 for(const f of ['index.html','spor.html','om.html'])assert(dist(f).includes('href="personvern.html"'),f+' mangler lenke');
+// Avbryt «Start på nytt» skal ikke lagre noe, og sletting skal håndtere blokkert lagring.
+assert(/closeJourney'\)\.onclick=\(\)=>\{[^}]*stage\(false,\{remember:false\}\)/.test(journey),'Tilbake til planen skal ikke skrive');
+assert(/blokkert|ikke Spareverksted tilgang til lagring/.test(dist('personvern.js')) );
 console.log('Personvern: ingen permanent startnøkkel, nivå lagres bare ved eget valg, veilederbroen skriver bare ved tur til veilederen, sletting rører bare egne nøkler.');
