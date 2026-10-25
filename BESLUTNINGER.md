@@ -207,6 +207,24 @@ Kildenotatene ligger i prosjektmappen «claude/» (ikke i repoet). PR-nummer st�
 
 **Status:** Vedtatt 23.10.2026. PR #15, nedre del mot innskuddene i PR #23.
 
+### Sparehorisont og Forbrukerrådets anbefaling
+
+**Valg:** I «Dette betyr tallene dine» vises Forbrukerrådets anbefalte minste sparehorisont for aksjefond (5 år). Ved Indeksfond og sparetid under 5 år står det i hovedteksten. Ved Brukskonto eller Sparekonto med innskudd og minst 5 års sparetid står en nøytral gruppe «Konto eller fond?» i utdypingen. Sparetid under ett år og i måneder er fortsatt gyldig, også for Indeksfond: varselet gjelder da på samme måte.
+
+**Alternativer:**
+- A: Bare i Veilederen («Pengene skal brukes snart»), som før.
+- B (valgt): Tekst i resultatet, regelbasert og uten nye beregninger. Siste ledd i «Forutsetninger» uendret.
+- C: Begrense eller advare i selve sparetidsfeltet. Forkastet: korte mål som ferie er gyldige, og et felt som nekter eller advarer ville blandet inn spareformen, som feltet ikke kjenner.
+- D: Råd om dyr gjeld og buffer i samme tekst. Utsatt: vi har ingen offentlig kilde som sier det, og Forbrukerrådets fondsside nevner det ikke (sjekket 25.10.2026).
+
+**Begrunnelse:** Anbefalingen kan siteres fra en offentlig kilde (Forbrukerrådet, Fondstyper: «Minimum anbefalt sparehorisont 5 år»). Teksten oppgir at det er en anbefaling, ikke en regel eller garanti. Kalkulatoren er fryst, og dette endrer ingen tall, bare forklaringen. Kildenivå for nye påstander: offentlig kilde eller tilsyn, så Forbrukerrådet og Finansportalen, så Smarte penger, så andre. Der vi ikke har en solid og oppdatert kilde, gir vi ikke råd.
+
+**Akseptert ulempe:** Kalkulatoren kjenner ikke gjeld, buffer eller hva pengene skal brukes til, så «Konto eller fond?» sier bare at anbefalingen ikke utelukker fond ved lang sparetid. Andre aktører oppgir 3 til 10 år. Vi bruker bare Forbrukerrådet.
+
+**Vurder på nytt når:** Forbrukerrådet endrer anbefalingen (tallet står i `assumptions.js` og `veileder-facts.js`, og en test krever at de er like), vi finner offentlig kilde for gjeld og buffer, eller brukere leser teksten som et råd om å bytte til fond.
+
+**Status:** Foreslått 25.10.2026 på branch `feature/sparehorisont-varsel`. Ikke publisert. **Ikke testet på iPhone.** Gjelder ikke Sparemål-siden, som har egen hjelpetekst for tid til kjøpet.
+
 ### Risikospørsmålet ut av startflyten
 
 **Valg:** Spørsmålet «Hvor store svingninger tåler du?» er tatt ut av startflyten, og ekkoet «Du tåler store svingninger» under overskriften er fjernet.

@@ -76,4 +76,29 @@ for(const over of [{},{savingsType:'checking'},{savingsType:'savings',rate:3,fee
  // Indeksfond får ikke kontoforbeholdet.
  assert.doesNotMatch(M.build(E,{...s,savingsType:'index',rate:7.11,fee:0.2},10,{...f,years:t=>t+' år'},A).main,/Det gjelder før skatt/);}
 
+// Sparehorisont: varsel ved indeksfond under Forbrukerrådets anbefalte minste horisont for aksjefond.
+{const A=require('../dist/assumptions.js'),F=require('../dist/veileder-facts.js'),ff={...f,years:t=>t+' år'};
+ assert.equal(A.horizon.fundMinYears,F.value('fundMinYears'),'samme tall som veilederens fakta');
+ assert.equal(A.horizon.source.url,F.data.fundMinYears.source,'samme kilde som veilederens fakta');
+ const short={...base,start:0,monthly:2000,rate:7.11,fee:0.2,savingsType:'index'};
+ for(const years of [0.5,1,3,4.9]){const m=M.build(E,{...short,years},years,ff,A);
+  assert.match(m.main,/Forbrukerrådet anbefaler minst 5 års sparehorisont for aksjefond, og planen din er kortere\. Dette er en anbefaling, ikke en regel eller garanti\./,'under 5 år: '+years);}
+ // 5 år og lengre: ingen varsel. Uten forutsetningene (A): ingen varsel og ingen gjettede tall.
+ for(const years of [5,10,30])assert.doesNotMatch(M.build(E,{...short,years},years,ff,A).main,/sparehorisont/);
+ assert.doesNotMatch(M.build(E,{...short,years:3},3,ff).main,/sparehorisont/);
+ // Månedsplaner (kortsiktig mål som ferie): 6 måneder gir varsel for indeksfond, men ingen varsel uten spareform.
+ assert.match(M.build(E,{...short,years:0.5},0.5,ff,A).main,/sparehorisont/);
+ assert.doesNotMatch(all(M.build(E,{...short,years:0.5,savingsType:''},0.5,ff,A)),/sparehorisont|Konto eller fond/);
+ // Konto med minst 5 år: nøytral opplysning, uten råd om gjeld eller buffer. Ikke for korte planer eller tomme planer.
+ const acct={...base,start:0,monthly:2000,rate:2.87,fee:0,savingsType:'savings'};
+ for(const years of [5,15]){const m=build2(years);const g=m.details.find(d=>d.title==='Konto eller fond?');assert.ok(g,'konto '+years);
+  assert.match(g.text,/^Forbrukerrådet anbefaler minst 5 års sparehorisont for aksjefond, og planen din er minst så lang\./);
+  assert.doesNotMatch(g.text,/gjeld|buffer|bør|burde|anbefaler deg/i);}
+ assert.ok(!build2(4).details.some(d=>d.title==='Konto eller fond?'));
+ assert.ok(!M.build(E,{...acct,start:0,monthly:0,years:10},10,ff,A).details.some(d=>d.title==='Konto eller fond?'),'ingen innskudd');
+ assert.ok(!M.build(E,{...acct,savingsType:'index',years:10},10,ff,A).details.some(d=>d.title==='Konto eller fond?'),'indeksfond har ikke gruppen');
+ function build2(years){return M.build(E,{...acct,years},years,ff,A);}
+ // Språkregler: ingen tankestrek i de nye tekstene.
+ for(const m of [M.build(E,{...short,years:3},3,ff,A),build2(10)])assert.doesNotMatch(all(m),/\u2014| \u2013 /);}
+
 console.log('Passed: meaning section follows the numbers, the chosen savings type and the horizon.');
