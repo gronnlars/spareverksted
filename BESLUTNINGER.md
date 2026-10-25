@@ -207,6 +207,41 @@ Kildenotatene ligger i prosjektmappen «claude/» (ikke i repoet). PR-nummer st�
 
 **Status:** Vedtatt 23.10.2026. PR #15, nedre del mot innskuddene i PR #23.
 
+### Sparetid i måneder
+
+**Valg:** Sparetid regnes i hele måneder. Minste sparetid er én måned, og felt som «0,08» og «0,14» godtas og rundes til nærmeste måned (0,14 år blir 2 måneder). Korte perioder vises som «Etter 6 måneder», ikke som «0,5 år». Skyveknappene for sparetid starter på 0,5 år og går i halve år.
+
+**Alternativer:**
+- A: Bare hele år. Forkastet: da kan ikke korte mål som ferie, oppussing eller et nært kjøp regnes.
+- B (valgt): Hele måneder, minst én måned, med visning i måneder under ett år.
+- C: Fritt antall dager eller uker. Forkastet: innskudd regnes månedlig, så mer presisjon ville ikke gitt riktigere tall.
+- D: Stoppe eller advare i feltet for korte sparetider. Utsatt til varselet om sparehorisont (se egen oppføring), som kommer i teksten og ikke i feltet.
+
+**Begrunnelse:** Rekonstruert fra commit 0b49a65 og 2712e8b (PR #11). Den konkrete årsaken var en feil: 0 år ga ingen innskudd og resultatet 0 kr selv med månedlig sparing, så grensen ble én måned. Deretter ble «0,08» og «0,0833» godtatt som én måned, og korte perioder ble vist i måneder. Behovet for korte mål (ferie og lignende) står i hjelpeteksten for Sparemål, men er ikke brukertestet eller dokumentert som egen beslutning før nå.
+
+**Akseptert ulempe:** Feltet godtar svært korte perioder (1 måned) uten å si at aksjefond ikke passer for dem. Varselet om det kommer i resultatteksten for Indeksfond.
+
+**Vurder på nytt når:** Brukere forstår ikke «2 måneder» når de skrev «0,14», eller testing viser at skyveknappen på 0,5 år hindrer korte mål.
+
+**Status:** Beskrivelse av gjeldende løsning, dokumentert 25.10.2026.
+
+### Kildenivå for påstander og råd
+
+**Valg:** Når en tekst på siden bygger på en kilde, brukes offentlige kilder først. Rekkefølge: lov, forskrift og tilsyn (for eksempel Skatteetaten, Finanstilsynet, SSB), deretter Forbrukerrådet og Finansportalen, deretter Smarte penger, deretter andre. Siden gir ikke råd der vi ikke har en solid og oppdatert kilde. Kilden skal være funnet og datert, og teksten skal skille mellom det kilden sier og det vi forklarer.
+
+**Alternativer:**
+- A: Bruke den kilden som er lettest tilgjengelig. Forkastet: bransjetekster og bloggere kan være gamle eller ha egne interesser.
+- B (valgt): Fast rekkefølge, og «ikke avklart» der vi ikke har kilde.
+- C: Alltid vise flere kilder. Forkastet som regel: nyttig ved uenighet, men ikke et krav for hver påstand.
+
+**Begrunnelse:** Passer med «public claims only what can be documented» og med regelen om at tidsavhengige regler trenger primærkilde, regelår og kontrolldato (SPRAKREGLER.md, punkt 5). Eksempel 25.10.2026: Forbrukerrådet oppgir 5 år som minste sparehorisont for aksjefond, mens andre aktører oppgir 3 til 10 år. Vi bruker Forbrukerrådet. Dyr gjeld og buffer før fond står ikke på Forbrukerrådets fondsside, så den påstanden er ikke tilskrevet dem.
+
+**Akseptert ulempe:** Noen nyttige råd må vente til vi har kilde, og tekster kan føles forsiktige. Primærkilder oppdateres sjelden, så kontrolldatoer må følges opp.
+
+**Vurder på nytt når:** Vi får flere kilder med samme status, eller en kilde endrer synspunkt.
+
+**Status:** Vedtatt 25.10.2026 etter prosjekteiers prioritering.
+
 ### Risikospørsmålet ut av startflyten
 
 **Valg:** Spørsmålet «Hvor store svingninger tåler du?» er tatt ut av startflyten, og ekkoet «Du tåler store svingninger» under overskriften er fjernet.
