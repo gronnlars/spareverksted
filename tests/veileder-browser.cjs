@@ -143,6 +143,14 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    await search('sparekonto');
    assert.equal(await page.locator('#contextPanel').isHidden(),false);
    assert.ok(await page.locator('#answer .option-card').count()>0);
+   for(const [query,title] of [['indeks fond','Hva er et indeksfond?'],['Er fond sparing?','Hva er forskjellen på sparing og investering?']]){
+    assert.equal(await titleFor(query),title);
+    assert.equal(await page.locator('#answer .option-card').count(),0);
+    assert.ok(await page.locator('#answer .explain-terms dt').count()>0);
+    await page.locator('#answer details.answer-sources summary').focus();await page.keyboard.press('Enter');
+    assert.match(await page.locator('#answer details.answer-sources').textContent(),/25. oktober 2026/);
+    await noOverflow();
+   }
    assert.deepEqual(eerrors,[]);await ectx.close();
   }
   assert.deepEqual(errors,[]);

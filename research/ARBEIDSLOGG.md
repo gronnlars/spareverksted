@@ -28,3 +28,7 @@ Les gren/PR før en utløpt reservasjon overtas. ASK er allerede forklart på ma
 - Åpne hull: skatt på barnesparing føres under SV-006/SV-007, BSU ved flytting under SV-135 og renters rente under SV-022. Faktisk kode er lest, men søkene er ikke kjørt. Fullstendige BSU-kontrolltilfeller og forventninger står i køens daterte dekningskontroll og må følge videre oppdrag. Ingen GAPS-rad er fjernet.
 - Utført kontroll gjelder dokumentasjon og egen kildekontroll. Ingen Node-, nettleser-, iPhone-, skjermleser-, forståelses- eller publiseringskontroll er utført. Grønn CI eller faktisk publisert versjon er ikke bekreftet i denne økten.
 - Neste arbeid: hent fersk main, åpne dokumentasjons-PR-er og logg. Gjenbruk utkastene i PR #64 hvis de ennå ikke er integrert i dokumentasjonen. Behandle SV-022 før nye boligtemaer etter køens prioritet. Svaret må forklare avkastning på tidligere avkastning med klart merkede forutsetninger; positive prosenter skal ikke framstilles som en markedsprognose. Fortsett i researchfasen; det foreligger ingen fullmakt til innholdspublisering.
+
+### Integrasjon etter nytt oppdrag 25. oktober
+
+Lars bestilte publisering. Dette erstatter researchoppgavens avgrensning for denne leveransen. ChatGPT/Codex har kontrollert kildene på nytt og integrert SV-035/SV-017 i eksisterende forklaringsvisning. 15 Node-testfiler og 156 søketilfeller består lokalt. Nye nettleserkontroller ved 320/390 px i eksisterende test, kjøres i CI. Lokal nettleser mangler. Ingen kalkulatorendring. PR #63 er nå på main og er bevart. Neste research: SV-022.

@@ -25,8 +25,8 @@ For hver rad gjelder foreløpig **fagkontroll: ikke nykontrollert; søketest: ik
 | Rekkefølge | Fast ID | Spørsmål | Først / overlapp / andre formuleringer | Foreløpig dekning | Arbeidsstatus | Utkast og kontroll |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | SV-031 | Hva er en aksjesparekonto (ASK)? | Ingen registrert | Eget svar: q-aksjesparekonto, integrert via #61 | Avventer | Dekning lest 25.10.2026, main 4022c94; ingen ny ASK-fagkontroll. Gjenbruk svaret. |
-| 2 | SV-035 | Hva er et indeksfond? | Ingen registrert | Delvis: funds; indeks og passiv forvaltning mangler | Kontrollert utkast | [SV-035](research/svarutkast/SV-035.md), selvkontroll 25.10.2026; søk ikke testet |
-| 3 | SV-017 | Hva er forskjellen på sparing og investering? | Ingen registrert | Delvis: funds; intet eget begrepssvar | Kontrollert utkast | [SV-017](research/svarutkast/SV-017.md), selvkontroll 25.10.2026; søk ikke testet |
+| 2 | SV-035 | Hva er et indeksfond? | Ingen registrert | Delvis: funds; indeks og passiv forvaltning mangler | Integrert, avventer publisering | [SV-035](research/svarutkast/SV-035.md), selvkontroll 25.10.2026; søk ikke testet |
+| 3 | SV-017 | Hva er forskjellen på sparing og investering? | Ingen registrert | Delvis: funds; intet eget begrepssvar | Integrert, avventer publisering | [SV-017](research/svarutkast/SV-017.md), selvkontroll 25.10.2026; søk ikke testet |
 | 4 | SV-022 | Hva er renters rente? | rentes rente; hvordan fungerer renters rente; GAPS renters-rente | Mangler egen forklaring; GAPS finnes på main | Kø | Kode lest 25.10.2026, main 4022c94; ingen ny fagkontroll |
 | 5 | SV-023 | Hvordan påvirker inflasjon sparepengene mine i banken? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
 | 6 | SV-001 | Hvor mye bør jeg ha på bufferkontoen? | Ingen registrert | Delvis: buffer | Kø | Ikke opprettet |
@@ -206,3 +206,7 @@ Kontrolltilfeller som skal følge en senere overlevering av BSU-flytteregelen, s
 Dette er videreført forventning, ikke en kodekontroll utført i researchøkten. Ingen GAPS-rader endres. En rad skal først fjernes når innholdet faktisk dekker spørsmålet. Bare å nevne fagordet er utilstrekkelig.
 
 PR #63 er lest som åpent forslag, head `435db45bd1a913b9be492629fdd07fe00dcd0118`. Den foreslår blant annet hullhåndtering for utbytte og rentefond. Det er ikke på main og er ikke testet her. Senere research på SV-050, SV-051 eller SV-061 må lese fersk status; denne økten endrer ikke deres prioritet eller fagstatus.
+
+## Integrasjon 25. oktober 2026
+
+Lars har bestilt publisering. SV-035 og SV-017 er integrert som q-indeksfond og q-sparing-investering i #64 etter ny kildekontroll. Indeksfond eies nå av egen forklaring; de to gamle søketilfellene d33/d56 er oppdatert til det nye svaret. Ingen kalkulatorendring. 15 Node-testfiler og 156 sammenligningstilfeller består lokalt. Nettleserkontroll kjøres i CI; lokalt mangler nettleserbinæren. Skjermleser og forståelsestest står åpne. Faktisk publisering bekreftes av deploy-jobben etter sammenslåing.
