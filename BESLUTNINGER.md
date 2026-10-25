@@ -227,24 +227,25 @@ Kildenotatene ligger i prosjektmappen «claude/» (ikke i repoet). PR-nummer st�
 
 ### Kildenivå for påstander og råd
 
-**Valg:** Når en tekst på siden bygger på en kilde, brukes offentlige kilder først. Rekkefølge:
+**Valg:** Når en tekst på siden bygger på en kilde, brukes offentlige kilder først. Listen er i prioritert rekkefølge: en kilde høyere opp går foran en lavere når de er uenige, og vi går bare ned ett nivå når det høyere nivået ikke dekker spørsmålet.
 1. Lov, forskrift og tilsyn (for eksempel Skatteetaten, Finanstilsynet, SSB).
 2. Forbrukerrådet og Finansportalen.
-3. Norske bank- og finansinstitusjoner med åpne, offentlige sider (for eksempel Finans Norge, banker og forsikringsselskaper).
+3. Norske bank- og finansinstitusjoner med åpne, offentlige sider (for eksempel Finans Norge, banker og forsikringsselskaper). Vær oppmerksom på at dette er kilder med interesse i å selge produkter.
 4. Medier med redaksjonelt ansvar.
-5. Alt annet, inkludert sider uten tydelig avsender og blogger.
+5. Alt annet, inkludert sider uten tydelig avsender og blogger. Brukes aldri som kilde.
 
 Siden gir ikke råd der vi ikke har en solid og oppdatert kilde. Kilden skal være funnet og datert, og teksten skal skille mellom det kilden sier og det vi forklarer.
 
-**Bank- og finansinstitusjoner** regnes som tryggere enn nettaviser fordi de svarer for produkter og vilkår og har åpne sider med egen dato. Siden må ha en synlig dato eller versjon, vi oppgir kontrolldatoen vår, og en institusjon brukes for sine egne produkter og vilkår, ikke som eneste kilde til generelle råd, fordi de også selger produktene.
+**Bank- og finansinstitusjoner** regnes som tryggere enn nettaviser fordi de svarer for produkter og vilkår og har åpne sider med egen dato. De har likevel salgsinteresse, og det skal vi være oppmerksomme på når vi vurderer hva de skriver, særlig om anbefalinger, avkastning og hvilke produkter som passer. Siden må ha en synlig dato eller versjon, vi oppgir kontrolldatoen vår, og en institusjon brukes for sine egne produkter og vilkår, ikke som eneste kilde til generelle råd, fordi de også selger produktene.
 
 **Medier med redaksjonelt ansvar** er medier som har ansvarlig redaktør, følger Vær varsom-plakaten og kan klages inn for Pressens Faglige Utvalg. De brukes til å finne og forstå en sak, og som veiviser til primærkilden. De brukes ikke som eneste kilde til tall, regler eller råd. Vi navngir ikke bestemte medier som «solide» her før vi har kontrollert hvert enkelt mot kriteriene og har en dato for kontrollen. Eksempler legges inn når den kontrollen er gjort.
 
-**Smarte penger** har ikke eget nivå. Vi har ikke avklart hvem som står bak siden eller hvilket redaksjonelt ansvar den har, så den regnes ikke som bedre kilde enn medier med redaksjonelt ansvar. Når den refererer til en primærkilde (for eksempel Forbrukerrådet), bruker vi primærkilden.
+**Smarte penger** har ikke eget nivå. Vi har ikke avklart hvem som står bak siden eller hvilket redaksjonelt ansvar den har, så den brukes ikke som kilde før det er avklart. Da kommer den på nivå 3 eller 4, etter hvem som står bak. Når den refererer til en primærkilde (for eksempel Forbrukerrådet), bruker vi primærkilden.
 
 **Alternativer:**
 - A: Bruke den kilden som er lettest tilgjengelig. Forkastet: bransjetekster og bloggere kan være gamle eller ha egne interesser.
-- B (valgt): Fast rekkefølge med kriterier for hvert nivå, og «ikke avklart» der vi ikke har kilde.
+- B (valgt): Fast, prioritert rekkefølge med kriterier for hvert nivå, nivå 5 aldri brukt, og «ikke avklart» der vi ikke har kilde.
+- B2: La nivå 5 være siste utvei når ingenting annet finnes. Forkastet 25.10.2026 av prosjekteier: da heller ingen kilde enn en dårlig kilde.
 - C: Sette institusjonene på samme nivå som Forbrukerrådet. Forkastet: de har salgsinteresse i produktene sine.
 - D: Ha Smarte penger som eget nivå mellom Forbrukerrådet og institusjonene. Forkastet 25.10.2026: avsender og redaktøransvar er ikke avklart, og vi har ikke grunnlag for å si at den er bedre enn medier med redaksjonelt ansvar.
 - E: Alltid vise flere kilder. Forkastet som regel: nyttig ved uenighet, men ikke et krav for hver påstand.
