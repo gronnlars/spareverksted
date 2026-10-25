@@ -35,7 +35,10 @@ const server=http.createServer((req,res)=>{
    await page.locator('.explain-next a').first().click();
    for(const [id,val]of [['start',10000],['monthly',0],['years',2],['rate',5],['fee',0],['inflation',0]])assert.equal(Number((await page.locator('#'+id).inputValue()).replace(/\s/g,'').replace(',','.')),val,id);
    assert.match((await page.locator('#total').innerText()).replace(/\s/g,''),/11025/);
-   await page.goto(origin+'/'+draft.additionalExamples[0].href);
+   // Åpne andre lenke fra svaret, slik brukeren gjør. Et rent hashbytte
+   // inne på kalkulatoren laster ikke inn en ny plan.
+   await page.goto(origin+'/spor.html');await page.locator('#question').fill('Hva er renters rente?');await page.locator('#questionForm button').click();
+   await page.locator('.explain-next a').nth(1).click();
    for(const [id,val]of [['start',10000],['monthly',0],['years',2],['rate',2],['fee',0],['inflation',2.5]])assert.equal(Number((await page.locator('#'+id).inputValue()).replace(/\s/g,'').replace(',','.')),val,id);
    assert.equal(await page.locator('[data-value-mode="both"]').getAttribute('aria-pressed'),'true');
    assert.match((await page.locator('#total').innerText()).replace(/\s/g,''),/10404/);
