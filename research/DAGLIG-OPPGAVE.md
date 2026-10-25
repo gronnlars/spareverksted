@@ -15,6 +15,10 @@ Gjør en liten, etterprøvbar del av [spørsmålkøen](../SPORSMALSKO.md). Norma
 3. Kontroller at køen du skal endre bygger på siste fjernversjon. Ikke overskriv en annen agents arbeid eller lokale endringer. Oppgi lest main-SHA i loggen.
 4. Se etter pågående arbeid. Ved en aktiv reservasjon: velg andre spørsmål. Hvis den felles grenen ikke kan oppdateres trygt, ikke start konkurrerende arbeid på samme ID-er. Bruk egen dokumentasjonsgren og rapporter hindringen.
 
+## Kontrollrunde først
+
+Sjekk kontrollkalenderen i [KILDEREGLER.md](../KILDEREGLER.md), punkt K7, og tabellen «Aktive avvik» øverst i [BESLUTNINGER.md](../BESLUTNINGER.md). Er en kontrollrunde forfalt, eller utløper et avvik innen to uker, gjør og varsle det før nye spørsmål. Statsbudsjettet, 1. januar og 1. juli er faste runder. Februar (Finans Norge) og nye SSB-renter følges også opp.
+
 ## Velg dagens leveranse
 
 - Rett dokumenterte feil og utløpte faktapåstander før nye emner. Feil i nettstedet rapporteres med fil, sted og konsekvens; denne oppgaven åpner ikke kodearbeid.
