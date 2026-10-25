@@ -24,6 +24,7 @@ jobs:
           node tests/veileder.test.cjs
           node tests/veileder-context.test.cjs
           node tests/veileder-grunnbegreper.test.cjs
+          python3 research/svarutkast/generer-gaps.py --check --product
           node tests/veileder-knowledge.test.cjs
           node tests/veileder-relevance.test.cjs
           node tests/veileder-sok.test.cjs
@@ -65,6 +66,9 @@ jobs:
         run: |
           node tests/input-browser.cjs
           node tests/veileder-browser.cjs
+          node research/svarutkast/prov-renters-browser.cjs
+          SPARE_ENGINE=firefox node research/svarutkast/prov-renters-browser.cjs
+          SPARE_ENGINE=webkit node research/svarutkast/prov-renters-browser.cjs
           node tests/veileder-sok-browser.cjs
           node tests/veileder-sok-rettinger-browser.cjs
           SPARE_ENGINE=firefox node tests/veileder-sok-rettinger-browser.cjs

@@ -55,7 +55,7 @@ function render(focus=false){
   const terms=el('section','','explain-terms');terms.append(el('h3','Begreper i svaret'));const dl=el('dl');
   for(const x of a.terms){dl.append(el('dt',x.term+(x.alsoCalled?' (også kalt '+x.alsoCalled+')':'')),el('dd',x.text));}
   terms.append(dl);out.append(terms);
-  if(a.next){const p=el('p','','explain-next'),link=el('a',a.next.text);link.href=a.next.href;p.append(link);out.append(p);}
+  if(a.next)for(const next of [a.next,...(a.next.more||[])]){const p=el('p','','explain-next'),link=el('a',next.text);link.href=next.href;p.append(link);out.append(p);}
   const deep=el('details','','full-answer');deep.append(el('summary','Fordypning'));
   for(const part of a.parts)deep.append(partSection(part));out.append(deep);
   const src=el('details','','answer-sources');src.append(el('summary','Kilder og forbehold'),el('p','Tall i eksempler er regneeksempler, ikke prognoser. Tall og regler kan endres.'+(a.caveat?' '+a.caveat:''),'hint'));
