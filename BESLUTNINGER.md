@@ -349,3 +349,17 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Vurder på nytt når:** Faktisk bruk viser feil svar eller gjentakende problemer, innhold endrer hvilke ord som har én eier, eller iPhone- og skjermlesertesting avdekker hindringer.
 
 **Status:** Anbefalt, ikke vedtatt. Lars avgjør.
+
+## Ingen egen UU-versjon eller UU-skin (25. oktober 2026)
+
+**Valg:** Siden skal være tilgjengelig i alle tre fargetemaer. Vi lager ikke en egen «UU-versjon» eller et fjerde tema ved siden av Natt.
+
+**Alternativer:** A: Et eget UU-tema. B: Valgfri «Tydelig visning» eller tekststørrelsesvelger. C: Heve standardtemaene og dokumentere det. Valgt: C nå. B kan vurderes senere.
+
+**Begrunnelse:** Et eget tema ville hatt de samme kravene og mer vedlikehold, siden grafens farger er satt per tema. Navnet antyder at de andre temaene ikke er tilgjengelige. Nøytral, Lys og Natt består alle kontrast-, tastatur-, fokus- og reflowtestene i Chromium. Se `research/universell-utforming.md`, punkt 4.
+
+**Akseptert ulempe:** Vi tilbyr ikke høyere kontrast eller større tekst som en enkel innstilling. Behovet er en hypotese som ikke er testet.
+
+**Vurder på nytt når:** Svar fra Uu-tilsynet (sak 2610 2553), brukertest med skjermleser eller svaksynte, eller tilbakemeldinger viser at standardtemaene ikke er nok.
+
+**Status:** Anbefalt av Claude, ikke formelt vedtatt.

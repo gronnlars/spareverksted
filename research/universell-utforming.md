@@ -84,9 +84,10 @@ Grunnlag: Uu-tilsynets regelverkssider (se kilder). Dette er ingen juridisk vurd
 - Lenkevarselet (toast) forsvinner av seg selv. Ikke vurdert mot 2.2.1.
 - Ingen test med brukere som har funksjonsnedsettelser.
 - Automatisk verktøy som axe-core er ikke kjørt (ikke tilgjengelig i arbeidsmiljøet).
+- **Henvendelse til Uu-tilsynet:** sendt og registrert 25.10.2026 kl. 12.40, saksnummer 2610 2553. Spørsmål: er Spareverksted omfattet, stemmer WCAG 2.0 A og AA for private, kan tilsynet eller andre vurdere om vi oppfyller kravene, hva skal til for å være best i klassen, og hvem kan teste med skjermleser og brukere. Svar ikke mottatt. Når svaret kommer, oppdateres punkt 4 og beslutningen under.
 
 **Beslutning: ingen egen UU-versjon eller UU-skin**
-Siden skal være tilgjengelig i alle temaer, ikke ha en tilgjengelig variant ved siden av. Et fjerde tema ville gitt samme krav og mer vedlikehold, og navnet antyder at de andre ikke er tilgjengelige. Revurderes hvis brukertest eller tilsynet viser et reelt behov. Mulig tillegg: en valgfri «Tydelig visning» eller tekststørrelsesvelger. Behovet er en hypotese som ikke er testet.
+Siden skal være tilgjengelig i alle temaer, ikke ha en tilgjengelig variant ved siden av. Et fjerde tema ville gitt samme krav og mer vedlikehold, og navnet antyder at de andre ikke er tilgjengelige. Revurderes hvis brukertest eller tilsynet (sak 2610 2553) viser et reelt behov. Mulig tillegg: en valgfri «Tydelig visning» eller tekststørrelsesvelger. Behovet er en hypotese som ikke er testet.
 
 ## 5. Kilder
 
