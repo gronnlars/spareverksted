@@ -2,7 +2,7 @@
 
 Felles arbeidsgrunnlag for hele nettstedet. Samlet 24. oktober 2026 fra arbeidet med kalkulatoren (fase 1 og 2). Gjelder alle nye deler fra første utkast, ikke som etterarbeid.
 
-Standard: WCAG 2.2 nivå AA. Vi omtaler resultatet som «ingen avvik funnet i de gjennomførte kontrollene», aldri som full WCAG-godkjenning. Om forskrift om universell utforming av IKT formelt gjelder for Spareverksted, er ikke undersøkt. Vi følger standarden uansett.
+Standard: WCAG 2.2 nivå AA. Vi omtaler resultatet som «ingen avvik funnet i de gjennomførte kontrollene», aldri som full WCAG-godkjenning. Om forskrift om universell utforming av IKT formelt gjelder for Spareverksted, er ikke avklart (se punkt 4). Vi følger standarden uansett.
 
 ## 1. Krav til hver ny del
 
@@ -49,7 +49,48 @@ En ny side eller funksjon er ikke ferdig før punktene under er oppfylt og kontr
 
 Testene beskytter det som er kontrollert. De beviser ikke at folk forstår innholdet.
 
-## 4. Kilder
+## 4. Forskriften om universell utforming av IKT (undersøkt 25.10.2026)
+
+Grunnlag: Uu-tilsynets regelverkssider (se kilder). Dette er ingen juridisk vurdering.
+
+**Hva reglene sier, slik tilsynet beskriver dem**
+- Private virksomheter, lag og organisasjoner er omfattet, uansett antall ansatte.
+- Gjelder nettsider og apper rettet mot publikum i Norge som er en viktig kanal for informasjon eller tjenester. Privatpersoners egne hjemmesider er unntatt.
+- Krav for privat sektor: WCAG 2.0 nivå A og AA, 35 suksesskriterier (1.2.3, 1.2.4 og 1.2.5 er unntatt).
+- Tilgjengelighetserklæring er krav for offentlig sektor. Tilsynets sider nevner ikke slikt krav for private.
+- EUs tilgjengelighetsdirektiv er ikke innført i Norge ennå. Datoer og omfang for private er ikke kontrollert.
+- **Om Spareverksted er omfattet, er ikke avklart.** Vi ber tilsynet om svar. Til da arbeider vi som om reglene gjelder.
+
+**Hva vi har gjort, og hvor det er kontrollert**
+
+| Område | Gjort | Kontroll |
+| --- | --- | --- |
+| Standard | Vi følger WCAG 2.2 AA, strengere enn kravet for privat sektor | Punkt 1 |
+| Kontrast | Tekst 4,5:1 og grafikk 3:1 i Nøytral, Lys og Natt, også grafens tekst, linjer og utfallsrom | `a11y-browser.cjs`, `theme-browser.cjs` (CI, Chromium) |
+| Tastatur og fokus | Hele flyten uten mus, synlig fokus, fokus tilbake etter dialog, faste elementer dekker ikke feltet med fokus | `a11y-browser.cjs` |
+| Skjermleser (kode) | `lang="nb"`, sidetitler, navn på alle kontroller, etiketter på alle felt, feilmelding koblet til feltet, hopp-lenke, `main` | Kodegjennomgang og probe 25.10.2026 (Chromium) |
+| Forstørring | 200 % tekst og 400 % zoom uten sideveis scrolling. Tekstavstand (1.4.12) uten overflyt | `a11y-browser.cjs`, probe 25.10.2026 |
+| Trykkflater | Minst 24 px, hjelpeknapper og hovedhandlinger helst 44 px | `a11y-browser.cjs` |
+| Farge og grafer | Farge er ikke eneste kjennetegn. Tabellvisning og tekstalternativ for grafen | Revisjon 23.10.2026 |
+| Bevegelse | `prefers-reduced-motion` respekteres | Kode |
+| Feilmeldinger | Feltet markeres og navngis, `aria-invalid`, fokus til første feil | Fase 1, testet |
+| Revisjon | 27 kombinasjoner (tre temaer, 320, 375 og 1280 px, tre sider) | 23.10.2026, manuelt i Chromium |
+
+**Åpent**
+- Ikke testet: iPhone Safari, VoiceOver, NVDA, Firefox og Edge med bare tekstforstørring. Sjekkliste: `claude/manuell-sjekkliste-2026-10-23.md` i prosjektet.
+- Ikke gjennomgått kriterium for kriterium: manuelle kriterier som informasjon og relasjoner (1.3.1), formål med lenker (2.4.4) og forutsigbarhet (3.2.x). De automatiske testene dekker dem ikke fullt ut.
+- Forsiden har to `h1`. Ikke sjekket om begge vises samtidig.
+- Ingen tilgjengelighetsside eller lenke til en slik fra menyen.
+- Lenkevarselet (toast) forsvinner av seg selv. Ikke vurdert mot 2.2.1.
+- Ingen test med brukere som har funksjonsnedsettelser.
+- Automatisk verktøy som axe-core er ikke kjørt (ikke tilgjengelig i arbeidsmiljøet).
+
+**Beslutning: ingen egen UU-versjon eller UU-skin**
+Siden skal være tilgjengelig i alle temaer, ikke ha en tilgjengelig variant ved siden av. Et fjerde tema ville gitt samme krav og mer vedlikehold, og navnet antyder at de andre ikke er tilgjengelige. Revurderes hvis brukertest eller tilsynet viser et reelt behov. Mulig tillegg: en valgfri «Tydelig visning» eller tekststørrelsesvelger. Behovet er en hypotese som ikke er testet.
+
+## 5. Kilder
+
+- [Uu-tilsynet: Hva sier forskriften?](https://www.uutilsynet.no/regelverk/kva-seier-forskrifta/153), [Unntakene](https://www.uutilsynet.no/regelverk/unntakene-fra-universell-utforming-av-ikt/2248) og [Fremtidige regelverk](https://www.uutilsynet.no/regelverk/fremtidige-regelverk-og-krav/747), lest 25.10.2026
 
 - [W3C: WCAG 2.2](https://www.w3.org/TR/WCAG22/) og forklaringssidene for hvert kriterium, blant annet [Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html), [Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html), [Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html), [Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html) og [Contrast Minimum](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
 - [W3C: Making Content Usable for People with Cognitive and Learning Disabilities](https://www.w3.org/WAI/WCAG2/supplemental/objectives/o3-clear-content/)
