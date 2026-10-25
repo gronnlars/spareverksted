@@ -69,7 +69,7 @@ En begrunnelse er ikke et vern mot kritikk. Faktiske regnefeil, utilgjengelige k
 
 ## Svar skrevet på forhånd, ikke laget av KI mens brukeren venter
 
-**Valg:** «Spør om sparing» viser tekster som er skrevet og kontrollert på forhånd, med kilder og kontrolldato. Det er reglene på siden som velger hvilken tekst brukeren ser. KI brukes i stor grad når tekstene skrives, men ingen KI-modell lager svar mens brukeren er på siden.
+**Valg:** «Spør om sparing» viser tekster som er skrevet og kildekontrollert før publisering, med kilder og kontrolldato. Kildekontrollen kan være utført med KI; menneskelig eller uavhengig fagkontroll oppgis bare når den er dokumentert. Det er reglene på siden som velger hvilken tekst brukeren ser. KI brukes i stor grad når tekstene skrives, men ingen KI-modell lager svar mens brukeren er på siden.
 
 **Alternativ:** La en språkmodell skrive personlige svar i det brukeren spør.
 

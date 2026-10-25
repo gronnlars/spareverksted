@@ -15,6 +15,6 @@ Main er autoritativt arbeidsgrunnlag. Hent fersk status og les åpne PR-er før 
 
 Prioritet: konkrete feil og utløpte påstander, deretter neste avgrensede spørsmål i køen. Vanlig research gir upublisert dokumentasjon. Integrasjon i nettsiden krever eget oppdrag og følger planens ferdigkriterier. Valgomaten er parkert. Ingen nye kalkulatorfunksjoner innenfor innholdsarbeidet.
 
-KI brukes i stor grad til å skrive innhold og kode. Svarene i «Spør om sparing» skrives på forhånd og kontrolleres mot kilder før de publiseres. Ingen svar lages av en KI-modell mens brukeren er på siden. Ingen innlogging, reklame eller ekstern logging som del av dette arbeidet. Beregninger foregår i størst mulig grad lokalt.
+KI brukes i stor grad til å utvikle innhold og kode. Svarene i «Spør om sparing» skrives og kildekontrolleres før publisering. Kildekontrollen kan være utført med KI. Menneskelig eller uavhengig fagkontroll oppgis bare når den er dokumentert. Ingen KI-modell lager svar under brukerens besøk. Ingen innlogging, reklame eller ekstern logging som del av dette arbeidet. Beregninger foregår i størst mulig grad lokalt.
 
 Oppgi utførte kontroller, begrensninger og faktisk status. Grønne tester beviser ikke full tilgjengelighet eller brukerforståelse. Main-push starter automatisk testing og publisering; ikke beskriv sammenslåing som en upublisert handling.
