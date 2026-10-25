@@ -126,7 +126,7 @@ Opplysningene er gitt av Lars. Selve e-postene ligger hos ham i Gmail. Private a
 
 | Mottaker | Sendt | Status (26.10.2026) | Referanse |
 |---|---|---|---|
-| Domene.no | E-post 1, uendret fra utkastet (versjonen med rettingene 25.10.2026) | Mottak bekreftet 25.10.2026 kl. 23.58. 26.10.2026: KI-generert svar mottatt. De sentrale spørsmålene om videresending er fortsatt uavklarte, og saken er videresendt til teamet. Venter på svar fra Domene.no | Sak 39138152 |
+| Domene.no | E-post 1, uendret fra utkastet (versjonen med rettingene 25.10.2026) | Mottak bekreftet 25.10.2026 kl. 23.58. 26.10.2026: to KI-svar mottatt (første mottaksvar, deretter et utfyllende svar fra «Anna KI»). Videresending til teamet bekreftet. De sentrale spørsmålene om videresending er fortsatt uavklarte. Venter på svar fra et menneske hos Domene.no | Sak 39138152 |
 | Nkom | E-post 2, uendret fra utkastet | Mottak bekreftet 26.10.2026 kl. 00.01. Venter på svar | Saksnummer ikke oppgitt i bekreftelsen |
 
 Spørsmål som er sendt:
@@ -135,11 +135,20 @@ Spørsmål som er sendt:
 
 Merk: Nkom-henvendelsen beskriver permanent lagring av tema og nivå. Lars vedtok 26.10.2026 alternativ B (fane); PR #78 er endret deretter. Ingen ny e-post er sendt for dette.
 
+Konsekvens for personverninformasjonen: avtale for videresending er ikke påvist, og lagring av meldingsinnhold, logger og underleverandører er uavklart. `personvern.html` har dette som «Avklares» og skal ikke fylles ut med antakelser.
+
 De reviderte utkastene (25.10.2026) er historikk, ikke ventende utsendinger. Ingen ny e-post trengs for presiseringene alene.
 
 Ikke sendt: spørsmål til GitHub Support og til Datatilsynet. Utkast finnes hos Lars.
 
-Svaret fra Domene.no 26.10.2026 er et automatisk, KI-generert mottaksvar. Det besvarer ingen av de fem spørsmålene, og det kan ikke brukes som bekreftelse på databehandleravtale, lagringstid, logger, underleverandører eller overføring utenfor EØS. Ordlyden er gjengitt av Lars.
+Svarene fra Domene.no 26.10.2026 er KI-generert (ordlyden er gjengitt av Lars). Det andre svaret er utfyllende, men er ikke en bindende opplysning fra Domene.no og kan ikke brukes som bekreftelse alene. Innholdet, slik det ble gjengitt:
+- Domene AS oppgis som databehandler og domeneeieren som behandlingsansvarlig. Dette gjelder avtalen om domenetjenesten.
+- Punkt 1.6: informasjon som sendes med e-post via tjenesten er ikke dekket av avtalen. Ansvaret for meldingsinnholdet ligger hos domeneeieren. Dette bekrefter Lars' tidligere gjengivelse og betyr at ingen databehandleravtale for videresending er påvist.
+- Generelle oppbevaringstider (3 år etter avsluttet kundeforhold, 5 år for fakturadata) gjelder kundeopplysninger, ikke meldingsinnhold. De er ikke våre sletterutiner og er ikke kopiert.
+- Oppgitt: automatisk logging av tidspunkt, IP-adresse ved bruk av e-posttjenesten og web- og sikkerhetslogger, for drift og sikkerhet. Ikke bekreftet av et menneske.
+- Oppgitt: deling bare når nødvendig for drift, med underleverandører bundet av samme regler, og aldri for markedsføring.
+- Oppgitt: behandling utenfor EØS kan forekomme «ved internasjonale domenenavn», og data er da kryptert (TLS). Det svarer ikke på om e-postvideresendingen behandles utenfor EØS, og TLS alene er ikke et overføringsgrunnlag.
+- Uspesifisert, ifølge svaret: hvor lenge meldingsinnhold lagres ved videresending, kø og sikkerhetskopier, nøyaktig innhold i e-postlogger og konkrete underleverandører for e-posttjenesten. Dette er dermed fortsatt de uavklarte punktene fra spørsmål 2, 3 og 4.
 
 Hva logginnslagene betyr:
 - Mottaksbekreftelsene er ikke faglige svar eller godkjenninger.

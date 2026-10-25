@@ -21,7 +21,7 @@ Avsender → Domene.no (videresending av personvern (at) og post (at) på sparev
 - Om Gmail-kontoen er Google Workspace eller en privat Google-konto. Ikke gjett ut fra at Gmail brukes.
 - Om det finnes databehandleravtale med Google. For Workspace aksepteres Cloud Data Processing Addendum av administrator i Admin-konsollen (Konto > Kontoinnstillinger > Juridisk og sikkerhet > Tilleggsvilkår for sikkerhet og personvern) ([Google](https://support.google.com/a/answer/2888485)). Siden omtaler ikke private Google-kontoer. Lars må sjekke hvilken kontotype det er.
 - Om Domene.no behandler videresendingen som databehandler. Domene.nos personvernerklæring ([domene.no/personvern.html](https://www.domene.no/personvern.html)) skal ifølge Lars' gjengivelse (punkt 1.6) si at informasjon publisert på nettsteder eller sendt med e-posttjenesten ikke omfattes av deres databehandleravtale. Vi har ikke klart å lese siden herfra. Punktet bekrefter da ikke en avtale for videresending. Rollen vurderes for hver behandling ut fra faktiske forhold, ikke av overskriften.
-- Lagring i kø, retur (bounce), sikkerhetskopi og logger hos Domene.no, og hvor lenge.
+- Lagring i kø, retur (bounce), sikkerhetskopi og logger hos Domene.no, og hvor lenge. Et KI-svar fra Domene.no 26.10.2026 sier at dette ikke er spesifisert i de offentlige vilkårene, og at e-post sendt via tjenesten ikke er dekket av avtalen (punkt 1.6). Svaret er ikke bindende. Se loggen i `docs/personvern-lagring.md`.
 - Hvor e-post behandles og om underleverandører utenfor EØS er involvert.
 
 ## E-postadresser på nettsiden
