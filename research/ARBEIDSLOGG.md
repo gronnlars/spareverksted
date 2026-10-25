@@ -32,3 +32,7 @@ Les gren/PR før en utløpt reservasjon overtas. ASK er allerede forklart på ma
 ### Integrasjon etter nytt oppdrag 25. oktober
 
 Lars bestilte publisering. Dette erstatter researchoppgavens avgrensning for denne leveransen. ChatGPT/Codex har kontrollert kildene på nytt og integrert SV-035/SV-017 i eksisterende forklaringsvisning. 15 Node-testfiler og 156 søketilfeller består lokalt. Nye nettleserkontroller ved 320/390 px i eksisterende test, kjøres i CI. Lokal nettleser mangler. Ingen kalkulatorendring. PR #63 er nå på main og er bevart. Neste research: SV-022.
+
+## Aktiv dagsreservasjon
+
+SV-001: ChatGPT/Codex, 25.10.2026, gren feat/buffer-2026-10-25. Start 08:45 Europe/Oslo, utløp 12:45. Gjenbruk og konkretisering av eksisterende buffersvar.
