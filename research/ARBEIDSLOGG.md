@@ -7,7 +7,9 @@ Felles overlevering for ChatGPT/Codex og Claude. Tid oppgis i Europe/Oslo.
 | ID-er | Aktør | Start | Utløp | Gren/PR |
 | --- | --- | --- | --- | --- |
 
-Ingen aktive reservasjoner ved opprettelsen. Fjern eller avslutt raden når leveransen er lagret. Les gren/PR før en utløpt reservasjon overtas.
+| SV-035, SV-017 | ChatGPT/Codex | 2026-10-25T02:02:04+02:00 | 2026-10-25T05:02:04+01:00 | docs/research-2026-10-25 |
+
+Les gren/PR før en utløpt reservasjon overtas. ASK er allerede forklart på main gjennom #61; #53 er lukket og erstattet. Ingen konkurrerende researchreservasjon funnet i main eller siste logg på docs/sporsmalsko-og-nattarbeid.
 
 ## Leveranser
 
