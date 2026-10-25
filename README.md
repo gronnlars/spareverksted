@@ -33,6 +33,7 @@ Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/packa
 - `dist/style.css`: responsiv utforming og utskriftsstil.
 - `dist/index.html`: sidens struktur.
 - `tests/engine.test.cjs`: uavhengig kontroll mot månedlige og årlige løkker.
+- `tests/personvern-lagring.test.cjs`: hva som lagres og når, at veilederbroen bare skriver ved tur til veilederen, og at slettingen bare rører Spareverksteds egne nøkler.
 - `tests/validation.test.cjs`: feltgrenser og feltnavn, sparemål, uttaksfelt, delte lenker felt for felt, gamle lagrede planer og realistiske planer mot lukket formel.
 - `tests/results.test.cjs`: kontrolltilfellene A til D mot en uavhengig månedsløkke, årsak til tap (kostnader, børsfall), kjøpekraft, lange perioder og forskjellen mellom innskudd ved månedsslutt og månedsstart.
 - `tests/band.test.cjs`: utfallsrommet for indeksfond mot Finans Norges formel, med lukket formel og egen løkke.
@@ -50,6 +51,7 @@ Med Node.js installert:
 node tests/engine.test.cjs
 node tests/tax-export.test.cjs
 node tests/validation.test.cjs
+node tests/personvern-lagring.test.cjs
 node tests/results.test.cjs
 ```
 
@@ -87,11 +89,21 @@ Grafen kan vise beløpet i kroner, kjøpekraften i dagens kroner, eller begge. I
 
 ## Lagring og deling
 
-Planer lagres lokalt i nettleseren under `sv-scenarios`. En delt lenke inneholder skjemaverdiene og visningsnivået, men ikke andre lagrede planer. Når en lenke åpnes, kontrolleres hvert felt for seg. Ugyldige felt får standardverdi, gyldige beholdes, og brukeren får beskjed om hvilke felt som er endret. Lagrede planer kontrolleres på samme måte når de åpnes.
+Spareverksted lagrer ingenting før brukeren gjør noe. Det finnes tre ulike ting, og de må ikke blandes:
 
-Når brukeren går fra kalkulatoren til «Spør om sparing», lagres hele planen i fanens `sessionStorage` (`sv-working-plan-v1`). Kommer brukeren tilbake i samme fane, hentes planen tilbake og kontrolleres som en lagret plan. Bare alder, sparetid og risikovalg som er endret i veilederen, legges oppå; sparetiden går til sparemålets periode når sparemål var åpent. En delt lenke vinner alltid over planen i fanen. Planen forsvinner når fanen lukkes, og fjernes når brukeren går tilbake til startskjermen.
+- **Lagrede planer** (`localStorage`, `sv-scenarios`): bare når brukeren trykker «Lagre plan». Inneholder navn og alle tall. Blir liggende til planen slettes. `localStorage` har ingen utløpstid.
+- **Arbeidsplanen** (`sessionStorage`, `sv-working-plan-v1`): hele planen med beløp. Opprettes bare når brukeren går fra kalkulatoren til «Spør om sparing», og oppdateres deretter når kalkulatorsiden forlates. Kommer brukeren tilbake i samme fane, hentes planen tilbake og kontrolleres som en lagret plan. Bare alder, sparetid og risikovalg som er endret i veilederen, legges oppå; sparetiden går til sparemålets periode når sparemål var åpent. En delt lenke vinner alltid over planen i fanen. Planen fjernes når brukeren går tilbake til startskjermen.
+- **Veilederkonteksten** (`sessionStorage`, `sv-guidance-tab-v2`): alder, sparetid, risikovalg og valgene i veilederen. Ingen beløp, navn eller fritekst. Se avsnittet om veilederen under.
 
-Grensene for alle tallfelt står i én oversikt i `dist/engine.js`. Deling, lagring og eksport kontrollerer alle felt som følger med planen og beregningen i aktiv modul (sparing, sparemål eller uttak). Ved feil flyttes fokus til feltet, og feltet kobles til feilmeldingen med `aria-describedby`. Ingen av beregningene sendes til en kalkulatortjener. Nettstedets driftsleverandør kan behandle vanlig trafikkmetadata.
+`sessionStorage` forsvinner vanligvis når fanen lukkes, men nettlesere som gjenoppretter faner, kan gjenopprette den. Lovet sletting ved lukking står derfor ikke i produktteksten.
+
+Andre valg: fargetema (`localStorage`, `sv-color-theme`) lagres når brukeren trykker på et tema. Visningsnivå (`localStorage`, `sv-level`) lagres bare når brukeren selv velger Utforsk eller Avansert med nivåknappene. «Enkel» er standard og lagres ikke, og automatiske tilbakestillinger lagrer ingenting. At brukeren har gått videre fra startguiden, huskes bare i fanen (`sessionStorage`, `sv-started`). Den gamle permanente nøkkelen `sv-started` i `localStorage` fjernes ved neste besøk.
+
+Siden `personvern.html` viser dette for brukeren og har en knapp som sletter alle nøklene over, og bare dem. Full kartlegging med fil og linje står i [docs/personvern-lagring.md](docs/personvern-lagring.md).
+
+En delt lenke inneholder skjemaverdiene og visningsnivået etter `#`, men ikke alder, risikovalg eller andre lagrede planer. Delen etter `#` sendes ikke til nettstedet i HTTP-forespørselen. Når en lenke åpnes, kontrolleres hvert felt for seg. Ugyldige felt får standardverdi, gyldige beholdes, og brukeren får beskjed om hvilke felt som er endret. Lagrede planer kontrolleres på samme måte når de åpnes.
+
+Grensene for alle tallfelt står i én oversikt i `dist/engine.js`. Deling, lagring og eksport kontrollerer alle felt som følger med planen og beregningen i aktiv modul (sparing, sparemål eller uttak). Ved feil flyttes fokus til feltet, og feltet kobles til feilmeldingen med `aria-describedby`. Nettstedets egen kode har ingen nettverkskall (ingen `fetch`, XHR, `sendBeacon`, WebSocket eller skjema som sendes), ingen eksterne skript, stiler eller skrifter og ingen informasjonskapsler. Dette er kontrollert i kildekoden, ikke i en nettverkslogg fra den publiserte siden. Nettleverandøren (GitHub Pages) logger IP-adresser av sikkerhetshensyn.
 
 ## Bidra
 

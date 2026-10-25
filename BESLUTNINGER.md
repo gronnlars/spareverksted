@@ -349,3 +349,17 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Vurder på nytt når:** Faktisk bruk viser feil svar eller gjentakende problemer, innhold endrer hvilke ord som har én eier, eller iPhone- og skjermlesertesting avdekker hindringer.
 
 **Status:** Anbefalt, ikke vedtatt. Lars avgjør.
+
+## Lokal lagring og personvernside (25. oktober 2026)
+
+**Valg:** Lagre minst mulig og bare etter en handling fra brukeren. `sv-started` flyttes fra `localStorage` til fanens `sessionStorage`, og lagrede planer regnes også som start. Visningsnivå lagres bare når brukeren selv trykker på et nivå, aldri «Enkel» og aldri ved automatisk tilbakestilling. Arbeidsplanen og veilederkonteksten opprettes bare når brukeren går til «Spør om sparing», ikke ved hver `pagehide`. Ny side `personvern.html` med sletteknapp for Spareverksteds egne nøkler. Ingen samtykkeboks.
+
+**Alternativer:** A: Beholde dagens lagring og skrive en forklaring. Valgt bort fordi `sv-started` ble lagret permanent uten noe uttrykkelig ønske, også når en delt lenke ble åpnet, og `sv-level` ble skrevet med standardverdien ved oppstart. B: Fjerne all lagring av tema og nivå. Valgt bort foreløpig fordi brukeren selv trykker på valget, og fordi Nkom ikke er spurt ennå. C: Flytte tema og nivå til `sessionStorage`. Mulig etter svar fra Nkom; en enkel endring. D: Samtykkeboks. Valgt bort fordi ingen kjent lagring er sporing eller statistikk, og en boks for uavklarte funksjoner ville være å skyve problemet over på brukeren. E: Slette arbeidsplanen når den er hentet tilbake. Valgt bort fordi omlasting av kalkulatoren da mister planen, og en utdatert plan hindres uansett ved at `pagehide` oppdaterer en plan som finnes.
+
+**Begrunnelse:** Ekomloven § 3-15 gjelder all lagring i nettleseren, også uten personopplysninger. Unntaket gjelder det som er strengt nødvendig for en tjeneste brukeren uttrykkelig har bedt om. Lagring etter et konkret trykk står sterkere enn lagring ved oppstart.
+
+**Akseptert ulempe:** En bruker uten lagrede planer ser startguiden igjen ved nytt besøk. Går brukeren til «Spør om sparing» via adressefeltet eller Om-siden i stedet for lenken i kalkulatoren, følger ikke planen med. Personvernsiden har punkter merket «Avklares» og er merket `noindex`.
+
+**Vurder på nytt når:** Nkom eller Datatilsynet svarer, ansvarlig og kontakt er avklart, eller hostingen endres.
+
+**Status:** Foreslått i PR, ikke vedtatt. Lars avgjør. Gjort på eget oppdrag fra Lars under pausen (docs/regulatorisk.md).

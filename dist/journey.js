@@ -1,8 +1,11 @@
 'use strict';
 // A first visit begins with a choice. Shared plans go straight to the calculation.
 let journeyKind='growth',wizardActive=false,basicsTouched=false,journeyFresh=false,journeyEditing=false;
-function hasStarted(){try{return localStorage.getItem('sv-started')==='1';}catch{return false;}}
-function rememberStart(){try{localStorage.setItem('sv-started','1');}catch{}}
+// «Har startet» huskes bare i denne fanen (sessionStorage), slik at turen til «Spør om sparing» og tilbake ikke viser startguiden igjen.
+// Lagrede planer regnes også som start. Den gamle, permanente nøkkelen sv-started fjernes. Se docs/personvern-lagring.md.
+try{localStorage.removeItem('sv-started');}catch{}
+function hasStarted(){if(Array.isArray(saved)&&saved.length)return true;try{return sessionStorage.getItem('sv-started')==='1';}catch{return false;}}
+function rememberStart(){try{sessionStorage.setItem('sv-started','1');}catch{}}
 function stage(showWizard){wizardActive=showWizard;document.body.dataset.stage=showWizard?'welcome':'workbench';$('welcomeWizard').hidden=!showWizard;$('workbench').hidden=showWizard;$('startAgain').hidden=showWizard;if(!showWizard){rememberStart();render();}window.scrollTo({top:0,behavior:'instant'});}
 // Startguiden: et tomt beløpsfelt betyr 0 ("fyll inn tallene du kjenner"). Alder håndteres for seg.
 function inputNumber(id){const v=$(id).value;return v.trim()===''?0:parsedNumber(v);}
@@ -25,9 +28,9 @@ $('journeyForm').onsubmit=event=>{event.preventDefault();try{const start=inputNu
  if(journeyFresh)freshPlan();else undoState={state:{...s},mode,view:{...view}};
  Object.assign(s,{userAge:known?age:0,ageKnown:known,until67:known&&$('onboardUntil67').checked,ageGroup:known?ageGroupFor(age):'all',activePage:goal?'dreams':'calculator'});
  if(goal)Object.assign(s,{dreamStart:start,dreamMonthly:monthly,dreamYears:years,dreamCost:amount});else Object.assign(s,{start,monthly,years});
- if(journeyEditing){$('undoText').textContent='Startvalgene er oppdatert.';$('undoBar').hidden=false;}else{mode='explore';setLevel('simple');}journeyEditing=false;fill();stage(false);
+ if(journeyEditing){$('undoText').textContent='Startvalgene er oppdatert.';$('undoBar').hidden=false;}else{mode='explore';setLevel('simple',{remember:false});}journeyEditing=false;fill();stage(false);
  }catch(error){$('journeyError').textContent=error.message;$('journeyError').hidden=false;for(const id of ['onboardStart','onboardMonthly','onboardYears','onboardAge','onboardGoal']){const v=inputNumber(id),limit=id==='onboardYears'?100:id==='onboardAge'?120:Infinity,empty=$(id).value.trim()==='';$(id).setAttribute('aria-invalid',String(!empty&&(!Number.isFinite(v)||v<0||v>limit)));}$('journeyError').scrollIntoView({block:'nearest'});}};
-$('exampleJourney').onclick=()=>{freshPlan();fill();setLevel('simple');s.activePage=journeyKind==='goal'?'dreams':'calculator';stage(false);};
+$('exampleJourney').onclick=()=>{freshPlan();fill();setLevel('simple',{remember:false});s.activePage=journeyKind==='goal'?'dreams':'calculator';stage(false);};
 // Skyveknapper er snarveier, aldri grenser. Skrivefeltet er alltid den gjeldende verdien.
 const SLIDER_SPECS={start:[0,1000000,1000],monthly:[0,20000,100],years:[0.5,50,.5],rate:[0,15,.1],spread:[0,5,.1],dreamStart:[0,500000,1000],dreamMonthly:[0,20000,100],dreamYears:[0.5,30,.5],dreamCost:[0,1000000,1000],annualWithdraw:[0,600000,1000],withdrawPercent:[0,10,.1]};
 // Alle skyveknapper har faste, moderate grenser. Skrivefeltet kan ha høyere gyldige verdier.

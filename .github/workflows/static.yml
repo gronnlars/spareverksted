@@ -35,6 +35,8 @@ jobs:
           node tests/results.test.cjs
           node tests/meaning.test.cjs
           node tests/band.test.cjs
+          node tests/personvern-lagring.test.cjs
+          node --check dist/personvern.js
           node --check dist/veileder-ui.js
           node --check dist/veileder-sok.js
           node --check dist/veileder-bridge.js
