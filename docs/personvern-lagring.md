@@ -113,6 +113,26 @@ Se i `sammendrag`: `forespørslerTilAndreVerter`, `Set_Cookie`, `ikkeGET_ellerMe
 
 E-post til oss er en egen behandling. Se `docs/kontakt-epost.md`.
 
+## Logg over henvendelser
+
+Opplysningene er gitt av Lars. Selve e-postene ligger hos ham i Gmail. Private adresser og skjermbilder skal ikke inn i repoet.
+
+| Mottaker | Sendt | Status (26.10.2026) | Referanse |
+|---|---|---|---|
+| Domene.no | E-post 1, uendret fra utkastet (versjonen med rettingene 25.10.2026) | Mottak bekreftet 25.10.2026 kl. 23.58. Venter på svar | Sak 39138152 |
+| Nkom | E-post 2, uendret fra utkastet | Mottak bekreftet 26.10.2026 kl. 00.01. Venter på svar | Saksnummer ikke oppgitt i bekreftelsen |
+
+Spørsmål som er sendt:
+- **Domene.no (fem):** hvilken avtale eller vilkår som gjelder for videresending, og om den er en databehandleravtale; lagring i kø, retur og sikkerhetskopi og hvor lenge; e-postlogger og oppbevaring; hvor e-posten behandles og underleverandører; sletting og behandling utenfor EØS.
+- **Nkom (to):** om lagring av tema og visningsnivå i localStorage etter aktivt valg er strengt nødvendig etter § 3-15, eller bør gjelde bare økten; om arbeidsplanen og veilederkonteksten i sessionStorage ved tur fra kalkulatoren til veiledningen faller under unntaket. Vedlagt var den korte lagringstabellen.
+
+Ikke sendt: spørsmål til GitHub Support og til Datatilsynet. Utkast finnes hos Lars.
+
+Hva logginnslagene betyr:
+- Mottaksbekreftelsene er ikke faglige svar eller godkjenninger.
+- De bekrefter ikke at aliasene for personvern og generell kontakt fungerer, med mindre henvendelsene ble sendt med disse som svaradresse. Mottakstest av begge aliasene gjenstår.
+- Endringer i løsningen som skyldes svar, skal føres inn her med dato og referanse. Avvent svar før nivå- og temavalget (alternativ A, B eller C) avgjøres endelig.
+
 ## Åpne spørsmål for myndighetsveiledning
 
 - Nkom: Er lagring av tema og visningsnivå i `localStorage` etter aktivt valg «strengt nødvendig for en tjeneste brukeren uttrykkelig har bedt om», eller bør det bare gjelde økten? Er en tur fra kalkulatoren til veiledningen i samme fane nok til at arbeidsplanen i `sessionStorage` faller inn under unntaket?
