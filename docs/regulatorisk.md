@@ -25,6 +25,8 @@ Dette er ikke noen forhåndsgodkjenning, og siden skal ikke omtales som godkjent
 
 Lars opplyser at han ringte Finanstilsynet 26. oktober 2026 kl. 14.05 norsk tid. Han fikk ikke tydelige svar. Samtalen registreres som oppfølging av henvendelsen, ikke som faglig avklaring eller godkjenning. Skriftlig svar avventes, og prosjektpausen endres ikke.
 
+Et internt vurderingsnotat om folkeopplysning, tematisk relevans og dokumentasjon står i [vurdering-folkeopplysning.md](vurdering-folkeopplysning.md). Det er ikke en avklaring og endrer ikke sperrene under.
+
 ## Sperrer som gjelder også etter oppstart
 
 Disse oppheves ikke av at pausen avsluttes:
