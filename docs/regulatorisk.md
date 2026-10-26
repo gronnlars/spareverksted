@@ -25,11 +25,15 @@ Dette er ikke noen forhåndsgodkjenning, og siden skal ikke omtales som godkjent
 
 Lars opplyser at han ringte Finanstilsynet 26. oktober 2026 kl. 14.05 norsk tid. Han fikk ikke tydelige svar. Samtalen registreres som oppfølging av henvendelsen, ikke som faglig avklaring eller godkjenning. Skriftlig svar avventes, og prosjektpausen endres ikke.
 
+Et internt vurderingsnotat om folkeopplysning, tematisk relevans og dokumentasjon står i [vurdering-folkeopplysning.md](vurdering-folkeopplysning.md). Det er ikke en avklaring og endrer ikke sperrene under.
+
 ## Presisering sendt 26. oktober 2026
 
 Lars bekrefter 26.10.2026 at en presiserende e-post er sendt til Finanstilsynet som oppfølging av henvendelsen av 25.10.2026, særlig punkt 2. Presiseringen skiller eksisterende tilpasning fra planlagte utvidelser: Opplysninger fylt inn på spørresiden endrer spørsmålsforslagene, mens alle temaer fortsatt er tilgjengelige. BSU-svaret ved oppgitt alder 70 år viser en forklaring om aldersgrensen i utdypingen. Tilpasninger om kort sparehorisont og dyr gjeld er kontrollert lokalt, men ikke bekreftet på publisert side i denne gjennomgangen. En utvidelse med flere aldersgrenser er ikke publisert.
 
 Utsendingen er bekreftet av Lars, ikke selv kontrollert mot sendt-versjonen i Gmail i denne oppdateringen. Lars har vist et skjermbilde av en mottaksbekreftelse fra Finanstilsynet 26.10.2026 kl. 15.37 norsk tid i forbindelse med presiseringen. Bekreftelsen opplyser at henvendelsen er mottatt og vil bli behandlet så snart som mulig. Dette er en mottaksbekreftelse, ikke et faglig svar eller en godkjenning. Faglig avklaring avventes fortsatt. Originalen oppbevares privat. Prosjektpausen er uendret.
+
+Kontrollstatusen for kort sparehorisont og dyr gjeld i avsnittet over beskriver vår kontroll av funksjonene, ikke bekreftet ordlyd i den sendte e-posten. Sendt-versjonen er ikke kontrollert i denne oppdateringen.
 
 ## Sperrer som gjelder også etter oppstart
 
