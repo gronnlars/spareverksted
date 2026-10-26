@@ -71,7 +71,7 @@ Hva B betyr, og ikke betyr:
 | C. Ingen husking | Standard hver gang (tema kan følge operativsystemet via `prefers-color-scheme`) | Ikke valgt. Mulig senere, hvis Nkom sier at heller ikke B holder |
 | D. Samtykke | Egen boks | Bygges ikke før noe krever det |
 
-Merk: henvendelsen til Nkom (se loggen) ble sendt før dette og beskriver permanent lagring i `localStorage`. Svaret må leses mot at løsningen i PR #78 nå er B.
+Merk: henvendelsen til Nkom ble sendt før valget av B, men spør uttrykkelig også om `sessionStorage`. Svaret må leses mot at løsningen i PR #78 nå er B.
 
 ## Sletting og andre faner
 
@@ -122,7 +122,7 @@ E-post til oss er en egen behandling. Se `docs/kontakt-epost.md`.
 
 ## Logg over henvendelser
 
-Opplysningene er gitt av Lars. Selve e-postene ligger hos ham i Gmail. Private adresser og skjermbilder skal ikke inn i repoet.
+Opplysningene er gitt av Lars og kontrollert mot sendte e-poster i Gmail av ChatGPT/Codex 26.10.2026. Originalene bevares privat. Private adresser, telefonnumre, signaturer, meldings-ID-er, sakslenker og skjermbilder skal ikke inn i repoet.
 
 | Mottaker | Sendt | Status (26.10.2026) | Referanse |
 |---|---|---|---|
@@ -131,9 +131,9 @@ Opplysningene er gitt av Lars. Selve e-postene ligger hos ham i Gmail. Private a
 
 Spørsmål som er sendt:
 - **Domene.no (fem):** hvilken avtale eller vilkår som gjelder for videresending, og om den er en databehandleravtale; lagring i kø, retur og sikkerhetskopi og hvor lenge; e-postlogger og oppbevaring; hvor e-posten behandles og underleverandører; sletting og behandling utenfor EØS.
-- **Nkom (to):** om lagring av tema og visningsnivå i localStorage etter aktivt valg er strengt nødvendig etter § 3-15, eller bør gjelde bare økten; om arbeidsplanen og veilederkonteksten i sessionStorage ved tur fra kalkulatoren til veiledningen faller under unntaket. Vedlagt var den korte lagringstabellen.
+- **Nkom (tre, kontrollert mot sendt e-post):** tema og visningsnivå i localStorage etter aktivt valg, betydningen av at knappen ikke sier «husk ved senere besøk», og forskjellen ved sessionStorage; arbeidsplan med beløp og veilederopplysninger i sessionStorage ved tur til veilederen; uttrykkelig lagring av plan i localStorage uten innebygd utløpstid. Sendt tekst presiserer at foreslått løsning beskrives, ikke nødvendigvis publisert versjon. Ingen lagringstabell eller vedlegg er observert i den sendte meldingen.
 
-Merk: Nkom-henvendelsen beskriver permanent lagring av tema og nivå. Lars vedtok 26.10.2026 alternativ B (fane); PR #78 er endret deretter. Ingen ny e-post er sendt for dette.
+Merk: Nkom-henvendelsen spør allerede om både localStorage og sessionStorage. Lars vedtok 26.10.2026 alternativ B (fane); PR #78 er endret deretter. Svaret må vurderes mot B og faktisk kodeversjon. Ingen ny e-post er sendt i denne gjennomgangen.
 
 Konsekvens for personverninformasjonen: rolle og avtale for videresending er ikke dokumentert, og lagring av meldingsinnhold, logger og underleverandører er uavklart. `personvern.html` har dette som «Avklares» og skal ikke fylles ut med antakelser.
 
@@ -141,11 +141,11 @@ De reviderte utkastene (25.10.2026) er historikk, ikke ventende utsendinger. Ing
 
 Ikke sendt: spørsmål til GitHub Support og til Datatilsynet. Utkast finnes hos Lars.
 
-Svarene fra Domene.no 26.10.2026 er KI-generert (ordlyden er gjengitt av Lars). Det andre svaret er utfyllende, men er ikke en bindende opplysning fra Domene.no og kan ikke brukes som bekreftelse alene. Innholdet, slik det ble gjengitt:
+Svarene fra Domene.no 26.10.2026 er KI-generert (ordlyden er gjengitt av Lars). Det andre svaret er utfyllende. At det er KI-generert avgjør ikke alene hvilken rettslig betydning det kan ha. De tjenestespesifikke påstandene er ikke tilstrekkelig dokumentert med avtalehenvisninger og konkrete driftsopplysninger, og behandles derfor som uavklarte. Innholdet, slik det ble gjengitt:
 - Domene AS oppgis som databehandler og domeneeieren som behandlingsansvarlig. Svaret sier ikke uttrykkelig at dette gjelder bare domenetjenesten; hvilken rolle Domene AS har ved e-postvideresending, er ikke besvart.
 - Punkt 1.6: informasjon som sendes med e-post via tjenesten er ikke dekket av avtalen. Ansvaret for meldingsinnholdet ligger hos domeneeieren. Dette bekrefter Lars' tidligere gjengivelse og viser at denne avtalen ikke dekker meldingene. Det avgjør ikke hvilken rolle Domene AS har ved videresending, og viser ikke at ingen annen avtale finnes. Det er ikke dokumentert hvilken leverandørrolle Domene AS har ved e-postvideresending, eller hvilken avtale som dekker behandlingen. Dette er fortsatt uavklart.
 - Generelle oppbevaringstider (3 år etter avsluttet kundeforhold, 5 år for fakturadata) gjelder kundeopplysninger, ikke meldingsinnhold. De er ikke våre sletterutiner og er ikke kopiert.
-- Oppgitt: automatisk logging av tidspunkt, IP-adresse ved bruk av e-posttjenesten og web- og sikkerhetslogger, for drift og sikkerhet. Ikke bekreftet av et menneske.
+- Oppgitt: automatisk logging av tidspunkt, IP-adresse ved bruk av e-posttjenesten og web- og sikkerhetslogger, for drift og sikkerhet. Ikke kontrollert mot konkrete avtalevilkår eller driftsdokumentasjon.
 - Oppgitt: deling bare når nødvendig for drift, med underleverandører bundet av samme regler, og aldri for markedsføring.
 - Oppgitt: behandling utenfor EØS kan forekomme «ved internasjonale domenenavn», og data er da kryptert (TLS). Det svarer ikke på om e-postvideresendingen behandles utenfor EØS, og TLS alene er ikke et overføringsgrunnlag.
 - Uspesifisert, ifølge svaret: hvor lenge meldingsinnhold lagres ved videresending, kø og sikkerhetskopier, nøyaktig innhold i e-postlogger og konkrete underleverandører for e-posttjenesten. Dette er dermed fortsatt de uavklarte punktene fra spørsmål 2, 3 og 4.
@@ -154,11 +154,11 @@ Hva logginnslagene betyr:
 - Mottaksbekreftelsene er ikke faglige svar eller godkjenninger.
 - De bekrefter ikke at aliasene for personvern og generell kontakt fungerer, med mindre henvendelsene ble sendt med disse som svaradresse. Mottakstest av begge aliasene gjenstår.
 - Videresending til teamet hos Domene.no er bekreftet 26.10.2026. Neste steg er å avklare rollen og hvilke avtaler som faktisk gjelder. «Videresending uten avtale» godtas ikke som konklusjon før det er gjort. Eventuell annen e-postløsning vurderes etterpå.
-- Endringer i løsningen som skyldes svar, skal føres inn her med dato og referanse. Avvent svar før nivå- og temavalget (alternativ A, B eller C) avgjøres endelig.
+- Endringer i løsningen som skyldes svar, skal føres inn her med dato og referanse. Alternativ B er valgt. Eventuell endring etter svaret krever en ny beslutning fra Lars.
 
 ## Åpne spørsmål for myndighetsveiledning
 
-- Nkom (spørsmålet som er sendt, formulert før valg av B): Er lagring av tema og visningsnivå i `localStorage` etter aktivt valg «strengt nødvendig for en tjeneste brukeren uttrykkelig har bedt om», eller bør det bare gjelde økten? Løsningen er nå B. Gjenstår: holder også fanelagring av valgene som unntak? Er en tur fra kalkulatoren til veiledningen i samme fane nok til at arbeidsplanen i `sessionStorage` faller inn under unntaket?
+- Nkom (spørsmål sendt før valg av B, med både localStorage og sessionStorage): Er lagring av tema og visningsnivå i `localStorage` etter aktivt valg «strengt nødvendig for en tjeneste brukeren uttrykkelig har bedt om», eller bør det bare gjelde økten? Løsningen er nå B. Gjenstår: holder også fanelagring av valgene som unntak? Er en tur fra kalkulatoren til veiledningen i samme fane nok til at arbeidsplanen i `sessionStorage` faller inn under unntaket?
 - Datatilsynet: Hvordan bør behandlingsansvar og informasjonsplikt vurderes for GitHubs IP-logger på en gratis Pages-side? Er lokal lagring av økonomiske opplysninger som operatøren aldri mottar, en behandling operatøren er ansvarlig for? Hvordan skilles lokal behandling fra e-postkontakt i personverninformasjonen?
 
 ## Kjente begrensninger
@@ -173,3 +173,14 @@ Hva logginnslagene betyr:
 1. `journey.js` pakket inn `setLevel` og sendte bare nivået videre, så `{remember:false}` gikk tapt. Rettet; testen kobler funksjonene sammen som på siden og feiler mot gammel innpakning.
 2. «Tilbake til planen» ble skjult for planer åpnet fra delt lenke etter at `sv-started` ikke lenger ble skrevet (`startflyt-browser.cjs:98`). Rettet med `planShown` i minnet. «Tilbake til planen» skriver ingenting.
 3. Påstander om utløpstid, «ingenting lagres» og fullstendig sletting ble gjort presise.
+
+## Kontroll mot faktisk sendt e-post 26.10.2026
+
+ChatGPT/Codex har lest de sendte henvendelsene til Finanstilsynet, Nkom, Domene.no og Uu-tilsynet samt tilgjengelige mottaksbekreftelser og svar i de identifiserte trådene. Bare korte oppsummeringer føres her; originaler og personopplysninger er utelatt.
+
+- Finanstilsynet: sendt 25.10.2026. Automatisk mottaksbekreftelse samme dag; ingen faglig avklaring funnet i gjennomgåtte meldinger. Spørsmålene gjelder anbefalinger, tilpasning, regneeksempler, produktomtale og gratis drift. Prosjektpausen oppheves ikke.
+- Nkom: sendt 25.10.2026 kl. 23.59 norsk tid. Tre spørsmål, inkludert eksplisitt lagring av plan. Loggen over er rettet fra det tidligere utkastet til faktisk sendt tekst. Tidligere oppgitt mottaksbekreftelse er brukeroppgitt og ikke selv lest i denne gjennomgangen.
+- Domene.no: sendt 25.10.2026 kl. 23.57 norsk tid. Utfyllende svar mottatt samme kveld. Svaret avklarer ikke tjenestespesifikk lagringstid, kø, sikkerhetskopier og underleverandører for videresending. Generelle kundedatalagringstider skal ikke brukes som lagringstid for meldinger. Påstanden om videresending til teamet i tidligere logg er ikke selv bekreftet i de gjennomgåtte meldingene.
+- Uu-tilsynet: sendt 25.10.2026. Automatisk registreringsbekreftelse lest; ingen faglig vurdering funnet i gjennomgåtte meldinger. Påstandene om gjennomført testing er opplysninger i henvendelsen, ikke nye testresultater fra denne kontrollen.
+
+Støttede neste steg: Behold skillet mellom utkast, sendt melding, mottaksbekreftelse og faglig svar. Bevar åpne spørsmål om leverandørroller, avtaler og behandling. Kontotype, mottakstest og sletterutine kan ikke fastslås fra disse meldingene. Det er ikke sendt oppfølging, endret kontoinnstillinger, testet nettsted eller publisert kode i denne gjennomgangen.
