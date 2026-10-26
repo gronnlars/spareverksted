@@ -31,7 +31,7 @@ Et internt vurderingsnotat om folkeopplysning, tematisk relevans og dokumentasjo
 
 Lars bekrefter 26.10.2026 at en presiserende e-post er sendt til Finanstilsynet som oppfølging av henvendelsen av 25.10.2026, særlig punkt 2. Presiseringen skiller eksisterende tilpasning fra planlagte utvidelser: Opplysninger fylt inn på spørresiden endrer spørsmålsforslagene, mens alle temaer fortsatt er tilgjengelige. BSU-svaret ved oppgitt alder 70 år viser en forklaring om aldersgrensen i utdypingen. Tilpasninger om kort sparehorisont og dyr gjeld er kontrollert lokalt, men ikke bekreftet på publisert side i denne gjennomgangen. En utvidelse med flere aldersgrenser er ikke publisert.
 
-Utsendingen er bekreftet av Lars, ikke selv kontrollert mot sendt-versjonen i Gmail i denne oppdateringen. Ingen ny mottaksbekreftelse eller faglig avklaring er dokumentert her. Originalen oppbevares privat. Prosjektpausen er uendret.
+Utsendingen er bekreftet av Lars, ikke selv kontrollert mot sendt-versjonen i Gmail i denne oppdateringen. Lars har vist et skjermbilde av en mottaksbekreftelse fra Finanstilsynet 26.10.2026 kl. 15.37 norsk tid i forbindelse med presiseringen. Bekreftelsen opplyser at henvendelsen er mottatt og vil bli behandlet så snart som mulig. Dette er en mottaksbekreftelse, ikke et faglig svar eller en godkjenning. Faglig avklaring avventes fortsatt. Originalen oppbevares privat. Prosjektpausen er uendret.
 
 ## Sperrer som gjelder også etter oppstart
 
