@@ -21,7 +21,7 @@ Avsender → Domene.no (videresending av personvern (at) og post (at) på sparev
 - Om Gmail-kontoen er Google Workspace eller en privat Google-konto. Ikke gjett ut fra at Gmail brukes.
 - Om det finnes databehandleravtale med Google. For Workspace aksepteres Cloud Data Processing Addendum av administrator i Admin-konsollen (Konto > Kontoinnstillinger > Juridisk og sikkerhet > Tilleggsvilkår for sikkerhet og personvern) ([Google](https://support.google.com/a/answer/2888485)). Siden omtaler ikke private Google-kontoer. Lars må sjekke hvilken kontotype det er.
 - Om Domene.no behandler videresendingen som databehandler. Domene.nos personvernerklæring ([domene.no/personvern.html](https://www.domene.no/personvern.html)) skal ifølge Lars' gjengivelse (punkt 1.6) si at informasjon publisert på nettsteder eller sendt med e-posttjenesten ikke omfattes av deres databehandleravtale. Vi har ikke klart å lese siden herfra. Punktet bekrefter da ikke en avtale for videresending. Rollen vurderes for hver behandling ut fra faktiske forhold, ikke av overskriften.
-- Lagring i kø, retur (bounce), sikkerhetskopi og logger hos Domene.no, og hvor lenge. Et KI-svar fra Domene.no 26.10.2026 sier at dette ikke er spesifisert i de offentlige vilkårene, og at e-post sendt via tjenesten ikke er dekket av avtalen (punkt 1.6). Svaret er ikke bindende. Se loggen i `docs/personvern-lagring.md`.
+- Lagring i kø, retur (bounce), sikkerhetskopi og logger hos Domene.no, og hvor lenge. Et KI-svar fra Domene.no 26.10.2026 sier at dette ikke er spesifisert i de offentlige vilkårene, og at e-post sendt via tjenesten ikke er dekket av avtalen (punkt 1.6). At svaret er KI-generert avgjør ikke alene rettslig betydning. De konkrete drifts- og avtaleforholdene er fortsatt utilstrekkelig dokumentert. Se loggen i `docs/personvern-lagring.md`.
 - Hvor e-post behandles og om underleverandører utenfor EØS er involvert.
 
 ## E-postadresser på nettsiden
@@ -53,4 +53,8 @@ Alt nedenfor er et forslag Lars må ta stilling til.
 1. Lars bekrefter at testmelding til begge alias kommer fram.
 2. Lars avklarer Google-kontotype og avtaleforhold.
 3. Lars velger sletterutine og bekrefter eller endrer forslagene over.
-4. Svar fra Domene.no er ønskelig. Usendt utkast med fem spørsmål ligger hos Lars.
+4. Henvendelsen med fem spørsmål er sendt til Domene.no 25.10.2026, kontrollert mot Gmail 26.10.2026. Et utfyllende svar er mottatt, men avtalegrunnlag og tjenestespesifikke opplysninger om videresending gjenstår. Se loggen i `docs/personvern-lagring.md`.
+
+## Gjennomgang 26.10.2026
+
+Sendt henvendelse og tilgjengelig svar fra Domene.no er lest av ChatGPT/Codex. Originaler, privat kontaktinformasjon, meldings-ID-er og kundesakslenker er ikke kopiert til repoet. Forslagene om å avklare kontotype, faktisk leverandørrolle, avtaler og sletterutine støttes som videre avklaringspunkter. Ingen konkret oppbevaringstid er vedtatt i denne gjennomgangen. Ingen ny e-post, «Send som»-konfigurasjon eller annen kontoendring er utført.
