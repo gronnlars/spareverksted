@@ -151,7 +151,7 @@ Ingen av punktene er vedtatt. De er skrevet som mulige framtidige prinsipper og 
 | H2 | Omfatter MARs anbefalingsregler vanlige verdipapirfond som ikke handles på markedsplass, slik de omfatter børsnoterte fond (ETF)? | Q&A 8.4 nevner regulert marked, MTF og OTF. MAR art. 2 er ikke lest. Børsnotering alene er ikke en fullstendig kontroll av virkeområdet. | Ikke avklart. Krever lesing av MAR art. 2 og eventuelt Finanstilsynet |
 | H3 | Kan en formulering som «billigste globale indeksfond» være et indirekte produktutvalg selv uten produktnavn? | Vår anvendelse av ESMAs sektoreksempel i Q&A 8.2, ikke ESMAs eget eksempel. Avhenger av hvor få produkter beskrivelsen i praksis peker på. | Vurdering. Kan tas med som eksempel hvis Finanstilsynet ber om det |
 | H4 | Kan Spareverksted framstå som «ekspert» etter 2016/958 art. 1 a? | Forutsetter først at siden gjentatte ganger foreslår investeringsbeslutninger om finansielle instrumenter. Er det ikke tilfellet, er spørsmålet om framtoning uten betydning for definisjonen. Dette er en vurdering etter MAR og 2016/958. Den avhenger ikke av om tilpasningen er investeringsrådgivning etter verdipapirhandelloven (H1); de to vurderingene er forskjellige. | Avhenger av innholdet i svarene |
-| H5 | Må beskrivelsen av eksisterende funksjoner overfor Finanstilsynet presiseres? Punkt 2 i henvendelsen dekker problemstillingen, men skal ifølge GPT beskrive tilpasningen som noe som videre vurderes, mens koden og brukerflyten (punkt 2, «Eksisterende tilpasning») viser at den finnes. | Tilpassede forslag på spørresiden er bekreftet på nettstedet av Lars. Endring av svartekster og overføring fra kalkulatoren er ikke bekreftet der. Claude har ikke lest e-posten. En presisering bør bare beskrive det som er bekreftet. | Lars: kontrollere nettstedet og den sendte e-posten, og avgjøre om en kort presisering skal sendes |
+| H5 | Presisering av eksisterende funksjoner overfor Finanstilsynet | **Oppfølging sendt:** Lars bekrefter 26.10.2026 utsending av presiserende e-post om eksisterende tilpasning og planlagte utvidelser. Dette avslutter spørsmålet om presiseringen skal sendes, men er ingen juridisk avklaring. Sendt-versjonen er ikke lest i Gmail i denne oppdateringen. | Avvent Finanstilsynets veiledning. Se docs/regulatorisk.md, «Presisering sendt 26. oktober 2026» |
 
 ## 5. Konkrete vurderingstilfeller
 
@@ -199,3 +199,11 @@ Kontrollert mot kildene 26. oktober 2026:
 - Nyere ESMA-svar i Q&A-verktøyet endrer punktene i avsnitt 2.
 - MAR art. 2 eller reglene om investeringsrådgivning blir lest og gir et annet bilde av H1 eller H2.
 - Lars vedtar noe av punkt 3. Da føres det i BESLUTNINGER.md, ikke her.
+
+## Oppfølgingsstatus 26. oktober 2026
+
+Lars bekrefter 26.10.2026 at en presiserende e-post er sendt til Finanstilsynet som oppfølging av henvendelsen av 25.10.2026, særlig punkt 2. Presiseringen skiller eksisterende tilpasning fra planlagte utvidelser: Opplysninger fylt inn på spørresiden endrer spørsmålsforslagene, mens alle temaer fortsatt er tilgjengelige. BSU-svaret ved oppgitt alder 70 år viser en forklaring om aldersgrensen i utdypingen. Tilpasninger om kort sparehorisont og dyr gjeld er kontrollert lokalt, men ikke bekreftet på publisert side i denne gjennomgangen. En utvidelse med flere aldersgrenser er ikke publisert.
+
+Utsendingen er bekreftet av Lars, ikke selv kontrollert mot sendt-versjonen i Gmail i denne oppdateringen. Ingen ny mottaksbekreftelse eller faglig avklaring er dokumentert her. Originalen oppbevares privat. Prosjektpausen er uendret.
+
+Lars har i tillegg vist skjermbilder fra publisert side: BSU-svaret med oppgitt alder 70 år har avsnittet «Aldersgrensen» under «Les en utfyllende vurdering». I den viste utdypingen for 14 år mangler dette avsnittet. Dette supplerer den tidligere observasjonen av tilpassede spørsmålsforslag. Det dokumenterer ikke alle svarvarianter eller årsaken til den rapporterte overføringsfeilen fra forsiden. Eldre opplysninger om at ingen endring av svartekst var bekreftet på nettstedet beskriver kontrollstatus før disse skjermbildene.
