@@ -143,5 +143,88 @@ Ideer uten plass i planen. Et punkt flyttes inn bare ved en egen beslutning.
 | Spareform fra kalkulatoren til veilederen | Dekningsoversikten 24.10 |
 | Standard prisvekst 2,0 % i stedet for 2,5 % | Spareformbeslutning 23.10. Kan bli en kildeoppdatering hvis Lars vil |
 | Gjøre `polish-browser.cjs` robust mot tidsfeil | Status 24.10. Testendring, ikke kalkulatorendring |
+| Sammenhenger og forklaringer (A1 til A3, B1 til B5, C1 til C4, D1 til D2) | Utkast i punkt 10, 26.10.2026. Ikke vedtatt |
 
 Valgomaten er parkert etter Lars sin beslutning 24. oktober 2026. Den vurderes separat etter at arbeidsgrunnlaget er samlet og kontrollert innholdspåfyll har en fungerende arbeidsflyt. Målet om et nedlastbart hverdagsbudsjett beholdes som framtidig krav, ikke som vedtatt implementeringsplan.
+
+## 10. Utkast: sammenhenger og forklaringer (26.10.2026, ikke vedtatt)
+
+Forslag fra Lars/GPT, undersøkt mot main `b2eada7` og åpne PR-er 26.10.2026. **Opphever ingen frys eller publiseringsbegrensning.** Kalkulatoren er fryst (punkt 0). Prosjektet er på vent til Finanstilsynet har svart (PR #77): ingen endringer i `dist/`, ingen nytt innhold, ingen sammenslåing. Alt under er planlegging. Ingenting er implementert eller testet utover det som står under «Bekreftet».
+
+Målet er at sammenhengene mellom eksisterende deler blir lettere å forstå. Forbindelser og forklaringer går foran nye kalkulatorfunksjoner. Dette er ingen ny kø: `SPORSMALSKO.md` er fortsatt køen, og ideene er også ført i punkt 9.
+
+### Bekreftet (kode lest på main, to enkle målinger i Chromium)
+
+| Spørsmål | Funn | Hvor |
+| --- | --- | --- |
+| Har svar egne stabile adresser? | **Nei.** `spor.html#q-kjopekraft` viser ingen svar (hash ignoreres). Valg av tema endrer ikke adressen (`spor.html` før og etter). Ingen `pushState`, `hashchange` eller `popstate` i veilederfilene, så tilbakeknappen forlater siden | `dist/veileder-ui.js`, `veileder-engine.js`, `veileder-cards.js`, `veileder-context.js` |
+| Kan kalkulatoren åpne et merket eksempel? | **Delvis.** Kalkulatoren åpnes med verdier via delingslenke (`index.html#start=...`), uten kodeendring. Men en delt lenke regnes som brukerens egne tall, og ingen merking som eksempel finnes. «Nullstill» og «Bare vis meg et eksempel» gir standardverdier uten merking | `dist/journey.js` rad 105 til 109, `dist/app.js` (`share`, `exampleJourney`) |
+| Overskriver en delt lenke brukerens tall? | **Ja i fanen.** Arbeidsplanen i fanen (`sv-working-plan-v1`) var start 1 000 kr før en delt lenke med start 5 000 kr ble åpnet i samme fane, og 5 000 kr etter at veilederen ble åpnet. Ingen bekreftelse. Lagrede planer (`sv-scenarios`) berøres ikke av lenken | Probe mot main, `dist/veileder-bridge.js`. Ikke gjort som test i repoet |
+| Finnes deler av «Hvor kom pengene fra?» | **Ja, delvis.** Resultatet viser innskudd, beregnet vekst og effekt av kostnader, og kroner kan vises sammen med kjøpekraft i dagens kroner (`view.both`). Tap i kroner skilles fra lavere kjøpekraft. Mangler: én samlet oppstilling av hvor sluttverdien kom fra | `dist/app.js` rad 125 til 150, 173, `dist/meaning.js` |
+| Kan en sparepause beskrives med eksisterende funksjoner? | **Nei, trolig ikke.** Motoren har fast månedsbeløp, en årlig prosentendring i månedsbeløpet (kontinuerlig) og ett engangsinnskudd. Ingen felt for pause med start og slutt. Ikke testet | `dist/engine.js` (`raw`, `FIELDS`) |
+| Finnes forklaringskort? | **Svarformen finnes** (`kind:'explainer'`: kort svar, begreper, eksempel, fordypning, kilder). Kjøpekraft finnes på main (`q-kjopekraft`). Renters rente ligger i #65 (ikke slått sammen). **Kostnader: ikke funnet på main.** Ingen figurkomponent i veilederen (0 svg-treff i `veileder-ui.js` og `veileder-cards.js`) | `dist/veileder-engine.js` rad 80 og 141, `dist/veileder-knowledge.js` |
+| Hva omfattes av frysen og pausen? | Frysen: alt som endrer kalkulatoren (C1 til C4, merking av eksempel i A1). Pausen: all `dist/`-endring og alt nytt innhold, også A2, A3 og B1 til B2. Frysen kan ha unntak for tilgjengelighetsfeil, regnefeil og kildeoppdateringer (punkt 0) | `research/plan.md` punkt 0, `docs/regulatorisk.md` i #77 |
+
+Regneeksemplet i B2 er kontrollert separat med uavhengig regning (Python, ikke visningskoden): 100 000 kr, +20 % og deretter −20 % gir 96 000 kr, og motsatt rekkefølge 96 000 kr. Med 10 000 kr satt inn mellom periodene: 104 000 mot 108 000 kr. Med 10 000 kr tatt ut: 88 000 mot 84 000 kr. Alle seks tall stemmer med forslaget.
+
+### Avhengigheter og samspill med åpne PR-er
+
+- **#78** (personvern, kontakt, fanelagring): endrer `veileder-bridge.js` og lagring. A1 og A2 må bygges oppå den, og A3 kan ikke aktiveres før den er publisert og e-postkontakten er avklart (se `docs/personvern-lagring.md`).
+- **#68** (alder og situasjon styrer forslagene): endrer `veileder-ui.js`, `veileder-engine.js` og `spor.html`. A2 berører samme filer, så rekkefølgen må avklares. #68 hører også inn under sperren for kontekstuell veiledning (#77).
+- **#65** (renters rente og kjøpekraft på bankkonto): gir kortet for renters rente. B1 bør ikke dupliseres.
+- **#54 og #47** (søk): nye svar må tåle søk. Ikke endre søkelogikk i samme PR.
+- **#75** (tilgjengelighetsside): lenker og UU-kravene gjelder alle nye deler.
+
+### Prioritering
+
+**Anbefalt første arbeidsoppgave når pausen er opphevet: A2, egen adresse per svar.** Grunnen: minst risiko, ingen nytt innhold, ingen kalkulatorendring, lett å føre tilbake, og A1 og A3 trenger den. Mens pausen varer: bare skrive og kontrollere spesifikasjonen (under).
+
+| Rangering | Idé | Rører | Status |
+| --- | --- | --- | --- |
+| 1 | A2 adresse per svar | `veileder-ui.js`, `spor.html`, tester | Spesifikasjon under. Venter på pause |
+| 2 | A1 «Åpne regneeksempelet» | Veileder, og kalkulatoren hvis eksemplet skal merkes | Spesifikasjon under. Merking krever endret kalkulator, så implementering venter på opphevet frys |
+| 3 | B1 grunnkort | Nytt innhold, svarbase, søketester | Venter på pause. Renters rente via #65 |
+| 4 | B2 samme prosentendringer | Nytt innhold | Eksempelet kontrollregnet. Faglig kilde ikke funnet ennå |
+| 5 | A3 «Savner du et svar?» | Kontaktløsning, personvernside | Bare planlagt. Aktivering venter på avklart kontakt |
+| 6 | C1 til C4 | Kalkulatoren | Venter på opphevet frys. C4 krever trolig endret motor, egen senere oppgave |
+| Kø | B3, B4, B5, D1, D2 | | Uendret, utvider ikke første leveranse |
+
+### A2: spesifikasjon (forslag)
+
+- Adresse: `spor.html#svar=<id>`, med eksisterende id-er (`funds`, `mortgage`, `q-kjopekraft` og så videre). Id-ene blir en offentlig kontrakt. En test låser listen, og en omdøpt id får en alias-oversikt.
+- Valg av svar legger til en historikkoppføring, slik at tilbakeknappen går til forrige visning. Endring av adressen for hånd åpner riktig svar (`hashchange`).
+- Ugyldig id: vanlig startvisning med en kort melding om at svaret ikke finnes, og lenke til temaene. Ingen tom side.
+- Kommer brukeren utenfra, har de ikke fylt inn noe. Svaret må ikke se ut som tilpasset deres tall. Eksisterende tekst om «Tilpass svaret» kontrolleres.
+- Fokus: ved direkte åpning flyttes fokus ikke uventet. Svaret kunngjøres for skjermleser slik som i dag, kontrolleres.
+- Ingen lagring, ingen nettverkskall. Adressen inneholder ingen personopplysninger.
+- Aksept: delbar og bokmerkbar adresse for alle svar, tilbakeknapp som forventet, ugyldig adresse håndtert, eksisterende søk og temavalg uendret, tastatur og skjermleser, og regresjonstest for hver id. Testes i Chromium, Firefox og WebKit, og på iPhone for hånd.
+
+### A1: spesifikasjon (forslag)
+
+- Første svar: «Sparekonto eller fond» (`funds`). Knappen «Åpne regneeksempelet» åpner kalkulatoren i **ny fane** (`target="_blank"` med `rel="noopener"`). Da berører den ikke arbeidsplanen i fanen brukeren kommer fra, og lagrede planer endres ikke. Dette er forslag og ikke testet.
+- Eksemplets verdier må bestemmes og begrunnes mot `dist/assumptions.js`. Verdiene er ikke valgt her.
+- Merking: en delt lenke regnes i dag som brukerens egne tall. Teksten «Dette er et eksempel, ikke dine tall» krever derfor en endring i kalkulatoren (for eksempel en parameter og en startnote). Det er dermed en endring av den fryste kalkulatoren, og implementeringen venter. Uten merking skal knappen ikke lanseres, siden teksten da ikke ville stemt.
+- Knappen og teksten må si hva som skjer («åpnes i en ny fane med eksempeltall»).
+- Aksept: eksisterende tall overskrives ikke, eksemplet er tydelig merket i kalkulatoren, tall og forbehold finnes som tekst, tastatur og skjermleser, og test mot at lagrede planer og arbeidsplan er uendret.
+
+### B1, B2: kort om forklaringskort
+
+Bruk `kind:'explainer'`. Ikke et parallelt system. Figur krever en ny, liten komponent (finnes ikke i dag), og alle tall og sammenhenger skal også stå som tekst. B2 forklarer at rekkefølgen bare er kjent i ettertid og gir ikke tidspunktråd. Eksemplet ser bort fra skatt, kostnader og inflasjon, og innskudd eller uttak skjer ett sted mellom to perioder. Faglig kilde må finnes og dateres før bruk (Finanstilsynet og Forbrukerrådet er nærmeste kandidater, ikke undersøkt). B2 må vurderes mot Finanstilsynets svar før publisering.
+
+### A3: bare plan
+
+Aktiveres ikke før kontaktløsningen er avklart (#78 ikke publisert, rolle og avtale hos Domene.no uavklart). Ved manglende treff kan brukeren åpne et e-postutkast der de selv redigerer teksten. Ingenting sendes automatisk, ingen kalkulatortall legges ved, og siden forklarer hva som går til e-postprogrammet. Innsendte spørsmål er innspill fra dem som velger å sende, ikke et representativt bilde. Ikke oppfordre til å sende personlige økonomiske forhold. Funksjonen er et særskilt, frivillig valg og må stå i personverninformasjonen.
+
+### C1 til C4: notater
+
+- **C1:** utgangspunktet finnes (innskudd, vekst, kostnader, kroner og dagens kroner). Kjøpekraft skal ikke legges til som tredje del av summen, og null vekst og negativ avkastning må håndteres.
+- **C2:** bygg på «Dette betyr tallene dine» (`dist/meaning.js`), få forutsetninger, én endring om gangen.
+- **C3:** avklar definisjonen først: samlede kostnader delt på månedlig sparebeløp er noe annet enn forsinkelsen mot et sparemål. Ikke bruk «fire års ekstra sparing» før dette er entydig.
+- **C4:** trolig ikke mulig uten endret motor. Egen senere oppgave, nøytrale formuleringer.
+
+### Ikke kontrollert
+
+- iPhone, Safari, Firefox, VoiceOver og NVDA for noen av ideene (ikke bygget).
+- Om #68 og #65 endrer det som er målt over (målt mot main).
+- Faglige kilder til B1 (kostnader) og B2.
+- Om A2 til A3 faller inn under Finanstilsynets spørsmål. Det avgjør Lars etter svaret.
