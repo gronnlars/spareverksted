@@ -165,7 +165,7 @@ Målet er at sammenhengene mellom eksisterende deler blir lettere å forstå. Fo
 | Finnes forklaringskort? | **Svarformen finnes** (`kind:'explainer'`: kort svar, begreper, eksempel, fordypning, kilder). Kjøpekraft finnes på main (`q-kjopekraft`). Renters rente ligger i #65 (ikke slått sammen). **Kostnader: ikke funnet på main.** Ingen figurkomponent i veilederen (0 svg-treff i `veileder-ui.js` og `veileder-cards.js`) | `dist/veileder-engine.js` rad 80 og 141, `dist/veileder-knowledge.js` |
 | Hva omfattes av frysen og pausen? | Frysen: alt som endrer kalkulatoren (C1 til C4, merking av eksempel i A1). Pausen: all `dist/`-endring og alt nytt innhold, også A2, A3 og B1 til B2. Frysen kan ha unntak for tilgjengelighetsfeil, regnefeil og kildeoppdateringer (punkt 0) | `research/plan.md` punkt 0, `docs/regulatorisk.md` i #77 |
 
-Regneeksemplet i B2 er kontrollert separat med uavhengig regning (Python, ikke visningskoden): 100 000 kr, +20 % og deretter −20 % gir 96 000 kr, og motsatt rekkefølge 96 000 kr. Med 10 000 kr satt inn mellom periodene: 104 000 mot 108 000 kr. Med 10 000 kr tatt ut: 88 000 mot 84 000 kr. Alle seks tall stemmer med forslaget.
+**Regnekontroll (ikke kildegrunnlag).** Regneeksemplet i B2 er kontrollert separat med uavhengig regning (Python, ikke visningskoden): 100 000 kr, +20 % og deretter −20 % gir 96 000 kr, og motsatt rekkefølge 96 000 kr. Med 10 000 kr satt inn mellom periodene: 104 000 mot 108 000 kr. Med 10 000 kr tatt ut: 88 000 mot 84 000 kr. Alle seks tall stemmer med forslaget. Dette bekrefter bare tallene. Det er ikke en kilde for forklaringen.
 
 ### Avhengigheter og samspill med åpne PR-er
 
@@ -191,25 +191,29 @@ Regneeksemplet i B2 er kontrollert separat med uavhengig regning (Python, ikke v
 
 ### A2: spesifikasjon (forslag)
 
-- Adresse: `spor.html#svar=<id>`, med eksisterende id-er (`funds`, `mortgage`, `q-kjopekraft` og så videre). Id-ene blir en offentlig kontrakt. En test låser listen, og en omdøpt id får en alias-oversikt.
-- Valg av svar legger til en historikkoppføring, slik at tilbakeknappen går til forrige visning. Endring av adressen for hånd åpner riktig svar (`hashchange`).
-- Ugyldig id: vanlig startvisning med en kort melding om at svaret ikke finnes, og lenke til temaene. Ingen tom side.
+- **Stabile svar-ID-er:** adressen er `spor.html#svar=<id>`. ID-en er en fast, kort, liten bokstav-tekst som ikke avledes av overskriften (eksisterende id-er som `funds`, `mortgage`, `q-kjopekraft` brukes). Endres en overskrift, endres ikke adressen. Id-ene er en offentlig kontrakt: en test låser listen, og en omdøpt id beholder den gamle som alias.
+- **Direkte åpning:** åpnes adressen uten forhåndsvalg, vises det svaret. Ingen tom side, ingen avhengighet av at brukeren har fylt inn noe.
+- **Oppdatering av siden:** samme svar vises igjen. Ingen lagring trengs, siden adressen bærer valget.
+- **Tilbake og frem:** hvert valg av svar legger til en historikkoppføring. Tilbake går til forrige visning (for eksempel listen eller det forrige svaret), frem til svaret igjen. Endring av adressen for hånd åpner riktig svar (`hashchange`/`popstate`).
+- **Ugyldig id:** startvisning med en kort melding om at svaret ikke finnes, og lenke til temaene. Meldingen er tilgjengelig for skjermleser. Ingen feil i konsollen.
+- **Tilgjengelig fokusplassering:** ved direkte åpning, oppdatering og navigasjon plasseres fokus ved svaret (overskriften eller svarområdet), ikke et tilfeldig sted og ikke så det hopper uventet i dokumentet. Ved tilbake og frem følger fokus og leseposisjon det forventede. Svaret kunngjøres på en måte som er kontrollert med skjermleser. Skal avgjøres ved test, ikke antas.
 - Kommer brukeren utenfra, har de ikke fylt inn noe. Svaret må ikke se ut som tilpasset deres tall. Eksisterende tekst om «Tilpass svaret» kontrolleres.
-- Fokus: ved direkte åpning flyttes fokus ikke uventet. Svaret kunngjøres for skjermleser slik som i dag, kontrolleres.
 - Ingen lagring, ingen nettverkskall. Adressen inneholder ingen personopplysninger.
-- Aksept: delbar og bokmerkbar adresse for alle svar, tilbakeknapp som forventet, ugyldig adresse håndtert, eksisterende søk og temavalg uendret, tastatur og skjermleser, og regresjonstest for hver id. Testes i Chromium, Firefox og WebKit, og på iPhone for hånd.
+- **Overlapp med #68 må avklares før kodearbeidet starter.** #68 (hode `0223e12`, ingen konflikt mot main per 26.10.2026) endrer `veileder-ui.js` (1 linje), `spor.html` (1 linje) og `veileder-engine.js` (47 tillegg, 4 slettinger). Overlappet med A2 er trolig lite, men er ikke testet med et faktisk prøveforsøk på sammenslåing. #68 hører under sperren for kontekstuell veiledning (#77), så rekkefølgen avgjøres av Lars etter Finanstilsynets svar.
+- Aksept: delbar og bokmerkbar adresse for alle svar, direkte åpning, oppdatering, tilbake og frem, ugyldig id, fokus og skjermleser, id-liste låst, eksisterende søk og temavalg uendret. Testes i Chromium, Firefox og WebKit, og på iPhone for hånd.
 
 ### A1: spesifikasjon (forslag)
 
-- Første svar: «Sparekonto eller fond» (`funds`). Knappen «Åpne regneeksempelet» åpner kalkulatoren i **ny fane** (`target="_blank"` med `rel="noopener"`). Da berører den ikke arbeidsplanen i fanen brukeren kommer fra, og lagrede planer endres ikke. Dette er forslag og ikke testet.
+- Første svar: «Sparekonto eller fond» (`funds`). Knappen «Åpne regneeksempelet» må ikke overskrive brukerens arbeidsplan. **Ny fane (`target="_blank"` med `rel="noopener"`) er foreløpig bare en mulig løsning.** Overskrivingsproblemet regnes ikke som løst før det er testet. Mulig utfall som må kontrolleres: om en ny fane faktisk starter uten arbeidsplan fra den første, hva som lagres når eksemplet åpnes, og om `pagehide` i eksempelfanen kan skrive over noe.
 - Eksemplets verdier må bestemmes og begrunnes mot `dist/assumptions.js`. Verdiene er ikke valgt her.
 - Merking: en delt lenke regnes i dag som brukerens egne tall. Teksten «Dette er et eksempel, ikke dine tall» krever derfor en endring i kalkulatoren (for eksempel en parameter og en startnote). Det er dermed en endring av den fryste kalkulatoren, og implementeringen venter. Uten merking skal knappen ikke lanseres, siden teksten da ikke ville stemt.
 - Knappen og teksten må si hva som skjer («åpnes i en ny fane med eksempeltall»).
 - Aksept: eksisterende tall overskrives ikke, eksemplet er tydelig merket i kalkulatoren, tall og forbehold finnes som tekst, tastatur og skjermleser, og test mot at lagrede planer og arbeidsplan er uendret.
+- **Retur må testes:** bruker går fra veilederen via eksemplet og senere tilbake til kalkulatoren, i samme fane og fra den andre fanen. Forventet: egne tall er bevart og ikke erstattet av eksemplet, og eksemplet vises ikke som brukerens egne tall. Også med blokkert lagring og med eksisterende lagrede planer.
 
 ### B1, B2: kort om forklaringskort
 
-Bruk `kind:'explainer'`. Ikke et parallelt system. Figur krever en ny, liten komponent (finnes ikke i dag), og alle tall og sammenhenger skal også stå som tekst. B2 forklarer at rekkefølgen bare er kjent i ettertid og gir ikke tidspunktråd. Eksemplet ser bort fra skatt, kostnader og inflasjon, og innskudd eller uttak skjer ett sted mellom to perioder. Faglig kilde må finnes og dateres før bruk (Finanstilsynet og Forbrukerrådet er nærmeste kandidater, ikke undersøkt). B2 må vurderes mot Finanstilsynets svar før publisering.
+Bruk `kind:'explainer'`. Ikke et parallelt system. Ingen automatisk åpning: når pausen oppheves, er A2 første kandidat, og resten av planen åpnes ikke av det. Figur krever en ny, liten komponent (finnes ikke i dag), og alle tall og sammenhenger skal også stå som tekst. B2 forklarer at rekkefølgen bare er kjent i ettertid og gir ikke tidspunktråd. Eksemplet ser bort fra skatt, kostnader og inflasjon, og innskudd eller uttak skjer ett sted mellom to perioder. **Kildegrunnlag er noe annet enn regnekontroll og er ikke funnet ennå.** En faglig kilde skal støtte selve forklaringen: at samme prosentendringer gir ulikt resultat avhengig av rekkefølge når det kommer innskudd eller uttak mellom periodene, og at rekkefølgen bare er kjent i ettertid. Kilden må finnes, leses og dateres før bruk. Ikke bruk en generell risikokilde (for eksempel «fond kan gå opp og ned») som ikke faktisk støtter dette poenget. Hvis ingen norsk primærkilde støtter forklaringen direkte, skal det stå, og kortet kan i stedet baseres på det matematiske eksemplet alene med forbehold. B2 må vurderes mot Finanstilsynets svar før publisering.
 
 ### A3: bare plan
 
@@ -226,5 +230,5 @@ Aktiveres ikke før kontaktløsningen er avklart (#78 ikke publisert, rolle og a
 
 - iPhone, Safari, Firefox, VoiceOver og NVDA for noen av ideene (ikke bygget).
 - Om #68 og #65 endrer det som er målt over (målt mot main).
-- Faglige kilder til B1 (kostnader) og B2.
+- Faglige kilder til B1 (kostnader) og B2. For B2: ingen kilde til forklaringen om rekkefølge og pengestrømmer er funnet. Bare regnekontrollen er gjort.
 - Om A2 til A3 faller inn under Finanstilsynets spørsmål. Det avgjør Lars etter svaret.
