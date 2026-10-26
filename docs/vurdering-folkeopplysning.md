@@ -54,16 +54,34 @@ Lest av Claude 26. oktober 2026 fra PDF-er Lars lastet opp. Sitater er gjengitt 
 
 **Ikke lest:** MAR art. 2 (virkeområde), verdipapirhandelloven om investeringsrådgivning, Finanstilsynets egne veiledninger og ESMAs Q&A-verktøy etter 2024. Ingen av kildene over er derfor «dagens fullstendige regelverk».
 
-### Funn i koden på main
+### Eksisterende tilpasning: kode, brukerflyt og publisering
 
-Observert i `dist/veileder-engine.js` og `dist/veileder-ui.js` på `b2eada7`. Dette er beskrivelse av publisert kode, ikke en vurdering av om den er lovlig.
+Tre forskjellige ting, med forskjellig styrke som bevis. Dette er beskrivelse av funksjoner, ikke en vurdering av om de er lovlige.
+
+**a) Koden på main (`b2eada7`).** Lest i `dist/veileder-engine.js` og `dist/veileder-ui.js`:
 
 - `suggestions()` velger og formulerer spørsmålsforslag ut fra alder (BSU-forslag til og med `bsuMaxAge` når brukeren ikke eier bolig), sparehorisont (kortere enn `fundMinYears` gir «Hvor bør penger til et nært mål stå?»), risikovalg, gjeld og buffer.
 - `answer()` legger til eller endrer deler av svaret ut fra de samme opplysningene, for eksempel aldersgrensen for BSU, sparehorisont under Forbrukerrådets anbefalte minimum og «Dyr gjeld først».
 - Grensesnittet skriver «Prioritert etter opplysningene dine. Alle temaer er fortsatt tilgjengelige.»
-- PR #68 (ikke sammenslått) vil utvide dette med flere aldersgrenser (18 og 62 år).
 
-Det betyr at en del av det henvendelsens punkt 2 spør om, allerede er publisert. Se angrepsflate A3.
+**b) Brukerflyten, kjørt lokalt.** Claude kjørte `dist/spor.html` fra `b2eada7` i Chromium (Playwright, 390 px bred) 26. oktober 2026, fylte ut «Tilpass spørsmål og svar», trykket «Oppdater vurderingen» og åpnet første forslag:
+
+| Opplysninger | Forslag som vises | Første svar, tilpassede deler |
+| --- | --- | --- |
+| Ingen | Pensjon, sparekonto eller fond, barnets navn. Hjelpetekst: «Velg et spørsmål, eller søk med egne ord.» | Ingen kontekstlinje |
+| Alder 25, eier ikke bolig | «Kan BSU passe til boligplanene mine?» først | «Basert på: alder 25 år.» |
+| Alder 70, eier ikke bolig | Samme tre som uten opplysninger. BSU foreslås ikke | «Basert på: alder 70 år.» |
+| 2 år til bruk | «Hvor bør penger til et nært mål stå?» først | Delen «Pengene skal brukes snart» |
+| Dyr gjeld, ingen buffer, alder 25 | Bare «Hvordan bygge en reserve og betale ned dyr gjeld?» | Delen «Dyr gjeld først» |
+| Alder 70, søker «hva er BSU» | (søk) | Svaret vises, med ekstra del «Aldersgrensen» |
+
+Med opplysninger står hjelpeteksten «Prioritert etter opplysningene dine. Alle temaer er fortsatt tilgjengelige.» Ikke kjørt: flyten der alder og sparetid hentes automatisk fra kalkulatoren, Safari, Firefox og mobil.
+
+**c) Det publiserte nettstedet.** GitHub-utrullingen til `github-pages` for `b2eada7` ble fullført 25. oktober 2026 kl. 23.33 UTC (Actions-kjøringen «Test and publish Spareverksted», status success), og arbeidsflyten publiserer `dist/`. Det tyder sterkt på at koden over er den som er publisert. Claude fikk ikke hentet filene fra nettstedet fra arbeidsmiljøet, så det er ikke kontrollert direkte. Det kan Lars gjøre ved å åpne «Spør om sparing», oppgi alder 25 og «Eier du bolig: Nei», og se om BSU-forslaget kommer først.
+
+**d) Utvidelsen i PR #68** (ikke sammenslått, ikke vedtatt) legger til nye aldersgrenser på 18 og 62 år for pensjon og barnesparing. Den er noe annet enn tilpasningen som finnes i dag, og må holdes atskilt når dette beskrives.
+
+Henvendelsens punkt 2 dekker problemstillingen, men ifølge GPTs kontroll av den sendte e-posten beskrives tilpasningen der som noe som «videre vurderes», og eksemplet som en funksjon som ikke er ferdig. Claude har ikke lest e-posten. Se H5 og angrepsflate A3.
 
 ## 3. Lars og GPTs vurderinger og ønskede prinsipper
 
@@ -109,7 +127,7 @@ Ingen av punktene er vedtatt. De er skrevet som mulige framtidige prinsipper og 
 
 **Vurdering:** Starttidspunkt, fall underveis og valg av periode kan endre inntrykket mye. Dette er et presentasjonsprinsipp, ikke et oppdrag om nye beregninger eller visualiseringer.
 
-**Eksisterende regler:** SPRAKREGLER.md punkt 4 og 5 («forventet», «sannsynlig» brukes ikke løst; skill brukerens tall, eksempeltall, historikk og antakelser). BESLUTNINGER.md, «Synlig usikkerhet uten å late som vi kjenner framtiden» og «Historiske eksempler» (perioden er hele den felles dekningen, ikke valgt ut fra resultatet). Kalkulatoren skriver i dag at veksten bygger på «forventet realavkastning for aksjer (Finans Norges prognosestandard, februar 2026)» og at det ikke er en garanti (`dist/journey.js`). Det tilsvarer kravet i 2016/958 art. 3 nr. 1 d om å merke prognoser og antakelser.
+**Eksisterende regler:** SPRAKREGLER.md punkt 4 og 5 («forventet», «sannsynlig» brukes ikke løst; skill brukerens tall, eksempeltall, historikk og antakelser). BESLUTNINGER.md, «Synlig usikkerhet uten å late som vi kjenner framtiden» og «Historiske eksempler» (perioden er hele den felles dekningen, ikke valgt ut fra resultatet). Kalkulatoren skriver i dag at veksten bygger på «forventet realavkastning for aksjer (Finans Norges prognosestandard, februar 2026)» og at det ikke er en garanti (`dist/journey.js`). Formuleringen berører det art. 3 nr. 1 d sier om å merke forventninger og angi kilden. Den viser ikke at alle relevante krav i bokstav d er oppfylt, for eksempel at alle vesentlige antakelser er angitt, og art. 3 gjelder uansett bare hvis teksten er en anbefaling.
 
 ### 3.6 Kildebruk
 
@@ -126,8 +144,8 @@ Ingen av punktene er vedtatt. De er skrevet som mulige framtidige prinsipper og 
 | H1 | Kan automatisk utvalg av forhåndsskrevne spørsmål og svar ut fra alder, sparehorisont og sparemål regnes som personlig anbefaling (investeringsrådgivning)? | Det er spørsmålet i henvendelsens punkt 2. Tilpasning alene er trolig ikke nok; det må vurderes sammen med om svaret gir en anbefaling om transaksjoner i bestemte finansielle instrumenter. Lovteksten om investeringsrådgivning er ikke lest i dette notatet. | Finanstilsynet (allerede spurt) |
 | H2 | Omfatter MARs anbefalingsregler vanlige verdipapirfond som ikke handles på markedsplass, slik de omfatter børsnoterte fond (ETF)? | Q&A 8.4 nevner regulert marked, MTF og OTF. MAR art. 2 er ikke lest. Børsnotering alene er ikke en fullstendig kontroll av virkeområdet. | Ikke avklart. Krever lesing av MAR art. 2 og eventuelt Finanstilsynet |
 | H3 | Kan en formulering som «billigste globale indeksfond» være et indirekte produktutvalg selv uten produktnavn? | Vår anvendelse av ESMAs sektoreksempel i Q&A 8.2, ikke ESMAs eget eksempel. Avhenger av hvor få produkter beskrivelsen i praksis peker på. | Vurdering. Kan tas med som eksempel hvis Finanstilsynet ber om det |
-| H4 | Kan Spareverksted framstå som «ekspert» etter 2016/958 art. 1 a? | Forutsetter først at siden gjentatte ganger foreslår investeringsbeslutninger om finansielle instrumenter. Er det ikke tilfellet, er spørsmålet om framtoning uten betydning for definisjonen. | Avhenger av H1 og innholdet |
-| H5 | Dekker henvendelsens punkt 2 også den tilpasningen som allerede er publisert (punkt 2, «Funn i koden på main»)? | Henvendelsens nøyaktige ordlyd er ikke lest av Claude. | Lars, mot den sendte versjonen |
+| H4 | Kan Spareverksted framstå som «ekspert» etter 2016/958 art. 1 a? | Forutsetter først at siden gjentatte ganger foreslår investeringsbeslutninger om finansielle instrumenter. Er det ikke tilfellet, er spørsmålet om framtoning uten betydning for definisjonen. Dette er en vurdering etter MAR og 2016/958. Den avhenger ikke av om tilpasningen er investeringsrådgivning etter verdipapirhandelloven (H1); de to vurderingene er forskjellige. | Avhenger av innholdet i svarene |
+| H5 | Må beskrivelsen av eksisterende funksjoner overfor Finanstilsynet presiseres? Punkt 2 i henvendelsen dekker problemstillingen, men skal ifølge GPT beskrive tilpasningen som noe som videre vurderes, mens koden og brukerflyten (punkt 2, «Eksisterende tilpasning») viser at den finnes. | Avviket er bekreftet i kode og lokal brukerflyt, ikke direkte på nettstedet. Claude har ikke lest e-posten. | Lars: kontrollere nettstedet og den sendte e-posten, og avgjøre om en kort presisering skal sendes |
 
 ## 5. Konkrete vurderingstilfeller
 
@@ -135,7 +153,7 @@ Ingen av punktene er vedtatt. De er skrevet som mulige framtidige prinsipper og 
 | --- | --- | --- |
 | «Du er 70, derfor passer dette fondet for deg» | Avvises som prosjektprinsipp. Kobler alder til et bestemt produkt og sier at det passer for brukeren. | Lars og GPTs vurdering. Følger også av sperre nr. 2 i docs/regulatorisk.md |
 | «Pensjon, gaver og arv» foreslås, med tilgang til alle emner | Mulig tematisk navigasjon (punkt 3.1). Gaver og forskudd på arv har ikke eget svar ennå (BESLUTNINGER.md i PR #68, «Akseptert ulempe»). | Juridisk uavklart (H1) |
-| En 70-åring søker etter BSU for et barnebarn | Relevant innhold skal ikke skjules på grunn av alder. Alder sier ikke hvem man spør for. På main legger `answer()` til aldersgrensen når kjent alder er over `bsuMaxAge`, men svaret vises. | Prinsipp. Bør kontrolleres i nettleser hvis tilpasningen åpnes igjen |
+| En 70-åring søker etter BSU for et barnebarn | Relevant innhold skal ikke skjules på grunn av alder. Alder sier ikke hvem man spør for. Kjørt lokalt på `b2eada7`: med alder 70 gir søket «hva er BSU» svaret, med en ekstra del om aldersgrensen. BSU foreslås ikke uoppfordret. | Prinsipp. Lokal brukerflyt i Chromium, ikke kontrollert på nettstedet |
 | «Dette alternativet har lavere kostnader» | Utilstrekkelig uten sammenligningsgrunnlag, vilkår og kilde (punkt 3.3). | Prinsipp |
 | «10 000 kroner vokser slik med en valgt årlig vekst på 5 prosent» | Beskrives som betinget regneeksempel, ikke forventet resultat. Veksten er en valgt forutsetning (2016/958 art. 3 nr. 1 d som kvalitetsmål). | Prinsipp |
 | «Billigste globale indeksfond» | Mulig indirekte produktutvalg, ikke automatisk ufarlig fordi produktnavn mangler (H3). | Hypotese |
@@ -156,7 +174,7 @@ Forslag til senere avklaring. Ingen av dem er rettet i dette notatet.
 | --- | --- | --- |
 | A1 | Notatet kan leses som at alderstilpasning er vedtatt eller juridisk avklart. | Statuslinje øverst. Prinsippene i punkt 3 står som ønsker, H1 står som uavklart, og det vises til sperre nr. 1. PR #68 er nevnt som ikke vedtatt. |
 | A2 | Kildene kan være utdaterte eller ufullstendige. ESMA-PDF-en oppdateres ikke etter 2023, MAR-PDF-en fra EFTA er ikke lest, og hverken MAR art. 2 eller reglene om investeringsrådgivning er lest. | Hver kilde har dato. Det som ikke er lest, står under «Overlevert» og «Ikke lest». Ingen påstand om at dette er dagens fullstendige regelverk. |
-| A3 | Notatet drøfter tilpasning som et framtidig prinsipp, mens main allerede tilpasser forslag og svar. Det kan gi et feil bilde av hva som er publisert. | Kodefunnet er dokumentert i punkt 2 med fil og funksjon. Ingen endring foreslås nå; om publisert tekst skal justeres, avgjør Lars etter svaret (docs/regulatorisk.md). H5 og M4 peker på det som må avklares. |
+| A3 | Notatet drøfter tilpasning som et framtidig prinsipp, mens main allerede tilpasser forslag og svar. Det kan gi et feil bilde av hva som er publisert, både her og i henvendelsen. | Punkt 2 skiller kode, lokal brukerflyt og publisert nettsted, og skiller dagens tilpasning fra utvidelsen i PR #68. Ingen endring i nettstedet foreslås her; om publisert tekst skal justeres, avgjør Lars etter svaret (docs/regulatorisk.md). Om henvendelsen bør presiseres, står i H5. M4 peker på grensen mot sperren. |
 | A4 | KI-kontroll kan bli lest som uavhengig fagkontroll. | Står uttrykkelig under «Hvem». Samsvarer med presiseringen i PR #79. |
 | A5 | Q&A fra ESMA kan bli lest som bindende lov. | Punkt 2 gjengir ESMAs egen formålsbeskrivelse: et verktøy for felles tilsynspraksis. Om svarene er rettslig bindende i Norge, er ikke vurdert. |
 
