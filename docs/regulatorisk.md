@@ -33,6 +33,8 @@ Lars bekrefter 26.10.2026 at en presiserende e-post er sendt til Finanstilsynet 
 
 Utsendingen er bekreftet av Lars, ikke selv kontrollert mot sendt-versjonen i Gmail i denne oppdateringen. Lars har vist et skjermbilde av en mottaksbekreftelse fra Finanstilsynet 26.10.2026 kl. 15.37 norsk tid i forbindelse med presiseringen. Bekreftelsen opplyser at henvendelsen er mottatt og vil bli behandlet så snart som mulig. Dette er en mottaksbekreftelse, ikke et faglig svar eller en godkjenning. Faglig avklaring avventes fortsatt. Originalen oppbevares privat. Prosjektpausen er uendret.
 
+Kontrollstatusen for kort sparehorisont og dyr gjeld i avsnittet over beskriver vår kontroll av funksjonene, ikke bekreftet ordlyd i den sendte e-posten. Sendt-versjonen er ikke kontrollert i denne oppdateringen.
+
 ## Sperrer som gjelder også etter oppstart
 
 Disse oppheves ikke av at pausen avsluttes:
