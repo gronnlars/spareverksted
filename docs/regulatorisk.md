@@ -21,6 +21,10 @@ Mens pausen varer:
 
 Dette er ikke noen forhåndsgodkjenning, og siden skal ikke omtales som godkjent, gjennomgått eller sett over av Finanstilsynet. Svaret ventes å være generell veiledning.
 
+## Telefonoppfølging 26. oktober 2026
+
+Lars opplyser at han ringte Finanstilsynet 26. oktober 2026 kl. 14.05 norsk tid. Han fikk ikke tydelige svar. Samtalen registreres som oppfølging av henvendelsen, ikke som faglig avklaring eller godkjenning. Skriftlig svar avventes, og prosjektpausen endres ikke.
+
 ## Sperrer som gjelder også etter oppstart
 
 Disse oppheves ikke av at pausen avsluttes:
