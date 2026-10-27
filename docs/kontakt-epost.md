@@ -116,3 +116,15 @@ Før publisering av PR #78:
 - Ikke kontrollert: om svar nå havner i innboksen hos mottakere i stedet for søppelpost. Bør testes med neste utgående e-post.
 - Oppdatert 27.10.2026 kveld: Lars har sjekket «Vis original» i Gmail på PC for en melding fra personvern-adressen. SPF, DKIM og DMARC viser `PASS`. Én testmelding til en annen Gmail-konto havnet likevel i søppelpost med begrunnelsen at den lignet søppelpost (innhold og nytt domene uten omdømme), ikke at avsender ikke kunne bekreftes.
 - Fra full header (vist av Lars 27.10.2026, meldingsinnhold ikke lagret): utgående e-post går fra `loke.domene.no` via MailChannels (`relay.mailchannels.net`, SPF godkjent for 23.83.212.6). MailChannels er dermed en part som behandler utgående meldinger. Meldings-ID `@imap.gmail.com` og Gmail-utkast-ID-er viser at Gmail-appen skriver meldingene via Googles servere. Personvernsiden er oppdatert: Google «behandler» (ikke lenger «kan behandle»), og MailChannels er lagt til som mottaker. Lagringstid hos Google og MailChannels er ukjent. Hvor MailChannels behandler data (USA eller EØS) er ikke kontrollert.
+
+### MailChannels: egne opplysninger (lest av Claude 27.10.2026, begge sider sist endret 18.06.2026 ifølge metadata)
+
+Kilder: [MailChannels GDPR](https://www.mailchannels.com/gdpr/), [MailChannels Privacy Policy](https://www.mailchannels.com/privacy-policy/). Lenkene ble funnet av Lars.
+
+- **Rolle:** GDPR-siden sier at MailChannels er usikker på om de er databehandler, behandlingsansvarlig eller begge, og opptrer derfor som begge. For data der de bare er databehandler, styres pliktene av kundeavtalen.
+- **Databehandleravtale:** Finnes, men bare for MailChannels' egne kunder. Kunden her er Domene.no, ikke Lars. Om Domene.no har signert den, er ukjent.
+- **Sted:** Ingen konkrete land oppgitt. GDPR-siden nevner datasentre i EU for kunder der. Om utgående e-post fra Domene.no går via EU eller andre steder, er ukjent.
+- **Overføringsgrunnlag:** Viser til selvsertifisering under British Columbias personvernlov (PIPA). Personvernerklæringen nevner «Safe Harbor», som ble underkjent av EU-domstolen i 2015. Verken standard personvernbestemmelser (SCC) eller EU-US Data Privacy Framework nevnes. Dette er en svakhet i deres dokumentasjon, ikke noe Spareverksted kan rette.
+- **Lagringstid** for meldingsinnhold og logger: ikke oppgitt.
+
+Konsekvens: personvernsiden trenger ingen endring. Den sier allerede at lagringstid hos MailChannels er ukjent. Spørsmål som eventuelt hører hjemme hos Domene.no, ikke MailChannels: har Domene.no databehandleravtale med MailChannels, og går utgående e-post via MailChannels' datasentre i EU?
