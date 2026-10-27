@@ -434,3 +434,11 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Samtidig:** ny seksjon «Hva du kan bruke Spareverksted til» på Om-siden med lenke til kildereglene og til Forbrukerrådet: oversiktssiden «Økonomi og betaling» (sist endret 29.04.2024) og sjekklisten før sparing og investering (sist endret 10.05.2024), begge på nynorsk ifølge teksten. Lars ba om en mer generell lenke og lot Claude velge; begge ble tatt med fordi setningen gjelder økonomiske valg generelt, mens sjekklisten er det mest konkrete rådet. Kontaktteksten ber nå folk ikke dele sensitive opplysninger og sier at det ikke gis personlig økonomisk rådgivning. Den gamle setningen «Regler og satser kan endre seg …» er fjernet fordi den nye seksjonen dekker den. «Prognoser» og «uavhengige fagkilder» fra Lars' utkast er erstattet, fordi kalkulatoren viser regneeksempler og kildereglene også bruker merkede kommersielle kilder.
 
 **Vurder på nytt når:** flere personer blir med og står ansvarlig.
+
+## Kildereglene vedtatt, og kildegjennomgang før hvert nytt spørsmål (28. oktober 2026)
+
+**Beslutning:** Lars godkjente `KILDEREGLER.md` (PR #71) 28.10.2026, etter at tre ting ble lagt inn: universiteter som eget grunnlag for regnemetoder (vedtatt 25.10, men ikke ført inn før nå), krav om at kilden faktisk svarer på påstanden, og at det som ikke er avklart, ikke publiseres. Nivå 1 gjelder alle offentlige etater og rettskilder, og medier på nivå 4 kan hjelpe med forståelse og ideer, men er aldri eneste kilde.
+
+**Arbeidsregel:** Lars har bedt GPT gå gjennom kildereglene og relevante kilder før hvert nye spørsmål lages. Alt innhold skal gås gjennom på nytt før publisering den dagen pausen eventuelt oppheves.
+
+**Konsekvens:** Svarutkast som sier at noe er uavklart (for eksempel BSU ved utenlandsflytting), må tilpasses før de publiseres.
