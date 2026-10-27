@@ -59,7 +59,7 @@ Dette er ikke et argument for at lagring etter et trykk er lovlig. Det er en min
 **Vedtatt av Lars 26.10.2026: alternativ B, husking bare i fanen (`sessionStorage`).** GPT anbefalte B. Hvorfor: det reduserer permanent lagring uten å fjerne funksjonen, og vi trenger ikke vente på Nkom for å velge mindre lagring.
 
 Hva B betyr, og ikke betyr:
-- Valget huskes når du går mellom sidene i samme fane. Det huskes ikke til neste besøk, og følger ikke med til en ny fane.
+- Valget huskes når du går mellom sidene i samme fane. Det huskes ikke til neste besøk. Det følger ikke med til en helt ny, tom fane, men nettleseren kopierer det når en fane åpnes fra siden (lenke i ny fane, `window.open`) eller dupliseres. Rettet 27.10.2026; tidligere tekst sa at det aldri følger med til ny fane.
 - Det er ikke garantert slettet når nettleseren lukkes. Nettlesere kan gjenopprette faner og dermed økten og valgene.
 - Det avgjør ikke alene om § 3-15-unntaket gjelder. Spørsmålet står åpent hos Nkom.
 - Gamle verdier fra tidligere besøk i `localStorage` leses ikke og fjernes. Brukere som hadde valgt Natt eller Avansert, må velge på nytt.
@@ -209,3 +209,17 @@ Kontroll etter innspill fra GPT 27.10.2026:
 - Egen behandling og leverandørenes er nå skilt i første avsnitt under «Hvem er ansvarlig?».
 - Nkom-avsnittet sier nå uttrykkelig at en henvendelse ikke betyr godkjenning. Ingen andre steder på siden omtaler godkjenning.
 - Sletteformuleringen er myket opp. Utkast til interesseavveining ligger i `docs/kontakt-epost.md`.
+
+
+## Gjennomlesing av Lars 27.10.2026 og rettinger
+
+Lars leste PDF-utkastet og påpekte seks ting. Status:
+
+1. **Tekst kuttet.** Ekte feil: felles `table{white-space:nowrap}` i `style.css` gjorde personverntabellen 1367 px bred i 390 px skjerm (sidelengs scrolling). Rettet med `white-space:normal` på `.privacy-table`. Kontrollert lokalt: ingen sidelengs scrolling i 320, 390 og 1280 px.
+2. **«Ny fane» kan forveksles med menyvalgene på siden.** Endret til «nettleserfane» og lagt til en forklaring.
+3. **Valg følger med mellom faner.** Lars observerte dette på publisert versjon (main), som fortsatt lagrer tema og nivå permanent i `localStorage`. Lokal test av PR-versjonen (Chromium): helt ny fane uten opphav får ikke valgene; fane åpnet med `window.open` fra siden får en kopi. Siden sa tidligere at valgene ikke følger med til ny fane. Det var for bastant og er rettet.
+4. **Planer oppdateres mellom faner.** Riktig for lagrede planer (`localStorage`, `storage`-hendelse), både på main og i PR-en. Står nå uttrykkelig.
+5. **«Vi mottar» e-post.** Endret til at det er Lars som mottar, leser, svarer og sletter.
+6. **Åpen kode.** Lagt til avsnitt med lenke til kildekoden og testene, slik at påstandene kan etterprøves.
+
+Lars opplyser også at han har slått av et statistikkverktøy i cPanel. Hvilket er ikke oppgitt. Det berører ikke besøkende på nettstedet, som ligger på GitHub Pages.
