@@ -18,7 +18,9 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    start:async p=>{await p.goto(origin+'/index.html');await p.evaluate(()=>{localStorage.removeItem('sv-started');sessionStorage.clear();});await p.reload();},
    kalkulator:async p=>{await p.goto(origin+'/index.html#'+PLAN);await p.reload();await p.evaluate(()=>{for(const d of document.querySelectorAll('#workbench details'))d.open=true;});},
    veileder:async p=>{await p.goto(origin+'/spor.html');await p.evaluate(()=>{for(const d of document.querySelectorAll('details'))d.open=true;});await p.locator('[data-topic]').first().click();},
-   om:async p=>{await p.goto(origin+'/om.html');}};
+   om:async p=>{await p.goto(origin+'/om.html');},
+   personvern:async p=>{await p.goto(origin+'/personvern.html');},
+   tilgjengelighet:async p=>{await p.goto(origin+'/tilgjengelighet.html');}};
   const page=async(theme,width,height=800)=>{const ctx=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});const p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message));await p.addInitScript(t=>{try{sessionStorage.setItem('sv-color-theme',t);}catch{}},theme);return p;};
 
   // Målingene kjører i siden. De er de samme som i revisjonen 23.10.2026 (se docs i prosjektet).
@@ -72,6 +74,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    const nameOf=e=>{if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');const lb=e.getAttribute('aria-labelledby');if(lb)return lb.split(' ').map(id=>document.getElementById(id)?.textContent||'').join(' ');if(e.id){const l=document.querySelector('label[for="'+e.id+'"]');if(l)return l.textContent;}const w=e.closest('label');if(w)return w.textContent;if(['BUTTON','A','SUMMARY'].includes(e.tagName))return e.textContent||e.querySelector('img')?.alt||'';return e.title||'';};
    for(const e of targets)if(!nameOf(e).trim())out.push('uten navn '+sel(e));
    if(document.documentElement.scrollWidth>innerWidth+1)out.push('horisontal scrolling');
+   // Bokser inni siden som må rulles sidelengs. Talltabeller er unntatt (WCAG 1.4.10 tillater todimensjonal rulling for datatabeller).
+   for(const e of document.querySelectorAll('body *')){if(!vis(e)||e.closest('#tableWrap,.withdraw-table,#comparison,.report-comparison'))continue;const ox=getComputedStyle(e).overflowX;if((ox==='auto'||ox==='scroll')&&e.scrollWidth>e.clientWidth+1)out.push('sidelengs rulling inni '+sel(e));}
    return out;});
   const focusCheck=async p=>{const out=[];await p.evaluate(()=>document.activeElement&&document.activeElement.blur());
    for(let i=0;i<40;i++){await p.keyboard.press('Tab');const f=await p.evaluate(()=>{const e=document.activeElement;if(!e||e===document.body)return null;const st=getComputedStyle(e);return {el:e.id||e.tagName.toLowerCase(),ok:(st.outlineStyle!=='none'&&parseFloat(st.outlineWidth)>0)||st.boxShadow!=='none'};});if(f&&!f.ok)out.push('fokus ikke synlig '+f.el);}

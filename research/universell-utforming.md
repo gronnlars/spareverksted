@@ -42,10 +42,11 @@ En ny side eller funksjon er ikke ferdig før punktene under er oppfylt og kontr
 
 | Kontroll | Hvor | Dekker | Ikke dekket |
 | --- | --- | --- | --- |
-| `tests/a11y-browser.cjs` | CI, Chromium | Kontrast (tekst, grafens tekst og linjer), trykkflater, navn, reflow ved 320 og 640 px, synlig fokus, tastatur, faste elementer over fokus. Tre temaer, kalkulator, veileder og Om-side | Safari, Firefox, skjermleser |
+| `tests/a11y-browser.cjs` | CI, Chromium | Kontrast (tekst, grafens tekst og linjer), trykkflater, navn, reflow ved 320 og 640 px, synlig fokus, tastatur, faste elementer over fokus. Tre temaer, kalkulator, veileder, Om-side, personvernside og tilgjengelighetsside. Fra 27.10.2026 også bokser inni siden som må rulles sidelengs (talltabeller unntatt) | Safari, Firefox, skjermleser |
 | `tests/polish-browser.cjs` | CI, Chromium, Firefox og WebKit | Svar straks etter startguiden, fokus ved feil, eksport lik grafen | WebKit er ikke Safari på iPhone |
 | Revisjon 23.10 | Manuelt i Chromium | 27 kombinasjoner (tre temaer × 320, 375, 1280 px × tre sider). Rettet: trykkflater, fokus som ble stående i lukket dialog | |
 | iPhone Safari, VoiceOver | Lars | Se `research/plan.md`, punkt 3 | NVDA, Firefox med bare tekstforstørring |
+| iPhone Safari, VoiceOver og zoom, personvernsiden | Lars, 27.10.2026 | Knappene «Vis e-postadresse» og «Slett» virket, VoiceOver leste riktig, zoom fungerte. Lars er ny bruker av hjelpemidlene | Kalkulator og veileder med VoiceOver, NVDA |
 
 Testene beskytter det som er kontrollert. De beviser ikke at folk forstår innholdet.
 
@@ -57,3 +58,9 @@ Testene beskytter det som er kontrollert. De beviser ikke at folk forstår innho
 - [Nielsen Norman Group: Progressive Disclosure](https://www.nngroup.com/articles/progressive-disclosure/) og [Visibility of System Status](https://www.nngroup.com/articles/visibility-system-status/)
 - [Spiegelhalter m.fl.: Visualizing uncertainty about the future](https://www.stat.berkeley.edu/users/aldous/157/Papers/spiegelhalter_visualizing.pdf)
 - Tidligere notater: `research/ux-2026-10-22.md`
+
+## 5. Tilgjengelighetsside og ny kontroll (27. oktober 2026)
+
+- `dist/tilgjengelighet.html` er oppdatert fra utkastet i PR #75 (25.10.2026): ny seksjon «Valg vi har tatt» (fra punkt 2 over), «Svar vi venter på» (Uu-tilsynet, sendt 25.10.2026, registreringsbekreftelse, ikke svar), kontakt via e-post (`post`) i tillegg til GitHub, og Lars' første iPhone-test. Lenket fra Om-siden og bunnteksten der.
+- Påstanden om at forskriften er «strengere/mindre streng» for private er fjernet. Siden sier bare at vi ikke vet om forskriften gjelder, og at vi følger WCAG 2.2 AA uansett.
+- Funn: tabellen på personvernsiden måtte rulles sidelengs på mobil (rettet i #78), men `a11y-browser.cjs` fanget det ikke, fordi reflow-kontrollen bare målte hele siden. Ny kontroll flagger bokser med `overflow-x:auto|scroll` som har innhold bredere enn boksen. Talltabellene `#tableWrap`, `.withdraw-table`, `#comparison` og `.report-comparison` er unntatt, siden WCAG 1.4.10 tillater todimensjonal rulling for datatabeller. Kontrollert at testen feiler med den gamle feilen og består med rettingen.
