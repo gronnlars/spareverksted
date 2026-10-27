@@ -8,7 +8,7 @@ Lokal gren: `draft/gaps-2026-10-25`. Bygger på main `f9c553aa668fd0bf96ce14d693
 
 1. [Renters rente, SV-022](SV-022.md). Gjenbruk av svaret fra [PR #65](https://github.com/gronnlars/spareverksted/pull/65), head `2385ddb3d9902dc9d0de1fd6aa2934c963ea4273`. Kortsvaret har fått tapsforbehold, og fordel/begrensning er gjort eksplisitt. Ingen konkurrerende implementering av #65.
 2. [Skatt på barnesparing, SV-006/SV-007](SV-006.md). Hvem som skattlegges, inntektsår og sentrale unntak. Dette besvarer ikke hele køspørsmålet om beste barnesparing.
-3. [BSU ved flytting, SV-135](SV-135.md). Skiller bank, bolig og utenlandsflytting. Utenlandsdelen er uavklart og sier «veit itte».
+3. [BSU ved flytting, SV-135](SV-135.md). Skiller bank, bolig og utenlandsflytting. Utenlandsdelen er uavklart og sier «vet ikke».
 4. [Utbytte, SV-050/SV-051](SV-050.md). Begrep, utdeling fra fond, skjerming og ASK. Ingen skattesats eller anbefaling av utbytteaksjer.
 5. [Rentefond, SV-061](SV-061.md). Typer, risiko, garanti og ASK-avgrensning. Ingen anbefalt plassering eller garantert avkastning.
 
