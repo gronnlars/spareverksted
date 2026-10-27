@@ -201,4 +201,11 @@ Endringer:
 
 Kontroller 27.10.2026 (lokalt, Chromium via Playwright 1.56.0): `personvern-browser`, `kontakt-browser`, `a11y-browser` og alle `*.test.cjs` består. Sjekket visuelt i 390 px bredde. Publisert side ikke kontrollert (egress-proxyen gir 403 mot spareverksted.no). Firefox og WebKit kjøres i CI.
 
-Lars opplyser 27.10.2026 at han har sendt et e-postsvar om personvern. Mottaker og innhold er ikke oppgitt her og ikke lest.
+Lars viste 27.10.2026 et skjermbilde av mottaksbekreftelsen fra Nkom, datert 26.10.2026, og teksten i den sendte henvendelsen. Den samsvarer med Nkom-raden i loggen over. Ingen ny henvendelse. Mottaksbekreftelsen er ikke et faglig svar.
+
+Kontroll etter innspill fra GPT 27.10.2026:
+
+- Lagringstabellen er sjekket mot koden på grenen. Samme seks nøkler, samme lagringstype. Én feil rettet: siden sa at én gammel nøkkel fjernes, koden fjerner tre (`sv-started`, `sv-level`, `sv-color-theme` i localStorage).
+- Egen behandling og leverandørenes er nå skilt i første avsnitt under «Hvem er ansvarlig?».
+- Nkom-avsnittet sier nå uttrykkelig at en henvendelse ikke betyr godkjenning. Ingen andre steder på siden omtaler godkjenning.
+- Sletteformuleringen er myket opp. Utkast til interesseavveining ligger i `docs/kontakt-epost.md`.

@@ -58,3 +58,15 @@ Alt nedenfor er et forslag Lars må ta stilling til.
 ## Gjennomgang 26.10.2026
 
 Sendt henvendelse og tilgjengelig svar fra Domene.no er lest av ChatGPT/Codex. Originaler, privat kontaktinformasjon, meldings-ID-er og kundesakslenker er ikke kopiert til repoet. Forslagene om å avklare kontotype, faktisk leverandørrolle, avtaler og sletterutine støttes som videre avklaringspunkter. Ingen konkret oppbevaringstid er vedtatt i denne gjennomgangen. Ingen ny e-post, «Send som»-konfigurasjon eller annen kontoendring er utført.
+
+## Utkast til interesseavveining for e-post (27.10.2026)
+
+Skrevet av Claude. Ikke juridisk vurdering og ikke vedtatt. Lars må godkjenne før personvernsiden publiseres. Bygger på de tre trinnene i GDPR art. 6 nr. 1 bokstav f: berettiget interesse, nødvendighet og avveining.
+
+1. **Interesse:** å kunne svare på spørsmål, feilmeldinger og tips om nettstedet, og å svare på forespørsler om personvern. Avsenderen har selv tatt kontakt og venter svar.
+2. **Nødvendighet:** for å svare må vi lese meldingen og bruke avsenderadressen. Vi trenger ikke flere opplysninger enn avsenderen selv sender. Siden ber om at man ikke skriver mer om egen økonomi enn nødvendig. Meldinger brukes ikke til noe annet enn å svare.
+3. **Avveining:** behandlingen er forventet av avsenderen, begrenset til det avsenderen selv sender, og leses bare av Lars. Det som trekker i motsatt retning: meldinger kan inneholde økonomiske opplysninger, de passerer Domene.no og Google, og vi har ikke fast slettefrist. Tiltak: oppfordring om å skrive lite om egen økonomi, sletting på forespørsel, og en fast slettefrist når Lars har valgt den.
+
+Foreløpig vurdering: grunnlaget virker egnet for vanlige henvendelser. Svar på forespørsler om rettigheter kan i tillegg bygge på plikten etter art. 12 til 22 (bokstav c), som ikke er vurdert her.
+
+**Sletteformulering på siden:** endret 27.10.2026 etter innspill fra GPT. Den lover ikke lenger sletting uten unntak, og sier at kopier hos Domene.no og i Googles sikkerhetskopier ikke kan slettes av oss.
