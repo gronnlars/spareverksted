@@ -114,3 +114,4 @@ Før publisering av PR #78:
 - Lars har kontrollert i offentlig DNS (dns.google) at SPF (`v=spf1 …`) og DKIM (`default._domainkey`, `v=DKIM1`) faktisk er publisert.
 - SPF inneholder `+a`, som også godkjenner adressen nettstedet peker til (GitHub Pages). Ikke en feil, men unødvendig. cPanel lot ikke Lars endre den, så den står. Kan tas med Domene.no senere om ønskelig.
 - Ikke kontrollert: om svar nå havner i innboksen hos mottakere i stedet for søppelpost. Bør testes med neste utgående e-post.
+- Oppdatert 27.10.2026 kveld: Lars har sjekket «Vis original» i Gmail på PC for en melding fra personvern-adressen. SPF, DKIM og DMARC viser `PASS`. Én testmelding til en annen Gmail-konto havnet likevel i søppelpost med begrunnelsen at den lignet søppelpost (innhold og nytt domene uten omdømme), ikke at avsender ikke kunne bekreftes.
