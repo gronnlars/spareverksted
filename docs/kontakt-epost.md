@@ -107,3 +107,10 @@ Før publisering av PR #78:
 - Lars bekrefter etterpå at e-post sendt utenfra kom fram, også meldinger sendt før rettingen.
 - Lars oppdaterte samtidig SSL-sertifikater i cPanel. Nettstedet ligger på GitHub Pages; sertifikater i cPanel gjelder e-post og webmail, ikke nettstedet, så lenge DNS for nettstedet peker til GitHub.
 - Gjenstår, ikke sperre for publisering: SPF og DKIM via «Email Deliverability» i cPanel, så svar ikke havner i søppelpost.
+
+## E-postoppsett ferdig 27.10.2026
+
+- cPanel «Email Deliverability» viser grønt for DKIM, SPF, DMARC (`p=none`, bare overvåking) og PTR (`loke.domene.no`). Skjermbilder vist av Lars.
+- Lars har kontrollert i offentlig DNS (dns.google) at SPF (`v=spf1 …`) og DKIM (`default._domainkey`, `v=DKIM1`) faktisk er publisert.
+- SPF inneholder `+a`, som også godkjenner adressen nettstedet peker til (GitHub Pages). Ikke en feil, men unødvendig. cPanel lot ikke Lars endre den, så den står. Kan tas med Domene.no senere om ønskelig.
+- Ikke kontrollert: om svar nå havner i innboksen hos mottakere i stedet for søppelpost. Bør testes med neste utgående e-post.
