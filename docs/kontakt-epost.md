@@ -76,3 +76,26 @@ Foreløpig vurdering: grunnlaget virker egnet for vanlige henvendelser. Svar på
 ## Status for aliasene 27.10.2026
 
 Lars opplyser at aliasene for personvern og generell kontakt ikke virker ennå. Årsaken er ikke undersøkt. Lars observerer at Domene.no ser ut til å bruke cPanel ([cPanel legal notices](https://www.cpanel.net/legal-notices/)). Han vurderer at cPanel er programvare hos leverandøren og ikke en egen part siden må nevne. Claude er enig i at programvare leverandøren bruker, normalt hører inn under leverandørens eget ansvar, men det er ikke kontrollert om cPanel som selskap får tilgang til meldinger. PR #78 publiseres ikke før begge alias er mottakstestet.
+
+## Ny løsning 27.10.2026: egne e-postkasser, ingen videresending
+
+Opplyst av Lars 27.10.2026, med skjermbilder av webmail-siden:
+
+- Aliasene `personvern` og `post` er nå egne e-postkasser hos Domene.no. Ingen videresending.
+- Lars bruker dem i Gmail-appen med IMAP og SMTP (SSL).
+- E-posttjenesten hos Domene.no kjøres på cPanel. Webmailen er Roundcube 1.6.19 med flere cPanel-tillegg.
+- Sending fra begge adressene virker. En testmelding til Lars' private adresse havnet i Googles søppelpostfilter.
+- **Mottak er ikke bekreftet.** Svar sendt til spareverksted-adressene var ikke kommet fram da Lars sjekket. Ingen feilmelding.
+
+Konsekvenser:
+
+- Flyten over («Avsender → Domene.no → Gmail») er erstattet: avsender → e-postkasse hos Domene.no → Lars leser i Gmail-appen.
+- Meldinger lagres nå i e-postkassen hos Domene.no, ikke bare i en kø. Sletting i e-postkassen er mulig for Lars; sikkerhetskopier hos Domene.no er ikke.
+- **Ikke kontrollert:** om Gmail-appen henter e-post fra andre kontoer via Googles servere og lagrer kopier der. Personvernsiden sier derfor at Google «kan» behandle meldingene, ikke at de gjør det.
+- Roundcube-listen viser et tillegg som heter `mixpanel_analytics`. Navnet tyder på bruksstatistikk fra webmailen til Mixpanel. Det gjelder trolig Lars' bruk av webmailen, ikke meldingsinnholdet, men det er ikke kontrollert. Det berører ikke besøkende på Spareverksted. Bruker Lars bare Gmail-appen, er det lite relevant.
+- At testmeldingen havnet i søppelpost, tyder på at domenet mangler eller har ufullstendig SPF, DKIM eller DMARC. Det er ikke kontrollert. cPanel har vanligvis et verktøy for dette («Email Deliverability»). Betyr at svar fra Spareverksted kan havne i søppelpost hos mottakeren.
+
+Før publisering av PR #78:
+
+1. Bekreft mottak i begge e-postkassene, helst ved å se i webmailen direkte. Kommer meldingen fram der, men ikke i Gmail-appen, er feilen i appoppsettet. Kommer den ikke fram i webmailen, er feilen hos Domene.no eller i DNS (MX-oppføringen).
+2. Sjekk e-postlevering (SPF, DKIM, DMARC) i cPanel.
