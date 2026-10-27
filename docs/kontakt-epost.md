@@ -99,3 +99,11 @@ Før publisering av PR #78:
 
 1. Bekreft mottak i begge e-postkassene, helst ved å se i webmailen direkte. Kommer meldingen fram der, men ikke i Gmail-appen, er feilen i appoppsettet. Kommer den ikke fram i webmailen, er feilen hos Domene.no eller i DNS (MX-oppføringen).
 2. Sjekk e-postlevering (SPF, DKIM, DMARC) i cPanel.
+
+## Mottak løst 27.10.2026
+
+- Årsak: domenet hadde ingen MX-oppføring. Oppslag (dns.google, gjengitt av Lars) viste bare SOA fra `ns1.dnsdomene.net`, serie `2026102207`. Intern levering mellom kassene virket fordi tjeneren leverer lokalt uten DNS. Dette forklarer trolig også at den tidligere videresendingen ikke virket.
+- Rettet av Lars i DNS hos Domene.no. Nytt oppslag viser MX `10 loke.domene.no`.
+- Lars bekrefter etterpå at e-post sendt utenfra kom fram, også meldinger sendt før rettingen.
+- Lars oppdaterte samtidig SSL-sertifikater i cPanel. Nettstedet ligger på GitHub Pages; sertifikater i cPanel gjelder e-post og webmail, ikke nettstedet, så lenge DNS for nettstedet peker til GitHub.
+- Gjenstår, ikke sperre for publisering: SPF og DKIM via «Email Deliverability» i cPanel, så svar ikke havner i søppelpost.
