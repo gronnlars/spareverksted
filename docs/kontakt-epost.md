@@ -67,6 +67,12 @@ Skrevet av Claude. Ikke juridisk vurdering og ikke vedtatt. Lars må godkjenne f
 2. **Nødvendighet:** for å svare må vi lese meldingen og bruke avsenderadressen. Vi trenger ikke flere opplysninger enn avsenderen selv sender. Siden ber om at man ikke skriver mer om egen økonomi enn nødvendig. Meldinger brukes ikke til noe annet enn å svare.
 3. **Avveining:** behandlingen er forventet av avsenderen, begrenset til det avsenderen selv sender, og leses bare av Lars. Det som trekker i motsatt retning: meldinger kan inneholde økonomiske opplysninger, de passerer Domene.no og Google, og vi har ikke fast slettefrist. Tiltak: oppfordring om å skrive lite om egen økonomi, sletting på forespørsel, og en fast slettefrist når Lars har valgt den.
 
+**Godkjent av Lars 27.10.2026** (se BESLUTNINGER.md).
+
 Foreløpig vurdering: grunnlaget virker egnet for vanlige henvendelser. Svar på forespørsler om rettigheter kan i tillegg bygge på plikten etter art. 12 til 22 (bokstav c), som ikke er vurdert her.
 
 **Sletteformulering på siden:** endret 27.10.2026 etter innspill fra GPT. Den lover ikke lenger sletting uten unntak, og sier at kopier hos Domene.no og i Googles sikkerhetskopier ikke kan slettes av oss.
+
+## Status for aliasene 27.10.2026
+
+Lars opplyser at aliasene for personvern og generell kontakt ikke virker ennå. Årsaken er ikke undersøkt. Lars observerer at Domene.no ser ut til å bruke cPanel ([cPanel legal notices](https://www.cpanel.net/legal-notices/)). Han vurderer at cPanel er programvare hos leverandøren og ikke en egen part siden må nevne. Claude er enig i at programvare leverandøren bruker, normalt hører inn under leverandørens eget ansvar, men det er ikke kontrollert om cPanel som selskap får tilgang til meldinger. PR #78 publiseres ikke før begge alias er mottakstestet.

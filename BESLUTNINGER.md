@@ -384,3 +384,19 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 
 **Ikke publisert:** PR #78 (personvernside, kontaktknapper, fanelagring av tema og nivå). Den venter på svar og på at kontaktadressene er mottakstestet.
 
+
+## Grunnlag og sletting for e-post på personvernsiden (27. oktober 2026)
+
+**Beslutning:** Lars godkjente 27.10.2026 at personvernsiden oppgir berettiget interesse (GDPR art. 6 nr. 1 bokstav f) som grunnlag for å lese og svare på e-post, med interesseavveiningen i `docs/kontakt-epost.md`, og sletteteksten: sletting fra innboksen på forespørsel, med mindre vi må beholde meldingen, og uten løfte om sletting av kopier hos Domene.no eller i Googles sikkerhetskopier.
+
+**Alternativer vurdert:**
+- A. Berettiget interesse med dokumentert avveining. **Valgt.**
+- B. Samtykke. Ikke valgt: avsenderen tar selv kontakt og venter svar, og samtykke må kunne trekkes tilbake, noe som passer dårlig for å dokumentere svar på rettighetsforespørsler.
+- C. Ikke oppgi grunnlag før juridisk avklaring. Ikke valgt: siden skal beskrive status nå og endres ved behov.
+- Sletting: «Ber du oss slette, sletter vi» (Claudes første utkast) ble forkastet som for kategorisk. GPTs forslag («når vi ikke lenger har lovlig grunnlag») ble omskrevet til konkret språk med samme innhold.
+
+**Akseptert ulempe:** Ingen fast slettefrist ennå. Vurderingen er skrevet av KI og ikke kontrollert av jurist.
+
+**Vurder på nytt når:** Datatilsynet eller Domene.no svarer, e-postløsningen endres, eller Lars velger slettefrist.
+
+**Sperre for publisering av PR #78:** Lars opplyser 27.10.2026 at e-postaliasene for personvern og generell kontakt ikke virker ennå. Siden kan ikke publiseres med en kontaktadresse som ikke når fram. Main har per 27.10.2026 ingen e-postadresser; kontakt skjer via GitHub. Lars vurderer at cPanel, som Domene.no ser ut til å bruke, er programvare hos leverandøren og ikke en egen part siden må nevne.
