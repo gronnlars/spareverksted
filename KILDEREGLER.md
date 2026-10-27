@@ -6,7 +6,7 @@ Reglene er få med vilje. De har ingen innebygde unntak (se «Når en regel må 
 
 ## K1. Ingen påstand uten kilde
 
-Hver påstand om tall, grenser, regler og anbefalinger har en kilde med URL, kildens dato eller regelår og vår kontrolldato. Mangler vi kilde, skriver vi «ikke avklart» eller utelater påstanden. Vi utelater bare når svaret er til nytte uten den. Har brukeren spurt om akkurat dette, eller kan taushet gi et feil inntrykk, skriver vi «ikke avklart» i stedet for å utelate.
+Hver påstand om tall, grenser, regler og anbefalinger har en kilde med URL, kildens dato eller regelår og vår kontrolldato. Det som ikke er avklart med en kilde, publiseres ikke. Ett unntak: har brukeren spurt om akkurat dette, eller vil det gi et feil inntrykk å la det være ute, sier svaret rett ut at Spareverksted ikke har et sikkert svar, og viser hvem som kan svare, for eksempel Skatteetaten eller Nav. Er det ikke mulig, publiseres ikke svaret.
 
 - Tall og regler leses fra kilden i samme arbeidsøkt. Aldri fra hukommelsen, og dette gjelder også KI.
 - Det vi ikke vet, skriver vi rett ut: «vet ikke». Vi skiller det vi har funnet fra det vi antar.
@@ -14,13 +14,13 @@ Hver påstand om tall, grenser, regler og anbefalinger har en kilde med URL, kil
 
 ## K2. Kilder i prioritert rekkefølge
 
-1. Lov, forskrift og tilsyn (Skatteetaten, Finanstilsynet, SSB).
+1. Offentlige etater og rettskilder: lov og forskrift (Lovdata), tilsyn og etater som Skatteetaten, Nav, Finanstilsynet, Datatilsynet og SSB.
 2. Forbrukerrådet og Finansportalen.
 3. Norske bank- og finansinstitusjoner med åpne sider. De har salgsinteresse, så vi bruker dem for deres egne produkter og vilkår, ikke som eneste kilde til generelle råd.
-4. Medier med redaksjonelt ansvar. De viser vei til primærkilden og er ikke eneste kilde til tall, regler eller råd. Vi navngir ikke bestemte medier som solide før de er kontrollert mot kriteriene.
+4. Medier med redaksjonelt ansvar. De kan hjelpe oss å forstå kildene over, vise vei til primærkilden og gi ideer til ting vi bør undersøke. De er aldri eneste kilde til tall, regler eller råd. Vi navngir ikke bestemte medier som solide før de er kontrollert mot kriteriene.
 5. Alt annet. Brukes aldri.
 
-En kilde høyere opp går foran en lavere når de er uenige. Vi går ned ett nivå bare når nivået over ikke dekker spørsmålet. Kilden til en norsk regel eller et norsk forhold er den norske versjonen. En engelsk side kan vise vei til den norske, men er ikke selv kilde. Finnes det ikke norsk versjon, står påstanden som «ikke avklart» til noen har lest en norsk kilde. Er kildene uenige på samme nivå, viser vi begge med kildehenvisning, eller vi skriver «ikke avklart». Vi velger aldri stille mellom dem.
+En kilde høyere opp går foran en lavere når de er uenige. Vi går ned ett nivå bare når nivået over ikke dekker spørsmålet. Kilden til en norsk regel eller et norsk forhold er den norske versjonen. En engelsk side kan vise vei til den norske, men er ikke selv kilde. Finnes det ikke norsk versjon, publiseres ikke påstanden før noen har lest en norsk kilde. Er kildene uenige på samme nivå, viser vi begge med kildehenvisning, eller vi lar være å publisere påstanden. Vi velger aldri stille mellom dem.
 
 ### Ved siden av nivåene: faglig grunnlag for regnemetoder
 
