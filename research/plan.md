@@ -144,6 +144,7 @@ Ideer uten plass i planen. Et punkt flyttes inn bare ved en egen beslutning.
 | Standard prisvekst 2,0 % i stedet for 2,5 % | Spareformbeslutning 23.10. Kan bli en kildeoppdatering hvis Lars vil |
 | Gjøre `polish-browser.cjs` robust mot tidsfeil | Status 24.10. Testendring, ikke kalkulatorendring |
 | Sammenhenger og forklaringer (A1 til A3, B1 til B5, C1 til C4, D1 til D2) | Utkast i punkt 10, 26.10.2026. Ikke vedtatt |
+| Navigasjon i veilederen, synlig «Ny beregning», spareform etter sparetid, visuell «Prøv små endringer» (N1 til N6) | Utkast i punkt 11, 27.10.2026. Ikke vedtatt |
 
 Valgomaten er parkert etter Lars sin beslutning 24. oktober 2026. Den vurderes separat etter at arbeidsgrunnlaget er samlet og kontrollert innholdspåfyll har en fungerende arbeidsflyt. Målet om et nedlastbart hverdagsbudsjett beholdes som framtidig krav, ikke som vedtatt implementeringsplan.
 
@@ -232,3 +233,62 @@ Aktiveres ikke før kontaktløsningen er avklart (#78 ikke publisert, rolle og a
 - Om #68 og #65 endrer det som er målt over (målt mot main).
 - Faglige kilder til B1 (kostnader) og B2. For B2: ingen kilde til forklaringen om rekkefølge og pengestrømmer er funnet. Bare regnekontrollen er gjort.
 - Om A2 til A3 faller inn under Finanstilsynets spørsmål. Det avgjør Lars etter svaret.
+
+## 11. Utkast: navigasjon i veilederen, veien tilbake og visuelle justeringer (27.10.2026, ikke vedtatt)
+
+Forslag fra Lars 27.10.2026, undersøkt mot main `b2eada7` og åpne PR-er samme dag. **Opphever ingen frys eller pause.** Kalkulatoren er fryst (punkt 0), og prosjektet er på vent til Finanstilsynet har svart (#77). Alt under er planlegging. Ingenting er bygget eller testet.
+
+### Bekreftet (kode lest på main)
+
+| Spørsmål | Funn | Hvor |
+| --- | --- | --- |
+| Er temaene gruppert? | **Nei.** Temavelgeren er én flat liste med sju temaer. Forklaringssvar (`kind:'explainer'`) får kategorien `explain`. | `dist/veileder-engine.js`, `topics` og `register` |
+| Er startforslagene tilpasset? | **Delvis.** `suggestions()` bruker gjeld, buffer, boligeierskap, fastrente, sparetid og risiko. Alder brukes bare til BSU. Pensjon, fond og barnesparing legges til som faste fyllforslag, mens overskriften sier «Prioritert etter opplysningene dine». **Begge deler rettes i #68** (ikke slått sammen). | `dist/veileder-engine.js`, `suggestions` |
+| Lenker svar til andre svar? | **Nei.** Et svar kan bare ha `next` (og `next.more`) med lenke, i praksis til kalkulatoren. Ingen kobling mellom svar. | `dist/veileder-engine.js`, `register` |
+| Finnes «Ny beregning»? | **Ja, men skjult.** `#startAgain` ligger inne i Meny-panelet, bare på kalkulatorsiden. `spor.html` og `om.html` har den ikke. Logoen på kalkulatorsiden (`brandHome`) ruller til toppen og starter ikke ny beregning. Startflyten varsler at planen erstattes og kan angres. | `dist/index.html`, `dist/journey.js`, `dist/guidance.js` |
+| Endres spareformknappene etter sparetid? | **Nei.** Brukskonto, Sparekonto og Indeksfond setter forutsetninger (beslutning 23.10) uansett sparetid. #67 legger til ett tekstvarsel for indeksfond under 5 år, med Forbrukerrådet som kilde, som et loggført avvik fra frysen. | `dist/app.js`, `savingsPreset`; `dist/veileder-facts.js`, `fundMinYears` |
+| Er «Prøv små endringer» visuell? | **Nei.** Tre faste forslag med tall og «Prøv»-knapp: 500 kr mer per måned, to år mer, og lavere kostnad eller ett prosentpoeng lavere vekst. | `dist/app.js`, `experiments` |
+
+Merk: grensen på 5 år kommer i dag fra Forbrukerrådet, ikke Finanstilsynet. Hvis Finanstilsynets svar på henvendelsen (#77) sier noe om sparehorisont eller om tilpasning kan regnes som råd, går det foran forslag N5.
+
+### Forslag
+
+**N1. Grupper i temavelgeren.** Hvert tema og svar får et felt `gruppe`, for eksempel Sparing og fond, Bolig og lån, Skatt, Pensjon, Barn og familie, Buffer og gjeld. Rekkefølgen er fast og flytter seg ikke etter brukerens opplysninger, så folk finner igjen ting på samme sted. En alfabetisk liste (A til Å) vurderes når kunnskapsbasen har rundt 40 svar. Terskelen er et skjønn, ikke et forskningsfunn. Søket er fortsatt hovedinngangen.
+
+**N2. Startforslag etter alder og sparetid.** Hører hjemme i forslagene før første spørsmål, ikke i temavelgeren. Bygges i #68. Sparetid bør veie minst like tungt som alder: en 60-åring kan spare til barnebarn i 18 år. Siden skal ikke late som den kjenner mer til økonomien enn opplysningene viser.
+
+**N3. «Naturlige spørsmål videre» etter et svar.** Hvert svar får et redaksjonelt valgt felt, for eksempel `videre: ['q-annuitet-serie', 'q-effektiv-rente']`. Eksempler: boliglån leder til annuitet og serielån og effektiv rente; fond leder til aktiv og passiv forvaltning og kostnader. Regler:
+- Håndplukket, ikke automatisk likhet. Det passer kravet om kontrollerte svar.
+- Høyst tre forslag. Fylles eventuelt opp med N2 hvis færre finnes.
+- En test feiler hvis `videre` peker på et ID som ikke finnes.
+- Planlagte, upubliserte svar kan stå i feltet, men vises ikke før de er publisert. Ingen døde lenker.
+- Fungerer best sammen med egen adresse per svar (A2 i punkt 10), slik at tilbakeknappen virker.
+- Må samordnes med `suggest`-feltet fra #68, så vi ikke får to overlappende mekanismer.
+- Nye svar i `SPORSMALSKO.md` får `videre` fra start. Køen har allerede kolonnen «Først / overlapp», som kan brukes som utgangspunkt.
+
+**N4. Synlig «Ny beregning».** Knappen bør stå synlig i toppfeltet, ikke bare i menyen, og finnes på alle sider. På `spor.html` og `om.html` er den en lenke til kalkulatorens startflyt. Varselet om at planen erstattes, og muligheten til å angre, beholdes. På mobil må den få plass ved siden av Meny med minst 44 x 44 px trykkflate. Uklart: Lars skrev «særlig når de er på forsiden». Om dette gjelder kalkulatorsiden eller spørsmålssiden, må avklares. Endringen i `index.html` berører kalkulatorsiden og krever unntak fra frysen. Endringen på de andre sidene gjør ikke det, men venter på pausen.
+
+**N5. Spareform tilpasset sparehorisont.** Alternativer:
+- A: Alle tre valg står alltid. Et nøytralt tekstvarsel ved kort sparetid (som #67). Anbefalt nå.
+- B: Rekkefølge eller merking endres etter sparetid, for eksempel «ofte brukt ved kort sparetid». Nærmere et råd. Vurderes bare hvis Finanstilsynets svar åpner for det.
+- C: Indeksfond skjules ved kort sparetid. Ikke anbefalt: fjerner brukerens valg og skjuler nettopp risikoen kalkulatoren skal vise.
+
+**N6. Visuell «Prøv små endringer».** Alternativer:
+- A: Behold de tre forslagene, men legg til en liten horisontal stolpe per forslag som viser endringen mot dagens plan. Ingen nytt inndatafelt. Anbefalt først.
+- B: Glidebryter for ekstra månedsbeløp (for eksempel 0 til 5 000 kr) med resultat og stolpe som oppdateres mens brukeren drar. Krever tekstfelt som alternativ, `aria-valuetext`, stor trykkflate på mobil og samme validering som hovedskjemaet. Risiko: to steder å endre samme tall kan forvirre. Vurderes etter A.
+Begge krever unntak fra frysen.
+
+### Foreslått rekkefølge når pausen er opphevet
+
+1. #68 (N2), etter Lars sin vurdering av Finanstilsynets svar.
+2. N3 sammen med A2 (egen adresse per svar). Lav risiko, bare data og visning i veilederen, ingen kalkulatorendring.
+3. N1 når antallet svar gjør den flate listen tung.
+4. N4 på `spor.html` og `om.html`. Kalkulatorsiden bare med unntak fra frysen.
+5. N5 A via #67.
+6. N6 parkert til frysen revurderes.
+
+### Ikke kontrollert
+
+- Ingen av forslagene er bygget eller testet, heller ikke på iPhone, Safari, Firefox, VoiceOver eller NVDA.
+- Om #68 og #78 endrer funnene over (målt mot main).
+- Om N3, N4 og N5 faller inn under Finanstilsynets spørsmål. Det avgjør Lars etter svaret.
