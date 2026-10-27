@@ -416,3 +416,13 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Ikke berørt:** Prosjektpausen etter henvendelsen til Finanstilsynet gjelder fortsatt for alt annet innhold. Denne publiseringen gjelder personvern og lagring.
 
 **Vurder på nytt når:** Nkom, Datatilsynet eller leverandørene svarer, eller Lars' iPhone-sjekk etter publisering viser feil.
+
+## «Jeg» i stedet for «vi» på Om-, personvern- og tilgjengelighetssiden (28. oktober 2026)
+
+**Beslutning:** Lars vedtok 28.10.2026 at sidene skal bruke «jeg», fordi det er én person som står ansvarlig. KI-verktøyene er nevnt med navn på Om-siden. «Sammen har vi» om Lars og ChatGPT står, fordi det gjelder samarbeidet.
+
+**Alternativer:** A. «Jeg» på de tre sidene nå, resten senere. **Valgt.** B. «Jeg» på hele nettstedet nå. Ikke valgt: kalkulator og veileder er fryst eller på pause. C. Beholde «vi». Ikke valgt: virker misvisende når bare én person står bak.
+
+**Samtidig:** ny seksjon «Hva du kan bruke Spareverksted til» på Om-siden med lenke til kildereglene og til Forbrukerrådets sjekkliste før sparing og investering (nynorsk, sist endret 10.05.2024 ifølge sidens metadata). Kontaktteksten ber nå folk ikke dele sensitive opplysninger og sier at det ikke gis personlig økonomisk rådgivning. Den gamle setningen «Regler og satser kan endre seg …» er fjernet fordi den nye seksjonen dekker den. «Prognoser» og «uavhengige fagkilder» fra Lars' utkast er erstattet, fordi kalkulatoren viser regneeksempler og kildereglene også bruker merkede kommersielle kilder.
+
+**Vurder på nytt når:** flere personer blir med og står ansvarlig.
