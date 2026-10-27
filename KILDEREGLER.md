@@ -9,7 +9,7 @@ Reglene er få med vilje. De har ingen innebygde unntak (se «Når en regel må 
 Hver påstand om tall, grenser, regler og anbefalinger har en kilde med URL, kildens dato eller regelår og vår kontrolldato. Mangler vi kilde, skriver vi «ikke avklart» eller utelater påstanden. Vi utelater bare når svaret er til nytte uten den. Har brukeren spurt om akkurat dette, eller kan taushet gi et feil inntrykk, skriver vi «ikke avklart» i stedet for å utelate.
 
 - Tall og regler leses fra kilden i samme arbeidsøkt. Aldri fra hukommelsen, og dette gjelder også KI.
-- Det vi ikke vet, skriver vi at vi ikke vet («veit itte»). Vi skiller det vi har funnet fra det vi antar.
+- Det vi ikke vet, skriver vi rett ut: «vet ikke». Vi skiller det vi har funnet fra det vi antar.
 
 ## K2. Kilder i prioritert rekkefølge
 
