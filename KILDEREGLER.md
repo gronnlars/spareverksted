@@ -10,6 +10,7 @@ Hver påstand om tall, grenser, regler og anbefalinger har en kilde med URL, kil
 
 - Tall og regler leses fra kilden i samme arbeidsøkt. Aldri fra hukommelsen, og dette gjelder også KI.
 - Det vi ikke vet, skriver vi rett ut: «vet ikke». Vi skiller det vi har funnet fra det vi antar.
+- Kilden må faktisk svare på det vi bruker den til, og innholdet må stemme med det vi skriver. At lenken virker, er ikke nok.
 
 ## K2. Kilder i prioritert rekkefølge
 
@@ -20,6 +21,16 @@ Hver påstand om tall, grenser, regler og anbefalinger har en kilde med URL, kil
 5. Alt annet. Brukes aldri.
 
 En kilde høyere opp går foran en lavere når de er uenige. Vi går ned ett nivå bare når nivået over ikke dekker spørsmålet. Kilden til en norsk regel eller et norsk forhold er den norske versjonen. En engelsk side kan vise vei til den norske, men er ikke selv kilde. Finnes det ikke norsk versjon, står påstanden som «ikke avklart» til noen har lest en norsk kilde. Er kildene uenige på samme nivå, viser vi begge med kildehenvisning, eller vi skriver «ikke avklart». Vi velger aldri stille mellom dem.
+
+### Ved siden av nivåene: faglig grunnlag for regnemetoder
+
+Kjente norske og engelskspråklige universiteter kan brukes som kilde til formler, definisjoner og beregningsmåter, for eksempel renters rente eller realavkastning. Aldri til skatt, satser, regler, markedstall eller hva som gjelder i Norge nå. Denne kategorien står ved siden av nivå 1 til 5, ikke inni dem. Regelen i K2 om norsk versjon gjelder norske regler og forhold, ikke formler.
+
+- Institusjonens egen side, ikke private sider eller forelesningsnotater.
+- Åpen uten innlogging og med en lenke som ikke endrer seg.
+- Begge datoer (kildens og vår kontrolldato), eller «udatert» hvis siden ikke har dato.
+- Merket «på engelsk» når den er det.
+- Vår egen beregning kontrolleres mot formelen i kilden.
 
 ## K3. Tre datoer, hver for seg
 
@@ -52,10 +63,11 @@ Eksempel: kalkulatoren er fryst, og en endring der som ikke har en av de fire go
 Svar ja eller nei. Ett nei betyr at PR-en ikke er klar.
 
 1. Har hver faktapåstand en kilde med URL, kildens dato eller regelår og vår kontrolldato (K1, K3)?
-2. Er kilden på nivå 1 til 4, og er den høyeste tilgjengelige brukt (K2)?
-3. Er foreslått, vedtatt og i kraft skilt, med gjelder-fra-dato (K4)?
-4. Gir teksten bare det kilden sier, uten eget råd (K5)?
-5. Er alle formuleringer riktige også om ett år (K6)?
-6. Er endringer med dato kontrollert av en annen enn forfatteren (K7)?
-7. Er `?v=` økt for hver endret fil i `dist/` som lastes fra en HTML-side (SOK.md punkt 11)?
-8. Er beslutningen loggført i BESLUTNINGER.md med alle alternativer?
+2. Er kilden på nivå 1 til 4, og er den høyeste tilgjengelige brukt (K2)? Gjelder det en formel eller definisjon, er kilden et universitet som oppfyller kravene ved siden av nivåene?
+3. Svarer kilden faktisk på det den brukes til, og stemmer innholdet med teksten (K1)?
+4. Er foreslått, vedtatt og i kraft skilt, med gjelder-fra-dato (K4)?
+5. Gir teksten bare det kilden sier, uten eget råd (K5)?
+6. Er alle formuleringer riktige også om ett år (K6)?
+7. Er endringer med dato kontrollert av en annen enn forfatteren (K7)?
+8. Er `?v=` økt for hver endret fil i `dist/` som lastes fra en HTML-side (SOK.md punkt 11)?
+9. Er beslutningen loggført i BESLUTNINGER.md med alle alternativer?
