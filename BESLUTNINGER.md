@@ -404,3 +404,15 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Endring samme dag:** Lars byttet 27.10.2026 fra videresending til egne e-postkasser hos Domene.no, lest med Gmail-appen via IMAP. Personvernsiden er skrevet om tilsvarende: meldinger lagres i e-postkassen hos Domene.no, Google «kan» behandle dem via Gmail-appen (ikke bekreftet), og sletteteksten gjelder e-postkassen. Sending virker; mottak er ikke bekreftet. Detaljer i `docs/kontakt-epost.md`.
 
 **Sperren for aliasene er løst 27.10.2026:** MX-oppføring manglet og er lagt inn (`10 loke.domene.no`). Lars bekrefter mottak utenfra. PR #78 kan publiseres når Lars bestemmer det. SPF og DKIM gjenstår.
+
+## Personvernsiden publiseres (27. oktober 2026)
+
+**Beslutning:** Lars godkjente 27.10.2026 publisering av PR #78 (personvernside, kontaktknapper, fanelagring av tema og nivå). `noindex` og utkastmerkingen er fjernet. Dette erstatter forbeholdet i oppføringen fra 26.10.2026 om at ingen nye publiseringer skulle skje før svar fra Domene.no og Nkom.
+
+**Begrunnelse:** Siden beskriver status per 27.10.2026 og sier rett ut hva som ikke er avklart. E-post virker begge veier, med SPF, DKIM og DMARC `PASS`. Lars og GPT har lest gjennom teksten, og påpekte feil er rettet.
+
+**Akseptert ulempe:** Leverandørforhold (ansvar, lagringssted, slettetider hos GitHub, Domene.no, MailChannels og Google) er fortsatt uavklarte. Svar fra Nkom kan kreve endring av fanelagringen.
+
+**Ikke berørt:** Prosjektpausen etter henvendelsen til Finanstilsynet gjelder fortsatt for alt annet innhold. Denne publiseringen gjelder personvern og lagring.
+
+**Vurder på nytt når:** Nkom, Datatilsynet eller leverandørene svarer, eller Lars' iPhone-sjekk etter publisering viser feil.
