@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Hva Spareverksted lagrer i nettleseren din, hvordan du sletter det, og hva nettleverandøren behandler.">
 <meta name="theme-color" content="#183f36">
-<!-- UTKAST: ikke publiser før punktene merket «Avklares» er avklart eller bevisst akseptert av Lars, og mottak av begge e-postaliasene er bekreftet. noindex er ingen tilgangskontroll. -->
+<!-- UTKAST: beskriver status per 27.10.2026 med åpne spørsmål sagt rett ut. Ikke publiser før Lars har godkjent teksten, behandlingsgrunnlaget og sletteløftet for e-post, og mottak av begge e-postaliasene er bekreftet. noindex er ingen tilgangskontroll. -->
 <meta name="robots" content="noindex">
 <title>Personvern og lokal lagring · Spareverksted</title>
 <link rel="stylesheet" href="style.css?v=15">
@@ -22,7 +22,7 @@
 .privacy-table th,.privacy-table td{border-top:1px solid var(--line,#d6dbd2);padding:10px 8px;text-align:left;vertical-align:top}
 .privacy-table th{font-weight:650}
 .table-scroll{overflow-x:auto}
-.privacy-pending{border-left:4px solid var(--warning,#b45309);background:var(--warning-bg,transparent);padding:8px 14px}
+.privacy-status{border-left:4px solid var(--line,#d6dbd2);padding:4px 14px}
 .delete-box{margin-top:16px}
 .delete-box button{min-height:48px}
 @media(max-width:640px){.privacy-table thead{position:absolute;left:-9999px}.privacy-table tr{display:block;border-top:1px solid var(--line,#d6dbd2);padding:8px 0}.privacy-table td{display:block;border:0;padding:4px 0}.privacy-table td::before{content:attr(data-label) ": ";font-weight:650}}
@@ -52,7 +52,7 @@
 <p class="kontakt-status hint" role="status"></p>
 <noscript><p>Uten JavaScript kan du sette adressen sammen selv: skriv ordet «personvern», deretter tegnet krøllalfa (@), deretter «spareverksted.no». Ingen mellomrom.</p></noscript>
 </div>
-<p class="privacy-pending"><strong>Avklares:</strong> hvilken rolle (behandlingsansvarlig eller databehandler) Lars og leverandørene har for hver behandling nedenfor. Det er ikke vurdert ferdig.</p>
+<p class="privacy-status"><strong>Leverandørene.</strong> GitHub, Domene.no og Google behandler også opplysninger når de leverer tjenestene sine, etter egne vilkår. Hvordan ansvaret er fordelt mellom oss og dem, har vi spurt om, men ikke fått et klart svar på. Vi oppdaterer siden når vi vet mer.</p>
 </section>
 
 <section class="giving-section" aria-labelledby="storedTitle">
@@ -69,7 +69,7 @@
 <tr><td data-label="Hva"><strong>At du har startet.</strong> Bare et merke, ingen tall.</td><td data-label="Når">Når du trykker deg videre fra startguiden.</td><td data-label="Hvorfor">Så startguiden ikke kommer tilbake når du går fram og tilbake.</td><td data-label="Hvor lenge">Som arbeidsplanen.</td></tr>
 </tbody></table></div>
 <p>Spareverksted bruker ikke informasjonskapsler (cookies) i egen kode. Nettleseren kan i tillegg lagre en vanlig kopi av sidene og filene for å laste dem raskere. Det gjelder alle nettsider og inneholder ikke tallene dine.</p>
-<p class="privacy-pending"><strong>Avklares:</strong> om det å huske fargetema og visningsnivå i fanen, etter at du har trykket på valget, er «strengt nødvendig» for en tjeneste du har bedt om etter ekomloven § 3-15. At lagringen bare gjelder fanen, avgjør ikke det alene. Nettleseren kan gjenopprette fanen, og da følger valgene med. Valgene huskes ikke til neste besøk, og de følger ikke med til en ny fane.</p>
+<p class="privacy-status"><strong>Fargetema og visningsnivå.</strong> Vi har valgt å huske disse valgene bare i fanen, for å lagre minst mulig. De huskes ikke til neste besøk og følger ikke med til en ny fane. Om dette er nok etter reglene om lagring i nettleseren (ekomloven § 3-15), har vi spurt Nkom om. Svaret er ikke kommet. Krever svaret noe annet, endrer vi løsningen.</p>
 </section>
 
 <section class="giving-section" aria-labelledby="deleteTitle">
@@ -91,8 +91,10 @@
 <li><strong>Opplysninger:</strong> avsenderadresse, tidspunkt, innholdet i meldingen og navnet ditt hvis du oppgir det.</li>
 <li><strong>Vei:</strong> meldingen sendes til en adresse på spareverksted.no. Domeneleverandøren Domene.no videresender den til en Gmail-konto, der Lars leser den.</li>
 <li><strong>Mottakere:</strong> Lars, Domene.no og Google, som leverer e-posttjenestene meldingen går gjennom.</li>
+<li><strong>Grunnlag:</strong> vi leser og svarer på meldingen fordi du har skrevet til oss. Grunnlaget er berettiget interesse (personvernforordningen artikkel 6 nr. 1 bokstav f): å kunne svare på henvendelser om nettstedet.</li>
+<li><strong>Hvor lenge:</strong> vi har ennå ikke en fast regel for hvor lenge vi beholder e-post. Ber du oss slette meldingen din, sletter vi den.</li>
 </ul>
-<p class="privacy-pending"><strong>Avklares:</strong> behandlingsgrunnlag, avtalene med Domene.no og Google, hvor lenge meldinger lagres hos dem, hvor de behandles, og hvor lenge vi selv beholder dem. Vi har ikke vedtatt noen fast sletterutine ennå.</p>
+<p class="privacy-status"><strong>Det vi ikke vet ennå.</strong> Vi har spurt Domene.no hvor lenge meldinger lagres hos dem under videresending, og hvor de behandles. Svaret vi har fått, er ikke konkret nok. Google lagrer meldingene i Gmail etter Googles vilkår. Vi oppdaterer siden når vi vet mer.</p>
 <p>Generell kontakt (ikke personvern) finner du på <a href="om.html#kontakt">Om Spareverksted</a>.</p>
 </section>
 
@@ -105,16 +107,16 @@
 <section class="giving-section" aria-labelledby="hostTitle">
 <h2 id="hostTitle">Nettleverandøren</h2>
 <p>Sidene publiseres med GitHub Pages fra GitHub, Inc. GitHub opplyser at besøkendes IP-adresse logges og lagres av sikkerhetshensyn, også for besøkende som ikke er logget inn på GitHub. Spareverksted har ikke tilgang til disse loggene.</p>
-<p class="privacy-pending"><strong>Avklares:</strong> hvilken rolle GitHub har, hvor lenge loggene lagres, hvor de behandles, og om adressen spareverksted.no går via flere leverandører enn GitHub. GitHub oppgir ikke lagringstid for slike logger i sin personvernerklæring. Les <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages">GitHubs side om Pages</a> og <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHubs personvernerklæring</a> (begge på engelsk).</p>
+<p class="privacy-status"><strong>Det vi ikke vet ennå.</strong> GitHub oppgir ikke hvor lenge slike logger lagres eller hvor de behandles. Vi kan ikke se eller slette dem. Vi har heller ikke kontrollert om adressen spareverksted.no går via flere leverandører enn GitHub. Les <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages">GitHubs side om Pages</a> og <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHubs personvernerklæring</a> (begge på engelsk).</p>
 </section>
 
 <section class="giving-section" aria-labelledby="rightsTitle">
 <h2 id="rightsTitle">Rettigheter og klage</h2>
 <p>Der personvernreglene (GDPR) gjelder, kan du be om innsyn i, retting av og sletting av opplysninger vi har om deg, for eksempel fra e-post du har sendt oss. Bruk personvernadressen over. Du kan klage til <a href="https://www.datatilsynet.no/">Datatilsynet</a>.</p>
-<p class="privacy-pending"><strong>Avklares:</strong> hvilke behandlingsgrunnlag og hvilke rettigheter som gjelder for hver behandling, når rollene over er avklart.</p>
+<p>I praksis gjelder dette e-post du har sendt oss. Tallene du skriver inn i kalkulatoren og veilederen, har vi ikke. De finnes bare i nettleseren din, og du sletter dem selv som beskrevet over. Loggene hos GitHub har vi ikke tilgang til. Spør GitHub direkte om dem.</p>
 </section>
 
-<p class="hint">Sist kontrollert mot koden: 25. oktober 2026.</p>
+<p class="hint">Sist kontrollert mot koden: 25. oktober 2026. Teksten beskriver status per 27. oktober 2026 og oppdateres når vi får svar fra Nkom, Domene.no eller andre.</p>
 <footer><a href="index.html">Tilbake til kalkulatoren</a><a href="om.html">Om Spareverksted</a><a href="https://github.com/gronnlars/spareverksted">Kildekode på GitHub</a></footer>
 </main>
 </body>

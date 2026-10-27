@@ -184,3 +184,21 @@ ChatGPT/Codex har lest de sendte henvendelsene til Finanstilsynet, Nkom, Domene.
 - Uu-tilsynet: sendt 25.10.2026. Automatisk registreringsbekreftelse lest; ingen faglig vurdering funnet i gjennomgåtte meldinger. Påstandene om gjennomført testing er opplysninger i henvendelsen, ikke nye testresultater fra denne kontrollen.
 
 Støttede neste steg: Behold skillet mellom utkast, sendt melding, mottaksbekreftelse og faglig svar. Bevar åpne spørsmål om leverandørroller, avtaler og behandling. Kontotype, mottakstest og sletterutine kan ikke fastslås fra disse meldingene. Det er ikke sendt oppfølging, endret kontoinnstillinger, testet nettsted eller publisert kode i denne gjennomgangen.
+
+## Personvernsiden skrevet som status per 27.10.2026
+
+Lars bestemte 27.10.2026 at siden skal beskrive det som gjelder nå, og endres hvis svar fra Nkom, Domene.no eller andre krever det. De fem boksene merket «Avklares» i `dist/personvern.html` er derfor erstattet med vanlig tekst som sier hva vi vet, hva vi har spurt om og hva vi ikke vet. Ingen påstand om at åpne spørsmål er avklart.
+
+Endringer:
+
+- Roller: sier at GitHub, Domene.no og Google behandler opplysninger etter egne vilkår, og at ansvarsfordelingen ikke er klart besvart.
+- Tema og nivå: sier at valget er fanelagring for å lagre minst mulig, at Nkom er spurt, og at løsningen endres hvis svaret krever det.
+- E-post: legger til grunnlag (berettiget interesse, art. 6 nr. 1 f) og at e-post slettes på forespørsel. Sier at Domene.no-svaret ikke er konkret nok og at Google lagrer etter egne vilkår.
+- GitHub: sier at lagringstid og sted ikke er oppgitt, at vi ikke kan se eller slette loggene, og at mulig mellomledd ikke er kontrollert.
+- Rettigheter: sier at rettighetene i praksis gjelder e-post, at kalkulatortall bare finnes i nettleseren, og at GitHub-logger må tas med GitHub.
+
+**Krever Lars' godkjenning før publisering:** behandlingsgrunnlaget for e-post og løftet om å slette e-post på forespørsel. Begge er fra forslaget i `docs/kontakt-epost.md`, ikke vedtatt rutine. Mottakstest av begge alias gjenstår fortsatt. Siden er fortsatt `noindex`.
+
+Kontroller 27.10.2026 (lokalt, Chromium via Playwright 1.56.0): `personvern-browser`, `kontakt-browser`, `a11y-browser` og alle `*.test.cjs` består. Sjekket visuelt i 390 px bredde. Publisert side ikke kontrollert (egress-proxyen gir 403 mot spareverksted.no). Firefox og WebKit kjøres i CI.
+
+Lars opplyser 27.10.2026 at han har sendt et e-postsvar om personvern. Mottaker og innhold er ikke oppgitt her og ikke lest.
