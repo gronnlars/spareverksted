@@ -223,3 +223,9 @@ Lars leste PDF-utkastet og påpekte seks ting. Status:
 6. **Åpen kode.** Lagt til avsnitt med lenke til kildekoden og testene, slik at påstandene kan etterprøves.
 
 Lars opplyser også at han har slått av et statistikkverktøy i cPanel. Hvilket er ikke oppgitt. Det berører ikke besøkende på nettstedet, som ligger på GitHub Pages.
+
+## Innspill fra GPT 27.10.2026 (etter lesing av fila og koden)
+
+1. «De huskes ikke til neste besøk» var for absolutt, siden gjenopprettede faner kan ta med valgene. Endret til «med forbeholdene om faner over».
+2. Slettestatusen sa «har ikke lagret noe i denne nettleseren nå», selv om andre faner kan ha fanelagring. Endret til «Ingen lagrede planer i denne nettleseren og ingen lagrede valg i denne fanen.» I tillegg (Claude): meldingen etter sletting nevner nå arbeidsplan, valg og veilederopplysninger i andre faner, ikke bare arbeidsplanen. `personvern.js` versjon 3.
+3. Leverandøravsnittene: GPT påpeker at åpenhet om usikkerhet ikke avklarer forholdene. Enig. Står som videre arbeid, ikke publiseringssperre: konkrete svar om ansvar, lagringssted og slettetider fra GitHub, Domene.no (inkludert MailChannels) og Google bør erstatte «vi har spurt» etter hvert.

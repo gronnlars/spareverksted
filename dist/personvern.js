@@ -16,13 +16,13 @@
   if(!button)return;
   function describe(){const n=planCount(local),any=stored(local,session).length>0;
    if(blocked){summary.textContent='Nettleseren gir ikke Spareverksted tilgang til lagring. Da lagres ingenting her, og det er ikke noe å slette.';button.hidden=true;return;}
-   summary.textContent=!any?'Spareverksted har ikke lagret noe i denne nettleseren nå.':n?`Du har ${n} lagret${n===1?' plan':'e planer'} her. Slettingen kan ikke angres.`:'Det er lagret valg, men ingen planer. Slettingen kan ikke angres.';
+   summary.textContent=!any?'Ingen lagrede planer i denne nettleseren og ingen lagrede valg i denne fanen.':n?`Du har ${n} lagret${n===1?' plan':'e planer'} her. Slettingen kan ikke angres.`:'Det er lagret valg, men ingen planer. Slettingen kan ikke angres.';
    button.hidden=!any;}
   button.addEventListener('click',()=>{const n=planCount(local);
    if(n&&!confirm(`Slette Spareverksteds data i denne nettleseren, også ${n} lagret${n===1?' plan':'e planer'}? Dette kan ikke angres.`))return;
    const ok=clearAll(local,session),left=stored(local,session);
    document.documentElement.dataset.theme='neutral';document.querySelectorAll('[data-color-theme]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.colorTheme==='neutral')));
-   status.textContent=ok&&!left.length?'Slettet i denne nettleseren og denne fanen. Andre åpne faner kan fortsatt ha en arbeidsplan i minnet. Lukk dem for å fjerne det.':'Noe kunne ikke slettes. Slett nettstedsdata for spareverksted.no i nettleserens innstillinger.';
+   status.textContent=ok&&!left.length?'Slettet: lagrede planer i denne nettleseren og det som var lagret i denne fanen. Andre åpne faner kan fortsatt ha arbeidsplan, valg og opplysninger til veilederen. Lukk dem for å fjerne det.':'Noe kunne ikke slettes. Slett nettstedsdata for spareverksted.no i nettleserens innstillinger.';
    describe();status.tabIndex=-1;status.focus();});
   describe();
  });
