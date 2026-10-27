@@ -31,6 +31,27 @@ Lars bekrefter 26.10.2026 at en presiserende e-post er sendt til Finanstilsynet 
 
 Utsendingen er bekreftet av Lars, ikke selv kontrollert mot sendt-versjonen i Gmail i denne oppdateringen. Lars har vist et skjermbilde av en mottaksbekreftelse fra Finanstilsynet 26.10.2026 kl. 15.37 norsk tid i forbindelse med presiseringen. Bekreftelsen opplyser at henvendelsen er mottatt og vil bli behandlet så snart som mulig. Dette er en mottaksbekreftelse, ikke et faglig svar eller en godkjenning. Faglig avklaring avventes fortsatt. Originalen oppbevares privat. Prosjektpausen er uendret.
 
+## Finanstilsynets artikkel om investeringsinformasjon, lest 27. oktober 2026
+
+Kilde: Finanstilsynet, «Råd til deg som deler informasjon om investeringer på sosiale medier», https://www.finanstilsynet.no/nyhetsarkiv/nyheter/2026/rad-til-deg-som-deler-informasjon-om-investeringer-pa-sosiale-medier/. Publisert 23.04.2026, sist endret 19.10.2026 (sidens metadata). Hva som ble endret 19.10, er ikke kjent. Lest av Claude 27.10.2026.
+
+**Type kilde:** Nyhetssak fra tilsynet, altså tilsynsveiledning, ikke regelverk. Målgruppen er de som deler investeringsinnhold i sosiale medier. Teksten viser ikke til konkrete lovparagrafer eller ESMA-dokumenter.
+
+**Det artikkelen sier:**
+
+- Personlige investeringsanbefalinger regnes som investeringsrådgivning, som krever tillatelse fra Finanstilsynet.
+- Uten tillatelse kan man ikke gi personlige investeringsråd om hva man bør kjøpe, selge eller beholde. Å anbefale hva folk bør investere i eller unngå, «kan» innebære investeringsrådgivning.
+- Finansielle produkter skal ikke markedsføres eller anbefales uten klare og tilstrekkelige opplysninger om risiko og hvordan gevinst kan oppstå.
+- Egne interesser og fordeler skal opplyses.
+
+**Vurdering (Claude, ikke juridisk avklaring):** Artikkelen bekrefter utgangspunktet prosjektet allerede følger, men avklarer ikke henvendelsens punkt 2: om tilpasning av forhåndsskrevne spørsmål og svar etter alder og sparehorisont er en personlig anbefaling (H1 i `docs/vurdering-folkeopplysning.md`). Den skiller heller ikke mellom produkttyper og bestemte instrumenter, og sier ingenting om regneeksempler eller omtalen av Nordnet og Investeringskonto Zero. Pausen og sperrene står derfor uendret.
+
+**MAR-PDF lenket fra artikkelen:** Forordning (EU) nr. 596/2014, norsk konsolidert tekst per 22.04.2021 («bare for informasjonsformål»). Det er samme versjon som står som «overlevert, ikke lest» i vurderingsnotatet. Den er ikke gjennomgått på nytt, fordi MAR gjelder anbefalinger om bestemte instrumenter og utstedere, og ikke avgjør H1. Om senere endringer i MAR er tatt inn i norsk rett, er ikke kontrollert.
+
+**Neste kilde ved behov:** Definisjonen av investeringsrådgivning i verdipapirhandelloven, lest på Lovdata. Ikke lest ennå. Lars har besluttet å avvente Finanstilsynets svar.
+
+**E-post:** Et utkast til oppfølging som viser til artikkelen og ber om bekreftelse av tre forståelser ble laget i samtale 27.10.2026. Lars har ikke opplyst at det er sendt.
+
 ## Sperrer som gjelder også etter oppstart
 
 Disse oppheves ikke av at pausen avsluttes:
