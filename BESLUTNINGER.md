@@ -4,6 +4,14 @@ Beslutningsnotat, 24. oktober 2026.
 
 Les dette før du foreslår større endringer. Notatet samler prinsipper og valg fra prosjektarbeidet. Det er ikke dokumentasjon på at alle deler er ferdige eller fullstendig brukertestet.
 
+## Aktive avvik fra reglene
+
+Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](KILDEREGLER.md), «Når en regel må brytes». Kontrollrunden går gjennom tabellen, og den som gjør runden varsler Lars minst to uker før utløp.
+
+| Hva | Regel | Godkjent av | Utløper | Fornyes av | Status |
+| --- | --- | --- | --- | --- | --- |
+| Varsel om sparehorisont for Indeksfond under 5 år på kalkulatorsiden (PR #67) | Kalkulatorfrysen (plan, punkt 0) | Lars ved sammenslåing | 31.01.2027 | Lars | Foreslått. Aktivt først når #67 er slått sammen |
+
 ## En ulempe betyr ikke at valget var feil
 
 Som når man velger skuffer framfor skap på et kjøkken: Begge løsninger har ulemper. Et godt valg kan innebære at man aksepterer noe irriterende for å slippe noe som ville vært verre.
