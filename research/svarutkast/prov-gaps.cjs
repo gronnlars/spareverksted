@@ -30,7 +30,7 @@ for(const [q,id]of [['Hva er ASK?','q-aksjesparekonto'],['ASK eller IPS?','q-ips
  assert.equal(V.search(q).hits[0].id,id,q);count++;
 }
 assert.equal(V.search('Jeg vil ikke ha fond').mode,'negated');count++;
-assert.match(Cards.build('q-bsu-flytting',{}).intro,/utenlandsflytting.*veit itte/);
+assert.match(Cards.build('q-bsu-flytting',{}).intro,/utenlandsflytting.*vet ikke/);
 // Eksemplene er egne kontrollregnestykker uten bruk av kalkulatorens motor.
 let saldo=10000;for(let year=0;year<2;year++)saldo+=saldo*.05;
 assert.equal(saldo,11025);assert.equal(10000*1.1*.9,9900);
