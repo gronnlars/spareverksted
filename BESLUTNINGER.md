@@ -357,3 +357,70 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Vurder på nytt når:** Faktisk bruk viser feil svar eller gjentakende problemer, innhold endrer hvilke ord som har én eier, eller iPhone- og skjermlesertesting avdekker hindringer.
 
 **Status:** Anbefalt, ikke vedtatt. Lars avgjør.
+
+## Lokal lagring og personvernside (25. oktober 2026)
+
+**Valg:** Lagre minst mulig og bare etter en handling fra brukeren. `sv-started` flyttes fra `localStorage` til fanens `sessionStorage`, og lagrede planer regnes også som start. Visningsnivå lagres bare når brukeren selv trykker på et nivå, aldri «Enkel» og aldri ved automatisk tilbakestilling. Arbeidsplanen og veilederkonteksten opprettes bare når brukeren går til «Spør om sparing», ikke ved hver `pagehide`. Ny side `personvern.html` med sletteknapp for Spareverksteds egne nøkler. Ingen samtykkeboks.
+
+**Alternativer:** A: Beholde dagens lagring og skrive en forklaring. Valgt bort fordi `sv-started` ble lagret permanent uten noe uttrykkelig ønske, også når en delt lenke ble åpnet, og `sv-level` ble skrevet med standardverdien ved oppstart. B: Fjerne all lagring av tema og nivå. Valgt bort foreløpig fordi brukeren selv trykker på valget, og fordi Nkom ikke er spurt ennå. C: Flytte tema og nivå til `sessionStorage`. Mulig etter svar fra Nkom; en enkel endring. D: Samtykkeboks. Valgt bort fordi ingen kjent lagring er sporing eller statistikk, og en boks for uavklarte funksjoner ville være å skyve problemet over på brukeren. E: Slette arbeidsplanen når den er hentet tilbake. Valgt bort fordi omlasting av kalkulatoren da mister planen, og en utdatert plan hindres uansett ved at `pagehide` oppdaterer en plan som finnes.
+
+**Begrunnelse:** Ekomloven § 3-15 gjelder all lagring i nettleseren, også uten personopplysninger. Unntaket gjelder det som er strengt nødvendig for en tjeneste brukeren uttrykkelig har bedt om. Lagring etter et konkret trykk står sterkere enn lagring ved oppstart.
+
+**Akseptert ulempe:** En bruker uten lagrede planer ser startguiden igjen ved nytt besøk. Går brukeren til «Spør om sparing» via adressefeltet eller Om-siden i stedet for lenken i kalkulatoren, følger ikke planen med. Personvernsiden har punkter merket «Avklares» og er merket `noindex`.
+
+**Vurder på nytt når:** Nkom eller Datatilsynet svarer, ansvarlig og kontakt er avklart, eller hostingen endres.
+
+**Status:** Foreslått i PR, ikke vedtatt. Lars avgjør. Gjort på eget oppdrag fra Lars under pausen (docs/regulatorisk.md).
+
+## Tema og nivå huskes bare i fanen (26. oktober 2026)
+
+**Beslutning:** Lars vedtok alternativ B i `docs/personvern-lagring.md`: fargetema (`sv-color-theme`) og visningsnivå (`sv-level`) lagres i `sessionStorage` og ikke i `localStorage`. (Bokstavene følger dokumentet; i oppføringen over fra 25. oktober har B og C andre betydninger.)
+
+**Begrunnelse:** Mindre permanent lagring uten å fjerne funksjonen. Valget gjelder så lenge fanen brukes, og huskes ikke til neste besøk.
+
+**Akseptert ulempe:** Brukeren må velge på nytt neste dag og i hver ny fane. Gamle permanente verdier fjernes og leses ikke.
+
+**Ikke avgjort:** Fanelagring er ikke garantert slettet ved lukking, siden nettlesere kan gjenopprette faner. Det avgjør ikke alene om ekomloven § 3-15 gjelder. Spørsmålet ligger hos Nkom.
+
+## Hvorfor KI-informasjonen ble publisert mens prosjektet er på pause (26. oktober 2026)
+
+**Beslutning:** Lars godkjente 26.10.2026 at PR #80 («Synlig KI-informasjon på forside og søkeside») ble slått sammen og publisert (main `b2eada7c7805b428835025d6d729218b5367a888`). Publiseringskjøringen gikk grønt. Lars bekreftet med skjermbilde (Safari på iPhone, 26.10.2026) at KI-linjen vises på forsiden; Om-siden og søkesiden er ikke sett på iPhone, og nettverkstrafikk, HTTP-hoder og servercookies er ikke kontrollert. Etter dette gjøres ingen nye publiseringer før svar fra Domene.no og Nkom foreligger.
+
+**Begrunnelse (Lars):** Endringen handlet ikke om generelle finansielle spørsmål. Den handlet om åpenhet om hvordan innholdet lages, og om personvern og etterrettelighet, som har vært grunnmuren i prosjektet fra start. GPT vurderte at den ikke berører det som er spurt Finanstilsynet om. Den vurderingen er en KI-vurdering av endringens omfang, ikke en juridisk godkjenning. Finanstilsynet er ikke spurt om akkurat denne endringen, og vurderingen er ikke en uttalelse fra dem.
+
+**Hva som ble publisert:** Én linje på forsiden, en tilsvarende tekst ved «Spør om sparing» og en seksjon på Om-siden. Ingen endring i beregninger, spørsmål, kunnskapsbase eller eksempler. Ingen lagring er endret i denne publiseringen.
+
+**Ikke publisert:** PR #78 (personvernside, kontaktknapper, fanelagring av tema og nivå). Den venter på svar og på at kontaktadressene er mottakstestet.
+
+
+## Grunnlag og sletting for e-post på personvernsiden (27. oktober 2026)
+
+**Beslutning:** Lars godkjente 27.10.2026 at personvernsiden oppgir berettiget interesse (GDPR art. 6 nr. 1 bokstav f) som grunnlag for å lese og svare på e-post, med interesseavveiningen i `docs/kontakt-epost.md`, og sletteteksten: sletting fra innboksen på forespørsel, med mindre vi må beholde meldingen, og uten løfte om sletting av kopier hos Domene.no eller i Googles sikkerhetskopier.
+
+**Alternativer vurdert:**
+- A. Berettiget interesse med dokumentert avveining. **Valgt.**
+- B. Samtykke. Ikke valgt: avsenderen tar selv kontakt og venter svar, og samtykke må kunne trekkes tilbake, noe som passer dårlig for å dokumentere svar på rettighetsforespørsler.
+- C. Ikke oppgi grunnlag før juridisk avklaring. Ikke valgt: siden skal beskrive status nå og endres ved behov.
+- Sletting: «Ber du oss slette, sletter vi» (Claudes første utkast) ble forkastet som for kategorisk. GPTs forslag («når vi ikke lenger har lovlig grunnlag») ble omskrevet til konkret språk med samme innhold.
+
+**Akseptert ulempe:** Ingen fast slettefrist ennå. Vurderingen er skrevet av KI og ikke kontrollert av jurist.
+
+**Vurder på nytt når:** Datatilsynet eller Domene.no svarer, e-postløsningen endres, eller Lars velger slettefrist.
+
+**Sperre for publisering av PR #78:** Lars opplyser 27.10.2026 at e-postaliasene for personvern og generell kontakt ikke virker ennå. Siden kan ikke publiseres med en kontaktadresse som ikke når fram. Main har per 27.10.2026 ingen e-postadresser; kontakt skjer via GitHub. Lars vurderer at cPanel, som Domene.no ser ut til å bruke, er programvare hos leverandøren og ikke en egen part siden må nevne.
+
+**Endring samme dag:** Lars byttet 27.10.2026 fra videresending til egne e-postkasser hos Domene.no, lest med Gmail-appen via IMAP. Personvernsiden er skrevet om tilsvarende: meldinger lagres i e-postkassen hos Domene.no, Google «kan» behandle dem via Gmail-appen (ikke bekreftet), og sletteteksten gjelder e-postkassen. Sending virker; mottak er ikke bekreftet. Detaljer i `docs/kontakt-epost.md`.
+
+**Sperren for aliasene er løst 27.10.2026:** MX-oppføring manglet og er lagt inn (`10 loke.domene.no`). Lars bekrefter mottak utenfra. PR #78 kan publiseres når Lars bestemmer det. SPF og DKIM gjenstår.
+
+## Personvernsiden publiseres (27. oktober 2026)
+
+**Beslutning:** Lars godkjente 27.10.2026 publisering av PR #78 (personvernside, kontaktknapper, fanelagring av tema og nivå). `noindex` og utkastmerkingen er fjernet. Dette erstatter forbeholdet i oppføringen fra 26.10.2026 om at ingen nye publiseringer skulle skje før svar fra Domene.no og Nkom.
+
+**Begrunnelse:** Siden beskriver status per 27.10.2026 og sier rett ut hva som ikke er avklart. E-post virker begge veier, med SPF, DKIM og DMARC `PASS`. Lars og GPT har lest gjennom teksten, og påpekte feil er rettet.
+
+**Akseptert ulempe:** Leverandørforhold (ansvar, lagringssted, slettetider hos GitHub, Domene.no, MailChannels og Google) er fortsatt uavklarte. Svar fra Nkom kan kreve endring av fanelagringen.
+
+**Ikke berørt:** Prosjektpausen etter henvendelsen til Finanstilsynet gjelder fortsatt for alt annet innhold. Denne publiseringen gjelder personvern og lagring.
+
+**Vurder på nytt når:** Nkom, Datatilsynet eller leverandørene svarer, eller Lars' iPhone-sjekk etter publisering viser feil.

@@ -32,3 +32,42 @@ Les gren/PR før en utløpt reservasjon overtas. ASK er allerede forklart på ma
 ### Integrasjon etter nytt oppdrag 25. oktober
 
 Lars bestilte publisering. Dette erstatter researchoppgavens avgrensning for denne leveransen. ChatGPT/Codex har kontrollert kildene på nytt og integrert SV-035/SV-017 i eksisterende forklaringsvisning. 15 Node-testfiler og 156 søketilfeller består lokalt. Nye nettleserkontroller ved 320/390 px i eksisterende test, kjøres i CI. Lokal nettleser mangler. Ingen kalkulatorendring. PR #63 er nå på main og er bevart. Neste research: SV-022.
+
+
+### GAPS-oppdrag 25. oktober 2026, lokal leveranse
+
+ChatGPT/Codex. Lest main `f9c553aa668fd0bf96ce14d6930f5ec02897abd6`. Lokal gren `draft/gaps-2026-10-25`. Brukerens uttrykkelige forbud mot push går foran nattinstruksens reservasjons-push. Ingen fjernreservasjon eller PR opprettet. Ingen aktive reservasjoner på main. Oppdaget eksisterende SV-022 i PR #65 og gjenbrukte dette framfor en konkurrerende implementering. De andre GAPS-utkastene er nye. Ingen filer i dist endres.
+
+SV-022, SV-006/SV-007, SV-135, SV-050/SV-051 og SV-061: kilder åpnet og lest 25.10.2026, kildeunntak og avgrensninger i utkastene. BSU ved utenlandsflytting er ikke avklart. DNBs fagavsnitt har ikke dokumentert egen kildedato. Kilderegler fra åpen PR #71 er lest som forslag, ikke som sammenslått regelverk. Evalueringsfilen finnes hverken på main eller i treet på origin/review-spareverksted-15379697258072798651, d7e02fd; kunne ikke leses. Ingen tidligere evaluering er lagt til grunn som autoritet.
+
+Kontroll: alle 15 eksisterende Node-testfiler består. Historisk søkesett: 156 tilfeller, 0 WD, 115/115 prioriterte søk har relevant treff blant de tre første på uendret produktkode. Isolert registrering av de fem utkastene: 35 nye søketilfeller og fem svarkort består. Sammenlignet med samme basis endres fire av 156 søk, alle gjelder de bestilte hullene. Se rapporten for begrensningene. Ingen nettleser- eller skjermlesertest utført. Tekstforslag for søkemeldinger avventer Lars og er ikke lagt inn.
+
+Neste steg: avklar kildeforbehold, få uavhengig fagkontroll og Lars sin tekstgodkjenning. Eventuell senere integrasjon må samordnes med #65 og bevare uavklarte hull. Denne leveransen gir ingen fullmakt til push, merge eller publisering. Ingen reservasjon står aktiv fra denne økten.
+
+
+### Revisjon av SV-022 etter Claudes KI-kontroll, videresendt av Lars, 25.10.2026
+
+DNB og skattekortsiden er tatt ut av SV-022. Skatte-ABC R-10-1.1, SSB og Finanstilsynet er faktisk åpnet på nytt og relevante avsnitt lest. Kildedato/regelår eller «udatert» står i data som blir synlige i kildetittelen og forbeholdet. Matematikk merkes som egen illustrasjon. Kortsvaret er avgrenset til renters rente, gjentakelse fjernet, forbehold samlet ved eksempelet, kjøpekraft løftet og kalkulatorlenke med eksempelverdier lagt til i utkastet. Ingen påstand om at tid alltid er viktigere enn rente.
+
+JSON er én fasit; fem Markdown-utkast genereres og samsvarskontrolleres. De fire andre svartekstene er ikke omskrevet. Isolert søkeprøve består med 35 tilfeller og samme fire historiske endringer. Kontrollregning og lenkens felt/11 025 kr består i Node. Faktisk visningstest er forberedt og forsøkt, men stoppet fordi Chromium mangler; installasjonen feilet. Ingen visuell test bestått. Claudes KI-kontrollregning dokumenteres separat fra ChatGPT/Codex sine egne testkjøringer. Ingen menneskelig kontroll er dokumentert. Uavhengig kontroll av originalkildene gjenstår. Se research/svarutkast/SV-022-KONTROLL.md. Ingen push, merge, integrasjon eller publisering.
+
+### Rettet attribusjon og fulgt opp Claude, 25.10.2026
+
+Det var Claude, ikke Lars, som utførte kontrollregningen og kildevurderingen videresendt i samtalen. Feil attribusjon er rettet i egne dokumenter, JSON og generert SV-022. Begge verktøyenes kontroller er KI-kontroller. Ingen menneskelig kontroll er dokumentert.
+
+Skattepåstanden er lagt inn i svarteksten med kildehenvisning til Skatteetatens hovedregel. Finanstilsynets kilde er ikke lenger kalt udatert: offisielt søkeuttrekk sier «Sist publisert: 23. oktober 2026». Claude-opplysningen om opprinnelig publisering 27.05.2016 og råmetadata er ikke bekreftet av ChatGPT/Codex; rå HTML ga 403, datoens synlighet må kontrolleres av et menneske. Skatteetatens faktiske avsnitt er lest etter innholdsfortegnelsen i KI-uttrekket. Menneskelig kontroll gjenstår etter Lars sitt oppdrag.
+
+Kilderegler er hentet på nytt fra docs/kilderegler, blob 604b7d2c0ab5cfc7620a3da5159b29aaead3c68c. Ingen KILDEREGLER.md på main f9c553a. Det påstås ikke at regel-PR #71 er merget.
+
+Andre utkastlenke gir kroner og kjøpekraft sammen i grafen: 10 000 kr, to år, 2 % rente og 2,5 % prisvekst, alle som illustrasjon. Gir 10 404 kr og 9 902,68 kr målt med prisene ved starten. 5 % rente med 2,5 % prisvekst ville gitt økt kjøpekraft før skatt/kostnader, så det er ikke brukt til et motsatt budskap. Begge lenker kontrollert mot sanitize og egen formel, uten produktendring. Den andre lenken finnes foreløpig i utkastet, ikke i nettstedets visning. Isolert søkeprøve består, samme fire historiske endringer. Nettlesertesten forsøkt på nytt og blokkert av manglende Chromium. Ingen push eller integrasjon.
+
+
+### Firefox og WebKit forsøkt 25.10.2026
+
+Etter Lars sitt oppdrag er SV-022-prøven gjort valgfri mellom chromium, firefox og webkit, med tidsgrenser. Firefox 153.0/build 1538 og WebKit 26.5/build 2336 er faktisk lastet ned via Playwrights alternative adresse. Firefox startet, men innholdsprosessene krasjet ved `/proc/self/uid_map: EPERM` og signal 11. Kjøring og diagnosekjøring ble avbrutt; ingen sidetester bestått. WebKit-prøven stoppet før sidetesting fordi systembiblioteker mangler. Ordinær `playwright install-deps webkit` feilet med exit 100 og setgroups/setegid/seteuid-tillatelsesfeil. Ingen miljørestriksjoner er endret. Ingen push, CI-kjøring eller publisering. Full feilstatus i SV-022-KONTROLL.md. Nettleserkontrollen er fortsatt åpen.
+
+### Kilder bekreftet av Lars og push godkjent 25.10.2026
+
+Lars opplyser at han har sjekket kildene og at siden kan pushes. Han har ikke regnet; Claude og egne programtester står for kontrollregningen. Godkjenningen gjelder SV-022 slik gjennomgått. Bare renters rente integreres. Andre GAPS-svar og søkemeldingene er ikke lagt inn. Renters-rente-raden tas ut av GAPS, og begge eksempellenkene støttes av eksisterende next med valgfri more-liste. Kalkulatoren er urørt. Produkt og Markdown genereres fra JSON. Fersk main/AGENTS er hentet via GitHub; main er f9c553a, PR #65 er fortsatt åpen på 2385ddb. Den nye leveransen erstatter SV-022-delen der; øvrige endringer fra #65 tas ikke med automatisk.
+
+Før push: 156 historiske søk sammenlignet mot main; bare t21 endrer seg til det nye svaret. De øvrige 155 er uendret. Node-tester kjøres på integrert versjon. Den faktiske nettleserprøven, uten utkastinjeksjon, kjøres i CI for Chromium, Firefox og WebKit. Kontrollgren pushes først; faktisk CI og publisering må bekreftes separat.

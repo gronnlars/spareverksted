@@ -19,7 +19,11 @@ try{
   if(Object.keys(patch).length){Object.assign(s,patch);if(s.ageKnown)s.ageGroup=ageGroupFor(s.userAge);fill();render();currentHorizon();}
  }
 }catch{}
-function carry(){try{const storage=window.sessionStorage,started=!document.getElementById('workbench').hidden;C.write(storage,C.fromCalculator(s,started,C.read(storage)));if(started)C.writePlan(storage,s,mode,view);else C.clearPlan(storage);}catch{}}
-for(const link of document.querySelectorAll('a[href="spor.html"]'))link.addEventListener('click',carry);
-window.addEventListener('pagehide',carry);
+// Arbeidsplanen og veilederkonteksten opprettes bare når brukeren klikker seg til «Spør om sparing».
+// pagehide oppdaterer dem bare hvis de allerede finnes i fanen, slik at en senere retur ikke henter en utdatert plan.
+// Brukere som aldri åpner veilederen, får ingenting lagret her. Se docs/personvern-lagring.md.
+function carry({create=false}={}){try{const storage=window.sessionStorage;if(!create&&storage.getItem(C.KEY)===null&&storage.getItem(C.PLAN_KEY)===null)return;const started=!document.getElementById('workbench').hidden;if(!started&&storage.getItem(C.KEY)===null){C.clearPlan(storage);return;}C.write(storage,C.fromCalculator(s,started,C.read(storage)));if(started)C.writePlan(storage,s,mode,view);else C.clearPlan(storage);}catch{}}
+// Delegert lytter: gjelder også lenker som legges til senere, som skrivebordsmenyen fra layout.js.
+document.addEventListener('click',event=>{if(event.target.closest?.('a[href="spor.html"]'))carry({create:true});});
+window.addEventListener('pagehide',()=>carry());
 })();
