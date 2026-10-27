@@ -62,7 +62,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert(await fresh.locator('#journeyError').isVisible());assert(await fresh.locator('#welcomeWizard').isVisible());
   await fresh.locator('#onboardYears').fill('5');await fresh.locator('#beginJourney').click();
   assert.equal(await fresh.evaluate(()=>document.activeElement.id),'dreamSummary');
-  await fresh.evaluate(()=>localStorage.removeItem('sv-started'));await fresh.goto(origin+'/index.html');
+  await fresh.evaluate(()=>{sessionStorage.removeItem('sv-started');localStorage.removeItem('sv-scenarios');});await fresh.goto(origin+'/index.html');
   await fresh.locator('#chooseGrowth').click();await fresh.locator('#exampleJourney').click();
   assert.equal(await fresh.evaluate(()=>document.activeElement.id),'savingsResult');
   assert.deepEqual(errors,[]);

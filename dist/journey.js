@@ -1,16 +1,21 @@
 'use strict';
 // A first visit begins with a choice. Shared plans go straight to the calculation.
 let journeyKind='growth',wizardActive=false,basicsTouched=false,journeyFresh=false,journeyEditing=false;
-function hasStarted(){try{return localStorage.getItem('sv-started')==='1';}catch{return false;}}
-function rememberStart(){try{localStorage.setItem('sv-started','1');}catch{}}
-function stage(showWizard){wizardActive=showWizard;document.body.dataset.stage=showWizard?'welcome':'workbench';$('welcomeWizard').hidden=!showWizard;$('workbench').hidden=showWizard;$('startAgain').hidden=showWizard;if(!showWizard){rememberStart();render();}window.scrollTo({top:0,behavior:'instant'});}
+// «Har startet» huskes bare i denne fanen (sessionStorage), slik at turen til «Spør om sparing» og tilbake ikke viser startguiden igjen.
+// Lagrede planer regnes også som start. Den gamle, permanente nøkkelen sv-started fjernes. Se docs/personvern-lagring.md.
+try{localStorage.removeItem('sv-started');}catch{}
+// planShown: planen har vært åpen i denne siden (også fra en delt lenke). Holdes i minnet, skrives ikke til lagring.
+let planShown=false;
+function hasStarted(){if(Array.isArray(saved)&&saved.length)return true;try{return sessionStorage.getItem('sv-started')==='1'||sessionStorage.getItem('sv-working-plan-v1')!==null;}catch{return false;}}
+function rememberStart(){try{sessionStorage.setItem('sv-started','1');}catch{}}
+function stage(showWizard,{remember=true}={}){wizardActive=showWizard;document.body.dataset.stage=showWizard?'welcome':'workbench';$('welcomeWizard').hidden=!showWizard;$('workbench').hidden=showWizard;$('startAgain').hidden=showWizard;if(!showWizard){planShown=true;if(remember)rememberStart();render();}window.scrollTo({top:0,behavior:'instant'});}
 // Startguiden: et tomt beløpsfelt betyr 0 ("fyll inn tallene du kjenner"). Alder håndteres for seg.
 function inputNumber(id){const v=$(id).value;return v.trim()===''?0:parsedNumber(v);}
 // Tall som siden selv skriver inn (skyveknapper, startguide, skattevindu), vises med tusenskille som ellers.
 function formatInput(value){return groupedNumber(value);}
 function prepareJourney(kind){journeyKind=kind;$('chooseGrowth').setAttribute('aria-pressed',kind==='growth');$('chooseGoal').setAttribute('aria-pressed',kind==='goal');$('journeyForm').hidden=false;$('onboardGoalLabel').hidden=kind!=='goal';$('journeyTitle').textContent=kind==='goal'?'Hva vil du spare til?':'Hva er utgangspunktet ditt?';$('beginJourney').textContent=journeyEditing?'Oppdater planen':kind==='goal'?'Se veien til målet ↗':'Vis spareplanen min ↗';$('exampleJourney').hidden=journeyEditing;if($('journeyFreshNote'))$('journeyFreshNote').hidden=!journeyFresh;
  // «Start på nytt» begynner fra standardverdiene, ikke fra planen som står. Planen endres først når brukeren går videre.
- const goal=kind==='goal',src=journeyFresh?E.defaults:s;$('onboardAge').value=src.ageKnown?formatInput(src.userAge):'';$('onboardStart').value=formatInput(goal?src.dreamStart:src.start);$('onboardMonthly').value=formatInput(goal?src.dreamMonthly:src.monthly);$('onboardYears').value=formatInput(goal?src.dreamYears:src.years);$('onboardGoal').value=formatInput(src.dreamCost);$('onboardUntil67').checked=src.until67||(!src.ageKnown&&kind==='growth');$('closeJourney').hidden=!hasStarted();$('journeyError').hidden=true;updateHorizon(false);
+ const goal=kind==='goal',src=journeyFresh?E.defaults:s;$('onboardAge').value=src.ageKnown?formatInput(src.userAge):'';$('onboardStart').value=formatInput(goal?src.dreamStart:src.start);$('onboardMonthly').value=formatInput(goal?src.dreamMonthly:src.monthly);$('onboardYears').value=formatInput(goal?src.dreamYears:src.years);$('onboardGoal').value=formatInput(src.dreamCost);$('onboardUntil67').checked=src.until67||(!src.ageKnown&&kind==='growth');$('closeJourney').hidden=!(hasStarted()||planShown);$('journeyError').hidden=true;updateHorizon(false);
 }
 function updateHorizon(auto){const raw=$('onboardAge').value.trim(),age=inputNumber('onboardAge'),known=raw!==''&&Number.isFinite(age)&&age>=0;$('until67Label').hidden=!known;if(auto&&known&&$('onboardUntil67').checked)$('onboardYears').value=formatInput(Math.max(0,67-age));const years=inputNumber('onboardYears');if(!known){$('journeyHorizon').textContent='Alder er valgfritt. Du kan bruke kalkulatoren uten å oppgi den.';return;}if(!Number.isFinite(years)||years<0){$('journeyHorizon').textContent='Velg hvor mange år du vil spare.';return;}$('journeyHorizon').textContent=`Om ${dec.format(years)} år er du ${dec.format(age+years)}, rundt ${new Date().getFullYear()+Math.round(years)}.`+($('onboardUntil67').checked?' 67 år er bare et startforslag, og kan endres.':'');}
 $('chooseGrowth').onclick=()=>{prepareJourney('growth');$('journeyForm').scrollIntoView({behavior:'smooth',block:'nearest'});};$('chooseGoal').onclick=()=>{prepareJourney('goal');$('journeyForm').scrollIntoView({behavior:'smooth',block:'nearest'});};
@@ -18,16 +23,16 @@ $('onboardAge').oninput=()=>updateHorizon(true);$('onboardUntil67').onchange=()=
 // Nullstiller hele planen (også skjulte valg som børsfall, ekstrainnskudd og spareform) når brukeren går videre fra «Start på nytt».
 // «Tilbake til planen» endrer ingenting. Endringen kan angres.
 function freshPlan(){if(!journeyFresh)return;journeyFresh=false;undoState={state:{...s},mode,view:{...view}};Object.assign(s,{...E.defaults});view={showBank:false,showRange:false,showGoal:false,both:false};selectedPlans.clear();basicsTouched=false;history.replaceState(null,'',location.pathname);$('undoText').textContent='Planen er nullstilt.';$('undoBar').hidden=false;}
-$('startAgain').onclick=()=>{journeyEditing=false;journeyFresh=true;stage(true);prepareJourney(s.activePage==='dreams'?'goal':'growth');};$('closeJourney').onclick=()=>{journeyFresh=false;journeyEditing=false;stage(false);};
+$('startAgain').onclick=()=>{journeyEditing=false;journeyFresh=true;stage(true);prepareJourney(s.activePage==='dreams'?'goal':'growth');};$('closeJourney').onclick=()=>{journeyFresh=false;journeyEditing=false;stage(false,{remember:false});};
 function editStartChoices(){journeyEditing=true;journeyFresh=false;stage(true);prepareJourney(s.activePage==='dreams'?'goal':'growth');}
 function ageGroupFor(age){if(age<18)return 'all';if(age<25)return '18-24';if(age<30)return '25-29';if(age<35)return '30-34';if(age<40)return '35-39';if(age<45)return '40-44';if(age<50)return '45-49';if(age<55)return '50-54';if(age<67)return '55-66';return '67+';}
 $('journeyForm').onsubmit=event=>{event.preventDefault();try{const start=inputNumber('onboardStart'),monthly=inputNumber('onboardMonthly'),years=inputNumber('onboardYears'),age=inputNumber('onboardAge'),known=$('onboardAge').value.trim()!=='';if([start,monthly,years,...(known?[age]:[])].some(x=>!Number.isFinite(x)||x<0))throw Error('Bruk tall fra 0 og oppover. Du kan skrive komma i desimaltall.');if(years>100)throw Error('Sparetid kan være opptil 100 år.');if(known&&age>120)throw Error('Alder må være mellom 0 og 120 år.');if(Math.round(years*12)<1)throw Error(known&&age>=67&&$('onboardUntil67')?.checked?'Du er 67 år eller eldre, så «til 67 år» gir ingen sparetid. Skriv inn hvor mange år du vil spare.':'Sparetiden må være minst én måned. Med 0 år blir det ingen innskudd å regne på.');const goal=journeyKind==='goal',amount=inputNumber('onboardGoal');if(goal&&(!Number.isFinite(amount)||amount<0||Math.round(years*12)<1))throw Error('Velg et mål fra 0 kr og en periode på minst én måned.');
  if(journeyFresh)freshPlan();else undoState={state:{...s},mode,view:{...view}};
  Object.assign(s,{userAge:known?age:0,ageKnown:known,until67:known&&$('onboardUntil67').checked,ageGroup:known?ageGroupFor(age):'all',activePage:goal?'dreams':'calculator'});
  if(goal)Object.assign(s,{dreamStart:start,dreamMonthly:monthly,dreamYears:years,dreamCost:amount});else Object.assign(s,{start,monthly,years});
- if(journeyEditing){$('undoText').textContent='Startvalgene er oppdatert.';$('undoBar').hidden=false;}else{mode='explore';setLevel('simple');}journeyEditing=false;fill();stage(false);
+ if(journeyEditing){$('undoText').textContent='Startvalgene er oppdatert.';$('undoBar').hidden=false;}else{mode='explore';setLevel('simple',{remember:false});}journeyEditing=false;fill();stage(false);
  }catch(error){$('journeyError').textContent=error.message;$('journeyError').hidden=false;for(const id of ['onboardStart','onboardMonthly','onboardYears','onboardAge','onboardGoal']){const v=inputNumber(id),limit=id==='onboardYears'?100:id==='onboardAge'?120:Infinity,empty=$(id).value.trim()==='';$(id).setAttribute('aria-invalid',String(!empty&&(!Number.isFinite(v)||v<0||v>limit)));}$('journeyError').scrollIntoView({block:'nearest'});}};
-$('exampleJourney').onclick=()=>{freshPlan();fill();setLevel('simple');s.activePage=journeyKind==='goal'?'dreams':'calculator';stage(false);};
+$('exampleJourney').onclick=()=>{freshPlan();fill();setLevel('simple',{remember:false});s.activePage=journeyKind==='goal'?'dreams':'calculator';stage(false);};
 // Skyveknapper er snarveier, aldri grenser. Skrivefeltet er alltid den gjeldende verdien.
 const SLIDER_SPECS={start:[0,1000000,1000],monthly:[0,20000,100],years:[0.5,50,.5],rate:[0,15,.1],spread:[0,5,.1],dreamStart:[0,500000,1000],dreamMonthly:[0,20000,100],dreamYears:[0.5,30,.5],dreamCost:[0,1000000,1000],annualWithdraw:[0,600000,1000],withdrawPercent:[0,10,.1]};
 // Alle skyveknapper har faste, moderate grenser. Skrivefeltet kan ha høyere gyldige verdier.
@@ -80,7 +85,7 @@ function refreshTax(){const target=$('taxEstimate');target.hidden=!s.taxEnabled;
 function currentHorizon(){const known=s.ageKnown&&Number.isFinite(s.userAge)&&s.userAge>=0,years=s.activePage==='dreams'?s.dreamYears:s.years;$('planContext').hidden=!known;if(!known)return;const end=s.userAge+years;$('planContext').innerHTML=`Du er ${dec.format(s.userAge)} år. Spareperioden går til omtrent ${dec.format(end)} år (${new Date().getFullYear()+Math.round(years)}). `+`<button id="editHorizon" class="text" type="button">Endre startvalg</button>`;$('editHorizon').onclick=editStartChoices;}
 const previousRender=render;render=function(){previousRender();syncSliders();currentHorizon();refreshTax();updateStartNote();};
 const previousSetPage=setPage;setPage=function(page){previousSetPage(page);currentHorizon();};
-const previousSetLevel=setLevel;setLevel=function(value){previousSetLevel(value);syncSliders();};
+const previousSetLevel=setLevel;setLevel=function(...args){previousSetLevel(...args);syncSliders();};
 // Export matrices contain numbers, not formatted currency strings.
 function savingsMatrix(){const useRange=view.showRange;const headings=['År med sparing',...(s.ageKnown?['Alder, omtrent']:[]),'Saldo før skatt, kr','Innskudd, kr','Saldo i dagens kroner, kr',...(useRange?['Lavere scenario før skatt, kr','Høyere scenario før skatt, kr']:[])];return [headings,...rows.map(p=>[p.t,...(s.ageKnown?[s.userAge+p.t]:[]),E.value(s,p.t),nominalPaid(p.t),E.value(s,p.t)/inflation(p.t),...(useRange?[scenarioValue(p.t,-1),scenarioValue(p.t,1)]:[])])];}
 function withdrawalMatrix(){const r=E.withdrawal(s,E.value(s,endYear(s)));return [['Uttaksår','Ordinært uttak før skatt, kr','Ekstrauttak før skatt, kr','Saldo etter uttak før skatt, kr','Samlet tatt ut før skatt, kr',...(s.taxEnabled?['Ordinært uttak etter avsatt skatt, kr','Anslått skatt dette året, kr','Samlet etter avsatt skatt, kr']:[])],...r.points.map(p=>{const t=s.taxEnabled?TaxEstimate.at(s,r,p.year):null;return [p.year,p.actual,p.extra||0,p.balance,p.total,...(t?[t.regularNet,t.tax,t.totalNet]:[])];})];}
@@ -117,7 +122,8 @@ function updateStartNote(){const n=$('startNote');if(!n)return;const parts=[],A=
  if(left.length){const list=left.map(k=>names[k]),joined=list.length>1?list.slice(0,-1).join(', ')+' og '+list.at(-1):list[0];
   parts.push(`${joined[0].toUpperCase()+joined.slice(1)} er forhåndsutfylt, ikke anbefalt eller beregnet fra svarene dine.`+(!t&&(left.includes('rate')||left.includes('fee'))?' På sparekonto: bruk kontoens rente og 0 % kostnad.':''));}
  const text=parts.join(' ');if(n.textContent!==text)n.textContent=text;n.hidden=!text;}
-updateStartNote();stage(!(hasStarted()||sharedPlan));
+// Ved lasting skrives ingenting, heller ikke når en delt lenke åpnes.
+updateStartNote();stage(!(hasStarted()||sharedPlan),{remember:false});
 
 const previousReportChart=reportChart;reportChart=function(){return previousReportChart()+(view.showRange?'<div class="fan-summary">'+$('fanSummary').innerHTML+'</div>':'');};
 $('showRange').setAttribute('aria-label','Vis lavere og høyere vekst');$('log').setAttribute('aria-label','Vis like prosentsteg på aksen');$('spread').closest('label').querySelector('.unit').textContent='%-poeng';

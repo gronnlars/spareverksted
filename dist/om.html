@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="navigation.css?v=3">
 <link rel="stylesheet" href="om.css?v=5">
 <script defer src="om.js?v=1"></script>
+<script defer src="kontakt.js?v=1"></script>
 <link rel="canonical" href="https://spareverksted.no/om.html">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="nb_NO">
@@ -89,7 +90,20 @@
 <p>Bruk kalkulatoren gratis til egen økonomi. Nye bidrag deles for ikke-kommersiell viderebruk; kommersiell bruk av disse krever egen avtale. Tidligere MIT-utgaver kan fortsatt brukes kommersielt.</p>
 <p>Les <a href="https://github.com/gronnlars/spareverksted/blob/main/LICENSE">vilkårene</a> og <a href="https://github.com/gronnlars/spareverksted/blob/main/PROVENANCE.md">om opphav og kilder</a>, eller <a href="https://github.com/gronnlars/spareverksted/issues/new">ta kontakt om viderebruk</a>.</p>
 </section>
-<footer><a href="index.html">Tilbake til kalkulatoren</a><a href="https://github.com/gronnlars/spareverksted">Kildekode på GitHub</a></footer>
+<section class="giving-section" id="kontakt" aria-labelledby="contactTitle">
+<h2 id="contactTitle">Kontakt</h2>
+<p>Spørsmål, feil eller tips om Spareverksted? Send e-post. Skriv ikke mer om økonomien din enn du trenger. Om personvern og hva som skjer med e-posten, se <a href="personvern.html">Personvern og lokal lagring</a>.</p>
+<div class="kontakt" data-kontakt="generell">
+<button type="button" class="kontakt-vis" aria-expanded="false" aria-controls="kontaktGenerell" hidden>Vis e-postadresse for generell kontakt</button>
+<div class="kontakt-resultat" id="kontaktGenerell" hidden>
+<p><a class="kontakt-lenke"></a></p>
+<button type="button" class="kontakt-kopier" aria-label="Kopier e-postadresse for generell kontakt">Kopier e-postadresse</button>
+</div>
+<p class="kontakt-status hint" role="status"></p>
+<noscript><p>Uten JavaScript kan du sette adressen sammen selv: skriv ordet «post», deretter tegnet krøllalfa (@), deretter «spareverksted.no». Ingen mellomrom.</p></noscript>
+</div>
+</section>
+<footer><a href="index.html">Tilbake til kalkulatoren</a><a href="personvern.html">Personvern og lokal lagring</a><a href="https://github.com/gronnlars/spareverksted">Kildekode på GitHub</a></footer>
 </main>
 </body>
 </html>

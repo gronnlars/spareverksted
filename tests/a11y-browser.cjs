@@ -19,7 +19,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    kalkulator:async p=>{await p.goto(origin+'/index.html#'+PLAN);await p.reload();await p.evaluate(()=>{for(const d of document.querySelectorAll('#workbench details'))d.open=true;});},
    veileder:async p=>{await p.goto(origin+'/spor.html');await p.evaluate(()=>{for(const d of document.querySelectorAll('details'))d.open=true;});await p.locator('[data-topic]').first().click();},
    om:async p=>{await p.goto(origin+'/om.html');}};
-  const page=async(theme,width,height=800)=>{const ctx=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});const p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message));await p.addInitScript(t=>{try{localStorage.setItem('sv-color-theme',t);}catch{}},theme);return p;};
+  const page=async(theme,width,height=800)=>{const ctx=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});const p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message));await p.addInitScript(t=>{try{sessionStorage.setItem('sv-color-theme',t);}catch{}},theme);return p;};
 
   // Målingene kjører i siden. De er de samme som i revisjonen 23.10.2026 (se docs i prosjektet).
   const measure=p=>p.evaluate(()=>{

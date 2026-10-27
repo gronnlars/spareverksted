@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<script src="theme.js?v=1"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Hva Spareverksted lagrer i nettleseren din, hvordan du sletter det, og hva nettleverandøren behandler.">
+<meta name="theme-color" content="#183f36">
+<title>Personvern og lokal lagring · Spareverksted</title>
+<link rel="stylesheet" href="style.css?v=15">
+<link rel="stylesheet" href="theme.css?v=2">
+<link rel="stylesheet" href="layout.css?v=7"><script defer src="layout.js?v=5"></script>
+<link rel="stylesheet" href="navigation.css?v=3">
+<link rel="stylesheet" href="om.css?v=5">
+<script defer src="personvern.js?v=3"></script>
+<script defer src="kontakt.js?v=1"></script>
+<link rel="canonical" href="https://spareverksted.no/personvern.html">
+<style>
+.privacy-table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.5;white-space:normal}
+.privacy-table th{position:static}
+.privacy-table th,.privacy-table td{border-top:1px solid var(--line,#d6dbd2);padding:10px 8px;text-align:left;vertical-align:top}
+.privacy-table th{font-weight:650}
+.table-scroll{overflow-x:auto}
+.privacy-status{border-left:4px solid var(--line,#d6dbd2);padding:4px 14px}
+.delete-box{margin-top:16px}
+.delete-box button{min-height:48px}
+@media(max-width:640px){.privacy-table,.privacy-table tbody{display:block;width:100%}.privacy-table thead{position:absolute;left:-9999px}.privacy-table tr{display:block;border-top:1px solid var(--line,#d6dbd2);padding:8px 0}.privacy-table td{display:block;border:0;padding:4px 0}.privacy-table td::before{content:attr(data-label) ": ";font-weight:650}}
+</style>
+</head>
+<body class="about-page">
+<a class="skip" href="#main">Hopp til innholdet</a>
+<header class="site-header"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">↗</span>spareverksted</a><details class="site-menu"><summary>Meny <span aria-hidden="true">☰</span></summary><div class="menu-panel"><nav class="site-nav" aria-label="Hovedmeny"><a href="index.html">Kalkulator</a><a href="spor.html">Spør om sparing</a><a href="om.html">Om Spareverksted</a></nav></div></details></header>
+<main id="main">
+<section class="about-intro" aria-labelledby="privacyTitle">
+<p class="eyebrow">PERSONVERN OG LOKAL LAGRING</p>
+<h1 id="privacyTitle">Tallene dine blir i nettleseren.</h1>
+<p>Beregningene gjøres i nettleseren din. Spareverksted har ingen innlogging, ingen reklame og ingen statistikkverktøy. Nettstedets egen kode har ingen skjemaer eller andre kall som sender det du skriver inn i kalkulatoren eller veilederen, til oss eller til andre.</p>
+<p>Koden er åpen. Alle kan se nøyaktig hva siden gjør, og etterprøve det som står her, i <a href="https://github.com/gronnlars/spareverksted">kildekoden på GitHub</a>. Der ligger også de automatiske testene som sjekker at ingenting lagres før du trykker på noe.</p>
+<p>To ting er likevel egne behandlinger: nettleverandøren som leverer sidene, og e-post hvis du skriver til oss. Begge står lenger ned.</p>
+</section>
+
+<section class="giving-section" aria-labelledby="whoTitle">
+<h2 id="whoTitle">Hvem er ansvarlig?</h2>
+<p>Ansvarlig for Spareverksted er Lars Kjelkenes Giæver, som privatperson. Det er ikke oppgitt noen virksomhet som ansvarlig.</p>
+<p>Spørsmål om personvern, innsyn eller sletting kan du sende til personvernadressen.</p>
+<div class="kontakt" data-kontakt="personvern">
+<button type="button" class="kontakt-vis" aria-expanded="false" aria-controls="kontaktPersonvern" hidden>Vis e-postadresse for personvern</button>
+<div class="kontakt-resultat" id="kontaktPersonvern" hidden>
+<p><a class="kontakt-lenke"></a></p>
+<button type="button" class="kontakt-kopier" aria-label="Kopier e-postadresse for personvern">Kopier e-postadresse</button>
+</div>
+<p class="kontakt-status hint" role="status"></p>
+<noscript><p>Uten JavaScript kan du sette adressen sammen selv: skriv ordet «personvern», deretter tegnet krøllalfa (@), deretter «spareverksted.no». Ingen mellomrom.</p></noscript>
+</div>
+<p class="privacy-status"><strong>Leverandørene.</strong> Det Lars er ansvarlig for, er nettstedet og e-posten han leser og svarer på. GitHub, Domene.no, MailChannels og Google behandler også opplysninger når de leverer tjenestene sine, etter egne vilkår. Hvordan ansvaret er fordelt mellom oss og dem, har vi spurt om, men ikke fått et klart svar på. Vi oppdaterer siden når vi vet mer.</p>
+</section>
+
+<section class="giving-section" aria-labelledby="storedTitle">
+<h2 id="storedTitle">Hva huskes i nettleseren, og hvor lenge?</h2>
+<p>Å åpne en side eller en delt lenke lagrer ingenting. Siden leser det den selv har lagret før, og fjerner gamle innstillinger som tidligere versjoner lagret permanent (startmerke, visningsnivå og fargetema). Det som står i tabellen, lagres først når du gjør det som står i kolonnen «Når». Lagringen skjer i nettleseren på enheten du bruker, ikke hos oss. Den er ikke kryptert. Andre som bruker samme nettleserprofil, kan se det som er lagret.</p>
+<div class="table-scroll"><table class="privacy-table">
+<thead><tr><th scope="col">Hva</th><th scope="col">Når</th><th scope="col">Hvorfor</th><th scope="col">Hvor lenge</th></tr></thead>
+<tbody>
+<tr><td data-label="Hva"><strong>Lagrede planer.</strong> Navnet du gir planen og alle tallene i den.</td><td data-label="Når">Når du trykker «Lagre plan».</td><td data-label="Hvorfor">Så du kan finne planen igjen. Det er det du ber om når du lagrer.</td><td data-label="Hvor lenge">Til du sletter planen eller dataene nedenfor. Lagringen har ingen innebygd utløpstid, men nettleseren kan fjerne den, for eksempel når den rydder plass eller du sletter nettstedsdata.</td></tr>
+<tr><td data-label="Hva"><strong>Visningsnivå.</strong> Utforsk eller Avansert.</td><td data-label="Når">Når du selv trykker på nivået. «Enkel» er standard og lagres ikke.</td><td data-label="Hvorfor">Så siden åpner på nivået du valgte.</td><td data-label="Hvor lenge">I denne nettleserfanen, til du velger «Enkel» eller sletter. Se forklaringen om faner under tabellen.</td></tr>
+<tr><td data-label="Hva"><strong>Fargetema.</strong> Nøytral, Lys eller Natt.</td><td data-label="Når">Når du trykker på et tema.</td><td data-label="Hvorfor">Så temaet er likt når du går mellom sidene på Spareverksted.</td><td data-label="Hvor lenge">I denne nettleserfanen, til du sletter. Se forklaringen om faner under tabellen.</td></tr>
+<tr><td data-label="Hva"><strong>Arbeidsplanen.</strong> Alle tallene i planen du jobber med, også beløp.</td><td data-label="Når">Når du trykker deg fra kalkulatoren til «Spør om sparing».</td><td data-label="Hvorfor">Så planen er uendret når du kommer tilbake.</td><td data-label="Hvor lenge">I denne nettleserfanen. Vanligvis borte når fanen lukkes. Se forklaringen om faner under tabellen.</td></tr>
+<tr><td data-label="Hva"><strong>Opplysninger til veilederen.</strong> Alder, sparetid og valgene i «Spør om sparing», for eksempel om du har buffer. Ingen beløp, navn eller spørsmål.</td><td data-label="Når">Når du går fra kalkulatoren til veilederen, eller trykker «Oppdater vurderingen».</td><td data-label="Hvorfor">Så du slipper å fylle inn det samme to ganger.</td><td data-label="Hvor lenge">Som arbeidsplanen. «Glem opplysningene mine» i veilederen sletter dem med en gang.</td></tr>
+<tr><td data-label="Hva"><strong>At du har startet.</strong> Bare et merke, ingen tall.</td><td data-label="Når">Når du trykker deg videre fra startguiden.</td><td data-label="Hvorfor">Så startguiden ikke kommer tilbake når du går fram og tilbake.</td><td data-label="Hvor lenge">Som arbeidsplanen.</td></tr>
+</tbody></table></div>
+<p>Spareverksted bruker ikke informasjonskapsler (cookies) i egen kode. Nettleseren kan i tillegg lagre en vanlig kopi av sidene og filene for å laste dem raskere. Det gjelder alle nettsider og inneholder ikke tallene dine.</p>
+<p><strong>Om faner.</strong> Med «fane» menes en fane i nettleseren, ikke menyvalgene på Spareverksted. Det som huskes «i denne nettleserfanen», følger ikke med hvis du åpner Spareverksted i en helt ny, tom fane. Men åpner du en lenke fra Spareverksted i ny fane, eller dupliserer fanen, tar nettleseren med en kopi. Lukker du nettleseren og den gjenoppretter fanene, kan valgene også komme tilbake. Lagrede planer er noe annet: de huskes i hele nettleseren og vises i alle faner.</p>
+<p class="privacy-status"><strong>Fargetema og visningsnivå.</strong> Vi har valgt å huske disse valgene bare i nettleserfanen, for å lagre minst mulig, med forbeholdene om faner over. Om dette er nok etter reglene om lagring i nettleseren (ekomloven § 3-15), har vi spurt Nkom om. Svaret er ikke kommet. At vi har spurt, betyr ikke at løsningen er godkjent. Krever svaret noe annet, endrer vi løsningen.</p>
+</section>
+
+<section class="giving-section" aria-labelledby="deleteTitle">
+<h2 id="deleteTitle">Slik sletter du</h2>
+<p>Du kan slette én plan under «Mine planer» i kalkulatoren. Knappen under sletter lagrede planer for Spareverksted i denne nettleseren, og visningsnivå, fargetema og annet som er lagret i denne nettleserfanen. Lagrede planer kan ikke hentes tilbake. Data fra andre nettsteder røres ikke.</p>
+<p>Har du Spareverksted åpent i andre nettleserfaner, har de egne kopier av arbeidsplanen og opplysningene til veilederen. Dem kan knappen ikke nå. De forsvinner vanligvis når du lukker fanene. Lagrede planer kommer ikke tilbake fra en annen fane.</p>
+<div class="delete-box">
+<p id="deleteSummary" class="hint">Sletteknappen trenger JavaScript. Du kan også slette nettstedsdata for spareverksted.no i nettleserens innstillinger.</p>
+<button type="button" id="deleteAll" class="primary" hidden>Slett Spareverksteds data i denne nettleseren</button>
+<p id="deleteStatus" role="status"></p>
+</div>
+</section>
+
+<section class="giving-section" aria-labelledby="mailTitle">
+<h2 id="mailTitle">E-post til oss</h2>
+<p>Hvis du sender e-post til Spareverksted, er det en egen behandling, atskilt fra kalkulatoren. Det er Lars som mottar det du skriver og adressen du skriver fra. Skriv ikke mer om økonomien din enn du trenger for å stille spørsmålet.</p>
+<ul>
+<li><strong>Formål:</strong> å svare på spørsmål, feilmeldinger og tips om Spareverksted.</li>
+<li><strong>Opplysninger:</strong> avsenderadresse, tidspunkt, innholdet i meldingen og navnet ditt hvis du oppgir det.</li>
+<li><strong>Vei:</strong> meldingen sendes til en adresse på spareverksted.no og lagres i en e-postkasse hos domeneleverandøren Domene.no. Den videresendes ikke. Lars leser og svarer på den i Gmail-appen, som henter e-posten fra Domene.no.</li>
+<li><strong>Mottakere:</strong> Lars og Domene.no, som lagrer e-postkassen. Google behandler meldingene fordi Lars leser og skriver dem i Gmail-appen. Svar vi sender, går ut via MailChannels, en utsendingstjeneste Domene.no bruker.</li>
+<li><strong>Grunnlag:</strong> Lars leser og svarer på meldingen fordi du har skrevet og venter svar. Grunnlaget vi legger til grunn, er berettiget interesse (personvernforordningen artikkel 6 nr. 1 bokstav f).</li>
+<li><strong>Hvor lenge:</strong> det finnes ennå ingen fast regel for hvor lenge e-post beholdes. Du kan be om at e-posten din slettes. Lars sletter den da fra e-postkassen, med mindre den må tas vare på, for eksempel for å vise at en forespørsel om personvern er besvart. Sikkerhetskopier hos Domene.no og kopier hos Google kan ikke Lars slette selv.</li>
+</ul>
+<p class="privacy-status"><strong>Det vi ikke vet ennå.</strong> Vi har spurt Domene.no om hvordan de behandler e-post, men svaret er ikke konkret nok om sikkerhetskopier, logger og hvor e-posten lagres. Hvor lenge Google og MailChannels beholder kopier, vet vi ikke. Vi oppdaterer siden når vi vet mer.</p>
+<p>Generell kontakt (ikke personvern) finner du på <a href="om.html#kontakt">Om Spareverksted</a>.</p>
+</section>
+
+<section class="giving-section" aria-labelledby="shareTitle">
+<h2 id="shareTitle">Deling og nedlasting</h2>
+<p>«Del plan» lager en lenke der tallene står etter tegnet #. Den delen av lenken sendes ikke i selve forespørselen til nettstedet når lenken åpnes. Sidens egne skript leser den i nettleseren. Tjenesten du deler lenken gjennom, for eksempel e-post eller en meldingsapp, kan se og lagre hele lenken. Alle som får lenken, kan se tallene. Alder, risikovalg og lagrede planer følger ikke med i lenken.</p>
+<p>Nedlastinger og utskrift lages i nettleseren din. Nettstedets egen kode sender dem ikke noe sted.</p>
+</section>
+
+<section class="giving-section" aria-labelledby="hostTitle">
+<h2 id="hostTitle">Nettleverandøren</h2>
+<p>Sidene publiseres med GitHub Pages fra GitHub, Inc. GitHub opplyser at besøkendes IP-adresse logges og lagres av sikkerhetshensyn, også for besøkende som ikke er logget inn på GitHub. Spareverksted har ikke tilgang til disse loggene.</p>
+<p class="privacy-status"><strong>Det vi ikke vet ennå.</strong> GitHub oppgir ikke hvor lenge slike logger lagres eller hvor de behandles. Vi kan ikke se eller slette dem. Vi har heller ikke kontrollert om adressen spareverksted.no går via flere leverandører enn GitHub. Les <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages">GitHubs side om Pages</a> og <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHubs personvernerklæring</a> (begge på engelsk).</p>
+</section>
+
+<section class="giving-section" aria-labelledby="rightsTitle">
+<h2 id="rightsTitle">Rettigheter og klage</h2>
+<p>Der personvernreglene (GDPR) gjelder, kan du be om innsyn i, retting av og sletting av opplysninger vi har om deg, for eksempel fra e-post du har sendt oss. Bruk personvernadressen over. Du kan klage til <a href="https://www.datatilsynet.no/">Datatilsynet</a>.</p>
+<p>I praksis gjelder dette e-post du har sendt oss. Tallene du skriver inn i kalkulatoren og veilederen, har vi ikke. De finnes bare i nettleseren din, og du sletter dem selv som beskrevet over. Loggene hos GitHub har vi ikke tilgang til. Spør GitHub direkte om dem.</p>
+</section>
+
+<p class="hint">Sist kontrollert mot koden: 27. oktober 2026. Teksten beskriver status per 27. oktober 2026 og oppdateres når vi får svar fra Nkom, Domene.no eller andre.</p>
+<footer><a href="index.html">Tilbake til kalkulatoren</a><a href="om.html">Om Spareverksted</a><a href="https://github.com/gronnlars/spareverksted">Kildekode på GitHub</a></footer>
+</main>
+</body>
+</html>
