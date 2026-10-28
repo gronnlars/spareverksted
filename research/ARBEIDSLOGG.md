@@ -91,3 +91,12 @@ ChatGPT/Codex. Start kl. 13.13 Europe/Oslo. Lest main `00d8f1536802b69eebf05a103
 SV-133 og SV-087/SV-090: [kontrollnotat](svarutkast/KONTROLL-BSU-IPS-2026-10-28.md). Skatteetatens relevante norske avsnitt faktisk lest 28.10.2026. Kontrollerte 2026-grenser samsvarer. 2027-forslaget er holdt atskilt. Dokumentert manglende svar om oppussing ved direkte BSU-treff, manglende støtte for sparevaneeffekt og eksisterende profiltilpasning som også bytter alternativkort. Åtte søk og 14 systematiske korttilfeller kjørt i Node, i tillegg utforskende profiler. Regnekontroll 2 750 kr. Egenkontroll, ikke uavhengig fagkontroll eller juridisk vurdering.
 
 Bare dokumentasjon i egen gren. Ingen produktkode, tester, sammenslåing eller publisering. Ingen faktisk live-, nettleser-, mobil- eller skjermleserkontroll i denne deløkten. Neste: fullfør kontroll av arvede råd og resten av eksisterende svar. K7-runden og uavhengig kontroll gjenstår. Ingen ny reservasjon aktiv.
+
+
+### Revidert PR #72 før Claude-kontroll, 28.10.2026 kl. 14.23 Europe/Oslo
+
+ChatGPT/Codex, etter Lars sitt uttrykkelige oppdrag. Fersk main `11df29417b0e094958cf2958b1b14044258b7c5d`, bekreftet identisk med main ved sammenligning. Relevante norske primærkilder faktisk nyåpnet og fagavsnitt lest i denne arbeidsøkten. Kilderegler blob `7d1bae6049c569844527ad94092fa2d7017b7343`. Regler og kildeversjoner er registrert i hovedrapporten.
+
+Gjennomgått PR-ens fem dokumenter. Ryddet hovedrapportens motstridende statuser og flyttet tilbakekalte funn til lenket git-historikk. Oppdatert begge delnotater med ny kildekontroll. Nytt funn om bruk av ubenyttet fondskontoskjerming mot rentedelen; korte og lange kildeavsnitt er synliggjort. Dokumentert Skatte-ABCs eldre løpende beløp ved siden av 2026-merknaden. Lest universitetskilde til regnemetoden. Ny Node-kontroll av regneeksemplene. Ingen ny søke-, profil-, nettleser- eller live-test. Ingen selvkontroll omtales som uavhengig kontroll.
+
+SV-031, SV-122, SV-133, SV-087/SV-090: kildeoppdatert dokumentasjon til Claude, fortsatt åpne produktfunn. Hovedrapporten inneholder selvstendig oppdrag med kilder og konkrete kontrollkrav. Claude har ikke kontrollert denne revisjonen ennå. Lars sjekker etterpå. Ingen oppdrag sendt automatisk. Ingen produktkode, tester, sammenslåing, auto-merge eller publisering. Ingen aktiv reservasjon etter leveransen. Hele nettstedets K7-runde og full kontroll av arvede råd gjenstår.
