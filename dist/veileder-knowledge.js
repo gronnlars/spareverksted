@@ -3,6 +3,7 @@
 'use strict';
 const F=typeof module!=='undefined'&&module.exports?require('./veileder-facts.js'):root.SpareFacts;
 const date=F.checked;
+const bsuRates=typeof module!=='undefined'&&module.exports?require('./bsu-rates.js'):root.SpareBsuRates;
 const bsu={id:'tax-bsu',title:'Skatteetaten: BSU og vilkår',url:'https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/'};
 const ask={id:'tax-ask',title:'Skatteetaten: aksjesparekonto',url:'https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/aksjar-og-verdipapir/om/aksjesparekonto-ask/'};
 const ips={id:'tax-ips',title:'Skatteetaten: individuell sparing til pensjon, ny ordning',url:'https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid-trygd-og-pensjon/pensjon-og-uforetrygd/ny-ordning-for-skattefavorisert-individuell-sparing-til-pensjon/'};
@@ -280,11 +281,11 @@ const entries=[
   "pros": [
    {
     "title": "Lavere skatt",
-    "text": "Du kan få 10 prosent av årets innskudd i skattefradrag, maksimalt 2 750 kroner. Du må betale nok skatt for å få fullt fradrag og ikke eie egen bolig 31. desember. Pengene må være satt inn før årets slutt, og banken må rapportere innskuddet til Skatteetaten."
+    "text": "Du kan få 10 prosent av årets innskudd i skattefradrag, maksimalt 2 750 kroner. Du må betale nok skatt for å få fullt fradrag. Eier du bolig 31. desember, alene eller sammen med andre, får du ikke fradrag det året. Pengene må være satt inn før årets slutt, og banken må rapportere innskuddet til Skatteetaten."
    },
    {
     "title": "Høyere rente",
-    "text": "I SSBs statistikk for husholdninger var gjennomsnittsrenten på BSU høyere enn på bundne innskudd hver måned fra januar 2018 til august 2026."
+    "text": "Ifølge SSB har BSU i snitt hatt høyere rente enn andre bundne bankinnskudd hvert år siden 2018. Bankene bestemmer renten, så din kan være høyere eller lavere."
    }
   ],
   "cons": [
@@ -301,10 +302,11 @@ const entries=[
   },
   {
    "title": "Mer om renter og konto",
+   table:bsuRates,
    "text": "Rentene kan ikke tas ut før sparepengene brukes til bolig. Renter som påløper fra og med året du fyller 34, kan likevel tas ut. Du kan bare opprette BSU-konto én gang, men kan flytte den ved direkte overføring mellom bankene."
   }
  ],
- "sources": [
+ "sources": [{"id":"bsu-satser-2026","title":"Skatteetaten: Fradrag for boligsparing for ungdom (BSU), 2026","url":"https://www.skatteetaten.no/satser/fradrag-for-boligsparing-for-ungdom-bsu/?year=2026"},
   {
    "id": "tax-bsu",
    "title": "Skatteetaten: Bustadsparing for ungdom (BSU)",
@@ -316,7 +318,7 @@ const entries=[
    "url": "https://www.ssb.no/statbank/table/11018?sq=30128709"
   }
  ],
- "review": {"text": "Kildegrunnlag: Skatteetatens PDF med utskriftsdato 28. oktober 2026, uten oppgitt oppdateringsdato eller uttrykkelig regelår, og SSB-uttrekk datert samme dag. Egenkontroll av ChatGPT/Codex. Neste kontroll før 1. januar 2027 og ved regelendringer; rentehistorikken kontrolleres ved nye SSB-tall."}
+ "review": {"text": "Kildegrunnlag: Skatteetatens PDF med utskriftsdato 28. oktober 2026, uten oppgitt oppdateringsdato, supplert med Skatteetatens satsside for 2026, og SSB-uttrekk datert samme dag. Egenkontroll av ChatGPT/Codex. Neste kontroll før 1. januar 2027 og ved regelendringer; rentehistorikken kontrolleres ved nye SSB-tall."}
 ,
  words:[/\bbsu\b/,/boligsparing for ungdom/]},
 {"id":"q-ips-ask",

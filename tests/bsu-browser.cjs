@@ -31,8 +31,16 @@ const engine=process.env.SPARE_ENGINE||'chromium',browserType=require('playwrigh
    await page.locator('#answerPanel').screenshot({path:dir+'/bsu-'+engine+'-'+width+'.png'});
    await page.locator('#answer .full-answer summary').focus();await page.keyboard.press('Enter');
    assert.match(await page.locator('#answer .full-answer').innerText(),/direkte overføring mellom bankene/);
+   const table=page.locator('#answer table');assert.equal(await table.count(),1);
+   assert.equal(await table.locator('caption').count(),1);
+   assert.equal(await table.locator('thead th[scope="col"]').count(),3);
+   assert.equal(await table.locator('tbody th[scope="row"]').count(),9);
+   assert.equal(await table.locator('tbody tr').last().innerText(),'2026 (jan. til aug.)\t5,49\t4,48');
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+   assert.ok(await table.evaluate(t=>t.scrollWidth<=t.clientWidth+1));
+   await page.locator('#answerPanel').screenshot({path:dir+'/bsu-table-'+engine+'-'+width+'.png'});
    await page.locator('#answer .answer-sources>summary').focus();await page.keyboard.press('Enter');
-   assert.equal(await page.locator('#answer .answer-sources a').count(),2);
+   assert.equal(await page.locator('#answer .answer-sources a').count(),3);
    await page.locator('#answer .review-details>summary').click();assert.match(await page.locator('#answer .answer-sources').innerText(),/egenkontroll/i);
    // Profile mutation must not add advice to the neutral BSU explanation.
    const other=await page.evaluate(()=>{

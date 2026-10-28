@@ -44,7 +44,15 @@ function suggestions(){
 }
 function render(focus=false){
  suggestions();if(!selected){if(focus){$('suggestedTitle').tabIndex=-1;$('suggestedTitle').focus();}return;}
- const partSection=part=>{const section=el('section','','answer-part');section.append(el('h3',part.title),el('p',part.text));return section;};
+ const partSection=part=>{const section=el('section','','answer-part');section.append(el('h3',part.title),el('p',part.text));
+  if(part.table){
+   const data=part.table,table=el('table','','answer-table');table.append(el('caption',data.caption));
+   const head=el('thead'),header=el('tr');
+   for(const title of data.columns){const th=el('th',title);th.scope='col';header.append(th);}head.append(header);table.append(head);
+   const body=el('tbody'),format=new Intl.NumberFormat('nb-NO',{minimumFractionDigits:2,maximumFractionDigits:2});
+   for(const row of data.rows){const tr=el('tr');row.forEach((value,index)=>{const cell=el(index===0?'th':'td',index===0?value:format.format(value));if(index===0)cell.scope='row';tr.append(cell);});body.append(tr);}table.append(body);section.append(table,el('p',data.note,'answer-table-note'));
+  }
+  return section;};
  const a=Cards.build(selected,profile());$('answerPanel').hidden=false;$('answerTitle').textContent=a.title;
  const out=$('answer');out.dataset.layout=a.layout||'';out.replaceChildren(el('p',a.intro,'answer-lead'));
  const checked=new Intl.DateTimeFormat('nb-NO',{dateStyle:'long'}).format(new Date(a.checked+'T12:00:00Z'));
