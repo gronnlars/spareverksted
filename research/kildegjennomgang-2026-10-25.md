@@ -1,3 +1,60 @@
+# Kildegjennomgang: løpende kontroll av eksisterende innhold
+
+## Ny delkontroll 28.10.2026: publisert svarfil
+
+Denne delkontrollen erstatter ikke full fagkontroll. Den eldre rapporten nedenfor er historikk; dens konklusjon om ingen nivå 4-kilder og klassifiseringen av Nordnet er ikke gjeldende.
+
+**Arbeidsgrunnlag:** main `0dd1007150ecb1c48f8f7e4c867b44224985537c`, KILDEREGLER.md og SPRAKREGLER.md på denne versjonen. Lars åpnet uttrykkelig kontrollarbeidet 28.10.2026. PR #90 er fortsatt åpen og er ikke behandlet som main. Ingen produktendringer eller publisering er gjort.
+
+**Live-kontroll:** hentet https://spareverksted.no/veileder-knowledge.js 28.10.2026. Git blob-SHA beregnet fra responsen: `baa420596e669867e7c565a99fefb1464032ac7b`, identisk med filen på kontrollert main. Dette bekrefter selve svarfilen, ikke visning, søketreff eller alle andre filer. Live facts-fil er også hentet for å lese svarenes faktiske kontrolldatoer. Ingen nettleser-, skjermleser- eller uavhengig fagkontroll utført.
+
+### Ni registrerte svar i denne filen
+
+| ID | Tittel | Oppgitt kontrolldato |
+| --- | --- | --- |
+| q-renters-rente | Hva er renters rente? | 25.10.2026 |
+| q-indeksfond | Hva er et indeksfond? | 25.10.2026 |
+| q-sparing-investering | Hva er forskjellen på sparing og investering? | 25.10.2026 |
+| q-aksjesparekonto | Hva er en aksjesparekonto (ASK)? | 24.10.2026 |
+| q-fondskonto | Hva er en fondskonto? | 24.10.2026 |
+| q-bsu-basics | Hva er BSU? | 22.10.2026 |
+| q-ips-ask | IPS eller ASK? | 22.10.2026 |
+| q-ask-zero | ASK eller fondskonto? | 22.10.2026 |
+| q-kjopekraft | Hva er kjøpekraft? | 24.10.2026 |
+
+Datoene over er nettstedets lagrede datoer, ikke ny kildekontroll utført i denne økten. Andre svar i veileder-engine.js og øvrige moduler er ennå ikke kartlagt i denne delkontrollen.
+
+### Bekreftede dokumentasjonsavvik
+
+1. **K2, norsk kilde:** q-fondskonto bruker fortsatt den engelske Skatteetaten-rettledningen som kilde til norske forhold. At kilden merkes engelsk opphever ikke regelen om norsk kilde. Norsk fulltekst må finnes, leses og kobles til de konkrete påstandene før en kildebytting kan foreslås. Nordnet-omtalen står urørt etter egen sperre.
+2. **Foreldet kildeoversikt:** Den eldre rapporten sier ingen nivå 4-kilder og plasserer Nordnet på nivå 3. Gjeldende K2 plasserer norske banker/finansinstitusjoner på nivå 4. DNBs indeksfondside er også kilde i q-indeksfond. Kommersielle kilder er ikke automatisk feil, men behovet og den konkrete påstandsdekningen må kontrolleres mot nivårekkefølgen.
+3. **K1/K3, manglende kildedato i svarfilen:** q-indeksfond og q-sparing-investering har vår kontrolldato og neste kontroll, men kildetitlene har ikke kildedato/regelår eller eksplisitt «ingen dato oppgitt». q-kjopekraft mangler også kildedato i denne filen. Kildeorganisasjon og URL er ikke nok. Endelig vurdering av hva brukeren ser krever også kontroll av renderer og eventuell annen metadata.
+4. **Kildedato fra søkeuttrekk:** q-renters-rente beskriver Finanstilsynets dato som hentet fra søkeuttrekk. Dato og innhold må kontrolleres i selve kilden før dette kan regnes som ny full kildekontroll. Datoen er ikke bekreftet på nytt her.
+
+### Forhold som må undersøkes, ikke konstaterte fagfeil
+
+- **Formelgrunnlag i q-renters-rente:** Svaret viser en sammensatt renteformel, men har ingen universitetskilde i kildelisten. Undersøk kildenes faktiske dekning og prosjektets særkrav til regnemetoder. Egne beregninger alene dokumenterer ikke at kildekravet er oppfylt.
+- **Mulig anbefalingspreg i q-sparing-investering:** «Start med formålet», «Del pengene etter behov» og eksempelet med reserve på konto og langsiktig investering kan oppfattes som framgangsmåte, selv om teksten sier at fordelingen ikke er anbefalt for alle. Kontroller mot K5 og SPRAKREGLER punkt 7. Dette er ikke en juridisk konklusjon, og nye begrepskrav er ikke automatisk et slettingsvedtak for eldre svar.
+- **Eksisterende tilpasning:** q-bsu-basics og q-ips-ask har funksjoner som velger merknad etter alder, boligeierskap eller sparetid. Eksistensen er bekreftet i filen. Live brukerflyt er ikke kjørt. Dette må vurderes som eksisterende, tidligere rapportert funksjonalitet, ikke ny utvikling eller bevis på lovbrudd.
+- **Kildeunderstøttelse:** Ingen av finanspåstandene er nylest mot ekstern primærkilde i denne delkontrollen. DNB/Forbrukerrådet-henvisninger, universitet/formelgrunnlag, norske skatteregler, kildedatoer og renderer prioriteres videre.
+
+### Regnekontroll utført
+
+Egenkontroll med JavaScript:
+- 100 000 × 1,025^10 = 128 008,45 kr.
+- 100 000 / 1,025^10 = 78 119,84 kr.
+Avrundingene til omtrent 128 000 kr og 78 000 kr i q-kjopekraft stemmer. Dette kontrollerer illustrasjonen, ikke eksterne påstander eller hele svaret.
+
+### Videreføring og fullmakt
+
+Den eksisterende planlagte oppgaven `6ad9f279fa0c819185b8f2b74f12038f` er oppdatert 28.10.2026 til konkret arbeid hver femte time. Eksisterende publisert innhold og tilgjengelige utkast gjennomgås og klargjøres før ordinært nytt innhold. Ingen konkurrerende spørsmålkø opprettes. Bruk denne PR-en og eksisterende kø/logg for videreføring. Kildekontroll og rettelsesforslag dokumenteres, ikke bare mangler i lenker.
+
+Tillatelsen gjelder kontroll, research og dokumentasjons-PR. Ingen endring i dist/, søk, beregninger eller funksjoner, ingen sammenslåing og ingen publisering uten Lars' uttrykkelige oppdrag eller godkjenning. Kontroll av en annen enn skribenten gjenstår. Sparetid er uttrykkelig bekreftet av Lars i samtalen.
+
+---
+
+## Historisk rapport fra 25.10.2026
+
 # Kildegjennomgang 25.10.2026
 
 Gjennomgang av alle kilder i `dist/` mot KILDEREGLER.md (K1 til K7, slik reglene står i PR #71).
