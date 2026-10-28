@@ -459,9 +459,11 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 
 ## Kontroll av premiss og mulig oppfattet anbefaling (28. oktober 2026)
 
-**Status:** Foreslått i PR, ikke vedtatt. Lars avgjør. Dette er bare dokumentasjon og endrer ikke nettsiden, kalkulatoren, søket, svarbasen, testene eller automatiseringen.
+**Status:** Vedtatt av Lars 28.10.2026 (PR #87). Dette er bare dokumentasjon og endrer ikke nettsiden, kalkulatoren, søket, svarbasen, testene eller automatiseringen.
 
-**Forslag:** Tre korte tillegg i eksisterende dokumenter. SPRAKREGLER.md, punkt 7: kontroller hva leseren kan oppfatte at teksten anbefaler. `research/DAGLIG-OPPGAVE.md`: undersøk premisset i spørsmålet, og noter begge kontrollene i svarmalen. `research/plan.md`, punkt 3: tre forståelsesspørsmål til eventuell senere brukertesting.
+**Sammenslåing under pausen:** Lars godkjente 28.10.2026 at PR #77 (pausenotatet), #79 (KI-presisering) og #87 slås sammen til main, i den rekkefølgen. Det er hans eget unntak etter `docs/regulatorisk.md`. Ingen filer i `dist/` er endret. Sammenslåingen starter publiseringsflyten, men endrer ikke det brukeren ser. Pausen gjelder ellers uendret.
+
+**Innhold:** Tre korte tillegg i eksisterende dokumenter. SPRAKREGLER.md, punkt 7: kontroller hva leseren kan oppfatte at teksten anbefaler. `research/DAGLIG-OPPGAVE.md`: undersøk premisset i spørsmålet, og noter begge kontrollene i svarmalen. `research/plan.md`, punkt 3: tre forståelsesspørsmål til eventuell senere brukertesting.
 
 **Alternativer:** A. Tillegg i dokumentene som allerede styrer arbeidet. **Valgt.** B. Egen sjekkliste for anbefalingskontroll. Ikke valgt: blir et konkurrerende dokument. C. Ny regel i KILDEREGLER.md. Ikke valgt: kildereglene handler om kilder og ble nettopp vedtatt. K5 dekker egne råd, mens dette gjelder hvordan en tekst kan oppfattes.
 
@@ -471,6 +473,6 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 
 **Akseptert ulempe:** Kontrollene er egenkontroll. «Ingen identifisert ved egenkontroll» er ingen garanti, og ingen uavhengig eller juridisk kontroll.
 
-**Ikke gjort her:** Samordning med prosjektpausen. Pausen og sperren for kontekstuell spørsmålsveiledning står i PR #77 (`docs/regulatorisk.md`), som ikke er på main. Oppføringen «Lokal lagring og personvernside» over henviser allerede til den filen. Forslag når #77 er avgjort: automatiseringens snevrere mandat beskrives i `docs/regulatorisk.md` som det som gjelder under pausen, ikke som fast regel. `research/DAGLIG-OPPGAVE.md`, steg 5, får en henvisning om at betingede personaliseringsregler bare er utkast og omfattes av sperren.
+**Ikke gjort her:** Samordning med prosjektpausen. Pausen og sperren for kontekstuell spørsmålsveiledning står i `docs/regulatorisk.md`. Notatet viser til `docs/vurdering-folkeopplysning.md`, som bare finnes i PR #81; henvisningen virker først når #81 er avgjort. Forslag til egen PR, ikke vedtatt: automatiseringens snevrere mandat beskrives i `docs/regulatorisk.md` som det som gjelder under pausen, ikke som fast regel. `research/DAGLIG-OPPGAVE.md`, steg 5, får en henvisning om at betingede personaliseringsregler bare er utkast og omfattes av sperren.
 
 **Vurder på nytt når:** Finanstilsynet svarer, eller brukertesting viser misforståelser som kontrollene ikke fanger.
