@@ -120,7 +120,7 @@ function updateStartNote(){const n=$('startNote');if(!n)return;const parts=[],A=
  if(usesPreset)parts.push(t==='index'?`Veksten ${dec.format(presetRate)} % er ${dec.format(A.index.realRate)} % forventet realavkastning for aksjer (Finans Norges prognosestandard, februar 2026) pluss prisveksten. Ikke en garanti.`:A[t].note);
  const names={rate:'vekst',inflation:'prisvekst',fee:'kostnad'},left=Object.keys(names).filter(k=>s[k]===E.defaults[k]&&!(k==='rate'&&usesPreset));
  if(left.length){const list=left.map(k=>names[k]),joined=list.length>1?list.slice(0,-1).join(', ')+' og '+list.at(-1):list[0];
-  parts.push(`${joined[0].toUpperCase()+joined.slice(1)} er forhåndsutfylt, ikke anbefalt eller beregnet fra svarene dine.`+(!t&&(left.includes('rate')||left.includes('fee'))?' På sparekonto: bruk kontoens rente og 0 % kostnad.':''));}
+  parts.push(`${joined[0].toUpperCase()+joined.slice(1)} er forhåndsutfylt, ikke anbefalt eller beregnet fra svarene dine.`+(!t&&(left.includes('rate')||left.includes('fee'))?' På sparekonto: velg renten du vil regne med gjennom hele perioden, og 0 % kostnad.':''));}
  const text=parts.join(' ');if(n.textContent!==text)n.textContent=text;n.hidden=!text;}
 // Ved lasting skrives ingenting, heller ikke når en delt lenke åpnes.
 updateStartNote();stage(!(hasStarted()||sharedPlan),{remember:false});
