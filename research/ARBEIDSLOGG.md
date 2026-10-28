@@ -129,3 +129,5 @@ CI-oppfølging for #98: ASK-testen består i alle tre nettlesere ved 320/390/128
 ### Samlet språk og svarmal, 28.10.2026
 
 ChatGPT/Codex etter Lars sitt oppdrag, main `1082c4f`. Ni egne svar og fire upubliserte utkast. [Omfang, bevarte vilkår, kildeavgrensning og kontroller](sprak-og-svarmal-2026-10-28.md). Gren `fix/sprak-og-svarmal`. Ingen aktiv reservasjon ved leveranse. #99 gjelder samtidig UU-arbeid og er ikke endret eller slått sammen. JSON-fasit og genererte utkast holdes synkronisert. Ingen nye søkeinnganger eller produksjonssvar. Språkdato skilles fra kildekontroll. Ingen uavhengig godkjenning, sammenslåing eller publisering.
+
+CI for #100: kjøring 40730938010 besto hele nettleserpakken, inkludert alle 13 svar i tre nettlesere og tre bredder. 13 mobilbilder og to representative ekstra visninger er visuelt vurdert. Oppfølging av overskrifter og eksempelstil samt rettet git-avhengighet i en test er dokumentert i kontrollnotatet. Siste head må ha egen bekreftet CI-status. Ingen publisering.

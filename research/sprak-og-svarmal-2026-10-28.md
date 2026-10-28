@@ -43,3 +43,12 @@ DNBs indeksfondside og Forbrukerrådets prissak ble åpnet. DNB-sidens dato er f
 18 Node-testfiler, generatorens samsvarskontroll og isolert utkastprøve kjøres. Ny kontroll verifiserer at alle 13 svar er nøytrale for ulike profiler og beholder nødvendige unntak. Søkeinnganger, spørsmål og regexer sammenlignes med main før omskriving. Søkerutingens regresjonstester bevares. Fire utkast må ikke dukke opp på produksjonssiden.
 
 Nettleserkontroll i Chromium, Firefox og WebKit ved 320, 390 og 1280 px er lagt til i CI med skjermbilder av alle 13 svar. Kontrollerer forbehold, åpning/lukking, tastatur, fokus, kilder, kontrollgrunnlag og reflow. Faktiske resultater og visuell vurdering føres etter kjøring. Ekte iPhone Safari, VoiceOver og brukertest er ikke utført. Kontroll av en annen enn skribenten og Lars sin publiseringsgodkjenning gjenstår. Ingen sammenslåing eller publisering inngår i dette oppdraget.
+
+
+## Faktiske CI-resultater og visuell vurdering
+
+Kjøring 40730938010 på `aa00829`: hele nettleserjobben besto. Den nye kontrollen bygget og viste alle 13 svar i Chromium, Firefox og WebKit ved 320, 390 og 1280 px. De fire utkastene ble bare registrert i testsiden. 117 svarbilder ligger i `ui-review` sammen med øvrige testbilder. Alle 13 WebKit-bilder ved 390 px er visuelt gjennomgått av GPT i kontaktark. BSU ved 320 px og IPS/ASK på PC er også undersøkt separat. Ingen avkuttet tekst eller vannrett flyt observert i disse bildene. Ingen skjermleser- eller brukertest erklæres.
+
+Visuell kontroll avdekket at den gamle ASK-spesifikke fordypningsoverskriften ble brukt på andre emner, og at grunnbegrepene fortsatt hadde en stor eksempelboks. Overskriften er endret til «Fordypning», og eksemplet bruker nå samme uinnrammede stil for alle oversiktssvar. Disse oppfølgingene skal også passere den siste CI-kjøringen. Gjentakelsen av fondskontoavgrensningen og en unødvendig BSU-henvisning i IPS-svaret er fjernet, mens vilkårene beholdes der de gjelder.
+
+Enhetstesten for historiske søkeinnganger feilet først i CI fordi standardutsjekken ikke inneholder git-historikken. Den er rettet til å bruke en fast, versjonert referanse hentet fra `1082c4f`. Selve forventningene er uendret. Ny versjon består lokalt sammen med de øvrige 17 Node-testfilene. Totalstatus på siste PR-head må leses separat, ikke utledes av denne første kjøringen.

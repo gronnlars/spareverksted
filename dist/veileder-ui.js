@@ -46,7 +46,7 @@ function render(focus=false){
  suggestions();if(!selected){if(focus){$('suggestedTitle').tabIndex=-1;$('suggestedTitle').focus();}return;}
  const partSection=part=>{const section=el('section','','answer-part');section.append(el('h3',part.title),el('p',part.text));return section;};
  const a=Cards.build(selected,profile());$('answerPanel').hidden=false;$('answerTitle').textContent=a.title;
- const out=$('answer');out.replaceChildren(el('p',a.intro,'answer-lead'));
+ const out=$('answer');out.dataset.layout=a.layout||'';out.replaceChildren(el('p',a.intro,'answer-lead'));
  const checked=new Intl.DateTimeFormat('nb-NO',{dateStyle:'long'}).format(new Date(a.checked+'T12:00:00Z'));
  out.append(el('p','Sist sjekket: '+checked,'answer-checked'));
  if(a.caveat)out.append(el('p',a.caveat,'answer-caveat'));
