@@ -478,3 +478,39 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Ikke gjort her:** Samordning med prosjektpausen. Pausen og sperren for kontekstuell spørsmålsveiledning står i `docs/regulatorisk.md`. Notatet viser til `docs/vurdering-folkeopplysning.md`, som bare finnes i PR #81; henvisningen virker først når #81 er avgjort. Forslag til egen PR, ikke vedtatt: automatiseringens snevrere mandat beskrives i `docs/regulatorisk.md` som det som gjelder under pausen, ikke som fast regel. `research/DAGLIG-OPPGAVE.md`, steg 5, får en henvisning om at betingede personaliseringsregler bare er utkast og omfattes av sperren.
 
 **Vurder på nytt når:** Finanstilsynet svarer, eller brukertesting viser misforståelser som kontrollene ikke fanger.
+
+## Forskningsinstitutter som eget kildenivå, og rolle avgjør nivået (28. oktober 2026)
+
+**Status:** Foreslått, ikke vedtatt. Endrer bare `KILDEREGLER.md` og denne loggen, ikke nettsiden, kalkulatoren, søket, svarbasen eller testene. PR-en er laget fordi Lars ba om det i samtale 28.10.2026, som unntak fra pausen i `docs/regulatorisk.md`. Ingen sammenslåing før Lars godkjenner.
+
+**Bakgrunn:** Lars spurte om SIFOs referansebudsjett kan brukes som kilde. SIFO var ikke uttrykkelig omfattet av kildereglene vedtatt i PR #71. SIFO er ikke en etat (nivå 1), og kategorien for universiteter ved siden av nivåene gjelder bare formler og definisjoner, ikke norske tall. Forslaget er bearbeidet i flere runder mellom Lars, Claude og GPT.
+
+**Endringer i KILDEREGLER.md:**
+1. Nytt nivå 3: norske, offentlig finansierte forskningsinstitutter og universiteter innenfor eget fagfelt, med SIFO som eksempel. Bankene blir nivå 4, mediene nivå 5 og «alt annet» nivå 6. Oppføringen over fra 28.10 (PR #71) sier «medier på nivå 4». Det var riktig da og er ikke endret.
+2. Nivå 1 beskrives med et kriterium og eksempler, også Norges Bank som offentlig og ikke-kommersiell. Eksemplene står fordi grensen mot Forbrukerrådet ellers blir uklar: Forbrukerrådet er selv et statlig forvaltningsorgan (Store norske leksikon, https://snl.no/Forbrukerrådet, lest 28.10.2026).
+3. Ny regel: rolle og innhold avgjør nivået, ikke institusjonsnavnet. Offisiell statistikk og vedtak er nivå 1. Analyser, prognoser og modeller fra de samme organene er nivå 3.
+4. Ny regel om primærkilde: omtaler og pressemeldinger brukes bare til å finne primærkilden, en kilde som gjengir andres tall er ikke egen kilde for tallet, og manglende tilgang dokumenteres i stedet for å erstattes med en omtale.
+5. Ny regel om modeller og referansebudsjetter.
+6. Følgeendringer: K3 (kildedato på nivå 3, 4 og 5), K7 (årlig kontroll av SIFOs referansebudsjett) og sjekklistens punkt 2.
+
+**Roller notert, ikke skrevet inn i reglene:** Statens pensjonskasse og Husbanken er nivå 1 for egne ordninger og regelverk. KLP er nivå 4 som finansinstitusjon. Det gjelder ikke nødvendigvis alt KLP skriver om offentlig tjenestepensjon. Det avgjøres av rolleregelen og kontroll mot primærkilden. Ingen av disse kategoriseringene er kontrollert mot institusjonenes egne dokumenter ennå.
+
+**SIFO:** Referansebudsjettet er verken et minstebudsjett eller et gjennomsnitt, dekker ikke blant annet bolig, strøm og feriereiser, og oppdateres årlig (https://www.oslomet.no/no/om/sifo/referansebudsjettet, lest 28.10.2026).
+
+**Alternativer:**
+A. Nytt nivå 3 med rolleregel og primærkilderegel. **Valgt.**
+B. GPTs første utkast: forskningsmiljøer som «prioriterte fagkilder» uten nivå, og bredt «relevante forskningsmiljøer ved norske universiteter». Ikke valgt: ingen plass i rekkefølgen, og åpner for enkeltstudier og kronikker.
+C. SSB på nivå 3. Ikke valgt: da går Forbrukerrådet foran offisiell statistikk som KPI.
+D. Nivå 1 uten eksempler. Ikke valgt: grensen mot Forbrukerrådet og Norges Bank blir uklar.
+E. Utvide universitetskategorien ved siden av nivåene. Ikke valgt: den gjelder formler, ikke norske tall.
+F. «Nivåene angir hovedprioritet, ikke absolutt rangering», med skjønnsmessig vekt på relevans. Ikke valgt: gir rom for å begrunne en lavere kilde med «relevans». Problemet løses av regelen om at en kilde som gjengir andres tall, ikke er egen kilde.
+G. Nytt datokrav for alle nivåer i K3. Ikke valgt: K1 og K3 krever allerede kildedato og kontrolldato for hver påstand.
+H. «Primærkilden når den finnes og er tilgjengelig.» Ikke valgt: kan leses som at manglende tilgang åpner for en sekundærkilde. I stedet: manglende tilgang dokumenteres, og påstanden venter.
+
+**Lovdata og innlimt tekst:** KI-verktøyene når ikke alltid Lovdata. Da kan Lovdata bare brukes når teksten faktisk er lest i økten. Limer Lars inn lovtekst, er det en kopi, og den må ha URL og dato for siste endring (K1, K3). Ingen ny regel trengs.
+
+**Akseptert ulempe:** Seks nivåer og to nye avsnitt gjør reglene lengre. Rolleregelen krever at bidragsyteren vurderer innholdstype, ikke bare avsender.
+
+**Ikke gjort her:** Den brutte henvisningen øverst i KILDEREGLER.md til oppføringene «Kildenivå for påstander og råd» og «Sparehorisont og Forbrukerrådets anbefaling». De finnes bare på de usammenslåtte grenene `docs/maaneder-og-kildenivaa` og `feature/sparehorisont-varsel`. Håndteres i egen PR.
+
+**Vurder på nytt når:** en kilde faller mellom to nivåer, eller samme avvik oppstår to ganger.
