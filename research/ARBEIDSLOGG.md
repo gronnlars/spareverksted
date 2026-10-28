@@ -135,3 +135,7 @@ CI for #100: kjøring 40730938010 besto hele nettleserpakken, inkludert alle 13 
 ### Oppfølging av tekstkontrollen av PR #100
 
 Lars sin videresendte gjennomgang viste gjentakelser og økt lengde. Revidert alle 13 svar, frivillige malfelt, felles eksempelvilkår og konsekvent «egenkontroll». Ordrette setningsdubletter testes, omskrevne gjentakelser er lest gjennom manuelt. Før-tall er fast referanse fra a9d0f6d, med åpen tellemetode. K1s unntak er bevart, og SV-135/SV-050 har egne publiseringssperrer i arbeidsnotatene. Borettslagsandel er bekreftet på Skatteetatens BSU-satsside før språkendringen. Ingen integrasjon av fire utkast, ingen sammenslåing eller publisering.
+
+## 28.10.2026: BSU, uttrykkelig integrasjonsoppdrag fra Lars
+
+ChatGPT/Codex har lagt samtalens godkjente BSU-utkast i q-bsu-basics med Skatteetaten og SSB-kilder. Bygger på PR #100, egen oppfølgings-PR mot den grenen, ingen konkurrerende main-endring. Se svarutkast/BSU-KILDEKONTROLL-2026-10-28.md. Alle lokale Node-testfiler består. Lokal nettleser mangler, og nedlasting feilet; visningskontroll avventer CI. Egen nettleserprøve for BSU ved 320/390/1280 px i tre motorer er lagt i CI. Ingen sammenslåing eller publisering. Faglig presisering av boligeierskap og regelår står åpent før publisering.

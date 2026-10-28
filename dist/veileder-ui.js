@@ -57,7 +57,7 @@ function render(focus=false){
    const card=el('section','','option-card explain-overview');card.append(el('h3','Fordeler og ulemper'));
    card.append(group('Fordeler',a.tradeoffs.pros,'pro'),group('Ulemper',a.tradeoffs.cons,'con'));out.append(card);
   }
-  const ex=el('section','','answer-part explain-example');ex.append(el('h3',a.example.title),el('p',a.example.text));out.append(ex);
+  if(a.example){const ex=el('section','','answer-part explain-example');ex.append(el('h3',a.example.title),el('p',a.example.text));out.append(ex);}
   const terms=el('section','','explain-terms');terms.append(el('h3','Begreper i svaret'));const dl=el('dl');
   for(const x of a.terms||[]){dl.append(el('dt',x.term+(x.alsoCalled?' (også kalt '+x.alsoCalled+')':'')),el('dd',x.text));}
   terms.append(dl);if(!overview)out.append(terms);
