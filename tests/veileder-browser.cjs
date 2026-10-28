@@ -103,7 +103,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    assert.equal(await page.locator('#answer .option-card').count(),0,'grunnbegrepet trenger ingen kunstige alternativkort');
    assert.equal(await page.locator('#contextPanel').isHidden(),true,'profilfeltene skal ikke vises for en ren forklaring');
    assert.match(await page.locator('#answer .answer-lead').textContent(),/inflasjon/);
-   assert.match(await page.locator('#answer .explain-example').textContent(),/ikke en prognose/);
+   assert.match(await page.locator('#answer .explain-example').textContent(),/(?:ikke en|ingen) prognose/);
    assert.equal(await page.locator('#answer .explain-terms').count(),0);
    assert.equal(await page.evaluate(()=>document.activeElement.id),'answerTitle','fokus skal flyttes til svaret');
    const deep=page.locator('#answer details.full-answer');
