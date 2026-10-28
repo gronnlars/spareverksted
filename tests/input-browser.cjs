@@ -167,7 +167,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   for(const [typed,expected] of [['-3',-3],['\u22123',-3],['\u22122,5',-2.5],['-0,5',-0.5]]){await p.locator('#growth').fill(typed);await p.locator('#growth').blur();await p.locator('#years').fill('11');assert(await p.locator('#error').isHidden(),typed);assert.equal(await p.evaluate(()=>s.growth),expected,typed);}
   await p.locator('#growth').fill('-3');const withHyphen=await p.locator('#total').innerText();await p.locator('#growth').fill('\u22123');assert.equal(await p.locator('#total').innerText(),withHyphen);
   await p.locator('#growth').fill('3\u2212');assert(await p.locator('#error').isVisible());assert.equal(await p.locator('#growth').getAttribute('aria-invalid'),'true');await p.locator('#growth').fill('0');
-  assert.match(await p.locator('#growth').evaluate(e=>e.closest('label').querySelector('.field-label').textContent),/endring/i,'growth is labelled as a change, not only an increase');
+  assert.match(await p.locator('#growth').evaluate(e=>e.closest('.field').querySelector('.field-label').textContent),/endring/i,'growth is labelled as a change, not only an increase');
   // Tap mot innskuddene vises tydelig, også med positiv eller null vekst.
   await p.evaluate(()=>setLevel('simple'));
   await p.locator('#start').fill('0');await p.locator('#monthly').fill('8200');await p.locator('#years').fill('38,5');await p.locator('#rate').fill('0');

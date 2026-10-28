@@ -68,7 +68,7 @@ footer{align-items:center;gap:12px}
  .workbench-toolbar{gap:8px;margin-bottom:14px}
  .panel{padding:18px;border-radius:14px;margin-bottom:14px}
  .plan-inputs .panel-title{margin-bottom:0}.plan-inputs h2{font-size:16px}
- #basic label{margin-top:12px;font-size:12px}
+ #basic .field{margin-top:12px;font-size:12px}
  #basic .field-label{min-height:34px;padding-right:24px;line-height:1.4}
  #basic .fieldbox{margin-top:6px}
  #basic .help-button{width:24px;height:24px;min-width:24px;font-size:12px}
