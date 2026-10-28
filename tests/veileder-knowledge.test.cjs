@@ -7,8 +7,8 @@ for(const e of entries){
  for(const q of e.questions)assert.equal(V.findTopics(q)[0],e.id,q);
  if(e.kind==='explainer'){assert.throws(()=>V.register(e),/duplisert/);continue;}
  for(const age of [20,33,34,57,null])for(const years of [0,3,10,25,null])for(const buffer of ['yes','no','']){
-  const r=Cards.build(e.id,{age,years,buffer});assert.equal(r.title,e.title);assert.equal(r.options.length,2);assert.ok(r.sources.length);assert.equal(r.checked,'2026-10-22');
-  if(buffer==='no')assert.match(r.note,/Uten buffer/);
+  const r=Cards.build(e.id,{age,years,buffer});assert.equal(r.title,e.title);assert.equal(r.options.length,2);assert.ok(r.sources.length);assert.equal(r.checked,e.checked);
+  assert.equal(r.note,'','kildekontrollerte sammenligninger er nøytrale');
  }
  assert.throws(()=>V.register(e),/duplisert/);
 }
@@ -18,16 +18,16 @@ assert.equal(V.findTopics('ASK eller investeringskonto?')[0],'q-ask-zero');
 assert.equal(V.findTopics('Hva skjer med studielånet?')[0],'student');
 assert.deepEqual(V.findTopics('Hvilken farge har himmelen?'),[]);
 const ips=JSON.stringify(Cards.build('q-ips-ask',{}));assert.match(ips,/25 000/);assert.match(ips,/2026/);assert.match(ips,/62 år/);assert.match(ips,/hele utbetalingen/i);assert.match(ips,/minst til 80/);
-const zero=JSON.stringify(Cards.build('q-ask-zero',{}));assert.match(zero,/forholdsmessig/);assert.match(zero,/forsikringsbasert/);assert.doesNotMatch(zero,/nordnet.no/);
-const bsu=JSON.stringify(Cards.build('q-bsu-basics',{}));assert.match(bsu,/27 500/);assert.match(bsu,/årets slutt/);
+const zero=JSON.stringify(Cards.build('q-ask-zero',{}));assert.match(zero,/forholdsmessig/);assert.match(zero,/forsikringsbasert/i);assert.doesNotMatch(zero,/nordnet.no/);
+const bsu=JSON.stringify(Cards.build('q-bsu-basics',{}));assert.match(bsu,/27 500/);assert.match(bsu,/31\. desember/);
 assert.match(JSON.stringify(Cards.build('q-bsu-basics',{age:34})),/til og med året du fyller 33/);
 assert.equal(C.clean({horizons:{'q-ips-ask':3}}).horizons['q-ips-ask'],3);
 assert.equal(C.clean({horizons:{constructor:7}}).horizons.constructor,Object.prototype.constructor);
 assert.equal(C.forTopic({profile:{years:10},horizons:{'q-ips-ask':3}},'q-ips-ask').years,3);
 console.log('First batch: three distinct answers, 225 profiles, routing, BSU eligibility, IPS binding, Zero withdrawal and extensible context passed.');
 
-assert.match(Cards.build('q-ips-ask',{age:57,years:3}).note,/før du er 62/);
-assert.match(Cards.build('q-bsu-basics',{age:34}).note,/Nye BSU-innskudd.*33/);
+assert.equal(Cards.build('q-ips-ask',{age:57,years:3}).note,'');
+assert.equal(Cards.build('q-bsu-basics',{age:34}).note,'');
 
 assert.equal(V.findTopics('hva er bsu')[0],'q-bsu-basics');
 assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
@@ -98,10 +98,10 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
  const a=Cards.build('q-aksjesparekonto',{}),f=Cards.build('q-fondskonto',{});
  for(const x of [a,f]){
   assert.equal(x.kind,'explainer');assert.deepEqual(x.options,[]);assert.match(x.example.text,/ikke en beregning av din skatt/);
-  assert.ok(x.sources.length&&x.sources.every(s=>s.url.startsWith('https://')));assert.equal(x.checked,x===a?'2026-10-28':'2026-10-24');
+  assert.ok(x.sources.length&&x.sources.every(s=>s.url.startsWith('https://')));assert.equal(x.checked,'2026-10-28');
   assert.ok(!/[–—]|\.\.\./.test(JSON.stringify(x)));
-  assert.match(x.caveat,/Kontrollert mot (?:side(?:n|ne) 24|kildene 28)\. oktober 2026/,'kontrolldato og at kildene mangler oppdateringsdato skal stå i forbeholdet');
-  assert.match(x.caveat,/ingen oppdateringsdato/);
+  assert.match(x.review.text,/Kontrollert mot kildene 28\. oktober 2026|avsnitt lest 28\. oktober 2026/,'kontrolldato og at kildene mangler oppdateringsdato skal stå i forbeholdet');
+  assert.match(x.review.text,/ingen oppdateringsdato/i);
   // Ingen satser, og ingen påstander vi ikke har kontrollert mot kildene.
   assert.doesNotMatch(JSON.stringify(x),/37,84|\b22 ?%|\b101 ?%|pengemarkedsfond|utenfor Europa|amerikanske/);
  }
@@ -110,7 +110,7 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
   // Presiseringer fra kontrollen mot Skatteetatens norske sider, 24. oktober 2026.
   const txt=JSON.stringify(a.parts);
   assert.match(txt,/aksjefond som er hjemmehørende i EØS/);assert.match(txt,/over 80 prosent aksjeandel ved inntektsårets begynnelse/);assert.match(txt,/Rene rentefond kan ikke ligge på kontoen/);
-  assert.match(f.example.text,/20 000 kroner er innskudd og 10 000 kroner er gevinst/);assert.match(f.example.text,/ser bort fra skjermingsfradraget/);
+  assert.match(f.example.text,/20 000 kroner i innskudd og 10 000 kroner i gevinst/);assert.match(f.example.text,/ser bort fra skjermingsfradraget/);
   assert.ok(a.sources.every(x=>/^https:\/\/www\.skatteetaten\.no\/(?:person|rettskilder)\//.test(x.url)),'ASK bruker norsk primærkilde');
   assert.ok(f.sources[0].url.startsWith('https://www.skatteetaten.no/person/'),'fondskonto bruker norsk primærkilde');
   const z=JSON.stringify(Cards.build('q-ask-zero',{}).options);
@@ -119,14 +119,14 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
  // Regneeksemplene stemmer.
  assert.match(a.example.text,/150 000/);assert.match(a.example.text,/50 000/);assert.equal(150000-100000,50000);
  const out=30000,paidIn=100000,value=150000,innskuddsandel=out*paidIn/value,gevinstandel=out-innskuddsandel;
- assert.equal(innskuddsandel,20000);assert.equal(gevinstandel,10000);assert.match(f.example.text,/20 000 kroner er innskudd og 10 000 kroner er gevinst/);assert.ok(out<=paidIn,'på ASK dekkes uttaket av innskuddet');
+ assert.equal(innskuddsandel,20000);assert.equal(gevinstandel,10000);assert.match(f.example.text,/20 000 kroner i innskudd og 10 000 kroner i gevinst/);assert.ok(out<=paidIn,'på ASK dekkes uttaket av innskuddet');
  // Produktnavn forklares med tilbyder og uten anbefaling.
  const names=f.terms.map(x=>x.term);for(const need of ['fondskonto','kapitalforsikring','investeringskonto','fond'])assert.ok(names.includes(need),need);
  // Ingen produkt- eller tilbydernavn i svarene (Lars 28.10.2026). Zero og IKZ legges inn som søkeord først når pausen oppheves.
  const prod=f.terms.find(x=>/produktnavn/.test(x.term));assert.ok(prod);assert.match(prod.text,/eget navn/);
  for(const id of ['q-fondskonto','q-ask-zero']){const all=JSON.stringify(V.questions?V.questions.find(q=>q.id===id):null)+JSON.stringify(Cards.build(id,{}));assert.doesNotMatch(all,/Nordnet|Zero|IKZ/i,id);}
  for(const q of ['Zero','IKZ'])assert.notEqual(V.findTopics(q)[0],'q-fondskonto',q+' er ikke søkeord ennå');
- assert.match(f.caveat,/ikke kontrollert her/);assert.match(f.caveat,/oktober 2025/);
+ assert.match(f.caveat,/ikke kontrollert her/);assert.match(f.review.text,/2026 og senere/);assert.doesNotMatch(f.review.text,/oktober 2025/);
 }
 
 // ASK: samme forklaring for alle profiler selv med fordeler/ulemper.

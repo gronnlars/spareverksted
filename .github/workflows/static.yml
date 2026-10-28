@@ -26,6 +26,7 @@ jobs:
           node tests/veileder-grunnbegreper.test.cjs
           python3 research/svarutkast/generer-gaps.py --check --product
           node tests/veileder-knowledge.test.cjs
+          node tests/svarmal.test.cjs
           node tests/veileder-relevance.test.cjs
           node tests/veileder-sok.test.cjs
           node tests/veileder-sok-utvidet.test.cjs
@@ -69,6 +70,9 @@ jobs:
         run: chown "$(id -u):$(id -g)" /github/home
       - name: Browser flows (Chromium)
         run: |
+          node tests/svarmal-browser.cjs
+          SPARE_ENGINE=firefox node tests/svarmal-browser.cjs
+          SPARE_ENGINE=webkit node tests/svarmal-browser.cjs
           node tests/ask-browser.cjs
           SPARE_ENGINE=firefox node tests/ask-browser.cjs
           SPARE_ENGINE=webkit node tests/ask-browser.cjs

@@ -11,36 +11,45 @@ def render(e):
     lines = [f"# {e['queue'][0]}: {e['title']}", '',
              '<!-- Generert fra gaps-2026-10-25.json. Rediger JSON og kjør generer-gaps.py. -->', '',
              e['status'], '',
-             'Arbeidsgrunnlag: main `f9c553aa668fd0bf96ce14d6930f5ec02897abd6`. ChatGPT/Codex. Upublisert lokal gren. Ingen push, merge eller publisering.', '',
-             f"Dekning: GAPS `{e['gap']}`. Kø-ID-er: {', '.join(e['queue'])}. Foreslått svar-ID: `{e['id']}`.", '',
-             '## Kort svar', '', e['intro'], '',
-             '## Eksempel', '', e['example']['text'], '',
-             '## Begreper', '']
-    for term in e['terms']:
-        lines += [f"- **{term['term']}:** {term['text']}"]
+             f"Svar-ID: `{e['id']}`. Kø-ID-er: {', '.join(e['queue'])}. Svarmal: `{e.get('layout', 'overview')}`.", '',
+             '## Kort svar', '', e['intro'], '']
+    if e.get('tradeoffs'):
+        lines += ['## Fordeler og ulemper', '']
+        for name, label in [('pros', 'Fordeler'), ('cons', 'Ulemper')]:
+            lines += ['### ' + label, '']
+            for item in e['tradeoffs'][name]:
+                lines += ['- **' + item['title'] + ':** ' + item['text']]
+            lines += ['']
+    lines += ['## Eksempel', '', e['example']['text'], '']
     if e.get('next'):
-        lines += ['', f"Lenke i nettstedets visning: [{e['next']['text']}](../../dist/{e['next']['href']})."]
+        lines += [f"Lenke i nettstedets visning: [{e['next']['text']}](../../dist/{e['next']['href']}).", '']
     for example in e.get('additionalExamples', []):
-        lines += ['', f"Ekstra utkastlenke: [{example['text']}](../../dist/{example['href']}).", '', example['note']]
-    lines += ['', '## Fordypning', '']
+        lines += [f"Ekstra utkastlenke: [{example['text']}](../../dist/{example['href']}).", '', example['note'], '']
+    lines += ['## Fordypning', '']
     for part in e['parts']:
         lines += [f"### {part['title']}", '', part['text'], '']
-    lines += ['## Kilder og faktakontroll', '', e['caveat'], '',
-              'Publiseringsdato: ikke publisert. Faktisk lesedato i denne utkastleveransen: 25.10.2026. Ingen nye skattesatser. Historisk ikrafttredelse er bare angitt der den faktisk er undersøkt.', '',
+    if e.get('terms'):
+        lines += ['### Begreper i svaret', '']
+        for term in e['terms']:
+            lines += [f"- **{term['term']}:** {term['text']}"]
+        lines += ['']
+    lines += ['## Kilder og forbehold', '', e['caveat'], '']
+    for source in e['sources']:
+        lines += [f"- [{source['title']}]({source['url']})"]
+    lines += ['', '## Kontrolldokumentasjon', '', e.get('review', {}).get('text', ''), '',
+              e.get('languageReview', ''), '',
+              'Opprinnelig arbeidsgrunnlag: main `f9c553aa668fd0bf96ce14d6930f5ec02897abd6`. Historisk lesedato: 25.10.2026. Nye kildelesinger angis per kilde. Språkendring gir ingen ny faglig godkjenning.', '',
               '| Påstand | Kilde | Kildens dato / regelår | Unntak og usikkerhet |',
               '| --- | --- | --- | --- |']
     for note in e['sourceNotes']:
         lines += ['| ' + ' | '.join(note) + ' |']
-    lines += ['']
-    for source in e['sources']:
-        lines += [f"- [{source['title']}]({source['url']})"]
     lines += ['', '## Angrepsflater og reparasjoner', '']
     lines += [f'{i}. {risk}' for i, risk in enumerate(e['risks'], 1)]
     lines += ['', '## Korrektur og overlevering', '',
-              'Navn, tallformat, forutsetninger og påstander kontrolleres mot kildene og egne kontrollregnestykker. Selvkontroll er ikke uavhengig fagkontroll. Se leveranserapporten for faktisk utførte tester og gjenstående kontroller.', '',
+              'Selvkontroll er ikke uavhengig fagkontroll. Språk og svarmal er gjennomgått, med faglige vilkår og uavklarte spørsmål bevart. Se research/sprak-og-svarmal-2026-10-28.md for samlet kontrollstatus.', '',
               'Søkeinnganger: ' + '; '.join(e['questions']) + '.', '',
-              'JSON er fasit for svartekst, søkeinnganger og kildemetadata. Denne Markdown-filen er generert. Kjør `python3 research/svarutkast/generer-gaps.py --check` for samsvarskontroll og `node research/svarutkast/prov-gaps.cjs` for isolert søkeprøve.', '',
-              ('SV-022 er integrert på arbeidsgrenen etter Lars sin godkjenning. CI og publisering må bekreftes separat. Lars har kontrollert kildene, ikke regnet. iPhone Safari og VoiceOver står åpne.' if e.get('integrationState') == 'branch' else '[Leveranserapport](GAPS-RAPPORT-2026-10-25.md). Dette svaret er ikke integrert i nettstedet. GAPS for svaret beholdes. Godkjenning gjenstår.'), '']
+              'JSON er fasit. Markdown genereres. Samsvar kontrolleres med `python3 research/svarutkast/generer-gaps.py --check --product`. Isolert søkeprøve: `node research/svarutkast/prov-gaps.cjs`.', '',
+              ('SV-022 finnes på main. Språkendringen i denne leveransen er ikke publisert.' if e.get('integrationState') == 'branch' else 'Dette svaret er fortsatt upublisert og er ikke lagt i nettstedets svarbase. GAPS beholdes. Godkjenning gjenstår.'), '']
     return '\n'.join(lines)
 
 if __name__ == '__main__':
@@ -57,7 +66,7 @@ if __name__ == '__main__':
     if '--product' in sys.argv:
         import re
         entry = next(e for e in entries if e['id'] == 'q-renters-rente')
-        fields = ['kind', 'id', 'category', 'title', 'checked', 'keys', 'questions', 'intro', 'terms', 'example', 'parts', 'sources', 'caveat', 'next']
+        fields = ['kind', 'id', 'category', 'title', 'checked', 'keys', 'questions', 'intro', 'terms', 'example', 'parts', 'sources', 'caveat', 'next', 'layout', 'tradeoffs', 'review']
         product = {k: entry[k] for k in fields if k in entry}
         product['next'] = dict(product['next'], more=[{'text': x['text'], 'href': x['href']} for x in entry.get('additionalExamples', [])])
         body = json.dumps(product, ensure_ascii=False, indent=1)

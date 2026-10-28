@@ -54,6 +54,7 @@ function validate(p={}){
  return out;
 }
 function category(id){return topics.find(t=>t.id===id)?.category||id;}
+function isNeutral(id){const e=topics.find(t=>t.id===id)?.entry;return !!(e&&(e.kind==='explainer'||e.neutral));}
 function isExplainer(id){return topics.find(t=>t.id===id)?.entry?.kind==='explainer';}
 function horizonRelevant(id){return ['funds','children','pension'].includes(category(id));}
 function fundRelevant(id,p={}){return ['mortgage','funds','pension','children','bsu'].includes(category(id))&&!(p.debt==='yes'&&p.buffer==='no');}
@@ -77,8 +78,9 @@ function answer(id,profile){
  const t=topics.find(t=>t.id===id);if(!t)throw Error('Velg et av temaene vi dekker.');
  if(t.entry&&t.entry.kind==='explainer'){
   const e=t.entry;
-  return F.resolve({title:t.title,kind:'explainer',layout:e.layout,tradeoffs:e.tradeoffs,terms:e.terms,example:e.example,next:e.next||null,caveat:e.caveat||'',parts:e.parts,sources:e.sources,checked:e.checked,missing:[],profile:validate(profile)});
+  return F.resolve({title:t.title,kind:'explainer',layout:e.layout,tradeoffs:e.tradeoffs,terms:e.terms,example:e.example,next:e.next||null,caveat:e.caveat||'',review:e.review||null,parts:e.parts,sources:e.sources,checked:e.checked,missing:[],profile:validate(profile)});
  }
+ if(t.entry?.neutral){const e=t.entry;return F.resolve({title:e.title,neutral:true,layout:e.layout,intro:e.intro,options:e.options,parts:e.parts,sources:e.sources,caveat:e.caveat,review:e.review,checked:e.checked,missing:[],profile:validate(profile)});}
  if(t.entry){
   const base=answer(t.category,profile),entry=t.entry;
   const priority=base.parts.filter(p=>p.priority),rest=base.parts.filter(p=>!p.priority);
@@ -141,7 +143,7 @@ function register(entry){
   // Fagtype holdes atskilt fra presentasjon. overview er en nøytral forklaring, uten profiltilpasning.
   if(!entry.title||!entry.intro||!entry.checked||!entry.questions?.length||!entry.words?.length||!entry.sources?.length||entry.options)throw Error('Ufullstendig forklaring.');
   if(entry.layout!==undefined&&entry.layout!=='overview')throw Error('Ukjent svarmal.');
-  if(entry.layout==='overview'&&(!entry.tradeoffs?.pros?.length||!entry.tradeoffs?.cons?.length||[...entry.tradeoffs.pros,...entry.tradeoffs.cons].some(x=>!x.title||!x.text)))throw Error('Oversikten trenger kildebelagte fordeler og ulemper.');
+  if(entry.tradeoffs&&(!entry.tradeoffs?.pros?.length||!entry.tradeoffs?.cons?.length||[...entry.tradeoffs.pros,...entry.tradeoffs.cons].some(x=>!x.title||!x.text)))throw Error('Oversikten trenger kildebelagte fordeler og ulemper.');
   if(entry.tradeoffs&&entry.layout!=='overview')throw Error('Fordeler og ulemper trenger oversiktsmal.');
   if(!entry.terms?.length||entry.terms.some(x=>!x.term||!x.text))throw Error('En forklaring trenger begreper med forklaring.');
   if(!entry.example?.title||!entry.example?.text)throw Error('En forklaring trenger et eksempel.');
@@ -150,14 +152,14 @@ function register(entry){
   if(entry.next?.more&&(!Array.isArray(entry.next.more)||entry.next.more.some(x=>!x.text||!x.href)))throw Error('Ufullstendig ekstra lenke videre.');
   for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
   if((entry.keys||[]).some(x=>!/^[a-zæøå0-9]+$/.test(x)))throw Error('Ugyldig søkeord.');
-  topics.push({id:entry.id,title:entry.title,category:'explain',questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});contentVersion++;
+  topics.push({id:entry.id,title:entry.title,category:entry.searchFamily||'explain',questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});contentVersion++;
   return;
  }
  if(!topics.some(t=>t.id===entry.category&&!t.entry)||!entry.title||!entry.intro||!entry.checked||!entry.questions?.length||!entry.words?.length||entry.options?.length!==2||!entry.sources?.length)throw Error('Ufullstendig spørsmål.');
- for(const o of entry.options)if(!o.title||!o.poorFit||!(o.pros?.length>=2)||!(o.cons?.length>=2)||[...o.pros,...o.cons].some(i=>!i.title||!i.text))throw Error('Hvert alternativ trenger minst to fordeler, to ulemper og når det passer dårlig.');
+ for(const o of entry.options)if(!o.title||(!entry.neutral&&!o.poorFit)||!(o.pros?.length>=(entry.neutral?1:2))||!(o.cons?.length>=(entry.neutral?1:2))||[...o.pros,...o.cons].some(i=>!i.title||!i.text))throw Error('Hvert alternativ trenger minst to fordeler, to ulemper og når det passer dårlig.');
  for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
  if((entry.keys||[]).some(x=>!/^[a-zæøå0-9]+$/.test(x)))throw Error('Ugyldig søkeord.');
  topics.push({id:entry.id,title:entry.title,category:entry.category,questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});contentVersion++;
 }
-const api={topics,findTopics,search,gaps:GAPS,reason:S.reason,answer,validate,checked,sources,register,category,isExplainer,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
+const api={topics,findTopics,search,gaps:GAPS,reason:S.reason,answer,validate,checked,sources,register,category,isExplainer,isNeutral,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
 })(typeof window!=='undefined'?window:globalThis);

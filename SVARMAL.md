@@ -32,3 +32,13 @@ Fordeler og ulemper beskriver etterprøvbare konsekvenser. Ingen produktnavn, pe
 - Kontroll av en annen enn skribenten og Lars sin godkjenning følger gjeldende regler. Et oppdrag om å skrive eller integrere gir ikke fullmakt til å endre svarmalen fritt eller publisere. Main-push starter publisering.
 
 Oppdrag som gis videre skal lenke til denne filen og beskrive ønsket resultat konkret, i tråd med CONTRIBUTING.md. Ingen modell skal måtte gjette hva «legg ut svaret» betyr.
+
+## Samlet gjennomgang bestilt 28.10.2026
+
+Lars har etter ASK-prøven bestilt språkgjennomgang og bruk av svarmalen for svarene i kildekontrollen, inkludert de fire upubliserte utkastene. Den tidligere avgrensningen til bare ASK er dermed erstattet for dette oppdraget.
+
+- Alle bruker oversiktsmalen. Grunnbegreper kan ha samme oppbygning uten fordeler og ulemper. En kontotype eller ordning får de dokumenterte følgene samlet. Faktiske sammenligninger beholder ett kort per alternativ.
+- Nødvendige forbehold vises ved kortsvaret. Arbeidslogg, kontrollverktøy og neste kontrollfrist står under «Om kildekontrollen», ved kildene. De fjernes ikke fra dokumentasjonen.
+- Forklaringer og kontosammenligninger i denne runden er nøytrale. De skal ikke arve profilråd eller bytte til buffer- og gjeldskort. BSU-forklaringen forklarer ordningen uten å konstruere et valg mot «alt utenfor BSU».
+- Språkdato er ikke kildekontrolldato. Bevar opprinnelige datoer når bare språk og plassering endres. Registrer faktiske nye kildeavsnitt separat.
+- Uavklarte spørsmål og upubliserte utkast beholder statusen. Språkvask gir ingen publiseringstillatelse.

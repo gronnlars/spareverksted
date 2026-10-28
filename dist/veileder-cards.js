@@ -49,6 +49,7 @@ const poorFits={
 };
 function build(id,profile){
  const full=V.answer(id,profile),p=full.profile,topic=V.topics.find(t=>t.id===id);if(topic.entry&&topic.entry.kind==='explainer')return F.resolve({...full,intro:topic.entry.intro,note:'',options:[],steps:[]});
+ if(topic.entry?.neutral)return F.resolve({...full,intro:topic.entry.intro,note:'',steps:[]});
  let c=content[id]||topic.entry;const category=topic.category||id;let note='';
  if(p.debt==='yes')note='Prioriter nødvendige utgifter, en liten reserve og nedbetaling av dyr gjeld før mer binding eller risiko.';
  else if(p.buffer==='no')note='Uten buffer kan en uventet regning føre til nye lån. Sett av en tilgjengelig reserve før du binder mer.';

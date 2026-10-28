@@ -20,6 +20,10 @@ Arbeidsstatus: `Kø`, `Pågår`, `Utkast`, `Kontrollert utkast`, `Avventer` elle
 
 For hver rad gjelder foreløpig **fagkontroll: ikke nykontrollert; søketest: ikke kjørt; kilder/kontrolldato: ikke registrert**. Når et spørsmål behandles, skal resultat og faktisk kontrolldato stå i radens utkastlenke, med kildetabell etter malen i arbeidsinstruksen. Et tidligere researchresultat fra samtalen kan brukes som startpunkt, men må leses og kontrolleres før det får ny status. Dagens dato er ikke en felles faktasjekkdato.
 
+## Språk og mal, status 28.10.2026
+
+Lars har bestilt samlet gjennomgang av de ni egne svarene og de fire utkastene i kildekontrollen. [Omfang og kontrollstatus](research/sprak-og-svarmal-2026-10-28.md). Dette er ikke ny kildegodkjenning eller publisering. Eksisterende radstatuser beholdes til kontrollene er fullført.
+
 ## Prioritert kø
 
 | Rekkefølge | Fast ID | Spørsmål | Først / overlapp / andre formuleringer | Foreløpig dekning | Arbeidsstatus | Utkast og kontroll |
