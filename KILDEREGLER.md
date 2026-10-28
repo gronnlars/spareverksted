@@ -1,6 +1,6 @@
 # Kilderegler for Spareverksted
 
-Forslag fra Claude 25.10.2026 etter samtale med Lars. Gjelder for alle bidragsytere, også KI-verktøy, når Lars har godkjent PR-en. Begrunnelsene og alternativene som ble forkastet står i [BESLUTNINGER.md](BESLUTNINGER.md), oppføringene «Kildenivå for påstander og råd» og «Sparehorisont og Forbrukerrådets anbefaling». Språk og tone følger [SPRAKREGLER.md](SPRAKREGLER.md).
+Disse kildereglene gjelder for alle bidragsytere til Spareverksted, også KI-verktøy. Endringer i reglene trer i kraft etter godkjenning og sammenslåing. Begrunnelser og tidligere vurderte alternativer står i [BESLUTNINGER.md](BESLUTNINGER.md), oppføringen «Kildereglene vedtatt, og kildegjennomgang før hvert nytt spørsmål». Eldre begrunnelser for kildenivåene og sparehorisonten ligger i åpne PR-er (#69 og #67) og er ikke en del av main før de er slått sammen. Språk og tone følger [SPRAKREGLER.md](SPRAKREGLER.md).
 
 Reglene er få med vilje. De har ingen innebygde unntak (se «Når en regel må brytes»).
 
