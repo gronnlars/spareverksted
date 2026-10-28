@@ -71,3 +71,51 @@ Etter Lars sitt oppdrag er SV-022-prøven gjort valgfri mellom chromium, firefox
 Lars opplyser at han har sjekket kildene og at siden kan pushes. Han har ikke regnet; Claude og egne programtester står for kontrollregningen. Godkjenningen gjelder SV-022 slik gjennomgått. Bare renters rente integreres. Andre GAPS-svar og søkemeldingene er ikke lagt inn. Renters-rente-raden tas ut av GAPS, og begge eksempellenkene støttes av eksisterende next med valgfri more-liste. Kalkulatoren er urørt. Produkt og Markdown genereres fra JSON. Fersk main/AGENTS er hentet via GitHub; main er f9c553a, PR #65 er fortsatt åpen på 2385ddb. Den nye leveransen erstatter SV-022-delen der; øvrige endringer fra #65 tas ikke med automatisk.
 
 Før push: 156 historiske søk sammenlignet mot main; bare t21 endrer seg til det nye svaret. De øvrige 155 er uendret. Node-tester kjøres på integrert versjon. Den faktiske nettleserprøven, uten utkastinjeksjon, kjøres i CI for Chromium, Firefox og WebKit. Kontrollgren pushes først; faktisk CI og publisering må bekreftes separat.
+
+
+### Delkontroll av eksisterende ASK og fondskonto, 28. oktober 2026
+
+ChatGPT/Codex, startet kl. 12.38 CET. Lest main-commit `00d8f1536802b69eebf05a1034f388bd87550d9f`. SV-031/q-aksjesparekonto og SV-122/q-fondskonto. Reservasjon pushet før kildearbeid i commit `a5aba3bc6f2283fa43e8b629325cfa054c831738`, og fjernloggen lest tilbake. Reservasjonsraden hadde feil starttid 12.45, faktisk startet denne kjøringen 12.38. Reservasjonen er nå avsluttet. Ingen andre aktive reservasjoner funnet i lest main eller kontrollgren.
+
+Viderefører PR #72 og bevarer tidligere rapport. [Ny delkontroll](svarutkast/KONTROLL-ASK-FONDSKONTO-2026-10-28.md) inneholder konkret kildebelegg, datoer, funn og rettelsesforslag. Publiserte knowledge-, facts- og ui-filer er hentet og byteidentiske med lest main. Motor/kortbygger undersøkt i repo. Dette er ingen nettlesertest. Norske primærkilder hos Skatteetaten faktisk lest 28.10.2026. Egenkontroll: tall stemmer, åtte søk kjørt, to profiler sammenlignet for begge svar. Garantert kapitalforsikring gir for bredt treff. Tidligere antakelse om engelsk kildetekst er korrigert etter faktisk lesing. Fondskontoens kildebeskrivelse er foreldet mot åpnet 2026-rettledning. Ingen produktpåstander nykontrollert.
+
+Køen oppdatert for disse to ID-ene. Ingen ny permanent kø, nye temaer eller produktendringer. Eksisterende ni begrepsutkast utenfor repoet hos ChatGPT, ikke tilgjengelige for andre bidragsytere funnet og lest som arbeidsgrunnlag, ikke nygodkjent eller overskrevet. Samlet fagkontroll av den gjenstår. Aktive avvik gjennomgått. Full K7-runde etter statsbudsjettet er ikke dokumentert i de leste loggene. Ingen utløp innen to uker funnet blant datofestede aktive avvik.
+
+Neste del: q-bsu-basics og q-ips-ask med 2026-regler og eksisterende tilpasning. Hele gjennomgangen er ikke ferdig. Kontroll av en annen enn skribenten, faktisk visning, tilgjengelighet og brukerforståelse gjenstår. Ingen program- eller nettlesertestfiler endret. Kun dokumentasjon på kontrollgrenen, ingen sammenslåing til main eller publisering.
+
+
+### BSU og IPS, kildekontroll 28. oktober 2026
+
+ChatGPT/Codex. Start kl. 13.13 Europe/Oslo. Lest main `00d8f1536802b69eebf05a1034f388bd87550d9f`. Lars ba uttrykkelig om videreføring. Reservasjon ble lagret og kontrollert på fjernversjonen før research, og er avsluttet ved denne leveransen. PR #72 videreføres.
+
+SV-133 og SV-087/SV-090: [kontrollnotat](svarutkast/KONTROLL-BSU-IPS-2026-10-28.md). Skatteetatens relevante norske avsnitt faktisk lest 28.10.2026. Kontrollerte 2026-grenser samsvarer. 2027-forslaget er holdt atskilt. Dokumentert manglende svar om oppussing ved direkte BSU-treff, manglende støtte for sparevaneeffekt og eksisterende profiltilpasning som også bytter alternativkort. Åtte søk og 14 systematiske korttilfeller kjørt i Node, i tillegg utforskende profiler. Regnekontroll 2 750 kr. Egenkontroll, ikke uavhengig fagkontroll eller juridisk vurdering.
+
+Bare dokumentasjon i egen gren. Ingen produktkode, tester, sammenslåing eller publisering. Ingen faktisk live-, nettleser-, mobil- eller skjermleserkontroll i denne deløkten. Neste: fullfør kontroll av arvede råd og resten av eksisterende svar. K7-runden og uavhengig kontroll gjenstår. Ingen ny reservasjon aktiv.
+
+
+### Revidert PR #72 før Claude-kontroll, 28.10.2026 kl. 14.23 Europe/Oslo
+
+ChatGPT/Codex, etter Lars sitt uttrykkelige oppdrag. Fersk main `11df29417b0e094958cf2958b1b14044258b7c5d`, bekreftet identisk med main ved sammenligning. Relevante norske primærkilder faktisk nyåpnet og fagavsnitt lest i denne arbeidsøkten. Kilderegler blob `7d1bae6049c569844527ad94092fa2d7017b7343`. Regler og kildeversjoner er registrert i hovedrapporten.
+
+Gjennomgått PR-ens fem dokumenter. Ryddet hovedrapportens motstridende statuser og flyttet tilbakekalte funn til lenket git-historikk. Oppdatert begge delnotater med ny kildekontroll. Nytt funn om bruk av ubenyttet fondskontoskjerming mot rentedelen; korte og lange kildeavsnitt er synliggjort. Dokumentert Skatte-ABCs eldre løpende beløp ved siden av 2026-merknaden. Lest universitetskilde til regnemetoden. Ny Node-kontroll av regneeksemplene. Ingen ny søke-, profil-, nettleser- eller live-test. Ingen selvkontroll omtales som uavhengig kontroll.
+
+SV-031, SV-122, SV-133, SV-087/SV-090: kildeoppdatert dokumentasjon til Claude, fortsatt åpne produktfunn. Hovedrapporten inneholder selvstendig oppdrag med kilder og konkrete kontrollkrav. Claude har ikke kontrollert denne revisjonen ennå. Lars sjekker etterpå. Ingen oppdrag sendt automatisk. Ingen produktkode, tester, sammenslåing, auto-merge eller publisering. Ingen aktiv reservasjon etter leveransen. Hele nettstedets K7-runde og full kontroll av arvede råd gjenstår.
+
+
+### Oppfølging av Claudes kontrollrapport, 28.10.2026
+
+ChatGPT/Codex har lest rapporten fra Claude, commit dfc0258f122103a1d4c7075bd64f372d63609b84. Rapporten står uendret. A1 til A13 er behandlet i egne dokumenter: konkret skjermingseksempel med kildeforbehold, årsskille 2025/2026, kilde D som eneste støtte i utvalget for alder/renter/oppussing, historisk lesestatus avklart, nivå og kontrolldato per kilde, eksplisitt sperre mot å endre Nordnet-setningen, samordnet køstatus, lenket BSU-delkontroll, utilgjengelig samling merket og matematisk omregning avgrenset. Forbrukerrådets metadata 16.10.2026 er bekreftet med direkte HTML-lesing.
+
+A15: begge IPS-adresser ga lesbar norsk tekst i kildeverktøyet. Direkte HTTP-forsøk ga 403 for begge. Ingen redirect eller canonical-tag er bekreftet av GPT. Dokumentasjonen lenker til nn-adressen Claude leste; produktet er urørt. A14 er fortsatt et spørsmål til Lars, ikke et vedtatt avvik. Ingen endring i BESLUTNINGER.md eller omtalen av Nordnet.
+
+Ny kildekontroll og dokumentretting er egenkontroll. Claudes uavhengige kontrollregning er registrert som separat KI-kontroll. B, D, H og J er fortsatt ikke lest av Claude. Endringene etter hans kontroll må kontrolleres før godkjenning. Ingen ny produkt-, nettleser- eller søketest. Ingen sammenslåing eller publisering.
+
+
+### Lars sin kildekontroll mottatt 28.10.2026
+
+Lars har sendt konkrete kildeutdrag og myndighetsutskrifter for H og G. GPT har lest begge PDF-er, kontrollert relevante sidetall og beregnet SHA-256, registrert i hovedrapportens avsnitt «Lars sin ordlydskontroll». Alder, oppussing, ASK-grunnlag, IPS-fradragets type og rettledningens uttaksavsnitt er dokumentert i hans utdrag. Utdraget av BSU-renter inneholder bare overskrift, og garantiavgrensningen mangler. Disse er uttrykkelig fortsatt åpne for menneskelig ordlydskontroll. Ingen helhetlig faglig godkjenning eller fullført K7 erklæres. Ingen endring i Claudes rapport, produktet eller tester. Ingen sammenslåing eller publisering.
+
+
+### Supplerende ordlydsdokumentasjon fra Lars, 28.10.2026
+
+To skjermbilder fra Skatteetaten er lest av ChatGPT/Codex. Lars har nå dokumentert garantiavgrensningen i fondskontosiden B og hele renteavsnittet i BSU-siden D, inkludert unntaket for renter påløpt fra og med året man fyller 34. Registrert med presis avgrensning i hovedrapporten. Disse to manglende utdragene er ikke lenger åpne. Ingen generell godkjenning, produktretting eller publisering. Øvrige kontrollpunkter står som før.
