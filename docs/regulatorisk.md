@@ -92,6 +92,7 @@ Dette gjelder fortsatt også innenfor områdene:
 - Omtalen av Nordnet og Investeringskonto Zero står urørt.
 - Ny funksjonalitet utenfor områdene, som nye kalkulatorfunksjoner, lånekalkulator og endringer i brukergrensesnittet som ikke er UU-retting, venter til oppstart.
 - Hver endring går i egen PR og slås sammen bare etter Lars' godkjenning.
+- Alt bygges slik at funksjonene som venter, lett kan kobles på senere. Se BESLUTNINGER.md, «Bygg slik at det som venter, lett kan kobles på».
 
 Er det tvil om en endring hører til et av områdene, avgjør Lars.
 

@@ -580,3 +580,26 @@ C. Oppheve pausen helt. Ikke valgt: spørsmålet om tilpasning etter alder og sp
 **Akseptert ulempe:** Grensen for «generelle spørsmål» og «opplagt lovbrudd» krever skjønn. Ved tvil avgjør Lars.
 
 **Vurder på nytt når:** Finanstilsynet svarer, eller et generelt svar viser seg å bli lest som en personlig anbefaling.
+
+## Bygg slik at det som venter, lett kan kobles på (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026 som prinsipp for alt arbeid under pausen. Lars' formulering: alt må lages så funksjonene vi venter på, lett kan integreres når avklaringen er på plass.
+
+**Beslutning:** Det som bygges nå, lages slik at funksjonene som venter (kontekstuell veiledning, forklaring der ordet står, ordlisteside, opplesning, lånekalkulator), kan kobles på uten å skrive om det som finnes. Konkret:
+
+1. **Av/på-bryter.** En funksjon som venter på avklaring, men bygges ferdig, styres fra ett sted og står av som standard. Av betyr ikke vist for brukeren.
+2. **Én kilde for innhold.** Begrepsregisteret og svarbasen har plass til det senere funksjoner trenger, for eksempel kort og lang forklaring. Felt for tilpasning legges ikke inn før sperren er opphevet.
+3. **Gjenbrukbare deler.** Teksten som beskriver resultatet (veikartet 0.5) lages som én modul som grafbeskrivelsen, en senere «Les opp»-knapp, eksport og veilederen kan bruke. Forklaringer vises med én felles komponent.
+4. **Tester for begge tilstander.** Tester sjekker at en avslått funksjon ikke vises, og at den virker når den slås på.
+5. **Offentlige sider omtaler bare det som er på.**
+
+**Grense:** «Bra nok er mer enn nok» gjelder. Det forberedes bare for funksjoner som allerede står i veikartet, og ingen kode skrives på forhånd uten at neste bruk er kjent.
+
+**Alternativer:**
+A. Prinsippet over. **Valgt.**
+B. Bygge bare det som publiseres nå, og bygge om senere. Ikke valgt: dobbelt arbeid og risiko for at det som er kontrollert, må kontrolleres på nytt.
+C. Bygge alt ferdig nå bak brytere, også kontekstuell veiledning. Ikke valgt: sperren gjelder, og svaret fra Finanstilsynet kan endre hva som skal bygges.
+
+**Akseptert ulempe:** Brytere og felles moduler gir litt mer kode og flere tester.
+
+**Vurder på nytt når:** en bryter står av lenge uten at funksjonen nærmer seg avklaring. Da fjernes koden heller enn å ligge der.
