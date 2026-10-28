@@ -31,3 +31,6 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 /* Forbehold og forklaringer skal være lesbare ved resultatet, også på mobil. */
 .before-tax-badge{font-size:.875rem;line-height:1.5;font-weight:600}
 .fan-outcome span,.fan-outcome small{font-size:.8125rem;line-height:1.5}
+
+/* Slik leser du grafen: tekst for alle, også dem som ikke ser grafen (UU, WCAG 1.1.1). Brødtekststørrelse, ikke hint. */
+.chart-summary{margin:14px 0 6px;max-width:68ch;font-size:15px;line-height:1.6;color:var(--ink)}.chart-summary h3{font-size:15px;margin:0 0 4px}.chart-summary p{margin:0}

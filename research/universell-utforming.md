@@ -37,6 +37,7 @@ En ny side eller funksjon er ikke ferdig før punktene under er oppfylt og kontr
 - **Utfallsbåndet har stiplede kantlinjer** med minst 3:1 mot bakgrunn og fyll. Fyllflaten alene ga 1,22:1 i lyse temaer.
 - **Usikkerhet framstilles som scenario eller modell, ikke som sannsynlighet**, når grunnlaget mangler. Bygger på Spiegelhalter m.fl.
 - **Eksempeltall og standardforutsetninger forklares i én kort tekst over feltene**, ikke med merke ved hvert felt.
+- **Grafene beskrives i ord (28.10.2026).** «Slik leser du grafen» under sparegrafen og en tilsvarende tekst under uttaksgrafen. Teksten lages av regler og tall (`dist/chart-summary.js`), er synlig for alle, kobles til grafen med `aria-describedby` og brukes også i SVG-ens `desc`. Ingen `aria-live`, i tråd med punkt 1. Retter feilen fra den eksterne skjermlesertesten 28.10.2026 (WCAG 1.1.1).
 - **Fagord forklares der de står, uten sprettoppvindu.** Mønsteret er valgt 28.10.2026. Ikke bygget, og venter til oppstart fordi det er en ny funksjon. Se punkt 6.
 
 ## 3. Kontroller som er gjennomført

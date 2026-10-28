@@ -648,3 +648,17 @@ C. Åpne for «generelle spørsmål» bredt. Ikke valgt: kategorien er for grov 
 
 **Vurder på nytt når:** Finanstilsynet svarer, eller et svar viser seg å bli lest som en anbefaling.
 
+
+## Grafene beskrives i ord (28. oktober 2026)
+
+**Status:** Lars ba 28.10.2026 om UU-rettingen som gjør grafer og beregninger nyttige også for dem som ikke ser dem. Retting av dokumentert UU-feil etter `docs/regulatorisk.md`, krav 6. Ikke en ny funksjon.
+
+**Beslutning:** Under sparegrafen står «Slik leser du grafen», og under uttaksgrafen en tilsvarende tekst. Teksten lages av regler og tallene i grafen (`dist/chart-summary.js`), ikke av KI. Den sier hva grafen viser, start og slutt, formen på linjen, et tydelig fall, avstanden til innskuddene, bånd, bank og lagrede planer, og at linjene er regneeksempler og ikke garantier. Den viser til tabellen for tall år for år.
+
+**Alternativer:**
+A. Synlig tekst for alle, koblet til grafen. **Valgt.** Hjelper også seende som ikke er vant til grafer.
+B. Tekst bare for skjermleser. Ikke valgt: VoiceOver leser ikke alltid SVG-beskrivelser, og seende får ikke hjelpen.
+C. Opplesning med `aria-live` når tallene endres. Ikke valgt: strider mot regelen om sparsom opplesning.
+D. «Les opp»-knapp. Ikke valgt nå: ny funksjon som venter til oppstart. Modulen kan gjenbrukes da.
+
+**Ikke kontrollert:** Hvordan VoiceOver og andre skjermlesere faktisk leser teksten. Bør prøves av testeren som fant feilen.

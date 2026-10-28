@@ -34,6 +34,7 @@ jobs:
           node tests/kjopekraft.test.cjs
           node tests/results.test.cjs
           node tests/meaning.test.cjs
+          node tests/chart-summary.test.cjs
           node tests/band.test.cjs
           node tests/personvern-lagring.test.cjs
           node --check dist/personvern.js
@@ -48,6 +49,7 @@ jobs:
           node --check dist/guidance.js
           node --check dist/journey.js
           node --check dist/meaning.js
+          node --check dist/chart-summary.js
           node --check dist/assumptions.js
           node --check dist/theme.js
           node --check dist/navigation.js
