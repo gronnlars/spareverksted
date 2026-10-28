@@ -241,3 +241,8 @@ SV-022: Lars har bekreftet egen kildekontroll og godkjent push 25.10.2026. Han h
 ## Kilderevisjon av PR #72, 28.10.2026
 
 SV-031, SV-122, SV-133 og SV-087/SV-090: dokumentasjonen er oppdatert mot main `11df29417b0e094958cf2958b1b14044258b7c5d` og nyåpnede kilder. [Gjeldende rapport og oppdrag til Claude](research/kildegjennomgang-2026-10-25.md). Status er til kontroll hos Claude før Lars sjekker, ikke publiseringsgodkjent. Nye funn om skjermingsbruk og kildeversjon er dokumentert. Produktfunnene er fortsatt åpne. Tidligere søke-/profilprøver er historiske og ikke kjørt på nytt i denne revisjonen.
+
+
+### Status etter #96, 28.10.2026
+
+SV-031, SV-122 og SV-034: dokumentasjonskontroll mot main-commit `0c1fb7398825cb3bd2909a6d890fe67e79140497`. Produktnavn og tilbyderkilde er fjernet gjennom #96; eldre status «produktomtalen urørt» er historisk. Intern ID q-ask-zero er bevart. [Konkrete funn og neste kontroll](research/svarutkast/STATUS-ETTER-PR96-2026-10-28.md). Egenkontroll av dokumentasjon, ingen ny kilde- eller live-kontroll. Øvrige fagfunn står åpne. Ingen reservasjon aktiv, ingen produktendring eller publisering i denne leveransen.

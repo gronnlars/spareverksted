@@ -139,3 +139,7 @@ Lars sin videresendte gjennomgang viste gjentakelser og økt lengde. Revidert al
 ## 28.10.2026: BSU, uttrykkelig integrasjonsoppdrag fra Lars
 
 ChatGPT/Codex har lagt samtalens godkjente BSU-utkast i q-bsu-basics med Skatteetaten og SSB-kilder. Bygger på PR #100, egen oppfølgings-PR mot den grenen, ingen konkurrerende main-endring. Se svarutkast/BSU-KILDEKONTROLL-2026-10-28.md. Alle lokale Node-testfiler består. Lokal nettleser mangler, og nedlasting feilet; visningskontroll avventer CI. Egen nettleserprøve for BSU ved 320/390/1280 px i tre motorer er lagt i CI. Ingen sammenslåing eller publisering. Faglig presisering av boligeierskap og regelår står åpent før publisering.
+
+### Status etter #96, 28.10.2026
+
+SV-031, SV-122 og SV-034: dokumentasjonskontroll mot main-commit `0c1fb7398825cb3bd2909a6d890fe67e79140497`. Produktnavn og tilbyderkilde er fjernet gjennom #96; eldre status «produktomtalen urørt» er historisk. Intern ID q-ask-zero er bevart. [Konkrete funn og neste kontroll](svarutkast/STATUS-ETTER-PR96-2026-10-28.md). Egenkontroll av dokumentasjon, ingen ny kilde- eller live-kontroll. Øvrige fagfunn står åpne. Ingen reservasjon aktiv, ingen produktendring eller publisering i denne leveransen.
