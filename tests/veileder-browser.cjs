@@ -116,7 +116,20 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    // ASK og fondskonto: egne forklaringer, sammenligningen for spørsmål om begge, og uavklart står som uavklart.
    const titleFor=async q=>{await search(q);await page.locator('#answerTitle').waitFor();return page.locator('#answerTitle').textContent();};
    assert.equal(await titleFor('ASK'),'Hva er en aksjesparekonto (ASK)?');
-   assert.equal(await page.locator('#answer .option-card').count(),0);
+   assert.equal(await page.locator('#answer .explain-overview').count(),1);
+   assert.equal(await page.locator('#contextPanel').isHidden(),true);
+   assert.equal(await page.locator('#answer .answer-caution').count(),0);
+   assert.equal(await page.locator('#answer .explain-terms').isVisible(),false,'ordlisten avbryter ikke hovedsvaret');
+   for(const kind of ['pro','con']){
+    const group=page.locator('#answer .explain-overview .'+kind);
+    await group.locator('summary').focus();await page.keyboard.press('Enter');
+    assert.notEqual(await group.getAttribute('open'),null);
+    assert.ok(await group.locator('li').count()>=2);
+   }
+   const detail=page.locator('#answer details.full-answer');
+   await detail.locator('summary').focus();await page.keyboard.press('Enter');
+   assert.match(await detail.innerText(),/ubenyttet skjerming fra tidligere år/);
+   await noOverflow();
    assert.equal(await titleFor('aksje spare konto'),'Hva er en aksjesparekonto (ASK)?');
    assert.equal(await titleFor('Hva er en investeringskonto?'),'Hva er en fondskonto?');
    assert.equal(await titleFor('fonds konto'),'Hva er en fondskonto?');

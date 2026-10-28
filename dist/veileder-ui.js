@@ -50,14 +50,20 @@ function render(focus=false){
  const checked=new Intl.DateTimeFormat('nb-NO',{dateStyle:'long'}).format(new Date(a.checked+'T12:00:00Z'));
  out.append(el('p','Sist sjekket: '+checked,'answer-checked'));
  if(a.kind==='explainer'){
-  // Forklaring: kort svar, eksempel, begreper, lenke videre, fordypning, kilder. Ingen alternativkort.
+  // Innholdstypen styrer nøytralitet; layout styrer bare presentasjonen.
+  const overview=a.layout==='overview';
+  if(overview){
+   const card=el('section','','option-card explain-overview');card.append(el('h3','Fordeler og ulemper'));
+   card.append(group('Fordeler',a.tradeoffs.pros,'pro'),group('Ulemper',a.tradeoffs.cons,'con'));out.append(card);
+  }
   const ex=el('section','','answer-part explain-example');ex.append(el('h3',a.example.title),el('p',a.example.text));out.append(ex);
   const terms=el('section','','explain-terms');terms.append(el('h3','Begreper i svaret'));const dl=el('dl');
   for(const x of a.terms){dl.append(el('dt',x.term+(x.alsoCalled?' (også kalt '+x.alsoCalled+')':'')),el('dd',x.text));}
-  terms.append(dl);out.append(terms);
+  terms.append(dl);if(!overview)out.append(terms);
   if(a.next)for(const next of [a.next,...(a.next.more||[])]){const p=el('p','','explain-next'),link=el('a',next.text);link.href=next.href;p.append(link);out.append(p);}
-  const deep=el('details','','full-answer');deep.append(el('summary','Fordypning'));
-  for(const part of a.parts)deep.append(partSection(part));out.append(deep);
+  const deep=el('details','','full-answer');deep.append(el('summary',overview?'Mer om regler og skjerming':'Fordypning'));
+  for(const part of a.parts)deep.append(partSection(part));
+  if(overview)deep.append(terms);out.append(deep);
   const src=el('details','','answer-sources');src.append(el('summary','Kilder og forbehold'),el('p','Tall i eksempler er regneeksempler, ikke prognoser. Tall og regler kan endres.'+(a.caveat?' '+a.caveat:''),'hint'));
   const sl=el('ul','','source-list');
   for(const s of a.sources){const li=el('li'),link=el('a',s.title);link.href=s.url;link.target='_blank';link.rel='noopener noreferrer';li.append(link);sl.append(li);}

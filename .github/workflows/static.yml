@@ -69,8 +69,11 @@ jobs:
         run: chown "$(id -u):$(id -g)" /github/home
       - name: Browser flows (Chromium)
         run: |
-          node tests/input-browser.cjs
+          node tests/ask-browser.cjs
+          SPARE_ENGINE=firefox node tests/ask-browser.cjs
+          SPARE_ENGINE=webkit node tests/ask-browser.cjs
           node tests/veileder-browser.cjs
+          node tests/input-browser.cjs
           node research/svarutkast/prov-renters-browser.cjs
           SPARE_ENGINE=firefox node research/svarutkast/prov-renters-browser.cjs
           SPARE_ENGINE=webkit node research/svarutkast/prov-renters-browser.cjs

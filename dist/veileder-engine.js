@@ -77,7 +77,7 @@ function answer(id,profile){
  const t=topics.find(t=>t.id===id);if(!t)throw Error('Velg et av temaene vi dekker.');
  if(t.entry&&t.entry.kind==='explainer'){
   const e=t.entry;
-  return F.resolve({title:t.title,kind:'explainer',terms:e.terms,example:e.example,next:e.next||null,caveat:e.caveat||'',parts:e.parts,sources:e.sources,checked:e.checked,missing:[],profile:validate(profile)});
+  return F.resolve({title:t.title,kind:'explainer',layout:e.layout,tradeoffs:e.tradeoffs,terms:e.terms,example:e.example,next:e.next||null,caveat:e.caveat||'',parts:e.parts,sources:e.sources,checked:e.checked,missing:[],profile:validate(profile)});
  }
  if(t.entry){
   const base=answer(t.category,profile),entry=t.entry;
@@ -138,8 +138,11 @@ function answer(id,profile){
 function register(entry){
  if(!entry||!/^q-[a-z0-9-]+$/.test(entry.id)||topics.some(t=>t.id===entry.id))throw Error('Ugyldig eller duplisert spørsmål.');
  if(entry.kind==='explainer'){
-  // Forklaring: «hva er dette?». Ingen alternativkort. Kort svar (intro), begreper, eksempel, fordypning og kilder.
+  // Fagtype holdes atskilt fra presentasjon. overview er en nøytral forklaring, uten profiltilpasning.
   if(!entry.title||!entry.intro||!entry.checked||!entry.questions?.length||!entry.words?.length||!entry.sources?.length||entry.options)throw Error('Ufullstendig forklaring.');
+  if(entry.layout!==undefined&&entry.layout!=='overview')throw Error('Ukjent svarmal.');
+  if(entry.layout==='overview'&&(!entry.tradeoffs?.pros?.length||!entry.tradeoffs?.cons?.length||[...entry.tradeoffs.pros,...entry.tradeoffs.cons].some(x=>!x.title||!x.text)))throw Error('Oversikten trenger kildebelagte fordeler og ulemper.');
+  if(entry.tradeoffs&&entry.layout!=='overview')throw Error('Fordeler og ulemper trenger oversiktsmal.');
   if(!entry.terms?.length||entry.terms.some(x=>!x.term||!x.text))throw Error('En forklaring trenger begreper med forklaring.');
   if(!entry.example?.title||!entry.example?.text)throw Error('En forklaring trenger et eksempel.');
   if(!entry.parts?.length||entry.parts.some(x=>!x.title||!x.text))throw Error('En forklaring trenger fordypning.');
