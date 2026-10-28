@@ -42,6 +42,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.match(summaryText,/går fra .+ til /);assert.doesNotMatch(summaryText,/ikke garantier|«Tabell»|^Grafen viser/);
   assert.match(fullText,/^Grafen viser /);assert.match(fullText,/ikke garantier/);assert.match(fullText,/«Tabell»/);
   assert.equal(await p.locator('#chart').getAttribute('aria-describedby'),'chartSummaryFull');
+  // Kort tekstalternativ: hovedinformasjon først, typen sist (Uu-tilsynet, Bilder og grafikk).
+  assert.match(await p.locator('#chart svg').getAttribute('aria-label'),/ over .+, fra .+ til .+\. Linjediagram\.$/);
   assert.match(await p.locator('#chart svg desc').textContent(),/^Etter .+ Før skatt\. Grafen viser /);
   await p.locator('#tableTab').click();assert(await p.locator('#chartSummary').isHidden(),'Description follows the graph view');
   await p.locator('#graphTab').click();assert(await p.locator('#chartSummary').isVisible(),'Description returns with the graph');

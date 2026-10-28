@@ -668,8 +668,12 @@ D. «Les opp»-knapp. Ikke valgt nå: ny funksjon som venter til oppstart. Modul
 - [W3C WAI: Complex Images](https://w3c.github.io/wai-tutorial-images/tutorials/images/complex/) (utkastversjon i W3Cs arbeidsrepo, ikke den publiserte siden, som ikke kunne åpnes): kort tekstalternativ som sier hva bildet er, og en lang beskrivelse med verdier, skala og trender, gjerne som en del av hovedinnholdet. `aria-describedby` passer bare for ren tekst uten overskrifter og tabeller, slik teksten her er.
 - [Finanstilsynets designmanual, Informasjonsgrafikk: diagrammer](https://finanstilsynet.no/designmanual/identitet/informasjonsgrafikk/informasjonsgrafikk-diagrammer) (publisert 05.01.2023, endret 08.05.2025): kontrast 3:1 for grafiske elementer, mørkere kant på lyse flater, og forklaringen av linjene i samme rekkefølge som i grafen.
 
+- [Uu-tilsynet: Bilder og grafikk](https://www.uutilsynet.no/veiledning/bilder-og-grafikk) (opprettet 17.04.2015, endret 15.12.2023, nivå 1, lest fra PDF Lars la ved 28.10.2026, nettadressen gjengitt slik Claude forstår den og ikke kontrollert): diagrammer skal ha en kort alternativ tekst som beskriver formål og hovedinformasjon, og den detaljerte informasjonen skal stå som tekst. Anbefaling utover kravet: begynn med det viktigste, og si om det er foto, illustrasjon eller grafikk konsekvent til slutt. HTML5 `<figure>` med `<figcaption>` er tilsynets anbefalte kode for synlig bildetekst. SVG anbefales for tekst i diagrammer.
+
+**Endret etter Uu-tilsynets råd:** Grafenes korte tekstalternativ har fått hovedinformasjonen og typen sist, for eksempel «Beløp i kroner over 25 år, fra 10 000 kr til 600 742 kr. Linjediagram.» Før sto det bare «Beløp i kroner over tid».
+
 **Avvik og forslag fra kontrollen, ikke gjort i denne PR-en:**
-- W3C foreslår å samle graf og beskrivelse i `<figure>` med `<figcaption>`. Kan vurderes som egen liten retting.
+- W3C og Uu-tilsynet anbefaler å samle graf og beskrivelse i `<figure>` med `<figcaption>`. Egen liten retting.
 - Grafens ytre `div` har `aria-label` uten rolle. Navn på et element uten rolle leses ikke av alle skjermlesere. Gjelder koden fra før.
 - Om tabellvisningen har riktige overskriftsceller, og om rekkefølgen i forklaringen av linjene følger grafen, er ikke kontrollert.
 - Chartability (Elavsky m.fl., EuroVis 2022), en fagfellevurdert sjekkliste for tilgjengelige grafer: testlisten er gått gjennom samme dag fra en PDF Lars la ved. Resultat og forslag står i `research/chartability-sparegraf.md`. Selve artikkelen er ikke lest.
