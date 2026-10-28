@@ -98,9 +98,9 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
  const a=Cards.build('q-aksjesparekonto',{}),f=Cards.build('q-fondskonto',{});
  for(const x of [a,f]){
   assert.equal(x.kind,'explainer');assert.deepEqual(x.options,[]);assert.match(x.example.text,/ikke en beregning av din skatt/);
-  assert.ok(x.sources.length&&x.sources.every(s=>s.url.startsWith('https://')));assert.equal(x.checked,'2026-10-24');
+  assert.ok(x.sources.length&&x.sources.every(s=>s.url.startsWith('https://')));assert.equal(x.checked,x===a?'2026-10-28':'2026-10-24');
   assert.ok(!/[–—]|\.\.\./.test(JSON.stringify(x)));
-  assert.match(x.caveat,/Kontrollert mot side(?:n|ne) 24\. oktober 2026/,'kontrolldato og at kildene mangler oppdateringsdato skal stå i forbeholdet');
+  assert.match(x.caveat,/Kontrollert mot (?:side(?:n|ne) 24|kildene 28)\. oktober 2026/,'kontrolldato og at kildene mangler oppdateringsdato skal stå i forbeholdet');
   assert.match(x.caveat,/ingen oppdateringsdato/);
   // Ingen satser, og ingen påstander vi ikke har kontrollert mot kildene.
   assert.doesNotMatch(JSON.stringify(x),/37,84|\b22 ?%|\b101 ?%|pengemarkedsfond|utenfor Europa|amerikanske/);
@@ -111,7 +111,7 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
   const txt=JSON.stringify(a.parts);
   assert.match(txt,/aksjefond som er hjemmehørende i EØS/);assert.match(txt,/over 80 prosent aksjeandel ved inntektsårets begynnelse/);assert.match(txt,/Rene rentefond kan ikke ligge på kontoen/);
   assert.match(f.example.text,/20 000 kroner er innskudd og 10 000 kroner er gevinst/);assert.match(f.example.text,/ser bort fra skjermingsfradraget/);
-  assert.ok(a.sources.every(x=>/^https:\/\/www\.skatteetaten\.no\/person\//.test(x.url)),'ASK bruker norsk primærkilde');
+  assert.ok(a.sources.every(x=>/^https:\/\/www\.skatteetaten\.no\/(?:person|rettskilder)\//.test(x.url)),'ASK bruker norsk primærkilde');
   assert.ok(f.sources[0].url.startsWith('https://www.skatteetaten.no/person/'),'fondskonto bruker norsk primærkilde');
   const z=JSON.stringify(Cards.build('q-ask-zero',{}).options);
   assert.doesNotMatch(z,/kan likevel investere utenfor Europa/);assert.match(z,/Ved kjøp på ASK/);assert.match(z,/oppfylte kravene ved kjøp, kan beholdes/);assert.match(txt,/Kravene vurderes når du kjøper/);
@@ -127,4 +127,17 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
  for(const id of ['q-fondskonto','q-ask-zero']){const all=JSON.stringify(V.questions?V.questions.find(q=>q.id===id):null)+JSON.stringify(Cards.build(id,{}));assert.doesNotMatch(all,/Nordnet|Zero|IKZ/i,id);}
  for(const q of ['Zero','IKZ'])assert.notEqual(V.findTopics(q)[0],'q-fondskonto',q+' er ikke søkeord ennå');
  assert.match(f.caveat,/ikke kontrollert her/);assert.match(f.caveat,/oktober 2025/);
+}
+
+// ASK: samme forklaring for alle profiler selv med fordeler/ulemper.
+{
+ const plain=Cards.build('q-aksjesparekonto',{});
+ assert.equal(plain.layout,'overview');
+ assert.equal(plain.tradeoffs.pros.length,2);assert.equal(plain.tradeoffs.cons.length,3);
+ assert.match(JSON.stringify(plain.parts),/ubenyttet skjerming fra tidligere år/);
+ for(const profile of [{age:18,years:1,debt:'yes',buffer:'no'},{age:70,years:30,risk:'low'}]){
+  const other=Cards.build('q-aksjesparekonto',profile);
+  for(const key of ['intro','tradeoffs','parts','example','terms','sources','note','steps'])assert.deepEqual(other[key],plain[key],key);
+ }
+ assert.equal(plain.note,'');assert.deepEqual(plain.options,[]);assert.deepEqual(plain.steps,[]);
 }

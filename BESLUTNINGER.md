@@ -721,3 +721,15 @@ C. Beholde Nordnet bare i kildelisten. Ikke valgt: setningene som bygde på kild
 
 **Vurder på nytt når:** pausen oppheves, og søkeordene «Zero» og «IKZ» skal legges inn igjen.
 
+
+## ASK i samlet svarmal og felles føringer (28. oktober 2026)
+
+**Status:** Lars bestilte innholdsgjennomgang av ASK og tilpasning til svarmalen med fordeler og ulemper. Han ba også om føringer som virker på tvers av verktøy. Implementasjonen i denne PR-en er til kontroll, ikke godkjent for publisering.
+
+**Valg:** ASK beholder den nøytrale innholdstypen, søkeinngangene og uavhengigheten fra brukerprofiler. Presentasjonen får en samlet oversikt med fordeler og ulemper, kortere eksempel og begreper i fordypningen. Felles føringer står i SVARMAL.md og lenkes fra arbeidsreglene og bidragsinstruksen.
+
+**Alternativer:** A. Samlet forklaring med kildebelagte fordeler og ulemper. Valgt. B. Beholde stor eksempelboks og synlig begrepsliste før fordypningen. Ikke valgt: Lars opplever siden som lite pen og mindre helhetlig. C. Gjøre ASK til en sammenligning for å få kortene. Ikke valgt: ville konstruert et valg og risikert å hente inn profiltilpasning og råd. D. Endre alle svar samtidig. Ikke valgt: ASK prøves og kontrolleres først.
+
+**Akseptert ulempe:** Enkelte detaljer krever fortsatt åpning av fordypningen. Nødvendige forbehold skal stå i kortsvaret eller ved fordelen de begrenser. Ingen påstand om at utformingen er brukertestet.
+
+**Vurder på nytt når:** Lars har sett prøvevisningen, kontrolløren finner misforståelser eller faktisk bruk viser at oversikten skjuler viktige begrensninger.

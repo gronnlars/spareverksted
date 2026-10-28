@@ -80,3 +80,5 @@ Når innhold og søk endres, vurderes forventet resultat på nytt.
 Les [AGENTS.md](AGENTS.md), [språkreglene](SPRAKREGLER.md), [beslutningene](BESLUTNINGER.md), [faseplanen](research/plan.md) og [kravene til universell utforming](research/universell-utforming.md) før arbeid. Dokumenter viktige nye valg og begrunnelser i beslutningsloggen samme dag. Bevar tidligere beslutninger med status når de erstattes.
 
 [Spørsmålkøen](SPORSMALSKO.md) er eneste prioriterte kø. [Daglig oppgave](research/DAGLIG-OPPGAVE.md) gjelder upublisert research; [arbeidsloggen](research/ARBEIDSLOGG.md) brukes til reservasjoner og overlevering. Kontrollert innholdspåfyll følger faseplanens punkt 6. Valgomaten venter. Kalkulatorens frys gjelder fortsatt.
+
+Ved arbeid med spørsmål og svar: les [SVARMAL.md](SVARMAL.md). Oppgi ønsket svarform og konkret visning i overleveringen. Den som integrerer, skal kontrollere den gjengitte siden og får ikke publiseringsfullmakt av at teksten er godkjent.

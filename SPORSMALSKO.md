@@ -24,7 +24,7 @@ For hver rad gjelder foreløpig **fagkontroll: ikke nykontrollert; søketest: ik
 
 | Rekkefølge | Fast ID | Spørsmål | Først / overlapp / andre formuleringer | Foreløpig dekning | Arbeidsstatus | Utkast og kontroll |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | SV-031 | Hva er en aksjesparekonto (ASK)? | Ingen registrert | Eget svar: q-aksjesparekonto, integrert via #61 | Delkontroll, åpne funn | Delkontroll 28.10.2026, revidert mot main 11df294. [Funn og videre kontroll](research/svarutkast/KONTROLL-ASK-FONDSKONTO-2026-10-28.md). Ikke fullført eller godkjent. |
+| 1 | SV-031 | Hva er en aksjesparekonto (ASK)? | Ingen registrert | Eget svar: q-aksjesparekonto, integrert via #61 | Delkontroll, åpne funn | Delkontroll 28.10.2026, revidert mot main 11df294. Ny ASK-retting og svarmal til kontroll: [SV-031](research/svarutkast/SV-031-SVARMAL-2026-10-28.md), ikke publisert. [Funn og videre kontroll](research/svarutkast/KONTROLL-ASK-FONDSKONTO-2026-10-28.md). Ikke fullført eller godkjent. |
 | 2 | SV-035 | Hva er et indeksfond? | Ingen registrert | Delvis: funds; indeks og passiv forvaltning mangler | Integrert, avventer publisering | [SV-035](research/svarutkast/SV-035.md), selvkontroll 25.10.2026; søk ikke testet |
 | 3 | SV-017 | Hva er forskjellen på sparing og investering? | Ingen registrert | Delvis: funds; intet eget begrepssvar | Integrert, avventer publisering | [SV-017](research/svarutkast/SV-017.md), selvkontroll 25.10.2026; søk ikke testet |
 | 4 | SV-022 | Hva er renters rente? | rentes rente; hvordan fungerer renters rente; GAPS renters-rente | Mangler egen forklaring; GAPS finnes på main | Utkast med forbehold | [Utkast](research/svarutkast/SV-022.md), selvkontroll 25.10.2026; lokal søkeprøve, ikke integrert |

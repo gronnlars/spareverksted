@@ -10,3 +10,6 @@
 .match-title{display:block;font-weight:600}
 .match-why{display:block;font-size:13px;font-weight:400;color:var(--muted,#526657);margin-top:2px}
 .match-results>button{margin-top:8px;min-height:44px}
+
+.explain-overview{max-width:800px;box-sizing:border-box;margin:22px 0}.explain-overview h3{font-size:18px;margin:0 0 14px}.explain-overview+.explain-example{padding:0;background:none;border:0;border-radius:0}
+.explain-overview .tradeoff p,.explain-overview+.explain-example p{font-size:14px}

@@ -119,3 +119,7 @@ Lars har sendt konkrete kildeutdrag og myndighetsutskrifter for H og G. GPT har 
 ### Supplerende ordlydsdokumentasjon fra Lars, 28.10.2026
 
 To skjermbilder fra Skatteetaten er lest av ChatGPT/Codex. Lars har nå dokumentert garantiavgrensningen i fondskontosiden B og hele renteavsnittet i BSU-siden D, inkludert unntaket for renter påløpt fra og med året man fyller 34. Registrert med presis avgrensning i hovedrapporten. Disse to manglende utdragene er ikke lenger åpne. Ingen generell godkjenning, produktretting eller publisering. Øvrige kontrollpunkter står som før.
+
+### ASK og felles svarmal, 28.10.2026
+
+ChatGPT/Codex etter Lars sitt konkrete oppdrag. Main `0c1fb7398825cb3bd2909a6d890fe67e79140497`. SV-031 i egen gren `fix/ask-svarmal`, ingen aktiv reservasjon ved leveranse. [Innhold, kildekontroll, angrepsflater og teststatus](svarutkast/SV-031-SVARMAL-2026-10-28.md). Kildene faktisk lest i denne økten. Felles føringer i SVARMAL.md lenket fra AGENTS, CONTRIBUTING og daglig instruks. ASK beholder nøytralitet og søkeinnganger. Bare ASK prøves i oversiktsmalen. Alle 17 Node-testfiler og generatorens produktkontroll består. Lokal nettleser mangler, CI må bekreftes og bildene vurderes. Annen kontrollør og Lars sin godkjenning gjenstår. Ingen sammenslåing eller publisering. #97 beholdes separat. Ingen fullført K7-runde for resten av nettstedet erklæres.

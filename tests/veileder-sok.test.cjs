@@ -35,7 +35,7 @@ const SET=[
  {q:'Lønner det seg å betale ned studielånet fortere?',expect:'student',proof:/Låne mindre eller betale ekstra/},
  {q:'Bør jeg redusere risikoen før jeg blir pensjonist?',expect:'pension',proof:/Mange reduserer risiko når uttakene nærmer seg/},
  {q:'Hva er forskjellen på IPS og ASK?',expect:'q-ips-ask',proof:/IPS er bundet pensjonssparing/},
- {q:'Hva er en aksjesparekonto?',expect:'q-aksjesparekonto',proof:/Du betaler ikke skatt på gevinst mens verdiene står på kontoen/},
+ {q:'Hva er en aksjesparekonto?',expect:'q-aksjesparekonto',proof:/Gevinst og utbytte skattlegges først ved uttak utover gjenværende innskudd/},
  // Ikke dekket. Et treff her er misvisende: brukeren får et svar på noe annet enn det hen spurte om.
  {q:'Hvordan blir fond skattlagt?',expect:null,why:'Fondssvaret har ingen skatteregler for fond. ASK-svaret forklarer bare forskjellen mellom to kontotyper.'},
  {q:'Er det dumt å ha alle sparepengene på brukskonto?',expect:null,why:'Ingen svar sammenligner brukskonto med sparekonto.'},

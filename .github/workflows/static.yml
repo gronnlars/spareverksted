@@ -71,6 +71,9 @@ jobs:
         run: |
           node tests/input-browser.cjs
           node tests/veileder-browser.cjs
+          node tests/ask-browser.cjs
+          SPARE_ENGINE=firefox node tests/ask-browser.cjs
+          SPARE_ENGINE=webkit node tests/ask-browser.cjs
           node research/svarutkast/prov-renters-browser.cjs
           SPARE_ENGINE=firefox node research/svarutkast/prov-renters-browser.cjs
           SPARE_ENGINE=webkit node research/svarutkast/prov-renters-browser.cjs
