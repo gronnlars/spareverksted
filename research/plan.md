@@ -55,6 +55,14 @@ Gjenstår, bare det som ikke kan gjøres herfra (Lars, iPhone Safari, rundt 10 m
 
 Fase 2 avsluttes først når status for kontrollpunktene er dokumentert. Utestet skjermleserbruk står som åpen kontroll og skal ikke omtales som godkjent. Kontrollert innholdspåfyll kan foregå mens dette følges opp, forutsatt at kjente alvorlige brukshindringer rettes først. Det skal stå ærlig hvor forståelsen ikke er systematisk testet med brukere.
 
+Hvis det senere blir brukertesting, gjenbrukes denne planen. Brukerpanel er fortsatt ikke et krav (punkt 8). La testbrukeren forklare med egne ord, uten at ønsket svar er forklart først:
+
+- Hva betyr resultatet eller hovedpoenget?
+- Hvilke forutsetninger og usikkerheter er viktige?
+- Sier siden noe om hva du bør gjøre? Hvis ja, hva?
+
+Registrer konkrete misforståelser og hvor de oppstår. Hold faktisk brukertesting atskilt fra redaksjonell egenkontroll og tekniske tester. Egenkontroll er ikke en brukertest.
+
 ## 4. Historisk dekningsoversikt, må kontrolleres før bruk
 
 Hva som finnes nå: sju temaer i veilederen (boliglån eller sparing, studielån, sparing til barn, buffer og dyr gjeld, sparekonto eller fond, pensjon, BSU) og tre egne svar (Hva er BSU?, IPS eller ASK?, ASK eller fondskonto?). Kalkulatoren dekker sparing, sparemål og uttak.

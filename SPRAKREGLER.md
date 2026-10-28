@@ -98,6 +98,11 @@ Ved en tekstendring skal bidragsyteren kontrollere:
 - Stemmer navn, tall, enheter, datoer og kilder?
 - Har omskrivingen bevart den faglige betydningen og nødvendige unntak?
 - Fungerer teksten på mobil, med forstørring og som navn eller beskjed for skjermleser der det er relevant?
+- Hva kan leseren oppfatte at teksten anbefaler? Kontroller overskrift, eksempler, eksempeltall, rekkefølge og hvilke begrensninger som er utelatt. En generell forklaring skal ikke gli over i et personlig råd. At ord som «kjøp», «selg» og «bør» mangler, er ikke alene nok kvalitetskontroll, og det er ingen juridisk avklaring. Se også [KILDEREGLER.md](KILDEREGLER.md), K5.
+
+Eksempel: Et regneeksempel med jevn vekst skal forklare regnemåten uten å antyde at brukeren bør velge spareformen, eller at brukeren kan regne med resultatet.
+
+Standardverdier og forhåndsvalg kan også signalisere hva som anbefales. De vurderes ved senere produktkontroll. Dette åpner ikke kalkulatoren for endringer; frysen i [research/plan.md](research/plan.md), punkt 0, gjelder.
 
 Beskriv konkret uklarhet, endring og kontroll i pull requesten. Noter det som ikke er testet. Kjør relevante eksisterende tester når tekst er koblet til logikk eller forventede svar. Ikke oppdater testforventninger bare for å gjøre dem grønne uten å kontrollere betydningen.
 

@@ -34,9 +34,15 @@ Sjekk kontrollkalenderen i [KILDEREGLER.md](../KILDEREGLER.md), punkt K7, og tab
 1. Les aktuelle primærkilder ved hver ny faktakontroll. Bruk relevante sider fra Skatteetaten, Nav, Lånekassen, Finanstilsynet, Finansdepartementet, Kartverket, Statsforvalteren, Altinn, Brønnøysundregistrene eller lov/forskrift. Bruk tilbydervilkår for produktfakta og merk kommersielle kilder. Kildeorganisasjonen er ikke i seg selv nok; kontroller den konkrete påstanden.
 2. Registrer URL, sidetittel, faktisk lesedato, regelår, påstand kilden støtter og vesentlige unntak. Skill vedtatte regler fra forslag og kjente fakta fra egne eksempler. Ikke kopier dato eller satser fra gammel research som om de var kontrollert i dag. Ved utilgjengelig kilde: marker hva som mangler og stopp den berørte konklusjonen.
 3. Lag eller oppdater `research/svarutkast/SV-xxx.md` etter malen under. Gjenbruk kilder og beslektede utkast med lenker. Ikke lag et kunstig valg eller like lange fordeler/ulemper for å fylle malen. Et grunnbegrep trenger ofte forklaring og eksempel framfor to kort.
-4. Skriv kort svar først, med nødvendig forbehold der det endrer meningen. Bruk fordeler og ulemper når spørsmålet gjelder et valg. Forklar nye fagord og henvis til relevante grunnbegreper. Ikke anta alder, bolig, barn, inntekt eller andre brukerforhold. Personalisering beskrives som betingede regler, ikke ny kode.
-5. Kontroller angrepsflater: minst tre konkrete feiltolkninger med reparasjon, deretter navn, tall, enheter, forutsetninger, datoer og språk. Unngå tankestrek, tre prikker og oppdiktet søkevolum. Bruk «hverken» og «renters rente».
-6. Gjør en egen kontrollrunde mot kildene. Merk selvkontroll som selvkontroll. Ikke kall det uavhengig kontroll. Et annet verktøy eller en annen agent kan senere overta; denne instruksen krever ikke samtidig agentarbeid.
+4. Undersøk om spørsmålet bygger på et feilaktig eller udokumentert premiss. Rett premisset kort før du forklarer begrepet. Ikke bekreft brukerens antakelse bare for å gi et direkte svar. Ta med begrensninger og moteksempler når de trengs for å forstå. Redaksjonelle kontrolltilfeller, ikke testet i søket:
+   - «Hvorfor dobler fond pengene hvert tiende år?» skal rette antakelsen om fast doblingstid.
+   - «Betyr 0 prosent gjennomsnitt at jeg har like mye penger?» skal forklare forskjellen mellom gjennomsnittet av årsprosentene og utviklingen i beløpet.
+   - «Er høyest beregnet sluttbeløp alltid best?» skal forklare hva beregningen utelater, uten å velge for brukeren.
+
+   Kontrolltilfellene åpner ikke for endringer i søket eller nye svar på nettsiden.
+5. Skriv kort svar først, med nødvendig forbehold der det endrer meningen. Bruk fordeler og ulemper når spørsmålet gjelder et valg. Forklar nye fagord og henvis til relevante grunnbegreper. Ikke anta alder, bolig, barn, inntekt eller andre brukerforhold. Personalisering beskrives som betingede regler, ikke ny kode.
+6. Kontroller angrepsflater: minst tre konkrete feiltolkninger med reparasjon, deretter navn, tall, enheter, forutsetninger, datoer og språk. Kontroller også hva leseren kan oppfatte at utkastet anbefaler, etter [SPRAKREGLER.md](../SPRAKREGLER.md), punkt 7. Unngå tankestrek, tre prikker og oppdiktet søkevolum. Bruk «hverken» og «renters rente».
+7. Gjør en egen kontrollrunde mot kildene. Merk selvkontroll som selvkontroll. Ikke kall det uavhengig kontroll. Et annet verktøy eller en annen agent kan senere overta; denne instruksen krever ikke samtidig agentarbeid.
 
 Særlige faggrenser: Konto er ikke investering. Zero er et produktnavn, ikke et generelt navn på alle fondskontoer. AS/ENK må skille utsatt skatt fra spart skatt, selskapets skatt fra eierens skatt og ta med uttak og administrasjon. Boligsalg krever presis eier- og botid. Pensjonsordninger må skilles før regler om uttak, arv og AFP beskrives. Ikke gi én universell trygg uttaksrate eller garanti om avkastning.
 
@@ -74,6 +80,9 @@ Avhenger av: <ID-er eller ingen>. Alternative formuleringer: <liste>.
 
 ## Angrepsflater og reparasjoner
 <Minst tre konkrete feiltolkninger og hvordan teksten forebygger dem.>
+Premiss: <ingen identifisert ved egenkontroll, eller hva som ble rettet>.
+Mulig oppfattet anbefaling: <ingen identifisert ved egenkontroll, eller hva som ble justert>.
+Begge er egenkontroll, ikke uavhengig kontroll, juridisk vurdering eller garanti.
 
 ## Korrektur og overlevering
 <Navn, tall, språk. Hva ble kontrollert? Hva gjenstår? Neste anbefalte oppgave.>
