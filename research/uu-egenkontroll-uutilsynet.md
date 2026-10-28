@@ -24,13 +24,13 @@ Kontrollert mot koden på main `00d8f15`, de automatiske testene og `research/un
 | 1. Tastatur | Snarveilenke, synlig fokus, fornuftig rekkefølge, fokus ved utvid og lukk | Ok, delvis | Hopp-lenke og synlig fokus testes i `a11y-browser.cjs`. Rekkefølgen er ikke gått gjennom manuelt |
 | 2. Forstørring | 200 til 400 % zoom, smal og bred skjerm, zoom på mobil | Ok | Reflow ved 320 og 640 px testes. Viewport sperrer ikke zoom på mobil |
 | 3. Farger og kontrast | Lenker markert med mer enn farge, kontrast 4,5:1 og 3:1, fargeblindsimulering av diagrammer | Delvis | Kontrast testes automatisk. Grafene bruker strektype i tillegg til farge. **Fargeblindsimulering av grafene er ikke gjort** |
-| 4. Overskrifter | Riktig koding, ingen hopp i nivå | Ok for HTML-filene | Ingen hopp funnet i de fem sidene. Innhold laget med JavaScript er ikke sjekket |
+| 4. Overskrifter | Riktig koding, ingen hopp i nivå | Ok for HTML-filene | Ingen hopp funnet i de fem sidene. Oppdatert 28.10.2026: tomme overskrifter i innhold laget med JavaScript er rettet i PR #99, og `tests/html-struktur-browser.cjs` sjekker den ferdige siden. Hopp i nivå i innhold fra JavaScript er ikke sjekket |
 | 5. Lenker | Lenker skiller seg ut, beskrivende lenketekst | Ikke kontrollert | |
 | 6. Bilder | Alternativ tekst, tom for pynt | Ok for grafene med PR #92 | Grafene har kort tekstalternativ med hovedinformasjon og typen sist, beskrivelse i tekst og tabell, slik løsningsforslaget «Bilder og grafikk» beskriver. `<figure>` med `<figcaption>` gjenstår. Andre bilder er ikke gått gjennom |
-| 7. Skjema | Synlig ledetekst koblet til feltet | Ok | Feltene har synlige ledetekster og navn |
+| 7. Skjema | Synlig ledetekst koblet til feltet | Ok | Feltene har synlige ledetekster og navn. Oppdatert 28.10.2026: hvert felt har nå én `label` som bare peker på feltet (PR #99) |
 | 8. Søk | Vanlige ord, skrivefeil, kombinasjoner | Ok | Søket i veilederen tåler skrivefeil og har egne tester. Søkestatistikk finnes ikke, siden ingenting logges |
 | 9. Sidetitler | Starter med sidens innhold, slutter med nettstedets navn | Delvis | Fire sider følger mønsteret. Forsiden heter «Spareverksted · Din plan, i ditt tempo», som starter med nettstedets navn. «Om Spareverksted» mangler skilletegn før navnet, men er tydelig |
-| 10. Kodevalidering | Riktig nøsting, ingen like id-er | Delvis | Ingen like id-er i de fem HTML-filene. W3C-validatoren er ikke kjørt |
+| 10. Kodevalidering | Riktig nøsting, ingen like id-er | Ok | Ingen like id-er i de fem HTML-filene. Oppdatert 28.10.2026: W3C-validatoren er kjørt av Lars (PR #94) og av Claude på den ferdige siden etter JavaScript (PR #99): ingen feil |
 
 ## Skjema: krav i forskriften
 
@@ -58,7 +58,11 @@ Her kan Spareverksted være bedre enn minstekravet, slik Lars ønsker.
 1. Fargeblindsimulering av grafene i alle tre temaer.
 2. Sjekk om feilmeldingen ved feltet blir stående når meldingen i `#toast` forsvinner. Hvis ikke: rett det.
 3. Vurder samlet feilliste over skjemaet.
-4. Kjør W3C-validatoren på de fem sidene.
+4. ~~Kjør W3C-validatoren på de fem sidene.~~ Gjort 28.10.2026, se punkt 10.
 5. Forsiden: tittel som starter med sidens innhold, for eksempel «Sparekalkulator · Spareverksted». Liten endring, men forsiden er også det folk deler.
 
 Alle er retting av UU-feil eller kontroller, og tillatt under pausen etter `docs/regulatorisk.md`, krav 6. Punkt 3 og 5 endrer det brukeren ser og bør godkjennes av Lars først.
+
+## Status ved sammenslåing (28. oktober 2026, kveld)
+
+Punkt 4, 7 og 10 er oppdatert etter PR #94, #99 og #103. Forslag 1, 2, 3 og 5 er fortsatt åpne og ikke påbegynt. Forslag 3 og 5 endrer det brukeren ser og krever Lars' godkjenning. Grafforklaringen er i tillegg gjort om til en liste, så den leses riktig uten sidens stilark (PR #103, funnet i Chrome sin lesemodus).
