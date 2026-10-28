@@ -504,4 +504,3 @@ const entries=[
 if(typeof module!=='undefined'&&module.exports)module.exports=entries;
 else {for(const entry of entries)root.SpareVeileder.register(entry);}
 })(typeof window!=='undefined'?window:globalThis);
-
