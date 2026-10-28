@@ -4,6 +4,16 @@ Beslutningsnotat, 24. oktober 2026.
 
 Les dette før du foreslår større endringer. Notatet samler prinsipper og valg fra prosjektarbeidet. Det er ikke dokumentasjon på at alle deler er ferdige eller fullstendig brukertestet.
 
+## Aktive avvik fra reglene
+
+Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](KILDEREGLER.md), «Når en regel må brytes». Kontrollrunden går gjennom tabellen, og den som gjør runden varsler Lars minst to uker før utløp.
+
+| Hva | Regel | Godkjent av | Utløper | Fornyes av | Status |
+| --- | --- | --- | --- | --- | --- |
+| Varsel om sparehorisont for Indeksfond under 5 år på kalkulatorsiden (PR #67) | Kalkulatorfrysen (plan, punkt 0) | Lars ved sammenslåing | 31.01.2027 | Lars | Foreslått. Aktivt først når #67 er slått sammen |
+| Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en med unntaket er slått sammen |
+| Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en er slått sammen |
+
 ## En ulempe betyr ikke at valget var feil
 
 Som når man velger skuffer framfor skap på et kjøkken: Begge løsninger har ulemper. Et godt valg kan innebære at man aksepterer noe irriterende for å slippe noe som ville vært verre.
@@ -67,17 +77,19 @@ En begrunnelse er ikke et vern mot kritikk. Faktiske regnefeil, utilgjengelige k
 
 **Vurder på nytt når:** Brukerbehov krever analyse av ulike avkastningsforløp, og en ny modell kan etterprøves. Test særlig om brukeren forstår at målet kan glippe på datoen pengene trengs.
 
-## Forhåndsskrevne svar framfor KI-svar
+## Svar skrevet på forhånd, ikke laget av KI mens brukeren venter
 
-**Valg:** «Spør om sparing» bruker kvalitetssikrede tekster og regler, med kilder og kontrolldato.
+**Valg:** «Spør om sparing» viser tekster som er skrevet og kildekontrollert før publisering, med kilder og kontrolldato. Kildekontrollen kan være utført med KI; menneskelig eller uavhengig fagkontroll oppgis bare når den er dokumentert. Det er reglene på siden som velger hvilken tekst brukeren ser. KI brukes i stor grad når tekstene skrives, men ingen KI-modell lager svar mens brukeren er på siden.
 
-**Alternativ:** La en språkmodell generere personlige svar.
+**Alternativ:** La en språkmodell skrive personlige svar i det brukeren spør.
 
 **Begrunnelse:** Svarene skal være etterprøvbare, forutsigbare og mulige å vedlikeholde. Tjenesten skal ikke kreve innlogging, reklame eller eksterne KI-kall.
 
 **Akseptert ulempe:** Søket forstår ikke alle formuleringer, og veilederen kan ikke svare fritt på alt. Manglende dekning skal ikke skjules med et irrelevant svar.
 
 **Vurder på nytt når:** Faktiske spørsmål viser hull i ruting eller innhold. Utvid kvalitetssikret dekning i riktig fase.
+
+**Presisert 25. oktober 2026:** Overskriften het tidligere «Forhåndsskrevne svar framfor KI-svar». Den kunne leses som at tekstene er skrevet uten KI. Det stemmer ikke. Valget gjelder hvordan svaret vises for brukeren, ikke hvordan teksten er laget. Kravet i språkreglene om naturlig norsk gjelder skrivestilen, ikke hvordan teksten er produsert.
 
 ## Kvalitet før flere funksjoner
 
@@ -349,3 +361,290 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Vurder på nytt når:** Faktisk bruk viser feil svar eller gjentakende problemer, innhold endrer hvilke ord som har én eier, eller iPhone- og skjermlesertesting avdekker hindringer.
 
 **Status:** Anbefalt, ikke vedtatt. Lars avgjør.
+
+## Lokal lagring og personvernside (25. oktober 2026)
+
+**Valg:** Lagre minst mulig og bare etter en handling fra brukeren. `sv-started` flyttes fra `localStorage` til fanens `sessionStorage`, og lagrede planer regnes også som start. Visningsnivå lagres bare når brukeren selv trykker på et nivå, aldri «Enkel» og aldri ved automatisk tilbakestilling. Arbeidsplanen og veilederkonteksten opprettes bare når brukeren går til «Spør om sparing», ikke ved hver `pagehide`. Ny side `personvern.html` med sletteknapp for Spareverksteds egne nøkler. Ingen samtykkeboks.
+
+**Alternativer:** A: Beholde dagens lagring og skrive en forklaring. Valgt bort fordi `sv-started` ble lagret permanent uten noe uttrykkelig ønske, også når en delt lenke ble åpnet, og `sv-level` ble skrevet med standardverdien ved oppstart. B: Fjerne all lagring av tema og nivå. Valgt bort foreløpig fordi brukeren selv trykker på valget, og fordi Nkom ikke er spurt ennå. C: Flytte tema og nivå til `sessionStorage`. Mulig etter svar fra Nkom; en enkel endring. D: Samtykkeboks. Valgt bort fordi ingen kjent lagring er sporing eller statistikk, og en boks for uavklarte funksjoner ville være å skyve problemet over på brukeren. E: Slette arbeidsplanen når den er hentet tilbake. Valgt bort fordi omlasting av kalkulatoren da mister planen, og en utdatert plan hindres uansett ved at `pagehide` oppdaterer en plan som finnes.
+
+**Begrunnelse:** Ekomloven § 3-15 gjelder all lagring i nettleseren, også uten personopplysninger. Unntaket gjelder det som er strengt nødvendig for en tjeneste brukeren uttrykkelig har bedt om. Lagring etter et konkret trykk står sterkere enn lagring ved oppstart.
+
+**Akseptert ulempe:** En bruker uten lagrede planer ser startguiden igjen ved nytt besøk. Går brukeren til «Spør om sparing» via adressefeltet eller Om-siden i stedet for lenken i kalkulatoren, følger ikke planen med. Personvernsiden har punkter merket «Avklares» og er merket `noindex`.
+
+**Vurder på nytt når:** Nkom eller Datatilsynet svarer, ansvarlig og kontakt er avklart, eller hostingen endres.
+
+**Status:** Foreslått i PR, ikke vedtatt. Lars avgjør. Gjort på eget oppdrag fra Lars under pausen (docs/regulatorisk.md).
+
+## Tema og nivå huskes bare i fanen (26. oktober 2026)
+
+**Beslutning:** Lars vedtok alternativ B i `docs/personvern-lagring.md`: fargetema (`sv-color-theme`) og visningsnivå (`sv-level`) lagres i `sessionStorage` og ikke i `localStorage`. (Bokstavene følger dokumentet; i oppføringen over fra 25. oktober har B og C andre betydninger.)
+
+**Begrunnelse:** Mindre permanent lagring uten å fjerne funksjonen. Valget gjelder så lenge fanen brukes, og huskes ikke til neste besøk.
+
+**Akseptert ulempe:** Brukeren må velge på nytt neste dag og i hver ny fane. Gamle permanente verdier fjernes og leses ikke.
+
+**Ikke avgjort:** Fanelagring er ikke garantert slettet ved lukking, siden nettlesere kan gjenopprette faner. Det avgjør ikke alene om ekomloven § 3-15 gjelder. Spørsmålet ligger hos Nkom.
+
+## Hvorfor KI-informasjonen ble publisert mens prosjektet er på pause (26. oktober 2026)
+
+**Beslutning:** Lars godkjente 26.10.2026 at PR #80 («Synlig KI-informasjon på forside og søkeside») ble slått sammen og publisert (main `b2eada7c7805b428835025d6d729218b5367a888`). Publiseringskjøringen gikk grønt. Lars bekreftet med skjermbilde (Safari på iPhone, 26.10.2026) at KI-linjen vises på forsiden; Om-siden og søkesiden er ikke sett på iPhone, og nettverkstrafikk, HTTP-hoder og servercookies er ikke kontrollert. Etter dette gjøres ingen nye publiseringer før svar fra Domene.no og Nkom foreligger.
+
+**Begrunnelse (Lars):** Endringen handlet ikke om generelle finansielle spørsmål. Den handlet om åpenhet om hvordan innholdet lages, og om personvern og etterrettelighet, som har vært grunnmuren i prosjektet fra start. GPT vurderte at den ikke berører det som er spurt Finanstilsynet om. Den vurderingen er en KI-vurdering av endringens omfang, ikke en juridisk godkjenning. Finanstilsynet er ikke spurt om akkurat denne endringen, og vurderingen er ikke en uttalelse fra dem.
+
+**Hva som ble publisert:** Én linje på forsiden, en tilsvarende tekst ved «Spør om sparing» og en seksjon på Om-siden. Ingen endring i beregninger, spørsmål, kunnskapsbase eller eksempler. Ingen lagring er endret i denne publiseringen.
+
+**Ikke publisert:** PR #78 (personvernside, kontaktknapper, fanelagring av tema og nivå). Den venter på svar og på at kontaktadressene er mottakstestet.
+
+
+## Grunnlag og sletting for e-post på personvernsiden (27. oktober 2026)
+
+**Beslutning:** Lars godkjente 27.10.2026 at personvernsiden oppgir berettiget interesse (GDPR art. 6 nr. 1 bokstav f) som grunnlag for å lese og svare på e-post, med interesseavveiningen i `docs/kontakt-epost.md`, og sletteteksten: sletting fra innboksen på forespørsel, med mindre vi må beholde meldingen, og uten løfte om sletting av kopier hos Domene.no eller i Googles sikkerhetskopier.
+
+**Alternativer vurdert:**
+- A. Berettiget interesse med dokumentert avveining. **Valgt.**
+- B. Samtykke. Ikke valgt: avsenderen tar selv kontakt og venter svar, og samtykke må kunne trekkes tilbake, noe som passer dårlig for å dokumentere svar på rettighetsforespørsler.
+- C. Ikke oppgi grunnlag før juridisk avklaring. Ikke valgt: siden skal beskrive status nå og endres ved behov.
+- Sletting: «Ber du oss slette, sletter vi» (Claudes første utkast) ble forkastet som for kategorisk. GPTs forslag («når vi ikke lenger har lovlig grunnlag») ble omskrevet til konkret språk med samme innhold.
+
+**Akseptert ulempe:** Ingen fast slettefrist ennå. Vurderingen er skrevet av KI og ikke kontrollert av jurist.
+
+**Vurder på nytt når:** Datatilsynet eller Domene.no svarer, e-postløsningen endres, eller Lars velger slettefrist.
+
+**Sperre for publisering av PR #78:** Lars opplyser 27.10.2026 at e-postaliasene for personvern og generell kontakt ikke virker ennå. Siden kan ikke publiseres med en kontaktadresse som ikke når fram. Main har per 27.10.2026 ingen e-postadresser; kontakt skjer via GitHub. Lars vurderer at cPanel, som Domene.no ser ut til å bruke, er programvare hos leverandøren og ikke en egen part siden må nevne.
+
+**Endring samme dag:** Lars byttet 27.10.2026 fra videresending til egne e-postkasser hos Domene.no, lest med Gmail-appen via IMAP. Personvernsiden er skrevet om tilsvarende: meldinger lagres i e-postkassen hos Domene.no, Google «kan» behandle dem via Gmail-appen (ikke bekreftet), og sletteteksten gjelder e-postkassen. Sending virker; mottak er ikke bekreftet. Detaljer i `docs/kontakt-epost.md`.
+
+**Sperren for aliasene er løst 27.10.2026:** MX-oppføring manglet og er lagt inn (`10 loke.domene.no`). Lars bekrefter mottak utenfra. PR #78 kan publiseres når Lars bestemmer det. SPF og DKIM gjenstår.
+
+## Personvernsiden publiseres (27. oktober 2026)
+
+**Beslutning:** Lars godkjente 27.10.2026 publisering av PR #78 (personvernside, kontaktknapper, fanelagring av tema og nivå). `noindex` og utkastmerkingen er fjernet. Dette erstatter forbeholdet i oppføringen fra 26.10.2026 om at ingen nye publiseringer skulle skje før svar fra Domene.no og Nkom.
+
+**Begrunnelse:** Siden beskriver status per 27.10.2026 og sier rett ut hva som ikke er avklart. E-post virker begge veier, med SPF, DKIM og DMARC `PASS`. Lars og GPT har lest gjennom teksten, og påpekte feil er rettet.
+
+**Akseptert ulempe:** Leverandørforhold (ansvar, lagringssted, slettetider hos GitHub, Domene.no, MailChannels og Google) er fortsatt uavklarte. Svar fra Nkom kan kreve endring av fanelagringen.
+
+**Ikke berørt:** Prosjektpausen etter henvendelsen til Finanstilsynet gjelder fortsatt for alt annet innhold. Denne publiseringen gjelder personvern og lagring.
+
+**Vurder på nytt når:** Nkom, Datatilsynet eller leverandørene svarer, eller Lars' iPhone-sjekk etter publisering viser feil.
+
+## «Jeg» i stedet for «vi» på Om-, personvern- og tilgjengelighetssiden (28. oktober 2026)
+
+**Beslutning:** Lars vedtok 28.10.2026 at sidene skal bruke «jeg», fordi det er én person som står ansvarlig. KI-verktøyene er nevnt med navn på Om-siden. «Sammen har vi» om Lars og ChatGPT står, fordi det gjelder samarbeidet.
+
+**Alternativer:** A. «Jeg» på de tre sidene nå, resten senere. **Valgt.** B. «Jeg» på hele nettstedet nå. Ikke valgt: kalkulator og veileder er fryst eller på pause. C. Beholde «vi». Ikke valgt: virker misvisende når bare én person står bak.
+
+**Samtidig:** ny seksjon «Hva du kan bruke Spareverksted til» på Om-siden med lenke til kildereglene og til Forbrukerrådet: oversiktssiden «Økonomi og betaling» (sist endret 29.04.2024) og sjekklisten før sparing og investering (sist endret 10.05.2024), begge på nynorsk ifølge teksten. Lars ba om en mer generell lenke og lot Claude velge; begge ble tatt med fordi setningen gjelder økonomiske valg generelt, mens sjekklisten er det mest konkrete rådet. Kontaktteksten ber nå folk ikke dele sensitive opplysninger og sier at det ikke gis personlig økonomisk rådgivning. Den gamle setningen «Regler og satser kan endre seg …» er fjernet fordi den nye seksjonen dekker den. «Prognoser» og «uavhengige fagkilder» fra Lars' utkast er erstattet, fordi kalkulatoren viser regneeksempler og kildereglene også bruker merkede kommersielle kilder.
+
+**Vurder på nytt når:** flere personer blir med og står ansvarlig.
+
+## Kildereglene vedtatt, og kildegjennomgang før hvert nytt spørsmål (28. oktober 2026)
+
+**Beslutning:** Lars godkjente `KILDEREGLER.md` (PR #71) 28.10.2026, etter at tre ting ble lagt inn: universiteter som eget grunnlag for regnemetoder (vedtatt 25.10, men ikke ført inn før nå), krav om at kilden faktisk svarer på påstanden, og at det som ikke er avklart, ikke publiseres. Nivå 1 gjelder alle offentlige etater og rettskilder, og medier på nivå 4 kan hjelpe med forståelse og ideer, men er aldri eneste kilde.
+
+**Arbeidsregel:** Lars har bedt GPT gå gjennom kildereglene og relevante kilder før hvert nye spørsmål lages. Alt innhold skal gås gjennom på nytt før publisering den dagen pausen eventuelt oppheves.
+
+**Konsekvens:** Svarutkast som sier at noe er uavklart (for eksempel BSU ved utenlandsflytting), må tilpasses før de publiseres.
+
+## Kortere delingslenker: bare feltene for delen som deles (28. oktober 2026)
+
+**Beslutning:** Lars godkjente 28.10.2026 at «Del plan» bare tar med feltene for delen brukeren ser på. Sparing: sparetallene, uten sparemål, uttak og skatt. Sparemål: bare sparemålsfeltene. Uttak: sparing, uttak og skatt, uten sparemål. Alder, risikovalg og de andre private feltene var allerede holdt utenfor og er det fortsatt.
+
+**Bakgrunn:** Kontroll 28.10.2026 viste at lenken hadde 52 verdier fra alle deler, også deler brukeren ikke hadde åpnet. Påstanden om at alder og risikovalg ikke er med, stemte (testet, og allerede sikret i `veileder-browser.cjs`). En første antakelse om at `start=38` var alder, var feil: `start` er startbeløpet.
+
+**Alternativer:** A. Felt for delen som deles. **Valgt.** B. Utelate felt som er lik standardverdien. Ikke valgt: gamle lenker kunne gi et annet resultat hvis en standardverdi endres. C. Beholde alt. Ikke valgt: dataminimering.
+
+**Kalkulatorfrysen:** Lars vurderer at endringen ikke endrer beregningene. Testen `tests/deling-browser.cjs` kontrollerer at resultatet er likt med ny og gammel lenke i alle tre deler.
+
+**Akseptert ulempe:** Har du fylt inn uttak og deler fra sparing, ser ikke mottakeren uttaket ditt.
+
+**Bakoverkompatibilitet:** Koden som leser lenker, er ikke endret. Gamle, fulle lenker virker som før.
+
+## Kontroll av premiss og mulig oppfattet anbefaling (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026 (PR #87). Dette er bare dokumentasjon og endrer ikke nettsiden, kalkulatoren, søket, svarbasen, testene eller automatiseringen.
+
+**Sammenslåing under pausen:** Lars godkjente 28.10.2026 at PR #77 (pausenotatet), #79 (KI-presisering) og #87 slås sammen til main, i den rekkefølgen. Det er hans eget unntak etter `docs/regulatorisk.md`. Ingen filer i `dist/` er endret. Sammenslåingen starter publiseringsflyten, men endrer ikke det brukeren ser. Pausen gjelder ellers uendret.
+
+**Innhold:** Tre korte tillegg i eksisterende dokumenter. SPRAKREGLER.md, punkt 7: kontroller hva leseren kan oppfatte at teksten anbefaler. `research/DAGLIG-OPPGAVE.md`: undersøk premisset i spørsmålet, og noter begge kontrollene i svarmalen. `research/plan.md`, punkt 3: tre forståelsesspørsmål til eventuell senere brukertesting.
+
+**Alternativer:** A. Tillegg i dokumentene som allerede styrer arbeidet. **Valgt.** B. Egen sjekkliste for anbefalingskontroll. Ikke valgt: blir et konkurrerende dokument. C. Ny regel i KILDEREGLER.md. Ikke valgt: kildereglene handler om kilder og ble nettopp vedtatt. K5 dekker egne råd, mens dette gjelder hvordan en tekst kan oppfattes.
+
+**Bakgrunn:** FinAuts podcastepisode «Når KI gir økonomiske råd: Hva skjer med rådgiverrollen og tilliten?» er pedagogisk inspirasjon. Den er ingen rettskilde og ingen dokumentasjon på at Spareverksted er godkjent. Læringspunktene: mer informasjon gir ikke nødvendigvis forståelse, brukeren kan søke bekreftelse på et feil premiss, og forklaringer kan oppfattes som anbefalinger.
+
+**Kilde, gjengitt fra PR #81 og ikke nylest:** ESMA, *Q&A on MAR* (ESMA70-145-111), Q&A 8.2. En tekst uten navngitt instrument eller utsteder er som hovedregel ikke en anbefaling, men kan være det hvis en rimelig investor kan utlede at den underforstått anbefaler bestemte instrumenter eller utstedere. Dette gjelder investeringsanbefalinger etter markedsmisbruksforordningen (MAR). Det sier ingenting om personlig investeringsrådgivning etter verdipapirhandelloven. Hvor grensen går for Spareverksted, er spørsmålet som er sendt Finanstilsynet.
+
+**Akseptert ulempe:** Kontrollene er egenkontroll. «Ingen identifisert ved egenkontroll» er ingen garanti, og ingen uavhengig eller juridisk kontroll.
+
+**Ikke gjort her:** Samordning med prosjektpausen. Pausen og sperren for kontekstuell spørsmålsveiledning står i `docs/regulatorisk.md`. Notatet viser til `docs/vurdering-folkeopplysning.md`, som bare finnes i PR #81; henvisningen virker først når #81 er avgjort. Forslag til egen PR, ikke vedtatt: automatiseringens snevrere mandat beskrives i `docs/regulatorisk.md` som det som gjelder under pausen, ikke som fast regel. `research/DAGLIG-OPPGAVE.md`, steg 5, får en henvisning om at betingede personaliseringsregler bare er utkast og omfattes av sperren.
+
+**Vurder på nytt når:** Finanstilsynet svarer, eller brukertesting viser misforståelser som kontrollene ikke fanger.
+
+## Forskningsinstitutter som eget kildenivå, og rolle avgjør nivået (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026 (PR #88). Endrer bare `KILDEREGLER.md` og denne loggen, ikke nettsiden, kalkulatoren, søket, svarbasen eller testene.
+
+**Sammenslåing under pausen:** Lars godkjente 28.10.2026 at PR #88 og deretter PR #89 (rettet innledning og brutte henvisninger i KILDEREGLER.md) slås sammen til main. Det er hans eget unntak etter `docs/regulatorisk.md`. Ingen filer i `dist/` er endret. Sammenslåingen starter publiseringsflyten, men endrer ikke det brukeren ser. Pausen gjelder ellers uendret.
+
+**Bakgrunn:** Lars spurte om SIFOs referansebudsjett kan brukes som kilde. SIFO var ikke uttrykkelig omfattet av kildereglene vedtatt i PR #71. SIFO er ikke en etat (nivå 1), og kategorien for universiteter ved siden av nivåene gjelder bare formler og definisjoner, ikke norske tall. Forslaget er bearbeidet i flere runder mellom Lars, Claude og GPT.
+
+**Endringer i KILDEREGLER.md:**
+1. Nytt nivå 3: norske, offentlig finansierte forskningsinstitutter og universiteter innenfor eget fagfelt, med SIFO som eksempel. Bankene blir nivå 4, mediene nivå 5 og «alt annet» nivå 6. Oppføringen over fra 28.10 (PR #71) sier «medier på nivå 4». Det var riktig da og er ikke endret.
+2. Nivå 1 beskrives med et kriterium og eksempler, også Norges Bank som offentlig og ikke-kommersiell. Eksemplene står fordi grensen mot Forbrukerrådet ellers blir uklar: Forbrukerrådet er selv et statlig forvaltningsorgan (Store norske leksikon, https://snl.no/Forbrukerrådet, lest 28.10.2026).
+3. Ny regel: rolle og innhold avgjør nivået, ikke institusjonsnavnet. Regelverk, vedtak, myndighetsveiledning om gjeldende regler og offisiell statistikk er nivå 1. Analyser, prognoser og modeller fra offentlige myndigheter er nivå 3 etter innholdet, også når organet ikke er et forskningsinstitutt. Dette står både i nivå 3 og i rolleregelen, slik at en analyse fra et direktorat eller tilsyn ikke faller mellom ordlydene (påpekt av GPT 28.10.2026).
+Forbrukerrådet og Finansportalen er unntatt fra rolleregelen: alt de publiserer på egne sider, også analyser og rapporter, er nivå 2. Uten denne setningen ville Forbrukerrådets analyser havnet på nivå 3, under deres egne korte råd, og det var uklart om Forbrukerrådet er en «offentlig myndighet». Godkjent av Lars 28.10.2026. Primærkilderegelen gjelder fortsatt, så en pressemelding fra Forbrukerrådet er omtale.
+4. Ny regel om primærkilde: omtaler og pressemeldinger brukes bare til å finne primærkilden. En offisiell kunngjøring fra organet som selv har fattet vedtaket, er primærkilde for at vedtaket er fattet og når det gjelder fra. En pressemelding som bare omtaler et vedtak, er det ikke. Konsekvens: er selve vedtaket eller kunngjøringen ikke tilgjengelig, publiseres ikke påstanden. Strengheten er bevisst og bekreftet av Lars 28.10.2026: Spareverksted skal ikke komme med egne eller andres påstander uten primærkilde. Videre: en kilde som gjengir andres tall er ikke egen kilde for tallet, og manglende tilgang dokumenteres i stedet for å erstattes med en omtale.
+5. Ny regel om modeller og referansebudsjetter.
+6. Følgeendringer: K3 (kildedato på nivå 3, 4 og 5), K7 (årlig kontroll av SIFOs referansebudsjett) og sjekklistens punkt 2.
+
+**Roller notert, ikke skrevet inn i reglene:** Statens pensjonskasse og Husbanken er nivå 1 for egne ordninger og regelverk. KLP er nivå 4 som finansinstitusjon. Det gjelder ikke nødvendigvis alt KLP skriver om offentlig tjenestepensjon. Det avgjøres av rolleregelen og kontroll mot primærkilden. Ingen av disse kategoriseringene er kontrollert mot institusjonenes egne dokumenter ennå.
+
+**SIFO:** Referansebudsjettet er verken et minstebudsjett eller et gjennomsnitt, dekker ikke blant annet bolig, strøm og feriereiser, og oppdateres årlig (https://www.oslomet.no/no/om/sifo/referansebudsjettet, lest 28.10.2026).
+
+**Alternativer:**
+A. Nytt nivå 3 med rolleregel og primærkilderegel. **Valgt.**
+B. GPTs første utkast: forskningsmiljøer som «prioriterte fagkilder» uten nivå, og bredt «relevante forskningsmiljøer ved norske universiteter». Ikke valgt: ingen plass i rekkefølgen, og åpner for enkeltstudier og kronikker.
+C. SSB på nivå 3. Ikke valgt: da går Forbrukerrådet foran offisiell statistikk som KPI.
+D. Nivå 1 uten eksempler. Ikke valgt: grensen mot Forbrukerrådet og Norges Bank blir uklar.
+E. Utvide universitetskategorien ved siden av nivåene. Ikke valgt: den gjelder formler, ikke norske tall.
+F. «Nivåene angir hovedprioritet, ikke absolutt rangering», med skjønnsmessig vekt på relevans. Ikke valgt: gir rom for å begrunne en lavere kilde med «relevans». Problemet løses av regelen om at en kilde som gjengir andres tall, ikke er egen kilde.
+G. Nytt datokrav for alle nivåer i K3. Ikke valgt: K1 og K3 krever allerede kildedato og kontrolldato for hver påstand.
+H. «Primærkilden når den finnes og er tilgjengelig.» Ikke valgt: kan leses som at manglende tilgang åpner for en sekundærkilde. I stedet: manglende tilgang dokumenteres, og påstanden venter.
+
+**Lovdata og innlimt tekst:** KI-verktøyene når ikke alltid Lovdata. Da kan Lovdata bare brukes når teksten faktisk er lest i økten. Limer Lars inn lovtekst, er det en kopi, og den må ha URL og dato for siste endring (K1, K3). Ingen ny regel trengs.
+
+**Akseptert ulempe:** Seks nivåer og to nye avsnitt gjør reglene lengre. Rolleregelen krever at bidragsyteren vurderer innholdstype, ikke bare avsender.
+
+**Avhengighet til åpne PR-er:** PR #69 (`docs/maaneder-og-kildenivaa`) har oppføringen «Kildenivå for påstander og råd» med den gamle listen på fem nivåer. Slås #69 sammen etter denne, er den oppføringen historikk og må ikke leses som gjeldende nivåer. PR #67 viser til «nivå 1 eller 2», som fortsatt er riktig.
+
+**Ikke gjort her:** Den brutte henvisningen øverst i KILDEREGLER.md til oppføringene «Kildenivå for påstander og råd» og «Sparehorisont og Forbrukerrådets anbefaling». De finnes bare på de usammenslåtte grenene `docs/maaneder-og-kildenivaa` og `feature/sparehorisont-varsel`. Håndteres i egen PR.
+
+**Vurder på nytt når:** en kilde faller mellom to nivåer, eller samme avvik oppstår to ganger.
+
+## Unntak fra pausen for nøytrale begrepsforklaringer (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026 kl. 10.09. Kravene står i `docs/regulatorisk.md`, «Unntak fra pausen: nøytrale begrepsforklaringer». Aktivt når PR-en med unntaket er slått sammen.
+
+**Beslutning:** Forklaringer av nøytrale begreper kan publiseres under pausen og uten hensyn til kalkulatorfrysen, når de bare forklarer betydning, ikke nevner produkter eller tilbydere, ikke tilpasses brukeren og følger kilde- og språkreglene. Første runde gjelder begreper som ikke hviler på regler eller satser.
+
+**Erstattet samme dag:** Begrensningen til «bare betydning» og til begreper uten regler eller satser gjelder ikke lenger. Gjeldende regel står i oppføringen «Nøytrale spørsmål og svar om økonomiske begreper» og i `docs/regulatorisk.md`, krav 1 og 4.
+
+**Bakgrunn:** Veikartet (28.10.2026, trinn 3.0) krever at alle fagord på siden skal kunne slås opp. I dag er 18 begreper forklart, spredt inne i enkeltsvar. Finanstilsynets artikkel lest 27.10.2026 gjelder personlige råd om hva man bør kjøpe, selge eller beholde. At en forklaring av hva et begrep betyr faller utenfor, er Claudes og Lars' vurdering, ikke en juridisk avklaring. Forslaget er bearbeidet mellom Lars, Claude og GPT.
+
+**Alternativer:**
+A. Unntak for nøytrale begreper med kontrollerbare krav. **Valgt.**
+B. Vente på Finanstilsynet med alt. Ikke valgt: lav risiko, stor nytte og ukjent ventetid.
+C. Unntak for alt innhold i veilederen. Ikke valgt: svar om valg mellom alternativer er nettopp det Finanstilsynet er spurt om.
+D. Unntaket omfatter også ny funksjonalitet (forklaring der ordet står, ordlisteside). Ikke valgt nå: ny kode krever egen test og prøving med hjelpemidler. Standarden fastsettes nå (oppføringen under), bygging venter til oppstart. **Endret samme dag, to ganger:** Lars vedtok først at forklaring der ordet står og ordlisten er UU og kan bygges nå. Senere samme dag sluttet han seg til GPTs innspill om at bare retting av dokumenterte UU-feil åpnes. Forklaring der ordet står og ordlisten er nye funksjoner og venter til oppstart, som opprinnelig.
+E. Kontroll bare med en liste over forbudte ord. Ikke valgt: en tekst kan styre valg uten de ordene (påpekt av GPT 28.10.2026). Listen er et varsel, hele teksten vurderes.
+
+**Akseptert ulempe:** «Nøytral» er en vurdering. Kontrollen er egenkontroll pluss kontroll av en annen enn skribenten, ingen juridisk kontroll.
+
+**Vurder på nytt når:** Finanstilsynet svarer, eller en forklaring viser seg å bli lest som en anbefaling.
+
+## Standard for fagord forklart der de står (28. oktober 2026)
+
+**Bygging:** venter til oppstart. Se oppføringen om unntaket over.
+
+**Status:** Lars ba 28.10.2026 om at det beste mønsteret for universell utforming undersøkes og legges inn som standarden. Valgt etter undersøkelse samme dag. Ikke bygget. Mønsteret regnes som endelig først etter prøvingen i `research/universell-utforming.md`, punkt 6, der også mønsteret og kildene står.
+
+**Beslutning:** Fagordet er en knapp i teksten med prikket understrek. Trykk åpner forklaringen i teksten rett etter ordet, slik at resten av teksten skyves ned. Ingenting dekkes, ingenting vises ved hover, og fokus flyttes ikke. Gjelder alle nivåer, med sterkere markering i Enkel.
+
+**Alternativer:**
+A. Knapp som åpner forklaringen i teksten rett etter ordet. **Valgt.** Virker likt med mus, tastatur, berøring og skjermleser, og dekker ikke innhold ved zoom.
+B. Verktøytips ved musepeker eller fokus. Ikke valgt: virker ikke med berøring, må oppfylle tre krav i WCAG 1.4.13, og W3C viser til at det vanligvis finnes mer forutsigbare løsninger.
+C. Flytende boks som åpnes ved trykk (som NRK). Ikke valgt: dekker teksten under, og kan havne delvis utenfor skjermen ved 400 % zoom (WCAG 1.4.10). Var utgangspunktet Lars viste fram.
+D. `<details>` og `<summary>`. Ikke valgt: kan ikke stå inne i en setning.
+E. `title`-attributtet. Ikke valgt: virker ikke med berøring, og vises ikke ved tastaturfokus i vanlige nettlesere.
+F. Lenke til ordlisten. Ikke valgt som hovedløsning: brukeren må forlate teksten. Brukes som reserve når JavaScript ikke virker.
+G. Opplesning med `role="status"` når forklaringen åpnes, slik Pearson anbefaler for toggletips. Ikke valgt nå: strider mot regelen om sparsom opplesning, og forklaringen står rett etter knappen. Tas opp igjen hvis VoiceOver-testen viser at forklaringen ikke blir funnet.
+
+**Akseptert ulempe:** Mønsteret er satt sammen ut fra kilder og egne regler, ikke testet med skjermleserbrukere ennå. 44 px trykkflate, som Claude nevnte tidligere 28.10, er ikke realistisk inne i et avsnitt. Kravet er minst 24 px linjehøyde.
+
+**Tilgjengelighetssiden:** Teksten om valget legges inn først når funksjonen publiseres. Utkastet står i `research/universell-utforming.md`, punkt 6.
+
+**Vurder på nytt når:** prøvingen viser problemer, eller Uu-tilsynet eller eksterne testere gir råd om noe annet.
+
+## Områder pausen ikke gjelder (28. oktober 2026)
+
+**Gjeldende regel:** står i `docs/regulatorisk.md`, «Områder pausen ikke gjelder», og i oppføringen «Nøytrale spørsmål og svar om økonomiske begreper» lenger ned. Resten av denne oppføringen er historikk.
+
+**Status:** Vedtatt av Lars 28.10.2026, samme dag som unntaket for begrepsforklaringer. Senere samme dag endret, se under.
+
+**Opprinnelig beslutning (erstattet):** Pausen gjelder ikke forbedringer i kilderegler og kildekontroll, universell utforming, generelle spørsmål, personvern og retting av opplagte brudd på lover og regler. Sperrene for kontekstuell veiledning og produktanbefalinger står, og ny funksjonalitet utenfor områdene venter til oppstart.
+
+**Bakgrunn:** Første eksterne skjermlesertest 28.10.2026 viste at grafen ikke beskrives i ord. Det er en UU-feil (WCAG 1.1.1). Kalkulatorfrysen tillot allerede å rette UU-feil, men pausen stoppet det. Lars vurderer at forbedringer som gjør siden riktigere, tryggere og mer tilgjengelig ikke bør vente på Finanstilsynet.
+
+**Endret samme dag, etter presiseringen til Finanstilsynet:** Lars sendte 28.10.2026 en presisering som nevner personvern, universell utforming, kildekrav og nøytrale begrepsforklaringer, ikke generelle spørsmål. For at regelverket skal stemme med det Finanstilsynet har fått vite, er «generelle spørsmål» tatt ut av områdene i `docs/regulatorisk.md`. Spørsmål og svar som bare forklarer begreper og forskjeller, er med under begrepsforklaringene. Retting av opplagte lovbrudd er beholdt som ren retting. Lars bekreftet retningen samme dag og erstattet «generelle spørsmål» med nøytrale spørsmål og svar om begreper, se egen oppføring.
+
+**Historikk, tolkning av den opprinnelige formuleringen (erstattet):** «Generelle spørsmål» er forstått som forhåndsskrevne svar som er like for alle brukere, uten tilpasning etter brukerens opplysninger og uten produktanbefalinger. Det er det Finanstilsynets artikkel ikke omtaler som personlig rådgivning.
+
+**Alternativer, slik de sto ved det opprinnelige vedtaket:**
+A. Åpne for disse områdene, med sperrene intakte. **Valgt.**
+B. Ett og ett unntak etter behov, som for begrepsforklaringene. Ikke valgt: gir mange små vedtak for samme type arbeid.
+C. Oppheve pausen helt. Ikke valgt: spørsmålet om tilpasning etter alder og sparehorisont er fortsatt ubesvart.
+
+**Akseptert ulempe:** Grensen for «generelle spørsmål» og «opplagt lovbrudd» krever skjønn. Ved tvil avgjør Lars.
+
+**Vurder på nytt når:** Finanstilsynet svarer, eller et generelt svar viser seg å bli lest som en personlig anbefaling.
+
+## Bygg slik at det som venter, lett kan kobles på (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026 som prinsipp for alt arbeid under pausen. Lars' formulering: alt må lages så funksjonene vi venter på, lett kan integreres når avklaringen er på plass.
+
+**Beslutning:** Det som bygges nå, lages slik at funksjonene som venter (kontekstuell veiledning, forklaring der ordet står, ordlisteside, opplesning, lånekalkulator), kan kobles på senere uten å skrive om det som finnes. Prinsippet gjelder bare arbeid som er tillatt nå. Det gir ikke tillatelse til å bygge utsatte funksjoner, heller ikke bak en av/på-bryter. Utsatte funksjoner bygges først etter oppstart. Konkret:
+
+1. **Ingen utsatte funksjoner bak bryter.** Opprinnelig sto det at en funksjon som venter, kunne bygges ferdig og stå avslått. Det er erstattet 28.10.2026 etter kontroll av GPT, fordi det kolliderer med at nye funksjoner venter.
+2. **Én kilde for innhold.** Begrepsregisteret og svarbasen har plass til det senere funksjoner trenger, for eksempel kort og lang forklaring. Felt for tilpasning legges ikke inn før sperren er opphevet.
+3. **Gjenbrukbare deler.** Teksten som beskriver resultatet (veikartet 0.5) lages som én modul som grafbeskrivelsen, en senere «Les opp»-knapp, eksport og veilederen kan bruke. Forklaringer vises med én felles komponent.
+4. **Tester for det som bygges.** Tester dekker det tillatte arbeidet. Tester for utsatte funksjoner skrives når funksjonene bygges.
+5. **Offentlige sider omtaler bare det som er på.**
+
+**Grense:** «Bra nok er mer enn nok» gjelder. Det forberedes bare for funksjoner som allerede står i veikartet, og ingen kode skrives på forhånd uten at neste bruk er kjent.
+
+**Alternativer:**
+A. Prinsippet over. **Valgt.**
+B. Bygge bare det som publiseres nå, og bygge om senere. Ikke valgt: dobbelt arbeid og risiko for at det som er kontrollert, må kontrolleres på nytt.
+C. Bygge alt ferdig nå bak brytere, også kontekstuell veiledning. Ikke valgt: sperren gjelder, og svaret fra Finanstilsynet kan endre hva som skal bygges.
+
+**Akseptert ulempe:** Brytere og felles moduler gir litt mer kode og flere tester.
+
+**Vurder på nytt når:** en bryter står av lenge uten at funksjonen nærmer seg avklaring. Da fjernes koden heller enn å ligge der.
+
+## Skrivemåte: «renters rente» (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026.
+
+**Beslutning:** I tekst skrives alltid «renters rente». «Rentes rente», «renter på renter» og andre skrivemåter skal gi søketreff, men brukes ikke i teksten.
+
+**Bakgrunn:** Begrepsregisteret (PR #91) fant begge skrivemåtene på siden. SPRAKREGLER krever ett navn per ting. «Renters rente» er tittelen på svaret som allerede finnes.
+
+**Alternativer:** A. «Renters rente». **Valgt.** B. «Rentes rente». Ikke valgt: ville kreve endring av eksisterende svar uten gevinst.
+
+**Sparetid, vedtatt av Lars 28.10.2026:** I tekst skrives «sparetid», forklart som «hvor lenge du planlegger å spare». «Sparehorisont» blir søkeord og brukes ikke i teksten. Anbefalt av GPT. Lars' begrunnelse: kort og presist, og korte ord er lettere for dem som lytter med skjermleser og for dem med dysleksi.
+
+## Nøytrale spørsmål og svar om økonomiske begreper (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026, med formulering fra GPT som Lars sluttet seg til. Ført i `docs/regulatorisk.md`, kravene 1, 4 og 5 og områdene.
+
+**Beslutning:** Svarbasen kan fylles med nøytrale spørsmål og svar som forklarer økonomiske begreper, også forskjeller, fordeler og ulemper. Avgrensningen gjelder innholdet: svarene skal ikke føre brukeren mot produkter, anbefale handlinger eller tilpasses som personlige råd. Relevante begrensninger og variasjoner forklares, uten konklusjon om hva brukeren bør velge. Eksempler: renters rente, effektiv rente, kredittscore, annuitetslån og serielån. GPT skriver svarene og har ansvaret for kildekontrollen. Lars godkjenner.
+
+**Hva som ikke åpnes:** Ingen nye funksjoner som lånekalkulator, budsjettveiviser eller styring etter alder, sparehorisont eller sparemål. Innholdsarbeidet åpner ikke av seg selv for publisering.
+
+**Endringer i kravene:**
+- Krav 1 tillater nå fordeler og ulemper. Claude anbefalte å skrive forskjeller som fakta og følger, ikke som «for» og «mot». Lars valgte å tillate fordeler og ulemper, med vilkåret at de skrives som etterprøvbare følger og ikke ender i en konklusjon.
+- Krav 4 tillater begreper som hviler på regler eller satser, når regelen er lest i primærkilden og forklaringen får kontrolldato og vedlikehold. Effektiv rente og kredittscore er slike begreper.
+- «Generelle spørsmål» er tatt ut som egen kategori. Den var for grov til å både åpne og sperre.
+
+**Forholdet til presiseringen til Finanstilsynet 28.10.2026:** Presiseringen sier at forklaringene anbefaler ingen handling, nevner ingen produkter og tilpasses ikke den enkelte. Det gjelder fortsatt. At svarene kan vise fordeler og ulemper, står ikke uttrykkelig i presiseringen. Claude vurderer at det ligger innenfor, så lenge svarene ikke ender i en anbefaling, men det er ikke en juridisk vurdering.
+
+**Alternativer:**
+A. Nøytrale begrepsspørsmål i spørsmål-og-svar-form, med fordeler og ulemper uten konklusjon. **Valgt.**
+B. Bare definisjoner, uten forskjeller og fordeler og ulemper. Ikke valgt: gir lite hjelp ved spørsmål som annuitetslån eller serielån.
+C. Åpne for «generelle spørsmål» bredt. Ikke valgt: kategorien er for grov og nevnes ikke i presiseringen.
+
+**Akseptert ulempe:** Grensen mellom fordeler og ulemper og en anbefaling krever skjønn i hvert svar. Kontrollen av premiss og mulig oppfattet anbefaling (PR #87) brukes på hvert svar.
+
+**Vurder på nytt når:** Finanstilsynet svarer, eller et svar viser seg å bli lest som en anbefaling.
+

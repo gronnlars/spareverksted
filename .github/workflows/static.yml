@@ -24,6 +24,7 @@ jobs:
           node tests/veileder.test.cjs
           node tests/veileder-context.test.cjs
           node tests/veileder-grunnbegreper.test.cjs
+          python3 research/svarutkast/generer-gaps.py --check --product
           node tests/veileder-knowledge.test.cjs
           node tests/veileder-relevance.test.cjs
           node tests/veileder-sok.test.cjs
@@ -34,6 +35,9 @@ jobs:
           node tests/results.test.cjs
           node tests/meaning.test.cjs
           node tests/band.test.cjs
+          node tests/personvern-lagring.test.cjs
+          node --check dist/personvern.js
+          node --check dist/kontakt.js
           node --check dist/veileder-ui.js
           node --check dist/veileder-sok.js
           node --check dist/veileder-bridge.js
@@ -65,21 +69,36 @@ jobs:
         run: |
           node tests/input-browser.cjs
           node tests/veileder-browser.cjs
+          node research/svarutkast/prov-renters-browser.cjs
+          SPARE_ENGINE=firefox node research/svarutkast/prov-renters-browser.cjs
+          SPARE_ENGINE=webkit node research/svarutkast/prov-renters-browser.cjs
           node tests/veileder-sok-browser.cjs
           node tests/veileder-sok-rettinger-browser.cjs
           SPARE_ENGINE=firefox node tests/veileder-sok-rettinger-browser.cjs
           SPARE_ENGINE=webkit node tests/veileder-sok-rettinger-browser.cjs
           node tests/startflyt-browser.cjs
+          node tests/ki-info-browser.cjs
+          SPARE_ENGINE=firefox node tests/ki-info-browser.cjs
+          SPARE_ENGINE=webkit node tests/ki-info-browser.cjs
           node tests/spareform-browser.cjs
           node tests/theme-browser.cjs
           node tests/navigation-browser.cjs
           node tests/roundtrip-browser.cjs
+          node tests/deling-browser.cjs
+          SPARE_ENGINE=firefox node tests/deling-browser.cjs
+          SPARE_ENGINE=webkit node tests/deling-browser.cjs
           node tests/a11y-browser.cjs
           node tests/akse-browser.cjs
           node tests/polish-browser.cjs
           SPARE_ENGINE=firefox node tests/polish-browser.cjs
           SPARE_ENGINE=webkit node tests/polish-browser.cjs
           node tests/felt-browser.cjs
+          node tests/personvern-browser.cjs
+          SPARE_ENGINE=firefox node tests/personvern-browser.cjs
+          SPARE_ENGINE=webkit node tests/personvern-browser.cjs
+          node tests/kontakt-browser.cjs
+          SPARE_ENGINE=firefox node tests/kontakt-browser.cjs
+          SPARE_ENGINE=webkit node tests/kontakt-browser.cjs
           SPARE_ENGINE=firefox node tests/felt-browser.cjs
           SPARE_ENGINE=webkit node tests/felt-browser.cjs
       - name: UI review screenshots

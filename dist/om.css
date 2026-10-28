@@ -15,7 +15,7 @@
 .vipps-line{display:flex;align-items:center;flex-wrap:wrap;gap:4px 12px;margin-top:12px;font-size:14px}
 .vipps-line strong{user-select:all;font-variant-numeric:tabular-nums}
 .vipps-line button{min-height:44px;font-size:13px;padding:8px}
-.giving-section .giving-help,.giving-help{font-size:14px;line-height:1.6;color:var(--muted)}
+.ki-section{max-width:680px;margin:0 0 56px}.ki-section h2{font-size:24px;margin-bottom:14px}.ki-section p{font-size:17px;line-height:1.7}.giving-section .giving-help,.giving-help{font-size:14px;line-height:1.6;color:var(--muted)}
 #copyStatus:empty{display:none}
 @media(max-width:850px){.giving-cards{grid-template-columns:1fr}.giving-card{padding:22px}.giving-card>p:first-of-type{margin-bottom:18px}}
 @media(max-width:480px){.about-page main{padding-inline:20px}.about-intro{margin-bottom:36px}.about-intro p,.giving-section>p{font-size:16px}.about-page footer{flex-direction:column;align-items:flex-start;gap:16px}.give-button{min-height:52px}}
@@ -24,3 +24,10 @@
 .giving-section>h3{font-size:21px;line-height:1.3;margin-top:28px}
 
 .giving-choice{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}.giving-choice a,.time-action{display:inline-flex;align-items:center;min-height:48px;padding:10px 16px;border:1px solid var(--line);border-radius:9px;font-weight:600;text-underline-offset:3px;box-sizing:border-box}#tid,#gaver{scroll-margin-top:24px}
+
+/* Kontaktknapper (kontakt.js). Adressen vises først etter trykk. */
+.kontakt{max-width:680px;margin-top:12px}
+.kontakt button{min-height:48px;padding:10px 16px}
+.kontakt-resultat{margin-top:12px}
+.kontakt-resultat p{margin:0 0 12px;font-size:18px;overflow-wrap:anywhere}
+.kontakt-status:empty{display:none}

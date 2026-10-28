@@ -4,7 +4,7 @@ Sist kontrollert 24. oktober 2026 mot main 4022c94 (inneholder #52, #56, #58, #5
 
 ## Hva søket gjør
 
-Søket er lokalt og forhåndsskrevet. Ingen KI, ingen innsending av det brukeren skriver. Koden ligger i `dist/veileder-sok.js`. `dist/veileder-engine.js` setter opp temaene og de brede ordene (`BROAD`, `GENERIC`).
+Søket kjører i nettleseren og leter bare blant svar som er skrevet på forhånd. Ingen KI-modell tolker spørsmålet. Søket behandler søketeksten lokalt i nettleseren, og nettstedets egen kode sender den ikke til en server. Koden ligger i `dist/veileder-sok.js`. `dist/veileder-engine.js` setter opp temaene og de brede ordene (`BROAD`, `GENERIC`).
 
 Seks utfall, og ingen av dem skal late som noe annet enn det er:
 
@@ -99,3 +99,7 @@ Regler:
 Innhold: kontrollert mot Skatteetatens norske sider og Nordnets FAQ 24. oktober 2026. Sidene oppgir ingen oppdateringsdato, bortsett fra rettledningen (revidert oktober 2025). Påstander som ikke lot seg bekrefte ble tatt ut. Forbeholdet vises under «Kilder og forbehold». Intro-endringene #53 gjorde i `q-ips-ask` og `q-ask-zero` er ikke tatt med.
 
 Kontroll mot norske primærkilder (24. oktober 2026): rene rentefond kan ikke ligge på ASK, og aksjer og aksjefond må være hjemmehørende i EØS. Siden sier ikke hvor et aksjefond må investere, så påstanden om at et EØS-fond kan investere utenfor Europa er tatt ut av `q-ask-zero`. Kjent rest: spørsmålet «konto» alene gir ingen treff.
+
+## SV-022, kontrollgren 25.10.2026
+
+Renters rente får egen forklaring q-renters-rente etter Lars sin kildekontroll og pushgodkjenning. Bare denne GAPS-raden fjernes. Andre hull består. Aktive tester forventer nå svaret; historisk sett er ikke endret. Sammenligning av 156 historiske søk mot main f9c553a gir én endring, t21, fra uncovered til q-renters-rente. Øvrige 155 er uendret. Begge kalkulatorlenkene er kontrollregnet uten endring i kalkulatorens kode. Nettleserprøven for faktisk innhold kjøres i CI; lokal Firefox/WebKit er blokkert av miljøfeil dokumentert i research/svarutkast/SV-022-KONTROLL.md.

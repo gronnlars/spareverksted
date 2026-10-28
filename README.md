@@ -33,6 +33,10 @@ Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/packa
 - `dist/style.css`: responsiv utforming og utskriftsstil.
 - `dist/index.html`: sidens struktur.
 - `tests/engine.test.cjs`: uavhengig kontroll mot månedlige og årlige løkker.
+- `tests/personvern-browser.cjs`: i Chromium, Firefox og WebKit: ingen lagring ved lasting eller delt lenke, nivå bare ved eget valg, sletting, ingen gjenoppstått plan fra en annen fane, ingen cookies og ingen forespørsler til andre domener.
+- `tests/kontakt-browser.cjs`: i Chromium, Firefox og WebKit: kontaktknappene viser adressen først ved trykk, kopiering bare ved eget trykk, tastatur, fallback ved blokkert utklippstavle, ingen komplett adresse i HTML.
+- `scripts/produksjonskontroll.cjs`: observerer forespørsler, cookies og lagring i en ren nettleser (`--local` mot `dist/`, eller en https-adresse). Brukes på en maskin med tilgang til den publiserte siden. Se docs/personvern-lagring.md.
+- `tests/personvern-lagring.test.cjs`: hva som lagres og når, at veilederbroen bare skriver ved tur til veilederen, og at slettingen bare rører Spareverksteds egne nøkler.
 - `tests/validation.test.cjs`: feltgrenser og feltnavn, sparemål, uttaksfelt, delte lenker felt for felt, gamle lagrede planer og realistiske planer mot lukket formel.
 - `tests/results.test.cjs`: kontrolltilfellene A til D mot en uavhengig månedsløkke, årsak til tap (kostnader, børsfall), kjøpekraft, lange perioder og forskjellen mellom innskudd ved månedsslutt og månedsstart.
 - `tests/band.test.cjs`: utfallsrommet for indeksfond mot Finans Norges formel, med lukket formel og egen løkke.
@@ -50,6 +54,7 @@ Med Node.js installert:
 node tests/engine.test.cjs
 node tests/tax-export.test.cjs
 node tests/validation.test.cjs
+node tests/personvern-lagring.test.cjs
 node tests/results.test.cjs
 ```
 
@@ -87,11 +92,21 @@ Grafen kan vise beløpet i kroner, kjøpekraften i dagens kroner, eller begge. I
 
 ## Lagring og deling
 
-Planer lagres lokalt i nettleseren under `sv-scenarios`. En delt lenke inneholder skjemaverdiene og visningsnivået, men ikke andre lagrede planer. Når en lenke åpnes, kontrolleres hvert felt for seg. Ugyldige felt får standardverdi, gyldige beholdes, og brukeren får beskjed om hvilke felt som er endret. Lagrede planer kontrolleres på samme måte når de åpnes.
+Spareverksted lagrer ingenting før brukeren gjør noe. Det finnes tre ulike ting, og de må ikke blandes:
 
-Når brukeren går fra kalkulatoren til «Spør om sparing», lagres hele planen i fanens `sessionStorage` (`sv-working-plan-v1`). Kommer brukeren tilbake i samme fane, hentes planen tilbake og kontrolleres som en lagret plan. Bare alder, sparetid og risikovalg som er endret i veilederen, legges oppå; sparetiden går til sparemålets periode når sparemål var åpent. En delt lenke vinner alltid over planen i fanen. Planen forsvinner når fanen lukkes, og fjernes når brukeren går tilbake til startskjermen.
+- **Lagrede planer** (`localStorage`, `sv-scenarios`): bare når brukeren trykker «Lagre plan». Inneholder navn og alle tall. Blir liggende til planen slettes. `localStorage` har ingen innebygd utløpstid, men nettleseren kan fjerne data.
+- **Arbeidsplanen** (`sessionStorage`, `sv-working-plan-v1`): hele planen med beløp. Opprettes bare når brukeren går fra kalkulatoren til «Spør om sparing», og oppdateres deretter når kalkulatorsiden forlates. Kommer brukeren tilbake i samme fane, hentes planen tilbake og kontrolleres som en lagret plan. Bare alder, sparetid og risikovalg som er endret i veilederen, legges oppå; sparetiden går til sparemålets periode når sparemål var åpent. En delt lenke vinner alltid over planen i fanen. Planen fjernes når brukeren går tilbake til startskjermen.
+- **Veilederkonteksten** (`sessionStorage`, `sv-guidance-tab-v2`): alder, sparetid, risikovalg og valgene i veilederen. Ingen beløp, navn eller fritekst. Se avsnittet om veilederen under.
 
-Grensene for alle tallfelt står i én oversikt i `dist/engine.js`. Deling, lagring og eksport kontrollerer alle felt som følger med planen og beregningen i aktiv modul (sparing, sparemål eller uttak). Ved feil flyttes fokus til feltet, og feltet kobles til feilmeldingen med `aria-describedby`. Ingen av beregningene sendes til en kalkulatortjener. Nettstedets driftsleverandør kan behandle vanlig trafikkmetadata.
+`sessionStorage` forsvinner vanligvis når fanen lukkes, men nettlesere som gjenoppretter faner, kan gjenopprette den. Lovet sletting ved lukking står derfor ikke i produktteksten.
+
+Andre valg: fargetema (`sessionStorage`, `sv-color-theme`) og visningsnivå (`sessionStorage`, `sv-level`) huskes bare i fanen, og bare når brukeren selv trykker på tema eller velger Utforsk eller Avansert. De følger ikke med til neste besøk eller en ny fane, men nettleseren kan gjenopprette fanen. Gamle permanente verdier fjernes. «Enkel» er standard og lagres ikke, og automatiske tilbakestillinger lagrer ingenting. At brukeren har trykket seg videre fra startguiden, huskes bare i fanen (`sessionStorage`, `sv-started`). Å åpne siden eller en delt lenke skriver ingenting. Den gamle permanente nøkkelen `sv-started` i `localStorage` fjernes ved neste besøk.
+
+Siden `personvern.html` viser dette for brukeren og har en knapp som sletter alle nøklene over, og bare dem. Den når `localStorage` for hele nettstedet, men bare `sessionStorage` i sin egen fane. Andre åpne faner leser planene på nytt når de endres (`storage`-hendelsen), så slettede planer skrives ikke tilbake. E-postkontakt er en egen behandling: se [docs/kontakt-epost.md](docs/kontakt-epost.md). Delen av en delt lenke etter `#` sendes ikke i selve HTTP-forespørselen, men sidens skript leser den, og tjenester du deler lenken gjennom kan se den. Full kartlegging med fil og linje står i [docs/personvern-lagring.md](docs/personvern-lagring.md).
+
+En delt lenke inneholder skjemaverdiene og visningsnivået etter `#`, men ikke alder, risikovalg eller andre lagrede planer. Delen etter `#` sendes ikke til nettstedet i HTTP-forespørselen. Når en lenke åpnes, kontrolleres hvert felt for seg. Ugyldige felt får standardverdi, gyldige beholdes, og brukeren får beskjed om hvilke felt som er endret. Lagrede planer kontrolleres på samme måte når de åpnes.
+
+Grensene for alle tallfelt står i én oversikt i `dist/engine.js`. Deling, lagring og eksport kontrollerer alle felt som følger med planen og beregningen i aktiv modul (sparing, sparemål eller uttak). Ved feil flyttes fokus til feltet, og feltet kobles til feilmeldingen med `aria-describedby`. Nettstedets egen kode har ingen nettverkskall (ingen `fetch`, XHR, `sendBeacon`, WebSocket eller skjema som sendes), ingen eksterne skript, stiler eller skrifter og ingen informasjonskapsler. Dette er kontrollert i kildekoden, ikke i en nettverkslogg fra den publiserte siden. Nettleverandøren (GitHub Pages) logger IP-adresser av sikkerhetshensyn.
 
 ## Bidra
 
@@ -105,7 +120,7 @@ Fra 24. oktober 2026 tilbys nye originale bidrag etter commit `8392d9adb934533ce
 
 **Den tidligere kalkulatoren er fortsatt MIT-lisensiert.** Materialet til og med commiten ovenfor kan fortsatt brukes kommersielt under MIT, også når det inngår i en nyere utgave. Endringen trekker ikke tilbake tidligere tillatelser. Git-historikken skiller grunnlaget fra senere bidrag. Andres materiale følger sine egne vilkår; vi kan bare lisensiere rettigheter vi faktisk har.
 
-Prosjektet er utviklet av Lars med hjelp fra ChatGPT og Claude, med innspill fra Gemini. KI har bidratt til kode, tekst, feilsøking og forslag. Se [PROVENANCE.md](PROVENANCE.md) for avgrensninger og kilder og [CONTRIBUTING.md](CONTRIBUTING.md) for nye bidrag. Gaver er frivillige og er aldri et vilkår for personlig bruk.
+Prosjektet er utviklet av Lars med hjelp fra ChatGPT og Claude, med innspill fra Gemini. KI er brukt i stor grad til kode, tekster, feilsøking og forslag. Svarene i veilederen skrives og kildekontrolleres før publisering. Kildekontrollen kan være utført med KI; menneskelig eller uavhengig fagkontroll oppgis bare når den er dokumentert. Ingen KI-modell lager svar under brukerens besøk. Se [PROVENANCE.md](PROVENANCE.md) for avgrensninger og kilder og [CONTRIBUTING.md](CONTRIBUTING.md) for nye bidrag. Gaver er frivillige og er aldri et vilkår for personlig bruk.
 
 ## GitHub Pages
 
@@ -135,7 +150,7 @@ Glidere er snarveier; egne tall kan være høyere enn gliderens utgangspunkt. Ek
 
 Veilederen bruker fanens `sessionStorage` under `sv-guidance-tab-v2`, uten navn, kontoinformasjon, sparebeløp eller fritekst. Opplysninger som mangler i kalkulatoren, fylles ikke fra standardverdier. Kalkulatorens sparetid brukes ikke automatisk til barnesparing. Manuell sparetid lagres per tema. Ved vanlig retur til kalkulatoren gjenbrukes kjent alder, sparetid og risikovalg. En eksplisitt plan i lenken overstyres aldri av denne konteksten. Opplysningene kan glemmes fra veilederen. Dette endrer ikke kalkulatorens egne felt. Veilederen virker også når øktlagring er blokkert, men da kan opplysninger ikke følge mellom sidene.
 
-Ingen eksterne KI-kall, bestemte aksjeandeler eller navngitte fondsanbefalinger. Svarene er generelle, med kildelenker og datoforbehold. Se `research/veileder-kilder.md` for bakgrunn og `research/ux-2026-10-22.md` for endringer, faktaliste og manuell testliste. Delingslenker fra kalkulatoren utelater alder, risikovalg og andre personlige profilvalg.
+Siden sender ingenting til en KI-tjeneste. Ingen bestemte aksjeandeler eller navngitte fondsanbefalinger. Svarene er generelle, med kildelenker og datoforbehold. Se `research/veileder-kilder.md` for bakgrunn og `research/ux-2026-10-22.md` for endringer, faktaliste og manuell testliste. Delingslenker fra kalkulatoren utelater alder, risikovalg og andre personlige profilvalg.
 
 Kontroller logikk og overføring:
 

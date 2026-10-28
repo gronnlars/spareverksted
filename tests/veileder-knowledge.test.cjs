@@ -2,7 +2,7 @@ const assert=require('node:assert/strict');
 const V=require('../dist/veileder-engine.js'),Cards=require('../dist/veileder-cards.js'),C=require('../dist/veileder-context.js');
 const entries=require('../dist/veileder-knowledge.js');
 for(const e of entries)V.register(e);
-assert.equal(V.topics.length,15);assert.equal(V.topics.filter(t=>!t.category).length,7,'new entries must not turn into more main choices');
+assert.equal(V.topics.length,16);assert.equal(V.topics.filter(t=>!t.category).length,7,'new entries must not turn into more main choices');
 for(const e of entries){
  for(const q of e.questions)assert.equal(V.findTopics(q)[0],e.id,q);
  if(e.kind==='explainer'){assert.throws(()=>V.register(e),/duplisert/);continue;}

@@ -1,6 +1,41 @@
 # Kildegjennomgang: løpende kontroll av eksisterende innhold
 
-## Ny delkontroll 28.10.2026: publisert svarfil
+## Videreført delkontroll 28.10.2026: ASK og fondskonto
+
+Lest main-commit `00d8f1536802b69eebf05a1034f388bd87550d9f`. PR #90 er nå sammenslått. [Kontrollnotat med påstandsdekning, kilder, regneforutsetninger, søkeprøve og reparasjoner](svarutkast/KONTROLL-ASK-FONDSKONTO-2026-10-28.md).
+
+**Rettelse av tidligere funn i denne rapporten:** En `/en/`-adresse beviser ikke engelsk fagtekst. Den eksisterende Skatteetaten-rettledningen viser norsk innhold. Språkbruddet som ble konstatert tidligere, er derfor ikke dokumentert. De eldre formuleringene nedenfor står som kontrollhistorikk og er erstattet på dette punktet.
+
+Konkrete nye funn: fondskontosvaret mangler avgrensning mot garantert avkastning og omtaler en eldre rettledningsversjon. ASK-kortsvaret bør synliggjøre skjerming. De publiserte knowledge-, facts- og ui-filene er byteidentiske med lest main. Regneeksemplene stemmer. Åtte lokale søketilfeller er kjørt, inkludert et for bredt treff for garantert kapitalforsikring. Ingen faktisk visnings- eller brukertest. Produktomtalen står urørt og er ikke nykontrollert.
+
+Aktive avvik er gjennomgått: #67 er fortsatt foreslått, utløp 31.01.2027. Ingen datofestet aktiv dispensasjon funnet med utløp innen to uker. En fullført K7-runde etter statsbudsjettet er ikke dokumentert i de leste loggene. Fortsett kontrollarbeidet før ordinært nytt innhold.
+
+### Utvidet register over eksisterende svar
+
+Dette er en opptelling av 16 registrerte svar på lest main, ikke en ny prioritert kø eller full fagkontroll. De sju grunnsvarene bygges fra veileder-engine.js og veileder-cards.js, de ni øvrige fra veileder-knowledge.js. Kilde-ID-er nedenfor peker til disse filenes kilderegistreringer. Alle har plassering på spørresiden. Kildenes individuelle datoer, påstandsdekning og vedlikeholdsfrister må fortsatt kartlegges for svarene utenfor dagens delkontroll. Tom metadata skal ikke tolkes som at innholdet er tidløst.
+
+| Svar-ID | Tittel | Kilde-ID-er | Lagret kontrolldato | Regelår / neste kontroll | Kontrollstatus |
+| --- | --- | --- | --- | --- | --- |
+| mortgage | Boliglån eller sparing | mortgage, pension, fixed, funds | 2026-10-22 | Ikke fullstendig kartlagt | Ikke ny fagkontrollert |
+| student | Studielån | student, grant | 2026-10-22 | Ikke fullstendig kartlagt | Ikke ny fagkontrollert |
+| children | Sparing til barn | child, adult, grant, funds | 2026-10-22 | Ikke fullstendig kartlagt | Ikke ny fagkontrollert |
+| buffer | Buffer og dyr gjeld | mortgage, nav | 2026-10-22 | Ikke fullstendig kartlagt | Ikke ny fagkontrollert |
+| funds | Sparekonto eller fond | funds, risk | 2026-10-22 | Ikke fullstendig kartlagt | Ikke ny fagkontrollert |
+| pension | Sparing til pensjon | pension, mortgage, funds | 2026-10-22 | Ikke fullstendig kartlagt | Ikke ny fagkontrollert |
+| bsu | BSU og boligkjøp | bsu, funds | 2026-10-22 | Ikke fullstendig kartlagt | Ikke ny fagkontrollert |
+| q-renters-rente | Hva er renters rente? | rente-skatt, ssb-inflasjon, finanstilsynet-fond | 2026-10-25 | Neste kontroll 25.01.2027 i forbehold; øvrige datoer gjenstår | Ikke ny fagkontrollert |
+| q-indeksfond | Hva er et indeksfond? | q-indeksfond-0, q-indeksfond-1, q-indeksfond-2, q-indeksfond-3 | 2026-10-25 | Neste kontroll 25.01.2027 i forbehold; øvrige datoer gjenstår | Ikke ny fagkontrollert |
+| q-sparing-investering | Hva er forskjellen på sparing og investering? | q-sparing-investering-0, q-sparing-investering-1, q-sparing-investering-2, q-sparing-investering-3 | 2026-10-25 | Neste kontroll 25.01.2027 i forbehold; øvrige datoer gjenstår | Ikke ny fagkontrollert |
+| q-aksjesparekonto | Hva er en aksjesparekonto (ASK)? | tax-ask-no | 2026-10-24 | Se kontrollnotatet | Delkontroll med åpne funn |
+| q-fondskonto | Hva er en fondskonto? | tax-fondskonto-no, tax-fondskonto-rettledning, nordnet-ikz | 2026-10-24 | Se kontrollnotatet | Delkontroll med åpne funn |
+| q-bsu-basics | Hva er BSU? | tax-bsu, funds | 2026-10-22 | Ikke fullstendig kartlagt | Ikke ny fagkontrollert |
+| q-ips-ask | IPS eller ASK? | tax-ips, tax-ask, pension, mortgage, funds | 2026-10-22 | Ikke fullstendig kartlagt | Ikke ny fagkontrollert |
+| q-ask-zero | ASK eller fondskonto? | tax-ask, tax-fondskonto, funds, risk | 2026-10-22 | Ikke fullstendig kartlagt | Ikke ny fagkontrollert |
+| q-kjopekraft | Hva er kjøpekraft? | ssb-inflasjon | 2026-10-24 | Ikke fullstendig kartlagt | Ikke ny fagkontrollert |
+
+De sju grunnsvarenes kilde-URL-er ligger i `sources` i motoren. Øvrige ligger i knowledge-filens konstanter og oppføringer. Kilderegistreringene er lest som kode, men kildene til de øvrige 14 svarene er ikke nyåpnet i denne økten. Kildetall i facts-filen har et felles årsfelt 2026; det er ikke dokumentasjon på at alle påstander i hvert svar er kontrollert for 2026.
+
+## Tidligere delkontroll 28.10.2026: publisert svarfil
 
 Denne delkontrollen erstatter ikke full fagkontroll. Den eldre rapporten nedenfor er historikk; dens konklusjon om ingen nivå 4-kilder og klassifiseringen av Nordnet er ikke gjeldende.
 
