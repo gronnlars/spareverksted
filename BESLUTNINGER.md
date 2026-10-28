@@ -811,3 +811,7 @@ B. Legge til skjulte overskrifter for skjermleser. Ikke valgt: tekst som bare fi
 **Ikke kontrollert:** Den nettbaserte W3C-validatoren, Firefox og Safari lokalt (testene i GitHub kjører Firefox og WebKit), og hvordan VoiceOver og NVDA leser feltene.
 
 **Vurder på nytt når:** nye felt lages på en annen måte enn de to feltbyggerne i `app.js` og `guidance.js`.
+
+**CodeQL-varsler på PR-en (rettet samme dag):** GitHubs sikkerhetsskanner meldte fire varsler om at tekst fra siden kunne bli tolket som HTML i `markInvalid` og `focusField`. CodeQL 2.23.3 kjørt lokalt viste samme dataflyt på main, så varslet var ikke nytt, bare synlig fordi PR-en endret `app.js`. Skanneren leste hjelpefunksjonen `$(key)` som jQuery, der en tekst kan bli til HTML. I Spareverksted er `$` bare `document.getElementById`. De to funksjonene bruker nå `document.getElementById(key)` direkte. Virkningen er den samme, og CodeQLs sikkerhetsregler gir 0 funn lokalt etterpå.
+
+Alternativer: A. Skrive `document.getElementById` i de to funksjonene. **Valgt.** B. Avvise varslene som falsk alarm i GitHub. Ikke valgt: skanneren ville fortsatt reagert ved neste endring. C. Gi `$` nytt navn i hele filen. Ikke valgt: stor endring for liten nytte.

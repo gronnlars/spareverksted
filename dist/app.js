@@ -38,7 +38,7 @@ const quoted=keys=>keys.map(k=>'«'+fieldLabel(k)+'»').join(', ');
 // Forklaring når en eldre plan eller lenke hadde negativ forventet vekst, prisvekst eller bankrente.
 const adjustedText=list=>list.length?(list.length===1?'':'Disse verdiene er endret: ')+list.map(a=>'«'+fieldLabel(a.key)+'» fra '+dec.format(a.from)+' % til 0 %').join(', ')+'. Den vanlige kalkulatoren bruker minst 0 %. Mulige tap kan du teste med «Børsfall» eller lavere vekst.':'';
 // Feilmarkering knyttes til meldingen med aria-describedby, slik at skjermlesere leser den ved feltet.
-function markInvalid(key,messageId){const el=key&&$(key);if(!el)return;el.setAttribute('aria-invalid','true');const ids=(el.getAttribute('aria-describedby')||'').split(' ').filter(Boolean);if(!ids.includes(messageId))el.setAttribute('aria-describedby',[...ids,messageId].join(' '));}
+function markInvalid(key,messageId){const el=key&&document.getElementById(key);if(!el)return;el.setAttribute('aria-invalid','true');const ids=(el.getAttribute('aria-describedby')||'').split(' ').filter(Boolean);if(!ids.includes(messageId))el.setAttribute('aria-describedby',[...ids,messageId].join(' '));}
 function clearInvalid(el,messageId){el.removeAttribute('aria-invalid');const ids=(el.getAttribute('aria-describedby')||'').split(' ').filter(x=>x&&x!==messageId);ids.length?el.setAttribute('aria-describedby',ids.join(' ')):el.removeAttribute('aria-describedby');}
 // Uferdig inntasting: feltet har fokus og er tomt eller inneholder bare et minustegn. Da vises ingen feilmelding.
 // Siste gyldige resultat står igjen, dempet, med en rolig merknad ved feltet. Feilmeldingen kommer når feltet forlates.
@@ -68,7 +68,7 @@ function planProblem(){
  return lastRenderError;
 }
 // Viser feltet med feil og flytter fokus dit. Bytter side bare når feltet ligger på en annen side.
-function focusField(key){const el=key&&$(key);if(!el)return;if(pageOf(key)!==s.activePage&&typeof setPage==='function')setPage(pageOf(key));for(let d=el.closest('details');d;d=d.parentElement?.closest('details'))d.open=true;markInvalid(key,pageOf(key)==='dreams'?'dreamError':pageOf(key)==='withdrawals'?'retirementResult':'error');el.focus({preventScroll:false});}
+function focusField(key){const el=key&&document.getElementById(key);if(!el)return;if(pageOf(key)!==s.activePage&&typeof setPage==='function')setPage(pageOf(key));for(let d=el.closest('details');d;d=d.parentElement?.closest('details'))d.open=true;markInvalid(key,pageOf(key)==='dreams'?'dreamError':pageOf(key)==='withdrawals'?'retirementResult':'error');el.focus({preventScroll:false});}
 function blockIfInvalid(action){const e=planProblem();if(!e)return false;notice(e.message+' '+action,8000);$('toast').dataset.validation='true';focusField(e.field);return true;}
 const endYear=n=>Math.round(n.years*12)/12;
 // Perioder under ett år vises i måneder, ikke som «0,08 år».
