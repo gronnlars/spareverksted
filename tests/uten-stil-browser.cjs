@@ -1,7 +1,7 @@
-// Grafen uten sidens stilark (Chromium). Leservisning i Safari, egne stilark og enkelte hjelpemidler
+// Grafen uten sidens stilark (Chromium). Lesemodus i Chrome og Safari, egne stilark og enkelte hjelpemidler
 // viser siden uten vår CSS. Da skal tallene på aksen ikke kuttes, og forklaringen av linjene
 // skal vises som en liste, ikke som ord klistret sammen («Beløp i kronerDu setter inn», funnet av Lars 28.10.2026).
-// Dette er en tilnærming. Det er ikke Safaris leservisning.
+// Dette er en tilnærming. Det er ikke nettleserens egen lesemodus.
 const {chromium}=require('playwright'),assert=require('node:assert/strict');
 const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
 (async()=>{

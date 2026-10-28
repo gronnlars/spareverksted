@@ -820,7 +820,7 @@ Alternativer: A. Skrive `document.getElementById` i de to funksjonene. **Valgt.*
 
 **Status:** Forslag. Retting av UU-feil etter `docs/regulatorisk.md`, krav 6. Endrer ikke beregningene. Venter på Lars.
 
-**Funn (Lars, iPhone, 28.10.2026):** I leservisning i Safari var tallene på grafens akse kuttet («00 tusen»), og forklaringen av linjene sto som «Beløp i kronerDu setter inn». Leservisning, egne stilark og enkelte hjelpemidler viser siden uten vår CSS. Mange bruker det for å lese lettere, blant annet ved dysleksi og nedsatt syn.
+**Funn (Lars, iPhone, 28.10.2026):** I lesemodus i Chrome var tallene på grafens akse kuttet («00 tusen»), og forklaringen av linjene sto som «Beløp i kronerDu setter inn». Lesemodus i nettlesere, egne stilark og enkelte hjelpemidler viser siden uten vår CSS. Mange bruker det for å lese lettere, blant annet ved dysleksi og nedsatt syn.
 
 **Årsak:** Skriftstørrelsen på teksten i grafen kom bare fra stilarket. Uten det arvet teksten en større skrift, og tallene ble for brede for plassen til venstre. Forklaringen var `span`-elementer uten mellomrom mellom seg. Mellomrommet kom bare fra CSS.
 
@@ -838,4 +838,4 @@ B. Mellomrom eller skilletegn mellom `span`. Ikke valgt: virker, men sier ikke a
 
 **Ikke rettet:** Uten farger viser ikke forklaringen hvilken linje som er hvilken. Teksten «Slik leser du grafen» dekker det. Oppfordringen «Pek eller trykk på grafen» vises også i leservisning, der grafen ikke kan brukes. Den er nyttig i vanlig visning og koster lite.
 
-**Ikke kontrollert:** Safaris leservisning selv. Chromium uten stilark er bare en tilnærming. Lars bør se samme side i leservisning etter publisering.
+**Ikke kontrollert:** Lesemodus i Chrome og leservisning i Safari selv. Chromium uten stilark er bare en tilnærming. Lars bør se samme side i lesemodus etter publisering.
