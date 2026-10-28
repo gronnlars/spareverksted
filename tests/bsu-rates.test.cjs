@@ -16,3 +16,7 @@ assert.deepEqual(bsu.parts.find(p=>p.table).table,data);
 assert.match(bsu.tradeoffs.pros[0].text,/alene eller sammen med andre/);
 assert.ok(bsu.sources.some(s=>s.url.includes('fradrag-for-boligsparing')));
 console.log('BSU: ni årsrader, månedstall, delår, faktisk visningsdata og kilde kontrollert.');
+// Boligeierskap: presiseringen Lars ba om før publisering 28.10.2026 skal ikke falle ut igjen.
+{const b=require('../dist/veileder-knowledge.js').find(e=>e.id==='q-bsu-basics'),t=JSON.stringify(b);
+ assert.match(t,/alene eller sammen med andre/);assert.match(t,/Både boligen du bor i og annen bolig teller/);assert.match(t,/borettslag/);assert.match(t,/Fritidsbolig alene hindrer ikke fradrag/);
+ assert.ok(b.sources.some(s=>s.url.includes('forskuddsutskrivingen-2026')),'Forskuddsutskrivingen 2026 er kilde for fritidsbolig');}
