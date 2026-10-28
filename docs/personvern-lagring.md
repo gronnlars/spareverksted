@@ -236,4 +236,5 @@ Lars opplyser også at han har slått av et statistikkverktøy i cPanel. Hvilket
 - Før endringen tok lenken med 52 verdier fra alle deler. Nå bare feltene for delen som deles (se BESLUTNINGER.md).
 - Åpner du en delt lenke i samme fane som en plan du jobber med, erstattes arbeidsplanen i fanen uten beskjed. Lagrede planer røres ikke. Ikke endret; foreslått som egen sak.
 - Nedlasting og utskrift inneholder alder hvis den er oppgitt. Står nå på personvernsiden.
+- Første kontroll på publisert nettsted (Lars, iPhone, 28.10.2026): Safari («Personvernrapport: Ingen kontaktede sporere») og Brave («0 annonser og andre ekle ting blokkert»). Verktøyene kjenner igjen sporingstjenester fra kjente lister. Det bekrefter at ingen kjente sporere ble funnet, ikke at all trafikk er kontrollert. Nettverkstrafikk og HTTP-hoder på publisert side er fortsatt ikke målt.
 - Personvernsiden: rettet «utskrifter», «Spareverksteds kode leser», «Jeg har ikke funnet opplysninger fra GitHub», og setningen om GitHub-logger under rettigheter (innspill fra GPT).
