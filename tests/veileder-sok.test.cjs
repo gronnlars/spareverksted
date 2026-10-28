@@ -35,7 +35,7 @@ const SET=[
  {q:'Lønner det seg å betale ned studielånet fortere?',expect:'student',proof:/Låne mindre eller betale ekstra/},
  {q:'Bør jeg redusere risikoen før jeg blir pensjonist?',expect:'pension',proof:/Mange reduserer risiko når uttakene nærmer seg/},
  {q:'Hva er forskjellen på IPS og ASK?',expect:'q-ips-ask',proof:/IPS og ASK har ulike regler for binding, skatt og investeringer/},
- {q:'Hva er en aksjesparekonto?',expect:'q-aksjesparekonto',proof:/Gjenværende innskudd tas ut skattefritt før gevinsten/},
+ {q:'Hva er en aksjesparekonto?',expect:'q-aksjesparekonto',proof:/Innskuddet du har igjen, kan tas ut uten skatt/},
  // Ikke dekket. Et treff her er misvisende: brukeren får et svar på noe annet enn det hen spurte om.
  {q:'Hvordan blir fond skattlagt?',expect:null,why:'Fondssvaret har ingen skatteregler for fond. ASK-svaret forklarer bare forskjellen mellom to kontotyper.'},
  {q:'Er det dumt å ha alle sparepengene på brukskonto?',expect:null,why:'Ingen svar sammenligner brukskonto med sparekonto.'},
@@ -149,3 +149,4 @@ for(const t of V.topics)for(const q of t.questions)assert.ok(V.findTopics(q).inc
 
 console.log(`Søk: ${report.right.length} av ${SET.filter(c=>c.expect).length} dekkede spørsmål får riktig tema først. `+
  `${report.honest.length} av ${SET.filter(c=>!c.expect).length} udekkede gir ingen treff. Kjente misvisende treff: ${report.misleading.length}.`);
+
