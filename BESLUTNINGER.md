@@ -797,7 +797,7 @@ Lars bestilte innlegging i GitHub og notat i PR. Valgt: egen ASK-gren oppå docs
 
 **Alternativer for punkt 1:**
 A. `div` rundt, `label for` bare rundt ledeteksten. **Valgt.** Ren HTML, ingen ARIA, og klikk på ledeteksten flytter fortsatt fokus til feltet.
-B. `fieldset` med `legend` for hvert felt. Ikke valgt: `fieldset` er for grupper av felt. Skjermlesere leser da gruppenavnet i tillegg til feltnavnet, så hvert felt blir lest to ganger.
+B. `fieldset` med `legend` for hvert felt. Ikke valgt: `fieldset` er for grupper av felt. Mange skjermlesere leser da gruppenavnet i tillegg til feltnavnet, så samme tekst kan bli lest to ganger.
 C. Beholde `label` rundt alt og koble med `aria-labelledby`. Ikke valgt: bryter fortsatt HTML-reglene og bruker ARIA der HTML har en løsning.
 
 **Alternativer for punkt 3:**
