@@ -648,3 +648,34 @@ C. Åpne for «generelle spørsmål» bredt. Ikke valgt: kategorien er for grov 
 
 **Vurder på nytt når:** Finanstilsynet svarer, eller et svar viser seg å bli lest som en anbefaling.
 
+
+## Grafene beskrives i ord (28. oktober 2026)
+
+**Status:** Lars ba 28.10.2026 om UU-rettingen som gjør grafer og beregninger nyttige også for dem som ikke ser dem. Retting av dokumentert UU-feil etter `docs/regulatorisk.md`, krav 6. Ikke en ny funksjon.
+
+**Beslutning:** Under sparegrafen står «Slik leser du grafen», og under uttaksgrafen en tilsvarende tekst. Teksten lages av regler og tallene i grafen (`dist/chart-summary.js`), ikke av KI. Den sier hva grafen viser, start og slutt, formen på linjen, et tydelig fall, avstanden til innskuddene, bånd, bank og lagrede planer, og at linjene er regneeksempler og ikke garantier. Den viser til tabellen for tall år for år.
+
+**Alternativer:**
+A. Synlig tekst for alle, koblet til grafen. **Valgt.** Hjelper også seende som ikke er vant til grafer.
+B. Tekst bare for skjermleser. Ikke valgt: VoiceOver leser ikke alltid SVG-beskrivelser, og seende får ikke hjelpen.
+C. Opplesning med `aria-live` når tallene endres. Ikke valgt: strider mot regelen om sparsom opplesning.
+D. «Les opp»-knapp. Ikke valgt nå: ny funksjon som venter til oppstart. Modulen kan gjenbrukes da.
+
+**Synlig og full tekst (endret samme dag):** Lars ba om at løsningen skal være god både for de fleste og for dem som bruker hjelpemidler. Seende får bare det grafen viser av nytt: start og slutt, formen på linjen, avstanden til innskuddene, bånd, bank og lagrede planer. Setninger som gjentar overskriften, merknaden under grafen eller henvisningen til tabellen, står bare i den fulle teksten. Den fulle teksten leses av skjermleser via `aria-describedby` og står i SVG-beskrivelsen. Alternativ: samme tekst for alle. Ikke valgt: seende ville lest forbeholdet og forklaringen av båndet to ganger.
+
+**Kilder, kontrollert etter at løsningen ble laget (28.10.2026):** Lars spurte om løsningen fulgte en standard. Svaret er delvis: WCAG 1.1.1 krever tekstalternativ, men oppbygningen av teksten ble først valgt av Claude ut fra generell kunnskap. Kontrollen mot kildene viste at valgene stemmer med rådene:
+- [Finanstilsynets designmanual, Universell utforming](https://finanstilsynet.no/designmanual/universell-utforming) (publisert 01.01.2023, endret 07.05.2025, nivå 1): diagrammer og infografikk må ha en synlig tekstbeskrivelse på samme side eller lenket fra den, som tabell, liste eller vanlig tekst. Det viktigste skal skrives først.
+- [W3C WAI: Complex Images](https://w3c.github.io/wai-tutorial-images/tutorials/images/complex/) (utkastversjon i W3Cs arbeidsrepo, ikke den publiserte siden, som ikke kunne åpnes): kort tekstalternativ som sier hva bildet er, og en lang beskrivelse med verdier, skala og trender, gjerne som en del av hovedinnholdet. `aria-describedby` passer bare for ren tekst uten overskrifter og tabeller, slik teksten her er.
+- [Finanstilsynets designmanual, Informasjonsgrafikk: diagrammer](https://finanstilsynet.no/designmanual/identitet/informasjonsgrafikk/informasjonsgrafikk-diagrammer) (publisert 05.01.2023, endret 08.05.2025): kontrast 3:1 for grafiske elementer, mørkere kant på lyse flater, og forklaringen av linjene i samme rekkefølge som i grafen.
+
+- [Uu-tilsynet: Bilder og grafikk](https://www.uutilsynet.no/veiledning/bilder-og-grafikk/205) (opprettet 17.04.2015, endret 15.12.2023, nivå 1, lest fra PDF Lars la ved 28.10.2026): diagrammer skal ha en kort alternativ tekst som beskriver formål og hovedinformasjon, og den detaljerte informasjonen skal stå som tekst. Anbefaling utover kravet: begynn med det viktigste, og si om det er foto, illustrasjon eller grafikk konsekvent til slutt. HTML5 `<figure>` med `<figcaption>` er tilsynets anbefalte kode for synlig bildetekst. SVG anbefales for tekst i diagrammer.
+
+**Endret etter Uu-tilsynets råd:** Grafenes korte tekstalternativ har fått hovedinformasjonen og typen sist, for eksempel «Beløp i kroner over 25 år, fra 10 000 kr til 600 742 kr. Linjediagram.» Før sto det bare «Beløp i kroner over tid».
+
+**Avvik og forslag fra kontrollen, ikke gjort i denne PR-en:**
+- W3C og Uu-tilsynet anbefaler å samle graf og beskrivelse i `<figure>` med `<figcaption>`. Egen liten retting.
+- Grafens ytre `div` har `aria-label` uten rolle. Navn på et element uten rolle leses ikke av alle skjermlesere. Gjelder koden fra før.
+- Om tabellvisningen har riktige overskriftsceller, og om rekkefølgen i forklaringen av linjene følger grafen, er ikke kontrollert.
+- Chartability (Elavsky m.fl., EuroVis 2022), en fagfellevurdert sjekkliste for tilgjengelige grafer: testlisten er gått gjennom samme dag fra en PDF Lars la ved. Resultat og forslag står i `research/chartability-sparegraf.md`. Selve artikkelen er ikke lest.
+
+**Ikke kontrollert:** Hvordan VoiceOver og andre skjermlesere faktisk leser teksten. Bør prøves av testeren som fant feilen.
