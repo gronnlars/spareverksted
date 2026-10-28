@@ -232,3 +232,8 @@ SV-022 revidert etter KI-kontroll fra Claude, videresendt av Lars 25.10.2026: [k
 Rettelse etter videresendt Claude-kontroll: kontrollregningen og kildevurderingen er fra Claude, ikke Lars. Ingen menneskelig fagkontroll er dokumentert. SV-022 har nå skattepåstand i svarteksten, presisert kildedato og kontrastlenke med 2 % rente / 2,5 % prisvekst. [Gjeldende kontrollstatus](research/svarutkast/SV-022-KONTROLL.md). Menneskelig kildekontroll og nettleserprøve gjenstår før integrasjon.
 
 SV-022: Lars har bekreftet egen kildekontroll og godkjent push 25.10.2026. Han har ikke regnet. Claude og programtester har kontrollert utregningene. SV-022 er integrert i kontrollgrenen med begge eksempellenkene, avventer CI/publisering. De fire andre GAPS-svarene er fortsatt utkast. BSU ved utenlandsflytting beholdes som hull.
+
+
+## Kilderevisjon av PR #72, 28.10.2026
+
+SV-031, SV-122, SV-133 og SV-087/SV-090: dokumentasjonen er oppdatert mot main `11df29417b0e094958cf2958b1b14044258b7c5d` og nyåpnede kilder. [Gjeldende rapport og oppdrag til Claude](research/kildegjennomgang-2026-10-25.md). Status er til kontroll hos Claude før Lars sjekker, ikke publiseringsgodkjent. Nye funn om skjermingsbruk og kildeversjon er dokumentert. Produktfunnene er fortsatt åpne. Tidligere søke-/profilprøver er historiske og ikke kjørt på nytt i denne revisjonen.
