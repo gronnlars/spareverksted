@@ -767,3 +767,8 @@ Lars godkjente teksten i samtalen og bestilte integrasjon i GitHub med kilder. V
 ### BSU-årstabell og boligvilkår, 28.10.2026
 
 Lars bestilte tre konkrete endringer i PR #101: boligvilkåret «alene eller sammen med andre» med Skatteetatens satsside, ny rentefordel og en ekte HTML-tabell i fordypningen. Årssnitt fra Claudes vedlagte CSV kontrollregnes mot den eksisterende månedsfilen. Valgt to rentekolonner, BSU og bundne innskudd, for en ryddig mobilvisning. Alternativ med ikke-bundne innskudd vises ikke, men tallene bevares i årsfilen. Tallene genereres fra datafil, ikke fra håndskrevet tekst. 2026 er et delår og må oppdateres før 01.01.2027. Ingen sammenslåing eller publisering bestilt.
+
+
+### ASK: kildekontrollert tekst og integrasjon, 28.10.2026
+
+Lars bestilte innlegging i GitHub og notat i PR. Valgt: egen ASK-gren oppå docs/svarstruktur-ask med BSU/#101-strukturen. Kun data i q-aksjesparekonto, samme søkeinnganger, ingen kalkulatorendringer. Risiko står i kortsvaret; avgrensning i review, så caveat og gammel separat skjermingskilde utgår. Gave, arv og flytting forklares med videreføring av skatteposisjoner. Alternativ: kutte til 300 ord eller bygge på main uten strukturen. Ikke valgt: Lars bestilte at teksten beholdes og at lengdeavvik varsles. 482 ord i svaret etter repoets teller, 566 med dokumentasjon. Lengdeavviket er ikke godkjent. Ingen sammenslåing eller publisering. Kontroller og begrensninger: research/svarutkast/ASK-KILDEKONTROLL-2026-10-28.md. Vurder på nytt ved Lars' gjennomgang, faglige funn eller regelendring.
