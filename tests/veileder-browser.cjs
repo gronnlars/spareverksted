@@ -156,13 +156,13 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    await search('sparekonto');
    assert.equal(await page.locator('#contextPanel').isHidden(),false);
    assert.ok(await page.locator('#answer .option-card').count()>0);
-   for(const [query,title] of [['indeks fond','Hva er et indeksfond?'],['Er fond sparing?','Hva er forskjellen på sparing og investering?']]){
+   for(const [query,title,checked] of [['indeks fond','Hva er et indeksfond?',/28. oktober 2026/],['Er fond sparing?','Hva er forskjellen på sparing og investering?',/25. oktober 2026/]]){
     assert.equal(await titleFor(query),title);
     assert.equal(await page.locator('#contextPanel').isHidden(),true);
     assert.equal(await page.locator('#answer .explain-terms').count(),0);
     assert.equal(await page.locator('#answer .explain-terms').isVisible(),false);
     await page.locator('#answer details.answer-sources>summary').focus();await page.keyboard.press('Enter');
-    assert.match(await page.locator('#answer details.answer-sources').textContent(),/25. oktober 2026/);
+    assert.match(await page.locator('#answer details.answer-sources').textContent(),checked);
     await noOverflow();
    }
    assert.deepEqual(eerrors,[]);await ectx.close();
