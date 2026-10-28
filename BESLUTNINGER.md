@@ -661,4 +661,15 @@ B. Tekst bare for skjermleser. Ikke valgt: VoiceOver leser ikke alltid SVG-beskr
 C. Opplesning med `aria-live` når tallene endres. Ikke valgt: strider mot regelen om sparsom opplesning.
 D. «Les opp»-knapp. Ikke valgt nå: ny funksjon som venter til oppstart. Modulen kan gjenbrukes da.
 
+**Kilder, kontrollert etter at løsningen ble laget (28.10.2026):** Lars spurte om løsningen fulgte en standard. Svaret er delvis: WCAG 1.1.1 krever tekstalternativ, men oppbygningen av teksten ble først valgt av Claude ut fra generell kunnskap. Kontrollen mot kildene viste at valgene stemmer med rådene:
+- [Finanstilsynets designmanual, Universell utforming](https://finanstilsynet.no/designmanual/universell-utforming) (publisert 01.01.2023, endret 07.05.2025, nivå 1): diagrammer og infografikk må ha en synlig tekstbeskrivelse på samme side eller lenket fra den, som tabell, liste eller vanlig tekst. Det viktigste skal skrives først.
+- [W3C WAI: Complex Images](https://w3c.github.io/wai-tutorial-images/tutorials/images/complex/) (utkastversjon i W3Cs arbeidsrepo, ikke den publiserte siden, som ikke kunne åpnes): kort tekstalternativ som sier hva bildet er, og en lang beskrivelse med verdier, skala og trender, gjerne som en del av hovedinnholdet. `aria-describedby` passer bare for ren tekst uten overskrifter og tabeller, slik teksten her er.
+- [Finanstilsynets designmanual, Informasjonsgrafikk: diagrammer](https://finanstilsynet.no/designmanual/identitet/informasjonsgrafikk/informasjonsgrafikk-diagrammer) (publisert 05.01.2023, endret 08.05.2025): kontrast 3:1 for grafiske elementer, mørkere kant på lyse flater, og forklaringen av linjene i samme rekkefølge som i grafen.
+
+**Avvik og forslag fra kontrollen, ikke gjort i denne PR-en:**
+- W3C foreslår å samle graf og beskrivelse i `<figure>` med `<figcaption>`. Kan vurderes som egen liten retting.
+- Grafens ytre `div` har `aria-label` uten rolle. Navn på et element uten rolle leses ikke av alle skjermlesere. Gjelder koden fra før.
+- Om tabellvisningen har riktige overskriftsceller, og om rekkefølgen i forklaringen av linjene følger grafen, er ikke kontrollert.
+- Chartability (Elavsky m.fl., EuroVis 2022), en fagfellevurdert sjekkliste for tilgjengelige grafer, er ikke lest. Bør brukes ved neste gjennomgang.
+
 **Ikke kontrollert:** Hvordan VoiceOver og andre skjermlesere faktisk leser teksten. Bør prøves av testeren som fant feilen.
