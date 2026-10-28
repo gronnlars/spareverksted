@@ -28,7 +28,7 @@ const server=http.createServer((req,res)=>{
    await page.locator('.full-answer > summary').click();
    const ex=await page.locator('.explain-example').boundingBox(),out=await page.locator('.full-answer .answer-part').filter({has:page.locator('h3',{hasText:'Tid og uttak'})}).boundingBox();
    assert.ok(ex.y+ex.height<=out.y,'eksempel vises før uttaksavsnitt');
-   await page.locator('.answer-sources > summary').click();assert.match(await page.locator('.source-list').innerText(),/23\.10\.2026/);
+   await page.locator('.answer-sources > summary').click();assert.match(await page.locator('.source-list').innerText(),/Skatteetaten/);assert.match(await page.locator('.source-list').innerText(),/OpenStax/);
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
    assert.equal(await page.locator('.explain-next a').count(),2);
    assert.equal(await page.locator('.explain-next a').nth(1).getAttribute('href'),draft.additionalExamples[0].href);
@@ -49,6 +49,6 @@ const server=http.createServer((req,res)=>{
    assert.ok(parse(cells[2])===9903);
    assert.deepEqual(errors,[]);await page.close();
   }
-  console.log(engine+' nettleserprøve: 320/390/1280 px, eksempel før uttak, kildedato fra søkeuttrekk, ingen overflow, kalkulatorlenke 11 025 kr og kontrast med 10 404 kr / 9 902,68 kr bestått.');
+  console.log(engine+' nettleserprøve: 320/390/1280 px, eksempel før uttak, kildeliste med formelkilde, ingen overflow, kalkulatorlenke 11 025 kr og kontrast med 10 404 kr / 9 902,68 kr bestått.');
  }finally{if(browser)await browser.close();await new Promise(r=>server.close(r));}
 })().catch(e=>{console.error(e.message);process.exitCode=1;});
