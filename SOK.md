@@ -86,13 +86,13 @@ Eierskap til navn (avgjort av Lars):
 | Forklaring | Nøkler (`keys`) |
 |---|---|
 | `q-aksjesparekonto` | `ask`, `aksjesparekonto` |
-| `q-fondskonto` | `fondskonto`, `investeringskonto`, `kapitalforsikring`, `zero`, `ikz` |
+| `q-fondskonto` | `fondskonto`, `investeringskonto`, `kapitalforsikring` (`zero` og `ikz` fjernet 28.10.2026, legges inn igjen når pausen oppheves) |
 | `q-ask-zero` (sammenligningen) | ingen |
 
 Regler:
 1. Et enkelt kontonavn åpner sin egen forklaring. `words` bruker `alone(navn, andre)`: treffet teller bare når spørsmålet ikke nevner den andre kontotypen.
 2. Sammenligningen nås med regexen `both` (ASK-navn og fondskonto-navn i samme spørsmål, i begge rekkefølger). Den har ingen `keys`, så et enkelt navn aldri åpner den.
-3. Produktnavn (for eksempel Investeringskonto Zero) forklares med tilbyder, uten anbefaling.
+3. Produkt- og tilbydernavn brukes ikke i svarene (vedtak 28.10.2026). Svarene sier at tilbydere kan gi fondskontoen egne navn.
 4. `fond(?!skonto)` i `funds` og `/\bask\b/` fjernet fra `q-ips-ask` er data i samme stil som `aksj(?!esparekonto)`. Søkemotoren `veileder-sok.js` er uendret.
 5. Ny forklaring med eget navn: legg navnet i `keys`, bruk `alone()` mot de andre kontonavnene, og legg inn en rad i søketestene.
 

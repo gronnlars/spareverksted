@@ -118,7 +118,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    assert.equal(await titleFor('ASK'),'Hva er en aksjesparekonto (ASK)?');
    assert.equal(await page.locator('#answer .option-card').count(),0);
    assert.equal(await titleFor('aksje spare konto'),'Hva er en aksjesparekonto (ASK)?');
-   assert.equal(await titleFor('Hva er Investeringskonto Zero?'),'Hva er en fondskonto?');
+   assert.equal(await titleFor('Hva er en investeringskonto?'),'Hva er en fondskonto?');
    assert.equal(await titleFor('fonds konto'),'Hva er en fondskonto?');
    assert.equal(await page.locator('#answer .explain-terms dt').count(),5);
    assert.equal(await page.locator('#answer .option-card').count(),0);
