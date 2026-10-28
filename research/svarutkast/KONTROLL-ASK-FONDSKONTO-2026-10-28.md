@@ -2,7 +2,19 @@
 
 Upublisert kontrollnotat fra ChatGPT/Codex. Egenkontroll, ikke uavhengig fagkontroll eller juridisk vurdering. Eksisterende svar undersøkes, ingen nye svar innføres.
 
-## Grunnlag og faktisk versjon
+## Ny gjennomgang før Claude-kontroll, 28.10.2026
+
+Denne oppfølgingen bygger på main `11df29417b0e094958cf2958b1b14044258b7c5d`, bekreftet identisk med main ved GitHub-sammenligning. Svarfilens blob er fortsatt `baa420596e669867e7c565a99fefb1464032ac7b`. Nyere main-endringer gjelder UU og endrer ikke de fire undersøkte svarene. Tidligere live- og søkeprøver nedenfor er historiske resultater, ikke nye kjøringer i denne oppfølgingen.
+
+ASK-siden, fondskontosiden og rettledningen er åpnet på nytt i denne arbeidsøkten. De samme konkrete avsnittene støtter funn 1 til 4 nedenfor. Norsk rettledningsadresse brukes som kilde. Den eksisterende /en/-adressen er også kontrollert og viser norsk fagtekst. Ingen kilde kalles engelsk alene ut fra adressen.
+
+**Nytt funn om skjerming:** I `q-fondskonto`, avsnittet «Skatt ved uttak», står skjerming bare omtalt på aksjedelen. Skatteetatens fondskontoside, under «Bruk av ubenyttet skjermingsfradrag ved uttak», og rettledningens «Særlig om uttak» sier at ubenyttet skjerming brukes mot hele gevinsten og også kan redusere rentedelen. Det korte skatteavsnittet er dermed ufullstendig. Forslag til erstatning i et senere produktoppdrag: «Ubenyttet skjermingsfradrag reduserer gevinsten ved uttak og kan også redusere rentedelen.» Beregning av årets skjerming og bruk av ubenyttet skjerming er to forskjellige forhold. Dette skal ikke forenkles til at rentepapirer i seg selv opptjener aksjeskjerming.
+
+De to myndighetssidene har dessuten korte avsnitt som bare omtaler aksjedelen, mens de mer utførlige uttaksavsnittene omtaler begge deler. Begge formuleringer er registrert åpent. Foreslått presisering bygger på de konkrete avsnittene om bruk av ubenyttet skjerming, ikke et stille valg mellom sidene. Claude skal kontrollere denne avgrensningen særskilt.
+
+Kildedato: ingen dato oppgitt på sidene. Rettledningen oppgir regelår 2026 og senere. Faktisk lesedato for denne oppfølgingen: 28.10.2026. Fondskontosidens eldre satsavsnitt løftes ikke til 2026. Ingen satser eller produktvilkår legges til. Se hovedrapportens gjeldende kilderegister og oppdrag til Claude.
+
+## Grunnlag og faktisk versjon i første delkontroll
 
 Lest main-commit: `00d8f1536802b69eebf05a1034f388bd87550d9f`. PR #90 er sammenslått og inngår i denne commiten. Alle obligatoriske prosjektregler og Aktive avvik er lest. PR #72 videreføres. Åpne #91 og #92 gjelder begrepsregister og grafbeskrivelse, ikke disse svarenes fagtekst. Ingen nye funksjoner eller konkurrerende kø opprettes.
 
