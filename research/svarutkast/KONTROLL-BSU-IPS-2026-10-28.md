@@ -2,7 +2,19 @@
 
 Upublisert dokumentasjon fra ChatGPT/Codex. Egenkontroll, hverken uavhengig fagkontroll eller juridisk vurdering. Viderefører PR #72. Lars ba uttrykkelig om å fortsette kontrollarbeidet. Ingen produktendringer eller publisering inngår.
 
-## Grunnlag og avgrensning
+## Ny gjennomgang før Claude-kontroll, 28.10.2026
+
+Main er bekreftet som `11df29417b0e094958cf2958b1b14044258b7c5d`. BSU-, IPS-, BSU-sats- og forskuddssidene, Finansdepartementets tabell og Forbrukerrådets side er åpnet på nytt. Relevante avsnitt er lest i denne arbeidsøkten. Faktisk lesedato er 28.10.2026, ikke en ny publiseringsdato. Ingen dato oppgitt på de udaterte hovedsidene. Tabellens dato er 07.10.2026 og forskuddsmeldingens dato er 15.12.2025.
+
+BSU-satsene og IPS-grensen er fortsatt dokumentert for 2026. Budsjetttabellens 2027-kolonne er et forslag. At beløpene er like, gjør ikke forslaget vedtatt. De tre tidsangivelsene holdes atskilt: kildedato, regelår og lesedato. Dato for nettsidens publisering er fortsatt ikke fastslått.
+
+[Skatte-ABC 2025/2026, P-4-5.1](https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/p-4-pensjon--individuell-sparing-til-pensjon/P-4.005/P-4.006/) er også åpnet, og selve fagavsnittet etter innholdsmenyen er lest. Kilden støtter fradragets type. Den har en 2026-merknad om 25 000 kr, men beholder eldre 15 000 kr i løpende tekst. Dette er en versjonsuklarhet i kilden, ikke grunnlag for å gjeninnføre den eldre grensen. Begge beløp registreres åpent. 2026-grensen bekreftes av den årsspesifikke hovedveiledningen og Finansdepartementets tabell. Ingen generell påstand om at Skatte-ABC er gjennomgått i sin helhet.
+
+**Presisering av fradrag:** IPS gir fradrag i alminnelig inntekt. BSU gir fradrag i skatt. Ordet «skattefradrag» alene kan skjule denne forskjellen, og skal ikke brukes som om samme innskudd gir samme skattevirkning i de to ordningene. Ingen personlig skatteberegning er gjort.
+
+Status for arvede råd er fortsatt åpen. At Forbrukerrådet oppgir fem års anbefalt sparehorisont for aksjefond dokumenterer ikke sparevaneeffekt, individuell egnethet eller prioritering av IPS mot ASK. Ingen handlingsråd godkjennes gjennom denne kildekontrollen. Historiske kodeprøver nedenfor er bevart med sitt opprinnelige grunnlag.
+
+## Grunnlag og avgrensning i første delkontroll
 
 Lest main: `00d8f1536802b69eebf05a1034f388bd87550d9f`. Ferske prosjektregler, regulatorisk pause, kø, logg og åpne PR-er lest. #91 til #94 gjelder annen dokumentasjon og UU, ikke disse svarenes fagtekst. Ingen aktiv reservasjon for disse ID-ene funnet i lest logg før egen reservasjon.
 
