@@ -488,8 +488,8 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Endringer i KILDEREGLER.md:**
 1. Nytt nivå 3: norske, offentlig finansierte forskningsinstitutter og universiteter innenfor eget fagfelt, med SIFO som eksempel. Bankene blir nivå 4, mediene nivå 5 og «alt annet» nivå 6. Oppføringen over fra 28.10 (PR #71) sier «medier på nivå 4». Det var riktig da og er ikke endret.
 2. Nivå 1 beskrives med et kriterium og eksempler, også Norges Bank som offentlig og ikke-kommersiell. Eksemplene står fordi grensen mot Forbrukerrådet ellers blir uklar: Forbrukerrådet er selv et statlig forvaltningsorgan (Store norske leksikon, https://snl.no/Forbrukerrådet, lest 28.10.2026).
-3. Ny regel: rolle og innhold avgjør nivået, ikke institusjonsnavnet. Offisiell statistikk og vedtak er nivå 1. Analyser, prognoser og modeller fra de samme organene er nivå 3.
-4. Ny regel om primærkilde: omtaler og pressemeldinger brukes bare til å finne primærkilden, en kilde som gjengir andres tall er ikke egen kilde for tallet, og manglende tilgang dokumenteres i stedet for å erstattes med en omtale.
+3. Ny regel: rolle og innhold avgjør nivået, ikke institusjonsnavnet. Regelverk, vedtak, myndighetsveiledning om gjeldende regler og offisiell statistikk er nivå 1. Analyser, prognoser og modeller fra offentlige myndigheter er nivå 3 etter innholdet, også når organet ikke er et forskningsinstitutt. Dette står både i nivå 3 og i rolleregelen, slik at en analyse fra et direktorat eller tilsyn ikke faller mellom ordlydene (påpekt av GPT 28.10.2026).
+4. Ny regel om primærkilde: omtaler og pressemeldinger brukes bare til å finne primærkilden. En offisiell kunngjøring fra organet som selv har fattet vedtaket, er primærkilde for at vedtaket er fattet og når det gjelder fra. En pressemelding som bare omtaler et vedtak, er det ikke. Konsekvens: er selve vedtaket eller kunngjøringen ikke tilgjengelig, publiseres ikke påstanden. Strengheten er bevisst, men må bekreftes av Lars. Videre: en kilde som gjengir andres tall er ikke egen kilde for tallet, og manglende tilgang dokumenteres i stedet for å erstattes med en omtale.
 5. Ny regel om modeller og referansebudsjetter.
 6. Følgeendringer: K3 (kildedato på nivå 3, 4 og 5), K7 (årlig kontroll av SIFOs referansebudsjett) og sjekklistens punkt 2.
 
@@ -510,6 +510,8 @@ H. «Primærkilden når den finnes og er tilgjengelig.» Ikke valgt: kan leses s
 **Lovdata og innlimt tekst:** KI-verktøyene når ikke alltid Lovdata. Da kan Lovdata bare brukes når teksten faktisk er lest i økten. Limer Lars inn lovtekst, er det en kopi, og den må ha URL og dato for siste endring (K1, K3). Ingen ny regel trengs.
 
 **Akseptert ulempe:** Seks nivåer og to nye avsnitt gjør reglene lengre. Rolleregelen krever at bidragsyteren vurderer innholdstype, ikke bare avsender.
+
+**Avhengighet til åpne PR-er:** PR #69 (`docs/maaneder-og-kildenivaa`) har oppføringen «Kildenivå for påstander og råd» med den gamle listen på fem nivåer. Slås #69 sammen etter denne, er den oppføringen historikk og må ikke leses som gjeldende nivåer. PR #67 viser til «nivå 1 eller 2», som fortsatt er riktig.
 
 **Ikke gjort her:** Den brutte henvisningen øverst i KILDEREGLER.md til oppføringene «Kildenivå for påstander og råd» og «Sparehorisont og Forbrukerrådets anbefaling». De finnes bare på de usammenslåtte grenene `docs/maaneder-og-kildenivaa` og `feature/sparehorisont-varsel`. Håndteres i egen PR.
 
