@@ -40,7 +40,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   const summaryText=await p.locator('#chartSummaryText').innerText();
   assert.match(summaryText,/^Grafen viser /);assert.match(summaryText,/går fra .+ til /);assert.match(summaryText,/ikke garantier/);assert.match(summaryText,/«Tabell»/);
   assert.equal(await p.locator('#chart').getAttribute('aria-describedby'),'chartSummaryText');
-  assert.match(await p.locator('#chart svg desc').textContent(),/^Grafen viser /);
+  assert.match(await p.locator('#chart svg desc').textContent(),/^Etter .+ Før skatt\. Grafen viser /);
   await p.locator('#tableTab').click();assert(await p.locator('#chartSummary').isHidden(),'Description follows the graph view');
   await p.locator('#graphTab').click();assert(await p.locator('#chartSummary').isVisible(),'Description returns with the graph');
   // Actual downloaded CSV values must match the graph and the XLSX/JSON source matrix.
