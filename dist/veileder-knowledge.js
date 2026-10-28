@@ -180,11 +180,87 @@ const entries=[
 /\bmå jeg investere for å spare\b/],
 "review":{"text":"Fagbeskrivelse kontrollert mot kildene 25. oktober 2026. Ingen bestemt avkastning eller produktpris er forutsatt. Neste kildekontroll senest 25. januar 2027."},
 "layout":"overview"},
-{"kind":"explainer",
-"layout":"overview",
-"id":"q-aksjesparekonto",
-"title":"Hva er en aksjesparekonto (ASK)?",
-"checked":"2026-10-28",
+{
+  "kind": "explainer",
+  "layout": "overview",
+  "id": "q-aksjesparekonto",
+  "title": "Hva er en aksjesparekonto (ASK)?",
+  "checked": "2026-10-28",
+  "terms": [],
+  "intro": "En aksjesparekonto (ASK) er en konto for bestemte aksjer og aksjefond i EØS. Du betaler skatt av gevinst og utbytte først ved uttak utover gjenværende innskudd, etter eventuelt skjermingsfradrag. Det er et fradrag som reduserer beløpet du betaler skatt av. Risikoen avhenger av hva du investerer i.",
+  "tradeoffs": {
+    "pros": [
+      {
+        "title": "Skatten utsettes",
+        "text": "Gevinst og utbytte kan investeres videre uten at du betaler skatt underveis."
+      },
+      {
+        "title": "Innskuddet kommer ut først",
+        "text": "Innskuddet du har igjen, kan tas ut uten skatt."
+      }
+    ],
+    "cons": [
+      {
+        "title": "Ikke alle aksjer er tillatt",
+        "text": "Selskapet må være hjemmehørende i EØS, altså høre til der skattemessig. Enkeltaksjer i for eksempel amerikanske selskaper kan derfor ikke kjøpes på ASK. Dette kan også gjelde selskaper på Oslo Børs."
+      },
+      {
+        "title": "Tapsfradrag først til slutt",
+        "text": "Taper du penger, får du fradrag først når kontoen avsluttes. Salg med tap inne på kontoen gir ikke fradrag."
+      },
+      {
+        "title": "Kontanter gir ikke rente",
+        "text": "Penger som står uinvestert på kontoen, gir ingen rente."
+      }
+    ]
+  },
+  "example": {
+    "title": "Eksempel: skatt når kontoen avsluttes",
+    "text": "Du har satt inn 100 000 kr og ikke tatt ut noe. Kontoen er verdt 150 000 kr. Du tar ut alt og avslutter kontoen. 100 000 kr er innskudd og skattefritt. 50 000 kr er gevinst. Med 5 000 kr i skjermingsfradrag er 45 000 kr skattepliktig. Med satsen for 2026 blir skatten 17 028 kr. Tallene er valgt for eksemplet og er ikke en beregning av din skatt."
+  },
+  "parts": [
+    {
+      "title": "Skatt ved uttak",
+      "text": "Tar du ut mer enn innskuddet du har igjen, betaler du skatt av det som overstiger innskuddet. Først trekkes eventuelt skjermingsfradrag fra. I 2026 er skatten 37,84 prosent av det skattepliktige beløpet. Tidligere uttak av innskudd reduserer beløpet du kan ta ut skattefritt."
+    },
+    {
+      "title": "Skjermingsfradrag",
+      "text": "Grunnlaget er årets laveste innskuddssaldo pluss ubenyttet skjerming fra tidligere år. Grunnlaget ganges med årets skjermingsrente."
+    },
+    {
+      "title": "Krav til konto og investeringer",
+      "text": "Bare personlige skattytere kan opprette ASK. Aksjene må være børsnoterte. Fond må være hjemmehørende i EØS og ha mer enn 80 prosent aksjer ved inntektsårets begynnelse. Kravene gjelder når du kjøper. Et verdipapir kan bli stående selv om det senere ikke oppfyller dem, for eksempel fordi selskapet flytter til USA."
+    },
+    {
+      "title": "Flytting",
+      "text": "Du kan flytte ASK til en annen tilbyder eller mellom egne ASK-er uten skatt. Innskudd og ubenyttet skjerming følger med i samme forhold som verdiene. Overføring av aksjer og fond fra en vanlig verdipapirkonto til ASK behandles skattemessig som salg, med beregning av gevinst eller tap."
+    },
+    {
+      "title": "Gave og arv",
+      "text": "ASK kan arves uten at overføringen skattlegges. Den kan også gis i gave, men da må hele kontoen overføres. Mottakeren fører videre innskuddet og skjermingen som hører til kontoen. Skattereglene kaller dette skattemessig kontinuitet. Når et dødsbo fordeles, kan også utvalgte aksjer og fond overføres til arvingens ASK. Innskudd og ubenyttet skjerming følger da med i samme forhold som verdiene. En ASK kan ikke eies av flere sammen. Vil du gi til flere, kan du fordele verdiene på flere egne ASK-er og gi bort hver konto."
+    }
+  ],
+  "sources": [
+    {
+      "id": "tax-ask-no",
+      "title": "Skatteetaten: Aksjesparekonto (ASK)",
+      "url": "https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/aksjer-og-verdipapirer/om/aksjesparekonto-ask/"
+    },
+    {
+      "id": "tax-aksjefaktor-2026",
+      "title": "Skatteetaten: Faktor for oppjustering av gevinst, tap eller utbytte på aksjer, 2026",
+      "url": "https://www.skatteetaten.no/satser/faktor-for-oppjustering-av-gevinsttap-eller-utbytte-pa-aksjer/"
+    },
+    {
+      "id": "tax-ask-arv-gave",
+      "title": "Skatteetaten: Skatte-ABC 2025/2026, A-10-9 Videreføring av aksjesparekonto ved arv eller gave",
+      "url": "https://www.skatteetaten.no/nn/rettskjelder/type/handboker/skatte-abc/gjeldende/a-10-aksjesparekonto/A-10.030/"
+    }
+  ],
+  "review": {
+    "text": "Skatteetatens sider er udaterte. Satsen gjelder inntektsåret 2026. Skatte-ABC 2025/2026 er lest fra en utskrift datert 28.10.2026, og utskriftstiden er ikke kildens oppdateringsdato. Lest 28.10.2026 av ChatGPT/Codex, egenkontroll. Svaret dekker ikke skatt ved flytting til utlandet, formuesskatt eller utenlandsk kildeskatt. Neste kontroll før 1. januar 2027 og ved regelendringer."
+  }
+,
 "keys":["ask",
 "aksjesparekonto"],
 "questions":["Hva er ASK?",
@@ -193,33 +269,8 @@ const entries=[
 "Hva betyr ASK?",
 "Hva er en aksjesparekonto (ASK)?"],
 "words":[/(?<!(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link).*)(?:\bask\b)(?!.*(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link))/,
-/(?<!(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link).*)(?:aksjesparekonto)(?!.*(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link))/],
-"intro":"En aksjesparekonto (ASK) er en konto for bestemte aksjer og aksjefond. Den har egne regler for skatt, uttak og hvilke investeringer som er tillatt.",
-"tradeoffs":{"pros":[{"title":"Utsatt skatt",
-"text":"Gevinst og utbytte skattlegges ikke løpende mens verdiene står på kontoen."},
-{"title":"Innskuddet kan tas ut først",
-"text":"Gjenværende innskudd tas ut skattefritt før gevinsten. Uttak utover dette skattlegges etter eventuell skjerming."}],
-"cons":[{"title":"Begrenset utvalg",
-"text":"Rene rentefond faller utenfor. Se EØS- og aksjeandelskravene i fordypningen."},
-{"title":"Tapsfradraget kommer senere",
-"text":"Tap gir først fradrag når kontoen avsluttes."},
-{"title":"Kontanter gir ikke rente",
-"text":"Penger som står uinvestert på ASK, gir ingen rente."}]},
-"terms":[],
-"example":{"title":"Eksempel: innskudd før gevinst",
-"text":"100 000 kr er satt inn, uten tidligere uttak, og kontoen er verdt 150 000 kr. Ved uttak av hele beløpet er 100 000 kr innskudd og 50 000 kr gevinst før skjerming. Valgte tall, ikke en beregning av din skatt."},
-"caveat":"ASK fjerner ikke risikoen for tap. Utflytting, arv og utenlandsk kildeskatt er ikke dekket her.",
-"sources":[{"id":"tax-ask-no",
-"title":"Skatteetaten: aksjesparekonto (ASK)",
-"url":"https://www.skatteetaten.no/person/skatt/hjelp-til-rett-skatt/aksjar-og-verdipapir/om/aksjesparekonto-ask/"},
-{"id":"tax-ask-skjerming",
-"title":"Skatteetaten: Skatte-ABC 2025/2026, A-10-5.6 Skjerming",
-"url":"https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/a-10-aksjesparekonto/A-10.010/A-10.018/"}],
-"parts":[{"title":"Hva kan ligge på kontoen?",
-"text":"Børsnoterte aksjer i selskaper og aksjefond som er hjemmehørende i EØS. Fondet må ha over 80 prosent aksjeandel ved inntektsårets begynnelse. Kravene vurderes når du kjøper. Verdipapirer som oppfylte kravene da, kan beholdes selv om kravene senere ikke er oppfylt."},
-{"title":"Slik virker skjermingen",
-"text":"Skjerming er et fradrag som reduserer skattepliktige aksjeinntekter. Grunnlaget er årets laveste innskuddssaldo pluss ubenyttet skjerming fra tidligere år. Grunnlaget multipliseres med årets skjermingsrente. Ubrukt skjerming kan brukes mot senere skattepliktige uttak."}],
-"review":{"text":"Skatteetatens ASK-side er udatert og omtaler 2026. Skatte-ABC: 2025/2026. Lest 28.10.2026, egenkontroll. Neste kontroll før 01.01.2027 og ved regelendringer."}},
+/(?<!(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link).*)(?:aksjesparekonto)(?!.*(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link))/]
+},
 {"kind":"explainer",
 "id":"q-fondskonto",
 "title":"Hva er en fondskonto?",
@@ -453,3 +504,4 @@ const entries=[
 if(typeof module!=='undefined'&&module.exports)module.exports=entries;
 else {for(const entry of entries)root.SpareVeileder.register(entry);}
 })(typeof window!=='undefined'?window:globalThis);
+
