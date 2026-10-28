@@ -109,3 +109,8 @@ ChatGPT/Codex har lest rapporten fra Claude, commit dfc0258f122103a1d4c7075bd64f
 A15: begge IPS-adresser ga lesbar norsk tekst i kildeverktøyet. Direkte HTTP-forsøk ga 403 for begge. Ingen redirect eller canonical-tag er bekreftet av GPT. Dokumentasjonen lenker til nn-adressen Claude leste; produktet er urørt. A14 er fortsatt et spørsmål til Lars, ikke et vedtatt avvik. Ingen endring i BESLUTNINGER.md eller omtalen av Nordnet.
 
 Ny kildekontroll og dokumentretting er egenkontroll. Claudes uavhengige kontrollregning er registrert som separat KI-kontroll. B, D, H og J er fortsatt ikke lest av Claude. Endringene etter hans kontroll må kontrolleres før godkjenning. Ingen ny produkt-, nettleser- eller søketest. Ingen sammenslåing eller publisering.
+
+
+### Lars sin kildekontroll mottatt 28.10.2026
+
+Lars har sendt konkrete kildeutdrag og myndighetsutskrifter for H og G. GPT har lest begge PDF-er, kontrollert relevante sidetall og beregnet SHA-256, registrert i hovedrapportens avsnitt «Lars sin ordlydskontroll». Alder, oppussing, ASK-grunnlag, IPS-fradragets type og rettledningens uttaksavsnitt er dokumentert i hans utdrag. Utdraget av BSU-renter inneholder bare overskrift, og garantiavgrensningen mangler. Disse er uttrykkelig fortsatt åpne for menneskelig ordlydskontroll. Ingen helhetlig faglig godkjenning eller fullført K7 erklæres. Ingen endring i Claudes rapport, produktet eller tester. Ingen sammenslåing eller publisering.
