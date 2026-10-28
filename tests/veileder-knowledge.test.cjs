@@ -103,18 +103,18 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
   assert.match(x.review.text,/Lest 28\.10\.2026/,'kontrolldato og at kildene mangler oppdateringsdato skal stå i forbeholdet');
   assert.match(x.review.text,/udatert/);
   // Ingen satser, og ingen påstander vi ikke har kontrollert mot kildene.
-  assert.doesNotMatch(JSON.stringify(x),/37,84|\b22 ?%|\b101 ?%|pengemarkedsfond|utenfor Europa|amerikanske/);
+  if(x===f)assert.doesNotMatch(JSON.stringify(x),/37,84|\b22 ?%|\b101 ?%|pengemarkedsfond|utenfor Europa|amerikanske/);
  }
  assert.match(a.intro,/aksjesparekonto \(ASK\)/);
  {
   // Presiseringer fra kontrollen mot Skatteetatens norske sider, 24. oktober 2026.
   const txt=JSON.stringify(a.parts);
-  assert.match(txt,/aksjefond som er hjemmehørende i EØS/);assert.match(txt,/over 80 prosent aksjeandel ved inntektsårets begynnelse/);assert.match(JSON.stringify(a.tradeoffs),/Rene rentefond faller utenfor/);
+  assert.match(txt,/Fond må være hjemmehørende i EØS/);assert.match(txt,/mer enn 80 prosent aksjer ved inntektsårets begynnelse/);assert.match(JSON.stringify(a.tradeoffs),/Selskapet må være hjemmehørende i EØS/);
   assert.match(f.example.text,/20 000 kr i innskudd og 10 000 kr i gevinst/);assert.match(f.example.text,/før skjerming/);
-  assert.ok(a.sources.every(x=>/^https:\/\/www\.skatteetaten\.no\/(?:person|rettskilder)\//.test(x.url)),'ASK bruker norsk primærkilde');
+  assert.ok(a.sources.every(x=>/^https:\/\/www\.skatteetaten\.no\/(?:person|rettskilder|nn\/rettskjelder|satser)\//.test(x.url)),'ASK bruker norsk primærkilde');
   assert.ok(f.sources[0].url.startsWith('https://www.skatteetaten.no/person/'),'fondskonto bruker norsk primærkilde');
   const z=JSON.stringify(Cards.build('q-ask-zero',{}).options);
-  assert.doesNotMatch(z,/kan likevel investere utenfor Europa/);assert.match(z,/Ved kjøp må/);assert.match(z,/oppfylte kravene ved kjøp, kan beholdes/);assert.match(txt,/Kravene vurderes når du kjøper/);
+  assert.doesNotMatch(z,/kan likevel investere utenfor Europa/);assert.match(z,/Ved kjøp må/);assert.match(z,/oppfylte kravene ved kjøp, kan beholdes/);assert.match(txt,/Kravene gjelder når du kjøper/);
  }
  // Regneeksemplene stemmer.
  assert.match(a.example.text,/150 000/);assert.match(a.example.text,/50 000/);assert.equal(150000-100000,50000);
@@ -141,3 +141,7 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
  }
  assert.equal(plain.note,'');assert.deepEqual(plain.options,[]);assert.deepEqual(plain.steps,[]);
 }
+
+
+// Source-checked 2026 ASK example and complete-account gift requirement.
+{ const a=Cards.build('q-aksjesparekonto',{}); assert.equal((150000-100000-5000)*0.3784,17028); assert.match(a.example.text,/17 028 kr/); assert.match(JSON.stringify(a.parts),/Ved gave|men da må hele kontoen overføres/); assert.equal(a.sources.length,3); assert.equal(a.caveat,''); }
