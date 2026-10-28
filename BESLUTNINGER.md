@@ -759,3 +759,7 @@ C. Beholde Nordnet bare i kildelisten. Ikke valgt: setningene som bygde på kild
 **K1-presisering:** Regelen har et uttrykkelig unntak for et direkte spørsmål eller nødvendig opplysning om usikkerhet, med henvisning til riktig instans. Den endres ikke her. De fire utkastene forblir upubliserte. Åpne spesialtilfeller i SV-135 og SV-050 registreres som publiseringssperrer i arbeidsnotatene, og svartekstene avgrenser dekningen.
 
 **Status:** Revisjon til kontroll i PR #100. Ikke en godkjenning av publisering eller av hele kildekontrollen.
+
+### BSU-utkast fra kildekontroll i samtale, 28.10.2026
+
+Lars godkjente teksten i samtalen og bestilte integrasjon i GitHub med kilder. Valgt: q-bsu-basics i nøytral oversiktsmal med PDF-grunnlag og datert SSB-historikk. Alternativene var å beholde #100s tidligere ordlyd eller lage en konkurrerende main-PR. Endringen bygger i stedet på #100 og har den grenen som base. Ingen sammenslåing eller publisering inngår. Eksempel er valgfritt i oversiktsmalen, fordi et tvunget eksempel her gjentar fradragsbeløpet. Åpent før publisering: presisering av indirekte boligeierskap, uttrykkelig regelår og uavhengig fagkontroll. Se research/svarutkast/BSU-KILDEKONTROLL-2026-10-28.md.
