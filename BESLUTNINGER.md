@@ -481,7 +481,9 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 
 ## Forskningsinstitutter som eget kildenivå, og rolle avgjør nivået (28. oktober 2026)
 
-**Status:** Foreslått, ikke vedtatt. Endrer bare `KILDEREGLER.md` og denne loggen, ikke nettsiden, kalkulatoren, søket, svarbasen eller testene. PR-en er laget fordi Lars ba om det i samtale 28.10.2026, som unntak fra pausen i `docs/regulatorisk.md`. Ingen sammenslåing før Lars godkjenner.
+**Status:** Vedtatt av Lars 28.10.2026 (PR #88). Endrer bare `KILDEREGLER.md` og denne loggen, ikke nettsiden, kalkulatoren, søket, svarbasen eller testene.
+
+**Sammenslåing under pausen:** Lars godkjente 28.10.2026 at PR #88 og deretter PR #89 (rettet innledning og brutte henvisninger i KILDEREGLER.md) slås sammen til main. Det er hans eget unntak etter `docs/regulatorisk.md`. Ingen filer i `dist/` er endret. Sammenslåingen starter publiseringsflyten, men endrer ikke det brukeren ser. Pausen gjelder ellers uendret.
 
 **Bakgrunn:** Lars spurte om SIFOs referansebudsjett kan brukes som kilde. SIFO var ikke uttrykkelig omfattet av kildereglene vedtatt i PR #71. SIFO er ikke en etat (nivå 1), og kategorien for universiteter ved siden av nivåene gjelder bare formler og definisjoner, ikke norske tall. Forslaget er bearbeidet i flere runder mellom Lars, Claude og GPT.
 
