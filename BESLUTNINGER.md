@@ -622,7 +622,7 @@ C. Bygge alt ferdig nå bak brytere, også kontekstuell veiledning. Ikke valgt: 
 
 **Alternativer:** A. «Renters rente». **Valgt.** B. «Rentes rente». Ikke valgt: ville kreve endring av eksisterende svar uten gevinst.
 
-**Sparetid, forslag (ikke vedtatt):** GPT anbefalte 28.10.2026 at det i tekst skrives «sparetid», forklart som «hvor lenge du planlegger å spare». «Sparehorisont» blir søkeord og brukes ikke i teksten. Lars har ikke valgt uttrykkelig.
+**Sparetid, vedtatt av Lars 28.10.2026:** I tekst skrives «sparetid», forklart som «hvor lenge du planlegger å spare». «Sparehorisont» blir søkeord og brukes ikke i teksten. Anbefalt av GPT. Lars' begrunnelse: kort og presist, og korte ord er lettere for dem som lytter med skjermleser og for dem med dysleksi.
 
 ## Nøytrale spørsmål og svar om økonomiske begreper (28. oktober 2026)
 
