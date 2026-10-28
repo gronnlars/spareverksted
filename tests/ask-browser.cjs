@@ -50,4 +50,3 @@ const engine=process.env.SPARE_ENGINE||'chromium',browserType=require('playwrigh
   console.log('ASK '+engine+': 320/390/1280 px, keyboard, focus, sources, profile independence and screenshots passed.');
  }finally{if(browser)await browser.close();server.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
-
