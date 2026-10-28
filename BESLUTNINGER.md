@@ -442,3 +442,17 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Arbeidsregel:** Lars har bedt GPT gå gjennom kildereglene og relevante kilder før hvert nye spørsmål lages. Alt innhold skal gås gjennom på nytt før publisering den dagen pausen eventuelt oppheves.
 
 **Konsekvens:** Svarutkast som sier at noe er uavklart (for eksempel BSU ved utenlandsflytting), må tilpasses før de publiseres.
+
+## Kortere delingslenker: bare feltene for delen som deles (28. oktober 2026)
+
+**Beslutning:** Lars godkjente 28.10.2026 at «Del plan» bare tar med feltene for delen brukeren ser på. Sparing: sparetallene, uten sparemål, uttak og skatt. Sparemål: bare sparemålsfeltene. Uttak: sparing, uttak og skatt, uten sparemål. Alder, risikovalg og de andre private feltene var allerede holdt utenfor og er det fortsatt.
+
+**Bakgrunn:** Kontroll 28.10.2026 viste at lenken hadde 52 verdier fra alle deler, også deler brukeren ikke hadde åpnet. Påstanden om at alder og risikovalg ikke er med, stemte (testet, og allerede sikret i `veileder-browser.cjs`). En første antakelse om at `start=38` var alder, var feil: `start` er startbeløpet.
+
+**Alternativer:** A. Felt for delen som deles. **Valgt.** B. Utelate felt som er lik standardverdien. Ikke valgt: gamle lenker kunne gi et annet resultat hvis en standardverdi endres. C. Beholde alt. Ikke valgt: dataminimering.
+
+**Kalkulatorfrysen:** Lars vurderer at endringen ikke endrer beregningene. Testen `tests/deling-browser.cjs` kontrollerer at resultatet er likt med ny og gammel lenke i alle tre deler.
+
+**Akseptert ulempe:** Har du fylt inn uttak og deler fra sparing, ser ikke mottakeren uttaket ditt.
+
+**Bakoverkompatibilitet:** Koden som leser lenker, er ikke endret. Gamle, fulle lenker virker som før.

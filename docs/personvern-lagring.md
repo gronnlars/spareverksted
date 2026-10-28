@@ -111,7 +111,7 @@ Se i `sammendrag`: `forespørslerTilAndreVerter`, `Set_Cookie`, `ikkeGET_ellerMe
 
 ## Nettleverandøren (leverandørens opplysninger, lest 25.10.2026)
 
-- Sidene publiseres med GitHub Pages (workflow-fil). At egendomenet går direkte til GitHub uten annen proxy eller CDN er **ukjent**.
+- Sidene publiseres med GitHub Pages (workflow-fil). Egendomenet går direkte til GitHub: DNS-oppslag (dns.google, gjengitt av Lars 28.10.2026) gir bare A-oppføringene 185.199.108.153, .109.153, .110.153 og .111.153, som er GitHub Pages. Sertifikatet er fra Let's Encrypt (kjede ISRG Root X1 → YR2), vist i Safari og Chrome. `www.spareverksted.no` er ikke kontrollert.
 - GitHub skriver at besøkendes IP-adresse logges og lagres av sikkerhetshensyn, også for besøkende som ikke er logget inn ([What is GitHub Pages?](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)).
 - GitHubs generelle personvernerklæring (ikrafttredelse 27. april 2026) nevner ikke Pages særskilt, oppgir ingen lagringstid for slike logger, oppgir GitHub, Inc. og GitHub B.V. som behandlingsansvarlige og viser til standard kontraktsklausuler og EU-US Data Privacy Framework for overføring ([GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)). Ingen avtale mellom Lars og GitHub om databehandling er kjent. Roller avgjøres ut fra faktisk forhold og avtale, ikke ut av overskriften i en erklæring.
 - Serverlogger: **ikke tilgjengelig**. Lagringstid er ikke gjettet. Spørsmål til GitHub Support ligger som usendt utkast.
@@ -229,3 +229,23 @@ Lars opplyser også at han har slått av et statistikkverktøy i cPanel. Hvilket
 1. «De huskes ikke til neste besøk» var for absolutt, siden gjenopprettede faner kan ta med valgene. Endret til «med forbeholdene om faner over».
 2. Slettestatusen sa «har ikke lagret noe i denne nettleseren nå», selv om andre faner kan ha fanelagring. Endret til «Ingen lagrede planer i denne nettleseren og ingen lagrede valg i denne fanen.» I tillegg (Claude): meldingen etter sletting nevner nå arbeidsplan, valg og veilederopplysninger i andre faner, ikke bare arbeidsplanen. `personvern.js` versjon 3.
 3. Leverandøravsnittene: GPT påpeker at åpenhet om usikkerhet ikke avklarer forholdene. Enig. Står som videre arbeid, ikke publiseringssperre: konkrete svar om ansvar, lagringssted og slettetider fra GitHub, Domene.no (inkludert MailChannels) og Google bør erstatte «vi har spurt» etter hvert.
+
+## Delingslenker kontrollert 28.10.2026
+
+- `start` i lenken er startbeløpet, ikke alder. Alder (`userAge`) og risikovalg (`riskChosen`) holdes utenfor, sammen med `ageKnown`, `until67`, `stress`, `ageGroup` og `purpose`. Sikret i `veileder-browser.cjs` og nå `deling-browser.cjs`.
+- Før endringen tok lenken med 52 verdier fra alle deler. Nå bare feltene for delen som deles (se BESLUTNINGER.md).
+- Åpner du en delt lenke i samme fane som en plan du jobber med, erstattes arbeidsplanen i fanen uten beskjed. Lagrede planer røres ikke. Ikke endret; foreslått som egen sak.
+- Nedlasting og utskrift inneholder alder hvis den er oppgitt. Står nå på personvernsiden.
+- Første kontroll på publisert nettsted (Lars, iPhone, 28.10.2026): Safari («Personvernrapport: Ingen kontaktede sporere») og Brave («0 annonser og andre ekle ting blokkert»). Verktøyene kjenner igjen sporingstjenester fra kjente lister. Det bekrefter at ingen kjente sporere ble funnet, ikke at all trafikk er kontrollert. Nettverkstrafikk og HTTP-hoder på publisert side er fortsatt ikke målt.
+- Personvernsiden: rettet «utskrifter», «Spareverksteds kode leser», «Jeg har ikke funnet opplysninger fra GitHub», og setningen om GitHub-logger under rettigheter (innspill fra GPT).
+
+### Kontrollogg for publisert nettsted
+
+| Dato | Kontroll | Metode | Resultat | Hva den ikke viser |
+|---|---|---|---|---|
+| 28.10.2026 | Sporing | Safari «Personvernrapport» og Brave-skjold på iPhone (Lars) | Ingen kontaktede sporere, 0 blokkert | Bare kjente sporere fra verktøyenes lister. Ikke en full måling av nettverkstrafikk |
+| 28.10.2026 | Mellomledd | DNS A-oppslag via dns.google (Lars) | Bare GitHub Pages (185.199.108–111.153) | IPv6 (AAAA) og `www` ikke sjekket. Svaret gjelder oppsettet på kontrolldagen |
+| 28.10.2026 | Kryptering | Sertifikat i Safari og Chrome (Lars) | Gyldig, Let's Encrypt, kjede ISRG Root X1 → YR2, gyldig til 22.01.2027 | Sier ikke hvem som leverer sidene |
+| 27.10.2026 | E-post | Gmail «Vis original» (Lars) | SPF, DKIM og DMARC `PASS` | Gjelder én melding fra personvern-adressen |
+
+Personvernsiden omtaler kontrollene med dato og «da jeg sjekket», ikke som varige garantier. Fortsatt uavklart og ikke besvart av disse kontrollene: GitHubs logglagring, ansvarsfordelingen mellom Lars og leverandørene, og oppbevaring av e-post hos Domene.no, MailChannels og Google.
