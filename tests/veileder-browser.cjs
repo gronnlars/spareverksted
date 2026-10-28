@@ -125,7 +125,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    await page.locator('#answer details.answer-sources summary').focus();await page.keyboard.press('Enter');
    const sourcesText=await page.locator('#answer details.answer-sources').textContent();
    assert.match(sourcesText,/ikke kontrollert her/);assert.match(sourcesText,/ingen oppdateringsdato/);assert.match(sourcesText,/24\. oktober 2026/);
-   assert.equal(await page.locator('#answer details.answer-sources a').count(),3);
+   assert.equal(await page.locator('#answer details.answer-sources a').count(),2,'Skatteetatens to kilder, uten tilbyderens side');
    await noOverflow();
    assert.equal(await titleFor('forskjellen på ASK og fondskonto'),'ASK eller fondskonto?');
    assert.equal(await page.locator('#answer .option-card').count(),2);
