@@ -59,7 +59,7 @@ Ikke lag ekstra fordeler eller ulemper for å fylle en mal. Hvis samme forhold h
 - Ikke bruk «sannsynlig», «trygt», «garantert» eller «forventet» løst. Et scenario er ikke et løfte eller automatisk en sannsynlighetsberegning.
 - Bruk norsk tallformat: «10 000 kr», «2,5 %» og «18 år». Skill prosent fra prosentpoeng.
 - Bruk «hverken». Unngå tankestrek, tre prikker, doble mellomrom og unødvendige utropstegn.
-- Skriv naturlig norsk. Kutt tomme innledninger og gjentakelser. Ingen fast ordgrense skal tvinge bort nødvendig mening.
+- Skriv naturlig norsk. Kutt tomme innledninger og gjentakelser. Dette gjelder skrivestilen, også når teksten er skrevet med hjelp av KI. Ingen fast ordgrense skal tvinge bort nødvendig mening.
 
 ## 5. Vis hva vi vet og hva vi antar
 

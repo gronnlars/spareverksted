@@ -1,5 +1,7 @@
 # Daglig arbeid med spørsmålkøen
 
+> **STANS: Daglig oppgave er satt på vent. Prosjektet er pauset til Finanstilsynet har svart og alt er klarert. Se [docs/regulatorisk.md](../docs/regulatorisk.md). Ikke utfør oppgaven uten uttrykkelig beskjed fra Lars.**
+
 Opprettet 24. oktober 2026. Kan utføres av ChatGPT/Codex eller Claude.
 
 ## Oppdrag og grense
