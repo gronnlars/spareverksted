@@ -733,3 +733,29 @@ C. Beholde Nordnet bare i kildelisten. Ikke valgt: setningene som bygde på kild
 **Akseptert ulempe:** Enkelte detaljer krever fortsatt åpning av fordypningen. Nødvendige forbehold skal stå i kortsvaret eller ved fordelen de begrenser. Ingen påstand om at utformingen er brukertestet.
 
 **Vurder på nytt når:** Lars har sett prøvevisningen, kontrolløren finner misforståelser eller faktisk bruk viser at oversikten skjuler viktige begrensninger.
+
+## Samlet språk og svarmal for kildekontrollens svar (28. oktober 2026)
+
+**Status:** Lars har bestilt at alle svarene i den pågående kildekontrollen, inkludert ASK, får tilpasset språk og felles svarmal uten å endre faglig mening. Implementasjonen leveres til kontroll, ikke publisering.
+
+**Valg:** Ni egne svar og fire upubliserte utkast får oversiktsmalen. Fordeler og ulemper brukes når det er faglig grunnlag. Faktiske sammenligninger beholder to kort. Grunnbegreper får ikke oppdiktede fordeler eller alternativer. Viktige forbehold står ved kortsvaret; arbeidsnotater ligger ved kildene. Faglige vilkår, datoer og usikkerheter beholdes. Detaljert omfang og kontrollstatus: research/sprak-og-svarmal-2026-10-28.md.
+
+**Alternativer:** A. Samlet mal med innholdstilpasset struktur. Valgt. B. Beholde ulike, sprikende maler. Ikke valgt: Lars opplever dem som lite helhetlige. C. Tvinge alle begreper inn i to alternativer. Ikke valgt: konstruerer valg og kan endre budskapet. D. Publisere de fire utkastene sammen med språkvasken. Ikke valgt: kildekontroll og godkjenning er ikke ferdig.
+
+**Avgrensning:** Kildekontrollerte BSU- og kontosvar skal ikke hente inn personlige råd eller erstatningskort fra gamle hovedtemaer. De sju hovedtemaenes logikk endres ikke. Dette åpner ingen ny sammenligningsvelger eller videre personalisering. Arbeidet med UU i #99 holdes separat.
+
+**Akseptert ulempe:** Mer detaljert innhold krever åpning av fordypningen. Selvkontroll beviser ikke brukerforståelse eller full tilgjengelighet.
+
+**Vurder på nytt når:** kontrollør, Lars eller faktisk bruk finner at en forenkling endrer meningen eller skjuler et viktig forbehold.
+
+## Gjentakelser og lengde i svarene, oppfølging 28.10.2026
+
+**Grunnlag:** Lars videresendte en gjennomgang av PR #100 som fant gjentakelser og økt samlet tekstmengde. Dette erstatter den tidligere språkrundens antakelse om at en strammere innledning alene gjorde svarene kortere.
+
+**Valg i arbeidsutkastet:** Ett hovedsted per faglig poeng. Frivillige felt, ingen tomme begrepslister eller fordypninger. Identiske setninger stoppes av test. Målet er 300 ord, inkludert fordypning; totalen med kildetitler og kontrollgrunnlag vises separat og utløser varsel over målet. Nødvendige vilkår kuttes ikke automatisk. Renters rente beholder regneforutsetninger og kontrollbare eksempler selv om totalen med dokumentasjon overstiger målet. Språkformen er «egenkontroll».
+
+**Alternativer:** A. Struktur og måling med redaksjonell kontroll. Valgt som implementeringsforslag. B. Hardt kutt ved 300 ord. Ikke valgt: kan fjerne vilkår som endrer meningen. C. Bare en test for ordrette dubletter. Ikke valgt alene: finner ikke omskrevne gjentakelser.
+
+**K1-presisering:** Regelen har et uttrykkelig unntak for et direkte spørsmål eller nødvendig opplysning om usikkerhet, med henvisning til riktig instans. Den endres ikke her. De fire utkastene forblir upubliserte. Åpne spesialtilfeller i SV-135 og SV-050 registreres som publiseringssperrer i arbeidsnotatene, og svartekstene avgrenser dekningen.
+
+**Status:** Revisjon til kontroll i PR #100. Ikke en godkjenning av publisering eller av hele kildekontrollen.

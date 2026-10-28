@@ -125,3 +125,13 @@ To skjermbilder fra Skatteetaten er lest av ChatGPT/Codex. Lars har nå dokument
 ChatGPT/Codex etter Lars sitt konkrete oppdrag. Main `0c1fb7398825cb3bd2909a6d890fe67e79140497`. SV-031 i egen gren `fix/ask-svarmal`, ingen aktiv reservasjon ved leveranse. [Innhold, kildekontroll, angrepsflater og teststatus](svarutkast/SV-031-SVARMAL-2026-10-28.md). Kildene faktisk lest i denne økten. Felles føringer i SVARMAL.md lenket fra AGENTS, CONTRIBUTING og daglig instruks. ASK beholder nøytralitet og søkeinnganger. Bare ASK prøves i oversiktsmalen. Alle 17 Node-testfiler og generatorens produktkontroll består. Lokal nettleser mangler, CI må bekreftes og bildene vurderes. Annen kontrollør og Lars sin godkjenning gjenstår. Ingen sammenslåing eller publisering. #97 beholdes separat. Ingen fullført K7-runde for resten av nettstedet erklæres.
 
 CI-oppfølging for #98: ASK-testen består i alle tre nettlesere ved 320/390/1280 px, og tre av ni bilder er visuelt vurdert av GPT. Se SV-031-notatet. Samlet nettleserjobb feiler på input-browser.cjs:115, utenfor de endrede ASK-filene. Årsaken er ikke avklart. Ingen grønn totalstatus eller publiseringsklar leveranse erklæres.
+
+### Samlet språk og svarmal, 28.10.2026
+
+ChatGPT/Codex etter Lars sitt oppdrag, main `1082c4f`. Ni egne svar og fire upubliserte utkast. [Omfang, bevarte vilkår, kildeavgrensning og kontroller](sprak-og-svarmal-2026-10-28.md). Gren `fix/sprak-og-svarmal`. Ingen aktiv reservasjon ved leveranse. #99 gjelder samtidig UU-arbeid og er ikke endret eller slått sammen. JSON-fasit og genererte utkast holdes synkronisert. Ingen nye søkeinnganger eller produksjonssvar. Språkdato skilles fra kildekontroll. Ingen uavhengig godkjenning, sammenslåing eller publisering.
+
+CI for #100: kjøring 40730938010 besto hele nettleserpakken, inkludert alle 13 svar i tre nettlesere og tre bredder. 13 mobilbilder og to representative ekstra visninger er visuelt vurdert. Oppfølging av overskrifter og eksempelstil samt rettet git-avhengighet i en test er dokumentert i kontrollnotatet. Siste head må ha egen bekreftet CI-status. Ingen publisering.
+
+### Oppfølging av tekstkontrollen av PR #100
+
+Lars sin videresendte gjennomgang viste gjentakelser og økt lengde. Revidert alle 13 svar, frivillige malfelt, felles eksempelvilkår og konsekvent «egenkontroll». Ordrette setningsdubletter testes, omskrevne gjentakelser er lest gjennom manuelt. Før-tall er fast referanse fra a9d0f6d, med åpen tellemetode. K1s unntak er bevart, og SV-135/SV-050 har egne publiseringssperrer i arbeidsnotatene. Borettslagsandel er bekreftet på Skatteetatens BSU-satsside før språkendringen. Ingen integrasjon av fire utkast, ingen sammenslåing eller publisering.

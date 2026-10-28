@@ -16,45 +16,28 @@
       "Hva betyr rente på rente?",
       "Får jeg renter på rentene?"
     ],
-    "intro": "Renters rente betyr at du får renter også på renter du har fått tidligere. Når rentene blir stående på kontoen, blir beløpet som kan gi nye renter større. Hvor mye pengene vokser, avhenger av renten og hvor lenge de står.",
-    "terms": [
-      {
-        "term": "renters rente",
-        "text": "Renter beregnet også av tidligere opptjente renter som blir stående på kontoen."
-      },
-      {
-        "term": "avkastning",
-        "text": "Det du tjener eller taper på en investering."
-      }
-    ],
+    "intro": "Renters rente betyr at du får renter også på renter du har fått tidligere. Når rentene blir stående, kan også de gi nye renter.",
+    "terms": [],
     "example": {
       "title": "Eksempel: 10 000 kr i to år",
-      "text": "Du setter inn 10 000 kr og får 5 % rente hvert år. Etter ett år har du 10 500 kr. Det andre året får du 525 kr i renter, og har 11 025 kr. Av rentene det andre året kommer 25 kr fra rentene du fikk det første året. I dette regneeksempelet legges rentene til én gang i året. Kontovilkårene avgjør når renter legges til på din konto. Vi forutsetter ingen nye innskudd eller uttak og uendret rente. Tallene er før skatt, kostnader og prisvekst. 5 % er et valgt eksempeltall, ikke et rentetilbud eller en prognose. Regnesammenheng, egen illustrasjon."
+      "text": "10 000 kr til 5 % årlig rente blir 10 500 kr etter ett år og 11 025 kr etter to. Det andre året er rentene 525 kr, hvorav 25 kr kommer fra tidligere renter. Alle regneeksemplene bruker valgte tall, uten nye innskudd eller uttak med mindre annet er beskrevet, før skatt og kostnader. Prisvekst er bare med der den er oppgitt. Renten er uendret, med årlig rentetillegg, med mindre annet er beskrevet. Tallene er ingen prognose."
     },
     "parts": [
       {
-        "title": "Flere kroner er ikke alltid mer kjøpekraft",
-        "text": "Skatteetatens hovedregel er at renteinntekt er skattepliktig. Eventuell skatt og kostnader reduserer det du sitter igjen med. Stiger prisene mer enn pengene dine vokser etter skatt og kostnader, kan du kjøpe mindre selv om kronebeløpet øker. Eksempelet med 5 % rente viser vekst i kroner, ikke hva pengene kan kjøpe."
+        "title": "Tid og uttak",
+        "text": "Ved 5 % rente blir startbeløpet omtrent 16 289 kr etter 10 år og 26 533 kr etter 20. Renten og tiden påvirker begge resultatet. Tas rentene ut årlig, blir de i stedet 500 kr per år: etter to år står 10 000 kr igjen, og 1 000 kr er utbetalt. Kontovilkårene avgjør når renter legges til."
       },
       {
-        "title": "Kronene kan vokse mens kjøpekraften faller",
-        "text": "Et annet regneeksempel: 10 000 kr med 2 % årlig rente blir 10 404 kr etter to år. Med 2,5 % årlig prisvekst tilsvarer det omtrent 9 903 kr målt med prisene ved starten. Du har flere kroner, men mindre kjøpekraft. Begge prosentene er valgte eksempeltall, og regnestykket er før skatt og kostnader. Dette er andre forutsetninger enn i eksempelet med 5 % rente. Med 5 % rente og 2,5 % prisvekst ville også kjøpekraften økt før skatt og kostnader. Regnesammenheng, egen illustrasjon."
+        "title": "Skatt og kjøpekraft",
+        "text": "Hovedregelen er at renteinntekt er skattepliktig. Skatt og kostnader reduserer beløpet. Med 2 % rente blir 10 000 kr til 10 404 kr etter to år. Ved 2,5 % prisvekst tilsvarer det omtrent 9 903 kr ved startens priser. Med 5 % rente ville også kjøpekraften økt."
       },
       {
-        "title": "Hva gjør tiden?",
-        "text": "Med de samme forutsetningene gir 10 000 kr med 5 % årlig rente omtrent 16 289 kr etter 10 år og 26 533 kr etter 20 år. Renter som blir stående, får flere år til å gi nye renter. Både renten og tiden påvirker resultatet; eksempelet viser ikke at den ene alltid er viktigere enn den andre. Tallene er før skatt, kostnader og prisvekst. Regnesammenheng, egen illustrasjon."
+        "title": "Fond svinger",
+        "text": "Risiko og forventet avkastning varierer med plasseringen. 10 000 kr som stiger 10 % og så faller 10 %, blir 9 900 kr. Avkastning betyr det investeringen tjener eller taper."
       },
       {
-        "title": "Hvis du tar ut rentene",
-        "text": "Tar du ut rentene etter hvert år, gir de ikke nye renter på denne kontoen. Med forutsetningene i eksempelet får du da 500 kr hvert år. Etter to år har du 10 000 kr på kontoen og har fått utbetalt 1 000 kr, før eventuell skatt og kostnader. Regnesammenheng, egen illustrasjon."
-      },
-      {
-        "title": "I fond er veksten ujevn",
-        "text": "For fond må du skille mellom et regneeksempel med fast avkastning og faktisk utvikling. Finanstilsynet opplyser at risiko og forventet avkastning varierer med plasseringene. En verdi på 10 000 kr som først stiger 10 % og deretter faller 10 %, ender på 9 900 kr. Dette er et valgt regneforløp, ikke en prognose. Det ser bort fra innskudd, uttak, kostnader og skatt. Regnesammenheng, egen illustrasjon."
-      },
-      {
-        "title": "Slik kan du regne selv",
-        "text": "Med fast årlig rente, årlig rentetillegg og uten innskudd eller uttak: sluttbeløp = startbeløp × (1 + rente / 100) opphøyd i antall år. Oppgi renten som prosenttall, for eksempel 5. I eksempelet: 10 000 × 1,05 × 1,05 = 11 025 kr. Regnesammenheng, egen illustrasjon."
+        "title": "Regnemåte",
+        "text": "Med fast rente og uten uttak: sluttbeløp = startbeløp × (1 + rente / 100) opphøyd i antall år. Renten skrives som prosenttall, for eksempel 5."
       }
     ],
     "sources": [
@@ -70,11 +53,16 @@
       },
       {
         "id": "finanstilsynet-fond",
-        "title": "Finanstilsynet: Verdipapirfond, risiko og kostnader (sist publisert 23.10.2026, dato fra søkeuttrekk)",
+        "title": "Finanstilsynet: verdipapirfond, risiko og kostnader",
         "url": "https://www.finanstilsynet.no/forbrukerinformasjon/verdipapirforetak-verdipapirfond-og-alternative-investeringsfond/"
+      },
+      {
+        "id": "openstax-renters",
+        "title": "OpenStax / Rice University: renters rente (på engelsk)",
+        "url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/6-1-exponential-functions"
       }
     ],
-    "caveat": "Regnesammenheng, egen illustrasjon. Eksemplene er før eventuell skatt og kostnader. Kildene er kontrollert 25. oktober 2026. Skatte-ABC er 2025/2026, SSB-artikkelen er publisert 15. september 2022. Finanstilsynets side er sist publisert 23. oktober 2026 ifølge kildeuttrekket. Neste kildekontroll senest 25. januar 2027.",
+    "caveat": "",
     "next": {
       "text": "Se regneeksempelet i kalkulatoren",
       "href": "index.html#start=10000&monthly=0&years=2&rate=5&fee=0&inflation=0&growth=0&extra=0&crash=0&real=0&showBank=0&showRange=0&level=explore&mode=explore"
@@ -119,6 +107,12 @@
         "Regnesammenheng, egen illustrasjon",
         "Ikke tidsavhengig regel eller markedssats",
         "Ingen ekstern kilde påstås. Forutsetninger og separat kontrollregning gjør sammenhengen etterprøvbar."
+      ],
+      [
+        "Regnemåte for renters rente",
+        "OpenStax / Rice University, Algebra and Trigonometry 2e, 6.1",
+        "Bok publisert 21.12.2021",
+        "Formelen faktisk lest 28.10.2026. Bare matematikk, ikke norske skatteregler."
       ]
     ],
     "status": "Lars opplyser 25.10.2026 at han har kontrollert kildene og godkjenner push. Han har ikke kontrollregnet. Kontrollregning: Claude (KI) og egne tester fra ChatGPT/Codex. Integrasjon av SV-022 er godkjent; de fire øvrige svarene er fortsatt utkast.",
@@ -129,7 +123,12 @@
         "note": "Andre forutsetninger enn hovedeksempelet: 2 % rente og 2,5 % prisvekst, begge valgte eksempeltall. 10 404 kr tilsvarer omtrent 9 903 kr med prisene ved starten. Før skatt og kostnader. Lenken viser kroner og kjøpekraft sammen i grafen."
       }
     ],
-    "integrationState": "branch"
+    "integrationState": "branch",
+    "layout": "overview",
+    "review": {
+      "text": "Skatte-ABC: 2025/2026. SSB: 15.09.2022. Kildekontroll 25.10.2026. OpenStax-formelen lest 28.10.2026. Språkrevisjon samme dato, egenkontroll. Ingen ny uavhengig fagkontroll."
+    },
+    "languageReview": "Språk og svarmal gjennomgått 28.10.2026. Tidligere kildekontrolldato er beholdt. Ny språkversjon er egenkontroll, ikke uavhengig fagkontroll."
   },
   {
     "kind": "explainer",
@@ -153,11 +152,11 @@
       "Hvem betaler skatt på barnesparing?",
       "Kan jeg spare til barnet uten å bli skattlagt?"
     ],
-    "intro": "Å spare i barnets navn gjør ikke automatisk sparingen skattefri. Etter hovedregelen for 2026 skattlegges barnets renteinntekter og formue hos foreldrene til og med inntektsåret barnet fyller 16 år. Fra inntektsåret barnet fyller 17 år, skattlegges barnet selv. Det finnes unntak.",
+    "intro": "Renteinntekter og formue som tilhører barnet, skattlegges som hovedregel hos foreldrene til og med året barnet fyller 16. Fra og med året barnet fyller 17, skattlegges barnet selv. Å spare i barnets navn gjør derfor ikke automatisk sparingen skattefri. Det finnes unntak.",
     "parts": [
       {
-        "title": "Fordel og ulempe ved eierskapet",
-        "text": "Barnet kan eie sparepengene selv om foreldrene skattlegges for dem. Eierskap gir derfor ikke i seg selv en skattefordel. Dette svaret forklarer hvem skatten fastsettes hos, ikke hvilket eierskap familien bør velge."
+        "title": "Eierskap og skatt er ulike spørsmål",
+        "text": "Barnet kan eie sparepengene selv om foreldrene skattlegges for dem. Det avgjør ikke alene om det blir skatt å betale. Svaret velger ikke eierskap for familien."
       },
       {
         "title": "Hvis foreldrene bor sammen eller hver for seg",
@@ -165,7 +164,7 @@
       },
       {
         "title": "Les mer: unntak og faktisk skatt",
-        "text": "Arbeidsinntekt har egne regler. Enkelte erstatnings- og forsikringsutbetalinger har særregler. Hvem som skattlegges, sier heller ikke alene om det blir skatt å betale. Denne forklaringen beregner hverken formuesskatt eller skatt på fondsgevinst. Les Skatteetatens veiledning og Skatte-ABC B-1 for unntakene."
+        "text": "Forklaringen beregner hverken formuesskatt eller skatt på fondsgevinst. Skatte-ABC B-1 beskriver blant annet unntak ved omsorgsfordeling og særkullsbarn."
       }
     ],
     "sources": [
@@ -199,18 +198,18 @@
       "Barnets navn kan leses som skattefritak. Reparasjon: første setning avviser automatisk fritak.",
       "Halvparten hos hver kan bli en absolutt regel. Reparasjon: hovedregel, omsorg og særkullsbarn nevnes."
     ],
-    "status": "Kontrollert utkast, selvkontroll. Ikke uavhengig fagkontroll.",
-    "caveat": "Kilder lest 25. oktober 2026. Regelomtale gjelder 2026. Ikke publisert. Neste kontroll senest 25. januar 2027, tidligere ved regelendringer.",
-    "terms": [
-      {
-        "term": "inntektsår",
-        "text": "Året inntekten eller formuen gjelder, ikke året skattemeldingen leveres."
-      }
-    ],
+    "status": "Kontrollert utkast, egenkontroll. Ikke uavhengig fagkontroll.",
+    "caveat": "Arbeidsinntekt og enkelte erstatnings- og forsikringsutbetalinger har egne regler.",
+    "terms": [],
     "example": {
       "title": "Eksempel: barnet fyller 17 år",
       "text": "Fyller barnet 17 år i 2026, gjelder hovedregelen om selvstendig skattlegging for hele inntektsåret 2026. Dette sier hvem som skattlegges, ikke hvor mye skatt barnet skal betale."
-    }
+    },
+    "layout": "overview",
+    "review": {
+      "text": "Kilder lest 25. oktober 2026. Regelomtale gjelder 2026. Ikke publisert. Neste kontroll senest 25. januar 2027, tidligere ved regelendringer."
+    },
+    "languageReview": "Språk og svarmal gjennomgått 28.10.2026. Tidligere kildekontrolldato er beholdt. Ny språkversjon er egenkontroll, ikke uavhengig fagkontroll."
   },
   {
     "kind": "explainer",
@@ -231,19 +230,15 @@
       "Kan jeg flytte BSU til en annen bank?",
       "Hva skjer med boligsparing for ungdom hvis jeg flytter?"
     ],
-    "intro": "Det kommer an på hva du mener med å flytte. BSU kan flyttes mellom godkjente banker når pengene overføres direkte mellom dem. Ved boligbytte er det bruken av pengene og BSU-vilkårene som må vurderes. Om konsekvensene av utenlandsflytting for akkurat din BSU: vet ikke. Det er ikke avklart i dette svaret.",
+    "intro": "BSU kan flyttes mellom godkjente banker uten at pengene først tas ut til din vanlige konto. Svaret gjelder bankbytte og bruk av BSU ved boligbytte.",
     "parts": [
       {
-        "title": "Fordel og ulempe ved bankbytte",
-        "text": "Du kan bytte bank uten å ta BSU-pengene ut til vanlig konto. Fordelen er at ordningen kan videreføres hos en annen godkjent bank. Begrensningen er at overføringen må skje direkte mellom bankene. Dette er ikke en anbefaling av en bestemt bank."
-      },
-      {
         "title": "Når du bytter bolig",
-        "text": "Skatteetaten opplyser at BSU kan brukes til kjøp av ny fast bolig til eget bruk; det trenger ikke være første boligkjøp. Bruk til renter og avdrag på egen bolig er også tillatt. Du kan ikke betale inn nye sparebeløp etter at du har begynt å bruke BSU-midlene. Boligeierskap ved årets slutt påvirker retten til skattefradrag."
+        "text": "Skatteetaten opplyser at BSU kan brukes til kjøp av ny fast bolig til eget bruk. Det trenger ikke være første boligkjøp. Bruk til renter og avdrag på egen bolig er også tillatt. Du kan ikke betale inn nye sparebeløp etter at du har begynt å bruke BSU-midlene. Boligeierskap ved årets slutt påvirker retten til skattefradrag."
       },
       {
-        "title": "Les mer: uttak og utenlandsflytting",
-        "text": "Brukes BSU-penger i strid med vilkårene, kan tidligere skattefradrag bli lagt til skatten. Utenlandsflytting, skatteplikt og bolig i utlandet må avklares særskilt. Bankbytteregelen alene besvarer ikke dette. Les Skatteetatens BSU-side og avklar utenlandsdelen med Skatteetaten før uttak."
+        "title": "Brudd på vilkårene",
+        "text": "Bruk i strid med vilkårene kan føre til at tidligere skattefradrag legges til skatten."
       }
     ],
     "sources": [
@@ -277,18 +272,35 @@
       "BSU kan oppfattes som begrenset til første bolig. Reparasjon: ny fast bolig til eget bruk beskrives.",
       "Bankbytte kan forveksles med eget uttak. Reparasjon: direkte mellom bankene står i kortsvaret."
     ],
-    "status": "Kontrollert utkast, selvkontroll. Ikke uavhengig fagkontroll.",
-    "caveat": "Kilder lest 25. oktober 2026. Regelomtale gjelder 2026. Ikke publisert. Neste kontroll senest 25. januar 2027, tidligere ved regelendringer.",
-    "terms": [
-      {
-        "term": "direkte overføring",
-        "text": "At BSU-pengene flyttes fra den gamle til den nye spareinstitusjonen uten først å bli utbetalt til din vanlige konto."
-      }
-    ],
+    "status": "Kontrollert utkast, egenkontroll. Ikke uavhengig fagkontroll.",
+    "caveat": "Utenlandsflytting omfattes ikke av dette utkastet.",
+    "terms": [],
     "example": {
       "title": "Eksempel: bytte av bank",
-      "text": "Du har BSU i bank A og vil ha den i bank B. Bankene må gjennomføre overføringen direkte mellom seg. Et uttak til din vanlige konto er ikke denne flytteprosessen."
-    }
+      "text": "Du vil flytte BSU fra bank A til bank B. Å få pengene utbetalt selv og sette dem inn igjen er ikke bankenes flytteprosess."
+    },
+    "layout": "overview",
+    "review": {
+      "text": "Kilder lest 25. oktober 2026. Regelomtale gjelder 2026. Ikke publisert. Neste kontroll senest 25. januar 2027, tidligere ved regelendringer."
+    },
+    "tradeoffs": {
+      "pros": [
+        {
+          "title": "Kontoen kan videreføres",
+          "text": "BSU-ordningen kan videreføres hos en annen godkjent bank."
+        }
+      ],
+      "cons": [
+        {
+          "title": "Overføringen må gå direkte",
+          "text": "Overføringen må skje direkte mellom spareinstitusjonene."
+        }
+      ]
+    },
+    "languageReview": "Språk og svarmal gjennomgått 28.10.2026. Tidligere kildekontrolldato er beholdt. Ny språkversjon er egenkontroll, ikke uavhengig fagkontroll.",
+    "publicationBlockers": [
+      "Utenlandsflytting er ikke kildeavklart. Utkastet besvarer bare bankbytte og boligformål. Brede flyttespørsmål må avgrenses før eventuell integrasjon."
+    ]
   },
   {
     "kind": "explainer",
@@ -316,8 +328,8 @@
     "intro": "Utbytte fra aksjer er verdier et selskap deler ut til aksjonærene. Fond kan også dele ut penger til andelseierne. Det er forskjell på utbytte fra aksjene fondet eier og en utdeling fra fondet til deg. Skatt avhenger blant annet av kontotypen og fondets aksjeandel.",
     "parts": [
       {
-        "title": "Fordel og begrensning ved utbetaling",
-        "text": "En kontantutdeling gir deg penger uten at du selger aksjer eller fondsandeler. Det sier ikke alene hvor mye investeringen samlet har gitt i avkastning. Denne forklaringen anbefaler hverken utbytteaksjer eller bestemte fond."
+        "title": "Utbetaling er ikke det samme som avkastning",
+        "text": "En kontantutdeling gir deg penger uten at du selger aksjer eller fondsandeler. Utbetalingen sier ikke alene hvor mye investeringen samlet har gitt i avkastning."
       },
       {
         "title": "Aksjer utenfor ASK",
@@ -326,10 +338,6 @@
       {
         "title": "ASK og fond",
         "text": "Utbytte på aksjer og aksjefondsandeler på ASK skattlegges fra 2019 ikke løpende ved utdeling, men inngår i ordningens uttaksregler. Utdeling fra fond utenfor ASK skattlegges etter regler som blant annet bygger på aksjeandelen. Rentefond og aksjefond behandles derfor ikke alltid likt."
-      },
-      {
-        "title": "Les mer",
-        "text": "Skatteetatens sider nedenfor forklarer skjerming, ASK og utdeling fra fond. Utenlandsk kildeskatt, forsikringsbasert fondskonto og om en konkret utdeling er tilbakebetaling av innbetalt kapital, er ikke avklart her: vet ikke for den konkrete saken."
       }
     ],
     "sources": [
@@ -385,22 +393,21 @@
       "Utsatt skatt kan leses som skattefritak. Reparasjon: uttaksreglene nevnes uttrykkelig.",
       "Utbetaling kan tolkes som samlet gevinst. Reparasjon: kontantstrøm skilles fra samlet avkastning."
     ],
-    "status": "Kontrollert utkast, selvkontroll. Ikke uavhengig fagkontroll.",
-    "caveat": "Kilder lest 25. oktober 2026. Regelomtale gjelder 2026. Ikke publisert. Neste kontroll senest 25. januar 2027, tidligere ved regelendringer.",
-    "terms": [
-      {
-        "term": "aksjonær",
-        "text": "En eier av aksjer i et selskap."
-      },
-      {
-        "term": "andelseier",
-        "text": "En eier av andeler i et fond."
-      }
-    ],
+    "status": "Kontrollert utkast, egenkontroll. Ikke uavhengig fagkontroll.",
+    "caveat": "Skatteforklaringen gjelder personlige aksjonærer bosatt i Norge. Utenlandsk kildeskatt, fondskonto og tilbakebetaling av innbetalt kapital behandles ikke her.",
+    "terms": [],
     "example": {
       "title": "Eksempel: en kontantutdeling",
       "text": "Anta at du eier 10 aksjer og selskapet deler ut 2 kr per aksje. Da mottar du 20 kr før eventuell skatt. Dette er valgte eksempeltall. De viser utbetalingen, ikke samlet avkastning eller en forventning om framtidige utdelinger."
-    }
+    },
+    "layout": "overview",
+    "review": {
+      "text": "Kilder lest 25. oktober 2026. Regelomtale gjelder 2026. Ikke publisert. Neste kontroll senest 25. januar 2027, tidligere ved regelendringer."
+    },
+    "languageReview": "Språk og svarmal gjennomgått 28.10.2026. Tidligere kildekontrolldato er beholdt. Ny språkversjon er egenkontroll, ikke uavhengig fagkontroll.",
+    "publicationBlockers": [
+      "Utenlandsk kildeskatt, fondskonto og klassifisering av tilbakebetaling er ikke kildeavklart i dette utkastet. Ikke integrer dette som et svar på disse spesialtilfellene."
+    ]
   },
   {
     "kind": "explainer",
@@ -425,14 +432,6 @@
     ],
     "intro": "Et rentefond investerer i rentepapirer, for eksempel obligasjoner. Du eier fondsandeler, ikke et bankinnskudd. Verdien kan svinge, og fondsandelene omfattes ikke av bankenes innskuddsgaranti. Rentefond har ulik risiko.",
     "parts": [
-      {
-        "title": "Fordel",
-        "text": "Forbrukerrådet beskriver likviditetsfond og obligasjonsfond som plasseringer med typisk lavere svingninger enn aksjefond. Dette gjelder ikke som et løfte om en bestemt avkastning eller risikoklasse for alle rentefond."
-      },
-      {
-        "title": "Ulemper",
-        "text": "Obligasjonsfond kan svinge mer enn likviditetsfond når markedsrentene endrer seg. Andre rentefond kan ha lavere kredittkvalitet. Det betyr større usikkerhet om låntakerne klarer å betale. Et høyt avkastningstall forteller derfor ikke alene hvor trygt fondet er."
-      },
       {
         "title": "Les mer: ulike typer",
         "text": "Forbrukerrådet skiller mellom likviditetsfond, obligasjonsfond og andre rentefond. Fondets nøkkelinformasjon beskriver blant annet risiko og kostnader. Denne forklaringen anbefaler ikke et bestemt fond og beregner ikke skatt. Rene rentefond kan ikke ligge på ASK."
@@ -491,21 +490,31 @@
       "Alle rentefond kan oppfattes som like. Reparasjon: typene og kredittrisiko skilles.",
       "Lavere svingninger kan tolkes som råd om buffer. Reparasjon: ingen generell bufferanbefaling eller bestemt horisont."
     ],
-    "status": "Kontrollert utkast, selvkontroll. Ikke uavhengig fagkontroll.",
-    "caveat": "Kilder lest 25. oktober 2026. Regelomtale gjelder 2026. Ikke publisert. Neste kontroll senest 25. januar 2027, tidligere ved regelendringer.",
-    "terms": [
-      {
-        "term": "rentepapir",
-        "text": "Et verdipapir knyttet til et lån, for eksempel en obligasjon."
-      },
-      {
-        "term": "kredittrisiko",
-        "text": "Risikoen knyttet til at den som har lånt penger, ikke betaler som avtalt."
-      }
-    ],
+    "status": "Kontrollert utkast, egenkontroll. Ikke uavhengig fagkontroll.",
+    "caveat": "",
+    "terms": [],
     "example": {
       "title": "Eksempel: endret markedsrente",
-      "text": "To fond kan svinge ulikt ved samme renteendring. Forbrukerrådet beskriver større kursrisiko ved renteendringer i obligasjonsfond enn i likviditetsfond. Navnet rentefond alene er derfor ikke nok til å sammenligne risikoen."
-    }
+      "text": "Et obligasjonsfond og et likviditetsfond kan endre verdi ulikt når markedsrenten endres. Rentefondets type har derfor betydning for risikoen."
+    },
+    "layout": "overview",
+    "review": {
+      "text": "Kilder lest 25. oktober 2026. Regelomtale gjelder 2026. Ikke publisert. Neste kontroll senest 25. januar 2027, tidligere ved regelendringer."
+    },
+    "tradeoffs": {
+      "pros": [
+        {
+          "title": "Vanligvis mindre svingninger enn aksjefond",
+          "text": "Forbrukerrådet beskriver likviditets- og obligasjonsfond som plasseringer med typisk lavere svingninger enn aksjefond. Det er ingen garanti for gevinst eller en bestemt risikoklasse."
+        }
+      ],
+      "cons": [
+        {
+          "title": "Rente og betalingsevne påvirker verdien",
+          "text": "Obligasjonsfond kan svinge mer enn likviditetsfond ved renteendringer. Lavere kredittkvalitet betyr større usikkerhet om låntakerne betaler. Høy avkastning sier ikke alene hvor trygt fondet er."
+        }
+      ]
+    },
+    "languageReview": "Språk og svarmal gjennomgått 28.10.2026. Tidligere kildekontrolldato er beholdt. Ny språkversjon er egenkontroll, ikke uavhengig fagkontroll."
   }
 ]
