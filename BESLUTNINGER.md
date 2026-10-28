@@ -75,17 +75,19 @@ En begrunnelse er ikke et vern mot kritikk. Faktiske regnefeil, utilgjengelige k
 
 **Vurder på nytt når:** Brukerbehov krever analyse av ulike avkastningsforløp, og en ny modell kan etterprøves. Test særlig om brukeren forstår at målet kan glippe på datoen pengene trengs.
 
-## Forhåndsskrevne svar framfor KI-svar
+## Svar skrevet på forhånd, ikke laget av KI mens brukeren venter
 
-**Valg:** «Spør om sparing» bruker kvalitetssikrede tekster og regler, med kilder og kontrolldato.
+**Valg:** «Spør om sparing» viser tekster som er skrevet og kildekontrollert før publisering, med kilder og kontrolldato. Kildekontrollen kan være utført med KI; menneskelig eller uavhengig fagkontroll oppgis bare når den er dokumentert. Det er reglene på siden som velger hvilken tekst brukeren ser. KI brukes i stor grad når tekstene skrives, men ingen KI-modell lager svar mens brukeren er på siden.
 
-**Alternativ:** La en språkmodell generere personlige svar.
+**Alternativ:** La en språkmodell skrive personlige svar i det brukeren spør.
 
 **Begrunnelse:** Svarene skal være etterprøvbare, forutsigbare og mulige å vedlikeholde. Tjenesten skal ikke kreve innlogging, reklame eller eksterne KI-kall.
 
 **Akseptert ulempe:** Søket forstår ikke alle formuleringer, og veilederen kan ikke svare fritt på alt. Manglende dekning skal ikke skjules med et irrelevant svar.
 
 **Vurder på nytt når:** Faktiske spørsmål viser hull i ruting eller innhold. Utvid kvalitetssikret dekning i riktig fase.
+
+**Presisert 25. oktober 2026:** Overskriften het tidligere «Forhåndsskrevne svar framfor KI-svar». Den kunne leses som at tekstene er skrevet uten KI. Det stemmer ikke. Valget gjelder hvordan svaret vises for brukeren, ikke hvordan teksten er laget. Kravet i språkreglene om naturlig norsk gjelder skrivestilen, ikke hvordan teksten er produsert.
 
 ## Kvalitet før flere funksjoner
 

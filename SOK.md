@@ -4,7 +4,7 @@ Sist kontrollert 24. oktober 2026 mot main 4022c94 (inneholder #52, #56, #58, #5
 
 ## Hva søket gjør
 
-Søket er lokalt og forhåndsskrevet. Ingen KI, ingen innsending av det brukeren skriver. Koden ligger i `dist/veileder-sok.js`. `dist/veileder-engine.js` setter opp temaene og de brede ordene (`BROAD`, `GENERIC`).
+Søket kjører i nettleseren og leter bare blant svar som er skrevet på forhånd. Ingen KI-modell tolker spørsmålet. Søket behandler søketeksten lokalt i nettleseren, og nettstedets egen kode sender den ikke til en server. Koden ligger i `dist/veileder-sok.js`. `dist/veileder-engine.js` setter opp temaene og de brede ordene (`BROAD`, `GENERIC`).
 
 Seks utfall, og ingen av dem skal late som noe annet enn det er:
 

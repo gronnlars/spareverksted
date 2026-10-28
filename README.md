@@ -120,7 +120,7 @@ Fra 24. oktober 2026 tilbys nye originale bidrag etter commit `8392d9adb934533ce
 
 **Den tidligere kalkulatoren er fortsatt MIT-lisensiert.** Materialet til og med commiten ovenfor kan fortsatt brukes kommersielt under MIT, også når det inngår i en nyere utgave. Endringen trekker ikke tilbake tidligere tillatelser. Git-historikken skiller grunnlaget fra senere bidrag. Andres materiale følger sine egne vilkår; vi kan bare lisensiere rettigheter vi faktisk har.
 
-Prosjektet er utviklet av Lars med hjelp fra ChatGPT og Claude, med innspill fra Gemini. KI har bidratt til kode, tekst, feilsøking og forslag. Se [PROVENANCE.md](PROVENANCE.md) for avgrensninger og kilder og [CONTRIBUTING.md](CONTRIBUTING.md) for nye bidrag. Gaver er frivillige og er aldri et vilkår for personlig bruk.
+Prosjektet er utviklet av Lars med hjelp fra ChatGPT og Claude, med innspill fra Gemini. KI er brukt i stor grad til kode, tekster, feilsøking og forslag. Svarene i veilederen skrives og kildekontrolleres før publisering. Kildekontrollen kan være utført med KI; menneskelig eller uavhengig fagkontroll oppgis bare når den er dokumentert. Ingen KI-modell lager svar under brukerens besøk. Se [PROVENANCE.md](PROVENANCE.md) for avgrensninger og kilder og [CONTRIBUTING.md](CONTRIBUTING.md) for nye bidrag. Gaver er frivillige og er aldri et vilkår for personlig bruk.
 
 ## GitHub Pages
 
@@ -150,7 +150,7 @@ Glidere er snarveier; egne tall kan være høyere enn gliderens utgangspunkt. Ek
 
 Veilederen bruker fanens `sessionStorage` under `sv-guidance-tab-v2`, uten navn, kontoinformasjon, sparebeløp eller fritekst. Opplysninger som mangler i kalkulatoren, fylles ikke fra standardverdier. Kalkulatorens sparetid brukes ikke automatisk til barnesparing. Manuell sparetid lagres per tema. Ved vanlig retur til kalkulatoren gjenbrukes kjent alder, sparetid og risikovalg. En eksplisitt plan i lenken overstyres aldri av denne konteksten. Opplysningene kan glemmes fra veilederen. Dette endrer ikke kalkulatorens egne felt. Veilederen virker også når øktlagring er blokkert, men da kan opplysninger ikke følge mellom sidene.
 
-Ingen eksterne KI-kall, bestemte aksjeandeler eller navngitte fondsanbefalinger. Svarene er generelle, med kildelenker og datoforbehold. Se `research/veileder-kilder.md` for bakgrunn og `research/ux-2026-10-22.md` for endringer, faktaliste og manuell testliste. Delingslenker fra kalkulatoren utelater alder, risikovalg og andre personlige profilvalg.
+Siden sender ingenting til en KI-tjeneste. Ingen bestemte aksjeandeler eller navngitte fondsanbefalinger. Svarene er generelle, med kildelenker og datoforbehold. Se `research/veileder-kilder.md` for bakgrunn og `research/ux-2026-10-22.md` for endringer, faktaliste og manuell testliste. Delingslenker fra kalkulatoren utelater alder, risikovalg og andre personlige profilvalg.
 
 Kontroller logikk og overføring:
 
