@@ -1,0 +1,87 @@
+# Regulatorisk status og pause
+
+Opprettet 25. oktober 2026. Intern statusnotis. Gjelder alle bidragsytere, inkludert ChatGPT/Codex, Claude, Gemini og Vibe.
+
+## Status: prosjektet er på vent
+
+Spareverksted er satt på vent til Finanstilsynet har gitt svar og veiledning, og alt er klarert. Prosjektet startes først opp igjen når Lars uttrykkelig melder fra om det, etter egen vurdering av svaret.
+
+Mens pausen varer:
+
+- Ingen ny utvikling og ingen nytt innhold. Ingen nye svar, kalkulatorfunksjoner eller endringer i `dist/`, beregninger, søkelogikk, svarbase eller tester.
+- Ingen sammenslåing til main og ingen start av publiserings-Actions.
+- Daglig oppgave og ekstraøkter er stanset. Eneste unntak er det Lars selv ber om i den enkelte samtalen.
+- Det som allerede er publisert, er ikke endret av denne notisen. Om publisert innhold bør justeres, avgjør Lars etter svaret.
+
+## Hva som er sendt
+
+- 25. oktober 2026 ble det sendt en henvendelse til Finanstilsynet om grensen mellom generell økonomisk informasjon, investeringsrådgivning og investeringsanbefalinger, blant annet om tilpassede spørsmål ut fra alder, sparehorisont og sparemål.
+- Samme dag kom en automatisk mottaksbekreftelse.
+- Svar foreligger ikke.
+
+Dette er ikke noen forhåndsgodkjenning, og siden skal ikke omtales som godkjent, gjennomgått eller sett over av Finanstilsynet. Svaret ventes å være generell veiledning.
+
+## Telefonoppfølging 26. oktober 2026
+
+Lars opplyser at han ringte Finanstilsynet 26. oktober 2026 kl. 14.05 norsk tid. Han fikk ikke tydelige svar. Samtalen registreres som oppfølging av henvendelsen, ikke som faglig avklaring eller godkjenning. Skriftlig svar avventes, og prosjektpausen endres ikke.
+
+## Presisering sendt 26. oktober 2026
+
+Lars bekrefter 26.10.2026 at en presiserende e-post er sendt til Finanstilsynet som oppfølging av henvendelsen av 25.10.2026, særlig punkt 2. Presiseringen skiller eksisterende tilpasning fra planlagte utvidelser: Opplysninger fylt inn på spørresiden endrer spørsmålsforslagene, mens alle temaer fortsatt er tilgjengelige. BSU-svaret ved oppgitt alder 70 år viser en forklaring om aldersgrensen i utdypingen. Tilpasninger om kort sparehorisont og dyr gjeld er kontrollert lokalt, men ikke bekreftet på publisert side i denne gjennomgangen. En utvidelse med flere aldersgrenser er ikke publisert.
+
+Utsendingen er bekreftet av Lars, ikke selv kontrollert mot sendt-versjonen i Gmail i denne oppdateringen. Lars har vist et skjermbilde av en mottaksbekreftelse fra Finanstilsynet 26.10.2026 kl. 15.37 norsk tid i forbindelse med presiseringen. Bekreftelsen opplyser at henvendelsen er mottatt og vil bli behandlet så snart som mulig. Dette er en mottaksbekreftelse, ikke et faglig svar eller en godkjenning. Faglig avklaring avventes fortsatt. Originalen oppbevares privat. Prosjektpausen er uendret.
+
+## Finanstilsynets artikkel om investeringsinformasjon, lest 27. oktober 2026
+
+Kilde: Finanstilsynet, «Råd til deg som deler informasjon om investeringer på sosiale medier», https://www.finanstilsynet.no/nyhetsarkiv/nyheter/2026/rad-til-deg-som-deler-informasjon-om-investeringer-pa-sosiale-medier/. Publisert 23.04.2026, sist endret 19.10.2026 (sidens metadata). Hva som ble endret 19.10, er ikke kjent. Lest av Claude 27.10.2026.
+
+**Type kilde:** Nyhetssak fra tilsynet, altså tilsynsveiledning, ikke regelverk. Målgruppen er de som deler investeringsinnhold i sosiale medier. Teksten viser ikke til konkrete lovparagrafer eller ESMA-dokumenter.
+
+**Det artikkelen sier:**
+
+- Personlige investeringsanbefalinger regnes som investeringsrådgivning, som krever tillatelse fra Finanstilsynet.
+- Uten tillatelse kan man ikke gi personlige investeringsråd om hva man bør kjøpe, selge eller beholde. Å anbefale hva folk bør investere i eller unngå, «kan» innebære investeringsrådgivning.
+- Finansielle produkter skal ikke markedsføres eller anbefales uten klare og tilstrekkelige opplysninger om risiko og hvordan gevinst kan oppstå.
+- Egne interesser og fordeler skal opplyses.
+
+**Vurdering (Claude, ikke juridisk avklaring):** Artikkelen bekrefter utgangspunktet prosjektet allerede følger, men avklarer ikke henvendelsens punkt 2: om tilpasning av forhåndsskrevne spørsmål og svar etter alder og sparehorisont er en personlig anbefaling (H1 i `docs/vurdering-folkeopplysning.md`). Den skiller heller ikke mellom produkttyper og bestemte instrumenter, og sier ingenting om regneeksempler eller omtalen av Nordnet og Investeringskonto Zero. Pausen og sperrene står derfor uendret.
+
+**MAR-PDF lenket fra artikkelen:** Forordning (EU) nr. 596/2014, norsk konsolidert tekst per 22.04.2021 («bare for informasjonsformål»). Det er samme versjon som står som «overlevert, ikke lest» i vurderingsnotatet. Den er ikke gjennomgått på nytt, fordi MAR gjelder anbefalinger om bestemte instrumenter og utstedere, og ikke avgjør H1. Om senere endringer i MAR er tatt inn i norsk rett, er ikke kontrollert.
+
+**Neste kilde ved behov:** Definisjonen av investeringsrådgivning i verdipapirhandelloven, lest på Lovdata. Ikke lest ennå. Lars har besluttet å avvente Finanstilsynets svar.
+
+**E-post:** Et utkast til oppfølging som viser til artikkelen og ber om bekreftelse av tre forståelser ble laget i samtale 27.10.2026. Lars har ikke opplyst at det er sendt.
+
+## Sperrer som gjelder også etter oppstart
+
+Disse oppheves ikke av at pausen avsluttes:
+
+1. **Kontekstuell spørsmålsveiledning** (fase 3, bruk av alder, sparehorisont og sparemål til å velge spørsmål) er sperret til Lars uttrykkelig åpner for den, etter å ha vurdert svaret.
+2. **Ingen produktanbefalinger** og ingen «best egnet for deg». Ingen anbefaling av bestemte fond, aksjer eller tilbydere. Omtale av produkter og tilbydere skal bare forklare begreper og kontotyper.
+3. **Kildekontrollen må være fullført** før nye råd legges ut.
+
+## Vilkår for oppstart
+
+1. Finanstilsynets svar og veiledning er mottatt.
+2. Lars har lest og vurdert svaret, og eventuelt tilpasset funksjoner og tekst.
+3. Lars har gitt uttrykkelig beskjed om oppstart. Ingen bidragsyter kan åpne prosjektet ut fra at tid har gått.
+
+## Konkret eksempel som skal stå urørt: omtale av Nordnet og Investeringskonto Zero
+
+Dette kan sendes til Finanstilsynet som oppfølging hvis de ber om konkrete eksempler på omtale av navngitte produkter og tilbydere. Teksten skal ikke skrives om før svaret er vurdert, slik at det som vurderes, er det som faktisk er publisert.
+
+- **Hvor:** ordlisten og to svar i `dist/veileder-knowledge.js`, spørsmål 33 i `SPORSMALSKO.md` og `research/sporsmal-og-prioritering.md`.
+- **Hva:** Nordnet er navngitt som tilbyder av produktet Investeringskonto Zero (kapitalforsikring), brukt som eksempel for å forklare forskjellen mellom ASK og forsikringsbasert fondskonto.
+- **To roller:** Nordnet er både eksempel på produktnavn og kilde til produktfakta (eierskap til aksjene, utbetaling til begunstigede ved død). Nordnets side er en kommersiell kilde og merket slik.
+- **Slik teksten står i dag:** produktet er nevnt «som eksempel for gjenkjenning, ikke som anbefaling». Ingen påstand om at Zero er kostnadsfritt.
+- **Mulig tiltak etter svar, ikke vedtatt:** bruke den generelle betegnelsen «forsikringsbasert fondskonto» i selve teksten og la tilbyderen stå bare i kildelisten.
+
+## Personvern
+
+Original e-post fra eller til Finanstilsynet og personopplysninger skal ikke legges i dette repoet. Originalene oppbevares privat hos Lars. Henvendelser til Finanstilsynet er underlagt offentleglova og kan bli etterspurt av andre.
+
+## Hva kan få oss til å revurdere
+
+- Finanstilsynet ber om flere opplysninger eller konkrete eksempler.
+- Svaret krever endringer i funksjoner eller tekst som allerede er publisert.
+- Lars endrer hva siden skal gjøre.
