@@ -297,6 +297,10 @@ const entries=[
  },
  "parts": [
   {
+   "title": "Hvilken bolig teller?",
+   "text": "Både boligen du bor i og annen bolig teller, også en andel i et borettslag. Fritidsbolig alene hindrer ikke fradrag."
+  },
+  {
    "title": "Hva kan pengene brukes til?",
    "text": "Blant annet kjøp av egen fast bolig, kjøpskostnader, renter og avdrag på boliglånet og oppussing og oppgradering av boligen. Det trenger ikke være ditt første boligkjøp. Når du har begynt å bruke BSU-pengene eller har brutt vilkårene, kan du ikke sette inn mer."
   },
@@ -307,6 +311,7 @@ const entries=[
   }
  ],
  "sources": [{"id":"bsu-satser-2026","title":"Skatteetaten: Fradrag for boligsparing for ungdom (BSU), 2026","url":"https://www.skatteetaten.no/satser/fradrag-for-boligsparing-for-ungdom-bsu/?year=2026"},
+  {"id":"bsu-forskudd-2026","title":"Skatteetaten: Forskuddsutskrivingen 2026","url":"https://www.skatteetaten.no/rettskilder/type/uttalelser/uttalelser/forskuddsutskrivingen-2026/"},
   {
    "id": "tax-bsu",
    "title": "Skatteetaten: Bustadsparing for ungdom (BSU)",
@@ -318,7 +323,7 @@ const entries=[
    "url": "https://www.ssb.no/statbank/table/11018?sq=30128709"
   }
  ],
- "review": {"text": "Kildegrunnlag: Skatteetatens PDF med utskriftsdato 28. oktober 2026, uten oppgitt oppdateringsdato, supplert med Skatteetatens satsside for 2026, og SSB-uttrekk datert samme dag. Egenkontroll av ChatGPT/Codex. Neste kontroll før 1. januar 2027 og ved regelendringer; rentehistorikken kontrolleres ved nye SSB-tall."}
+ "review": {"text": "Kildegrunnlag: Skatteetatens PDF med utskriftsdato 28. oktober 2026, uten oppgitt oppdateringsdato, supplert med Skatteetatens satsside for 2026, og SSB-uttrekk datert samme dag. Boligeierskap kontrollert av Claude 28. oktober 2026. Egenkontroll av ChatGPT/Codex. Neste kontroll før 1. januar 2027 og ved regelendringer; rentehistorikken kontrolleres ved nye SSB-tall."}
 ,
  words:[/\bbsu\b/,/boligsparing for ungdom/]},
 {"id":"q-ips-ask",

@@ -55,3 +55,21 @@ Siden dokumenterer helt/delvis, direkte/indirekte eie av primær-/sekundærbolig
 2026-raden og perioden skal oppdateres ved kildekontrollen før 1. januar 2027. Bruk nye månedstall fra samme SSB-serie, oppdater månedlig grunnlag og årsfil, regenerer visningsfilen og kjør testene. SSB-lenken alene endrer ikke den statiske tabellen. Samme kontroll må også oppdatere delårsmerkingen.
 
 Alle lokale Node-testfiler og generatorens --check består etter oppdateringen. Nettleserprøven kontrollerer tabellsemantikk, ni rader, desimalkomma, kilder, tastatur og ingen vannrett rulling etter åpning ved 320/390/1280 px. Resultater fra faktisk nettleserkjøring føres i PR-en.
+
+
+## Boligeierskap presisert før publisering (Claude, 28.10.2026)
+
+Lars ba om at presiseringen om direkte og indirekte boligeierskap, og primær- og sekundærbolig, ble avklart og rettet før publisering. Den sto i #100, men falt ut da kortteksten ble erstattet i denne PR-en.
+
+Lest av Claude 28.10.2026:
+
+- Skatteetaten, Forskuddsutskrivingen 2026, avgitt 15.12.2025 (norsk): det gis ikke fradrag for BSU-sparing for skattepliktige som eier bolig. Med bolig menes primær- og sekundærbolig. Den som eier fritidseiendom, kan fremdeles kreve fradrag.
+- Skatteetatens satsside for BSU, engelsk versjon: «No deduction is given when you pr. 31 December in the income year wholly or partly owns primary or secondary residence. This applies to both direct and indirect ownership.» Udatert. Den engelske siden er bare kontroll av innholdet. Kilden er den norske satssiden, som GPT har lest to ganger samme dag og gjengitt med borettslagsandel som eksempel på indirekte eierskap. Claude fikk ikke åpnet den norske versjonen fra arbeidsmiljøet.
+
+Ny del i svaret, «Hvilken bolig teller?»: «Både boligen du bor i og annen bolig teller, også en andel i et borettslag. Fritidsbolig alene hindrer ikke fradrag.» Lars' bestilte setning «Eier du bolig 31. desember, alene eller sammen med andre, får du ikke fradrag det året» står uendret. Forskuddsutskrivingen 2026 er lagt til i kildelisten igjen.
+
+«Primærbolig» og «sekundærbolig» er skrevet som vanlige ord, ikke fagord. «Indirekte eierskap» er forklart med borettslagsandelen i stedet for å bruke ordet.
+
+Lengde: 381 ord totalt og 300 i svaret, under referanseversjonen (384). Test i `tests/bsu-rates.test.cjs` hindrer at presiseringen faller ut igjen.
+
+Åpent: Borettslagseksemplet bygger på GPTs lesing av den norske satssiden. Lars kan bekrefte ved å åpne https://www.skatteetaten.no/satser/fradrag-for-boligsparing-for-ungdom-bsu/?year=2026 og se etter ordet «borettslagsandel».
