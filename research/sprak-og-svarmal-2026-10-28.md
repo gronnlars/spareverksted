@@ -93,3 +93,18 @@ Svartekst: ingen like setninger, ingen vi-form, alle 13 svar kortere. 4603 → 3
 | Hva er et rentefond? | 258 | 187 | -71 |
 
 19 Node-testfiler, generatorens samsvarskontroll og 35 isolerte utkastprøver består lokalt etter revisjonen. Nettleser- og visningsresultater må gjelde ny PR-head.
+
+
+## Kildepunktet om indeksfond lukket (Claude, 28.10.2026)
+
+Lars ba om at de åpne kildepunktene i denne PR-en ble kontrollert før publisering. Det åpne punktet var DNB-siden i `q-indeksfond` (udatert, nivå 4) og påstandene om samlet pris og passive fond.
+
+Lest 28.10.2026, med sidens egne datoer fra metadata:
+
+- Finanstilsynet, «Verdipapirforetak, verdipapirfond og alternative investeringsfond» (publisert 27.05.2016, sist oppdatert 23.10.2026), nivå 1: «Fond som forvaltes aktivt har ofte høyere kostnader enn indeksfond (passivt forvaltede fond).» «Indeksfond tar sikte på å avspeile avkastningen i et bestemt verdipapirmarked.» «I fondets nøkkelinformasjon gis standardisert informasjon om kostnader.» Fondene skal være risikoklassifisert i nøkkelinformasjonen.
+- Forbrukerrådet, «Sparing i fond og spareprofiler» (oppdatert 16.10.2026), nivå 2: «Indeksfond er aksjefond som består av aksjer som skal gjenspeile en aksjeindeks.» «Gebyrene er som regel alltid lavere i indeksfond enn i aktivt forvaltede fond.» «Ett og samme fond kan derfor ha ulik pris hos forskjellige tilbydere.»
+- Forbrukerrådet, «Nå kan du sjekke om du betaler for mye for fondet ditt» (publisert 20.10.2026), nivå 2: plattformgebyrer fra fondsdistributørene kommer i tillegg til løpende kostnader i fondet, og «Summen av kostnadene utgjør den årlige prisen for fondet hos hver enkelt tilbyder.»
+
+Alle påstandene i svaret er dermed dekket av nivå 1 og 2. DNB-siden er fjernet fra kildelisten, fordi en bank etter K2 ikke er kilde til generelle påstander når nivåene over dekker dem, og fordi svaret ikke nevner tilbydere. Kontrolldato for svaret er satt til 28.10.2026. Dette er kontroll av en annen enn skribenten (Claude, ikke GPT), men ikke uavhengig fagkontroll av en fagperson.
+
+Finansportalens prissammenligning trengs ikke som kilde, fordi Forbrukerrådets egen sak dekker påstanden.
