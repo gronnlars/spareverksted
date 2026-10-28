@@ -149,4 +149,3 @@ for(const t of V.topics)for(const q of t.questions)assert.ok(V.findTopics(q).inc
 
 console.log(`Søk: ${report.right.length} av ${SET.filter(c=>c.expect).length} dekkede spørsmål får riktig tema først. `+
  `${report.honest.length} av ${SET.filter(c=>!c.expect).length} udekkede gir ingen treff. Kjente misvisende treff: ${report.misleading.length}.`);
-
