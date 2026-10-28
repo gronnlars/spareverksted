@@ -69,7 +69,7 @@ Lars har besluttet at pausen og kalkulatorfrysen ikke gjelder forklaringer av n�
 3. **Ingen tilpasning** etter brukerens opplysninger.
 4. **Første runde uten regler og satser.** Bare begreper som ikke hviler på regelverk eller satser, for eksempel indeks, prisvekst, kjøpekraft og renters rente. Begreper som ASK, BSU og skjermingsfradrag venter til kildekontrollen er fullført.
 5. **Vanlig kontroll.** Kilde etter [KILDEREGLER.md](../KILDEREGLER.md), språk etter [SPRAKREGLER.md](../SPRAKREGLER.md) og kontroll av en annen enn skribenten.
-6. **Innhold, ikke ny funksjonalitet.** Unntaket gjelder forklaringer i veilederens eksisterende oppbygning. Forklaring der ordet står i teksten og en egen ordlisteside er ny funksjonalitet og venter til etter oppstart. Standarden for den er likevel fastsatt i [research/universell-utforming.md](../research/universell-utforming.md), punkt 6.
+6. **Forklaring der ordet står er UU (endret 28.10.2026).** Lars har vedtatt at forklaring der ordet står i teksten, og en ordliste, regnes som forbedring av universell utforming. De kan bygges nå og skal være slått på når de publiseres, etter standarden i [research/universell-utforming.md](../research/universell-utforming.md), punkt 6. Prøvingen der gjøres før publisering.
 7. **Egen PR og godkjenning.** Hver forklaring eller gruppe av forklaringer går i egen PR og slås sammen bare etter Lars' godkjenning.
 
 Unntaket er Lars' egen vurdering, ikke en avklaring fra Finanstilsynet. Lars vurderer å orientere Finanstilsynet om det.

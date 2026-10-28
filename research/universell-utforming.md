@@ -69,7 +69,7 @@ Testene beskytter det som er kontrollert. De beviser ikke at folk forstår innho
 
 ## 6. Fagord forklart der de står (28. oktober 2026)
 
-**Status:** Valgt standard etter undersøkelse 28.10.2026, på oppdrag fra Lars. Ikke bygget. Mønsteret regnes som endelig først når prøvingen under er gjort. Begrunnelse og forkastede alternativer: [BESLUTNINGER.md](../BESLUTNINGER.md), «Standard for fagord forklart der de står».
+**Status:** Valgt standard etter undersøkelse 28.10.2026, på oppdrag fra Lars. Ikke bygget. Lars vedtok samme dag at funksjonen er UU, kan bygges under pausen og skal være slått på når den publiseres. Mønsteret regnes som endelig først når prøvingen under er gjort. Begrunnelse og forkastede alternativer: [BESLUTNINGER.md](../BESLUTNINGER.md), «Standard for fagord forklart der de står».
 
 ### Mønster
 
