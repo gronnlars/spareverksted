@@ -98,3 +98,27 @@ PR-en er klar for Claudes gjennomgang, ikke for sammenslåing eller publisering.
 | A15 | Begge IPS-adresser åpnet med lesbart faginnhold i kildeverktøyet 28.10.2026. Direkte HTTP ga 403 på begge. Ingen videresending eller canonical-tag bekreftet av GPT. Dokumentasjonen bruker nn-adressen Claude leste, uten produktendring. |
 
 B, D, H og J er fortsatt ikke lest av Claude. GPTs nye lesing erstatter ikke kontroll av en annen enn skribenten. K7 står åpen for disse og for rettingene etter kontrollrapporten. Ingen ny juridisk vurdering, ny kodeprøve, live-kontroll eller publisering.
+
+
+## Lars sin ordlydskontroll, mottatt 28.10.2026
+
+Dette avsnittet supplerer tidligere kontrollstatus. Lars har selv sendt utdrag fra kildene og to PDF-utskrifter. Det er menneskelig kontroll av den dokumenterte ordlyden, ikke en generell faglig eller juridisk godkjenning. Claudes rapport og opplysninger om hva han ikke fikk lest, står uendret.
+
+| Punkt i sjekklisten til Lars | Dokumentert nå | Gjenstående avgrensning |
+| --- | --- | --- |
+| 1 / B fondskonto | Lars har sendt definisjonen, alternative betegnelser, forsikringsselskapets eierskap, kundens risiko og grensene for lite forsikringselement. | Innledningen om uten garantert avkastning og B-avsnittet om bruk av ubenyttet skjerming er ikke med. Ikke marker hele B kontrollert av Lars. |
+| 2 / D BSU | Lars har sendt uttrykkelig «til og med» året man fyller 33, sparegrenser, skattefradrag, boligvilkår, oppussing/vedlikehold og unntak for møbler, frittstående hvitevarer og verktøy. | Overskriften om renter er med, men brødteksten mangler. Renteregelens ordlyd er fortsatt ikke bekreftet av Lars. |
+| 3 / H budsjetttabell | PDF lest av GPT: side 1 skiller vedtatt 2026 fra forslag 2027. Side 6 viser IPS-fradrag 25 000 kr i begge kolonner. Side 7 viser BSU 10 prosent, 27 500 kr årlig og 300 000 kr samlet i begge kolonner. Kildedato 07.10.2026. | Utskriften dokumenterer regjeringens forslag, ikke stortingsvedtak om 2027. |
+| 4 / J Skatte-ABC | Lars har sendt selve P-4-5.1: fradrag i alminnelig inntekt, 2026-merknad med 25 000 kr, løpende tekst med 15 000 kr, kostnadskomponenter og frist. | Årsskillet skal forklares med G, ikke ved å erklære kilden feil. Ingen helhetlig lovkontroll. |
+| 5 / A ASK | Lars har sendt laveste innskuddssaldo tillagt ubenyttet skjerming, uttaksavsnitt og historiske overgangsregler. | Innledningssetningen om skjerming ved skattepliktig uttak er ikke med i dette utdraget. Bare de sendte avsnittene registreres som menneskelig ordlydskontroll. |
+| 6 / C rettledning | Lars har sendt hele relevante uttaksavsnitt: forholdsmessig innskudd/gevinst, ubenyttet skjerming mot hele gevinsten og en mulig framgangsmåte med aksjedelen først og rentedelen for eventuell rest. | «Kan gjøres ved f.eks.» støtter et eksempel, ikke en eksklusiv plikt til denne rekkefølgen. Setningene om garantiavgrensning og rettledningens regelår er ikke med. |
+| 7 / G IPS | Lars bekrefter samsvar og har lastet opp PDF. GPT har lest begge sider. Side 1 og 2 knytter 15 000 kr til 2025 og 25 000 kr til 2026. Side 2 viser ordinært uttak fra 62, minst til 80 og minst ti år, med uføreunntak. | Fradragets type er dokumentert med J, ikke utledet fra PDF-ens setning om skatt på utbetaling. |
+
+### Sporbarhet for opplastede PDF-er
+
+Utgitt av myndighetene, levert av Lars. GPTs lesedato: 28.10.2026. Utskriftsdato er ikke kildens publiseringsdato. Ingen personopplysninger eller private saksdokumenter er kopiert inn i repoet. PDF-ene er ikke lagt inn i git; kontrollgrunnlaget er oppsummert her med kilde-URL, sidetall og SHA-256 slik at en senere kontrollør kan skille filversjonene.
+
+- Skattesatser 2027: 15 sider, utskriftsfot 28.10.2026 kl. 15.33. SHA-256 `825cbe64db198919b81d26a3f066696e8986df72cb888ba7af29c09c3a8d3a1b`. Kilde H i tabellen over. Tekst på side 1, 6 og 7 kontrollert; side 7 også sett visuelt.
+- Individuell sparing til pensjon: 2 sider, utskriftsfot 28.10.2026 kl. 15.41. SHA-256 `21eb4f718df39ec3ff97c2c577b8b94d657c92a43f626e1a41036ccdc5bc30c6`. Kilde G på nn-adressen i tabellen over. Begge sider lest, side 2 også sett visuelt.
+
+Ingen påstander som mangler i materialet, er markert som menneskelig kontrollert. Neste forespørsel til Lars er de to korte avsnittene om BSU-renter og avgrensningen til kapitalforsikring uten garantert avkastning. B sitt eget skjermingsavsnitt og C sitt regelår kan deretter bekreftes dersom de fortsatt brukes separat som dokumentasjon. E/F/I fra Claudes utvidete sjekkliste er ikke menneskelig kontrollert ved denne meldingen. Produktfunnene, A14 og godkjenning av rettingene står fortsatt åpne.
