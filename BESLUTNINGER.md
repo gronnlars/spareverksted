@@ -12,7 +12,7 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | --- | --- | --- | --- | --- | --- |
 | Varsel om sparehorisont for Indeksfond under 5 år på kalkulatorsiden (PR #67) | Kalkulatorfrysen (plan, punkt 0) | Lars ved sammenslåing | 31.01.2027 | Lars | Foreslått. Aktivt først når #67 er slått sammen |
 | Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en med unntaket er slått sammen |
-| Forbedringer i kilderegler, UU, generelle spørsmål, personvern og opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en er slått sammen |
+| Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en er slått sammen |
 
 ## En ulempe betyr ikke at valget var feil
 
@@ -570,7 +570,9 @@ G. Opplesning med `role="status"` når forklaringen åpnes, slik Pearson anbefal
 
 **Bakgrunn:** Første eksterne skjermlesertest 28.10.2026 viste at grafen ikke beskrives i ord. Det er en UU-feil (WCAG 1.1.1). Kalkulatorfrysen tillot allerede å rette UU-feil, men pausen stoppet det. Lars vurderer at forbedringer som gjør siden riktigere, tryggere og mer tilgjengelig ikke bør vente på Finanstilsynet.
 
-**Tolkning, skrevet av Claude og ikke eksplisitt bekreftet:** «Generelle spørsmål» er forstått som forhåndsskrevne svar som er like for alle brukere, uten tilpasning etter brukerens opplysninger og uten produktanbefalinger. Det er det Finanstilsynets artikkel ikke omtaler som personlig rådgivning.
+**Endret samme dag, etter presiseringen til Finanstilsynet:** Lars sendte 28.10.2026 en presisering som nevner personvern, universell utforming, kildekrav og nøytrale begrepsforklaringer, ikke generelle spørsmål. For at regelverket skal stemme med det Finanstilsynet har fått vite, er «generelle spørsmål» tatt ut av områdene i `docs/regulatorisk.md`. Spørsmål og svar som bare forklarer begreper og forskjeller, er med under begrepsforklaringene. Retting av opplagte lovbrudd er beholdt som ren retting. Endringen er gjort av Claude og må bekreftes av Lars i PR #90.
+
+**Tolkning, skrevet av Claude og ikke eksplisitt bekreftet (gjelder den opprinnelige formuleringen):** «Generelle spørsmål» er forstått som forhåndsskrevne svar som er like for alle brukere, uten tilpasning etter brukerens opplysninger og uten produktanbefalinger. Det er det Finanstilsynets artikkel ikke omtaler som personlig rådgivning.
 
 **Alternativer:**
 A. Åpne for disse områdene, med sperrene intakte. **Valgt.**
@@ -603,3 +605,15 @@ C. Bygge alt ferdig nå bak brytere, også kontekstuell veiledning. Ikke valgt: 
 **Akseptert ulempe:** Brytere og felles moduler gir litt mer kode og flere tester.
 
 **Vurder på nytt når:** en bryter står av lenge uten at funksjonen nærmer seg avklaring. Da fjernes koden heller enn å ligge der.
+
+## Skrivemåte: «renters rente» (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026.
+
+**Beslutning:** I tekst skrives alltid «renters rente». «Rentes rente», «renter på renter» og andre skrivemåter skal gi søketreff, men brukes ikke i teksten.
+
+**Bakgrunn:** Begrepsregisteret (PR #91) fant begge skrivemåtene på siden. SPRAKREGLER krever ett navn per ting. «Renters rente» er tittelen på svaret som allerede finnes.
+
+**Alternativer:** A. «Renters rente». **Valgt.** B. «Rentes rente». Ikke valgt: ville kreve endring av eksisterende svar uten gevinst.
+
+**Gjenstår:** Samme avklaring for «sparetid» og «sparehorisont».

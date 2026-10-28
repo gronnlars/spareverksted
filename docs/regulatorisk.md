@@ -52,6 +52,18 @@ Kilde: Finanstilsynet, «Råd til deg som deler informasjon om investeringer på
 
 **E-post:** Et utkast til oppfølging som viser til artikkelen og ber om bekreftelse av tre forståelser ble laget i samtale 27.10.2026. Lars har ikke opplyst at det er sendt.
 
+## Presisering sendt 28. oktober 2026
+
+Lars sendte en ny presisering til Finanstilsynet 28.10.2026. Finanstilsynet bekreftet mottak samme dag kl. 11.36. Det er en mottaksbekreftelse, ikke et faglig svar eller en godkjenning. Teksten, slik Lars har gjengitt den:
+
+> En kort presisering til henvendelsen min av 25. oktober og oppfølgingen 26. oktober: Mens jeg venter på svar fra dere, arbeider jeg med personvern, universell utforming, kildekrav og nøytrale forklaringer av hva økonomiske begreper betyr. Forklaringene følger faste krav til kilder og presisjon. De anbefaler ingen handling, nevner ingen produkter og tilpasses ikke den enkelte.
+>
+> Videre utvikling av tilpasning etter alder, sparehorisont og sparemål er fortsatt satt på vent. Beskrivelsen av eksisterende funksjoner i e-posten 26. oktober gjelder fortsatt.
+>
+> Avgrensningene er beskrevet i arbeidsdokumentet om prosjektpausen og unntaket for begrepsforklaringer. Dokumentoppdateringen ligger foreløpig til kontroll i PR #90 og er ikke slått sammen.
+
+**Konsekvens:** Avsnittene under er tilpasset det som står i presiseringen. Utvider Lars arbeidet under pausen ut over dette, bør Finanstilsynet orienteres først. Originalen oppbevares privat.
+
 ## Sperrer som gjelder også etter oppstart
 
 Disse oppheves ikke av at pausen avsluttes:
@@ -62,9 +74,9 @@ Disse oppheves ikke av at pausen avsluttes:
 
 ## Unntak fra pausen: nøytrale begrepsforklaringer (vedtatt 28. oktober 2026 kl. 10.09)
 
-Lars har besluttet at pausen og kalkulatorfrysen ikke gjelder forklaringer av nøytrale begreper som oppfyller alle kravene under. Alt annet står på vent som før. Begrunnelse og forkastede alternativer står i [BESLUTNINGER.md](../BESLUTNINGER.md).
+Lars har besluttet at pausen og kalkulatorfrysen ikke gjelder forklaringer av nøytrale begreper som oppfyller alle kravene under. Hvilke andre områder pausen ikke gjelder, står i neste avsnitt. Begrunnelse og forkastede alternativer står i [BESLUTNINGER.md](../BESLUTNINGER.md).
 
-1. **Bare betydning.** Teksten forklarer hva begrepet betyr, uten å anbefale handling, rangere alternativer eller trekke slutninger om brukeren. Ord som «bør», «lønner seg», «tryggere» og «bedre» er en varselliste, ikke selve kontrollen. Hele teksten vurderes.
+1. **Bare betydning og forskjeller.** Teksten forklarer hva begrepet betyr, og kan vise hvordan to begreper skiller seg, for eksempel annuitetslån og serielån. Forskjeller skrives som etterprøvbare fakta og følger, ikke som vurderinger, og teksten ender ikke i en konklusjon om hva som passer. Den anbefaler ikke handling, rangerer ikke alternativene og trekker ikke slutninger om brukeren. Ord som «bør», «lønner seg», «tryggere» og «bedre» er en varselliste, ikke selve kontrollen. Hele teksten vurderes.
 2. **Ingen navn.** Ingen produkt- eller tilbydernavn. Omtalen av Nordnet og Investeringskonto Zero står urørt, se under.
 3. **Ingen tilpasning** etter brukerens opplysninger.
 4. **Første runde uten regler og satser.** Bare begreper som ikke hviler på regelverk eller satser, for eksempel indeks, prisvekst, kjøpekraft og renters rente. Begreper som ASK, BSU og skjermingsfradrag venter til kildekontrollen er fullført.
@@ -72,18 +84,19 @@ Lars har besluttet at pausen og kalkulatorfrysen ikke gjelder forklaringer av n�
 6. **Forklaring der ordet står er UU (endret 28.10.2026).** Lars har vedtatt at forklaring der ordet står i teksten, og en ordliste, regnes som forbedring av universell utforming. De kan bygges nå og skal være slått på når de publiseres, etter standarden i [research/universell-utforming.md](../research/universell-utforming.md), punkt 6. Prøvingen der gjøres før publisering.
 7. **Egen PR og godkjenning.** Hver forklaring eller gruppe av forklaringer går i egen PR og slås sammen bare etter Lars' godkjenning.
 
-Unntaket er Lars' egen vurdering, ikke en avklaring fra Finanstilsynet. Lars vurderer å orientere Finanstilsynet om det.
+Unntaket er Lars' egen vurdering, ikke en avklaring fra Finanstilsynet. Lars orienterte Finanstilsynet om det 28.10.2026, se «Presisering sendt 28. oktober 2026».
 
 ## Områder pausen ikke gjelder (vedtatt 28. oktober 2026)
 
 Lars har besluttet at pausen ikke gjelder forbedringer innen disse områdene:
 
-1. **Kilderegler og kildekontroll**, også retting av kilder og påstander i publisert innhold.
+1. **Kildekrav og kildekontroll**, også retting av kilder og påstander i publisert innhold.
 2. **Universell utforming**, for eksempel beskrivelse av grafer i tekst. Kalkulatorfrysen tillater allerede å rette UU-feil.
-3. **Generelle spørsmål**, det vil si forhåndsskrevne svar som er like for alle brukere.
-4. **Personvern.**
-5. **Opplagte brudd på lover og regler** som må tettes.
-6. **Nøytrale begrepsforklaringer**, med kravene i avsnittet over.
+3. **Personvern.**
+4. **Nøytrale begrepsforklaringer**, med kravene i avsnittet over. Spørsmål og svar som bare forklarer begreper og forskjeller, hører hit.
+5. **Retting av opplagte brudd på lover og regler.** Bare retting, ikke ny utvikling.
+
+Områdene 1 til 4 er de som står i presiseringen til Finanstilsynet 28.10.2026. Lars vedtok tidligere samme dag også å åpne for «generelle spørsmål». Det er ikke tatt med her, fordi presiseringen ikke nevner det. Nye generelle svar utover begrepsforklaringer venter til Lars eventuelt har orientert Finanstilsynet.
 
 Dette gjelder fortsatt også innenfor områdene:
 
