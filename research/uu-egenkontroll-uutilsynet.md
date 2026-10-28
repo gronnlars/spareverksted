@@ -7,11 +7,11 @@ Gjennomført 28. oktober 2026 av Claude, på oppdrag fra Lars. Upublisert arbeid
 Lars la ved to sider fra Uu-tilsynet som PDF 28.10.2026, fordi tilsynets nettsted er stengt for Claudes verktøy:
 
 - «Sjekk nettstedet ditt selv», https://www.uutilsynet.no/veiledning/sjekk-nettstedet-ditt-selv/708. Opprettet 10.02.2016, sist endret 26.10.2026. Ti punkter for egen testing. Tilsynet skriver selv at punktene ikke dekker alle lovkrav.
-- «Løsningsforslag etter tema: Skjema», Uu-tilsynet. Opprettet 28.04.2020, sist endret 19.12.2023. Skiller mellom krav i forskriften og anbefalinger utover kravene.
+- «Løsningsforslag etter tema: Skjema», https://www.uutilsynet.no/veiledning/skjema/38. Opprettet 28.04.2020, sist endret 19.12.2023. Skiller mellom krav i forskriften og anbefalinger utover kravene.
 
 Uu-tilsynet er nivå 1 i kildereglene. Teksten i PDF-ene manglet noen bokstaver ved uttrekk, men innholdet var lesbart.
 
-Siden «Utdypende om bilder og grafikk», som det lenkes til under punkt 6, er ikke lest. Den er mest relevant for grafene og bør legges ved som PDF.
+- «Løsningsforslag etter tema: Bilder og grafikk», https://www.uutilsynet.no/veiledning/bilder-og-grafikk/205. Opprettet 17.04.2015, sist endret 15.12.2023. Lagt ved samme dag. Brukt i PR #92 for grafenes tekstalternativ, se `BESLUTNINGER.md`, «Grafene beskrives i ord».
 
 ## Hvordan kontrollen er gjort
 
@@ -26,7 +26,7 @@ Kontrollert mot koden på main `00d8f15`, de automatiske testene og `research/un
 | 3. Farger og kontrast | Lenker markert med mer enn farge, kontrast 4,5:1 og 3:1, fargeblindsimulering av diagrammer | Delvis | Kontrast testes automatisk. Grafene bruker strektype i tillegg til farge. **Fargeblindsimulering av grafene er ikke gjort** |
 | 4. Overskrifter | Riktig koding, ingen hopp i nivå | Ok for HTML-filene | Ingen hopp funnet i de fem sidene. Innhold laget med JavaScript er ikke sjekket |
 | 5. Lenker | Lenker skiller seg ut, beskrivende lenketekst | Ikke kontrollert | |
-| 6. Bilder | Alternativ tekst, tom for pynt | Ok for grafene med PR #92 | Grafene har navn, beskrivelse og tabell. Andre bilder er ikke gått gjennom |
+| 6. Bilder | Alternativ tekst, tom for pynt | Ok for grafene med PR #92 | Grafene har kort tekstalternativ med hovedinformasjon og typen sist, beskrivelse i tekst og tabell, slik løsningsforslaget «Bilder og grafikk» beskriver. `<figure>` med `<figcaption>` gjenstår. Andre bilder er ikke gått gjennom |
 | 7. Skjema | Synlig ledetekst koblet til feltet | Ok | Feltene har synlige ledetekster og navn |
 | 8. Søk | Vanlige ord, skrivefeil, kombinasjoner | Ok | Søket i veilederen tåler skrivefeil og har egne tester. Søkestatistikk finnes ikke, siden ingenting logges |
 | 9. Sidetitler | Starter med sidens innhold, slutter med nettstedets navn | Delvis | Fire sider følger mønsteret. Forsiden heter «Spareverksted · Din plan, i ditt tempo», som starter med nettstedets navn. «Om Spareverksted» mangler skilletegn før navnet, men er tydelig |
