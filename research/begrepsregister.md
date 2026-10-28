@@ -4,6 +4,14 @@ Opprettet 28. oktober 2026 av Claude, på oppdrag fra Lars (veikartet, trinn 3.0
 
 Registeret er grunnlaget for forklaringene GPT skriver (veikartet 0.4 og 3.0). Det skal bli den ene kilden for definisjoner, med kort og lang forklaring per begrep, når forklaringene er godkjent.
 
+## Status ved sammenslåing (28. oktober 2026, kveld)
+
+Registeret er fortsatt riktig som arbeidsgrunnlag, men tre ting er endret etter at det ble skrevet. Tellingen i tabellen er ikke laget på nytt.
+
+- **«Renters rente» og «sparetid» er vedtatt** (BESLUTNINGER.md, «Skrivemåte: «renters rente»»). Funn 2 er dermed avgjort som beslutning. Teksten på siden er ikke rettet ennå: «rentes rente» står fortsatt fire steder i kalkulatorens forklaringer (`index.html`, `experience.js`, `guidance.js`, `journey.js`), og «sparehorisont» én gang i veilederen (`veileder-engine.js`, i gjengivelsen av Forbrukerrådets anbefaling). Rettingen er egen oppgave.
+- **Kolonnen «Regel/sats»:** Begreper som hviler på regler eller satser venter ikke lenger på en senere runde. Etter endringen 28.10.2026 i `docs/regulatorisk.md`, punkt 4, kan de forklares når regelen er lest i primærkilden og forklaringen får kontrolldato.
+- **Forklaring der ordet står og egen ordlisteside** er nye funksjoner som venter til oppstart (`docs/regulatorisk.md`, punkt 6). Funn 1 beskriver behovet, ikke en løsning som kan bygges nå.
+
 ## Slik er registeret laget
 
 - Lest fra `dist/` på main `0dd1007`. Synlig tekst i HTML-filene og tekststrenger i JavaScript-filene, uten kommentarer.
