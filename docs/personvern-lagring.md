@@ -229,3 +229,11 @@ Lars opplyser også at han har slått av et statistikkverktøy i cPanel. Hvilket
 1. «De huskes ikke til neste besøk» var for absolutt, siden gjenopprettede faner kan ta med valgene. Endret til «med forbeholdene om faner over».
 2. Slettestatusen sa «har ikke lagret noe i denne nettleseren nå», selv om andre faner kan ha fanelagring. Endret til «Ingen lagrede planer i denne nettleseren og ingen lagrede valg i denne fanen.» I tillegg (Claude): meldingen etter sletting nevner nå arbeidsplan, valg og veilederopplysninger i andre faner, ikke bare arbeidsplanen. `personvern.js` versjon 3.
 3. Leverandøravsnittene: GPT påpeker at åpenhet om usikkerhet ikke avklarer forholdene. Enig. Står som videre arbeid, ikke publiseringssperre: konkrete svar om ansvar, lagringssted og slettetider fra GitHub, Domene.no (inkludert MailChannels) og Google bør erstatte «vi har spurt» etter hvert.
+
+## Delingslenker kontrollert 28.10.2026
+
+- `start` i lenken er startbeløpet, ikke alder. Alder (`userAge`) og risikovalg (`riskChosen`) holdes utenfor, sammen med `ageKnown`, `until67`, `stress`, `ageGroup` og `purpose`. Sikret i `veileder-browser.cjs` og nå `deling-browser.cjs`.
+- Før endringen tok lenken med 52 verdier fra alle deler. Nå bare feltene for delen som deles (se BESLUTNINGER.md).
+- Åpner du en delt lenke i samme fane som en plan du jobber med, erstattes arbeidsplanen i fanen uten beskjed. Lagrede planer røres ikke. Ikke endret; foreslått som egen sak.
+- Nedlasting og utskrift inneholder alder hvis den er oppgitt. Står nå på personvernsiden.
+- Personvernsiden: rettet «utskrifter», «Spareverksteds kode leser», «Jeg har ikke funnet opplysninger fra GitHub», og setningen om GitHub-logger under rettigheter (innspill fra GPT).
