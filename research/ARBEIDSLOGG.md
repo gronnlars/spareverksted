@@ -114,3 +114,8 @@ Ny kildekontroll og dokumentretting er egenkontroll. Claudes uavhengige kontroll
 ### Lars sin kildekontroll mottatt 28.10.2026
 
 Lars har sendt konkrete kildeutdrag og myndighetsutskrifter for H og G. GPT har lest begge PDF-er, kontrollert relevante sidetall og beregnet SHA-256, registrert i hovedrapportens avsnitt «Lars sin ordlydskontroll». Alder, oppussing, ASK-grunnlag, IPS-fradragets type og rettledningens uttaksavsnitt er dokumentert i hans utdrag. Utdraget av BSU-renter inneholder bare overskrift, og garantiavgrensningen mangler. Disse er uttrykkelig fortsatt åpne for menneskelig ordlydskontroll. Ingen helhetlig faglig godkjenning eller fullført K7 erklæres. Ingen endring i Claudes rapport, produktet eller tester. Ingen sammenslåing eller publisering.
+
+
+### Supplerende ordlydsdokumentasjon fra Lars, 28.10.2026
+
+To skjermbilder fra Skatteetaten er lest av ChatGPT/Codex. Lars har nå dokumentert garantiavgrensningen i fondskontosiden B og hele renteavsnittet i BSU-siden D, inkludert unntaket for renter påløpt fra og med året man fyller 34. Registrert med presis avgrensning i hovedrapporten. Disse to manglende utdragene er ikke lenger åpne. Ingen generell godkjenning, produktretting eller publisering. Øvrige kontrollpunkter står som før.
