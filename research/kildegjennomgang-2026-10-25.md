@@ -1,5 +1,9 @@
 # Kildegjennomgang: løpende kontroll av eksisterende innhold
 
+## Delkontroll 28.10.2026: BSU og IPS
+
+[Fullt kontrollnotat](svarutkast/KONTROLL-BSU-IPS-2026-10-28.md). SV-133 og SV-087/SV-090, to eksisterende svar. Kontrollerte 2026-grenser samsvarer med Skatteetatens veiledning. Dokumentert dekningshull ved søk om BSU til oppussing. Sparevaneeffekten i IPS-svaret mangler støtte i den leste kilden. Åtte søk og 14 systematiske profiltilfeller kjørt i Node: dyr gjeld kombinert med manglende buffer bytter alternativkort i begge svar. Dette er eksisterende kodeatferd, ikke ny funksjonalitet eller juridisk avklaring. Ingen produktendringer. K7-runden, full kontroll av arvede råd, uavhengig kontroll og faktisk visning gjenstår.
+
 ## Videreført delkontroll 28.10.2026: ASK og fondskonto
 
 Lest main-commit `00d8f1536802b69eebf05a1034f388bd87550d9f`. PR #90 er nå sammenslått. [Kontrollnotat med påstandsdekning, kilder, regneforutsetninger, søkeprøve og reparasjoner](svarutkast/KONTROLL-ASK-FONDSKONTO-2026-10-28.md).
