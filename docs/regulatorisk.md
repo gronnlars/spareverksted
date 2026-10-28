@@ -76,11 +76,11 @@ Disse oppheves ikke av at pausen avsluttes:
 
 Lars har besluttet at pausen og kalkulatorfrysen ikke gjelder forklaringer av nøytrale begreper som oppfyller alle kravene under. Hvilke andre områder pausen ikke gjelder, står i neste avsnitt. Begrunnelse og forkastede alternativer står i [BESLUTNINGER.md](../BESLUTNINGER.md).
 
-1. **Bare betydning og forskjeller.** Teksten forklarer hva begrepet betyr, og kan vise hvordan to begreper skiller seg, for eksempel annuitetslån og serielån. Forskjeller skrives som etterprøvbare fakta og følger, ikke som vurderinger, og teksten ender ikke i en konklusjon om hva som passer. Den anbefaler ikke handling, rangerer ikke alternativene og trekker ikke slutninger om brukeren. Ord som «bør», «lønner seg», «tryggere» og «bedre» er en varselliste, ikke selve kontrollen. Hele teksten vurderes.
+1. **Forklarer, men styrer ikke.** Teksten forklarer hva begrepet betyr, og kan vise forskjeller, fordeler og ulemper, for eksempel ved annuitetslån og serielån. Den forklarer også relevante begrensninger og variasjoner. Den fører ikke brukeren mot produkter, anbefaler ikke handling, ender ikke i en konklusjon om hva brukeren bør velge, og trekker ikke slutninger om brukeren. Fordeler og ulemper skrives som etterprøvbare følger, ikke som vurderinger av hva som er best.
 2. **Ingen navn.** Ingen produkt- eller tilbydernavn. Omtalen av Nordnet og Investeringskonto Zero står urørt, se under.
 3. **Ingen tilpasning** etter brukerens opplysninger.
-4. **Første runde uten regler og satser.** Bare begreper som ikke hviler på regelverk eller satser, for eksempel indeks, prisvekst, kjøpekraft og renters rente. Begreper som ASK, BSU og skjermingsfradrag venter til kildekontrollen er fullført.
-5. **Vanlig kontroll.** Kilde etter [KILDEREGLER.md](../KILDEREGLER.md), språk etter [SPRAKREGLER.md](../SPRAKREGLER.md) og kontroll av en annen enn skribenten.
+4. **Regler og satser krever primærkilde og vedlikehold (endret 28.10.2026).** Begreper som hviler på regelverk eller satser, for eksempel effektiv rente, kredittscore, ASK og BSU, kan forklares når regelen er lest i primærkilden og forklaringen får kontrolldato og plass i vedlikeholdet etter KILDEREGLER. Opprinnelig sto det at slike begreper skulle vente til en senere runde.
+5. **Vanlig kontroll.** GPT skriver forklaringene og har ansvaret for kildekontrollen. Kilde etter [KILDEREGLER.md](../KILDEREGLER.md), språk etter [SPRAKREGLER.md](../SPRAKREGLER.md) og kontroll av en annen enn skribenten. Lars godkjenner.
 6. **Forklaring der ordet står er UU (endret 28.10.2026).** Lars har vedtatt at forklaring der ordet står i teksten, og en ordliste, regnes som forbedring av universell utforming. De kan bygges nå og skal være slått på når de publiseres, etter standarden i [research/universell-utforming.md](../research/universell-utforming.md), punkt 6. Prøvingen der gjøres før publisering.
 7. **Egen PR og godkjenning.** Hver forklaring eller gruppe av forklaringer går i egen PR og slås sammen bare etter Lars' godkjenning.
 
@@ -93,17 +93,18 @@ Lars har besluttet at pausen ikke gjelder forbedringer innen disse områdene:
 1. **Kildekrav og kildekontroll**, også retting av kilder og påstander i publisert innhold.
 2. **Universell utforming**, for eksempel beskrivelse av grafer i tekst. Kalkulatorfrysen tillater allerede å rette UU-feil.
 3. **Personvern.**
-4. **Nøytrale begrepsforklaringer**, med kravene i avsnittet over. Spørsmål og svar som bare forklarer begreper og forskjeller, hører hit.
+4. **Nøytrale spørsmål og svar om økonomiske begreper**, med kravene i avsnittet over. Kan ha spørsmål-og-svar-form og fylle svarbasen, også med forskjeller, fordeler og ulemper.
 5. **Retting av opplagte brudd på lover og regler.** Bare retting, ikke ny utvikling.
 
-Områdene 1 til 4 er de som står i presiseringen til Finanstilsynet 28.10.2026. Lars vedtok tidligere samme dag også å åpne for «generelle spørsmål». Det er ikke tatt med her, fordi presiseringen ikke nevner det. Nye generelle svar utover begrepsforklaringer venter til Lars eventuelt har orientert Finanstilsynet.
+Områdene 1 til 4 svarer til presiseringen til Finanstilsynet 28.10.2026. «Generelle spørsmål» er ikke lenger en egen kategori. Den var for grov både til å åpne og til å sperre (Lars 28.10.2026). Nøytrale begrepsspørsmål hører til punkt 4. Svar som går ut over å forklare begreper, venter.
 
 Dette gjelder fortsatt også innenfor områdene:
 
 - Sperrene over står: ingen kontekstuell spørsmålsveiledning før Lars åpner den, ingen produktanbefalinger eller «best egnet for deg», og kildekontroll før nye råd.
 - Generelle svar tilpasses ikke etter alder, sparehorisont, sparemål eller andre opplysninger brukeren har fylt inn.
 - Omtalen av Nordnet og Investeringskonto Zero står urørt.
-- Ny funksjonalitet utenfor områdene, som nye kalkulatorfunksjoner, lånekalkulator og endringer i brukergrensesnittet som ikke er UU-retting, venter til oppstart.
+- Ingen nye funksjoner, for eksempel lånekalkulator, budsjettveiviser eller noe som styrer brukeren etter alder, sparehorisont eller sparemål. UU-forbedringer som grafbeskrivelse og forklaring der ordet står, regnes ikke som nye funksjoner i denne betydningen.
+- Innholdsarbeidet åpner ikke av seg selv for publisering. Hver PR godkjennes av Lars.
 - Hver endring går i egen PR og slås sammen bare etter Lars' godkjenning.
 - Alt bygges slik at funksjonene som venter, lett kan kobles på senere. Se BESLUTNINGER.md, «Bygg slik at det som venter, lett kan kobles på».
 

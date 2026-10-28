@@ -617,3 +617,28 @@ C. Bygge alt ferdig nå bak brytere, også kontekstuell veiledning. Ikke valgt: 
 **Alternativer:** A. «Renters rente». **Valgt.** B. «Rentes rente». Ikke valgt: ville kreve endring av eksisterende svar uten gevinst.
 
 **Gjenstår:** Samme avklaring for «sparetid» og «sparehorisont».
+
+## Nøytrale spørsmål og svar om økonomiske begreper (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026, med formulering fra GPT som Lars sluttet seg til. Ført i `docs/regulatorisk.md`, kravene 1, 4 og 5 og områdene.
+
+**Beslutning:** Svarbasen kan fylles med nøytrale spørsmål og svar som forklarer økonomiske begreper, også forskjeller, fordeler og ulemper. Avgrensningen gjelder innholdet: svarene skal ikke føre brukeren mot produkter, anbefale handlinger eller tilpasses som personlige råd. Relevante begrensninger og variasjoner forklares, uten konklusjon om hva brukeren bør velge. Eksempler: renters rente, effektiv rente, kredittscore, annuitetslån og serielån. GPT skriver svarene og har ansvaret for kildekontrollen. Lars godkjenner.
+
+**Hva som ikke åpnes:** Ingen nye funksjoner som lånekalkulator, budsjettveiviser eller styring etter alder, sparehorisont eller sparemål. Innholdsarbeidet åpner ikke av seg selv for publisering.
+
+**Endringer i kravene:**
+- Krav 1 tillater nå fordeler og ulemper. Claude anbefalte å skrive forskjeller som fakta og følger, ikke som «for» og «mot». Lars valgte å tillate fordeler og ulemper, med vilkåret at de skrives som etterprøvbare følger og ikke ender i en konklusjon.
+- Krav 4 tillater begreper som hviler på regler eller satser, når regelen er lest i primærkilden og forklaringen får kontrolldato og vedlikehold. Effektiv rente og kredittscore er slike begreper.
+- «Generelle spørsmål» er tatt ut som egen kategori. Den var for grov til å både åpne og sperre.
+
+**Forholdet til presiseringen til Finanstilsynet 28.10.2026:** Presiseringen sier at forklaringene anbefaler ingen handling, nevner ingen produkter og tilpasses ikke den enkelte. Det gjelder fortsatt. At svarene kan vise fordeler og ulemper, står ikke uttrykkelig i presiseringen. Claude vurderer at det ligger innenfor, så lenge svarene ikke ender i en anbefaling, men det er ikke en juridisk vurdering.
+
+**Alternativer:**
+A. Nøytrale begrepsspørsmål i spørsmål-og-svar-form, med fordeler og ulemper uten konklusjon. **Valgt.**
+B. Bare definisjoner, uten forskjeller og fordeler og ulemper. Ikke valgt: gir lite hjelp ved spørsmål som annuitetslån eller serielån.
+C. Åpne for «generelle spørsmål» bredt. Ikke valgt: kategorien er for grov og nevnes ikke i presiseringen.
+
+**Akseptert ulempe:** Grensen mellom fordeler og ulemper og en anbefaling krever skjønn i hvert svar. Kontrollen av premiss og mulig oppfattet anbefaling (PR #87) brukes på hvert svar.
+
+**Vurder på nytt når:** Finanstilsynet svarer, eller et svar viser seg å bli lest som en anbefaling.
+
