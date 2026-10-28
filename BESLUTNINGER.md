@@ -815,3 +815,27 @@ B. Legge til skjulte overskrifter for skjermleser. Ikke valgt: tekst som bare fi
 **CodeQL-varsler på PR-en (rettet samme dag):** GitHubs sikkerhetsskanner meldte fire varsler om at tekst fra siden kunne bli tolket som HTML i `markInvalid` og `focusField`. CodeQL 2.23.3 kjørt lokalt viste samme dataflyt på main, så varslet var ikke nytt, bare synlig fordi PR-en endret `app.js`. Skanneren leste hjelpefunksjonen `$(key)` som jQuery, der en tekst kan bli til HTML. I Spareverksted er `$` bare `document.getElementById`. De to funksjonene bruker nå `document.getElementById(key)` direkte. Virkningen er den samme, og CodeQLs sikkerhetsregler gir 0 funn lokalt etterpå.
 
 Alternativer: A. Skrive `document.getElementById` i de to funksjonene. **Valgt.** B. Avvise varslene som falsk alarm i GitHub. Ikke valgt: skanneren ville fortsatt reagert ved neste endring. C. Gi `$` nytt navn i hele filen. Ikke valgt: stor endring for liten nytte.
+
+## Grafen uten sidens stilark (28. oktober 2026)
+
+**Status:** Forslag. Retting av UU-feil etter `docs/regulatorisk.md`, krav 6. Endrer ikke beregningene. Venter på Lars.
+
+**Funn (Lars, iPhone, 28.10.2026):** I lesemodus i Chrome var tallene på grafens akse kuttet («00 tusen»), og forklaringen av linjene sto som «Beløp i kronerDu setter inn». Lesemodus i nettlesere, egne stilark og enkelte hjelpemidler viser siden uten vår CSS. Mange bruker det for å lese lettere, blant annet ved dysleksi og nedsatt syn.
+
+**Årsak:** Skriftstørrelsen på teksten i grafen kom bare fra stilarket. Uten det arvet teksten en større skrift, og tallene ble for brede for plassen til venstre. Forklaringen var `span`-elementer uten mellomrom mellom seg. Mellomrommet kom bare fra CSS.
+
+**Retting:**
+1. Grafene har `font-size` og `font-family` som attributter på `svg`. Stilarket overstyrer dem som før. Uten stilark brukes de.
+2. Forklaringen er en ekte liste, `ul` med `li`, også i rapporten. Uten stilark vises den som punktliste. Skjermlesere sier hvor mange linjer det er.
+
+**Utseendet med stilark:** 18 av 18 skjermbilder er pikselidentiske før og etter (kalkulator, sparemål og uttak; tre nivåer; 390 og 1280 px).
+
+**Alternativer for punkt 2:**
+A. `ul` med `li`. **Valgt.** Innebygd HTML, gir mening både med og uten stil.
+B. Mellomrom eller skilletegn mellom `span`. Ikke valgt: virker, men sier ikke at det er en liste.
+
+**Ny test:** `tests/uten-stil-browser.cjs` fjerner stilarkene og sjekker at grafteksten holder seg innenfor og at forklaringen er en liste. Feiler på main, består her.
+
+**Ikke rettet:** Uten farger viser ikke forklaringen hvilken linje som er hvilken. Teksten «Slik leser du grafen» dekker det. Oppfordringen «Pek eller trykk på grafen» vises også i leservisning, der grafen ikke kan brukes. Den er nyttig i vanlig visning og koster lite.
+
+**Ikke kontrollert:** Lesemodus i Chrome og leservisning i Safari selv. Chromium uten stilark er bare en tilnærming. Lars bør se samme side i lesemodus etter publisering.
