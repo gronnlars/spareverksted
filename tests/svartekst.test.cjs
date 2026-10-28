@@ -20,4 +20,3 @@ for(const e of [...entries,...drafts]){
 }
 console.log('Svartekst: ingen like setninger, ingen vi-form, ASK har dokumentert lengdeavvik; øvrige svar kortere. '+oldTotal+' → '+total+' ord ('+((total/oldTotal-1)*100).toFixed(1)+' %).');
 if(process.argv.includes('--table'))console.log('| Svar | Før | Etter | Endring |\n| --- | ---: | ---: | ---: |\n'+rows.join('\n'));
-
