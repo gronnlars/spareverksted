@@ -2,7 +2,7 @@
 
 Felles arbeidsgrunnlag for hele nettstedet. Samlet 24. oktober 2026 fra arbeidet med kalkulatoren (fase 1 og 2). Gjelder alle nye deler fra første utkast, ikke som etterarbeid.
 
-Standard: WCAG 2.2 nivå AA. Vi omtaler resultatet som «ingen avvik funnet i de gjennomførte kontrollene», aldri som full WCAG-godkjenning. Om forskrift om universell utforming av IKT formelt gjelder for Spareverksted, er ikke undersøkt. Vi følger standarden uansett.
+Standard: WCAG 2.2 nivå AA. Vi omtaler resultatet som «ingen avvik funnet i de gjennomførte kontrollene», aldri som full WCAG-godkjenning. Om forskrift om universell utforming av IKT formelt gjelder for Spareverksted, er ikke avklart. Uu-tilsynet skriver at både private og offentlige virksomheter, lag og organisasjoner må følge regelverket ([uutilsynet.no/regelverk](https://www.uutilsynet.no/regelverk/), lest av Lars via skjermbilde 28.10.2026). Om en privatperson med en gratis hobbyside regnes som virksomhet, sier siden ikke. Vi følger standarden uansett.
 
 ## 1. Krav til hver ny del
 
@@ -110,3 +110,13 @@ Utkast. Legges inn under «Valg jeg har tatt» i `dist/tilgjengelighet.html` i s
 - [U.S. Web Design System: Tooltip](https://designsystem.digital.gov/components/tooltip/) (publisert 20.10.2026). Ikke skjul nødvendig informasjon i verktøytips. Vis innholdet på siden når det er plass.
 - Inspirasjon: NRK sine ordforklaringer (skjermbilde fra Lars 28.10.2026). Åpnes ved trykk, men som flytende boks som dekker teksten under.
 - Ikke nylest i denne økten: HTML-spesifikasjonen om at `<details>` ikke kan stå inne i et avsnitt, og unntaket for knapper i løpende tekst i [WCAG 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html). Kontrolleres før funksjonen bygges.
+
+## 7. Lenker til regelverket på tilgjengelighetssiden (28. oktober 2026)
+
+Forslag, legges inn i `dist/tilgjengelighet.html` i egen PR etter Lars' godkjenning.
+
+- **Hovedlenke:** Uu-tilsynets side [Regelverk](https://www.uutilsynet.no/regelverk/), med undersidene «Regelverk og krav» (gjeldende) og «Fremtidige regelverk og krav». Tilsynsmyndigheten, nivå 1 i kildereglene. Lars vurderte siden 28.10.2026 og mente den ser veldig bra ut.
+- **Ingen egne påstander om status eller datoer.** Undersiden [Fremtidige regelverk og krav](https://www.uutilsynet.no/regelverk/fremtidige-regelverk-og-krav/747) sa 28.10.2026 at tilgjengelighetsdirektivet skal tre i kraft i juni 2025. Siden er udatert og virker utdatert, så den brukes ikke som kilde for når direktivet gjelder i Norge.
+- **Primærkilder ved behov:** EUR-Lex for [webdirektivet (EU) 2016/2102](https://eur-lex.europa.eu/eli/dir/2016/2102/oj) og [tilgjengelighetsdirektivet (EU) 2019/882](https://eur-lex.europa.eu/eli/dir/2019/882/oj), og [Prop. 111 LS (2025-2026)](https://www.regjeringen.no/no/dokumenter/prop.-111-ls-20252026/id3172632/). Ingen av disse er lest. Claude fikk ikke åpnet dem 28.10.2026.
+- **Spørsmål til Uu-tilsynet:** om regelverket gjelder Spareverksted, kan tas med i oppfølgingen av henvendelsen som allerede er sendt.
+
