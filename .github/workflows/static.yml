@@ -26,6 +26,7 @@ jobs:
           node tests/veileder-grunnbegreper.test.cjs
           python3 research/svarutkast/generer-gaps.py --check --product
           node tests/veileder-knowledge.test.cjs
+          node tests/veileder-bsu-dobbel.test.cjs
           node tests/veileder-relevance.test.cjs
           node tests/veileder-sok.test.cjs
           node tests/veileder-sok-utvidet.test.cjs
