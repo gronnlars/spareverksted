@@ -21,9 +21,7 @@ assert.match(text('q-ips-ask'),/25 000/);assert.match(text('q-ips-ask'),/minst t
 assert.match(text('q-barnesparing-skatt'),/til og med året barnet fyller 16/);assert.match(text('q-barnesparing-skatt'),/året barnet fyller 17/);
 assert.match(text('q-bsu-flytting'),/vet ikke/);assert.match(text('q-utbytte'),/personlig.*bosatt i Norge/);assert.match(text('q-rentefond'),/innskuddsgaranti/);
 // Same names, questions and regexes as main. No new comparison picker or automatic publication of drafts.
-const cp=require('node:child_process'),vm=require('node:vm'),{createRequire}=require('node:module'),path=require('node:path');
-const code=cp.execFileSync('git',['show','1082c4f:dist/veileder-knowledge.js'],{encoding:'utf8'}),sandbox={module:{exports:{}},require:createRequire(path.resolve('dist/veileder-knowledge.js'))};
-vm.runInNewContext(code,sandbox);const old=JSON.parse(JSON.stringify(sandbox.module.exports.map(x=>({id:x.id,keys:x.keys,questions:x.questions,words:x.words.map(String)}))));
+const old=require('./fixtures/svarmal-search-baseline.json');
 const fresh=entries.map(x=>({id:x.id,keys:x.keys,questions:x.questions,words:x.words.map(String)}));
 assert.deepEqual(JSON.parse(JSON.stringify(fresh)),old);
 console.log('Svarmal: 13 svar, profil-uavhengighet, faglige forbehold, uavklarte spørsmål og uendrede søkeinnganger består.');
