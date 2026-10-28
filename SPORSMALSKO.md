@@ -47,7 +47,7 @@ For hver rad gjelder foreløpig **fagkontroll: ikke nykontrollert; søketest: ik
 | 21 | SV-003 | Lønner det seg alltid å fylle opp BSU-kontoen? | Ingen registrert | Delvis: bsu / q-bsu-basics | Kø | Ikke opprettet |
 | 22 | SV-004 | Hva er aldersgrensen for BSU? | Ingen registrert | Delvis: q-bsu-basics | Kø | Ikke opprettet |
 | 23 | SV-005 | Kan jeg bruke BSU på oppussing? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
-| 24 | SV-133 | Hva er BSU, og hvordan fungerer ordningen? | Ingen registrert | Eget svar: q-bsu-basics | Kø | Ikke opprettet |
+| 24 | SV-133 | Hva er BSU, og hvordan fungerer ordningen? | Ingen registrert | Eget svar: q-bsu-basics | Delkontroll, åpne funn | [delkontroll BSU/IPS](research/svarutkast/KONTROLL-BSU-IPS-2026-10-28.md), egenkontroll 28.10.2026; regelår 2026, søk og lokal tilpasning kontrollert, ingen integrasjon |
 | 25 | SV-134 | Får jeg BSU-fradrag hvis jeg betaler lite skatt eller eier bolig? | Ingen registrert | Delvis: q-bsu-basics | Kø | Ikke opprettet |
 | 26 | SV-135 | Hva kan BSU brukes til, og hva skjer ved feil bruk? | Først SV-133; hva skjer med BSU hvis jeg flytter; GAPS bsu-flytting | BSU finnes, men flytting besvares ikke | Utkast med forbehold | [Utkast](research/svarutkast/SV-135.md), selvkontroll 25.10.2026; lokal søkeprøve, ikke integrert |
 | 27 | SV-136 | Bør jeg prioritere buffer, BSU eller annen sparing til bolig? | Først SV-001, SV-133 | Delvis: bsu / buffer | Kø | Ikke opprettet |
@@ -57,8 +57,8 @@ For hver rad gjelder foreløpig **fagkontroll: ikke nykontrollert; søketest: ik
 | 31 | SV-032 | Kan jeg ha rentefond på ASK? | Først SV-031, SV-061 | Delvis: q-ips-ask / q-ask-zero | Kø | Ikke opprettet |
 | 32 | SV-122 | Hva kan fondskonto bety, og hvordan skiller det seg fra et fond? | vanlig fondskonto; aksje- og fondskonto; kapitalforsikring | Eget svar q-fondskonto, publisert svarfil kontrollert | Avventer | [Delkontroll 28.10.2026](research/svarutkast/KONTROLL-ASK-FONDSKONTO-2026-10-28.md): forbehold, kildeversjon og bredt søketreff. Produktomtalen urørt. |
 | 33 | SV-034 | Hva er forskjellen på ASK og forsikringsbasert fondskonto, som Nordnet Investeringskonto Zero? | Først SV-031, SV-122; ASK eller Zero; IKZ; investeringskonto | Delvis: q-ask-zero | Kø | Ikke opprettet |
-| 34 | SV-087 | Hva er individuell pensjonssparing (IPS)? | IPS; individuell sparing til pensjon | Delvis: q-ips-ask | Kø | Ikke opprettet |
-| 35 | SV-090 | Hvordan sammenligner jeg IPS med langsiktig sparing på ASK? | Først SV-031, SV-087; IPS eller ASK | Delvis: q-ips-ask | Kø | Ikke opprettet |
+| 34 | SV-087 | Hva er individuell pensjonssparing (IPS)? | IPS; individuell sparing til pensjon | Delvis: q-ips-ask | Delkontroll, åpne funn | [delkontroll BSU/IPS](research/svarutkast/KONTROLL-BSU-IPS-2026-10-28.md), egenkontroll 28.10.2026; eksisterende q-ips-ask, ikke komplett nytt svar eller publiseringsgodkjenning |
+| 35 | SV-090 | Hvordan sammenligner jeg IPS med langsiktig sparing på ASK? | Først SV-031, SV-087; IPS eller ASK | Delvis: q-ips-ask | Delkontroll, åpne funn | [delkontroll BSU/IPS](research/svarutkast/KONTROLL-BSU-IPS-2026-10-28.md), egenkontroll 28.10.2026; eksisterende q-ips-ask, ikke komplett nytt svar eller publiseringsgodkjenning |
 | 36 | SV-081 | Hva er egen pensjonskonto (EPK)? | Først SV-077; EPK; egen pensjonskonto | Ikke kontrollert | Kø | Ikke opprettet |
 | 37 | SV-082 | Bør jeg velge egen leverandør for pensjonskontoen? | Først SV-081, SV-141 | Ikke kontrollert | Kø | Ikke opprettet |
 | 38 | SV-083 | Hva er et pensjonskapitalbevis? | Ingen registrert | Ikke kontrollert | Kø | Ikke opprettet |
