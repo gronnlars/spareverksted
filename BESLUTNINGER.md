@@ -688,6 +688,7 @@ D. «Les opp»-knapp. Ikke valgt nå: ny funksjon som venter til oppstart. Modul
 1. `div` inne i `label` (12 feil). Feltboksen er nå `span` med `display:block`, i HTML og i feltene som lages med JavaScript. Utseendet skal være uendret.
 2. `label` med både avkrysningsboks og hjelpeknapp (2 feil). Hjelpeknappen står nå ved siden av `label`, i en felles rad. En `label` skal bare peke på ett skjemaelement.
 3. `aria-label` på grafens `div` uten rolle (1 feil). Grafen har nå `role="group"`. Det samme punktet ble funnet i Chartability-gjennomgangen.
+4. `aria-label` på temaknappenes `div` uten rolle på «Spør om sparing» (1 feil, funnet av Lars samme dag). Har nå `role="group"`.
 
 **Ikke rettet:** Advarslene om `section` uten overskrift og tomme overskrifter. Overskriftene fylles av JavaScript, og seksjonene har navn via `aria-labelledby` eller er skjult. Validatoren ser bare HTML-en før JavaScript kjører.
 
