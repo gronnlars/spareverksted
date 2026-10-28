@@ -81,7 +81,7 @@ Lars har besluttet at pausen og kalkulatorfrysen ikke gjelder forklaringer av n�
 3. **Ingen tilpasning** etter brukerens opplysninger.
 4. **Regler og satser krever primærkilde og vedlikehold (endret 28.10.2026).** Begreper som hviler på regelverk eller satser, for eksempel effektiv rente, kredittscore, ASK og BSU, kan forklares når regelen er lest i primærkilden og forklaringen får kontrolldato og plass i vedlikeholdet etter KILDEREGLER. Opprinnelig sto det at slike begreper skulle vente til en senere runde.
 5. **Vanlig kontroll.** GPT skriver forklaringene og har ansvaret for kildekontrollen. Kilde etter [KILDEREGLER.md](../KILDEREGLER.md), språk etter [SPRAKREGLER.md](../SPRAKREGLER.md) og kontroll av en annen enn skribenten. Lars godkjenner.
-6. **Forklaring der ordet står er UU (endret 28.10.2026).** Lars har vedtatt at forklaring der ordet står i teksten, og en ordliste, regnes som forbedring av universell utforming. De kan bygges nå og skal være slått på når de publiseres, etter standarden i [research/universell-utforming.md](../research/universell-utforming.md), punkt 6. Prøvingen der gjøres før publisering.
+6. **Rettelse av dokumentert UU-feil, ikke ny funksjon (endret igjen 28.10.2026).** Grafbeskrivelsen kan lages nå, fordi den retter en dokumentert tilgjengelighetsfeil: en ekstern skjermlesertest 28.10.2026 fant at grafen ikke beskrives i ord (WCAG 1.1.1). Forklaring der ordet står i teksten og en egen ordlisteside er nye funksjoner og venter til oppstart. Standarden for dem er fastsatt i [research/universell-utforming.md](../research/universell-utforming.md), punkt 6, så de kan bygges riktig senere. Lars vedtok tidligere samme dag å regne dem som UU, men sluttet seg senere til at de må skilles fra retting av dokumenterte feil.
 7. **Egen PR og godkjenning.** Hver forklaring eller gruppe av forklaringer går i egen PR og slås sammen bare etter Lars' godkjenning.
 
 Unntaket er Lars' egen vurdering, ikke en avklaring fra Finanstilsynet. Lars orienterte Finanstilsynet om det 28.10.2026, se «Presisering sendt 28. oktober 2026».
@@ -103,7 +103,7 @@ Dette gjelder fortsatt også innenfor områdene:
 - Sperrene over står: ingen kontekstuell spørsmålsveiledning før Lars åpner den, ingen produktanbefalinger eller «best egnet for deg», og kildekontroll før nye råd.
 - Generelle svar tilpasses ikke etter alder, sparehorisont, sparemål eller andre opplysninger brukeren har fylt inn.
 - Omtalen av Nordnet og Investeringskonto Zero står urørt.
-- Ingen nye funksjoner, for eksempel lånekalkulator, budsjettveiviser eller noe som styrer brukeren etter alder, sparehorisont eller sparemål. UU-forbedringer som grafbeskrivelse og forklaring der ordet står, regnes ikke som nye funksjoner i denne betydningen.
+- Ingen nye funksjoner, for eksempel lånekalkulator, budsjettveiviser, forklaring der ordet står, egen ordlisteside eller noe som styrer brukeren etter alder, sparehorisont eller sparemål. Rettelse av en dokumentert UU-feil, som grafbeskrivelsen, er ikke en ny funksjon. At noe kalles en UU-forbedring, er ikke nok til å åpne det.
 - Innholdsarbeidet åpner ikke av seg selv for publisering. Hver PR godkjennes av Lars.
 - Hver endring går i egen PR og slås sammen bare etter Lars' godkjenning.
 - Alt bygges slik at funksjonene som venter, lett kan kobles på senere. Se BESLUTNINGER.md, «Bygg slik at det som venter, lett kan kobles på».

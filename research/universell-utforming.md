@@ -37,7 +37,7 @@ En ny side eller funksjon er ikke ferdig før punktene under er oppfylt og kontr
 - **Utfallsbåndet har stiplede kantlinjer** med minst 3:1 mot bakgrunn og fyll. Fyllflaten alene ga 1,22:1 i lyse temaer.
 - **Usikkerhet framstilles som scenario eller modell, ikke som sannsynlighet**, når grunnlaget mangler. Bygger på Spiegelhalter m.fl.
 - **Eksempeltall og standardforutsetninger forklares i én kort tekst over feltene**, ikke med merke ved hvert felt.
-- **Fagord forklares der de står, uten sprettoppvindu.** Valgt 28.10.2026, ikke bygget. Se punkt 6.
+- **Fagord forklares der de står, uten sprettoppvindu.** Mønsteret er valgt 28.10.2026. Ikke bygget, og venter til oppstart fordi det er en ny funksjon. Se punkt 6.
 
 ## 3. Kontroller som er gjennomført
 
@@ -69,7 +69,7 @@ Testene beskytter det som er kontrollert. De beviser ikke at folk forstår innho
 
 ## 6. Fagord forklart der de står (28. oktober 2026)
 
-**Status:** Valgt standard etter undersøkelse 28.10.2026, på oppdrag fra Lars. Ikke bygget. Lars vedtok samme dag at funksjonen er UU, kan bygges under pausen og skal være slått på når den publiseres. Mønsteret regnes som endelig først når prøvingen under er gjort. Begrunnelse og forkastede alternativer: [BESLUTNINGER.md](../BESLUTNINGER.md), «Standard for fagord forklart der de står».
+**Status:** Valgt standard etter undersøkelse 28.10.2026, på oppdrag fra Lars. Ikke bygget. Funksjonen er ny og bygges først etter oppstart (`docs/regulatorisk.md`, krav 6). Mønsteret regnes som endelig først når prøvingen under er gjort. Begrunnelse og forkastede alternativer: [BESLUTNINGER.md](../BESLUTNINGER.md), «Standard for fagord forklart der de står».
 
 ### Mønster
 

@@ -534,7 +534,7 @@ H. «Primærkilden når den finnes og er tilgjengelig.» Ikke valgt: kan leses s
 A. Unntak for nøytrale begreper med kontrollerbare krav. **Valgt.**
 B. Vente på Finanstilsynet med alt. Ikke valgt: lav risiko, stor nytte og ukjent ventetid.
 C. Unntak for alt innhold i veilederen. Ikke valgt: svar om valg mellom alternativer er nettopp det Finanstilsynet er spurt om.
-D. Unntaket omfatter også ny funksjonalitet (forklaring der ordet står, ordlisteside). Ikke valgt nå: ny kode krever egen test og prøving med hjelpemidler. Standarden fastsettes nå (oppføringen under), bygging venter til oppstart. **Endret samme dag:** Lars vedtok at forklaring der ordet står og ordlisten er UU, kan bygges nå og skal være slått på når de publiseres.
+D. Unntaket omfatter også ny funksjonalitet (forklaring der ordet står, ordlisteside). Ikke valgt nå: ny kode krever egen test og prøving med hjelpemidler. Standarden fastsettes nå (oppføringen under), bygging venter til oppstart. **Endret samme dag, to ganger:** Lars vedtok først at forklaring der ordet står og ordlisten er UU og kan bygges nå. Senere samme dag sluttet han seg til GPTs innspill om at bare retting av dokumenterte UU-feil åpnes. Forklaring der ordet står og ordlisten er nye funksjoner og venter til oppstart, som opprinnelig.
 E. Kontroll bare med en liste over forbudte ord. Ikke valgt: en tekst kan styre valg uten de ordene (påpekt av GPT 28.10.2026). Listen er et varsel, hele teksten vurderes.
 
 **Akseptert ulempe:** «Nøytral» er en vurdering. Kontrollen er egenkontroll pluss kontroll av en annen enn skribenten, ingen juridisk kontroll.
@@ -542,6 +542,8 @@ E. Kontroll bare med en liste over forbudte ord. Ikke valgt: en tekst kan styre 
 **Vurder på nytt når:** Finanstilsynet svarer, eller en forklaring viser seg å bli lest som en anbefaling.
 
 ## Standard for fagord forklart der de står (28. oktober 2026)
+
+**Bygging:** venter til oppstart. Se oppføringen om unntaket over.
 
 **Status:** Lars ba 28.10.2026 om at det beste mønsteret for universell utforming undersøkes og legges inn som standarden. Valgt etter undersøkelse samme dag. Ikke bygget. Mønsteret regnes som endelig først etter prøvingen i `research/universell-utforming.md`, punkt 6, der også mønsteret og kildene står.
 
@@ -589,7 +591,7 @@ C. Oppheve pausen helt. Ikke valgt: spørsmålet om tilpasning etter alder og sp
 
 **Beslutning:** Det som bygges nå, lages slik at funksjonene som venter (kontekstuell veiledning, forklaring der ordet står, ordlisteside, opplesning, lånekalkulator), kan kobles på uten å skrive om det som finnes. Konkret:
 
-1. **Av/på-bryter.** En funksjon som venter på avklaring, men bygges ferdig, styres fra ett sted og står av som standard. Av betyr ikke vist for brukeren. Unntak: UU-forbedringer står på når de publiseres (Lars 28.10.2026).
+1. **Av/på-bryter.** En funksjon som venter på avklaring, men bygges ferdig, styres fra ett sted og står av som standard. Av betyr ikke vist for brukeren. Rettelse av en dokumentert UU-feil står på når den publiseres.
 2. **Én kilde for innhold.** Begrepsregisteret og svarbasen har plass til det senere funksjoner trenger, for eksempel kort og lang forklaring. Felt for tilpasning legges ikke inn før sperren er opphevet.
 3. **Gjenbrukbare deler.** Teksten som beskriver resultatet (veikartet 0.5) lages som én modul som grafbeskrivelsen, en senere «Les opp»-knapp, eksport og veilederen kan bruke. Forklaringer vises med én felles komponent.
 4. **Tester for begge tilstander.** Tester sjekker at en avslått funksjon ikke vises, og at den virker når den slås på.
@@ -616,7 +618,7 @@ C. Bygge alt ferdig nå bak brytere, også kontekstuell veiledning. Ikke valgt: 
 
 **Alternativer:** A. «Renters rente». **Valgt.** B. «Rentes rente». Ikke valgt: ville kreve endring av eksisterende svar uten gevinst.
 
-**Gjenstår:** Samme avklaring for «sparetid» og «sparehorisont».
+**Sparetid:** Lars sluttet seg 28.10.2026 til GPTs anbefaling. I tekst skrives «sparetid», forklart som «hvor lenge du planlegger å spare». «Sparehorisont» er søkeord og brukes ikke i teksten.
 
 ## Nøytrale spørsmål og svar om økonomiske begreper (28. oktober 2026)
 
