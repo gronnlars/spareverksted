@@ -26,6 +26,8 @@ jobs:
           node tests/veileder-grunnbegreper.test.cjs
           python3 research/svarutkast/generer-gaps.py --check --product
           node tests/veileder-knowledge.test.cjs
+          python3 scripts/generate-bsu-rates.py --check
+          node tests/bsu-rates.test.cjs
           node tests/svarmal.test.cjs
           node tests/svartekst.test.cjs
           node tests/veileder-relevance.test.cjs
@@ -74,6 +76,9 @@ jobs:
           node tests/svarmal-browser.cjs
           SPARE_ENGINE=firefox node tests/svarmal-browser.cjs
           SPARE_ENGINE=webkit node tests/svarmal-browser.cjs
+          node tests/bsu-browser.cjs
+          SPARE_ENGINE=firefox node tests/bsu-browser.cjs
+          SPARE_ENGINE=webkit node tests/bsu-browser.cjs
           node tests/ask-browser.cjs
           SPARE_ENGINE=firefox node tests/ask-browser.cjs
           SPARE_ENGINE=webkit node tests/ask-browser.cjs

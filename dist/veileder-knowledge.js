@@ -3,6 +3,7 @@
 'use strict';
 const F=typeof module!=='undefined'&&module.exports?require('./veileder-facts.js'):root.SpareFacts;
 const date=F.checked;
+const bsuRates=typeof module!=='undefined'&&module.exports?require('./bsu-rates.js'):root.SpareBsuRates;
 const bsu={id:'tax-bsu',title:'Skatteetaten: BSU og vilkår',url:'https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/'};
 const ask={id:'tax-ask',title:'Skatteetaten: aksjesparekonto',url:'https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/aksjar-og-verdipapir/om/aksjesparekonto-ask/'};
 const ips={id:'tax-ips',title:'Skatteetaten: individuell sparing til pensjon, ny ordning',url:'https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid-trygd-og-pensjon/pensjon-og-uforetrygd/ny-ordning-for-skattefavorisert-individuell-sparing-til-pensjon/'};
@@ -257,48 +258,74 @@ const entries=[
 "text":"Du kan ikke ta ut bare innskuddet først. Uttaket inneholder en forholdsmessig del av innskudd og gevinst eller tap."},
 {"title":"Vilkår og kostnader varierer",
 "text":"Samlede kostnader og vilkår for flytting følger avtalen. Ingen bestemt tilbyders vilkår er kontrollert her."}]}},
-{"id":"q-bsu-basics",
-"searchFamily":"bsu",
-"category":"bsu",
-"title":"Hva er BSU?",
-"checked":"2026-10-28",
-"keys":["bsu",
-"boligsparing"],
-"words":[/\bbsu\b/,
-/boligsparing for ungdom/],
-"questions":["Hva er BSU?",
-"Hva betyr BSU?",
-"Hvordan fungerer boligsparing for ungdom?"],
-"intro":"BSU betyr boligsparing for ungdom. Det er sparing på en egen bankkonto med mulighet for fradrag i skatten.",
-"sources":[{"id":"bsu-eierskap","title":"Skatteetaten: BSU-satser og boligeierskap","url":"https://www.skatteetaten.no/satser/fradrag-for-boligsparing-for-ungdom-bsu/?year=2026"},{"id":"tax-bsu",
-"title":"Skatteetaten: BSU og vilkår",
-"url":"https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/"},
-{"id":"bsu-2026",
-"title":"Skatteetaten: Forskuddsutskrivingen 2026",
-"url":"https://www.skatteetaten.no/rettskilder/type/uttalelser/uttalelser/forskuddsutskrivingen-2026/"}],
-"parts":[{"title":"Grenser for {{year}}",
-"text":"Årsgrensen er {{bsuAnnual}} kr, og samlet innbetalt beløp kan ikke overstige {{bsuTotal}} kr."},
-{"title":"Hva kan pengene brukes til?",
-"text":"BSU kan blant annet brukes til egen fast bolig, renter og avdrag på boliglånet og oppussing av egen bolig. Møbler og frittstående hvitevarer er ikke godkjente formål."},
-{"title":"Innskudd og renter",
-"text":"Renter teller ikke med i innskuddsgrensene, så saldoen kan være høyere. Rentene er normalt bundet til bolig. Renter som påløper fra og med året du fyller 34, kan likevel tas ut."},
-{"title":"Boligeierskap og videre sparing",
-"text":"Regelen gjelder primærbolig og sekundærbolig. Også indirekte eierskap, som en borettslagsandel, teller. Fritidseiendom alene stenger ikke for fradrag. Etter at du har begynt å bruke BSU-pengene, kan du ikke betale inn nye sparebeløp."}],
-"review":{"text":"BSU-veiledningen er udatert. Regelår 2026, bekreftet i Forskuddsutskrivingen 2026 (15.12.2025). Lest 28.10.2026, egenkontroll. Neste kontroll før 01.01.2027."},
-"kind":"explainer",
-"layout":"overview",
-"tradeoffs":{"pros":[{"title":"Mulig fradrag i skatten",
-"text":"I {{year}} gir innskudd {{bsuPercent}} prosent fradrag. Det trekkes direkte fra skatten, og kan ikke overstige det du ellers skulle betalt."},
-{"title":"Bankkonto uten aksjesvingninger",
-"text":"Renten følger bankens vilkår."}],
-"cons":[{"title":"Pengene er bundet til bolig",
-"text":"Bruk i strid med vilkårene kan føre til at tidligere skattefradrag legges til skatten."},
-{"title":"Fradraget har vilkår",
-"text":"Nye innskudd er tillatt til og med året du fyller {{bsuMaxAge}}. Eier du bolig 31. desember, helt eller delvis, får du ikke fradrag det året."}]},
-"terms":[],
-"example":{"title":"Eksempel: fradrag for et innskudd",
-"text":"Et innskudd på {{bsuAnnual}} kr i {{year}} gir maksimalt {{bsuMaxDeduction}} kr i fradrag, forutsatt at vilkårene er oppfylt."},
-"caveat":""},
+ {
+ "kind": "explainer",
+ "layout": "overview",
+ "id": "q-bsu-basics",
+ "searchFamily":"bsu",
+ "terms":[],
+ "category": "bsu",
+ "title": "Hva er BSU?",
+ "checked": "2026-10-28",
+ "keys": [
+  "bsu",
+  "boligsparing"
+ ],
+ "questions": [
+  "Hva er BSU?",
+  "Hva betyr BSU?",
+  "Hvordan fungerer boligsparing for ungdom?"
+ ],
+ "intro": "BSU betyr boligsparing for ungdom. Du kan spare til og med året du fyller 33 og sette inn opptil 27 500 kroner i året og 300 000 kroner totalt. Rentene kommer i tillegg og teller ikke med i innskuddsgrensene.",
+ "tradeoffs": {
+  "pros": [
+   {
+    "title": "Lavere skatt",
+    "text": "Du kan få 10 prosent av årets innskudd i skattefradrag, maksimalt 2 750 kroner. Du må betale nok skatt for å få fullt fradrag. Eier du bolig 31. desember, alene eller sammen med andre, får du ikke fradrag det året. Pengene må være satt inn før årets slutt, og banken må rapportere innskuddet til Skatteetaten."
+   },
+   {
+    "title": "Høyere rente",
+    "text": "Ifølge SSB har BSU i snitt hatt høyere rente enn andre bundne bankinnskudd hvert år siden 2018. Bankene bestemmer renten, så din kan være høyere eller lavere."
+   }
+  ],
+  "cons": [
+   {
+    "title": "Tilbakebetaling ved annen bruk",
+    "text": "Du kan ta ut pengene til andre formål, men da bryter du vilkårene og må betale tilbake skattefradrag du tidligere har fått, gjennom økt skatt. Har deler av pengene gått til kjøp av egen fast bolig i tråd med vilkårene, gjelder tilbakebetalingen bare den delen som ikke er brukt slik."
+   }
+  ]
+ },
+ "parts": [
+  {
+   "title": "Hvilken bolig teller?",
+   "text": "Både boligen du bor i og annen bolig teller, også en andel i et borettslag. Fritidsbolig alene hindrer ikke fradrag."
+  },
+  {
+   "title": "Hva kan pengene brukes til?",
+   "text": "Blant annet kjøp av egen fast bolig, kjøpskostnader, renter og avdrag på boliglånet og oppussing og oppgradering av boligen. Det trenger ikke være ditt første boligkjøp. Når du har begynt å bruke BSU-pengene eller har brutt vilkårene, kan du ikke sette inn mer."
+  },
+  {
+   "title": "Mer om renter og konto",
+   table:bsuRates,
+   "text": "Rentene kan ikke tas ut før sparepengene brukes til bolig. Renter som påløper fra og med året du fyller 34, kan likevel tas ut. Du kan bare opprette BSU-konto én gang, men kan flytte den ved direkte overføring mellom bankene."
+  }
+ ],
+ "sources": [{"id":"bsu-satser-2026","title":"Skatteetaten: Fradrag for boligsparing for ungdom (BSU), 2026","url":"https://www.skatteetaten.no/satser/fradrag-for-boligsparing-for-ungdom-bsu/?year=2026"},
+  {"id":"bsu-forskudd-2026","title":"Skatteetaten: Forskuddsutskrivingen 2026","url":"https://www.skatteetaten.no/rettskilder/type/uttalelser/uttalelser/forskuddsutskrivingen-2026/"},
+  {
+   "id": "tax-bsu",
+   "title": "Skatteetaten: Bustadsparing for ungdom (BSU)",
+   "url": "https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/"
+  },
+  {
+   "id": "ssb-bsu-historikk",
+   "title": "SSB: Renter på innskudd, tabell 11018. Husholdninger, januar 2018 til august 2026. Uttrekk 28. oktober 2026.",
+   "url": "https://www.ssb.no/statbank/table/11018?sq=30128709"
+  }
+ ],
+ "review": {"text": "Kildegrunnlag: Skatteetatens PDF med utskriftsdato 28. oktober 2026, uten oppgitt oppdateringsdato, supplert med Skatteetatens satsside for 2026, og SSB-uttrekk datert samme dag. Boligeierskap kontrollert av Claude 28. oktober 2026. Egenkontroll av ChatGPT/Codex. Neste kontroll før 1. januar 2027 og ved regelendringer; rentehistorikken kontrolleres ved nye SSB-tall."}
+,
+ words:[/\bbsu\b/,/boligsparing for ungdom/]},
 {"id":"q-ips-ask",
 "category":"pension",
 "title":"IPS eller ASK?",

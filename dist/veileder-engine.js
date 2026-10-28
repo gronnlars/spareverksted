@@ -146,7 +146,7 @@ function register(entry){
   if(entry.tradeoffs&&(!entry.tradeoffs?.pros?.length||!entry.tradeoffs?.cons?.length||[...entry.tradeoffs.pros,...entry.tradeoffs.cons].some(x=>!x.title||!x.text)))throw Error('Oversikten trenger kildebelagte fordeler og ulemper.');
   if(entry.tradeoffs&&entry.layout!=='overview')throw Error('Fordeler og ulemper trenger oversiktsmal.');
   if((entry.layout!=='overview'&&!entry.terms?.length)||(entry.terms||[]).some(x=>!x.term||!x.text))throw Error('En forklaring trenger begreper med forklaring.');
-  if(!entry.example?.title||!entry.example?.text)throw Error('En forklaring trenger et eksempel.');
+  if((entry.layout!=='overview'||entry.example)&&(!entry.example?.title||!entry.example?.text))throw Error('En forklaring trenger et eksempel.');
   if(!entry.parts?.length||entry.parts.some(x=>!x.title||!x.text))throw Error('En forklaring trenger fordypning.');
   if(entry.next&&(!entry.next.text||!entry.next.href))throw Error('Ufullstendig lenke videre.');
   if(entry.next?.more&&(!Array.isArray(entry.next.more)||entry.next.more.some(x=>!x.text||!x.href)))throw Error('Ufullstendig ekstra lenke videre.');

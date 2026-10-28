@@ -25,7 +25,7 @@ const entries=require('../dist/veileder-knowledge.js'),drafts=require('../resear
     assert.equal(await page.evaluate(()=>document.activeElement.id),'answerTitle');
     assert.equal(await page.locator('#contextPanel').isHidden(),true);
     assert.equal(await page.locator('#answer .answer-caveat').count(),entry.caveat?1:0);
-    if(entry.kind==='explainer'){assert.equal(await page.locator('#answer .explain-terms').isVisible(),false);assert.equal(await page.locator('#answer .explain-example').evaluate(x=>getComputedStyle(x).borderTopWidth),'0px');}
+    if(entry.kind==='explainer'){assert.equal(await page.locator('#answer .explain-terms').isVisible(),false);if(entry.example)assert.equal(await page.locator('#answer .explain-example').evaluate(x=>getComputedStyle(x).borderTopWidth),'0px');else assert.equal(await page.locator('#answer .explain-example').count(),0);}
     for(const summary of await page.locator('#answer .tradeoff>summary').all()){
      await summary.focus();await page.keyboard.press('Enter');assert.equal(await summary.evaluate(x=>x.parentElement.open),true);
     }
