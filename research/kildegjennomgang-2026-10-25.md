@@ -122,3 +122,15 @@ Utgitt av myndighetene, levert av Lars. GPTs lesedato: 28.10.2026. Utskriftsdato
 - Individuell sparing til pensjon: 2 sider, utskriftsfot 28.10.2026 kl. 15.41. SHA-256 `21eb4f718df39ec3ff97c2c577b8b94d657c92a43f626e1a41036ccdc5bc30c6`. Kilde G på nn-adressen i tabellen over. Begge sider lest, side 2 også sett visuelt.
 
 Ingen påstander som mangler i materialet, er markert som menneskelig kontrollert. Neste forespørsel til Lars er de to korte avsnittene om BSU-renter og avgrensningen til kapitalforsikring uten garantert avkastning. B sitt eget skjermingsavsnitt og C sitt regelår kan deretter bekreftes dersom de fortsatt brukes separat som dokumentasjon. E/F/I fra Claudes utvidete sjekkliste er ikke menneskelig kontrollert ved denne meldingen. Produktfunnene, A14 og godkjenning av rettingene står fortsatt åpne.
+
+
+## Supplerende skjermbilder fra Lars, 28.10.2026
+
+Lars har fulgt opp de to manglende avsnittene med skjermbilder fra skatteetaten.no. ChatGPT/Codex har lest den synlige teksten. Bildene er menneskelig innhentet ordlydsdokumentasjon, ikke en helhetlig faglig eller juridisk godkjenning. Tidspunktene 15.51 og 15.52 er synlige skjermklokker, ikke kildenes publiseringsdato.
+
+- Fondskonto, kilde B: skjermbildet viser uttrykkelig at reglene bare gjelder kapitalforsikringer uten garantert avkastning. Avsnittet foran avgrenser samtidig til lite forsikringselement. Den tidligere åpne ordlydskontrollen av garantiavgrensningen er dermed dokumentert av Lars.
+- BSU, kilde D: det åpne renteavsnittet sier at renter ikke brukes som del av årlig sparebeløp og ikke regnes med ved beregning av maksimalt sparebeløp. Det sier også at rentene ikke kan tas ut før sparebeløpet brukes til bolig, med unntak for renter som påløper fra og med inntektsåret man fyller 34. Den tidligere åpne ordlydskontrollen av renteregelen er dermed dokumentert av Lars. Unntaket gjelder påløpte renter fra det aktuelle året, ikke automatisk alle tidligere opptjente renter.
+
+Dette supplerer status i tabellen over: garantiavgrensningen i B og renteavsnittet i D mangler ikke lenger i Lars sitt materiale. Påstanden om at disse to utdragene fortsatt må hentes, er historisk og erstattet av dette avsnittet. B sitt eget skjermingsavsnitt og C sitt uttrykkelige regelår er fortsatt ikke dokumentert av Lars her. C sitt uttaksavsnitt er allerede levert i hans tidligere melding. Øvrige åpne kontrollpunkter og produktfunn er ikke lukket ved disse bildene.
+
+Ingen produkttekst, Nordnet-omtale eller tester er endret. Ingen sammenslåing eller publisering. Rettelsene i dokumentasjonen og resterende kontrollpunkter skal fortsatt gjennomgås før godkjenning.
