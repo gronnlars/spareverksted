@@ -238,3 +238,14 @@ Lars opplyser også at han har slått av et statistikkverktøy i cPanel. Hvilket
 - Nedlasting og utskrift inneholder alder hvis den er oppgitt. Står nå på personvernsiden.
 - Første kontroll på publisert nettsted (Lars, iPhone, 28.10.2026): Safari («Personvernrapport: Ingen kontaktede sporere») og Brave («0 annonser og andre ekle ting blokkert»). Verktøyene kjenner igjen sporingstjenester fra kjente lister. Det bekrefter at ingen kjente sporere ble funnet, ikke at all trafikk er kontrollert. Nettverkstrafikk og HTTP-hoder på publisert side er fortsatt ikke målt.
 - Personvernsiden: rettet «utskrifter», «Spareverksteds kode leser», «Jeg har ikke funnet opplysninger fra GitHub», og setningen om GitHub-logger under rettigheter (innspill fra GPT).
+
+### Kontrollogg for publisert nettsted
+
+| Dato | Kontroll | Metode | Resultat | Hva den ikke viser |
+|---|---|---|---|---|
+| 28.10.2026 | Sporing | Safari «Personvernrapport» og Brave-skjold på iPhone (Lars) | Ingen kontaktede sporere, 0 blokkert | Bare kjente sporere fra verktøyenes lister. Ikke en full måling av nettverkstrafikk |
+| 28.10.2026 | Mellomledd | DNS A-oppslag via dns.google (Lars) | Bare GitHub Pages (185.199.108–111.153) | IPv6 (AAAA) og `www` ikke sjekket. Svaret gjelder oppsettet på kontrolldagen |
+| 28.10.2026 | Kryptering | Sertifikat i Safari og Chrome (Lars) | Gyldig, Let's Encrypt, kjede ISRG Root X1 → YR2, gyldig til 22.01.2027 | Sier ikke hvem som leverer sidene |
+| 27.10.2026 | E-post | Gmail «Vis original» (Lars) | SPF, DKIM og DMARC `PASS` | Gjelder én melding fra personvern-adressen |
+
+Personvernsiden omtaler kontrollene med dato og «da jeg sjekket», ikke som varige garantier. Fortsatt uavklart og ikke besvart av disse kontrollene: GitHubs logglagring, ansvarsfordelingen mellom Lars og leverandørene, og oppbevaring av e-post hos Domene.no, MailChannels og Google.
