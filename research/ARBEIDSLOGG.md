@@ -7,9 +7,7 @@ Felles overlevering for ChatGPT/Codex og Claude. Tid oppgis i Europe/Oslo.
 | ID-er | Aktør | Start | Utløp | Gren/PR |
 | --- | --- | --- | --- | --- |
 
-| SV-133, SV-087, SV-090 (eksisterende BSU/IPS-svar) | ChatGPT/Codex | 28.10.2026 kl. 13.13 | 28.10.2026 kl. 17.13 | docs/kildegjennomgang / #72 |
-
-Ingen andre aktive reservasjoner fra denne økten. SV-035 og SV-017 avsluttet ved leveranse i PR #64.
+Ingen aktive reservasjoner fra denne økten. SV-035 og SV-017 avsluttet ved leveranse i PR #64.
 
 Les gren/PR før en utløpt reservasjon overtas. ASK er allerede forklart på main gjennom #61; #53 er lukket og erstattet. Ingen konkurrerende researchreservasjon funnet i main eller siste logg på docs/sporsmalsko-og-nattarbeid.
 
@@ -84,3 +82,12 @@ Viderefører PR #72 og bevarer tidligere rapport. [Ny delkontroll](svarutkast/KO
 Køen oppdatert for disse to ID-ene. Ingen ny permanent kø, nye temaer eller produktendringer. Eksisterende privat samling av ni begrepsutkast funnet og lest som arbeidsgrunnlag, ikke nygodkjent eller overskrevet. Samlet fagkontroll av den gjenstår. Aktive avvik gjennomgått. Full K7-runde etter statsbudsjettet er ikke dokumentert i de leste loggene. Ingen utløp innen to uker funnet blant datofestede aktive avvik.
 
 Neste del: q-bsu-basics og q-ips-ask med 2026-regler og eksisterende tilpasning. Hele gjennomgangen er ikke ferdig. Kontroll av en annen enn skribenten, faktisk visning, tilgjengelighet og brukerforståelse gjenstår. Ingen program- eller nettlesertestfiler endret. Kun dokumentasjon på kontrollgrenen, ingen sammenslåing til main eller publisering.
+
+
+### BSU og IPS, kildekontroll 28. oktober 2026
+
+ChatGPT/Codex. Start kl. 13.13 Europe/Oslo. Lest main `00d8f1536802b69eebf05a1034f388bd87550d9f`. Lars ba uttrykkelig om videreføring. Reservasjon ble lagret og kontrollert på fjernversjonen før research, og er avsluttet ved denne leveransen. PR #72 videreføres.
+
+SV-133 og SV-087/SV-090: [kontrollnotat](svarutkast/KONTROLL-BSU-IPS-2026-10-28.md). Skatteetatens relevante norske avsnitt faktisk lest 28.10.2026. Kontrollerte 2026-grenser samsvarer. 2027-forslaget er holdt atskilt. Dokumentert manglende svar om oppussing ved direkte BSU-treff, manglende støtte for sparevaneeffekt og eksisterende profiltilpasning som også bytter alternativkort. Åtte søk og 14 systematiske korttilfeller kjørt i Node, i tillegg utforskende profiler. Regnekontroll 2 750 kr. Egenkontroll, ikke uavhengig fagkontroll eller juridisk vurdering.
+
+Bare dokumentasjon i egen gren. Ingen produktkode, tester, sammenslåing eller publisering. Ingen faktisk live-, nettleser-, mobil- eller skjermleserkontroll i denne deløkten. Neste: fullfør kontroll av arvede råd og resten av eksisterende svar. K7-runden og uavhengig kontroll gjenstår. Ingen ny reservasjon aktiv.
