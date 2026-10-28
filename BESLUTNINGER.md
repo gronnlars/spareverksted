@@ -679,3 +679,22 @@ D. «Les opp»-knapp. Ikke valgt nå: ny funksjon som venter til oppstart. Modul
 - Chartability (Elavsky m.fl., EuroVis 2022), en fagfellevurdert sjekkliste for tilgjengelige grafer: testlisten er gått gjennom samme dag fra en PDF Lars la ved. Resultat og forslag står i `research/chartability-sparegraf.md`. Selve artikkelen er ikke lest.
 
 **Ikke kontrollert:** Hvordan VoiceOver og andre skjermlesere faktisk leser teksten. Bør prøves av testeren som fant feilen.
+
+## Gyldig HTML etter W3C-validatoren (28. oktober 2026)
+
+**Status:** Lars kjørte W3C Nu HTML Checker 28.10.2026. Bare forsiden fikk merknader. Retting av UU-feil og kodefeil etter `docs/regulatorisk.md`, krav 6. Endrer ikke beregningene.
+
+**Funn og retting:**
+1. `div` inne i `label` (12 feil). Feltboksen er nå `span` med `display:block`, i HTML og i feltene som lages med JavaScript. Utseendet skal være uendret.
+2. `label` med både avkrysningsboks og hjelpeknapp (2 feil). Hjelpeknappen står nå ved siden av `label`, i en felles rad. En `label` skal bare peke på ett skjemaelement.
+3. `aria-label` på grafens `div` uten rolle (1 feil). Grafen har nå `role="group"`. Det samme punktet ble funnet i Chartability-gjennomgangen.
+4. `aria-label` på temaknappenes `div` uten rolle på «Spør om sparing» (1 feil, funnet av Lars samme dag). Har nå `role="group"`.
+
+**Ikke rettet:** Advarslene om `section` uten overskrift og tomme overskrifter. Overskriftene fylles av JavaScript, og seksjonene har navn via `aria-labelledby` eller er skjult. Validatoren ser bare HTML-en før JavaScript kjører.
+
+**Funnet i koden, ikke av validatoren:** Glidebryteren og hjelpeknappene som lages med JavaScript, legges inne i samme `label` som tallfeltet. Da har én `label` flere skjemaelementer, og glidebryteren kan få samme navn som tallfeltet. Det krever en større omlegging av feltene og testene og er ikke gjort her. Bør tas som egen oppgave.
+
+**Alternativer for punkt 2:** A. Knappen utenfor `label`, i en felles rad. **Valgt.** B. Beholde knappen i `label` og skjule den for skjermleser. Ikke valgt: knappen må kunne brukes med skjermleser.
+
+**Ikke kontrollert:** Utseendet er ikke sett på skjerm. Testene i GitHub tar skjermbilder.
+
