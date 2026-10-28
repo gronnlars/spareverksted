@@ -31,3 +31,6 @@
 .kontakt-resultat{margin-top:12px}
 .kontakt-resultat p{margin:0 0 12px;font-size:18px;overflow-wrap:anywhere}
 .kontakt-status:empty{display:none}
+
+/* Logg over tester på tilgjengelighetssiden: trykkflate minst 24 px. */
+.check-log summary{padding-top:4px;padding-bottom:4px;margin:6px 0}.check-log ul{margin-top:10px}

@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="theme.css?v=2">
 <link rel="stylesheet" href="layout.css?v=7"><script defer src="layout.js?v=5"></script>
 <link rel="stylesheet" href="navigation.css?v=3">
-<link rel="stylesheet" href="om.css?v=5">
+<link rel="stylesheet" href="om.css?v=6">
 <script defer src="kontakt.js?v=1"></script>
 <link rel="canonical" href="https://spareverksted.no/tilgjengelighet.html">
 <meta property="og:type" content="website">
@@ -71,12 +71,24 @@
 
 <section class="giving-section" aria-labelledby="a11yChecked">
 <h2 id="a11yChecked">Slik har jeg kontrollert</h2>
+<p>Siden testes automatisk hver gang den endres, og jeg har gjort noen tester for hånd. Flere av feilene som er funnet, er rettet. Kjente begrensninger er beskrevet nedenfor. Det er for få tester med brukere til å si at siden fungerer godt for alle, og ingenting her er en godkjenning.</p>
+<details class="check-log"><summary>Se hva som er testet og rettet</summary>
 <ul>
 <li><strong>Automatiske tester</strong> kjører hver gang siden endres. De sjekker kontrast, trykkflater, tastatur, fokus og forstørring i tre fargetemaer og ved flere skjermbredder, i nettleseren Chromium. Noen brukerflyter testes også i Firefox og WebKit, motoren bak Safari.</li>
 <li><strong>En manuell gjennomgang</strong> 23. oktober 2026 av kalkulatoren, veilederen og Om-siden i tre temaer og tre skjermbredder.</li>
 <li><strong>En første test på iPhone</strong> 27. oktober 2026, gjort av meg. Jeg er ikke vant til slike hjelpemidler, men knappene på personvernsiden virket, VoiceOver leste opp riktig, og forstørring fungerte.</li>
+<li><strong>En test med skjermleser</strong> 28. oktober 2026, gjort av en som kjenner hjelpemidlene og kravene. Det meste virket, og forstørringen fikk ros. Grafene ble ikke beskrevet i ord. Beskrivelser av grafene ble lagt til samme dag. De er ennå ikke kontrollert på nytt med skjermleser.</li>
+<li><strong>Kontroll av koden</strong> med <a href="https://validator.w3.org/">W3Cs validator</a> 28. oktober 2026. Den fant 16 feil på forsiden og på «Spør om sparing». De er rettet, og nå finner den ingen feil på noen av de fem sidene. Den gir noen advarsler om overskrifter som fylles inn mens du bruker siden. Validatoren sjekker bare koden slik siden lastes inn, ikke det som skjer når du regner. Du kan kjøre den samme kontrollen selv:
+<ul>
+<li><a href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fspareverksted.no%2F">Kontroller forsiden med W3Cs validator</a></li>
+<li><a href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fspareverksted.no%2Fspor.html">Kontroller «Spør om sparing» med W3Cs validator</a></li>
+<li><a href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fspareverksted.no%2Fom.html">Kontroller Om-siden med W3Cs validator</a></li>
+<li><a href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fspareverksted.no%2Fpersonvern.html">Kontroller personvernsiden med W3Cs validator</a></li>
+<li><a href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fspareverksted.no%2Ftilgjengelighet.html">Kontroller denne siden med W3Cs validator</a></li>
+</ul></li>
 </ul>
-<p>Resultatet er «ingen avvik funnet i de kontrollene jeg har gjort». Det er ikke det samme som at siden er godkjent. Koden og testene ligger åpent på <a href="https://github.com/gronnlars/spareverksted">GitHub</a>, så du kan se hva som faktisk er sjekket.</p>
+</details>
+<p>Koden og testene ligger åpent på <a href="https://github.com/gronnlars/spareverksted">GitHub</a>, så du kan se hva som faktisk er sjekket.</p>
 </section>
 
 <section class="giving-section" aria-labelledby="a11yNot">
@@ -84,10 +96,10 @@
 <ul>
 <li>Hele kalkulatoren og veilederen med VoiceOver, og skjermleseren NVDA på PC.</li>
 <li>Alle sider i Safari på iPhone og i Firefox.</li>
-<li>Bruk av personer som selv er avhengige av hjelpemidler.</li>
+<li>Tester med flere brukere som selv er avhengige av hjelpemidler. Én test er gjort, og det er ikke nok.</li>
 <li>De delene av WCAG som ikke kan testes automatisk.</li>
 </ul>
-<p>Meldingen som vises når du åpner en delt lenke med ugyldige verdier, forsvinner av seg selv etter en stund. Jeg har ikke vurdert om det er et problem for deg som trenger mer tid.</p>
+<p>Meldingen som vises når du åpner en delt lenke med ugyldige verdier, forsvinner av seg selv etter en stund. Det samme gjør meldingen når lagring eller deling stoppes fordi et felt er feil. Jeg har ikke vurdert om det er et problem for deg som trenger mer tid.</p>
 </section>
 
 <section class="giving-section" aria-labelledby="a11yWaiting">
