@@ -74,6 +74,27 @@ Lars har besluttet at pausen og kalkulatorfrysen ikke gjelder forklaringer av n�
 
 Unntaket er Lars' egen vurdering, ikke en avklaring fra Finanstilsynet. Lars vurderer å orientere Finanstilsynet om det.
 
+## Områder pausen ikke gjelder (vedtatt 28. oktober 2026)
+
+Lars har besluttet at pausen ikke gjelder forbedringer innen disse områdene:
+
+1. **Kilderegler og kildekontroll**, også retting av kilder og påstander i publisert innhold.
+2. **Universell utforming**, for eksempel beskrivelse av grafer i tekst. Kalkulatorfrysen tillater allerede å rette UU-feil.
+3. **Generelle spørsmål**, det vil si forhåndsskrevne svar som er like for alle brukere.
+4. **Personvern.**
+5. **Opplagte brudd på lover og regler** som må tettes.
+6. **Nøytrale begrepsforklaringer**, med kravene i avsnittet over.
+
+Dette gjelder fortsatt også innenfor områdene:
+
+- Sperrene over står: ingen kontekstuell spørsmålsveiledning før Lars åpner den, ingen produktanbefalinger eller «best egnet for deg», og kildekontroll før nye råd.
+- Generelle svar tilpasses ikke etter alder, sparehorisont, sparemål eller andre opplysninger brukeren har fylt inn.
+- Omtalen av Nordnet og Investeringskonto Zero står urørt.
+- Ny funksjonalitet utenfor områdene, som nye kalkulatorfunksjoner, lånekalkulator og endringer i brukergrensesnittet som ikke er UU-retting, venter til oppstart.
+- Hver endring går i egen PR og slås sammen bare etter Lars' godkjenning.
+
+Er det tvil om en endring hører til et av områdene, avgjør Lars.
+
 ## Vilkår for oppstart
 
 1. Finanstilsynets svar og veiledning er mottatt.

@@ -12,6 +12,7 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | --- | --- | --- | --- | --- | --- |
 | Varsel om sparehorisont for Indeksfond under 5 år på kalkulatorsiden (PR #67) | Kalkulatorfrysen (plan, punkt 0) | Lars ved sammenslåing | 31.01.2027 | Lars | Foreslått. Aktivt først når #67 er slått sammen |
 | Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en med unntaket er slått sammen |
+| Forbedringer i kilderegler, UU, generelle spørsmål, personvern og opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en er slått sammen |
 
 ## En ulempe betyr ikke at valget var feil
 
@@ -560,3 +561,22 @@ G. Opplesning med `role="status"` når forklaringen åpnes, slik Pearson anbefal
 **Tilgjengelighetssiden:** Teksten om valget legges inn først når funksjonen publiseres. Utkastet står i `research/universell-utforming.md`, punkt 6.
 
 **Vurder på nytt når:** prøvingen viser problemer, eller Uu-tilsynet eller eksterne testere gir råd om noe annet.
+
+## Områder pausen ikke gjelder (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026, samme dag som unntaket for begrepsforklaringer. Grensene står i `docs/regulatorisk.md`, «Områder pausen ikke gjelder».
+
+**Beslutning:** Pausen gjelder ikke forbedringer i kilderegler og kildekontroll, universell utforming, generelle spørsmål, personvern og retting av opplagte brudd på lover og regler. Sperrene for kontekstuell veiledning og produktanbefalinger står, og ny funksjonalitet utenfor områdene venter til oppstart.
+
+**Bakgrunn:** Første eksterne skjermlesertest 28.10.2026 viste at grafen ikke beskrives i ord. Det er en UU-feil (WCAG 1.1.1). Kalkulatorfrysen tillot allerede å rette UU-feil, men pausen stoppet det. Lars vurderer at forbedringer som gjør siden riktigere, tryggere og mer tilgjengelig ikke bør vente på Finanstilsynet.
+
+**Tolkning, skrevet av Claude og ikke eksplisitt bekreftet:** «Generelle spørsmål» er forstått som forhåndsskrevne svar som er like for alle brukere, uten tilpasning etter brukerens opplysninger og uten produktanbefalinger. Det er det Finanstilsynets artikkel ikke omtaler som personlig rådgivning.
+
+**Alternativer:**
+A. Åpne for disse områdene, med sperrene intakte. **Valgt.**
+B. Ett og ett unntak etter behov, som for begrepsforklaringene. Ikke valgt: gir mange små vedtak for samme type arbeid.
+C. Oppheve pausen helt. Ikke valgt: spørsmålet om tilpasning etter alder og sparehorisont er fortsatt ubesvart.
+
+**Akseptert ulempe:** Grensen for «generelle spørsmål» og «opplagt lovbrudd» krever skjønn. Ved tvil avgjør Lars.
+
+**Vurder på nytt når:** Finanstilsynet svarer, eller et generelt svar viser seg å bli lest som en personlig anbefaling.

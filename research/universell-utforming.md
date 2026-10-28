@@ -48,6 +48,7 @@ En ny side eller funksjon er ikke ferdig før punktene under er oppfylt og kontr
 | Revisjon 23.10 | Manuelt i Chromium | 27 kombinasjoner (tre temaer × 320, 375, 1280 px × tre sider). Rettet: trykkflater, fokus som ble stående i lukket dialog | |
 | iPhone Safari, VoiceOver | Lars | Se `research/plan.md`, punkt 3 | NVDA, Firefox med bare tekstforstørring |
 | iPhone Safari, VoiceOver og zoom, personvernsiden | Lars, 27.10.2026 | Knappene «Vis e-postadresse» og «Slett» virket, VoiceOver leste riktig, zoom fungerte. Lars er ny bruker av hjelpemidlene | Kalkulator og veileder med VoiceOver, NVDA |
+| Ekstern tester med skjermleser, uformell | Publisert side, 28.10.2026, rapportert til Lars i melding | Det meste virket med skjermleser, zoomen fikk ros. **Feil:** grafen beskrives ikke i ord, bare sluttbeløp og akser. Ønske: opplesingsknapp. Testerens navn lagres ikke her | Hvilken enhet, nettleser og skjermleser. Om tabellvisningen ble funnet |
 
 Testene beskytter det som er kontrollert. De beviser ikke at folk forstår innholdet.
 
