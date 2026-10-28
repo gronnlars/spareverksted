@@ -26,7 +26,7 @@ const SET=[
  // Forklaringen «Hva er kjøpekraft?» svarer best. Sparekonto-svaret har bare én setning om temaet og godtas som alternativ.
  {q:'Hvorfor blir pengene mindre verdt på sparekontoen?',expect:'q-kjopekraft',also:['funds'],proof:/Kjøpekraft er hvor mye du kan kjøpe for pengene|Renten etter skatt kan være lavere enn prisveksten/},
  {q:'Hva er BSU?',expect:'q-bsu-basics',proof:/boligsparing for ungdom/},
- {q:'Får jeg BSU-fradrag hvis jeg allerede eier leilighet?',expect:'q-bsu-basics',also:['bsu'],proof:/ikke eie egen bolig 31\. desember|Eier du bolig ved årets slutt|ikke eier bolig ved årets slutt|Eier du bolig 31\. desember, helt eller delvis, får du ikke fradrag/},
+ {q:'Får jeg BSU-fradrag hvis jeg allerede eier leilighet?',expect:'q-bsu-basics',also:['bsu'],proof:/Eier du bolig 31\. desember, alene eller sammen med andre|ikke eie egen bolig 31\. desember|Eier du bolig ved årets slutt|ikke eier bolig ved årets slutt|Eier du bolig 31\. desember, helt eller delvis, får du ikke fradrag/},
  {q:'Vi skal kjøpe leilighet om to år, hvordan bør vi spare egenkapitalen?',expect:'bsu',also:['funds'],proof:/uegnet nær boligkjøp|tilgjengelige til en fast, nær dato/},
  {q:'Bør jeg spare i mitt eller barnets navn?',expect:'children',proof:/I barnets navn gir du pengene fra deg/},
  {q:'Vil spare til barnebarnet mitt, hva bør jeg tenke på?',expect:'children',proof:/Eierskapet betyr minst like mye/},

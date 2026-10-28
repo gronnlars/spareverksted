@@ -763,3 +763,7 @@ C. Beholde Nordnet bare i kildelisten. Ikke valgt: setningene som bygde på kild
 ### BSU-utkast fra kildekontroll i samtale, 28.10.2026
 
 Lars godkjente teksten i samtalen og bestilte integrasjon i GitHub med kilder. Valgt: q-bsu-basics i nøytral oversiktsmal med PDF-grunnlag og datert SSB-historikk. Alternativene var å beholde #100s tidligere ordlyd eller lage en konkurrerende main-PR. Endringen bygger i stedet på #100 og har den grenen som base. Ingen sammenslåing eller publisering inngår. Eksempel er valgfritt i oversiktsmalen, fordi et tvunget eksempel her gjentar fradragsbeløpet. Åpent før publisering: presisering av indirekte boligeierskap, uttrykkelig regelår og uavhengig fagkontroll. Se research/svarutkast/BSU-KILDEKONTROLL-2026-10-28.md.
+
+### BSU-årstabell og boligvilkår, 28.10.2026
+
+Lars bestilte tre konkrete endringer i PR #101: boligvilkåret «alene eller sammen med andre» med Skatteetatens satsside, ny rentefordel og en ekte HTML-tabell i fordypningen. Årssnitt fra Claudes vedlagte CSV kontrollregnes mot den eksisterende månedsfilen. Valgt to rentekolonner, BSU og bundne innskudd, for en ryddig mobilvisning. Alternativ med ikke-bundne innskudd vises ikke, men tallene bevares i årsfilen. Tallene genereres fra datafil, ikke fra håndskrevet tekst. 2026 er et delår og må oppdateres før 01.01.2027. Ingen sammenslåing eller publisering bestilt.
