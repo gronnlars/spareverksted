@@ -60,6 +60,20 @@ Disse oppheves ikke av at pausen avsluttes:
 2. **Ingen produktanbefalinger** og ingen «best egnet for deg». Ingen anbefaling av bestemte fond, aksjer eller tilbydere. Omtale av produkter og tilbydere skal bare forklare begreper og kontotyper.
 3. **Kildekontrollen må være fullført** før nye råd legges ut.
 
+## Unntak fra pausen: nøytrale begrepsforklaringer (vedtatt 28. oktober 2026 kl. 10.09)
+
+Lars har besluttet at pausen og kalkulatorfrysen ikke gjelder forklaringer av nøytrale begreper som oppfyller alle kravene under. Alt annet står på vent som før. Begrunnelse og forkastede alternativer står i [BESLUTNINGER.md](../BESLUTNINGER.md).
+
+1. **Bare betydning.** Teksten forklarer hva begrepet betyr, uten å anbefale handling, rangere alternativer eller trekke slutninger om brukeren. Ord som «bør», «lønner seg», «tryggere» og «bedre» er en varselliste, ikke selve kontrollen. Hele teksten vurderes.
+2. **Ingen navn.** Ingen produkt- eller tilbydernavn. Omtalen av Nordnet og Investeringskonto Zero står urørt, se under.
+3. **Ingen tilpasning** etter brukerens opplysninger.
+4. **Første runde uten regler og satser.** Bare begreper som ikke hviler på regelverk eller satser, for eksempel indeks, prisvekst, kjøpekraft og renters rente. Begreper som ASK, BSU og skjermingsfradrag venter til kildekontrollen er fullført.
+5. **Vanlig kontroll.** Kilde etter [KILDEREGLER.md](../KILDEREGLER.md), språk etter [SPRAKREGLER.md](../SPRAKREGLER.md) og kontroll av en annen enn skribenten.
+6. **Innhold, ikke ny funksjonalitet.** Unntaket gjelder forklaringer i veilederens eksisterende oppbygning. Forklaring der ordet står i teksten og en egen ordlisteside er ny funksjonalitet og venter til etter oppstart. Standarden for den er likevel fastsatt i [research/universell-utforming.md](../research/universell-utforming.md), punkt 6.
+7. **Egen PR og godkjenning.** Hver forklaring eller gruppe av forklaringer går i egen PR og slås sammen bare etter Lars' godkjenning.
+
+Unntaket er Lars' egen vurdering, ikke en avklaring fra Finanstilsynet. Lars vurderer å orientere Finanstilsynet om det.
+
 ## Vilkår for oppstart
 
 1. Finanstilsynets svar og veiledning er mottatt.

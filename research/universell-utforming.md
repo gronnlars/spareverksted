@@ -37,6 +37,7 @@ En ny side eller funksjon er ikke ferdig før punktene under er oppfylt og kontr
 - **Utfallsbåndet har stiplede kantlinjer** med minst 3:1 mot bakgrunn og fyll. Fyllflaten alene ga 1,22:1 i lyse temaer.
 - **Usikkerhet framstilles som scenario eller modell, ikke som sannsynlighet**, når grunnlaget mangler. Bygger på Spiegelhalter m.fl.
 - **Eksempeltall og standardforutsetninger forklares i én kort tekst over feltene**, ikke med merke ved hvert felt.
+- **Fagord forklares der de står, uten sprettoppvindu.** Valgt 28.10.2026, ikke bygget. Se punkt 6.
 
 ## 3. Kontroller som er gjennomført
 
@@ -64,3 +65,47 @@ Testene beskytter det som er kontrollert. De beviser ikke at folk forstår innho
 - `dist/tilgjengelighet.html` er oppdatert fra utkastet i PR #75 (25.10.2026): ny seksjon «Valg vi har tatt» (fra punkt 2 over), «Svar vi venter på» (Uu-tilsynet, sendt 25.10.2026, registreringsbekreftelse, ikke svar), kontakt via e-post (`post`) i tillegg til GitHub, og Lars' første iPhone-test. Lenket fra Om-siden og bunnteksten der.
 - Påstanden om at forskriften er «strengere/mindre streng» for private er fjernet. Siden sier bare at vi ikke vet om forskriften gjelder, og at vi følger WCAG 2.2 AA uansett.
 - Funn: tabellen på personvernsiden måtte rulles sidelengs på mobil (rettet i #78), men `a11y-browser.cjs` fanget det ikke, fordi reflow-kontrollen bare målte hele siden. Ny kontroll flagger bokser med `overflow-x:auto|scroll` som har innhold bredere enn boksen. Talltabellene `#tableWrap`, `.withdraw-table`, `#comparison` og `.report-comparison` er unntatt, siden WCAG 1.4.10 tillater todimensjonal rulling for datatabeller. Kontrollert at testen feiler med den gamle feilen og består med rettingen.
+
+## 6. Fagord forklart der de står (28. oktober 2026)
+
+**Status:** Valgt standard etter undersøkelse 28.10.2026, på oppdrag fra Lars. Ikke bygget. Mønsteret regnes som endelig først når prøvingen under er gjort. Begrunnelse og forkastede alternativer: [BESLUTNINGER.md](../BESLUTNINGER.md), «Standard for fagord forklart der de står».
+
+### Mønster
+
+- **Knapp i teksten.** Fagordet er en `<button type="button">` med ordet som navn. Prikket understrek, slik at farge ikke er eneste kjennetegn. Ser annerledes ut enn lenker. Synlig fokus i alle tre temaer.
+- **Tilstand.** `aria-expanded="false"` eller `"true"`, og `aria-controls` mot forklaringen.
+- **Forklaringen står i teksten.** Den er en `<span>` rett etter knappen, vist som egen blokk når den er åpen. Den skyver resten av teksten ned og dekker ikke noe. `<span>` fordi den må kunne stå inne i et avsnitt.
+- **Åpne og lukke.** Trykk, Enter eller mellomrom åpner og lukker. Escape lukker når fokus er på knappen. Fokus flyttes ikke.
+- **Ingen opplesning med `aria-live`.** Forklaringen står rett etter knappen i lesrekkefølgen, i tråd med punkt 1 om sparsom opplesning.
+- **Ingen hover og ingen `title`.** Forklaringen vises aldri bare fordi musepekeren eller fokus er på ordet.
+- **Flere kan være åpne.** Én forklaring lukkes ikke fordi en annen åpnes.
+- **Uten JavaScript** er ordet en lenke til ordlisten.
+- **Bevegelse.** Ingen animasjon, og i alle fall ingen ved `prefers-reduced-motion`.
+- **Trykkflate.** Hele ordet er trykkflaten. Knapper i løpende tekst er unntatt minstekravet i 2.5.8, men linjeavstanden skal gi minst 24 px høyde. 44 px høyde er ikke realistisk inne i et avsnitt uten å endre linjeavstanden for all tekst.
+- **Hvor ofte.** Første gang ordet står i hvert avsnitt eller innholdsseksjon. I Enkel markeres alle fagord, i Avansert bare de minst kjente eller med svakere markering. Forklaringen finnes i alle nivåer.
+- **Tekst.** Den korte forklaringen hentes fra begrepsregisteret, slik at ordlisten og forklaringen i teksten bygger på samme definisjon.
+
+### Prøving før mønsteret regnes som endelig
+
+- Tastatur i Chromium, Firefox og WebKit.
+- VoiceOver på iPhone (Lars). NVDA på Windows og TalkBack hvis eksterne testere kan.
+- Zoom 200 % og 400 % (320 px bredde), og tekstforstørring.
+- Smal og bred mobil.
+- Hovedspørsmålet: finner en skjermleserbruker forklaringen uten hjelp, og forstår hen at ordet kan trykkes på?
+- `tests/a11y-browser.cjs` utvides med knappenavn, `aria-expanded`, kontrast for understrek og fokus, og at ingen forklaring dekker annet innhold.
+
+Viser VoiceOver-testen at forklaringen ikke blir funnet, vurderes alternativ G i beslutningsloggen (opplesning når den åpnes).
+
+### Tekst til tilgjengelighetssiden
+
+Utkast. Legges inn under «Valg jeg har tatt» i `dist/tilgjengelighet.html` i samme PR som funksjonen, ikke før. Siden skal bare beskrive det som er bygget og kontrollert.
+
+> **Fagord forklares der de står, uten sprettoppvindu.** Trykker du på et ord med prikket understrek, kommer forklaringen rett under ordet og skyver teksten ned. Den dekker ikke annet innhold, og den virker likt med mus, tastatur, berøring og skjermleser. Jeg valgte bort små vinduer som dukker opp når du holder musepekeren over et ord. De virker ikke på mobil og dekker lett teksten når siden er forstørret.
+
+### Kilder, lest 28.10.2026
+
+- [W3C: Understanding SC 1.4.13 Content on Hover or Focus](https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus) (oppdatert 12.07.2026). Innhold som vises ved hover eller fokus må kunne lukkes, holdes over og bli stående. Sier at det vanligvis finnes mer forutsigbare og tilgjengelige måter å legge til innhold på.
+- [Pearson Accessibility: Tooltips and Toggletips](https://accessibility.pearson.com/resources/component-library/tooltips-and-toggletips). Skiller verktøytips (hover og fokus) fra toggletips (åpnes ved aktivering). Knapp som utløser, fokus blir på knappen, innholdet skal ikke blokkere innhold rundt.
+- [U.S. Web Design System: Tooltip](https://designsystem.digital.gov/components/tooltip/) (publisert 20.10.2026). Ikke skjul nødvendig informasjon i verktøytips. Vis innholdet på siden når det er plass.
+- Inspirasjon: NRK sine ordforklaringer (skjermbilde fra Lars 28.10.2026). Åpnes ved trykk, men som flytende boks som dekker teksten under.
+- Ikke nylest i denne økten: HTML-spesifikasjonen om at `<details>` ikke kan stå inne i et avsnitt, og unntaket for knapper i løpende tekst i [WCAG 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html). Kontrolleres før funksjonen bygges.

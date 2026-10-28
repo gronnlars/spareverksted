@@ -11,6 +11,7 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | Hva | Regel | Godkjent av | Utløper | Fornyes av | Status |
 | --- | --- | --- | --- | --- | --- |
 | Varsel om sparehorisont for Indeksfond under 5 år på kalkulatorsiden (PR #67) | Kalkulatorfrysen (plan, punkt 0) | Lars ved sammenslåing | 31.01.2027 | Lars | Foreslått. Aktivt først når #67 er slått sammen |
+| Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en med unntaket er slått sammen |
 
 ## En ulempe betyr ikke at valget var feil
 
@@ -519,3 +520,43 @@ H. «Primærkilden når den finnes og er tilgjengelig.» Ikke valgt: kan leses s
 **Ikke gjort her:** Den brutte henvisningen øverst i KILDEREGLER.md til oppføringene «Kildenivå for påstander og råd» og «Sparehorisont og Forbrukerrådets anbefaling». De finnes bare på de usammenslåtte grenene `docs/maaneder-og-kildenivaa` og `feature/sparehorisont-varsel`. Håndteres i egen PR.
 
 **Vurder på nytt når:** en kilde faller mellom to nivåer, eller samme avvik oppstår to ganger.
+
+## Unntak fra pausen for nøytrale begrepsforklaringer (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026 kl. 10.09. Kravene står i `docs/regulatorisk.md`, «Unntak fra pausen: nøytrale begrepsforklaringer». Aktivt når PR-en med unntaket er slått sammen.
+
+**Beslutning:** Forklaringer av nøytrale begreper kan publiseres under pausen og uten hensyn til kalkulatorfrysen, når de bare forklarer betydning, ikke nevner produkter eller tilbydere, ikke tilpasses brukeren og følger kilde- og språkreglene. Første runde gjelder begreper som ikke hviler på regler eller satser.
+
+**Bakgrunn:** Veikartet (28.10.2026, trinn 3.0) krever at alle fagord på siden skal kunne slås opp. I dag er 18 begreper forklart, spredt inne i enkeltsvar. Finanstilsynets artikkel lest 27.10.2026 gjelder personlige råd om hva man bør kjøpe, selge eller beholde. At en forklaring av hva et begrep betyr faller utenfor, er Claudes og Lars' vurdering, ikke en juridisk avklaring. Forslaget er bearbeidet mellom Lars, Claude og GPT.
+
+**Alternativer:**
+A. Unntak for nøytrale begreper med kontrollerbare krav. **Valgt.**
+B. Vente på Finanstilsynet med alt. Ikke valgt: lav risiko, stor nytte og ukjent ventetid.
+C. Unntak for alt innhold i veilederen. Ikke valgt: svar om valg mellom alternativer er nettopp det Finanstilsynet er spurt om.
+D. Unntaket omfatter også ny funksjonalitet (forklaring der ordet står, ordlisteside). Ikke valgt nå: ny kode krever egen test og prøving med hjelpemidler. Standarden fastsettes nå (oppføringen under), bygging venter til oppstart.
+E. Kontroll bare med en liste over forbudte ord. Ikke valgt: en tekst kan styre valg uten de ordene (påpekt av GPT 28.10.2026). Listen er et varsel, hele teksten vurderes.
+
+**Akseptert ulempe:** «Nøytral» er en vurdering. Kontrollen er egenkontroll pluss kontroll av en annen enn skribenten, ingen juridisk kontroll.
+
+**Vurder på nytt når:** Finanstilsynet svarer, eller en forklaring viser seg å bli lest som en anbefaling.
+
+## Standard for fagord forklart der de står (28. oktober 2026)
+
+**Status:** Lars ba 28.10.2026 om at det beste mønsteret for universell utforming undersøkes og legges inn som standarden. Valgt etter undersøkelse samme dag. Ikke bygget. Mønsteret regnes som endelig først etter prøvingen i `research/universell-utforming.md`, punkt 6, der også mønsteret og kildene står.
+
+**Beslutning:** Fagordet er en knapp i teksten med prikket understrek. Trykk åpner forklaringen i teksten rett etter ordet, slik at resten av teksten skyves ned. Ingenting dekkes, ingenting vises ved hover, og fokus flyttes ikke. Gjelder alle nivåer, med sterkere markering i Enkel.
+
+**Alternativer:**
+A. Knapp som åpner forklaringen i teksten rett etter ordet. **Valgt.** Virker likt med mus, tastatur, berøring og skjermleser, og dekker ikke innhold ved zoom.
+B. Verktøytips ved musepeker eller fokus. Ikke valgt: virker ikke med berøring, må oppfylle tre krav i WCAG 1.4.13, og W3C viser til at det vanligvis finnes mer forutsigbare løsninger.
+C. Flytende boks som åpnes ved trykk (som NRK). Ikke valgt: dekker teksten under, og kan havne delvis utenfor skjermen ved 400 % zoom (WCAG 1.4.10). Var utgangspunktet Lars viste fram.
+D. `<details>` og `<summary>`. Ikke valgt: kan ikke stå inne i en setning.
+E. `title`-attributtet. Ikke valgt: virker ikke med berøring, og vises ikke ved tastaturfokus i vanlige nettlesere.
+F. Lenke til ordlisten. Ikke valgt som hovedløsning: brukeren må forlate teksten. Brukes som reserve når JavaScript ikke virker.
+G. Opplesning med `role="status"` når forklaringen åpnes, slik Pearson anbefaler for toggletips. Ikke valgt nå: strider mot regelen om sparsom opplesning, og forklaringen står rett etter knappen. Tas opp igjen hvis VoiceOver-testen viser at forklaringen ikke blir funnet.
+
+**Akseptert ulempe:** Mønsteret er satt sammen ut fra kilder og egne regler, ikke testet med skjermleserbrukere ennå. 44 px trykkflate, som Claude nevnte tidligere 28.10, er ikke realistisk inne i et avsnitt. Kravet er minst 24 px linjehøyde.
+
+**Tilgjengelighetssiden:** Teksten om valget legges inn først når funksjonen publiseres. Utkastet står i `research/universell-utforming.md`, punkt 6.
+
+**Vurder på nytt når:** prøvingen viser problemer, eller Uu-tilsynet eller eksterne testere gir råd om noe annet.
