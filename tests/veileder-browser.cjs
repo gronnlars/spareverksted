@@ -71,7 +71,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await page.locator('#profileDetails>summary').click();await page.locator('#resetGuidance').click();
   assert.equal(await page.evaluate(()=>sessionStorage.getItem('sv-guidance-tab-v2')),null);
   await search('Hva er BSU?');assert.equal(await page.locator('#answerTitle').innerText(),'Hva er BSU?');
-  await page.locator('.full-answer>summary').click();assert.match(await page.locator('.full-answer').innerText(),/27 500/);
+  assert.match(await page.locator('.answer-lead').innerText(),/27 500/);
+  await page.locator('.full-answer>summary').click();assert.match(await page.locator('.full-answer').innerText(),/oppussing og oppgradering/);
   await search('<img src=x onerror="window.injected=true">');assert(await page.locator('#answerPanel').isHidden());assert.equal(await page.evaluate(()=>window.injected),undefined);
   for(const id of ['mortgage','student','children','buffer','funds','pension','bsu']){await pick(id);assert(await page.locator('#answerPanel').isVisible());assert.equal(await page.locator('.option-card').count(),2);}
   for(const width of [320,360,390,768,1280]){await page.setViewportSize({width,height:844});await noOverflow();}
