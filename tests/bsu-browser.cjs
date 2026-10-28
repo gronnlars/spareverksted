@@ -40,7 +40,7 @@ const engine=process.env.SPARE_ENGINE||'chromium',browserType=require('playwrigh
    assert.ok(await table.evaluate(t=>t.scrollWidth<=t.clientWidth+1));
    await page.locator('#answerPanel').screenshot({path:dir+'/bsu-table-'+engine+'-'+width+'.png'});
    await page.locator('#answer .answer-sources>summary').focus();await page.keyboard.press('Enter');
-   assert.equal(await page.locator('#answer .answer-sources a').count(),3);
+   assert.equal(await page.locator('#answer .answer-sources a').count(),4);
    await page.locator('#answer .review-details>summary').click();assert.match(await page.locator('#answer .answer-sources').innerText(),/egenkontroll/i);
    // Profile mutation must not add advice to the neutral BSU explanation.
    const other=await page.evaluate(()=>{
