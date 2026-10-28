@@ -6,6 +6,7 @@ Felles overlevering for ChatGPT/Codex og Claude. Tid oppgis i Europe/Oslo.
 
 | ID-er | Aktør | Start | Utløp | Gren/PR |
 | --- | --- | --- | --- | --- |
+| SV-031, SV-122 (q-aksjesparekonto, q-fondskonto) | ChatGPT/Codex | 28.10.2026 kl. 12.45 CET | 28.10.2026 kl. 16.45 CET | docs/kildegjennomgang, PR #72 |
 
 Ingen aktive reservasjoner fra denne økten. SV-035 og SV-017 avsluttet ved leveranse i PR #64.
 
