@@ -528,6 +528,8 @@ H. «Primærkilden når den finnes og er tilgjengelig.» Ikke valgt: kan leses s
 
 **Beslutning:** Forklaringer av nøytrale begreper kan publiseres under pausen og uten hensyn til kalkulatorfrysen, når de bare forklarer betydning, ikke nevner produkter eller tilbydere, ikke tilpasses brukeren og følger kilde- og språkreglene. Første runde gjelder begreper som ikke hviler på regler eller satser.
 
+**Erstattet samme dag:** Begrensningen til «bare betydning» og til begreper uten regler eller satser gjelder ikke lenger. Gjeldende regel står i oppføringen «Nøytrale spørsmål og svar om økonomiske begreper» og i `docs/regulatorisk.md`, krav 1 og 4.
+
 **Bakgrunn:** Veikartet (28.10.2026, trinn 3.0) krever at alle fagord på siden skal kunne slås opp. I dag er 18 begreper forklart, spredt inne i enkeltsvar. Finanstilsynets artikkel lest 27.10.2026 gjelder personlige råd om hva man bør kjøpe, selge eller beholde. At en forklaring av hva et begrep betyr faller utenfor, er Claudes og Lars' vurdering, ikke en juridisk avklaring. Forslaget er bearbeidet mellom Lars, Claude og GPT.
 
 **Alternativer:**
@@ -566,17 +568,19 @@ G. Opplesning med `role="status"` når forklaringen åpnes, slik Pearson anbefal
 
 ## Områder pausen ikke gjelder (28. oktober 2026)
 
-**Status:** Vedtatt av Lars 28.10.2026, samme dag som unntaket for begrepsforklaringer. Grensene står i `docs/regulatorisk.md`, «Områder pausen ikke gjelder».
+**Gjeldende regel:** står i `docs/regulatorisk.md`, «Områder pausen ikke gjelder», og i oppføringen «Nøytrale spørsmål og svar om økonomiske begreper» lenger ned. Resten av denne oppføringen er historikk.
 
-**Beslutning:** Pausen gjelder ikke forbedringer i kilderegler og kildekontroll, universell utforming, generelle spørsmål, personvern og retting av opplagte brudd på lover og regler. Sperrene for kontekstuell veiledning og produktanbefalinger står, og ny funksjonalitet utenfor områdene venter til oppstart.
+**Status:** Vedtatt av Lars 28.10.2026, samme dag som unntaket for begrepsforklaringer. Senere samme dag endret, se under.
+
+**Opprinnelig beslutning (erstattet):** Pausen gjelder ikke forbedringer i kilderegler og kildekontroll, universell utforming, generelle spørsmål, personvern og retting av opplagte brudd på lover og regler. Sperrene for kontekstuell veiledning og produktanbefalinger står, og ny funksjonalitet utenfor områdene venter til oppstart.
 
 **Bakgrunn:** Første eksterne skjermlesertest 28.10.2026 viste at grafen ikke beskrives i ord. Det er en UU-feil (WCAG 1.1.1). Kalkulatorfrysen tillot allerede å rette UU-feil, men pausen stoppet det. Lars vurderer at forbedringer som gjør siden riktigere, tryggere og mer tilgjengelig ikke bør vente på Finanstilsynet.
 
-**Endret samme dag, etter presiseringen til Finanstilsynet:** Lars sendte 28.10.2026 en presisering som nevner personvern, universell utforming, kildekrav og nøytrale begrepsforklaringer, ikke generelle spørsmål. For at regelverket skal stemme med det Finanstilsynet har fått vite, er «generelle spørsmål» tatt ut av områdene i `docs/regulatorisk.md`. Spørsmål og svar som bare forklarer begreper og forskjeller, er med under begrepsforklaringene. Retting av opplagte lovbrudd er beholdt som ren retting. Endringen er gjort av Claude og må bekreftes av Lars i PR #90.
+**Endret samme dag, etter presiseringen til Finanstilsynet:** Lars sendte 28.10.2026 en presisering som nevner personvern, universell utforming, kildekrav og nøytrale begrepsforklaringer, ikke generelle spørsmål. For at regelverket skal stemme med det Finanstilsynet har fått vite, er «generelle spørsmål» tatt ut av områdene i `docs/regulatorisk.md`. Spørsmål og svar som bare forklarer begreper og forskjeller, er med under begrepsforklaringene. Retting av opplagte lovbrudd er beholdt som ren retting. Lars bekreftet retningen samme dag og erstattet «generelle spørsmål» med nøytrale spørsmål og svar om begreper, se egen oppføring.
 
-**Tolkning, skrevet av Claude og ikke eksplisitt bekreftet (gjelder den opprinnelige formuleringen):** «Generelle spørsmål» er forstått som forhåndsskrevne svar som er like for alle brukere, uten tilpasning etter brukerens opplysninger og uten produktanbefalinger. Det er det Finanstilsynets artikkel ikke omtaler som personlig rådgivning.
+**Historikk, tolkning av den opprinnelige formuleringen (erstattet):** «Generelle spørsmål» er forstått som forhåndsskrevne svar som er like for alle brukere, uten tilpasning etter brukerens opplysninger og uten produktanbefalinger. Det er det Finanstilsynets artikkel ikke omtaler som personlig rådgivning.
 
-**Alternativer:**
+**Alternativer, slik de sto ved det opprinnelige vedtaket:**
 A. Åpne for disse områdene, med sperrene intakte. **Valgt.**
 B. Ett og ett unntak etter behov, som for begrepsforklaringene. Ikke valgt: gir mange små vedtak for samme type arbeid.
 C. Oppheve pausen helt. Ikke valgt: spørsmålet om tilpasning etter alder og sparehorisont er fortsatt ubesvart.
@@ -589,12 +593,12 @@ C. Oppheve pausen helt. Ikke valgt: spørsmålet om tilpasning etter alder og sp
 
 **Status:** Vedtatt av Lars 28.10.2026 som prinsipp for alt arbeid under pausen. Lars' formulering: alt må lages så funksjonene vi venter på, lett kan integreres når avklaringen er på plass.
 
-**Beslutning:** Det som bygges nå, lages slik at funksjonene som venter (kontekstuell veiledning, forklaring der ordet står, ordlisteside, opplesning, lånekalkulator), kan kobles på uten å skrive om det som finnes. Konkret:
+**Beslutning:** Det som bygges nå, lages slik at funksjonene som venter (kontekstuell veiledning, forklaring der ordet står, ordlisteside, opplesning, lånekalkulator), kan kobles på senere uten å skrive om det som finnes. Prinsippet gjelder bare arbeid som er tillatt nå. Det gir ikke tillatelse til å bygge utsatte funksjoner, heller ikke bak en av/på-bryter. Utsatte funksjoner bygges først etter oppstart. Konkret:
 
-1. **Av/på-bryter.** En funksjon som venter på avklaring, men bygges ferdig, styres fra ett sted og står av som standard. Av betyr ikke vist for brukeren. Rettelse av en dokumentert UU-feil står på når den publiseres.
+1. **Ingen utsatte funksjoner bak bryter.** Opprinnelig sto det at en funksjon som venter, kunne bygges ferdig og stå avslått. Det er erstattet 28.10.2026 etter kontroll av GPT, fordi det kolliderer med at nye funksjoner venter.
 2. **Én kilde for innhold.** Begrepsregisteret og svarbasen har plass til det senere funksjoner trenger, for eksempel kort og lang forklaring. Felt for tilpasning legges ikke inn før sperren er opphevet.
 3. **Gjenbrukbare deler.** Teksten som beskriver resultatet (veikartet 0.5) lages som én modul som grafbeskrivelsen, en senere «Les opp»-knapp, eksport og veilederen kan bruke. Forklaringer vises med én felles komponent.
-4. **Tester for begge tilstander.** Tester sjekker at en avslått funksjon ikke vises, og at den virker når den slås på.
+4. **Tester for det som bygges.** Tester dekker det tillatte arbeidet. Tester for utsatte funksjoner skrives når funksjonene bygges.
 5. **Offentlige sider omtaler bare det som er på.**
 
 **Grense:** «Bra nok er mer enn nok» gjelder. Det forberedes bare for funksjoner som allerede står i veikartet, og ingen kode skrives på forhånd uten at neste bruk er kjent.
@@ -618,7 +622,7 @@ C. Bygge alt ferdig nå bak brytere, også kontekstuell veiledning. Ikke valgt: 
 
 **Alternativer:** A. «Renters rente». **Valgt.** B. «Rentes rente». Ikke valgt: ville kreve endring av eksisterende svar uten gevinst.
 
-**Sparetid:** Lars sluttet seg 28.10.2026 til GPTs anbefaling. I tekst skrives «sparetid», forklart som «hvor lenge du planlegger å spare». «Sparehorisont» er søkeord og brukes ikke i teksten.
+**Sparetid, forslag (ikke vedtatt):** GPT anbefalte 28.10.2026 at det i tekst skrives «sparetid», forklart som «hvor lenge du planlegger å spare». «Sparehorisont» blir søkeord og brukes ikke i teksten. Lars har ikke valgt uttrykkelig.
 
 ## Nøytrale spørsmål og svar om økonomiske begreper (28. oktober 2026)
 

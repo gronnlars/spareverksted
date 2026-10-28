@@ -6,7 +6,8 @@ Opprettet 25. oktober 2026. Intern statusnotis. Gjelder alle bidragsytere, inklu
 
 Spareverksted er satt på vent til Finanstilsynet har gitt svar og veiledning, og alt er klarert. Prosjektet startes først opp igjen når Lars uttrykkelig melder fra om det, etter egen vurdering av svaret.
 
-Mens pausen varer:
+Mens pausen varer, gjelder hovedreglene under, med unntakene i avsnittet «Områder pausen ikke gjelder» lenger ned. Tillatt innholdsarbeid gir ingen automatisk publiseringstillatelse. Integrasjon i nettsiden og sammenslåing til main krever Lars' uttrykkelige oppdrag eller godkjenning.
+
 
 - Ingen ny utvikling og ingen nytt innhold. Ingen nye svar, kalkulatorfunksjoner eller endringer i `dist/`, beregninger, søkelogikk, svarbase eller tester.
 - Ingen sammenslåing til main og ingen start av publiserings-Actions.
