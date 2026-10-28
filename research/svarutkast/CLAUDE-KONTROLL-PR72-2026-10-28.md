@@ -12,7 +12,9 @@ KI-kontroll utført av Claude (Anthropic) på oppdrag fra Lars. Ikke menneskelig
 
 ## 1. Kildene: lest av Claude 28.10.2026
 
-Kontrolldato for alle: 28.10.2026. Lest med nettleserverktøy som henter og oppsummerer siden. Sitater er kontrollert der det står «ordrett».
+Kontrolldato for alle: 28.10.2026.
+
+**Rettelse 28.10.2026:** «Lest» i tabellen betyr at siden ble hentet med et verktøy der en mindre språkmodell oppsummerer innholdet. Claude har ikke sett selve sidene, og sitatene er ikke kontrollert mot sidene. Oppsummeringen av A motsa seg selv i første forsøk. Ingen av kildene i tabellen regnes derfor som sikkert lest av Claude. Funnene A1, A2 og påstandene om A, C, E, F, G og I må bekreftes ved at Lars eller en annen leser ordlyden på selve siden. Liste over ordlyden som skal finnes, står i avsnittet «Ordlyd Lars skal bekrefte» nederst.
 
 | ID | Status | Kildedato | Nivå | Hva Claude fant |
 | --- | --- | --- | --- | --- |
@@ -151,3 +153,18 @@ Bortsett fra A7 til A11 stemmer statusene. Produktfunnene står som åpne overal
 PR-en er ikke klar for godkjenning før A1 til A6 er rettet. Ingen funn tyder på regnefeil eller produktanbefalinger. Kildene B, D, H og J er ikke lest av Claude, så K7-kravet om kontroll av en annen enn skribenten er ikke oppfylt for påstandene som bare hviler på dem: aldersgrensen 33 år, renter utenfor BSU-grensen, oppussing, 2027-forslaget og fradragstypen for IPS.
 
 Ikke utført: nettleser-, mobil-, skjermleser- og brukertest, søkeprøver, kjøring av kortbyggeren og live-kontroll. Lovtekst er ikke lest.
+
+## Ordlyd Lars skal bekrefte
+
+Ingen av funnene som bygger på disse kildene, brukes før ordlyden er bekreftet. Rekkefølge etter hvor mye som avhenger av kilden.
+
+1. **C, rettledning fondskonto**, avsnittet «Særlig om uttak fra fondskonto». Finn setningen om at ubenyttet skjerming reduserer aksjedelen først og deretter rentedelen (A1). Finn også setningen om at reglene bare gjelder kapitalforsikring uten garantert avkastning (funn 1), og hvilket inntektsår rettledningen gjelder for (funn 2).
+2. **G, Skatteetatens IPS-side.** Finn beløpet for 2025 og for 2026 (A2), og om siden sier at fradraget gis i alminnelig inntekt.
+3. **A, Skatteetatens ASK-side.** Finn setningen om at skjermingsgrunnlaget er laveste innskudd tillagt ubenyttet skjerming fra tidligere år (funn 4).
+4. **D, Skatteetatens BSU-side** (ikke hentet). Finn aldersgrensen 33 år, at renter ikke teller i sparegrensene, og hva som står om oppussing, møbler og hvitevarer (A3).
+5. **E, BSU-satser.** Sjekk at årsvelgeren står på 2026, og finn «både direkte og indirekte eie».
+6. **F, Forskuddsutskrivingen 2026.** Finn setningen om fritidseiendom.
+7. **B, Skatteetatens fondskontoside** (ikke hentet). Finn avsnittet «Bruk av ubenyttet skjermingsfradrag ved uttak», og om Skatteetaten nevner andre navn på kontotypen, for eksempel investeringskonto.
+8. **H, Skattesatser 2027** (ikke hentet). Finn BSU- og IPS-radene og overskriftene på kolonnene for 2026 og 2027.
+9. **J, Skatte-ABC P-4-5.1** (ikke hentet). Finn om innbetaling gir fradrag i alminnelig inntekt, og hvilket år 15 000 og 25 000 kr gjelder.
+10. **I, Forbrukerrådet.** Finn «Minimum anbefalt sparehorisont 5 år» under aksjefond.
