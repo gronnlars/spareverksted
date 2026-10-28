@@ -78,7 +78,7 @@ Disse oppheves ikke av at pausen avsluttes:
 Lars har besluttet at pausen og kalkulatorfrysen ikke gjelder forklaringer av nøytrale begreper som oppfyller alle kravene under. Hvilke andre områder pausen ikke gjelder, står i neste avsnitt. Begrunnelse og forkastede alternativer står i [BESLUTNINGER.md](../BESLUTNINGER.md).
 
 1. **Forklarer, men styrer ikke.** Teksten forklarer hva begrepet betyr, og kan vise forskjeller, fordeler og ulemper, for eksempel ved annuitetslån og serielån. Den forklarer også relevante begrensninger og variasjoner. Den fører ikke brukeren mot produkter, anbefaler ikke handling, ender ikke i en konklusjon om hva brukeren bør velge, og trekker ikke slutninger om brukeren. Fordeler og ulemper skrives som etterprøvbare følger, ikke som vurderinger av hva som er best.
-2. **Ingen navn.** Ingen produkt- eller tilbydernavn. Omtalen av Nordnet og Investeringskonto Zero står urørt, se under.
+2. **Ingen navn.** Ingen produkt- eller tilbydernavn. Omtalen av Nordnet og Investeringskonto Zero er fjernet, se under.
 3. **Ingen tilpasning** etter brukerens opplysninger.
 4. **Regler og satser krever primærkilde og vedlikehold (endret 28.10.2026).** Begreper som hviler på regelverk eller satser, for eksempel effektiv rente, kredittscore, ASK og BSU, kan forklares når regelen er lest i primærkilden og forklaringen får kontrolldato og plass i vedlikeholdet etter KILDEREGLER. Opprinnelig sto det at slike begreper skulle vente til en senere runde.
 5. **Vanlig kontroll.** GPT skriver forklaringene og har ansvaret for kildekontrollen. Kilde etter [KILDEREGLER.md](../KILDEREGLER.md), språk etter [SPRAKREGLER.md](../SPRAKREGLER.md) og kontroll av en annen enn skribenten. Lars godkjenner.
@@ -103,7 +103,6 @@ Dette gjelder fortsatt også innenfor områdene:
 
 - Sperrene over står: ingen kontekstuell spørsmålsveiledning før Lars åpner den, ingen produktanbefalinger eller «best egnet for deg», og kildekontroll før nye råd.
 - Generelle svar tilpasses ikke etter alder, sparehorisont, sparemål eller andre opplysninger brukeren har fylt inn.
-- Omtalen av Nordnet og Investeringskonto Zero står urørt.
 - Ingen nye funksjoner, for eksempel lånekalkulator, budsjettveiviser, forklaring der ordet står, egen ordlisteside eller noe som styrer brukeren etter alder, sparehorisont eller sparemål. Rettelse av en dokumentert UU-feil, som grafbeskrivelsen, er ikke en ny funksjon. At noe kalles en UU-forbedring, er ikke nok til å åpne det.
 - Innholdsarbeidet åpner ikke av seg selv for publisering. Hver PR godkjennes av Lars.
 - Hver endring går i egen PR og slås sammen bare etter Lars' godkjenning.
@@ -117,15 +116,17 @@ Er det tvil om en endring hører til et av områdene, avgjør Lars.
 2. Lars har lest og vurdert svaret, og eventuelt tilpasset funksjoner og tekst.
 3. Lars har gitt uttrykkelig beskjed om oppstart. Ingen bidragsyter kan åpne prosjektet ut fra at tid har gått.
 
-## Konkret eksempel som skal stå urørt: omtale av Nordnet og Investeringskonto Zero
+## Omtale av Nordnet og Investeringskonto Zero (fjernet 28. oktober 2026)
 
-Dette kan sendes til Finanstilsynet som oppfølging hvis de ber om konkrete eksempler på omtale av navngitte produkter og tilbydere. Teksten skal ikke skrives om før svaret er vurdert, slik at det som vurderes, er det som faktisk er publisert.
+**Endret 28.10.2026:** Lars vedtok å fjerne produkt- og tilbydernavnet fra svarene og bruke «fondskonto» og «investeringskonto». Navnet på én tilbyder var en feil, ikke et eksempel som måtte stå. Den publiserte teksten slik den var, finnes i historikken på main ved commit `df5bbb3`, og kan vises Finanstilsynet om de ber om det. «Zero» og «IKZ» legges inn som søkeord først når pausen oppheves. Beskrivelsen under er historikk.
+
+Opprinnelig: Dette kan sendes til Finanstilsynet som oppfølging hvis de ber om konkrete eksempler på omtale av navngitte produkter og tilbydere. Teksten skal ikke skrives om før svaret er vurdert, slik at det som vurderes, er det som faktisk er publisert.
 
 - **Hvor:** ordlisten og to svar i `dist/veileder-knowledge.js`, spørsmål 33 i `SPORSMALSKO.md` og `research/sporsmal-og-prioritering.md`.
 - **Hva:** Nordnet er navngitt som tilbyder av produktet Investeringskonto Zero (kapitalforsikring), brukt som eksempel for å forklare forskjellen mellom ASK og forsikringsbasert fondskonto.
 - **To roller:** Nordnet er både eksempel på produktnavn og kilde til produktfakta (eierskap til aksjene, utbetaling til begunstigede ved død). Nordnets side er en kommersiell kilde og merket slik.
 - **Slik teksten står i dag:** produktet er nevnt «som eksempel for gjenkjenning, ikke som anbefaling». Ingen påstand om at Zero er kostnadsfritt.
-- **Mulig tiltak etter svar, ikke vedtatt:** bruke den generelle betegnelsen «forsikringsbasert fondskonto» i selve teksten og la tilbyderen stå bare i kildelisten.
+- **Mulig tiltak etter svar, ikke vedtatt:** bruke den generelle betegnelsen «forsikringsbasert fondskonto» i selve teksten og la tilbyderen stå bare i kildelisten. Erstattet av vedtaket over: tilbyderen er fjernet også fra kildelisten.
 
 ## Personvern
 

@@ -698,3 +698,26 @@ D. «Les opp»-knapp. Ikke valgt nå: ny funksjon som venter til oppstart. Modul
 
 **Ikke kontrollert:** Utseendet er ikke sett på skjerm. Testene i GitHub tar skjermbilder.
 
+## Fondskonto og investeringskonto i stedet for Investeringskonto Zero (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026, etter at han hadde gått gjennom kildene i PR #72.
+
+**Beslutning:** Svarene om fondskonto og sammenligningen med ASK bruker «fondskonto» og «investeringskonto», ikke produktnavnet Investeringskonto Zero eller tilbyderen Nordnet. En setning sier at tilbydere kan gi fondskontoen egne navn. «Zero» og «IKZ» fjernes som søkeord nå og legges inn igjen når pausen oppheves.
+
+**Begrunnelse (Lars):** Det ene er en tilbyders navn, det andre er navnene som faktisk brukes. Navnet på én tilbyder var en feil som skulle ryddes uansett.
+
+**Endringer i svarene:**
+- Ordforklaringen «produktnavn, for eksempel Investeringskonto Zero» er erstattet med en generell forklaring av produktnavn.
+- To setninger som bygde på Nordnets side, er fjernet: at Nordnet formelt eier aksjene og at du ikke har stemmerett, og at kontoverdien utbetales til begunstigede ved død. De gjaldt ett produkt og var ikke kontrollert mot en generell kilde (PR #72 merket dem som åpne produktpåstander).
+- Nordnets side er fjernet fra kildelisten. Svaret bygger nå på Skatteetatens kilder.
+- Søkeordene «zero» og «ikz» er fjernet. «Investeringskonto» gir fortsatt treff.
+
+**Ikke endret:** Den interne id-en `q-ask-zero` beholdes, fordi lenker og tester bruker den. Brukerne ser den ikke. Forbeholdet om at Skatteetatens rettledning er «revidert oktober 2025», som PR #72 fant feil, er ikke rettet her. Det tas i egen PR.
+
+**Alternativer:**
+A. Fjerne produkt- og tilbydernavn, bruke de generelle navnene. **Valgt.**
+B. La teksten stå urørt til Finanstilsynet svarer, som `docs/regulatorisk.md` sa. Ikke valgt: Lars vurderte omtalen som en feil. Den gamle teksten ligger i historikken (`df5bbb3`).
+C. Beholde Nordnet bare i kildelisten. Ikke valgt: setningene som bygde på kilden, gjaldt ett bestemt produkt.
+
+**Vurder på nytt når:** pausen oppheves, og søkeordene «Zero» og «IKZ» skal legges inn igjen.
+

@@ -14,7 +14,7 @@ for(const e of entries){
 }
 assert.equal(V.findTopics('Hva er BSU?')[0],'q-bsu-basics');
 assert.equal(V.findTopics('IPS eller ASK?')[0],'q-ips-ask');
-assert.equal(V.findTopics('ASK eller Zero?')[0],'q-ask-zero');
+assert.equal(V.findTopics('ASK eller investeringskonto?')[0],'q-ask-zero');
 assert.equal(V.findTopics('Hva skjer med studielånet?')[0],'student');
 assert.deepEqual(V.findTopics('Hvilken farge har himmelen?'),[]);
 const ips=JSON.stringify(Cards.build('q-ips-ask',{}));assert.match(ips,/25 000/);assert.match(ips,/2026/);assert.match(ips,/62 år/);assert.match(ips,/hele utbetalingen/i);assert.match(ips,/minst til 80/);
@@ -66,13 +66,13 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
  assert.equal(V.topics.filter(t=>!t.category).length,7,'forklaringer skal ikke bli hovedtemaer');
  // Eierskap: hvert navn har én eier. Sammenligningen har ingen enkeltnavn.
  assert.deepEqual([...ask.keys].sort(),['aksjesparekonto','ask']);
- assert.deepEqual([...fond.keys].sort(),['fondskonto','ikz','investeringskonto','kapitalforsikring','zero']);
+ assert.deepEqual([...fond.keys].sort(),['fondskonto','investeringskonto','kapitalforsikring']);
  assert.ok(!cmp.keys||cmp.keys.length===0,'sammenligningen skal ikke eie enkeltnavn');
  const all=V.topics.flatMap(t=>(t.keys||[]).map(k=>[k,t.id]));
  for(const k of [...ask.keys,...fond.keys])assert.equal(all.filter(([x])=>x===k).length,1,'«'+k+'» skal ha én eier');
  // Direkte navn og ferdige spørsmål.
  for(const q of ['ASK','ask','Ask','aksjesparekonto','Hva er ASK?','Hva er en aksjesparekonto?','Hva betyr ASK?'])assert.equal(V.findTopics(q)[0],'q-aksjesparekonto',q);
- for(const q of ['fondskonto','Hva er en fondskonto?','kapitalforsikring','investeringskonto','Investeringskonto Zero','Zero','zero','IKZ','ikz','Unit Link','Hva er Investeringskonto Zero?','Hva er IKZ?'])assert.equal(V.findTopics(q)[0],'q-fondskonto',q);
+ for(const q of ['fondskonto','Hva er en fondskonto?','kapitalforsikring','investeringskonto','Unit Link','Hva er en investeringskonto?'])assert.equal(V.findTopics(q)[0],'q-fondskonto',q);
  // Særskriving.
  for(const q of ['aksje spare konto','aksje sparekonto','aksjespare konto'])assert.equal(V.findTopics(q)[0],'q-aksjesparekonto',q);
  for(const q of ['fonds konto','fond konto','kapital forsikring','investerings konto'])assert.equal(V.findTopics(q)[0],'q-fondskonto',q);
@@ -84,7 +84,7 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
   assert.ok(r.suggestions.every(s=>s.kind==='typo'),q);
  }
  // Spørsmål som sammenligner kontotypene går til sammenligningen, ikke til en av forklaringene.
- for(const q of ['ASK eller fondskonto?','ASK eller Zero?','forskjellen på ASK og fondskonto','Hva er forskjellen på aksjesparekonto og fondskonto?','Hva er forskjellen på ASK og Investeringskonto Zero?','ASK eller investeringskonto','ask og kapitalforsikring','aksjesparekonto eller fondskonto','forskjellen mellom ASK og IKZ']){
+ for(const q of ['ASK eller fondskonto?','forskjellen på ASK og fondskonto','Hva er forskjellen på aksjesparekonto og fondskonto?','ASK eller investeringskonto','ask og kapitalforsikring','aksjesparekonto eller fondskonto']){
   const r=V.search(q);
   assert.equal(r.mode,'answer',q);assert.equal(r.hits[0].id,'q-ask-zero',q);
   assert.ok(!r.hits.some(h=>h.id==='q-aksjesparekonto'||h.id==='q-fondskonto'),q+': enkeltforklaringene skal ikke blandes inn');
@@ -122,7 +122,9 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
  assert.equal(innskuddsandel,20000);assert.equal(gevinstandel,10000);assert.match(f.example.text,/20 000 kroner er innskudd og 10 000 kroner er gevinst/);assert.ok(out<=paidIn,'på ASK dekkes uttaket av innskuddet');
  // Produktnavn forklares med tilbyder og uten anbefaling.
  const names=f.terms.map(x=>x.term);for(const need of ['fondskonto','kapitalforsikring','investeringskonto','fond'])assert.ok(names.includes(need),need);
- const prod=f.terms.find(x=>/produktnavn/.test(x.term));assert.ok(prod);
- assert.match(prod.text,/Nordnet Livsforsikring AS/);assert.match(prod.text,/ikke som anbefaling/);
+ // Ingen produkt- eller tilbydernavn i svarene (Lars 28.10.2026). Zero og IKZ legges inn som søkeord først når pausen oppheves.
+ const prod=f.terms.find(x=>/produktnavn/.test(x.term));assert.ok(prod);assert.match(prod.text,/eget navn/);
+ for(const id of ['q-fondskonto','q-ask-zero']){const all=JSON.stringify(V.questions?V.questions.find(q=>q.id===id):null)+JSON.stringify(Cards.build(id,{}));assert.doesNotMatch(all,/Nordnet|Zero|IKZ/i,id);}
+ for(const q of ['Zero','IKZ'])assert.notEqual(V.findTopics(q)[0],'q-fondskonto',q+' er ikke søkeord ennå');
  assert.match(f.caveat,/ikke kontrollert her/);assert.match(f.caveat,/oktober 2025/);
 }
