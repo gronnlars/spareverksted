@@ -42,3 +42,15 @@ Lars har etter ASK-prøven bestilt språkgjennomgang og bruk av svarmalen for sv
 - Forklaringer og kontosammenligninger i denne runden er nøytrale. De skal ikke arve profilråd eller bytte til buffer- og gjeldskort. BSU-forklaringen forklarer ordningen uten å konstruere et valg mot «alt utenfor BSU».
 - Språkdato er ikke kildekontrolldato. Bevar opprinnelige datoer når bare språk og plassering endres. Registrer faktiske nye kildeavsnitt separat.
 - Uavklarte spørsmål og upubliserte utkast beholder statusen. Språkvask gir ingen publiseringstillatelse.
+
+
+## Unngå gjentakelser og mål lengden (revisjon 28.10.2026)
+
+- Hvert faglig poeng har ett hovedsted. Kortsvar gir oversikt, eksempel illustrerer med tall, og fordypning tilfører nye opplysninger. Ikke kopier forklaringen til en begrepsliste eller en ekstra avgrensning.
+- Et separat forbeholdsfelt brukes bare når det trengs en opplysning som ikke allerede står ved hovedpoenget. Tomme felt, begrepslister og fordypninger skal ikke fylles for malens skyld eller vises tomme.
+- Eksempeltall og felles forutsetninger forklares én gang ved eksemplet. Avvik i et annet regneeksempel må likevel stå ved det aktuelle eksemplet. Før/etter skatt og kroner/kjøpekraft må aldri forsvinne for å spare ord.
+- Kildelisten har ingen fast ansvarsfrase som gjentar forbeholdene. Kontrollgrunnlaget oppgir kildedato/regelår, faktisk lesedato og kontrollform. Bruk «egenkontroll» konsekvent. Ikke skriv at kildene ikke har godkjent teksten.
+- Bruk «jeg» der nettstedets avsender må omtales. For regneforutsetninger er «Eksemplet forutsetter» eller en direkte formulering ofte enklere.
+- Mål: inntil 300 ord per svar, med fordypning. Ordtellingen viser også totalen inkludert kildetitler og kontrolltekst som kan åpnes. Overskridelse gir et redaksjonelt varsel med begrunnelse, aldri automatisk kutt av et faglig vilkår. Antall ord er ikke i seg selv et bevis på god tekst.
+- `tests/svartekst.test.cjs` stopper identiske gjentatte setninger med minst seks ord i samme svar. Den tester den tidligere indeksfond-feilen. Korte etiketter og overskrifter er unntatt. Omskrevne gjentakelser må fortsatt finnes ved lesing.
+- Ikke gjør uavklarte faglige påstander til publiserbar tekst. Avgrens det svaret faktisk dekker, og registrer åpne temaer som publiseringssperrer i arbeidsnotatet. K1s uttrykkelige unntak for et direkte spørsmål gjelder fortsatt; dette endrer ikke kildereglene eller gir fullmakt til publisering.

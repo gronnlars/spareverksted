@@ -36,6 +36,8 @@ def render(e):
     lines += ['## Kilder og forbehold', '', e['caveat'], '']
     for source in e['sources']:
         lines += [f"- [{source['title']}]({source['url']})"]
+    if e.get('publicationBlockers'):
+        lines += ['', '## Publiseringssperrer (arbeidsnotat)', ''] + ['- ' + x for x in e['publicationBlockers']]
     lines += ['', '## Kontrolldokumentasjon', '', e.get('review', {}).get('text', ''), '',
               e.get('languageReview', ''), '',
               'Opprinnelig arbeidsgrunnlag: main `f9c553aa668fd0bf96ce14d6930f5ec02897abd6`. Historisk lesedato: 25.10.2026. Nye kildelesinger angis per kilde. Språkendring gir ingen ny faglig godkjenning.', '',
@@ -46,7 +48,7 @@ def render(e):
     lines += ['', '## Angrepsflater og reparasjoner', '']
     lines += [f'{i}. {risk}' for i, risk in enumerate(e['risks'], 1)]
     lines += ['', '## Korrektur og overlevering', '',
-              'Selvkontroll er ikke uavhengig fagkontroll. Språk og svarmal er gjennomgått, med faglige vilkår og uavklarte spørsmål bevart. Se research/sprak-og-svarmal-2026-10-28.md for samlet kontrollstatus.', '',
+              'Egenkontroll er ikke uavhengig fagkontroll. Språk og svarmal er gjennomgått, med faglige vilkår og uavklarte spørsmål bevart. Se research/sprak-og-svarmal-2026-10-28.md for samlet kontrollstatus.', '',
               'Søkeinnganger: ' + '; '.join(e['questions']) + '.', '',
               'JSON er fasit. Markdown genereres. Samsvar kontrolleres med `python3 research/svarutkast/generer-gaps.py --check --product`. Isolert søkeprøve: `node research/svarutkast/prov-gaps.cjs`.', '',
               ('SV-022 finnes på main. Språkendringen i denne leveransen er ikke publisert.' if e.get('integrationState') == 'branch' else 'Dette svaret er fortsatt upublisert og er ikke lagt i nettstedets svarbase. GAPS beholdes. Godkjenning gjenstår.'), '']

@@ -26,7 +26,7 @@ const server=http.createServer((req,res)=>{
    const order=await page.locator('#answer').evaluate(n=>[...n.children].map(x=>x.className));
    assert.ok(order.indexOf('answer-part explain-example')<order.indexOf('full-answer'));
    await page.locator('.full-answer > summary').click();
-   const ex=await page.locator('.explain-example').boundingBox(),out=await page.locator('.full-answer .answer-part').filter({has:page.locator('h3',{hasText:'Hvis du tar ut rentene'})}).boundingBox();
+   const ex=await page.locator('.explain-example').boundingBox(),out=await page.locator('.full-answer .answer-part').filter({has:page.locator('h3',{hasText:'Tid og uttak'})}).boundingBox();
    assert.ok(ex.y+ex.height<=out.y,'eksempel vises før uttaksavsnitt');
    await page.locator('.answer-sources > summary').click();assert.match(await page.locator('.source-list').innerText(),/23\.10\.2026/);
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));

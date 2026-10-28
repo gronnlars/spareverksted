@@ -24,15 +24,14 @@ const entries=require('../dist/veileder-knowledge.js'),drafts=require('../resear
     assert.equal(await page.locator('#answerTitle').innerText(),entry.title);
     assert.equal(await page.evaluate(()=>document.activeElement.id),'answerTitle');
     assert.equal(await page.locator('#contextPanel').isHidden(),true);
-    assert.ok(await page.locator('#answer .answer-caveat').isVisible());
+    assert.equal(await page.locator('#answer .answer-caveat').count(),entry.caveat?1:0);
     if(entry.kind==='explainer'){assert.equal(await page.locator('#answer .explain-terms').isVisible(),false);assert.equal(await page.locator('#answer .explain-example').evaluate(x=>getComputedStyle(x).borderTopWidth),'0px');}
     for(const summary of await page.locator('#answer .tradeoff>summary').all()){
      await summary.focus();await page.keyboard.press('Enter');assert.equal(await summary.evaluate(x=>x.parentElement.open),true);
     }
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),entry.id+' '+width);
     await page.locator('#answerPanel').screenshot({timeout:10000,path:dir+'/svar-'+entry.id+'-'+engine+'-'+width+'.png'});
-    await page.locator('#answer .full-answer>summary').focus();await page.keyboard.press('Enter');
-    assert.equal(await page.locator('#answer .full-answer').evaluate(x=>x.open),true);
+    if(entry.parts.length||entry.terms?.length){await page.locator('#answer .full-answer>summary').focus();await page.keyboard.press('Enter');assert.equal(await page.locator('#answer .full-answer').evaluate(x=>x.open),true);}else assert.equal(await page.locator('#answer .full-answer').count(),0);
     await page.locator('#answer .answer-sources>summary').focus();await page.keyboard.press('Enter');
     assert.ok(await page.locator('#answer .source-list a').count()>0);
     const review=page.locator('#answer .review-details');assert.equal(await review.evaluate(x=>x.open),false);

@@ -45,8 +45,8 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
  const a=Cards.build('q-kjopekraft',{debt:'yes',buffer:'no'});
  assert.equal(a.kind,'explainer');assert.deepEqual(a.options,[]);assert.equal(a.note,'','profil skal ikke endre en ren forklaring');
  assert.match(a.intro,/kjøpekraft/i);assert.match(a.intro,/inflasjon/);
- assert.ok(a.terms.some(x=>x.term==='prisvekst'&&x.alsoCalled==='inflasjon'));
- assert.match(a.example.text,/ikke en prognose/);
+ assert.match(a.intro,/Prisveksten kalles også inflasjon/);
+ assert.match(a.example.text,/ingen prognose/);
  assert.ok(a.sources.length&&a.sources.every(s=>s.url.startsWith('https://')));assert.equal(a.checked,'2026-10-24');
  // Regneeksemplet i teksten stemmer.
  const later=100000*1.025**10,today=100000/1.025**10;
@@ -100,8 +100,8 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
   assert.equal(x.kind,'explainer');assert.deepEqual(x.options,[]);assert.match(x.example.text,/ikke en beregning av din skatt/);
   assert.ok(x.sources.length&&x.sources.every(s=>s.url.startsWith('https://')));assert.equal(x.checked,'2026-10-28');
   assert.ok(!/[–—]|\.\.\./.test(JSON.stringify(x)));
-  assert.match(x.review.text,/Kontrollert mot kildene 28\. oktober 2026|avsnitt lest 28\. oktober 2026/,'kontrolldato og at kildene mangler oppdateringsdato skal stå i forbeholdet');
-  assert.match(x.review.text,/ingen oppdateringsdato/i);
+  assert.match(x.review.text,/Lest 28\.10\.2026/,'kontrolldato og at kildene mangler oppdateringsdato skal stå i forbeholdet');
+  assert.match(x.review.text,/udatert/);
   // Ingen satser, og ingen påstander vi ikke har kontrollert mot kildene.
   assert.doesNotMatch(JSON.stringify(x),/37,84|\b22 ?%|\b101 ?%|pengemarkedsfond|utenfor Europa|amerikanske/);
  }
@@ -109,24 +109,24 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
  {
   // Presiseringer fra kontrollen mot Skatteetatens norske sider, 24. oktober 2026.
   const txt=JSON.stringify(a.parts);
-  assert.match(txt,/aksjefond som er hjemmehørende i EØS/);assert.match(txt,/over 80 prosent aksjeandel ved inntektsårets begynnelse/);assert.match(txt,/Rene rentefond kan ikke ligge på kontoen/);
-  assert.match(f.example.text,/20 000 kroner i innskudd og 10 000 kroner i gevinst/);assert.match(f.example.text,/ser bort fra skjermingsfradraget/);
+  assert.match(txt,/aksjefond som er hjemmehørende i EØS/);assert.match(txt,/over 80 prosent aksjeandel ved inntektsårets begynnelse/);assert.match(JSON.stringify(a.tradeoffs),/Rene rentefond faller utenfor/);
+  assert.match(f.example.text,/20 000 kr i innskudd og 10 000 kr i gevinst/);assert.match(f.example.text,/før skjerming/);
   assert.ok(a.sources.every(x=>/^https:\/\/www\.skatteetaten\.no\/(?:person|rettskilder)\//.test(x.url)),'ASK bruker norsk primærkilde');
   assert.ok(f.sources[0].url.startsWith('https://www.skatteetaten.no/person/'),'fondskonto bruker norsk primærkilde');
   const z=JSON.stringify(Cards.build('q-ask-zero',{}).options);
-  assert.doesNotMatch(z,/kan likevel investere utenfor Europa/);assert.match(z,/Ved kjøp på ASK/);assert.match(z,/oppfylte kravene ved kjøp, kan beholdes/);assert.match(txt,/Kravene vurderes når du kjøper/);
+  assert.doesNotMatch(z,/kan likevel investere utenfor Europa/);assert.match(z,/Ved kjøp må/);assert.match(z,/oppfylte kravene ved kjøp, kan beholdes/);assert.match(txt,/Kravene vurderes når du kjøper/);
  }
  // Regneeksemplene stemmer.
  assert.match(a.example.text,/150 000/);assert.match(a.example.text,/50 000/);assert.equal(150000-100000,50000);
  const out=30000,paidIn=100000,value=150000,innskuddsandel=out*paidIn/value,gevinstandel=out-innskuddsandel;
- assert.equal(innskuddsandel,20000);assert.equal(gevinstandel,10000);assert.match(f.example.text,/20 000 kroner i innskudd og 10 000 kroner i gevinst/);assert.ok(out<=paidIn,'på ASK dekkes uttaket av innskuddet');
- // Produktnavn forklares med tilbyder og uten anbefaling.
- const names=f.terms.map(x=>x.term);for(const need of ['fondskonto','kapitalforsikring','investeringskonto','fond'])assert.ok(names.includes(need),need);
+ assert.equal(innskuddsandel,20000);assert.equal(gevinstandel,10000);assert.match(f.example.text,/20 000 kr i innskudd og 10 000 kr i gevinst/);assert.ok(out<=paidIn,'på ASK dekkes uttaket av innskuddet');
+ // Begreper forklares i selve teksten, uten en dupliserende ordliste.
+ assert.match(f.intro,/egne produktnavn/);assert.match(f.parts[0].text,/Forsikringsselskapet eier verdipapirene/);
  // Ingen produkt- eller tilbydernavn i svarene (Lars 28.10.2026). Zero og IKZ legges inn som søkeord først når pausen oppheves.
- const prod=f.terms.find(x=>/produktnavn/.test(x.term));assert.ok(prod);assert.match(prod.text,/eget navn/);
+ assert.match(f.intro,/egne produktnavn/);
  for(const id of ['q-fondskonto','q-ask-zero']){const all=JSON.stringify(V.questions?V.questions.find(q=>q.id===id):null)+JSON.stringify(Cards.build(id,{}));assert.doesNotMatch(all,/Nordnet|Zero|IKZ/i,id);}
  for(const q of ['Zero','IKZ'])assert.notEqual(V.findTopics(q)[0],'q-fondskonto',q+' er ikke søkeord ennå');
- assert.match(f.caveat,/ikke kontrollert her/);assert.match(f.review.text,/2026 og senere/);assert.doesNotMatch(f.review.text,/oktober 2025/);
+ assert.match(JSON.stringify(f.tradeoffs),/Ingen bestemt tilbyders vilkår er kontrollert her/);assert.match(f.review.text,/2026 og senere/);assert.doesNotMatch(f.review.text,/oktober 2025/);
 }
 
 // ASK: samme forklaring for alle profiler selv med fordeler/ulemper.

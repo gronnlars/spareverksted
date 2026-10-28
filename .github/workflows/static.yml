@@ -27,6 +27,7 @@ jobs:
           python3 research/svarutkast/generer-gaps.py --check --product
           node tests/veileder-knowledge.test.cjs
           node tests/svarmal.test.cjs
+          node tests/svartekst.test.cjs
           node tests/veileder-relevance.test.cjs
           node tests/veileder-sok.test.cjs
           node tests/veileder-sok-utvidet.test.cjs

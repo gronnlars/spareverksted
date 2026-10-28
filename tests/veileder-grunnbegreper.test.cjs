@@ -19,7 +19,7 @@ for(const q of ['renters rente','rentersrente','rentes rente','rente på rente',
 }
 assert.equal(V.search('rentersrnete').mode,'suggest');assert.equal(V.search('rentersrnete').suggestions[0].id,'q-renters-rente');
 for(const q of ['Hva er rentefond?','skatt på barnesparing','Hva skjer med BSU hvis jeg flytter til utlandet?','Hva er utbytte fra fond?'])assert.equal(V.search(q).mode,'uncovered',q);
-const rr=Cards.build('q-renters-rente',{});assert.equal(rr.kind,'explainer');assert.equal(rr.next.more.length,1);assert.match(rr.parts[0].text,/renteinntekt er skattepliktig/);
+const rr=Cards.build('q-renters-rente',{});assert.equal(rr.kind,'explainer');assert.equal(rr.next.more.length,1);assert.match(rr.parts.map(p=>p.text).join(' '),/renteinntekt er skattepliktig/);
 assert.ok(rr.sources.every(x=>!x.url.includes('dnb.no')));assert.equal(rr.checked,'2026-10-25');
 const E=require('../dist/engine.js');
 for(const [link,nominal,real]of [[rr.next,11025,11025],[rr.next.more[0],10404,10000*1.02**2/1.025**2]]){

@@ -59,13 +59,13 @@ function render(focus=false){
   }
   const ex=el('section','','answer-part explain-example');ex.append(el('h3',a.example.title),el('p',a.example.text));out.append(ex);
   const terms=el('section','','explain-terms');terms.append(el('h3','Begreper i svaret'));const dl=el('dl');
-  for(const x of a.terms){dl.append(el('dt',x.term+(x.alsoCalled?' (også kalt '+x.alsoCalled+')':'')),el('dd',x.text));}
+  for(const x of a.terms||[]){dl.append(el('dt',x.term+(x.alsoCalled?' (også kalt '+x.alsoCalled+')':'')),el('dd',x.text));}
   terms.append(dl);if(!overview)out.append(terms);
   if(a.next)for(const next of [a.next,...(a.next.more||[])]){const p=el('p','','explain-next'),link=el('a',next.text);link.href=next.href;p.append(link);out.append(p);}
   const deep=el('details','','full-answer');deep.append(el('summary','Fordypning'));
   for(const part of a.parts)deep.append(partSection(part));
-  if(overview)deep.append(terms);out.append(deep);
-  const src=el('details','','answer-sources');src.append(el('summary','Kilder og forbehold'),el('p','Eksempeltall er ikke prognoser. Regler og vilkår kan endres.','hint'));
+  if(overview&&a.terms?.length)deep.append(terms);out.append(deep);
+  const src=el('details','','answer-sources');src.append(el('summary','Kilder og kontrollgrunnlag'));
   const sl=el('ul','','source-list');
   for(const s of a.sources){const li=el('li'),link=el('a',s.title);link.href=s.url;link.target='_blank';link.rel='noopener noreferrer';li.append(link);sl.append(li);}
   src.append(sl);if(a.review){const review=el('details','','review-details');review.append(el('summary','Om kildekontrollen'),el('p',a.review.text));src.append(review);}out.append(src);
@@ -77,8 +77,8 @@ function render(focus=false){
  for(const o of a.options){const card=el('article','','option-card');card.append(el('h3',o.title),el('p',o.subtitle,'option-subtitle'),group('Fordeler',o.pros,'pro'),group('Ulemper',o.cons,'con'),...(o.poorFit?[el('p','Passer dårlig hvis '+o.poorFit,'poor-fit')]:[]));grid.append(card);}out.append(grid);
  const full=el('details','','full-answer');full.append(el('summary',a.neutral?'Fordypning':'Les en utfyllende vurdering'));
  for(const part of a.parts.slice(0,3))full.append(partSection(part));
- if(a.parts.length>3){const more=el('details','','more-sections');more.append(el('summary','Vis flere ('+(a.parts.length-3)+')'));for(const part of a.parts.slice(3))more.append(partSection(part));full.append(more);}out.append(full);
- const sources=el('details','','answer-sources');sources.append(el('summary','Kilder og forbehold'),el('p',a.neutral?'Regler og vilkår kan endres. Se kildene for detaljer.':'Regler og grenser kan endres. Tidshorisont er bare en del av vurderingen, og lang tid garanterer ikke gevinst. Kildene har ikke godkjent veilederen.','hint'));
+ if(a.parts.length>3){const more=el('details','','more-sections');more.append(el('summary','Vis flere ('+(a.parts.length-3)+')'));for(const part of a.parts.slice(3))more.append(partSection(part));full.append(more);}if(a.parts.length)out.append(full);
+ const sources=el('details','','answer-sources');sources.append(el('summary',a.neutral?'Kilder og kontrollgrunnlag':'Kilder og forbehold'));if(!a.neutral)sources.append(el('p','Regler og grenser kan endres. Lang tid garanterer ikke gevinst.','hint'));
  const ul=el('ul','','source-list');
  for(const s of a.sources){const li=el('li'),link=el('a',s.title);link.href=s.url;link.target='_blank';link.rel='noopener noreferrer';li.append(link);ul.append(li);}sources.append(ul);if(a.review){const review=el('details','','review-details');review.append(el('summary','Om kildekontrollen'),el('p',a.review.text));sources.append(review);}
  out.append(sources);describe();if(focus)$('answerTitle').focus();

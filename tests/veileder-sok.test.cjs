@@ -26,7 +26,7 @@ const SET=[
  // Forklaringen «Hva er kjøpekraft?» svarer best. Sparekonto-svaret har bare én setning om temaet og godtas som alternativ.
  {q:'Hvorfor blir pengene mindre verdt på sparekontoen?',expect:'q-kjopekraft',also:['funds'],proof:/Kjøpekraft er hvor mye du kan kjøpe for pengene|Renten etter skatt kan være lavere enn prisveksten/},
  {q:'Hva er BSU?',expect:'q-bsu-basics',proof:/boligsparing for ungdom/},
- {q:'Får jeg BSU-fradrag hvis jeg allerede eier leilighet?',expect:'q-bsu-basics',also:['bsu'],proof:/Eier du bolig ved årets slutt|ikke eier bolig ved årets slutt|eierskap til primær- eller sekundærbolig 31\. desember stenger for fradrag/},
+ {q:'Får jeg BSU-fradrag hvis jeg allerede eier leilighet?',expect:'q-bsu-basics',also:['bsu'],proof:/Eier du bolig ved årets slutt|ikke eier bolig ved årets slutt|Eier du bolig 31\. desember, helt eller delvis, får du ikke fradrag/},
  {q:'Vi skal kjøpe leilighet om to år, hvordan bør vi spare egenkapitalen?',expect:'bsu',also:['funds'],proof:/uegnet nær boligkjøp|tilgjengelige til en fast, nær dato/},
  {q:'Bør jeg spare i mitt eller barnets navn?',expect:'children',proof:/I barnets navn gir du pengene fra deg/},
  {q:'Vil spare til barnebarnet mitt, hva bør jeg tenke på?',expect:'children',proof:/Eierskapet betyr minst like mye/},
@@ -34,8 +34,8 @@ const SET=[
  {q:'Bør jeg ta opp studielån når jeg har sparepenger?',expect:'student',proof:/Studielån kan gi trygghet/},
  {q:'Lønner det seg å betale ned studielånet fortere?',expect:'student',proof:/Låne mindre eller betale ekstra/},
  {q:'Bør jeg redusere risikoen før jeg blir pensjonist?',expect:'pension',proof:/Mange reduserer risiko når uttakene nærmer seg/},
- {q:'Hva er forskjellen på IPS og ASK?',expect:'q-ips-ask',proof:/IPS er pensjonssparing der pengene er bundet til pensjon/},
- {q:'Hva er en aksjesparekonto?',expect:'q-aksjesparekonto',proof:/Ved uttak tas gjenværende innskudd ut først, uten skatt/},
+ {q:'Hva er forskjellen på IPS og ASK?',expect:'q-ips-ask',proof:/IPS og ASK har ulike regler for binding, skatt og investeringer/},
+ {q:'Hva er en aksjesparekonto?',expect:'q-aksjesparekonto',proof:/Gjenværende innskudd tas ut skattefritt før gevinsten/},
  // Ikke dekket. Et treff her er misvisende: brukeren får et svar på noe annet enn det hen spurte om.
  {q:'Hvordan blir fond skattlagt?',expect:null,why:'Fondssvaret har ingen skatteregler for fond. ASK-svaret forklarer bare forskjellen mellom to kontotyper.'},
  {q:'Er det dumt å ha alle sparepengene på brukskonto?',expect:null,why:'Ingen svar sammenligner brukskonto med sparekonto.'},

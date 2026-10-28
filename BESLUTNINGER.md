@@ -747,3 +747,15 @@ C. Beholde Nordnet bare i kildelisten. Ikke valgt: setningene som bygde på kild
 **Akseptert ulempe:** Mer detaljert innhold krever åpning av fordypningen. Selvkontroll beviser ikke brukerforståelse eller full tilgjengelighet.
 
 **Vurder på nytt når:** kontrollør, Lars eller faktisk bruk finner at en forenkling endrer meningen eller skjuler et viktig forbehold.
+
+## Gjentakelser og lengde i svarene, oppfølging 28.10.2026
+
+**Grunnlag:** Lars videresendte en gjennomgang av PR #100 som fant gjentakelser og økt samlet tekstmengde. Dette erstatter den tidligere språkrundens antakelse om at en strammere innledning alene gjorde svarene kortere.
+
+**Valg i arbeidsutkastet:** Ett hovedsted per faglig poeng. Frivillige felt, ingen tomme begrepslister eller fordypninger. Identiske setninger stoppes av test. Målet er 300 ord, inkludert fordypning; totalen med kildetitler og kontrollgrunnlag vises separat og utløser varsel over målet. Nødvendige vilkår kuttes ikke automatisk. Renters rente beholder regneforutsetninger og kontrollbare eksempler selv om totalen med dokumentasjon overstiger målet. Språkformen er «egenkontroll».
+
+**Alternativer:** A. Struktur og måling med redaksjonell kontroll. Valgt som implementeringsforslag. B. Hardt kutt ved 300 ord. Ikke valgt: kan fjerne vilkår som endrer meningen. C. Bare en test for ordrette dubletter. Ikke valgt alene: finner ikke omskrevne gjentakelser.
+
+**K1-presisering:** Regelen har et uttrykkelig unntak for et direkte spørsmål eller nødvendig opplysning om usikkerhet, med henvisning til riktig instans. Den endres ikke her. De fire utkastene forblir upubliserte. Åpne spesialtilfeller i SV-135 og SV-050 registreres som publiseringssperrer i arbeidsnotatene, og svartekstene avgrenser dekningen.
+
+**Status:** Revisjon til kontroll i PR #100. Ikke en godkjenning av publisering eller av hele kildekontrollen.

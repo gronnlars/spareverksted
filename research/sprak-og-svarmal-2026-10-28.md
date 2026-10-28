@@ -52,3 +52,44 @@ Kjøring 40730938010 på `aa00829`: hele nettleserjobben besto. Den nye kontroll
 Visuell kontroll avdekket at den gamle ASK-spesifikke fordypningsoverskriften ble brukt på andre emner, og at grunnbegrepene fortsatt hadde en stor eksempelboks. Overskriften er endret til «Fordypning», og eksemplet bruker nå samme uinnrammede stil for alle oversiktssvar. Disse oppfølgingene skal også passere den siste CI-kjøringen. Gjentakelsen av fondskontoavgrensningen og en unødvendig BSU-henvisning i IPS-svaret er fjernet, mens vilkårene beholdes der de gjelder.
 
 Enhetstesten for historiske søkeinnganger feilet først i CI fordi standardutsjekken ikke inneholder git-historikken. Den er rettet til å bruke en fast, versjonert referanse hentet fra `1082c4f`. Selve forventningene er uendret. Ny versjon består lokalt sammen med de øvrige 17 Node-testfilene. Totalstatus på siste PR-head må leses separat, ikke utledes av denne første kjøringen.
+
+## Revisjon etter Lars sin videresendte tekstkontroll
+
+Tidligere språkrunde var ikke tilstrekkelig: strammere kortsvar skjulte en lengre samlet tekst. Revisjonen fjerner både ordrette og omskrevne gjentakelser. Kortsvar gir oversikt; fordeler/ulemper har reglene én gang; fordypning har tilleggsinformasjon; eksempelregler står ved eksemplene. Begrepslister og fordypning vises ikke når de er tomme. Faste ansvarsfraser ved kildene er fjernet. Kjøpekraft har ikke lenger formuleringen om at kildene ikke har godkjent forklaringen.
+
+K1 er lest på nytt. Vurderingen om et absolutt forbud mot å omtale usikkerhet var for kategorisk: regelen har et uttrykkelig unntak. Ingen kildekrav endres. SV-135 dekker bankbytte/boligformål, ikke utenlandsflytting. SV-050 dekker ikke kildeskatt, fondskonto eller tilbakebetaling av innbetalt kapital. De åpne fagpunktene er bevart som `publicationBlockers` i JSON og i de genererte arbeidsnotatene. De fire utkastene integreres fortsatt ikke i produksjonssiden.
+
+BSU-satsiden ble faktisk lest i denne revisjonen: https://www.skatteetaten.no/satser/fradrag-for-boligsparing-for-ungdom-bsu/?year=2026. Den sier uttrykkelig at regelen gjelder helt/delvis og direkte/indirekte eierskap, med borettslagsandel som eksempel på indirekte eierskap. Denne presiseringen er derfor kildebelagt før forenklingen, og kilden er lagt til svaret. Udatert side; årstallet støttes fortsatt av den tidligere leste Forskuddsutskrivingen 2026. Ingen andre uavklarte forhold er gjort til verifiserte fakta.
+
+### Slik måles lengden
+
+`tests/helpers/svartekst.cjs` teller de samme tekstfeltene før og etter: tittel, kortsvar, forbehold, kort, eksempel, fordypning, begreper og lenketekst, samt kildetitler og kontrolltekst. URL-er, søkeord, profildata, arbeidsnotater og faste UI-etiketter utelates. Det er en annen avgrensning enn kontrollørens 3 147/3 353 ord. Tallene må ikke blandes. Referansen fra PR-head `a9d0f6d` er lagret i `tests/fixtures/svartekst-before.json`. Samme funksjon teller revisjonen. Regneeksempler, kilder og kontrolldatoer er med, så reduksjonen skyldes ikke at dokumentasjon flyttes ut av opptellingen.
+
+Alle 13 svar er kortere enn den gjennomgåtte PR-versjonen. De ni egne svarene er også samlet kortere enn main `1082c4f`, målt på samme egne innholdsfelt (ikke arvet kategoriinnhold). Tabellen genereres med `node tests/svartekst.test.cjs --table`. Renters rente varsles særskilt: selve svaret er under 300 ord, men totalen med kildetitler og kontrollgrunnlag er over. Regneforutsetninger og forskjellige eksempler beholdes framfor automatisk kutt.
+
+### Utførte og gjenstående kontroller
+
+Ny duplikattest normaliserer identiske setninger med minst seks ord innenfor ett svar. Den beviser at den fanger den tidligere indeksfond-setningen når den står to ganger. Korte etiketter og overskrifter er unntatt. Dette kontrollerer ikke omskrevne gjentakelser eller faglig mening; alle 13 tekster er også lest og gjennomgått manuelt av GPT. Det er egenkontroll, ingen uavhengig fagkontroll.
+
+Eksisterende semantiske tester er tilpasset nye formuleringer og plasseringer, uten å fjerne kontroller av beløp, vilkår, risiko, renter, skatt og regneeksempler. Isolerte utkastprøver og produksjonens GAPS beholdes. Svarmalen må også bestå ny nettleser- og visuell kontroll etter denne revisjonen. Tidligere grønne kjøringer gjelder tidligere tekstversjon.
+
+### Målt etter revisjonen
+
+Svartekst: ingen like setninger, ingen vi-form, alle 13 svar kortere. 4603 → 3110 ord (-32.4 %).
+| Svar | Før | Etter | Endring |
+| --- | ---: | ---: | ---: |
+| Hva er renters rente? | 593 | 332 | -261 |
+| Hva er et indeksfond? | 452 | 226 | -226 |
+| Hva er forskjellen på sparing og investering? | 338 | 220 | -118 |
+| Hva er en aksjesparekonto (ASK)? | 337 | 272 | -65 |
+| Hva er en fondskonto? | 423 | 262 | -161 |
+| Hva er BSU? | 384 | 280 | -104 |
+| IPS eller ASK? | 329 | 231 | -98 |
+| ASK eller fondskonto? | 307 | 231 | -76 |
+| Hva er kjøpekraft? | 311 | 181 | -130 |
+| Hvem betaler skatt på barnesparing? | 280 | 230 | -50 |
+| Hva skjer med BSU hvis jeg flytter? | 287 | 199 | -88 |
+| Hva er utbytte fra aksjer og fond? | 304 | 259 | -45 |
+| Hva er et rentefond? | 258 | 187 | -71 |
+
+19 Node-testfiler, generatorens samsvarskontroll og 35 isolerte utkastprøver består lokalt etter revisjonen. Nettleser- og visningsresultater må gjelde ny PR-head.

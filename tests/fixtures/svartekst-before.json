@@ -1,0 +1,71 @@
+{
+  "base": "a9d0f6dff855653368a0c744294990a236fd6638",
+  "method": "Alle tekstfelt for leseren, inkludert kildetitler og kontrollgrunnlag. URL-er, ruting og arbeidsnotater utelates. Ingen faste UI-etiketter.",
+  "answers": {
+    "q-renters-rente": {
+      "title": "Hva er renters rente?",
+      "content": 515,
+      "all": 593
+    },
+    "q-indeksfond": {
+      "title": "Hva er et indeksfond?",
+      "content": 405,
+      "all": 452
+    },
+    "q-sparing-investering": {
+      "title": "Hva er forskjellen på sparing og investering?",
+      "content": 298,
+      "all": 338
+    },
+    "q-aksjesparekonto": {
+      "title": "Hva er en aksjesparekonto (ASK)?",
+      "content": 279,
+      "all": 337
+    },
+    "q-fondskonto": {
+      "title": "Hva er en fondskonto?",
+      "content": 387,
+      "all": 423
+    },
+    "q-bsu-basics": {
+      "title": "Hva er BSU?",
+      "content": 345,
+      "all": 384
+    },
+    "q-ips-ask": {
+      "title": "IPS eller ASK?",
+      "content": 285,
+      "all": 329
+    },
+    "q-ask-zero": {
+      "title": "ASK eller fondskonto?",
+      "content": 272,
+      "all": 307
+    },
+    "q-kjopekraft": {
+      "title": "Hva er kjøpekraft?",
+      "content": 295,
+      "all": 311
+    },
+    "q-barnesparing-skatt": {
+      "title": "Hvem betaler skatt på barnesparing?",
+      "content": 244,
+      "all": 280
+    },
+    "q-bsu-flytting": {
+      "title": "Hva skjer med BSU hvis jeg flytter?",
+      "content": 253,
+      "all": 287
+    },
+    "q-utbytte": {
+      "title": "Hva er utbytte fra aksjer og fond?",
+      "content": 259,
+      "all": 304
+    },
+    "q-rentefond": {
+      "title": "Hva er et rentefond?",
+      "content": 221,
+      "all": 258
+    }
+  }
+}
