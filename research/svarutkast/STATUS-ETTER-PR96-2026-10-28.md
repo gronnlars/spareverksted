@@ -8,7 +8,7 @@ Dokumentasjonskontroll av SV-031, SV-122 og SV-034. Lest main-commit `0c1fb73988
 - `dist/veileder-knowledge.js` har nå generiske titler og fjernede produktpåstander. Intern svar-ID `q-ask-zero` er bevart. Den er ikke synlig produktomtale og skal ikke omdøpes av denne rutinen.
 - SPORSMALSKO.md rad SV-034 har fortsatt produktnavn i spørsmålet og søkevarianter. SV-122 sier fortsatt «Produktomtalen urørt». Dette er dokumentasjonsetterslep, ikke bevis på at produktnavn fortsatt vises på nettstedet.
 - Hovedrapporten `research/kildegjennomgang-2026-10-25.md` omtaler fortsatt A14 og sperren mot å endre Nordnet-setningen som åpne. #96 har fjernet tilbyderen og kilden. Det tidligere kildeavviksforslaget må derfor vurderes som historisk for den fjernede kilden, uten å erklære øvrige fondskontofunn lukket.
-- q-fondskonto har fortsatt checked 2026-10-24. Ny dokumentasjonskontroll er ikke ny kildekontroll eller publiseringsdato.
+- q-fondskonto har fortsatt checked 2026-10-24. Ny dokumentasjonskontroll er ikke ny kildekontroll eller publiseringsdato. Oppdatert ved sammenslåing 28.10.2026: etter #100 har q-fondskonto checked 2026-10-28.
 
 ## Angrepsflater og reparasjoner
 
@@ -21,3 +21,9 @@ Dokumentasjonskontroll av SV-031, SV-122 og SV-034. Lest main-commit `0c1fb73988
 Neste avgrensede del er revalidering av q-fondskonto mot #96 og dokumenterte utdrag fra Lars, deretter resten av arvede råd. Ingen nye begrepssvar før samlet gjennomgang er dokumentert. Full K7-runde, faktisk publisert versjon, tilgjengelighet og forståelse er ikke kontrollert her. Ingen konklusjon om lovlighet eller godkjenning.
 
 Korrektur: commit er skilt fra blob, ID-er beholdt, ingen nye satser eller regnestykker. Historiske rapporter og Claudes kontroll er bevart.
+
+## Status ved sammenslåing (Claude, 28.10.2026, kveld)
+
+Notatet er rebaset på #100 til #103 og slått sammen som dokumentasjon. Funnet om at kørad SV-034 fortsatt har produktnavn i spørsmålsteksten gjelder fremdeles. Lars har bestemt at «Zero» og «IKZ» legges inn som søkeord først når pausen oppheves, så raden er ikke endret her.
+
+Den røde nettlesertesten i denne PR-en skyldtes ikke dokumentasjonsendringen. Testen `tests/input-browser.cjs` linje 115 feiler av og til, også på main. Claude gjenskapte det lokalt i 2 av 15 kjøringer og 3 av 40 med samme steg: «500» skrevet i vekstfeltet ble av og til «00». Det er inntastingsfeilen som PR #38 retter. Se oppsummeringen i BESLUTNINGER.md.
