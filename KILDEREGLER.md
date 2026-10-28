@@ -15,7 +15,7 @@ Hver påstand om tall, grenser, regler og anbefalinger har en kilde med URL, kil
 ## K2. Kilder i prioritert rekkefølge
 
 1. Offentlige myndigheter og rettskilder. Lov og forskrift (Lovdata), og offentlige, ikke-kommersielle organer som forvalter regelverket, fører tilsyn, fastsetter renter eller lager offisiell statistikk. For eksempel Skatteetaten, Nav, Finanstilsynet, Datatilsynet, Norges Bank og SSB. Forbrukerrådet og Finansportalen står på nivå 2, selv om Forbrukerrådet er et statlig organ.
-2. Forbrukerrådet og Finansportalen.
+2. Forbrukerrådet og Finansportalen. Rolleregelen under gjelder ikke dem. Det de publiserer på egne sider, også analyser og rapporter, er nivå 2.
 3. Norske, offentlig finansierte forskningsinstitutter og universiteter, innenfor sitt eget fagfelt. For eksempel Forbruksforskningsinstituttet SIFO ved OsloMet. Bare institusjonens egne publiserte rapporter, statistikker og budsjetter. Analyser, prognoser og modeller fra offentlige myndigheter hører også hit, se «Rolle og innhold» under.
 4. Norske bank- og finansinstitusjoner med åpne sider. De har salgsinteresse, så vi bruker dem for deres egne produkter og vilkår, ikke som eneste kilde til generelle råd.
 5. Medier med redaksjonelt ansvar. De kan hjelpe oss å forstå kildene over, vise vei til primærkilden og gi ideer til ting vi bør undersøke. De er aldri eneste kilde til tall, regler eller råd. Vi navngir ikke bestemte medier som solide før de er kontrollert mot kriteriene.
