@@ -11,6 +11,8 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | Hva | Regel | Godkjent av | Utløper | Fornyes av | Status |
 | --- | --- | --- | --- | --- | --- |
 | Varsel om sparehorisont for Indeksfond under 5 år på kalkulatorsiden (PR #67) | Kalkulatorfrysen (plan, punkt 0) | Lars ved sammenslåing | 31.01.2027 | Lars | Foreslått. Aktivt først når #67 er slått sammen |
+| Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en med unntaket er slått sammen |
+| Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en er slått sammen |
 
 ## En ulempe betyr ikke at valget var feil
 
@@ -519,3 +521,130 @@ H. «Primærkilden når den finnes og er tilgjengelig.» Ikke valgt: kan leses s
 **Ikke gjort her:** Den brutte henvisningen øverst i KILDEREGLER.md til oppføringene «Kildenivå for påstander og råd» og «Sparehorisont og Forbrukerrådets anbefaling». De finnes bare på de usammenslåtte grenene `docs/maaneder-og-kildenivaa` og `feature/sparehorisont-varsel`. Håndteres i egen PR.
 
 **Vurder på nytt når:** en kilde faller mellom to nivåer, eller samme avvik oppstår to ganger.
+
+## Unntak fra pausen for nøytrale begrepsforklaringer (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026 kl. 10.09. Kravene står i `docs/regulatorisk.md`, «Unntak fra pausen: nøytrale begrepsforklaringer». Aktivt når PR-en med unntaket er slått sammen.
+
+**Beslutning:** Forklaringer av nøytrale begreper kan publiseres under pausen og uten hensyn til kalkulatorfrysen, når de bare forklarer betydning, ikke nevner produkter eller tilbydere, ikke tilpasses brukeren og følger kilde- og språkreglene. Første runde gjelder begreper som ikke hviler på regler eller satser.
+
+**Erstattet samme dag:** Begrensningen til «bare betydning» og til begreper uten regler eller satser gjelder ikke lenger. Gjeldende regel står i oppføringen «Nøytrale spørsmål og svar om økonomiske begreper» og i `docs/regulatorisk.md`, krav 1 og 4.
+
+**Bakgrunn:** Veikartet (28.10.2026, trinn 3.0) krever at alle fagord på siden skal kunne slås opp. I dag er 18 begreper forklart, spredt inne i enkeltsvar. Finanstilsynets artikkel lest 27.10.2026 gjelder personlige råd om hva man bør kjøpe, selge eller beholde. At en forklaring av hva et begrep betyr faller utenfor, er Claudes og Lars' vurdering, ikke en juridisk avklaring. Forslaget er bearbeidet mellom Lars, Claude og GPT.
+
+**Alternativer:**
+A. Unntak for nøytrale begreper med kontrollerbare krav. **Valgt.**
+B. Vente på Finanstilsynet med alt. Ikke valgt: lav risiko, stor nytte og ukjent ventetid.
+C. Unntak for alt innhold i veilederen. Ikke valgt: svar om valg mellom alternativer er nettopp det Finanstilsynet er spurt om.
+D. Unntaket omfatter også ny funksjonalitet (forklaring der ordet står, ordlisteside). Ikke valgt nå: ny kode krever egen test og prøving med hjelpemidler. Standarden fastsettes nå (oppføringen under), bygging venter til oppstart. **Endret samme dag, to ganger:** Lars vedtok først at forklaring der ordet står og ordlisten er UU og kan bygges nå. Senere samme dag sluttet han seg til GPTs innspill om at bare retting av dokumenterte UU-feil åpnes. Forklaring der ordet står og ordlisten er nye funksjoner og venter til oppstart, som opprinnelig.
+E. Kontroll bare med en liste over forbudte ord. Ikke valgt: en tekst kan styre valg uten de ordene (påpekt av GPT 28.10.2026). Listen er et varsel, hele teksten vurderes.
+
+**Akseptert ulempe:** «Nøytral» er en vurdering. Kontrollen er egenkontroll pluss kontroll av en annen enn skribenten, ingen juridisk kontroll.
+
+**Vurder på nytt når:** Finanstilsynet svarer, eller en forklaring viser seg å bli lest som en anbefaling.
+
+## Standard for fagord forklart der de står (28. oktober 2026)
+
+**Bygging:** venter til oppstart. Se oppføringen om unntaket over.
+
+**Status:** Lars ba 28.10.2026 om at det beste mønsteret for universell utforming undersøkes og legges inn som standarden. Valgt etter undersøkelse samme dag. Ikke bygget. Mønsteret regnes som endelig først etter prøvingen i `research/universell-utforming.md`, punkt 6, der også mønsteret og kildene står.
+
+**Beslutning:** Fagordet er en knapp i teksten med prikket understrek. Trykk åpner forklaringen i teksten rett etter ordet, slik at resten av teksten skyves ned. Ingenting dekkes, ingenting vises ved hover, og fokus flyttes ikke. Gjelder alle nivåer, med sterkere markering i Enkel.
+
+**Alternativer:**
+A. Knapp som åpner forklaringen i teksten rett etter ordet. **Valgt.** Virker likt med mus, tastatur, berøring og skjermleser, og dekker ikke innhold ved zoom.
+B. Verktøytips ved musepeker eller fokus. Ikke valgt: virker ikke med berøring, må oppfylle tre krav i WCAG 1.4.13, og W3C viser til at det vanligvis finnes mer forutsigbare løsninger.
+C. Flytende boks som åpnes ved trykk (som NRK). Ikke valgt: dekker teksten under, og kan havne delvis utenfor skjermen ved 400 % zoom (WCAG 1.4.10). Var utgangspunktet Lars viste fram.
+D. `<details>` og `<summary>`. Ikke valgt: kan ikke stå inne i en setning.
+E. `title`-attributtet. Ikke valgt: virker ikke med berøring, og vises ikke ved tastaturfokus i vanlige nettlesere.
+F. Lenke til ordlisten. Ikke valgt som hovedløsning: brukeren må forlate teksten. Brukes som reserve når JavaScript ikke virker.
+G. Opplesning med `role="status"` når forklaringen åpnes, slik Pearson anbefaler for toggletips. Ikke valgt nå: strider mot regelen om sparsom opplesning, og forklaringen står rett etter knappen. Tas opp igjen hvis VoiceOver-testen viser at forklaringen ikke blir funnet.
+
+**Akseptert ulempe:** Mønsteret er satt sammen ut fra kilder og egne regler, ikke testet med skjermleserbrukere ennå. 44 px trykkflate, som Claude nevnte tidligere 28.10, er ikke realistisk inne i et avsnitt. Kravet er minst 24 px linjehøyde.
+
+**Tilgjengelighetssiden:** Teksten om valget legges inn først når funksjonen publiseres. Utkastet står i `research/universell-utforming.md`, punkt 6.
+
+**Vurder på nytt når:** prøvingen viser problemer, eller Uu-tilsynet eller eksterne testere gir råd om noe annet.
+
+## Områder pausen ikke gjelder (28. oktober 2026)
+
+**Gjeldende regel:** står i `docs/regulatorisk.md`, «Områder pausen ikke gjelder», og i oppføringen «Nøytrale spørsmål og svar om økonomiske begreper» lenger ned. Resten av denne oppføringen er historikk.
+
+**Status:** Vedtatt av Lars 28.10.2026, samme dag som unntaket for begrepsforklaringer. Senere samme dag endret, se under.
+
+**Opprinnelig beslutning (erstattet):** Pausen gjelder ikke forbedringer i kilderegler og kildekontroll, universell utforming, generelle spørsmål, personvern og retting av opplagte brudd på lover og regler. Sperrene for kontekstuell veiledning og produktanbefalinger står, og ny funksjonalitet utenfor områdene venter til oppstart.
+
+**Bakgrunn:** Første eksterne skjermlesertest 28.10.2026 viste at grafen ikke beskrives i ord. Det er en UU-feil (WCAG 1.1.1). Kalkulatorfrysen tillot allerede å rette UU-feil, men pausen stoppet det. Lars vurderer at forbedringer som gjør siden riktigere, tryggere og mer tilgjengelig ikke bør vente på Finanstilsynet.
+
+**Endret samme dag, etter presiseringen til Finanstilsynet:** Lars sendte 28.10.2026 en presisering som nevner personvern, universell utforming, kildekrav og nøytrale begrepsforklaringer, ikke generelle spørsmål. For at regelverket skal stemme med det Finanstilsynet har fått vite, er «generelle spørsmål» tatt ut av områdene i `docs/regulatorisk.md`. Spørsmål og svar som bare forklarer begreper og forskjeller, er med under begrepsforklaringene. Retting av opplagte lovbrudd er beholdt som ren retting. Lars bekreftet retningen samme dag og erstattet «generelle spørsmål» med nøytrale spørsmål og svar om begreper, se egen oppføring.
+
+**Historikk, tolkning av den opprinnelige formuleringen (erstattet):** «Generelle spørsmål» er forstått som forhåndsskrevne svar som er like for alle brukere, uten tilpasning etter brukerens opplysninger og uten produktanbefalinger. Det er det Finanstilsynets artikkel ikke omtaler som personlig rådgivning.
+
+**Alternativer, slik de sto ved det opprinnelige vedtaket:**
+A. Åpne for disse områdene, med sperrene intakte. **Valgt.**
+B. Ett og ett unntak etter behov, som for begrepsforklaringene. Ikke valgt: gir mange små vedtak for samme type arbeid.
+C. Oppheve pausen helt. Ikke valgt: spørsmålet om tilpasning etter alder og sparehorisont er fortsatt ubesvart.
+
+**Akseptert ulempe:** Grensen for «generelle spørsmål» og «opplagt lovbrudd» krever skjønn. Ved tvil avgjør Lars.
+
+**Vurder på nytt når:** Finanstilsynet svarer, eller et generelt svar viser seg å bli lest som en personlig anbefaling.
+
+## Bygg slik at det som venter, lett kan kobles på (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026 som prinsipp for alt arbeid under pausen. Lars' formulering: alt må lages så funksjonene vi venter på, lett kan integreres når avklaringen er på plass.
+
+**Beslutning:** Det som bygges nå, lages slik at funksjonene som venter (kontekstuell veiledning, forklaring der ordet står, ordlisteside, opplesning, lånekalkulator), kan kobles på senere uten å skrive om det som finnes. Prinsippet gjelder bare arbeid som er tillatt nå. Det gir ikke tillatelse til å bygge utsatte funksjoner, heller ikke bak en av/på-bryter. Utsatte funksjoner bygges først etter oppstart. Konkret:
+
+1. **Ingen utsatte funksjoner bak bryter.** Opprinnelig sto det at en funksjon som venter, kunne bygges ferdig og stå avslått. Det er erstattet 28.10.2026 etter kontroll av GPT, fordi det kolliderer med at nye funksjoner venter.
+2. **Én kilde for innhold.** Begrepsregisteret og svarbasen har plass til det senere funksjoner trenger, for eksempel kort og lang forklaring. Felt for tilpasning legges ikke inn før sperren er opphevet.
+3. **Gjenbrukbare deler.** Teksten som beskriver resultatet (veikartet 0.5) lages som én modul som grafbeskrivelsen, en senere «Les opp»-knapp, eksport og veilederen kan bruke. Forklaringer vises med én felles komponent.
+4. **Tester for det som bygges.** Tester dekker det tillatte arbeidet. Tester for utsatte funksjoner skrives når funksjonene bygges.
+5. **Offentlige sider omtaler bare det som er på.**
+
+**Grense:** «Bra nok er mer enn nok» gjelder. Det forberedes bare for funksjoner som allerede står i veikartet, og ingen kode skrives på forhånd uten at neste bruk er kjent.
+
+**Alternativer:**
+A. Prinsippet over. **Valgt.**
+B. Bygge bare det som publiseres nå, og bygge om senere. Ikke valgt: dobbelt arbeid og risiko for at det som er kontrollert, må kontrolleres på nytt.
+C. Bygge alt ferdig nå bak brytere, også kontekstuell veiledning. Ikke valgt: sperren gjelder, og svaret fra Finanstilsynet kan endre hva som skal bygges.
+
+**Akseptert ulempe:** Brytere og felles moduler gir litt mer kode og flere tester.
+
+**Vurder på nytt når:** en bryter står av lenge uten at funksjonen nærmer seg avklaring. Da fjernes koden heller enn å ligge der.
+
+## Skrivemåte: «renters rente» (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026.
+
+**Beslutning:** I tekst skrives alltid «renters rente». «Rentes rente», «renter på renter» og andre skrivemåter skal gi søketreff, men brukes ikke i teksten.
+
+**Bakgrunn:** Begrepsregisteret (PR #91) fant begge skrivemåtene på siden. SPRAKREGLER krever ett navn per ting. «Renters rente» er tittelen på svaret som allerede finnes.
+
+**Alternativer:** A. «Renters rente». **Valgt.** B. «Rentes rente». Ikke valgt: ville kreve endring av eksisterende svar uten gevinst.
+
+**Sparetid, vedtatt av Lars 28.10.2026:** I tekst skrives «sparetid», forklart som «hvor lenge du planlegger å spare». «Sparehorisont» blir søkeord og brukes ikke i teksten. Anbefalt av GPT. Lars' begrunnelse: kort og presist, og korte ord er lettere for dem som lytter med skjermleser og for dem med dysleksi.
+
+## Nøytrale spørsmål og svar om økonomiske begreper (28. oktober 2026)
+
+**Status:** Vedtatt av Lars 28.10.2026, med formulering fra GPT som Lars sluttet seg til. Ført i `docs/regulatorisk.md`, kravene 1, 4 og 5 og områdene.
+
+**Beslutning:** Svarbasen kan fylles med nøytrale spørsmål og svar som forklarer økonomiske begreper, også forskjeller, fordeler og ulemper. Avgrensningen gjelder innholdet: svarene skal ikke føre brukeren mot produkter, anbefale handlinger eller tilpasses som personlige råd. Relevante begrensninger og variasjoner forklares, uten konklusjon om hva brukeren bør velge. Eksempler: renters rente, effektiv rente, kredittscore, annuitetslån og serielån. GPT skriver svarene og har ansvaret for kildekontrollen. Lars godkjenner.
+
+**Hva som ikke åpnes:** Ingen nye funksjoner som lånekalkulator, budsjettveiviser eller styring etter alder, sparehorisont eller sparemål. Innholdsarbeidet åpner ikke av seg selv for publisering.
+
+**Endringer i kravene:**
+- Krav 1 tillater nå fordeler og ulemper. Claude anbefalte å skrive forskjeller som fakta og følger, ikke som «for» og «mot». Lars valgte å tillate fordeler og ulemper, med vilkåret at de skrives som etterprøvbare følger og ikke ender i en konklusjon.
+- Krav 4 tillater begreper som hviler på regler eller satser, når regelen er lest i primærkilden og forklaringen får kontrolldato og vedlikehold. Effektiv rente og kredittscore er slike begreper.
+- «Generelle spørsmål» er tatt ut som egen kategori. Den var for grov til å både åpne og sperre.
+
+**Forholdet til presiseringen til Finanstilsynet 28.10.2026:** Presiseringen sier at forklaringene anbefaler ingen handling, nevner ingen produkter og tilpasses ikke den enkelte. Det gjelder fortsatt. At svarene kan vise fordeler og ulemper, står ikke uttrykkelig i presiseringen. Claude vurderer at det ligger innenfor, så lenge svarene ikke ender i en anbefaling, men det er ikke en juridisk vurdering.
+
+**Alternativer:**
+A. Nøytrale begrepsspørsmål i spørsmål-og-svar-form, med fordeler og ulemper uten konklusjon. **Valgt.**
+B. Bare definisjoner, uten forskjeller og fordeler og ulemper. Ikke valgt: gir lite hjelp ved spørsmål som annuitetslån eller serielån.
+C. Åpne for «generelle spørsmål» bredt. Ikke valgt: kategorien er for grov og nevnes ikke i presiseringen.
+
+**Akseptert ulempe:** Grensen mellom fordeler og ulemper og en anbefaling krever skjønn i hvert svar. Kontrollen av premiss og mulig oppfattet anbefaling (PR #87) brukes på hvert svar.
+
+**Vurder på nytt når:** Finanstilsynet svarer, eller et svar viser seg å bli lest som en anbefaling.
+

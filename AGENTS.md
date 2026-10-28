@@ -1,6 +1,6 @@
 # Arbeidsregler for Spareverksted
 
-**STANS: Prosjektet er på vent til Finanstilsynet har svart og alt er klarert. Les [docs/regulatorisk.md](docs/regulatorisk.md) før du gjør noe. Ikke start arbeid uten uttrykkelig beskjed fra Lars.**
+**STANS: Prosjektet er på vent til Finanstilsynet har svart og alt er klarert. Les [docs/regulatorisk.md](docs/regulatorisk.md) før du gjør noe. Ikke start arbeid uten uttrykkelig beskjed fra Lars. Pausen gjelder ikke (vedtatt 28.10.2026): kildekrav, universell utforming, personvern, nøytrale spørsmål og svar om økonomiske begreper, og retting av opplagte lovbrudd. Ingen nye funksjoner. Grensene står i regulatorisk.md, «Områder pausen ikke gjelder».**
 
 Gjelder hele repoet og alle bidragsytere, inkludert ChatGPT/Codex, Claude, Gemini og Vibe.
 
