@@ -91,7 +91,7 @@ function answer(id,profile){
  if(p.income==='uncertain')add('Ta høyde for inntektsfall','Med usikker inntekt er tilgjengelige penger ekstra viktige. Velg et sparebeløp som også tåler svakere måneder uten ny dyr gjeld.',true);
  const base={
  mortgage:['Det kommer an på hva du trenger mest','Ekstra nedbetaling reduserer gjeld og framtidige renteutgifter. Fond kan gi høyere avkastning, men også tap. Penger du har betalt inn på boliglånet, er normalt ikke fritt tilgjengelige uten en ny avtale med banken.','mortgage','pension','fixed'],
- student:['Skill mellom trygghet og investering','Studielån kan gi rom i studentøkonomien, men er fortsatt gjeld. Å beholde en reserve på konto og å investere lånte penger i aksjefond er to forskjellige valg. Fondsverdien kan falle mens lånet består.','student','grant'],
+ student:['Skill mellom trygghet og investering','Studielån kan gi rom i studentøkonomien, men er fortsatt gjeld. Å beholde en reserve på konto og å investere lånte penger i aksjefond er to forskjellige valg. Faller fondet, blir lånet stående likevel.','student','grant'],
  children:['Hvem skal eie pengene?','I barnets navn tilhører pengene barnet. I ditt navn beholder du råderetten, men pengene inngår i din økonomi. Arv, kreditorer og et eventuelt samlivsbrudd kan få betydning. Bruk tid på eierskapet før du velger spareprodukt.','child','adult','grant'],
  buffer:['Begynn med utgiftene dine','En buffer skal dekke uforutsette, nødvendige utgifter. Ta utgangspunkt i bolig, transport, forsørgeransvar og inntekt. Det finnes ikke ett riktig antall månedslønner for alle. En tilgjengelig sparekonto passer bedre til dette formålet enn aksjefond.','mortgage','nav'],
  funds:['Når trenger du pengene?','Sparekonto og aksjefond løser ulike behov. Konto gir mer forutsigbarhet. Et bredt aksjefond sprer risikoen mellom selskaper, men kan likevel falle mye. Se på samlede kostnader, også eventuelle plattformgebyrer.','funds','risk'],
@@ -113,8 +113,8 @@ function answer(id,profile){
   pension:'Pensjonssparing varer ofte i mange år. Et automatisk trekk kan gjøre det lettere å holde planen. Velg et beløp du klarer over tid, og behold en buffer først.'};
  if(Object.hasOwn(effort,id))add('Hva krever det av deg?',p.discipline==='automatic'?'Et fast trekk kan gjøre det lettere å gjennomføre sparingen. Det fjerner hverken tapsrisiko eller behovet for å tilpasse beløpet når økonomien endrer seg.':effort[id]);
  if(id==='mortgage'){
- add('Sammenlign på samme grunnlag','Sammenlign spart rente etter virkningen av rentefradrag med fondsavkastning etter kostnader og skatt. En forventet fondsavkastning er usikker. En kombinasjon av sparing og ekstra avdrag kan også være aktuell.');
- add(p.fixed==='yes'?'Du har fastrente':'Har du fastrente?', 'Ved fastrente kan ekstra innbetaling utløse overkurs eller underkurs. Be banken regne ut kostnaden og forklare avtalen før du bestemmer deg. Ved flytende rente vil rentebesparelsen endre seg når renten endres.');
+ add('Sammenlign på samme grunnlag','Sammenlign renten du sparer, etter rentefradrag, med forventet fondsavkastning etter kostnader og skatt. Fondsavkastningen er usikker. En kombinasjon av sparing og ekstra avdrag kan også være aktuell.');
+ add(p.fixed==='yes'?'Du har fastrente':'Har du fastrente?', 'Betaler du ekstra mens renten er bundet, kan det gi overkurs eller underkurs. Overkurs betyr at du betaler bankens rentetap hvis rentene har falt. Underkurs betyr at banken kan godskrive deg en gevinst hvis rentene har steget. Be banken regne ut kostnaden og forklare avtalen før du bestemmer deg. Ved flytende rente endres rentebesparelsen når renten endres.');
  }
  if(id==='student'){
  add('Renter og stipend','Lånet er normalt rentefritt mens du får støtte til fulltidsutdanning. Andre studiesituasjoner kan ha andre regler. Inntekt, nettoformue og studieprogresjon påvirker om lån blir stipend. Sjekk vilkårene hos Lånekassen.');
