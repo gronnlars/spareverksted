@@ -111,7 +111,7 @@ Se i `sammendrag`: `forespørslerTilAndreVerter`, `Set_Cookie`, `ikkeGET_ellerMe
 
 ## Nettleverandøren (leverandørens opplysninger, lest 25.10.2026)
 
-- Sidene publiseres med GitHub Pages (workflow-fil). At egendomenet går direkte til GitHub uten annen proxy eller CDN er **ukjent**.
+- Sidene publiseres med GitHub Pages (workflow-fil). Egendomenet går direkte til GitHub: DNS-oppslag (dns.google, gjengitt av Lars 28.10.2026) gir bare A-oppføringene 185.199.108.153, .109.153, .110.153 og .111.153, som er GitHub Pages. Sertifikatet er fra Let's Encrypt (kjede ISRG Root X1 → YR2), vist i Safari og Chrome. `www.spareverksted.no` er ikke kontrollert.
 - GitHub skriver at besøkendes IP-adresse logges og lagres av sikkerhetshensyn, også for besøkende som ikke er logget inn ([What is GitHub Pages?](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)).
 - GitHubs generelle personvernerklæring (ikrafttredelse 27. april 2026) nevner ikke Pages særskilt, oppgir ingen lagringstid for slike logger, oppgir GitHub, Inc. og GitHub B.V. som behandlingsansvarlige og viser til standard kontraktsklausuler og EU-US Data Privacy Framework for overføring ([GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)). Ingen avtale mellom Lars og GitHub om databehandling er kjent. Roller avgjøres ut fra faktisk forhold og avtale, ikke ut av overskriften i en erklæring.
 - Serverlogger: **ikke tilgjengelig**. Lagringstid er ikke gjettet. Spørsmål til GitHub Support ligger som usendt utkast.
