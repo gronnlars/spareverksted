@@ -670,6 +670,6 @@ D. «Les opp»-knapp. Ikke valgt nå: ny funksjon som venter til oppstart. Modul
 - W3C foreslår å samle graf og beskrivelse i `<figure>` med `<figcaption>`. Kan vurderes som egen liten retting.
 - Grafens ytre `div` har `aria-label` uten rolle. Navn på et element uten rolle leses ikke av alle skjermlesere. Gjelder koden fra før.
 - Om tabellvisningen har riktige overskriftsceller, og om rekkefølgen i forklaringen av linjene følger grafen, er ikke kontrollert.
-- Chartability (Elavsky m.fl., EuroVis 2022), en fagfellevurdert sjekkliste for tilgjengelige grafer, er ikke lest. Bør brukes ved neste gjennomgang.
+- Chartability (Elavsky m.fl., EuroVis 2022), en fagfellevurdert sjekkliste for tilgjengelige grafer: testlisten er gått gjennom samme dag fra en PDF Lars la ved. Resultat og forslag står i `research/chartability-sparegraf.md`. Selve artikkelen er ikke lest.
 
 **Ikke kontrollert:** Hvordan VoiceOver og andre skjermlesere faktisk leser teksten. Bør prøves av testeren som fant feilen.
