@@ -772,3 +772,42 @@ Lars bestilte tre konkrete endringer i PR #101: boligvilkåret «alene eller sam
 ### ASK: kildekontrollert tekst og integrasjon, 28.10.2026
 
 Lars bestilte innlegging i GitHub og notat i PR. Valgt: egen ASK-gren oppå docs/svarstruktur-ask med BSU/#101-strukturen. Kun data i q-aksjesparekonto, samme søkeinnganger, ingen kalkulatorendringer. Risiko står i kortsvaret; avgrensning i review, så caveat og gammel separat skjermingskilde utgår. Gave, arv og flytting forklares med videreføring av skatteposisjoner. Alternativ: kutte til 300 ord eller bygge på main uten strukturen. Ikke valgt: Lars bestilte at teksten beholdes og at lengdeavvik varsles. 482 ord i svaret etter repoets teller, 566 med dokumentasjon. Lengdeavviket er ikke godkjent. Ingen sammenslåing eller publisering. Kontroller og begrensninger: research/svarutkast/ASK-KILDEKONTROLL-2026-10-28.md. Vurder på nytt ved Lars' gjennomgang, faglige funn eller regelendring.
+
+## Én etikett per felt, og ingen tomme overskrifter (28. oktober 2026)
+
+**Status:** Forslag. Retting av UU-feil og kodefeil etter `docs/regulatorisk.md`, krav 6. Endrer ikke beregningene. Venter på Lars.
+
+**Bakgrunn:** Lars ba om opprydding til ren W3C-test, med innebygde HTML-løsninger der det passer. En liste fra Grok hadde fire punkter. Punkt 3 (`aria-label` på `div` uten rolle) og deler av punkt 1 var allerede rettet i «Gyldig HTML etter W3C-validatoren» over. Resten er kontrollert på nytt her.
+
+**Hvordan det er kontrollert:** Nu HTML Checker (versjon 20.6.30, kjørt lokalt) på HTML-filene og på den ferdige siden etter at JavaScript har kjørt, i 17 tilstander: startside, kalkulator på alle nivåer, sparemål, uttak, hver dialog åpen, ugyldig felt, «Spør om sparing» med og uten svar, Om, Personvern og Tilgjengelighet. Den nettbaserte validatoren kunne ikke nås fra arbeidsmiljøet.
+
+**Funn i den ferdige siden (før retting):**
+1. Tallfeltene som lages med JavaScript lå i én `label` sammen med hjelpeknappen, glidebryteren og en `div`. 539 feil på kalkulatorsiden. Dette er feilen som sto som «egen oppgave» i forrige oppføring.
+2. Tomme overskrifter før skriptet fyller dem: forklaringsdialogen, eksempeldialogen, sparemålkortet og svaret i «Spør om sparing».
+3. `section` uten overskrift: resultatkortet, sparemål, uttak, «Mine planer» og utskriftsrapporten.
+4. To `path` i den lille mobilgrafen manglet `d` før skriptet tegnet dem.
+
+**Retting:**
+1. Hvert felt er nå `<div class="field">` med en ekte `<label for>` som bare holder ledeteksten. Hjelpeknapp, tallfelt, glidebryter og beskrivelse står ved siden av, inne i samme `div`. Tallfeltet får navnet sitt fra `<label for>`, så den gamle `aria-label`-lappen på tallfeltene er fjernet.
+2. Overskriftene har en kort standardtekst («Forklaring», «Eksempel», «Sparemålet», «Svar», «Resultat») som skriptet bytter ut.
+3. Resultatkortets tittel er nå en `h2` med samme utseende som før. Det gir skjermleserbrukere en overskrift å hoppe til. De fire andre seksjonene hadde ikke navn og var derfor ikke landemerker. De er nå `div`.
+4. `d="M0 0"` som startverdi. Tegner ingenting synlig.
+
+**Utseendet:** Skjermbilder før og etter er sammenlignet piksel for piksel: kalkulator, sparemål og uttak, nivåene Enkel, Utforsk og Avansert, 390 og 1280 px bredde, med fokus i et felt. Alle 18 er like.
+
+**Alternativer for punkt 1:**
+A. `div` rundt, `label for` bare rundt ledeteksten. **Valgt.** Ren HTML, ingen ARIA, og klikk på ledeteksten flytter fortsatt fokus til feltet.
+B. `fieldset` med `legend` for hvert felt. Ikke valgt: `fieldset` er for grupper av felt. Skjermlesere leser da gruppenavnet i tillegg til feltnavnet, så hvert felt blir lest to ganger.
+C. Beholde `label` rundt alt og koble med `aria-labelledby`. Ikke valgt: bryter fortsatt HTML-reglene og bruker ARIA der HTML har en løsning.
+
+**Alternativer for punkt 3:**
+A. Gjøre ledeteksten i resultatkortet til `h2`, de navnløse seksjonene til `div`. **Valgt.**
+B. Legge til skjulte overskrifter for skjermleser. Ikke valgt: tekst som bare finnes for hjelpemidler, bør unngås når en synlig tekst kan gjøre jobben.
+
+**Ny test:** `tests/html-struktur-browser.cjs` sjekker den ferdige siden: én etikett per felt, ingen blokkelementer i `label`, ingen tomme overskrifter, ingen navnløs `section`, ingen `aria-label` på `div` eller `span` uten rolle. Den feiler på main og består på denne grenen.
+
+**Ikke rettet:** Nu 20.6.30 melder `font-weight: 650` i den innebygde stilen på personvernsiden som feil. CSS Fonts nivå 4 tillater tall fra 1 til 1000, så dette er trolig en gammel regel i den lokale validatoren. Hvis den nettbaserte validatoren også melder det, er 600 en trygg erstatning.
+
+**Ikke kontrollert:** Den nettbaserte W3C-validatoren, Firefox og Safari lokalt (testene i GitHub kjører Firefox og WebKit), og hvordan VoiceOver og NVDA leser feltene.
+
+**Vurder på nytt når:** nye felt lages på en annen måte enn de to feltbyggerne i `app.js` og `guidance.js`.

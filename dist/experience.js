@@ -23,8 +23,8 @@ openHelp=function(key){
  $('helpDialog').showModal();
 };
 // Field-level hints explain the four numbers without a compulsory tour.
-for(const [id,text]of [['start','Penger som er satt av fra før.'],['monthly','Nye penger du setter inn.'],['years','Tiden frem til du vil bruke pengene.'],['rate','Din antakelse, før kostnader og skatt.']]){const small=document.createElement('small');small.className='field-description';small.id=id+'Description';small.textContent=text;$(id).setAttribute('aria-describedby',small.id);$(id).closest('label').append(small);}
-const dreamInflationLabel=$('dreamInflation').closest('label'),prices=document.createElement('details');prices.innerHTML='<summary>Prisvekst for dette kjøpet</summary>';dreamInflationLabel.before(prices);prices.append(dreamInflationLabel);
+for(const [id,text]of [['start','Penger som er satt av fra før.'],['monthly','Nye penger du setter inn.'],['years','Tiden frem til du vil bruke pengene.'],['rate','Din antakelse, før kostnader og skatt.']]){const small=document.createElement('small');small.className='field-description';small.id=id+'Description';small.textContent=text;$(id).setAttribute('aria-describedby',small.id);$(id).closest('.field,label').append(small);}
+const dreamInflationLabel=$('dreamInflation').closest('.field,label'),prices=document.createElement('details');prices.innerHTML='<summary>Prisvekst for dette kjøpet</summary>';dreamInflationLabel.before(prices);prices.append(dreamInflationLabel);
 // Only apply a preset after showing the values it changes; starting capital is preserved.
 const PRESETS={
  buffer:{name:'Buffer',cost:30000,years:2,monthly:1200,type:'buffer'},
