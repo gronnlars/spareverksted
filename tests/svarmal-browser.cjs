@@ -13,6 +13,7 @@ const entries=require('../dist/veileder-knowledge.js'),drafts=require('../resear
   const dir='/tmp/spareverksted-ui-review';fs.mkdirSync(dir,{recursive:true});
   for(const width of [320,390,1280]){
    const context=await browser.newContext({viewport:{width,height:900}}),page=await context.newPage(),errors=[];
+   page.setDefaultTimeout(10000);page.setDefaultNavigationTimeout(10000);
    page.on('pageerror',e=>errors.push(e.message));
    await page.goto('http://127.0.0.1:'+server.address().port+'/spor.html');
    // Drafts are registered only in this isolated test page. They remain absent from the production bundle.
@@ -29,13 +30,14 @@ const entries=require('../dist/veileder-knowledge.js'),drafts=require('../resear
      await summary.focus();await page.keyboard.press('Enter');assert.equal(await summary.evaluate(x=>x.parentElement.open),true);
     }
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),entry.id+' '+width);
-    await page.locator('#answerPanel').screenshot({path:dir+'/svar-'+entry.id+'-'+engine+'-'+width+'.png'});
+    await page.locator('#answerPanel').screenshot({timeout:10000,path:dir+'/svar-'+entry.id+'-'+engine+'-'+width+'.png'});
     await page.locator('#answer .full-answer>summary').focus();await page.keyboard.press('Enter');
     assert.equal(await page.locator('#answer .full-answer').evaluate(x=>x.open),true);
     await page.locator('#answer .answer-sources>summary').focus();await page.keyboard.press('Enter');
     assert.ok(await page.locator('#answer .source-list a').count()>0);
     const review=page.locator('#answer .review-details');assert.equal(await review.evaluate(x=>x.open),false);
     await review.locator('summary').focus();await page.keyboard.press('Enter');assert.equal(await review.evaluate(x=>x.open),true);
+    console.log(engine+' '+width+' '+entry.id+' rendered');
     assert.doesNotMatch(await page.locator('#answer').innerText(),/Beregningen er forklart under|undefined|\{\{/);
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),entry.id+' expanded '+width);
    }

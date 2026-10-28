@@ -62,7 +62,7 @@ function render(focus=false){
   for(const x of a.terms){dl.append(el('dt',x.term+(x.alsoCalled?' (også kalt '+x.alsoCalled+')':'')),el('dd',x.text));}
   terms.append(dl);if(!overview)out.append(terms);
   if(a.next)for(const next of [a.next,...(a.next.more||[])]){const p=el('p','','explain-next'),link=el('a',next.text);link.href=next.href;p.append(link);out.append(p);}
-  const deep=el('details','','full-answer');deep.append(el('summary',overview?'Mer om regler og skjerming':'Fordypning'));
+  const deep=el('details','','full-answer');deep.append(el('summary','Fordypning'));
   for(const part of a.parts)deep.append(partSection(part));
   if(overview)deep.append(terms);out.append(deep);
   const src=el('details','','answer-sources');src.append(el('summary','Kilder og forbehold'),el('p','Eksempeltall er ikke prognoser. Regler og vilkår kan endres.','hint'));
@@ -75,7 +75,7 @@ function render(focus=false){
  if(a.steps.length){const steps=el('section','','next-steps');steps.append(el('h3','Et mulig neste steg'));const list=el('ol');for(const text of a.steps)list.append(el('li',text));steps.append(list);out.append(steps);}
  const grid=el('div','','option-grid');
  for(const o of a.options){const card=el('article','','option-card');card.append(el('h3',o.title),el('p',o.subtitle,'option-subtitle'),group('Fordeler',o.pros,'pro'),group('Ulemper',o.cons,'con'),...(o.poorFit?[el('p','Passer dårlig hvis '+o.poorFit,'poor-fit')]:[]));grid.append(card);}out.append(grid);
- const full=el('details','','full-answer');full.append(el('summary','Les en utfyllende vurdering'));
+ const full=el('details','','full-answer');full.append(el('summary',a.neutral?'Fordypning':'Les en utfyllende vurdering'));
  for(const part of a.parts.slice(0,3))full.append(partSection(part));
  if(a.parts.length>3){const more=el('details','','more-sections');more.append(el('summary','Vis flere ('+(a.parts.length-3)+')'));for(const part of a.parts.slice(3))more.append(partSection(part));full.append(more);}out.append(full);
  const sources=el('details','','answer-sources');sources.append(el('summary','Kilder og forbehold'),el('p',a.neutral?'Regler og vilkår kan endres. Se kildene for detaljer.':'Regler og grenser kan endres. Tidshorisont er bare en del av vurderingen, og lang tid garanterer ikke gevinst. Kildene har ikke godkjent veilederen.','hint'));

@@ -156,7 +156,7 @@ function register(entry){
   return;
  }
  if(!topics.some(t=>t.id===entry.category&&!t.entry)||!entry.title||!entry.intro||!entry.checked||!entry.questions?.length||!entry.words?.length||entry.options?.length!==2||!entry.sources?.length)throw Error('Ufullstendig spørsmål.');
- for(const o of entry.options)if(!o.title||(!entry.neutral&&!o.poorFit)||!(o.pros?.length>=(entry.neutral?1:2))||!(o.cons?.length>=(entry.neutral?1:2))||[...o.pros,...o.cons].some(i=>!i.title||!i.text))throw Error('Hvert alternativ trenger minst to fordeler, to ulemper og når det passer dårlig.');
+ for(const o of entry.options)if(!o.title||(!entry.neutral&&!o.poorFit)||!(o.pros?.length>=(entry.neutral?1:2))||!(o.cons?.length>=(entry.neutral?1:2))||[...o.pros,...o.cons].some(i=>!i.title||!i.text))throw Error(entry.neutral?'Hvert alternativ trenger dokumenterte fordeler og ulemper.':'Hvert alternativ trenger minst to fordeler, to ulemper og når det passer dårlig.');
  for(const source of entry.sources)if(!source.title||!source.url?.startsWith('https://'))throw Error('Manglende kilde.');
  if((entry.keys||[]).some(x=>!/^[a-zæøå0-9]+$/.test(x)))throw Error('Ugyldig søkeord.');
  topics.push({id:entry.id,title:entry.title,category:entry.category,questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});contentVersion++;
