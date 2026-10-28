@@ -839,3 +839,31 @@ B. Mellomrom eller skilletegn mellom `span`. Ikke valgt: virker, men sier ikke a
 **Ikke rettet:** Uten farger viser ikke forklaringen hvilken linje som er hvilken. Teksten «Slik leser du grafen» dekker det. Oppfordringen «Pek eller trykk på grafen» vises også i leservisning, der grafen ikke kan brukes. Den er nyttig i vanlig visning og koster lite.
 
 **Ikke kontrollert:** Lesemodus i Chrome og leservisning i Safari selv. Chromium uten stilark er bare en tilnærming. Lars bør se samme side i lesemodus etter publisering.
+
+## Dagens arbeid samlet og publisert (28. oktober 2026, kveld)
+
+**Status:** Utført etter Lars' fullmakt 28.10.2026: ferdigstille #99 til #103 og dokumentasjons-PR-ene #91, #93 og #97, løse de konkrete restpunktene, og deretter slå sammen og publisere.
+
+**Restpunkter løst før sammenslåing:**
+1. **BSU, boligeierskap (#101).** Presiseringen fra #100 hadde falt ut. Ny del «Hvilken bolig teller?»: bolig du bor i og annen bolig, borettslagsandel, og at fritidsbolig alene ikke hindrer fradrag. Kilder: Skatteetatens satsside og Forskuddsutskrivingen 2026 (15.12.2025), kontrollert av Claude. Lars' bestilte setning står uendret. Detaljer i `research/svarutkast/BSU-KILDEKONTROLL-2026-10-28.md`.
+2. **Åpne kildepunkter i #100.** Påstandene i indeksfondsvaret er lest i Finanstilsynet (nivå 1) og Forbrukerrådet (nivå 2). DNB-siden (nivå 4, udatert) er fjernet som kilde. De fire upubliserte utkastene er kontrollert ute av produksjonen. Detaljer i `research/sprak-og-svarmal-2026-10-28.md`.
+3. **ASK (#102).** Teksten er beholdt. Lengdeavviket (482 ord i svaret) er dokumentert i PR-en og venter på Lars' vurdering.
+4. **Rekkefølge.** #100, #101, strukturnotatet (`docs/svarstruktur-ask`, kom inn med #102), #102, #99, #103, #97, #91, #93. Hver gren ble rebaset på den forrige. Ved hver sammenslåing ble det kontrollert at innholdet på main var identisk med versjonen som besto alle tester i Chromium, Firefox og WebKit.
+
+**Kontroll:** Alle 59 testkommandoer i CI-listen besto lokalt i Chromium på den samlede versjonen. CI besto i alle tre nettlesere på samme innhold, og CodeQL ga ingen nye varsler. W3C Nu-validatoren ga 0 feil i 27 tilstander av den ferdige siden, også med BSU-, ASK- og indeksfondsvarene åpne. Mobil- og PC-bilder er sett gjennom. Publisert commit er `ddecaba` (GitHub Pages, status success).
+
+**Rød test i #97:** Ikke dokumentasjonen. `tests/input-browser.cjs` linje 115 feiler av og til, også på main: «500» skrevet i vekstfeltet blir av og til «00». Gjenskapt lokalt i 2 av 15 og 3 av 40 kjøringer. Det er inntastingsfeilen PR #38 retter.
+
+**Står igjen, med grunn:**
+
+| Hva | Grunn |
+| --- | --- |
+| PR #38, inntastingsfeil i kalkulatoren | Ekte feil, men en kalkulatorretting. Hører ikke til områdene pausen åpner for, og var ikke i oppdraget. Grenen har konflikt med main. Lars avgjør. |
+| «Rentes rente» fire steder og «sparehorisont» ett sted i teksten | Skrivemåten er vedtatt, men teksten er ikke rettet. Egen liten oppgave. |
+| Borettslagseksemplet i BSU | Bygger på GPTs lesing av den norske satssiden. Claude fikk bare åpnet den engelske. Lars kan bekrefte ved å se etter «borettslagsandel» på satssiden. |
+| ASK-lengden | Over målet på 300 ord. Lars har ikke godkjent avviket. |
+| Uavhengig fagkontroll, iPhone, VoiceOver | Ikke utført. Kontrollen er egenkontroll av GPT og kontroll av Claude. |
+| Den publiserte siden | Claude kunne ikke åpne spareverksted.no fra arbeidsmiljøet. Publiseringen er bekreftet i GitHub, ikke ved å se på siden. |
+| UU-forslag 1, 2, 3 og 5 i `research/uu-egenkontroll-uutilsynet.md` | Ikke påbegynt. 3 og 5 endrer det brukeren ser. |
+
+**Ikke gjort:** Ingen nye funksjoner. Pausen er ikke opphevet utover det Lars har vedtatt.

@@ -143,3 +143,7 @@ ChatGPT/Codex har lagt samtalens godkjente BSU-utkast i q-bsu-basics med Skattee
 ### Status etter #96, 28.10.2026
 
 SV-031, SV-122 og SV-034: dokumentasjonskontroll mot main-commit `0c1fb7398825cb3bd2909a6d890fe67e79140497`. Produktnavn og tilbyderkilde er fjernet gjennom #96; eldre status «produktomtalen urørt» er historisk. Intern ID q-ask-zero er bevart. [Konkrete funn og neste kontroll](svarutkast/STATUS-ETTER-PR96-2026-10-28.md). Egenkontroll av dokumentasjon, ingen ny kilde- eller live-kontroll. Øvrige fagfunn står åpne. Ingen reservasjon aktiv, ingen produktendring eller publisering i denne leveransen.
+
+### Samlet og publisert, 28.10.2026 kveld
+
+Claude etter Lars' fullmakt. #100, #101, #102, #99, #103, #97, #91 og #93 er slått sammen. Publisert commit `ddecaba`. Restpunkter, kontroller og det som står igjen: BESLUTNINGER.md, «Dagens arbeid samlet og publisert».
