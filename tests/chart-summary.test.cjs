@@ -36,4 +36,10 @@ const main=(fn,name='Beløp i kroner')=>({name,points:line(fn)});
  const r2=E.withdrawal({...s,annualWithdraw:50000},1000000);assert.match(S.withdrawal(r2,1000000,f),/varer hele perioden/);}
 // 9. Tom graf gir ingen tekst.
 assert.equal(S.savings({main:{name:'x',points:[]},maxTime:0},f),'');
+// 10. Synlig tekst gjentar ikke overskrift, merknad eller henvisning til tabell, men har tallene. Full tekst har alt.
+{const g=t=>12000*((1.08**t-1)/0.08);const r=S.savingsParts({main:main(g),paid:{points:paid},low:1,high:2,maxTime:20,nominal:true},f);
+ assert.doesNotMatch(r.visible,/^Grafen viser|ikke garantier|«Tabell»/);assert.match(r.visible,/går fra/);assert.match(r.visible,/beregnet avkastning/);assert.match(r.visible,/skraverte båndet/);
+ assert.ok(r.full.startsWith('Grafen viser'));assert.ok(r.full.includes(r.visible.split('. ')[0]));
+ const b=S.savingsParts({main:main(t=>100000),real:{points:line(t=>100000/1.025**t)},maxTime:20,nominal:true},f);
+ assert.doesNotMatch(b.visible,/prisveksten tar/);assert.match(b.full,/prisveksten tar/);assert.match(b.visible,/kjøpekraften er 61\s027 kr/);}
 console.log('chart-summary: alle tester bestått');

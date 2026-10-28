@@ -9,12 +9,16 @@ const yearText=t=>{const y=Math.max(1,Math.ceil(t-1e-9));return 'år '+y;};
 // Beskrivelse av hovedgrafen.
 // d: {main:{name,points}, paid?:{points}, real?:{points}, low?, high?, bank?, comparisons?:[{name,end}], maxTime, nominal:boolean}
 // f: {money, period}
-function savings(d,f){
- const out=[],m=d.main.points;if(!m||m.length<2)return '';
+// Gir {visible, full}. visible er det seende får under grafen. full brukes for skjermleser og SVG-beskrivelsen.
+// Setninger som gjentar overskrift, forklaringen av linjene eller merknaden under grafen, står bare i full,
+// slik at seende ikke leser det samme to ganger.
+function savingsParts(d,f){
+ const parts=[],m=d.main.points;if(!m||m.length<2)return {visible:'',full:''};
+ const out={push:t=>parts.push({t,v:true})},hide=t=>parts.push({t,v:false});
  const v0=m[0].v,vEnd=m.at(-1).v,period=f.period(d.maxTime),both=!!d.real;
  // 1. Hva grafen viser.
- if(both)out.push(`Grafen viser to linjer over ${period}: beløpet i kroner og hva det kan kjøpe målt i dagens kroner.`);
- else out.push(`Grafen viser ${d.main.name.toLowerCase()} over ${period}`+(d.paid?', sammen med en linje for det du selv setter inn.':'.'));
+ if(both)hide(`Grafen viser to linjer over ${period}: beløpet i kroner og hva det kan kjøpe målt i dagens kroner.`);
+ else hide(`Grafen viser ${d.main.name.toLowerCase()} over ${period}`+(d.paid?', sammen med en linje for det du selv setter inn.':'.'));
  // 2. Start og slutt.
  out.push(`${both?'Kronebeløpet':'Beløpet'} går fra ${f.money(v0)} til ${f.money(vEnd)}.`);
  // 3. Formen på linjen. Beskriver bare det som synes, ikke årsaken.
@@ -34,14 +38,15 @@ function savings(d,f){
    else out.push(`Avstanden mellom linjene er beregnet avkastning. Til slutt er den ${f.money(Math.max(0,vEnd-pEnd))}.`);}
  }
  // 5. Kroner og kjøpekraft.
- if(both){const r=d.real.points.at(-1).v;out.push(`Avstanden mellom linjene viser hvor mye prisveksten tar av det beløpet kan kjøpe. Til slutt er den ${f.money(Math.max(0,vEnd-r))}, og kjøpekraften er ${f.money(r)}.`);}
+ if(both){const r=d.real.points.at(-1).v;hide('Avstanden mellom linjene viser hvor mye prisveksten tar av det beløpet kan kjøpe.');out.push(`Til slutt er avstanden ${f.money(Math.max(0,vEnd-r))}, og kjøpekraften er ${f.money(r)}.`);}
  // 6. Bånd, bank og sammenligninger.
  if(d.low&&d.high)out.push(`Det skraverte båndet viser et lavere og et høyere regneeksempel. Til slutt går det fra ${f.money(d.low)} til ${f.money(d.high)}.`);
  if(Number.isFinite(d.bank))out.push(`Linjen for bank ender på ${f.money(d.bank)}.`);
  if(d.comparisons&&d.comparisons.length)out.push('Grafen viser også lagrede planer: '+d.comparisons.map(c=>`${c.name}, som ender på ${f.money(c.end)}`).join('; ')+'.');
- out.push('Linjene er regneeksempler, ikke garantier. Tallene år for år finner du med knappen «Tabell» over grafen.');
- return out.join(' ');
+ hide('Linjene er regneeksempler, ikke garantier. Tallene år for år finner du med knappen «Tabell» over grafen.');
+ return {visible:parts.filter(p=>p.v).map(p=>p.t).join(' '),full:parts.map(p=>p.t).join(' ')};
 }
+function savings(d,f){return savingsParts(d,f).full;}
 
 // Beskrivelse av uttaksgrafen. r: resultatet fra E.withdrawal. capital: beløpet ved uttaksstart.
 function withdrawal(r,capital,f){
@@ -54,6 +59,6 @@ function withdrawal(r,capital,f){
  return out.join(' ');
 }
 
-const S={savings,withdrawal};
+const S={savings,savingsParts,withdrawal};
 if(typeof module!=='undefined')module.exports=S;else root.ChartSummary=S;
 })(this);

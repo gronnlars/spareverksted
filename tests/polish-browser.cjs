@@ -37,9 +37,11 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.locator('#seeGraph').click();await p.screenshot({path:path.join(shots,'03-mobile-graph.png')});
   // Grafen beskrives i ord for dem som ikke ser den (UU, WCAG 1.1.1), og teksten følger graf/tabell-valget.
   assert(await p.locator('#chartSummary').isVisible(),'Graph description is visible');
-  const summaryText=await p.locator('#chartSummaryText').innerText();
-  assert.match(summaryText,/^Grafen viser /);assert.match(summaryText,/går fra .+ til /);assert.match(summaryText,/ikke garantier/);assert.match(summaryText,/«Tabell»/);
-  assert.equal(await p.locator('#chart').getAttribute('aria-describedby'),'chartSummaryText');
+  // Seende får det nye grafen viser, uten å gjenta overskrift og merknad. Skjermleser får hele teksten.
+  const summaryText=await p.locator('#chartSummaryText').innerText(),fullText=await p.locator('#chartSummaryFull').textContent();
+  assert.match(summaryText,/går fra .+ til /);assert.doesNotMatch(summaryText,/ikke garantier|«Tabell»|^Grafen viser/);
+  assert.match(fullText,/^Grafen viser /);assert.match(fullText,/ikke garantier/);assert.match(fullText,/«Tabell»/);
+  assert.equal(await p.locator('#chart').getAttribute('aria-describedby'),'chartSummaryFull');
   assert.match(await p.locator('#chart svg desc').textContent(),/^Etter .+ Før skatt\. Grafen viser /);
   await p.locator('#tableTab').click();assert(await p.locator('#chartSummary').isHidden(),'Description follows the graph view');
   await p.locator('#graphTab').click();assert(await p.locator('#chartSummary').isVisible(),'Description returns with the graph');

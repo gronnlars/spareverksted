@@ -49,4 +49,20 @@ Testlisten fra Chartability (Elavsky, Bennett og Moritz, «How accessible is my 
 4. **Prøv piltastene med skjermleser.** Overstyrer de skjermleseren, må de bare virke når grafen er valgt med Tab, eller fjernes til fordel for tabellen.
 5. **Automatisk test for tekstavstand (WCAG 1.4.12).**
 
+## Konsekvens for de fleste brukerne
+
+Lars ba 28.10.2026 om en vurdering av om rettingene endrer utseendet eller opplevelsen for vanlige brukere. Siden skal fungere sømløst både for de fleste og for dem som bruker hjelpemidler. Vurderingen er gjort ut fra koden. Ingen skjermbilder er sett.
+
+| Forslag | Synlig endring for de fleste | Vurdering |
+| --- | --- | --- |
+| «Slik leser du grafen» (PR #92) | Fire korte setninger under grafen | Den største synlige endringen. Gjentakelser av overskrift og merknad er tatt ut av den synlige teksten, så seende får bare det nye. Hjelper også seende som ikke er vant til grafer |
+| 1. Aksetall 12 til 13 px | Knapt synlig | Lange aksetall som «12,5 mill.» kan bli for brede for venstremargen på mobil (68 px). Venstremargen bør økes noen piksler, og det må sjekkes på smal skjerm |
+| 1. Forbeholdet 12 til 14 px | Forbeholdet blir litt mer framtredende | Ønsket, fordi forbeholdet påvirker forståelsen. Behold den dempede fargen, så det fortsatt ser ut som en merknad |
+| 2. «kr» ved aksen | Ett lite ord over aksen | Hjelper alle. Ingen ulempe |
+| 3. Rolle på grafens element | Ingen | Bare for hjelpemidler |
+| 4. Piltaster | Ingen for seende | Avgjøres etter prøving med skjermleser |
+| 5. Test for tekstavstand | Ingen | Bare en test |
+
+Ingen av forslagene gjør siden dårligere for de fleste. Det som må sjekkes på skjerm, er aksetallene på smal mobil.
+
 Punkt 1 til 3 og 5 er retting av UU-feil og tillatt under pausen etter `docs/regulatorisk.md`, krav 6. Punkt 4 krever prøving med skjermleser først.
