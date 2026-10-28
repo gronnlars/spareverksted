@@ -219,6 +219,59 @@ Kildenotatene ligger i prosjektmappen «claude/» (ikke i repoet). PR-nummer st�
 
 **Status:** Vedtatt 23.10.2026. PR #15, nedre del mot innskuddene i PR #23.
 
+### Sparetid i måneder
+
+**Valg:** Sparetid regnes i hele måneder. Minste sparetid er én måned, og felt som «0,08» og «0,14» godtas og rundes til nærmeste måned (0,14 år blir 2 måneder). Korte perioder vises som «Etter 6 måneder», ikke som «0,5 år». Skyveknappene for sparetid starter på 0,5 år og går i halve år.
+
+**Alternativer:**
+- A: Bare hele år. Forkastet: da kan ikke korte mål som ferie, oppussing eller et nært kjøp regnes.
+- B (valgt): Hele måneder, minst én måned, med visning i måneder under ett år.
+- C: Fritt antall dager eller uker. Forkastet: innskudd regnes månedlig, så mer presisjon ville ikke gitt riktigere tall.
+- D: Stoppe eller advare i feltet for korte sparetider. Utsatt til varselet om sparehorisont (se egen oppføring), som kommer i teksten og ikke i feltet.
+
+**Begrunnelse:** Rekonstruert fra commit 0b49a65 og 2712e8b (PR #11). Den konkrete årsaken var en feil: 0 år ga ingen innskudd og resultatet 0 kr selv med månedlig sparing, så grensen ble én måned. Deretter ble «0,08» og «0,0833» godtatt som én måned, og korte perioder ble vist i måneder. Behovet for korte mål (ferie og lignende) står i hjelpeteksten for Sparemål, men er ikke brukertestet eller dokumentert som egen beslutning før nå.
+
+**Akseptert ulempe:** Feltet godtar svært korte perioder (1 måned) uten å si at aksjefond ikke passer for dem. Varselet om det kommer i resultatteksten for Indeksfond.
+
+**Vurder på nytt når:** Brukere forstår ikke «2 måneder» når de skrev «0,14», eller testing viser at skyveknappen på 0,5 år hindrer korte mål.
+
+**Status:** Beskrivelse av gjeldende løsning, dokumentert 25.10.2026.
+
+### Kildenivå for påstander og råd
+
+**Valg:** Når en tekst på siden bygger på en kilde, brukes offentlige kilder først. Listen er i prioritert rekkefølge: en kilde høyere opp går foran en lavere når de er uenige, og vi går bare ned ett nivå når det høyere nivået ikke dekker spørsmålet.
+1. Lov, forskrift og tilsyn (for eksempel Skatteetaten, Finanstilsynet, SSB).
+2. Forbrukerrådet og Finansportalen.
+3. Norske bank- og finansinstitusjoner med åpne, offentlige sider (for eksempel Finans Norge, banker og forsikringsselskaper). Vær oppmerksom på at dette er kilder med interesse i å selge produkter.
+4. Medier med redaksjonelt ansvar.
+5. Alt annet, inkludert sider uten tydelig avsender og blogger. Brukes aldri som kilde.
+
+Siden gir ikke råd der vi ikke har en solid og oppdatert kilde. Kilden skal være funnet og datert, og teksten skal skille mellom det kilden sier og det vi forklarer.
+
+**Bank- og finansinstitusjoner** regnes som tryggere enn nettaviser fordi de svarer for produkter og vilkår og har åpne sider med egen dato. De har likevel salgsinteresse, og det skal vi være oppmerksomme på når vi vurderer hva de skriver, særlig om anbefalinger, avkastning og hvilke produkter som passer. Siden må ha en synlig dato eller versjon, vi oppgir kontrolldatoen vår, og en institusjon brukes for sine egne produkter og vilkår, ikke som eneste kilde til generelle råd, fordi de også selger produktene.
+
+**Medier med redaksjonelt ansvar** er medier som har ansvarlig redaktør, følger Vær varsom-plakaten og kan klages inn for Pressens Faglige Utvalg. De brukes til å finne og forstå en sak, og som veiviser til primærkilden. De brukes ikke som eneste kilde til tall, regler eller råd. Vi navngir ikke bestemte medier som «solide» her før vi har kontrollert hvert enkelt mot kriteriene og har en dato for kontrollen. Eksempler legges inn når den kontrollen er gjort.
+
+**Tre ulike datoer.** Vi skiller mellom: (1) kildens egen dato, versjon eller regelår, altså når siden vi viser til sist ble oppdatert eller hvilket år reglene gjelder for, (2) vår kontrolldato, altså når vi leste og kontrollerte kilden, og (3) når teksten ble lagt ut på nettsiden. Vår kontrolldato sier ikke at kilden er ny, og kildens dato sier ikke at vi har kontrollert den. Hver kilde skal ha både kildens dato og vår kontrolldato. Har siden ingen synlig dato, skriver vi «ingen dato oppgitt på siden» i stedet for å bruke vår kontrolldato som om den var kildens. Nivå 3 og 4 krever kildedato. Eksempel som allerede følger dette: SSB-renten i `assumptions.js` har både `updated` (kildens dato) og `checked` (vår). Veilederen viser i dag bare «Sist sjekket», så kildens dato mangler der.
+
+**Smarte penger** har ikke eget nivå. Vi har ikke avklart hvem som står bak siden eller hvilket redaksjonelt ansvar den har, så den brukes ikke som kilde før det er avklart. Da kommer den på nivå 3 eller 4, etter hvem som står bak. Når den refererer til en primærkilde (for eksempel Forbrukerrådet), bruker vi primærkilden.
+
+**Alternativer:**
+- A: Bruke den kilden som er lettest tilgjengelig. Forkastet: bransjetekster og bloggere kan være gamle eller ha egne interesser.
+- B (valgt): Fast, prioritert rekkefølge med kriterier for hvert nivå, nivå 5 aldri brukt, og «ikke avklart» der vi ikke har kilde.
+- B2: La nivå 5 være siste utvei når ingenting annet finnes. Forkastet 25.10.2026 av prosjekteier: da heller ingen kilde enn en dårlig kilde.
+- C: Sette institusjonene på samme nivå som Forbrukerrådet. Forkastet: de har salgsinteresse i produktene sine.
+- D: Ha Smarte penger som eget nivå mellom Forbrukerrådet og institusjonene. Forkastet 25.10.2026: avsender og redaktøransvar er ikke avklart, og vi har ikke grunnlag for å si at den er bedre enn medier med redaksjonelt ansvar.
+- E: Alltid vise flere kilder. Forkastet som regel: nyttig ved uenighet, men ikke et krav for hver påstand.
+
+**Begrunnelse:** Passer med «public claims only what can be documented» og med regelen om at tidsavhengige regler trenger primærkilde, regelår og kontrolldato (SPRAKREGLER.md, punkt 5). Eksempel 25.10.2026: Forbrukerrådet oppgir 5 år som minste sparehorisont for aksjefond, mens andre aktører oppgir 3 til 10 år. Vi bruker Forbrukerrådet. Dyr gjeld og buffer før fond står ikke på Forbrukerrådets fondsside, så den påstanden er ikke tilskrevet dem.
+
+**Akseptert ulempe:** Institusjonenes sider kan endres uten varsel og kan farges av salg. Noen nyttige råd må vente til vi har kilde, og tekster kan føles forsiktige. Primærkilder oppdateres sjelden, så kontrolldatoer må følges opp. Å kontrollere medier ett og ett tar tid, og til det er gjort finnes ingen navngitte eksempler.
+
+**Vurder på nytt når:** Vi har kontrollert aktuelle medier og kan navngi eksempler, vi avklarer hvem som står bak Smarte penger, vi får flere kilder med samme status, eller en kilde endrer synspunkt.
+
+**Status:** Vedtatt 25.10.2026 etter prosjekteiers prioritering. Presisert samme dag: bank- og finansinstitusjoner hører til de åpne kildene, Smarte penger har ikke eget nivå, og kildens dato skilles fra vår kontrolldato og publiseringsdato.
+
 ### Risikospørsmålet ut av startflyten
 
 **Valg:** Spørsmålet «Hvor store svingninger tåler du?» er tatt ut av startflyten, og ekkoet «Du tåler store svingninger» under overskriften er fjernet.
