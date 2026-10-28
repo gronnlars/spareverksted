@@ -42,7 +42,7 @@ $('applyPreset').onclick=()=>{if(!pendingPreset)return;changePlan({dreamType:pen
 // Report generation snapshots all relevant assumptions, including hidden ones.
 const labelMap=Object.fromEntries(Object.values(specs).flat().map(([k,label,unit])=>[k,{label,unit}]));
 function assumptionRows(keys,state=s){return '<div class="report-assumptions">'+keys.map(k=>{const meta=labelMap[k]||{label:k,unit:''};return '<div><span>'+escapeHTML(meta.label)+'</span><b>'+escapeHTML(typeof state[k]==='number'?dec.format(state[k]):state[k])+' '+meta.unit+'</b></div>';}).join('')+'</div>';}
-function reportChart(){const svg=$('chart').querySelector('svg');if(!svg)return '';return '<div class="report-chart">'+svg.outerHTML.replaceAll('spareArea','reportArea').replaceAll('plotClip','reportClip').replace('id="chartGuide"','id="reportGuide"')+'</div><div class="legend">'+$('chartLegend').innerHTML+'</div>';}
+function reportChart(){const svg=$('chart').querySelector('svg');if(!svg)return '';return '<div class="report-chart">'+svg.outerHTML.replaceAll('spareArea','reportArea').replaceAll('plotClip','reportClip').replace('id="chartGuide"','id="reportGuide"')+'</div><ul class="legend">'+$('chartLegend').innerHTML+'</ul>';}
 function buildReport(){
  E.validate(s);if(!$('error').hidden)throw Error('Rett tallene før du lager rapporten.');
  const t=endYear(s),final=E.value(s,t),now=new Date().toLocaleDateString('nb-NO',{year:'numeric',month:'long',day:'numeric'});
