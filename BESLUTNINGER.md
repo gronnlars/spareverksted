@@ -456,3 +456,21 @@ Målet er å bevare tankearbeidet, ikke å fryse prosjektet.
 **Akseptert ulempe:** Har du fylt inn uttak og deler fra sparing, ser ikke mottakeren uttaket ditt.
 
 **Bakoverkompatibilitet:** Koden som leser lenker, er ikke endret. Gamle, fulle lenker virker som før.
+
+## Kontroll av premiss og mulig oppfattet anbefaling (28. oktober 2026)
+
+**Status:** Foreslått i PR, ikke vedtatt. Lars avgjør. Dette er bare dokumentasjon og endrer ikke nettsiden, kalkulatoren, søket, svarbasen, testene eller automatiseringen.
+
+**Forslag:** Tre korte tillegg i eksisterende dokumenter. SPRAKREGLER.md, punkt 7: kontroller hva leseren kan oppfatte at teksten anbefaler. `research/DAGLIG-OPPGAVE.md`: undersøk premisset i spørsmålet, og noter begge kontrollene i svarmalen. `research/plan.md`, punkt 3: tre forståelsesspørsmål til eventuell senere brukertesting.
+
+**Alternativer:** A. Tillegg i dokumentene som allerede styrer arbeidet. **Valgt.** B. Egen sjekkliste for anbefalingskontroll. Ikke valgt: blir et konkurrerende dokument. C. Ny regel i KILDEREGLER.md. Ikke valgt: kildereglene handler om kilder og ble nettopp vedtatt. K5 dekker egne råd, mens dette gjelder hvordan en tekst kan oppfattes.
+
+**Bakgrunn:** FinAuts podcastepisode «Når KI gir økonomiske råd: Hva skjer med rådgiverrollen og tilliten?» er pedagogisk inspirasjon. Den er ingen rettskilde og ingen dokumentasjon på at Spareverksted er godkjent. Læringspunktene: mer informasjon gir ikke nødvendigvis forståelse, brukeren kan søke bekreftelse på et feil premiss, og forklaringer kan oppfattes som anbefalinger.
+
+**Kilde, gjengitt fra PR #81 og ikke nylest:** ESMA, *Q&A on MAR* (ESMA70-145-111), Q&A 8.2. En tekst uten navngitt instrument eller utsteder er som hovedregel ikke en anbefaling, men kan være det hvis en rimelig investor kan utlede at den underforstått anbefaler bestemte instrumenter eller utstedere. Dette gjelder investeringsanbefalinger etter markedsmisbruksforordningen (MAR). Det sier ingenting om personlig investeringsrådgivning etter verdipapirhandelloven. Hvor grensen går for Spareverksted, er spørsmålet som er sendt Finanstilsynet.
+
+**Akseptert ulempe:** Kontrollene er egenkontroll. «Ingen identifisert ved egenkontroll» er ingen garanti, og ingen uavhengig eller juridisk kontroll.
+
+**Ikke gjort her:** Samordning med prosjektpausen. Pausen og sperren for kontekstuell spørsmålsveiledning står i PR #77 (`docs/regulatorisk.md`), som ikke er på main. Oppføringen «Lokal lagring og personvernside» over henviser allerede til den filen. Forslag når #77 er avgjort: automatiseringens snevrere mandat beskrives i `docs/regulatorisk.md` som det som gjelder under pausen, ikke som fast regel. `research/DAGLIG-OPPGAVE.md`, steg 5, får en henvisning om at betingede personaliseringsregler bare er utkast og omfattes av sperren.
+
+**Vurder på nytt når:** Finanstilsynet svarer, eller brukertesting viser misforståelser som kontrollene ikke fanger.
