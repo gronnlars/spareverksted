@@ -51,6 +51,8 @@ En ny side eller funksjon er ikke ferdig før punktene under er oppfylt og kontr
 | iPhone Safari, VoiceOver og zoom, personvernsiden | Lars, 27.10.2026 | Knappene «Vis e-postadresse» og «Slett» virket, VoiceOver leste riktig, zoom fungerte. Lars er ny bruker av hjelpemidlene | Kalkulator og veileder med VoiceOver, NVDA |
 | Ekstern tester med skjermleser, uformell | Publisert side, 28.10.2026, rapportert til Lars i melding | Det meste virket med skjermleser, zoomen fikk ros. **Feil:** grafen beskrives ikke i ord, bare sluttbeløp og akser. Ønske: opplesingsknapp. Testerens navn lagres ikke her | Hvilken enhet, nettleser og skjermleser. Om tabellvisningen ble funnet |
 
+| W3C Nu HTML Checker (vnu 26.10.18) | Lars, 28.10.2026, mot spareverksted.no | Fire sider uten merknader. Forsiden: 15 feil av tre typer. 1) `div` inne i `label` (feltboksene). 2) To hjelpeknapper inne i samme `label` som en avkrysningsboks. 3) `aria-label` på grafens `div` uten rolle. I tillegg advarsler om `section` uten overskrift og tomme overskrifter som fylles av JavaScript. Alle tre feiltypene rettet i PR-en etter #92 | Innhold laget med JavaScript sjekkes ikke av validatoren |
+
 Testene beskytter det som er kontrollert. De beviser ikke at folk forstår innholdet.
 
 ## 4. Kilder
