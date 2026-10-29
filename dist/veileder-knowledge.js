@@ -415,7 +415,7 @@ const entries=[
   },
   {
    "title": "Hva kan pengene brukes til?",
-   "text": "Blant annet kjøp av egen fast bolig, kjøpskostnader, renter og avdrag på boliglånet og oppussing og oppgradering av boligen. Det trenger ikke være ditt første boligkjøp. Når du har begynt å bruke bundne BSU-midler, det vil si tidligere års innskudd og renter, eller har brutt vilkårene, kan du ikke sette inn mer."
+   "text": "Blant annet kjøp av egen fast bolig, kjøpskostnader, renter og avdrag på boliglånet og oppussing og oppgradering av boligen. Det trenger ikke være ditt første boligkjøp. Når du har begynt å bruke bundne BSU-midler, det vil si tidligere års innskudd og renter opptjent til og med året du fyller 33, eller har brutt vilkårene, kan du ikke sette inn mer."
   },
   {
    "title": "Mer om renter og konto",
