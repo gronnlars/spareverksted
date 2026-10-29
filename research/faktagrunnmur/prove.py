@@ -73,11 +73,15 @@ def fixtures():
 REQUIRED=set(['annual','total','age','rate','housing','interest','withdrawal'])
 PROFILES={'deposit':{'annual','total'},'benefit':{'rate','age','housing'},'interest':{'interest'}}
 FIELDS=set(fact(0))
+EXPECTED_SCOPE={key:record['scope'] for key,record in fixtures().items()}
+VIEW_SCOPES={'deposit':{'deposit'},'benefit':{'deposit','tax_benefit'},'interest':{'interest_tax'}}
 
 def validate(db):
  if not REQUIRED<=db.keys(): raise ValueError('missing scheme coverage')
  for fid,f in db.items():
   if set(f)!=FIELDS: raise ValueError('schema fields')
+  if fid in EXPECTED_SCOPE and f['scope']!=EXPECTED_SCOPE[fid]: raise ValueError('fact scope mismatch')
+  if f['scope'] not in {'deposit','tax_benefit','interest_tax','withdrawal'}: raise ValueError('unknown scope')
   if f['knowledge'] not in ['known','unknown','none','not_applicable']: raise ValueError('knowledge')
   if f['legal'] not in ['in_force','adopted','proposed','repealed']: raise ValueError('legal')
   if f['review'] not in ['checked','unreviewed','open']: raise ValueError('review')
@@ -98,6 +102,7 @@ def view(db,profile,claims,year=2026,calculation=False,basis='income_year'):
  validate(db)
  if profile not in PROFILES: raise ValueError('unknown profile')
  if not PROFILES[profile]<=set(claims): raise ValueError('view coverage')
+ if any(fid not in db or db[fid]['scope'] not in VIEW_SCOPES[profile] for fid in claims): raise ValueError('view scope mismatch')
  out=[]
  def bundle(fid,trail=()):
   if fid in trail: raise ValueError('cycle')
@@ -162,6 +167,10 @@ def run_tests():
  check('confirmation time basis enforced',lambda:blocked(lambda:view(fixtures(),'deposit',['annual','total'],basis='withdrawal_year')))
  check('midyear effective date rejected for full year',lambda:blocked(lambda:view(mutate('annual','effective_from','2026-07-01'),'deposit',['annual','total'])))
  check('historical display blocked without evidence',lambda:blocked(lambda:view(fixtures(),'deposit',['annual','total'],year=2019)))
+ check('withdrawal scope cannot label annual deposit fact',lambda:blocked(lambda:view(mutate('annual','scope','withdrawal'),'deposit',['annual','total'])))
+ check('unknown scope rejected',lambda:blocked(lambda:validate(mutate('annual','scope','typo'))))
+ check('withdrawal fact cannot be added to deposit card',lambda:blocked(lambda:view(fixtures(),'deposit',['annual','total','withdrawal'])))
+ check('benefit card accepts its required mixed scopes',lambda:len(view(fixtures(),'benefit',['rate','age','housing']))==3)
  return results
 
 if __name__=='__main__':
