@@ -892,3 +892,7 @@ B. Mellomrom eller skilletegn mellom `span`. Ikke valgt: virker, men sier ikke a
 
 **Revurderes hvis:** brukere opplever at forklaringen endrer seg for tidlig eller for sent, eller lesemodus fortsatt viser tall som ikke stemmer med hovedtallet.
 
+
+## Fondskonto revidert og godkjent 29. oktober 2026
+
+Lars bekrefter kontroll av ham og Claude og bestiller innlegging og publisering av siste tekst fra samtalen. q-fondskonto bruker samme oversiktsstruktur og renderer som BSU og ASK. Bredere utvalg og utsatt skatt beholdes som dokumenterte fordeler, og forholdsmessig uttak som ulempe. Udokumenterte kostnads- og flyttepåstander fjernes. Alternativet å utelate EØS-fordelen forkastes fordi Prop. 1 LS (2025/2026), punkt 8.10.2, dokumenterer forskjellen. Skjermingens rekkefølge gjøres ikke obligatorisk. Ingen nye funksjoner eller endret søk. Se research/svarutkast/FONDSKONTO-KILDEKONTROLL-2026-10-29.md for kilder, lengde og kontrollstatus.

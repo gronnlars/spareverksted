@@ -13,6 +13,7 @@ for(const e of [...entries,...drafts]){
  assert.doesNotMatch(pieces(a).join(' '),/\bvi\b|\bvår(?:e|t)?\b|selvkontroll|Kildene har ikke godkjent|Regnesammenheng, egen illustrasjon/iu,e.id);
  // ASK is deliberately expanded with sourced gift, inheritance and transfer rules.
  if(e.id==='q-aksjesparekonto')assert.ok(content<600,'ASK length regression; deviation remains editorially unapproved');
+ else if(e.id==='q-fondskonto')assert.ok(content<=300&&all<=450,'Godkjent fondskontorevisjon: innhold innenfor 300 ord, dokumentasjon telles separat');
  else assert.ok(all<before.answers[e.id].all,e.id+' must actually be shorter than the reviewed PR version');
  if(all>300)console.warn(e.id+': '+all+' ord totalt ('+content+' i svaret). Redaksjonelt varsel: over målet på 300, ikke automatisk tekstkutt.');
  total+=all;oldTotal+=before.answers[e.id].all;

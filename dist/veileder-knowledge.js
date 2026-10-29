@@ -271,10 +271,82 @@ const entries=[
 "words":[/(?<!(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link).*)(?:\bask\b)(?!.*(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link))/,
 /(?<!(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link).*)(?:aksjesparekonto)(?!.*(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link))/]
 },
-{"kind":"explainer",
-"id":"q-fondskonto",
-"title":"Hva er en fondskonto?",
-"checked":"2026-10-28",
+{
+  "kind": "explainer",
+  "layout": "overview",
+  "id": "q-fondskonto",
+  "title": "Hva er en fondskonto?",
+  "checked": "2026-10-29",
+  "intro": "En fondskonto, også kalt investeringskonto, kombinerer investering og forsikring. Pengene kan plasseres i aksjer, fond og andre verdipapirer. Du bærer risikoen, og verdien kan falle.",
+  "caveat": "Skatteforklaringen gjelder privatpersoner med konto uten garantert avkastning og med et lite forsikringstillegg ved død eller uførhet.",
+  "terms": [],
+  "tradeoffs": {
+    "pros": [
+      {
+        "title": "Bredere utvalg enn ASK",
+        "text": "Avhengig av tilbyderen kan kontoen gi tilgang til blant annet aksjer i selskaper utenfor EØS og rentefond. Disse kan ikke kjøpes på ASK."
+      },
+      {
+        "title": "Utsatt skatt ved handel",
+        "text": "Kjøp og salg inne på kontoen utløser normalt ikke skatt på gevinsten for deg. Kontoen inngår likevel i formuen din."
+      }
+    ],
+    "cons": [
+      {
+        "title": "Gevinst følger med ved uttak",
+        "text": "Har kontoen steget i verdi, inneholder hvert uttak både innskudd og gevinst. Du kan ikke ta ut innskuddet først, slik du kan på ASK."
+      }
+    ]
+  },
+  "example": {
+    "title": "Eksempel på uttak",
+    "text": "Du har satt inn 100 000 kr, og kontoen er verdt 150 000 kr. Uten tidligere uttak består et uttak på 30 000 kr av 20 000 kr innskudd og 10 000 kr gevinst før skjermingsfradrag. Tallene er et eksempel, ikke en beregning av skatten din."
+  },
+  "parts": [
+    {
+      "title": "Eierskap og forsikring",
+      "text": "Forsikringsselskapet eier investeringene. Du har et krav mot selskapet som tilsvarer kontoverdien. Forsikringstillegget regnes som lite når det er under 50 prosent av kontoverdien. Er tillegget et fast beløp, må det være lavere enn gjenværende innbetalt sparebeløp, uten avkastning."
+    },
+    {
+      "title": "Skatt og fradrag",
+      "text": "Aksjeandel betyr hvor stor del som regnes som aksjer. Ved skatteberegningen regnes over 80 prosent som 100 prosent og under 20 prosent som null. Gjennomsnittet av de årlige andelene bestemmer fordelingen av gevinst mellom aksjedelen og rentedelen. Satsene i 2026 er henholdsvis 37,84 og 22 prosent. Aksjedelen gir grunnlag for skjermingsfradrag, som reduserer skattepliktig gevinst. Ved uttak må ubenyttet skjerming brukes mot gevinsten, også rentedelen. Ved verdifall gir uttak fradrag for en forholdsmessig del av tapet."
+    }
+  ],
+  "sources": [
+    {
+      "id": "tax-fondskonto-no",
+      "title": "Skatteetaten: Fondskonto",
+      "url": "https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/aksjer-og-verdipapirer/om/skatteregler-investere-i-aksjer-og-andre-verdipapirer-gjennom-kapitalforsikring-fondskonto/"
+    },
+    {
+      "id": "tax-fondskonto-abc",
+      "title": "Skatteetaten: Skatte-ABC 2025/2026, spesielt om fondskonto",
+      "url": "https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/v-6-verdipapirfond/V-6.001/V-6.003/"
+    },
+    {
+      "id": "tax-fondskonto-rettledning",
+      "title": "Skatteetaten: Rettledning om fondskonto, 2026 og senere",
+      "url": "https://www.skatteetaten.no/nn/bedrift-og-organisasjon/rapportering-og-bransjar/tredjepartsopplysninger/bank-finans-og-forsikring/fondskonto/rettledning/"
+    },
+    {
+      "id": "tax-aksjefaktor-2026",
+      "title": "Skatteetaten: Gevinst, tap eller utbytte på aksjer, 2026",
+      "url": "https://www.skatteetaten.no/satser/faktor-for-oppjustering-av-gevinsttap-eller-utbytte-pa-aksjer/?year=2026"
+    },
+    {
+      "id": "tax-ask-no",
+      "title": "Skatteetaten: Aksjesparekonto (ASK)",
+      "url": "https://www.skatteetaten.no/person/skatt/hjelp-til-rett-skatt/aksjar-og-verdipapir/om/aksjesparekonto-ask/"
+    },
+    {
+      "id": "fin-fondskonto-utvalg",
+      "title": "Finansdepartementet: Prop. 1 LS (2025/2026), punkt 8.10.2, fondskonto og gjeldende rett",
+      "url": "https://www.regjeringen.no/no/dokumenter/prop.-1-ls-20252026/id3124192/?ch=2"
+    }
+  ],
+  "review": {
+    "text": "Regelår 2026. Skatte-ABC 2025/2026 og rettledningen for 2026 og senere er lest sammen med personsidene og Prop. 1 LS (2025/2026), punkt 8.10.2 om gjeldende rett. Ingen oppdateringsdato oppgitt på Skatteetatens sider. PDF-enes utskriftsdato er ikke oppdateringsdato. Lest 29.10.2026 av ChatGPT/Codex, egenkontroll. Lars bekrefter 29.10.2026 at teksten er kontrollert av ham og Claude og godkjent for publisering. Svaret dekker ikke selskaper, utflytting eller bestemte tilbyderes vilkår. Neste kontroll før 1. januar 2027 og ved relevante forslag eller regelendringer."
+  },
 "keys":["fondskonto",
 "investeringskonto",
 "kapitalforsikring"],
@@ -286,29 +358,8 @@ const entries=[
 /(?<!(?:\bask\b|aksjesparekonto).*)(?:kapitalforsikring)(?!.*(?:\bask\b|aksjesparekonto))/,
 /(?<!(?:\bask\b|aksjesparekonto).*)(?:investeringskonto)(?!.*(?:\bask\b|aksjesparekonto))/,
 /(?<!(?:\bask\b|aksjesparekonto).*)(?:unit ?link)(?!.*(?:\bask\b|aksjesparekonto))/],
-"intro":"En fondskonto er en kapitalforsikring der pengene investeres i verdipapirer. Den kalles også investeringskonto. Tilbydere kan bruke egne produktnavn.",
-"terms":[],
-"example":{"title":"Eksempel: ta ut en del av pengene",
-"text":"Innskuddet er 100 000 kr og verdien 150 000 kr. Et uttak på 30 000 kr består av 20 000 kr i innskudd og 10 000 kr i gevinst, før skjerming. På ASK ville dette uttaket vært dekket av innskuddet dersom det ikke hadde vært tidligere uttak. Valgte tall, ikke en beregning av din skatt."},
-"caveat":"Skattereglene her gjelder bare kontoer med lite forsikringselement og uten garantert avkastning.",
-"sources":[{"id":"tax-fondskonto-no",
-"title":"Skatteetaten: skatteregler for fondskonto (kapitalforsikring)",
-"url":"https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/aksjer-og-verdipapirer/om/skatteregler-investere-i-aksjer-og-andre-verdipapirer-gjennom-kapitalforsikring-fondskonto"},
-{"id":"tax-fondskonto-rettledning",
-"title":"Skatteetaten: rettledning om fondskonto",
-"url":"https://www.skatteetaten.no/nn/bedrift-og-organisasjon/rapportering-og-bransjar/tredjepartsopplysninger/bank-finans-og-forsikring/fondskonto/rettledning/"}],
-"parts":[{"title":"Hvem eier investeringene?",
-"text":"Forsikringsselskapet eier verdipapirene. Du har et krav mot selskapet som tilsvarer kontoverdien, og bærer risikoen for avkastningen. Verdien kan falle."},
-{"title":"Skatt og skjerming",
-"text":"Ved uttak behandles en del av forsikringen som avsluttet. Gevinsten fordeles mellom aksjer og andre investeringer, med ulike skatteregler. Skjerming er et fradrag. Ubenyttet skjerming kan redusere hele gevinsten, også rentedelen. Én framgangsmåte er å trekke fradraget fra aksjegevinsten først og bruke eventuell rest mot rentedelen. Dette gir ikke rentepapirer rett til aksjeskjerming."}],
-"review":{"text":"Kildesidene er udaterte. Rettledningen gjelder 2026 og senere. Lest 28.10.2026, egenkontroll. Neste kontroll før 01.01.2027 og ved regelendringer."},
-"layout":"overview",
-"tradeoffs":{"pros":[{"title":"Skatten utsettes",
-"text":"Kjøp og salg inne på kontoen utløser normalt ikke skatt på avkastningen."}],
-"cons":[{"title":"Gevinst følger med ved uttak",
-"text":"Du kan ikke ta ut bare innskuddet først. Uttaket inneholder en forholdsmessig del av innskudd og gevinst eller tap."},
-{"title":"Vilkår og kostnader varierer",
-"text":"Samlede kostnader og vilkår for flytting følger avtalen. Ingen bestemt tilbyders vilkår er kontrollert her."}]}},
+
+},
  {
  "kind": "explainer",
  "layout": "overview",
