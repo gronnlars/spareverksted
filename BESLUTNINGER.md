@@ -904,3 +904,8 @@ Lars bestiller at øvrige svar tas ut av visningen til de er kontrollert etter s
 Alternativ A: permanent sletting av innhold og kilder. Forkastet fordi arbeid kan gjenbrukes etter kontroll. Alternativ B: bare skjule temaknappene. Forkastet fordi søk og forslag fortsatt kunne åpne svarene. Valgt: eksplisitt publiseringsutvalg, med arkiv i research/svarutkast/TILBAKETRUKNE-SVAR-2026-10-29.json og historikken bevart. Arkivet er utkast, ingen ny faglig godkjenning. Ny publisering av et svar krever eget godkjent oppdrag.
 
 Historiske nettlesertester av beholdt utkastkode bruker en eksplisitt testfixture uten publiseringsutvalg. Nye produksjonstester bruker uendret spor.html og bekrefter at bare tre svar finnes og at tidligere spørsmål ikke gir eldre råd. Ingen produksjonsinnstilling lar brukeren slå av utvalget. Dette er en avgrenset tilbaketrekking, ikke en åpning for nye funksjoner under pausen.
+
+
+## Nettside som kilde, 29. oktober 2026
+
+Lars presiserer at PDF-utskriftene av nettsider bare er en intern lesemåte. De skal ikke omtales som egne kilder i publiseringsteksten. Kildelisten lenker til nettsiden, og kontrollgrunnlaget oppgir relevant regelår, faktisk lesedato og kjent kildedato. Tekniske opplysninger om utskrifter beholdes internt. Dette er rettet i kontrollteksten for BSU, ASK og fondskonto uten endring av kilder, faginnhold eller kontrolldato. SVARMAL.md er presisert. Alternativet å beholde lesemåten i brukerens kontrolltekst forkastes fordi det forveksler arbeidsmaterialet med kilden. Selvstendige PDF-originaler omfattes ikke av denne avgrensningen.

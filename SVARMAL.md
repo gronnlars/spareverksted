@@ -55,3 +55,8 @@ Lars har etter ASK-prøven bestilt språkgjennomgang og bruk av svarmalen for sv
 - Mål: inntil 300 ord per svar, med fordypning. Ordtellingen viser også totalen inkludert kildetitler og kontrolltekst som kan åpnes. Overskridelse gir et redaksjonelt varsel med begrunnelse, aldri automatisk kutt av et faglig vilkår. Antall ord er ikke i seg selv et bevis på god tekst.
 - `tests/svartekst.test.cjs` stopper identiske gjentatte setninger med minst seks ord i samme svar. Den tester den tidligere indeksfond-feilen. Korte etiketter og overskrifter er unntatt. Omskrevne gjentakelser må fortsatt finnes ved lesing.
 - Ikke gjør uavklarte faglige påstander til publiserbar tekst. Avgrens det svaret faktisk dekker, og registrer åpne temaer som publiseringssperrer i arbeidsnotatet. K1s uttrykkelige unntak for et direkte spørsmål gjelder fortsatt; dette endrer ikke kildereglene eller gir fullmakt til publisering.
+
+
+## Nettsiden er kilden, lesemåten er intern (29.10.2026)
+
+Når en nettside er lest gjennom en PDF-utskrift, et skjermbilde eller et tekstuttrekk, er nettsiden fortsatt kilden. Bruk original nettadresse og sidetittel i kildelisten. Oppgi kildens dato eller regelår og faktisk kontrolldato. Omtale av PDF-utskrift, utskriftstid og andre tekniske lesemåter hører hjemme i interne kontrollnotater, ikke i teksten for leseren eller «Om kildekontrollen». Dette gjelder ikke selvstendige rapporter eller andre originaldokumenter som faktisk er publisert som PDF.
