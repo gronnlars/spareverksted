@@ -877,3 +877,18 @@ B. Mellomrom eller skilletegn mellom `span`. Ikke valgt: virker, men sier ikke a
 2. **BSU, borettslagseksemplet.** Lars bekrefter at Skatteetatens norske og engelske satsside er samme side, bare oversatt. Eksemplet står på den norske kilden.
 3. **Grafen i lesemodus (#103).** Lars bekrefter at den fungerer i Chrome på iPhone.
 4. **PR #38 (inntastingsfeilen).** Lars' vurdering: rettingen endrer ikke kalkulatorens funksjoner for brukerne, gir ingen nye variabler og ingen nye måter å se tallene på. Den retter et stille, feil tall og faller derfor innenfor kalkulatorfrysens unntak for dokumenterte feil. Rebaset på main 29.10.2026. Gjenskapingen av feilen ga 3 av 40 før og 0 av 40 etter, og inntastingstesten 2 av 15 før og 0 av 15 etter.
+
+## Forklaringen oppdateres etter skrivepause, og resultatradene som beskrivelsesliste (29.10.2026)
+
+**Funn (Lars, iPhone, Safari Reader, 29.10.2026):** Hovedtallet var 12 456 484 kr, men «Mer om tallene» sa 240 000 kr innskudd, som er eksempelplanens tall. Gjenskapt i Chromium. «Dette betyr tallene dine» ble bare beregnet på nytt når feltet ble forlatt. Til da var teksten bare dempet med CSS. Den grå «Oppsummering»-boksen i skjermbildet er Safaris egen KI-oppsummering, ikke nettsidens.
+
+**Valg:**
+1. Forklaringen beregnes etter 0,5 sekunders skrivepause, i tillegg til når feltet forlates. Alternativ: beregne ved hvert tastetrykk. Ikke valgt: teksten ville hoppe mens brukeren skriver, og skjermlesere kan lese opp halvferdige tall. Alternativ: tømme teksten mens den venter. Ikke valgt: «Mer om tallene» ville blinke tomt.
+2. Resultatradene er `dl` med `dt` og `dd`. Alternativ: skjult kolon mellom `span`. Ikke valgt, av samme grunn som for grafforklaringen 28.10.2026.
+3. Resultatkort og forklaring ligger i én `article`. Ingen synlig endring.
+4. Forslag om å skjule sekundært innhold med `hidden` eller skrive ekstra tekst for lesemodus er ikke fulgt. Gamle tall skal ikke finnes i siden, og «Mer om tallene» skal være tilgjengelig for alle.
+
+**Oppfølging samme dag:** Lars testet på iPhone. Chrome viser riktige tall i lesemodus etter endringen. Safari Reader viser eksempelplanen uansett, også hovedtallet, og planen kan bli nullstilt når lesemodus lukkes. Det er en annen sak enn denne: Safari ser ut til å laste siden på nytt. Ført opp i research/plan.md, «Kjente feil som venter». Lars: ingen tiltak før Nkom har svart om fanelagring.
+
+**Revurderes hvis:** brukere opplever at forklaringen endrer seg for tidlig eller for sent, eller lesemodus fortsatt viser tall som ikke stemmer med hovedtallet.
+

@@ -110,6 +110,9 @@ jobs:
           SPARE_ENGINE=firefox node tests/polish-browser.cjs
           SPARE_ENGINE=webkit node tests/polish-browser.cjs
           node tests/felt-browser.cjs
+          node tests/forklaring-oppdateres-browser.cjs
+          SPARE_ENGINE=firefox node tests/forklaring-oppdateres-browser.cjs
+          SPARE_ENGINE=webkit node tests/forklaring-oppdateres-browser.cjs
           node tests/personvern-browser.cjs
           SPARE_ENGINE=firefox node tests/personvern-browser.cjs
           SPARE_ENGINE=webkit node tests/personvern-browser.cjs

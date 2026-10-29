@@ -256,8 +256,12 @@ function syncLevel(){document.body.dataset.level=level;for(const b of $('levels'
 // «Enkel» er standard og lagres aldri; et lagret valg fjernes i stedet.
 function setLevel(value,{remember=true}={}){level=value;try{if(remember&&value!=='simple')sessionStorage.setItem('sv-level',level);else sessionStorage.removeItem('sv-level');}catch{}syncLevel();if(window.renderDream)window.renderDream();}
 // State changes are read once per user input. An empty field stops the calculation; see pendingKey().
-document.addEventListener('input',event=>{if(!event.target.closest('#taxDialog')&&event.target.id in E.defaults){typingRender=true;read();render();typingRender=false;if($('toast').dataset.validation&&!planProblem()){clearTimeout(window.toastTimer);$('toast').style.display='none';delete $('toast').dataset.validation;}}});
-// «Dette betyr tallene dine» oppdateres når feltet forlates eller skyveknappen slippes (change), ikke ved hvert tastetrykk.
+document.addEventListener('input',event=>{if(!event.target.closest('#taxDialog')&&event.target.id in E.defaults){typingRender=true;read();render();typingRender=false;scheduleMeaning();if($('toast').dataset.validation&&!planProblem()){clearTimeout(window.toastTimer);$('toast').style.display='none';delete $('toast').dataset.validation;}}});
+// «Dette betyr tallene dine» oppdateres når feltet forlates eller skyveknappen slippes (change), og etter en kort
+// skrivepause. Uten pausen ble gamle tall stående i siden til feltet ble forlatt, og lesemodus, skjermlesere og
+// kopiering fikk dem som om de var riktige (funnet i Safari Reader 29.10.2026).
+let meaningTimer=0;
+function scheduleMeaning(){clearTimeout(meaningTimer);meaningTimer=setTimeout(()=>{if(!lastRenderError&&$('meaning').classList.contains('meaning-waiting'))renderMeaning();},500);}
 document.addEventListener('change',event=>{const id=event.target.dataset?.field||event.target.id;if(id in E.defaults&&!lastRenderError)renderMeaning();});
 // Tusenskille settes når brukeren forlater feltet, ikke mens det skrives, slik at markøren ikke hopper.
 // Startguidens felt grupperes også, men et tomt felt der (for eksempel alder) forblir tomt.

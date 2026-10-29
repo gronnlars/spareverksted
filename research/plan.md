@@ -153,3 +153,9 @@ Ideer uten plass i planen. Et punkt flyttes inn bare ved en egen beslutning.
 | Gjøre `polish-browser.cjs` robust mot tidsfeil | Status 24.10. Testendring, ikke kalkulatorendring |
 
 Valgomaten er parkert etter Lars sin beslutning 24. oktober 2026. Den vurderes separat etter at arbeidsgrunnlaget er samlet og kontrollert innholdspåfyll har en fungerende arbeidsflyt. Målet om et nedlastbart hverdagsbudsjett beholdes som framtidig krav, ikke som vedtatt implementeringsplan.
+
+## 10. Kjente feil som venter
+
+| Feil | Status og hva som avgjør |
+| --- | --- |
+| **Safari Reader viser eksempeltallene, ikke brukerens plan.** Etter at lesemodus lukkes, er planen av og til nullstilt til eksempelplanen. Safaris KI-oppsummering gjentar eksempeltallene som om de var brukerens. | Funnet av Lars på iPhone 29.10.2026, både på spareverksted.no og på rettegrenen for #106. Gjelder ikke lesemodus i Chrome. Trolig laster Safari siden på nytt, og planen ligger bare i minnet. Mulig løsning: husk planen i fanen (`sessionStorage`) hele tiden. Det er en personvernavgjørelse og venter på Nkoms svar om fanelagring (se docs/personvern-lagring.md). Lars 29.10.2026: ingen tiltak nå, siden siden ikke er delt eller søkbar ennå. Opplysning på tilgjengelighetssiden vurderes hvis svaret drøyer. |

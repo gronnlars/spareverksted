@@ -201,3 +201,4 @@ input[aria-invalid=true]{border-color:var(--control-border,#b3452c);outline-colo
 #savingsResult:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
 
 .ki-note{max-width:680px;margin:14px 0 0;font-size:15px;line-height:1.6;color:var(--ink)}
+.metrics{margin-bottom:0}.metrics dt,.metrics dd{margin:0}
