@@ -22,3 +22,5 @@ Prioritet: konkrete feil og utløpte påstander, deretter neste avgrensede spør
 KI brukes i stor grad til å utvikle innhold og kode. Svarene i «Spør om sparing» skrives og kildekontrolleres før publisering. Kildekontrollen kan være utført med KI. Menneskelig eller uavhengig fagkontroll oppgis bare når den er dokumentert. Ingen KI-modell lager svar under brukerens besøk. Ingen innlogging, reklame eller ekstern logging som del av dette arbeidet. Beregninger foregår i størst mulig grad lokalt.
 
 Oppgi utførte kontroller, begrensninger og faktisk status. Grønne tester beviser ikke full tilgjengelighet eller brukerforståelse. Main-push starter automatisk testing og publisering; ikke beskriv sammenslåing som en upublisert handling.
+
+Publisert HTML kan valideres med W3C Nu, lokalt eller på validator.w3.org, også ved å laste opp den ferdig viste siden. Siden er offentlig, så opplasting bryter ikke personvernreglene. Last aldri opp noe som inneholder personopplysninger eller upublisert materiale. Kan validatoren ikke brukes, skal kontrollen meldes som blokkert, ikke bestått.
