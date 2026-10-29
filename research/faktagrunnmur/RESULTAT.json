@@ -125,8 +125,24 @@
     {
       "test": "historical display blocked without evidence",
       "result": "pass"
+    },
+    {
+      "test": "withdrawal scope cannot label annual deposit fact",
+      "result": "pass"
+    },
+    {
+      "test": "unknown scope rejected",
+      "result": "pass"
+    },
+    {
+      "test": "withdrawal fact cannot be added to deposit card",
+      "result": "pass"
+    },
+    {
+      "test": "benefit card accepts its required mixed scopes",
+      "result": "pass"
     }
   ],
-  "passed": 31,
-  "total": 31
+  "passed": 35,
+  "total": 35
 }
