@@ -58,6 +58,18 @@ jobs:
           node --check dist/assumptions.js
           node --check dist/theme.js
           node --check dist/navigation.js
+          node tests/w3c-status.test.cjs
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      # Nu Html Checker, the validator behind validator.w3.org. Fails on errors, reports warnings.
+      - name: W3C validator on all pages
+        run: |
+          npm install --no-save --no-package-lock vnu-jar
+          JAR=node_modules/vnu-jar/build/dist/vnu.jar
+          java -jar "$JAR" --format json --stdout --exit-zero-always dist/*.html > /tmp/w3c.json
+          python3 scripts/w3c-status.py /tmp/w3c.json "$(java -jar "$JAR" --version)" >> "$GITHUB_STEP_SUMMARY"
   browser:
     runs-on: ubuntu-latest
     # Playwrights eget testbilde har Chromium og systempakkene ferdig installert.
@@ -148,6 +160,19 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build source download
         run: python3 scripts/package-source.py
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      # Writes the result into the published copy of tilgjengelighet.html only. Nothing is committed.
+      - name: Write W3C result into the accessibility page
+        run: |
+          npm install --no-save --no-package-lock vnu-jar
+          JAR=node_modules/vnu-jar/build/dist/vnu.jar
+          VERSION="$(java -jar "$JAR" --version)"
+          java -jar "$JAR" --format json --stdout --exit-zero-always dist/*.html > /tmp/w3c.json
+          python3 scripts/w3c-status.py /tmp/w3c.json "$VERSION" --write
+          java -jar "$JAR" --errors-only dist/tilgjengelighet.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
