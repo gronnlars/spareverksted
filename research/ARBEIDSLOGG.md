@@ -174,3 +174,8 @@ Lars bestiller gjennomføring. Base f896cb7. Bare BSU, ASK og fondskonto forblir
 ## Sist gjennomgått og 12-månedersvarsel, 29. oktober 2026
 
 Claude, på Lars' bestilling. Base 9a382ad. q-bsu-basics, q-aksjesparekonto og q-fondskonto får `published` og `changed` fra git-historikken på main. `checked` er uendret. Ingen faktapåstander eller kilder er endret, og ingen ny kildekontroll er gjort. Bare «Sist gjennomgått» og eventuelt varsel under overskriften. Alle tre datoene under «Kilder og kontrollgrunnlag», etter Lars' tilbakemelding samme dag. Ny ansvarslinje. Regler for kontrollrunden i SVARMAL.md. Kontroll: Node-tester og Chromium-tester lokalt. Firefox og WebKit kjøres i CI. Visningen ved 320, 390 og 1280 px er kontrollert i Chromium.
+
+
+## ASK-bosted og årets BSU-innskudd, 29. oktober 2026
+
+ChatGPT/Codex. Base 29344dc343448e2d9ec5d7beadc12b0cbe21bf7a. Lars godkjenner oppfølging av dokumenterte kildefunn under metodeprøven. To avgrensede rettinger i q-aksjesparekonto og q-bsu-basics. Kildene nyåpnet, alle 208 historiske renteverdier kontrollert mot ferskt SSB-uttrekk, årssnitt kontrollregnet med eksisterende generator. ASK-eksemplet kontrollregnet til 17 028 kr. published bevares. changed og checked settes til 29.10.2026 etter gjennomgang. Kontrollform: egenkontroll, ingen ny uavhengig fagkontroll. Detaljer og gjenstående kontroller i research/svarutkast/KONTROLL-EGENSKAPSFUNN-2026-10-29.md. Ingen sammenslåing eller publisering.
