@@ -888,5 +888,7 @@ B. Mellomrom eller skilletegn mellom `span`. Ikke valgt: virker, men sier ikke a
 3. Resultatkort og forklaring ligger i én `article`. Ingen synlig endring.
 4. Forslag om å skjule sekundært innhold med `hidden` eller skrive ekstra tekst for lesemodus er ikke fulgt. Gamle tall skal ikke finnes i siden, og «Mer om tallene» skal være tilgjengelig for alle.
 
+**Oppfølging samme dag:** Lars testet på iPhone. Chrome viser riktige tall i lesemodus etter endringen. Safari Reader viser eksempelplanen uansett, også hovedtallet, og planen kan bli nullstilt når lesemodus lukkes. Det er en annen sak enn denne: Safari ser ut til å laste siden på nytt. Ført opp i research/plan.md, «Kjente feil som venter». Lars: ingen tiltak før Nkom har svart om fanelagring.
+
 **Revurderes hvis:** brukere opplever at forklaringen endrer seg for tidlig eller for sent, eller lesemodus fortsatt viser tall som ikke stemmer med hovedtallet.
 
