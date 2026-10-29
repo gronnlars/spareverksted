@@ -946,3 +946,14 @@ Lars bestiller brukerrettet README nå, med «Denne versjonen av Spareverksted e
 Valgt: kort README med oppstart, bruk, begrensninger, personvern, tilgjengelighet, lisens og hjelp. Arbeidsdokumentasjon lenkes med full GitHub-adresse. Modellvalg og drift bevares i docs/beregningsmodell.md og docs/drift.md. Begge ZIP-mappenavn forklares. Alternativet å beholde kontrollhistorikk og detaljer i README forkastes fordi det skjuler oppstartsinstruksjonene. En utvidet ZIP med all dokumentasjon er ikke valgt; nødvendige instrukser og lisens følger pakken allerede. Pakkeskriptet endres ikke.
 
 Kontroll: pakken er laget og pakket ut i tom mappe av ChatGPT/Codex. README-kommandoen starter lokal server, og alle fem HTML-sidene svarer. Offline beregning og nettlesertester er tidligere rapportert kontrollert av Claude mot cf77f71, ikke kjørt på nytt av Codex. Ingen beregningskode er endret. Revurder README ved full oppstart, endret publisert funksjonalitet eller endret pakkestruktur.
+
+
+## Automatisk W3C-resultat på tilgjengelighetssiden (30. oktober 2026)
+
+Lars fant ikke W3C-kontrollen på tilgjengelighetssiden, fordi den lå i en lukket utvidbar del. Han ba om en synlig oppdatering av feil og advarsler som lages automatisk ved hver publisering, for alle sidene. Gjelder universell utforming og er innenfor unntaket fra pausen.
+
+Valgt: GitHub Actions kjører Nu Html Checker (vnu-jar fra npm, samme validator som validator.w3.org) på alle HTML-filene i dist. Ved feil stopper testene, så siden publiseres ikke med kjente kodefeil. Advarsler stopper ikke. Ved publisering skriver scripts/w3c-status.py dato, versjon og antall feil og advarsler per side inn mellom markørene w3c-status i den publiserte kopien av tilgjengelighet.html. Ingenting committes tilbake. Besøkende kontakter aldri W3C.
+
+Alternativer: Hente resultatet fra validator.w3.org i nettleseren ble forkastet: eksterne kall fra besøkende bryter personvernsiden og gjør siden avhengig av W3Cs tjeneste. Å committe resultatet tilbake til main ble forkastet fordi det gir en ekstra commit per publisering. Å la feil gå gjennom og bare vise dem ble forkastet; da kan kjente kodefeil publiseres.
+
+Begrensning: Validatoren sjekker HTML-en slik den lastes, ikke tilstanden etter at JavaScript har kjørt, og den sier ikke at siden er tilgjengelig. Versjonen er ikke låst, så nye regler i validatoren kan gi nye feil uten at koden er endret. Revurder hvis det skjer ofte. Kontroll: skriptet er testet med oppdiktede resultater (tests/w3c-status.test.cjs). Den ekte validatoren kunne ikke lastes ned i arbeidsmiljøet og kjøres første gang i GitHub Actions på PR-en.
