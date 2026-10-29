@@ -906,6 +906,10 @@ Alternativ A: permanent sletting av innhold og kilder. Forkastet fordi arbeid ka
 Historiske nettlesertester av beholdt utkastkode bruker en eksplisitt testfixture uten publiseringsutvalg. Nye produksjonstester bruker uendret spor.html og bekrefter at bare tre svar finnes og at tidligere spørsmål ikke gir eldre råd. Ingen produksjonsinnstilling lar brukeren slå av utvalget. Dette er en avgrenset tilbaketrekking, ikke en åpning for nye funksjoner under pausen.
 
 
+## Nettside som kilde, 29. oktober 2026
+
+Lars presiserer at PDF-utskriftene av nettsider bare er en intern lesemåte. De skal ikke omtales som egne kilder i publiseringsteksten. Kildelisten lenker til nettsiden, og kontrollgrunnlaget oppgir relevant regelår, faktisk lesedato og kjent kildedato. Tekniske opplysninger om utskrifter beholdes internt. Dette er rettet i kontrollteksten for BSU, ASK og fondskonto uten endring av kilder, faginnhold eller kontrolldato. SVARMAL.md er presisert. Alternativet å beholde lesemåten i brukerens kontrolltekst forkastes fordi det forveksler arbeidsmaterialet med kilden. Selvstendige PDF-originaler omfattes ikke av denne avgrensningen.
+
 ## «Sist gjennomgått» under overskriften og varsel etter 12 måneder (29.10.2026)
 
 **Bestilt av Lars 29.10.2026.** Leseren skal raskt se om informasjonen er fersk, slik nettaviser merker gamle saker. Gjelder BSU, ASK og fondskonto og alle nye svar.

@@ -260,7 +260,7 @@ const entries=[
     }
   ],
   "review": {
-    "text": "Skatteetatens sider er udaterte. Satsen gjelder inntektsåret 2026. Skatte-ABC 2025/2026 er lest fra en utskrift datert 28.10.2026, og utskriftstiden er ikke kildens oppdateringsdato. Lest 28.10.2026 av ChatGPT/Codex, egenkontroll. Svaret dekker ikke skatt ved flytting til utlandet, formuesskatt eller utenlandsk kildeskatt. Neste kontroll før 1. januar 2027 og ved regelendringer."
+    "text": "Skatteetatens sider er udaterte. Satsen gjelder inntektsåret 2026. Skatte-ABC gjelder utgaven 2025/2026. Lest 28.10.2026 av ChatGPT/Codex, egenkontroll. Svaret dekker ikke skatt ved flytting til utlandet, formuesskatt eller utenlandsk kildeskatt. Neste kontroll før 1. januar 2027 og ved regelendringer."
   }
 ,
 "keys":["ask",
@@ -349,7 +349,7 @@ const entries=[
     }
   ],
   "review": {
-    "text": "Regelår 2026. Skatte-ABC 2025/2026 og rettledningen for 2026 og senere er lest sammen med personsidene og Prop. 1 LS (2025/2026), punkt 8.10.2 om gjeldende rett. Ingen oppdateringsdato oppgitt på Skatteetatens sider. PDF-enes utskriftsdato er ikke oppdateringsdato. Lest 29.10.2026 av ChatGPT/Codex, egenkontroll. Lars bekrefter 29.10.2026 at teksten er kontrollert av ham og Claude og godkjent for publisering. Svaret dekker ikke selskaper, utflytting eller bestemte tilbyderes vilkår. Neste kontroll før 1. januar 2027 og ved relevante forslag eller regelendringer."
+    "text": "Regelår 2026. Skatte-ABC 2025/2026 og rettledningen for 2026 og senere er lest sammen med personsidene og Prop. 1 LS (2025/2026), punkt 8.10.2 om gjeldende rett. Ingen oppdateringsdato oppgitt på Skatteetatens sider. Lest 29.10.2026 av ChatGPT/Codex, egenkontroll. Lars bekrefter 29.10.2026 at teksten er kontrollert av ham og Claude og godkjent for publisering. Svaret dekker ikke selskaper, utflytting eller bestemte tilbyderes vilkår. Neste kontroll før 1. januar 2027 og ved relevante forslag eller regelendringer."
   },
 "keys":["fondskonto",
 "investeringskonto",
@@ -431,7 +431,7 @@ const entries=[
    "url": "https://www.ssb.no/statbank/table/11018?sq=30128709"
   }
  ],
- "review": {"text": "Kildegrunnlag: Skatteetatens PDF med utskriftsdato 28. oktober 2026, uten oppgitt oppdateringsdato, supplert med Skatteetatens satsside for 2026, og SSB-uttrekk datert samme dag. Boligeierskap kontrollert av Claude 28. oktober 2026. Egenkontroll av ChatGPT/Codex. Neste kontroll før 1. januar 2027 og ved regelendringer; rentehistorikken kontrolleres ved nye SSB-tall."}
+ "review": {"text": "Kildegrunnlag: Skatteetatens nettsider om BSU og satser for 2026, og SSBs rentestatistikk med uttrekk 28. oktober 2026. Ingen oppdateringsdato oppgitt på Skatteetatens sider. Boligeierskap kontrollert av Claude 28. oktober 2026. Egenkontroll av ChatGPT/Codex. Neste kontroll før 1. januar 2027 og ved regelendringer; rentehistorikken kontrolleres ved nye SSB-tall."}
 ,
  words:[/\bbsu\b/,/boligsparing for ungdom/]},
 {"id":"q-ips-ask",

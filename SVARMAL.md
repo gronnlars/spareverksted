@@ -57,6 +57,10 @@ Lars har etter ASK-prøven bestilt språkgjennomgang og bruk av svarmalen for sv
 - Ikke gjør uavklarte faglige påstander til publiserbar tekst. Avgrens det svaret faktisk dekker, og registrer åpne temaer som publiseringssperrer i arbeidsnotatet. K1s uttrykkelige unntak for et direkte spørsmål gjelder fortsatt; dette endrer ikke kildereglene eller gir fullmakt til publisering.
 
 
+## Nettsiden er kilden, lesemåten er intern (29.10.2026)
+
+Når en nettside er lest gjennom en PDF-utskrift, et skjermbilde eller et tekstuttrekk, er nettsiden fortsatt kilden. Bruk original nettadresse og sidetittel i kildelisten. Oppgi kildens dato eller regelår og faktisk kontrolldato. Omtale av PDF-utskrift, utskriftstid og andre tekniske lesemåter hører hjemme i interne kontrollnotater, ikke i teksten for leseren eller «Om kildekontrollen». Dette gjelder ikke selvstendige rapporter eller andre originaldokumenter som faktisk er publisert som PDF.
+
 ## Datoer og gjennomgang (Lars 29.10.2026)
 
 Gjelder alle publiserte svar og alle som oppdaterer dem, også ChatGPT/Codex i den faste kontrollrunden.
