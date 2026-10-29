@@ -159,3 +159,33 @@ Valgomaten er parkert etter Lars sin beslutning 24. oktober 2026. Den vurderes s
 | Feil | Status og hva som avgjør |
 | --- | --- |
 | **Safari Reader viser eksempeltallene, ikke brukerens plan.** Etter at lesemodus lukkes, er planen av og til nullstilt til eksempelplanen. Safaris KI-oppsummering gjentar eksempeltallene som om de var brukerens. | Funnet av Lars på iPhone 29.10.2026, både på spareverksted.no og på rettegrenen for #106. Gjelder ikke lesemodus i Chrome. Trolig laster Safari siden på nytt, og planen ligger bare i minnet. Mulig løsning: husk planen i fanen (`sessionStorage`) hele tiden. Det er en personvernavgjørelse og venter på Nkoms svar om fanelagring (se docs/personvern-lagring.md). Lars 29.10.2026: ingen tiltak nå, siden siden ikke er delt eller søkbar ennå. Opplysning på tilgjengelighetssiden vurderes hvis svaret drøyer. |
+
+## 11. Oppdrag: delbare svar i «Spør om sparing» (29.10.2026)
+
+**Status:** Bestilt inn i veikartet av Lars. Planlagt, ikke bygget. Dette oppdraget gir bare fullmakt til dokumentasjon, ikke implementering, sammenslåing eller publisering. Avklar gjennomføring mot prosjektpausen før bygging.
+
+**Problem:** Lars melder at et åpnet ASK-svar hverken kan deles ved å kopiere adresselinjen eller med en egen deleknapp. Mottakeren må kunne åpne det samme publiserte svaret direkte uten å søke på nytt.
+
+**Foreslått løsning:**
+
+- Hvert publisert svar får én stabil lenke basert på svar-ID. Når brukeren åpner et svar, oppdateres adresselinjen til denne lenken uten full sidelasting. Endelig URL-format velges etter kontroll av eksisterende ruting og GitHub Pages.
+- En synlig knapp «Del svaret» ved svaroverskriften åpner mobilens delingsmeny når det støttes. Ellers kopieres lenken. «Kopier lenke» kan tilbys som egen handling hvis det gjør løsningen enklere.
+- Ved vellykket kopiering vises «Lenken er kopiert». Ved feil tilbys en synlig lenke som kan kopieres manuelt. Avbrutt deling behandles som avbrudd, ikke feil.
+- Lenken inneholder bare svaridentifikatoren. Søketekst, alder, spareplan og andre brukeropplysninger følger ikke med. Ingen ny lagring eller sporing.
+- Mottakeren får gjeldende publiserte svar med overskrift og vanlig tilgang til fordypning, kilder og kontrolldato. Lenken lover ikke en historisk versjon av teksten.
+- Tilbake og fram i nettleseren må fungere for svar som brukeren bevisst åpner, uten et nytt historikkpunkt for hvert tastetrykk i søket.
+- Tilbaketrukne eller ukjente svar gir en forståelig beskjed og vei til publiserte spørsmål. Direkte lenker må respektere publiseringsutvalget.
+
+**Arbeidsgrunnlag og avgrensning:** Repo `gronnlars/spareverksted`, fersk main og åpne PR-er må kontrolleres før endring. Følg AGENTS.md, docs/regulatorisk.md og research/universell-utforming.md. Gjenbruk eksisterende svarvisning og svar-ID-er. Ingen nye faglige svar, personlig tilpasning eller endringer i kalkulatorens deling. Meldingen fra Lars er brukerobservasjonen; teknisk årsak og dagens URL-håndtering er ikke undersøkt i dette dokumentasjonsoppdraget.
+
+**Ferdigkriterier før eventuell publisering:**
+
+1. Åpne ASK gjennom søk, kopier adresselinjen og åpne den i en ny privat fane uten tidligere lagring. Riktig svar åpnes direkte. Gjenta for BSU og fondskonto.
+2. Del ASK fra iPhone Safari og åpne mottatt lenke. Samme svar åpnes uten nytt søk. Kontroller både fullført og avbrutt deling.
+3. Kontroller reserveflyt uten delings-API, ved nektet utklippstavletilgang og ved mislykket kopiering.
+4. Last siden på nytt med svarlenken, og prøv tilbake/fram mellom to svar. Søk uten åpning av svar skal ikke fylle nettleserhistorikken.
+5. Prøv ukjent svar-ID og et tilbaketrukket svar. Ingen upublisert tekst skal vises eller erstattes av et tilfeldig svar.
+6. Kontroller tastatur, synlig fokus, skjermlesernavn, rolig statusmelding ved kopiering, 320 px bredde og forstørring. Ingen uventet fokusflytting når et svar åpnes.
+7. Inspiser delingslenken og bekreft at den ikke inneholder brukeropplysninger. Kjør relevante eksisterende søke- og nettlesertester samt avgrensede regresjonskontroller for direkte lenker og publiseringsutvalg.
+
+**Leveranse:** Én avgrenset PR med valgt URL-format, begrunnelse, utførte kontroller og konkrete begrensninger. Ingen kode eller nettlesertester er utført i planleggingsoppdraget.
