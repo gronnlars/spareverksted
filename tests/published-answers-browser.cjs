@@ -8,6 +8,23 @@ assert.equal(await page.locator('[data-topic]').count(),3);assert.equal(await pa
 const submit=async q=>{await page.locator('#searchBox').evaluate(e=>e.open=true);await page.locator('#question').fill(q);await page.locator('#questionForm button').click();};
 for(const q of ['Hva er renters rente?','IPS eller ASK?','ASK eller fondskonto?','Bør jeg betale ned boliglånet eller spare i fond?','fond','utbytte','rentefond']){await submit(q);assert.equal(await page.locator('#answerPanel').isHidden(),true,q);assert.ok(await page.locator('#matchStatus').innerText());}
 for(const q of ['Hva er ASK?','Hva er BSU?','Hva er en fondskonto?']){await submit(q);assert.equal(await page.locator('#answerPanel').isHidden(),false);for(const d of await page.locator('#answer details').all())await d.evaluate(e=>e.open=true);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));assert.equal(await page.locator('#answer .poor-fit,#answer .next-steps').count(),0);}
+
+// Bare kontrolldatoen under overskriften, før kortsvaret. Datohistorikken ligger under kildene.
+await submit('Hva er BSU?');
+assert.deepEqual(await page.evaluate(()=>{const h=document.getElementById('answerTitle'),a=document.getElementById('answer'),first=a.firstElementChild;return [h.nextElementSibling===a,first.className,first.tagName,first.textContent,a.children[1].className];}),[true,'answer-dates','P','Sist gjennomgått: 28. oktober 2026','answer-lead']);
+assert.equal(await page.locator('#answer>.answer-history').count(),0);
+await page.locator('.answer-sources>summary').click();
+assert.deepEqual(await page.locator('.answer-sources .answer-history dt').allInnerTexts(),['Først publisert','Sist endret','Sist gjennomgått']);
+assert.deepEqual(await page.locator('.answer-sources .answer-history dd').allInnerTexts(),['22. oktober 2026','28. oktober 2026','28. oktober 2026']);
+assert.equal(await page.locator('.answer-overdue').count(),0);
+assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
 assert.deepEqual(errors,[]);await page.close();
-const failed=await browser.newPage({viewport:{width,height:900}});await failed.route('**/veileder-published.js*',r=>r.abort());await failed.goto('http://127.0.0.1:'+server.address().port+'/spor.html');assert.equal(await failed.locator('[data-topic]').count(),0);assert.equal(await failed.locator('#answerPanel').isHidden(),true);assert.match(await failed.locator('#matchStatus').innerText(),/kunne ikke lastes/);await failed.close();}console.log(engine+': bare tre publiserte svar, manglende svar uten tilbakefall, 320/390/1280 px.');
+const late=await browser.newPage({viewport:{width,height:900}});await late.clock.setFixedTime(new Date('2027-11-15T12:00:00Z'));
+await late.goto('http://127.0.0.1:'+server.address().port+'/spor.html');await late.locator('#suggestedQuestions button',{hasText:'Hva er en fondskonto?'}).click();
+const warn=late.locator('#answer>.answer-overdue');assert.ok(await warn.isVisible());
+assert.equal(await warn.innerText(),'⚠ Dette svaret er ikke gjennomgått på over 12 måneder. Satser, grenser og regler kan ha endret seg.');
+assert.equal(await warn.getAttribute('role'),null);assert.equal(await warn.locator('span').getAttribute('aria-hidden'),'true');
+assert.deepEqual(await late.evaluate(()=>[...document.getElementById('answer').children].slice(0,3).map(n=>n.classList[0])),['answer-dates','answer-caution','answer-lead']);
+assert.ok(await late.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await late.close();
+const failed=await browser.newPage({viewport:{width,height:900}});await failed.route('**/veileder-published.js*',r=>r.abort());await failed.goto('http://127.0.0.1:'+server.address().port+'/spor.html');assert.equal(await failed.locator('[data-topic]').count(),0);assert.equal(await failed.locator('#answerPanel').isHidden(),true);assert.match(await failed.locator('#matchStatus').innerText(),/kunne ikke lastes/);await failed.close();}console.log(engine+': bare tre publiserte svar, manglende svar uten tilbakefall, datoer og varsel etter 12 måneder, 320/390/1280 px.');
 }finally{if(browser)await browser.close();server.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

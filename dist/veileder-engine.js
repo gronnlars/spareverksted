@@ -78,9 +78,9 @@ function answer(id,profile){
  const t=topics.find(t=>t.id===id);if(!t)throw Error('Velg et av temaene vi dekker.');
  if(t.entry&&t.entry.kind==='explainer'){
   const e=t.entry;
-  return F.resolve({title:t.title,kind:'explainer',layout:e.layout,tradeoffs:e.tradeoffs,terms:e.terms,example:e.example,next:e.next||null,caveat:e.caveat||'',review:e.review||null,parts:e.parts,sources:e.sources,checked:e.checked,missing:[],profile:validate(profile)});
+  return F.resolve({title:t.title,kind:'explainer',layout:e.layout,tradeoffs:e.tradeoffs,terms:e.terms,example:e.example,next:e.next||null,caveat:e.caveat||'',review:e.review||null,parts:e.parts,sources:e.sources,checked:e.checked,published:e.published||null,changed:e.changed||null,missing:[],profile:validate(profile)});
  }
- if(t.entry?.neutral){const e=t.entry;return F.resolve({title:e.title,neutral:true,layout:e.layout,intro:e.intro,options:e.options,parts:e.parts,sources:e.sources,caveat:e.caveat,review:e.review,checked:e.checked,missing:[],profile:validate(profile)});}
+ if(t.entry?.neutral){const e=t.entry;return F.resolve({title:e.title,neutral:true,layout:e.layout,intro:e.intro,options:e.options,parts:e.parts,sources:e.sources,caveat:e.caveat,review:e.review,checked:e.checked,published:e.published||null,changed:e.changed||null,missing:[],profile:validate(profile)});}
  if(t.entry){
   const base=answer(t.category,profile),entry=t.entry;
   const priority=base.parts.filter(p=>p.priority),rest=base.parts.filter(p=>!p.priority);
@@ -161,5 +161,11 @@ function register(entry){
  if((entry.keys||[]).some(x=>!/^[a-zæøå0-9]+$/.test(x)))throw Error('Ugyldig søkeord.');
  topics.push({id:entry.id,title:entry.title,category:entry.category,questions:entry.questions,words:entry.words,keys:entry.keys||[],entry});contentVersion++;
 }
-const api={topics,findTopics,search,gaps:GAPS,reason:S.reason,answer,validate,checked,sources,register,category,isExplainer,isNeutral,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
+// Et svar regnes som ikke gjennomgått når det har gått mer enn 12 måneder siden «Sist gjennomgått».
+function reviewOverdue(checked,now=new Date()){
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(String(checked)))return true;
+ const [y,m,d]=checked.split('-').map(Number),limit=new Date(Date.UTC(y+1,m-1,d,23,59,59));
+ return now.getTime()>limit.getTime();
+}
+const api={reviewOverdue,topics,findTopics,search,gaps:GAPS,reason:S.reason,answer,validate,checked,sources,register,category,isExplainer,isNeutral,horizonRelevant,fundRelevant,suggestions};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareVeileder=api;
 })(typeof window!=='undefined'?window:globalThis);

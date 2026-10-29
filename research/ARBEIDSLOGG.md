@@ -170,3 +170,7 @@ ChatGPT/Codex integrerer godkjent q-fondskonto etter Lars' uttrykkelige publiser
 ## Tilbaketrekking av øvrige svar, 29. oktober 2026
 
 Lars bestiller gjennomføring. Base f896cb7. Bare BSU, ASK og fondskonto forblir tilgjengelige. Seks øvrige egne svar og sju hovedtemaer tas ut av produksjonsvisningen. Arkiv med spørsmål, kilder og gjengitt tekst ligger i TILBAKETRUKNE-SVAR-2026-10-29.json under svarutkast. Eldre tester beholdes som eksplisitte utkasttester. Nye tester kontrollerer faktisk produksjonsutvalg, manglende svar og fravær av profiltilpasset reserveveiledning. Ingen endring av kalkulatorberegninger eller de tre godkjente tekstene. Faktisk CI- og publiseringsstatus registreres i PR.
+
+## Sist gjennomgått og 12-månedersvarsel, 29. oktober 2026
+
+Claude, på Lars' bestilling. Base 9a382ad. q-bsu-basics, q-aksjesparekonto og q-fondskonto får `published` og `changed` fra git-historikken på main. `checked` er uendret. Ingen faktapåstander eller kilder er endret, og ingen ny kildekontroll er gjort. Bare «Sist gjennomgått» og eventuelt varsel under overskriften. Alle tre datoene under «Kilder og kontrollgrunnlag», etter Lars' tilbakemelding samme dag. Ny ansvarslinje. Regler for kontrollrunden i SVARMAL.md. Kontroll: Node-tester og Chromium-tester lokalt. Firefox og WebKit kjøres i CI. Visningen ved 320, 390 og 1280 px er kontrollert i Chromium.

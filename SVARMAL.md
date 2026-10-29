@@ -60,3 +60,44 @@ Lars har etter ASK-prøven bestilt språkgjennomgang og bruk av svarmalen for sv
 ## Nettsiden er kilden, lesemåten er intern (29.10.2026)
 
 Når en nettside er lest gjennom en PDF-utskrift, et skjermbilde eller et tekstuttrekk, er nettsiden fortsatt kilden. Bruk original nettadresse og sidetittel i kildelisten. Oppgi kildens dato eller regelår og faktisk kontrolldato. Omtale av PDF-utskrift, utskriftstid og andre tekniske lesemåter hører hjemme i interne kontrollnotater, ikke i teksten for leseren eller «Om kildekontrollen». Dette gjelder ikke selvstendige rapporter eller andre originaldokumenter som faktisk er publisert som PDF.
+
+## Datoer og gjennomgang (Lars 29.10.2026)
+
+Gjelder alle publiserte svar og alle som oppdaterer dem, også ChatGPT/Codex i den faste kontrollrunden.
+
+**Tre felt per svar** i `dist/veileder-knowledge.js`, alle som `ÅÅÅÅ-MM-DD`:
+
+| Felt | Vises som | Regel |
+| --- | --- | --- |
+| `published` | Først publisert | Settes én gang, når svaret første gang kom på main. Endres aldri. |
+| `changed` | Sist endret | Bare når innholdet faktisk endres: fakta, tall, forbehold, kilder eller betydning. Ren flytting og cacheversjon teller ikke. |
+| `checked` | Sist gjennomgått | Dato for siste reelle gjennomgang. Er lik `published` til første gjennomgang. |
+
+Rekkefølgen er alltid `published` ≤ `changed` ≤ `checked`. Testen `tests/published-answers.test.cjs` stopper svar som mangler et felt eller har feil rekkefølge.
+
+**Visning:** Under overskriften står bare «Sist gjennomgått» og eventuelt varselet etter 12 måneder. Alle tre datoene, med en kort forklaring av «gjennomgått», står øverst i «Kilder og kontrollgrunnlag». Sidens ansvarslinje viser til datoen under overskriften.
+
+**«Sist gjennomgått» får ny dato bare når alt dette er gjort i samme arbeidsøkt:**
+
+1. Hver kilde i svaret er åpnet og lest i dagens versjon, etter [KILDEREGLER.md](KILDEREGLER.md).
+2. Hver sats, grense, regel og hvert regneeksempel i svaret er kontrollert mot kilden.
+3. Kildens dato eller regelår og egen lesedato er ført i «Om kildekontrollen» (K3).
+
+**Kunne en kilde ikke åpnes eller bekreftes, skal datoen ikke flyttes.** Skriv i arbeidsloggen hvilken kilde som feilet og hvorfor. Er du usikker på om noe fortsatt stemmer, merk svaret for manuell kontroll i loggen. Gjett aldri, og endre ikke teksten på usikkert grunnlag.
+
+**Hvis noe er endret:** rett innholdet, sett både `changed` og `checked` til dagens dato, og noter i arbeidsloggen hva som ble endret. Endringer med ikrafttredelsesdato kontrolleres av en annen enn den som skrev teksten (K7).
+
+**Hvis alt stemmer:** sett bare `checked` til dagens dato. Teksten endres ikke.
+
+**Varsel etter 12 måneder:** Er det gått mer enn 12 måneder siden `checked`, viser siden automatisk «Dette svaret er ikke gjennomgått på over 12 måneder. Satser, grenser og regler kan ha endret seg.» Varselet er vanlig tekst med varselfarge, ikonet er skjult for skjermleser, og det avbryter ikke opplesingen (ingen `role="alert"`). Varselet skal aldri fjernes ved å flytte datoen uten reell gjennomgang. Det er et ærlig signal til brukeren og en påminnelse internt om svar som har falt ut av rutinen.
+
+**Faste gjennomganger** følger K7: etter at statsbudsjettet legges fram, før 1. januar og før 1. juli. Svar om skatt, BSU, IPS, ASK og andre satser og grenser prioriteres.
+
+**Logg** for hver gjennomgang i `research/ARBEIDSLOGG.md`: dato, svar-ID, kilder sjekket, hva som ble endret eller «ingen endring», og hva som må kontrolleres manuelt.
+
+Nye svar får alle tre feltene ved innlegging. Et svar uten reell gjennomgang skal vise sin eldste ærlige dato, ikke dagens.
+
+
+## Kort kontrolltekst for leseren (Lars 29.10.2026)
+
+«Om kildekontrollen» oppgir kildens dato eller regelår, faktisk lesedato, hvem som kontrollerte og kontrollformen, samt vesentlige avgrensninger. Bruk «jeg» om redaksjonelle avgrensninger. Ikke ta med tekniske arbeidsmetoder, interne godkjenningsprosesser eller planer og frister for neste gjennomgang. Slike opplysninger bevares i interne kontrollnotater og arbeidsloggen. Publisert, endret og gjennomgått vises gjennom egne datofelt, og varselet om manglende gjennomgang følger eksisterende regel. Interne kontrollfrister gjelder fortsatt og skal ikke fjernes fra vedlikeholdet.

@@ -43,6 +43,24 @@ function suggestions(){
  for(const item of items)$('suggestedQuestions').append(button(item.title,()=>choose(item.id)));
  $('suggestedPanel').hidden=items.length===0;
 }
+const longDate=iso=>new Intl.DateTimeFormat('nb-NO',{dateStyle:'long',timeZone:'UTC'}).format(new Date(iso+'T12:00:00Z'));
+// Under overskriften: bare «Sist gjennomgått» og eventuelt varsel etter 12 måneder.
+function dates(a){
+ const out=[el('p','Sist gjennomgått: '+longDate(a.checked),'answer-dates')];
+ if(V.reviewOverdue(a.checked)){
+  const warn=el('p','','answer-caution answer-overdue'),icon=el('span','⚠ ');icon.setAttribute('aria-hidden','true');
+  warn.append(icon,'Dette svaret er ikke gjennomgått på over 12 måneder. Satser, grenser og regler kan ha endret seg.');out.push(warn);
+ }
+ return out;
+}
+// Under «Kilder og kontrollgrunnlag»: hele datohistorikken.
+function history(a){
+ const rows=[['Først publisert',a.published],['Sist endret',a.changed],['Sist gjennomgått',a.checked]].filter(([,d])=>d);
+ const box=el('div','','answer-history'),dl=el('dl');
+ for(const [label,d] of rows)dl.append(el('dt',label),el('dd',longDate(d)));
+ box.append(dl,el('p','Gjennomgått betyr at kildene og tallene er sjekket på nytt. Svaret endres bare når noe må rettes.','hint'));
+ return box;
+}
 function render(focus=false){
  suggestions();if(!selected){if(focus){$('suggestedTitle').tabIndex=-1;$('suggestedTitle').focus();}return;}
  const partSection=part=>{const section=el('section','','answer-part');section.append(el('h3',part.title),el('p',part.text));
@@ -55,9 +73,7 @@ function render(focus=false){
   }
   return section;};
  const a=Cards.build(selected,profile());$('answerPanel').hidden=false;$('answerTitle').textContent=a.title;
- const out=$('answer');out.dataset.layout=a.layout||'';out.replaceChildren(el('p',a.intro,'answer-lead'));
- const checked=new Intl.DateTimeFormat('nb-NO',{dateStyle:'long'}).format(new Date(a.checked+'T12:00:00Z'));
- out.append(el('p','Sist sjekket: '+checked,'answer-checked'));
+ const out=$('answer');out.dataset.layout=a.layout||'';out.replaceChildren(...dates(a),el('p',a.intro,'answer-lead'));
  if(a.caveat)out.append(el('p',a.caveat,'answer-caveat'));
  if(a.kind==='explainer'){
   // Innholdstypen styrer nøytralitet; layout styrer bare presentasjonen.
@@ -77,7 +93,7 @@ function render(focus=false){
   const src=el('details','','answer-sources');src.append(el('summary','Kilder og kontrollgrunnlag'));
   const sl=el('ul','','source-list');
   for(const s of a.sources){const li=el('li'),link=el('a',s.title);link.href=s.url;link.target='_blank';link.rel='noopener noreferrer';li.append(link);sl.append(li);}
-  src.append(sl);if(a.review){const review=el('details','','review-details');review.append(el('summary','Om kildekontrollen'),el('p',a.review.text));src.append(review);}out.append(src);
+  src.append(history(a),sl);if(a.review){const review=el('details','','review-details');review.append(el('summary','Om kildekontrollen'),el('p',a.review.text));src.append(review);}out.append(src);
   describe();if(focus)$('answerTitle').focus();return;
  }
  if(a.note)out.append(el('p',a.note,'answer-caution'));
@@ -89,7 +105,7 @@ function render(focus=false){
  if(a.parts.length>3){const more=el('details','','more-sections');more.append(el('summary','Vis flere ('+(a.parts.length-3)+')'));for(const part of a.parts.slice(3))more.append(partSection(part));full.append(more);}if(a.parts.length)out.append(full);
  const sources=el('details','','answer-sources');sources.append(el('summary',a.neutral?'Kilder og kontrollgrunnlag':'Kilder og forbehold'));if(!a.neutral)sources.append(el('p','Regler og grenser kan endres. Lang tid garanterer ikke gevinst.','hint'));
  const ul=el('ul','','source-list');
- for(const s of a.sources){const li=el('li'),link=el('a',s.title);link.href=s.url;link.target='_blank';link.rel='noopener noreferrer';li.append(link);ul.append(li);}sources.append(ul);if(a.review){const review=el('details','','review-details');review.append(el('summary','Om kildekontrollen'),el('p',a.review.text));sources.append(review);}
+ for(const s of a.sources){const li=el('li'),link=el('a',s.title);link.href=s.url;link.target='_blank';link.rel='noopener noreferrer';li.append(link);ul.append(li);}sources.append(history(a),ul);if(a.review){const review=el('details','','review-details');review.append(el('summary','Om kildekontrollen'),el('p',a.review.text));sources.append(review);}
  out.append(sources);describe();if(focus)$('answerTitle').focus();
 }
 function choose(id,focus=true){

@@ -43,6 +43,8 @@ Kjente norske og engelskspråklige universiteter kan brukes som kilde til formle
 
 Kildens egen dato eller regelår, vår kontrolldato og dato for publisering på nettsiden er tre ulike ting. Vi blander dem aldri. Har siden ingen synlig dato, skriver vi «ingen dato oppgitt på siden». Nivå 3, 4 og 5 krever kildedato.
 
+For hvert svar på nettsiden føres også «Først publisert», «Sist endret» og «Sist gjennomgått». Reglene for når hver dato settes, og varselet etter 12 måneder, står i [SVARMAL.md](SVARMAL.md), «Datoer og gjennomgang».
+
 ## K4. Foreslått er ikke vedtatt, og vedtatt er ikke i kraft
 
 Hver endring i regler har en status: foreslått, vedtatt eller i kraft, og en dato for når den gjelder fra. En foreslått endring beskrives med hvem som foreslår og at den ikke er vedtatt. Den brukes aldri som gjeldende regel. Overgangen fra foreslått til vedtatt er en bevisst redigering etter at primærkilden er lest.

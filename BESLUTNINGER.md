@@ -909,3 +909,22 @@ Historiske nettlesertester av beholdt utkastkode bruker en eksplisitt testfixtur
 ## Nettside som kilde, 29. oktober 2026
 
 Lars presiserer at PDF-utskriftene av nettsider bare er en intern lesemåte. De skal ikke omtales som egne kilder i publiseringsteksten. Kildelisten lenker til nettsiden, og kontrollgrunnlaget oppgir relevant regelår, faktisk lesedato og kjent kildedato. Tekniske opplysninger om utskrifter beholdes internt. Dette er rettet i kontrollteksten for BSU, ASK og fondskonto uten endring av kilder, faginnhold eller kontrolldato. SVARMAL.md er presisert. Alternativet å beholde lesemåten i brukerens kontrolltekst forkastes fordi det forveksler arbeidsmaterialet med kilden. Selvstendige PDF-originaler omfattes ikke av denne avgrensningen.
+
+## «Sist gjennomgått» under overskriften og varsel etter 12 måneder (29.10.2026)
+
+**Bestilt av Lars 29.10.2026.** Leseren skal raskt se om informasjonen er fersk, slik nettaviser merker gamle saker. Gjelder BSU, ASK og fondskonto og alle nye svar.
+
+**Valg:**
+1. «Sist gjennomgått» rett under overskriften, før kortsvaret. Alternativ A: datoen nederst ved kildene, som før. Ikke valgt: den som søker, ser den ikke før svaret er lest. Alternativ B: «Publisert» til første gjennomgang og deretter «Sist gjennomgått». Ikke valgt: én fast etikett er enklere å vedlikeholde og å forstå.
+2. «Først publisert», «Sist endret» og «Sist gjennomgått» står samlet øverst i «Kilder og kontrollgrunnlag». Alternativ A: alle tre datoene under overskriften. Ikke valgt: støy før svaret. Alternativ B: et eget åpne/lukke-felt med datoene under overskriften. Prøvd først, men forkastet av Lars samme dag: han vil bare ha kontrolldato og eventuelt varsel øverst. Etiketten «Sist sjekket» er forkastet fordi den kan leses som at ingen har søkt opp svaret siden.
+3. Skillet mellom «gjennomgått» og «endret». En gjennomgang uten funn flytter bare `checked`. Alternativ: bare én dato. Ikke valgt: leseren ser da ikke om gjennomgått betyr «alt stemte» eller «noe ble rettet».
+4. Varsel etter 12 måneder uten gjennomgang. Alternativ: fem år, som i mange nettaviser. Ikke valgt: satser og grenser endres hvert år. Teksten «ikke gjennomgått» er valgt framfor «kan være utdatert» fordi den sier hva som ikke er gjort, ikke bare at verden kan ha endret seg.
+5. Varselet er vanlig tekst med eksisterende varselfarger, ikon skjult for skjermleser og uten `role="alert"`. Alternativ: `role="alert"`. Ikke valgt: det avbryter skjermleseren ved sidelasting for et statisk varsel.
+
+**Datoer for de tre svarene**, fra git-historikken på main: BSU først på main 22.10.2026 (#4), ASK og fondskonto 24.10.2026 (#61). Sist endret: BSU 28.10 (#101), ASK 28.10 (#102), fondskonto 29.10 (#107). «Sist gjennomgått» er uendret fra feltet som tidligere het «Sist sjekket».
+
+**Ansvarslinjen** i «Om veilederen og personvern» er endret etter Lars' tekst samme dag: livssituasjon i stedet for økonomi, typer sparing uten bestemt produkt, selskap eller tilbyder, og at satser, grenser og regler kan ha endret seg siden siste gjennomgang.
+
+Regler for hvem som flytter datoene og når: [SVARMAL.md](SVARMAL.md), «Datoer og gjennomgang». Innenfor pausens unntak for kildekrav og universell utforming. Ingen ny kalkulatorfunksjon.
+
+**Revurderes hvis:** brukere misforstår «gjennomgått», varselet vises for ofte til å bli tatt på alvor, eller kontrollrutinen ikke klarer å holde svarene innenfor 12 måneder.
