@@ -1,3 +1,5 @@
+// Check the actual publication policy before the retained draft regressions.
+if(require('node:child_process').spawnSync(process.execPath,['tests/published-answers.test.cjs'],{stdio:'inherit',env:process.env}).status!==0)process.exit(1);
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const V=require('../dist/veileder-engine.js'),Cards=require('../dist/veileder-cards.js');
 const entries=require('../dist/veileder-knowledge.js');for(const e of entries)V.register(e);

@@ -896,3 +896,11 @@ B. Mellomrom eller skilletegn mellom `span`. Ikke valgt: virker, men sier ikke a
 ## Fondskonto revidert og godkjent 29. oktober 2026
 
 Lars bekrefter kontroll av ham og Claude og bestiller innlegging og publisering av siste tekst fra samtalen. q-fondskonto bruker samme oversiktsstruktur og renderer som BSU og ASK. Bredere utvalg og utsatt skatt beholdes som dokumenterte fordeler, og forholdsmessig uttak som ulempe. Udokumenterte kostnads- og flyttepåstander fjernes. Alternativet å utelate EØS-fordelen forkastes fordi Prop. 1 LS (2025/2026), punkt 8.10.2, dokumenterer forskjellen. Skjermingens rekkefølge gjøres ikke obligatorisk. Ingen nye funksjoner eller endret søk. Se research/svarutkast/FONDSKONTO-KILDEKONTROLL-2026-10-29.md for kilder, lengde og kontrollstatus.
+
+## Bare BSU, ASK og fondskonto vises, 29. oktober 2026
+
+Lars bestiller at øvrige svar tas ut av visningen til de er kontrollert etter samme standard. Hans «Gjør det nå» viser til forslaget om å beholde q-bsu-basics, q-aksjesparekonto og q-fondskonto. IPS er ikke med: eksisterende IPS-svar er sammenligningen IPS eller ASK. Alle sju eldre hovedtemaer og seks andre svar sperres i søk, temavalg, forslag og svar-API i produksjonsvisningen. Ingen eldre veiledning skal vises som reserve ved manglende svar. Profiltilpassede forslag erstattes av de tre publiserte forklaringene. Kalkulatoren endres ikke.
+
+Alternativ A: permanent sletting av innhold og kilder. Forkastet fordi arbeid kan gjenbrukes etter kontroll. Alternativ B: bare skjule temaknappene. Forkastet fordi søk og forslag fortsatt kunne åpne svarene. Valgt: eksplisitt publiseringsutvalg, med arkiv i research/svarutkast/TILBAKETRUKNE-SVAR-2026-10-29.json og historikken bevart. Arkivet er utkast, ingen ny faglig godkjenning. Ny publisering av et svar krever eget godkjent oppdrag.
+
+Historiske nettlesertester av beholdt utkastkode bruker en eksplisitt testfixture uten publiseringsutvalg. Nye produksjonstester bruker uendret spor.html og bekrefter at bare tre svar finnes og at tidligere spørsmål ikke gir eldre råd. Ingen produksjonsinnstilling lar brukeren slå av utvalget. Dette er en avgrenset tilbaketrekking, ikke en åpning for nye funksjoner under pausen.

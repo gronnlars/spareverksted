@@ -1,3 +1,5 @@
+// Historical draft regression: production availability is tested separately.
+const readDraftAsset=require('./helpers/draft-assets.cjs');
 // Nettlesertest av to nye søkesituasjoner i «Spør om sparing»: skrivefeil med kjente stammer og negasjon.
 // Kjøres i Chromium, Firefox og WebKit (SPARE_ENGINE). WebKit er ikke det samme som Safari på iPhone.
 // Sjekker visning, trykkflater, vannrett scrolling og at ingenting sendes ut av siden. Rangeringen dekkes av Node-testene.
@@ -7,7 +9,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
  const engine=process.env.SPARE_ENGINE||'chromium',browserType={chromium,firefox,webkit}[engine];
  assert(browserType,'Unknown test browser');
  const root=path.resolve(__dirname,'../dist');
- const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!file.startsWith(root+path.sep)){res.writeHead(403);return res.end();}try{res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(file));}catch{res.writeHead(404);res.end();}});
+ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!file.startsWith(root+path.sep)){res.writeHead(403);return res.end();}try{res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html');res.end(readDraftAsset(file));}catch{res.writeHead(404);res.end();}});
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
  let browser;
  try{
