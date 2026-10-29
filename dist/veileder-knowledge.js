@@ -186,8 +186,8 @@ const entries=[
   "id": "q-aksjesparekonto",
   "title": "Hva er en aksjesparekonto (ASK)?",
   "published": "2026-10-24",
-  "changed": "2026-10-28",
-  "checked": "2026-10-28",
+  "changed": "2026-10-29",
+  "checked": "2026-10-29",
   "terms": [],
   "intro": "En aksjesparekonto (ASK) er en konto for bestemte aksjer og aksjefond i EØS. Du betaler skatt av gevinst og utbytte først ved uttak utover gjenværende innskudd, etter eventuelt skjermingsfradrag. Det er et fradrag som reduserer beløpet du betaler skatt av. Risikoen avhenger av hva du investerer i.",
   "tradeoffs": {
@@ -231,7 +231,7 @@ const entries=[
     },
     {
       "title": "Krav til konto og investeringer",
-      "text": "Bare personlige skattytere kan opprette ASK. Aksjene må være børsnoterte. Fond må være hjemmehørende i EØS og ha mer enn 80 prosent aksjer ved inntektsårets begynnelse. Kravene gjelder når du kjøper. Et verdipapir kan bli stående selv om det senere ikke oppfyller dem, for eksempel fordi selskapet flytter til USA."
+      "text": "Personlige skattytere bosatt i EØS kan opprette ASK. Aksjene må være børsnoterte. Fond må være hjemmehørende i EØS og ha mer enn 80 prosent aksjer ved inntektsårets begynnelse. Kravene gjelder når du kjøper. Et verdipapir kan bli stående selv om det senere ikke oppfyller dem, for eksempel fordi selskapet flytter til USA."
     },
     {
       "title": "Flytting",
@@ -254,13 +254,18 @@ const entries=[
       "url": "https://www.skatteetaten.no/satser/faktor-for-oppjustering-av-gevinsttap-eller-utbytte-pa-aksjer/"
     },
     {
+      "id": "tax-ask-opprette",
+      "title": "Skatteetaten: Skatte-ABC 2025/2026, hvem som kan opprette ASK",
+      "url": "https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/a-10-aksjesparekonto/A-10.001/"
+    },
+    {
       "id": "tax-ask-arv-gave",
       "title": "Skatteetaten: Skatte-ABC 2025/2026, A-10-9 Videreføring av aksjesparekonto ved arv eller gave",
       "url": "https://www.skatteetaten.no/nn/rettskjelder/type/handboker/skatte-abc/gjeldende/a-10-aksjesparekonto/A-10.030/"
     }
   ],
   "review": {
-    "text": "Skatteetatens sider er udaterte. Satsen gjelder inntektsåret 2026. Skatte-ABC gjelder utgaven 2025/2026. Lest 28.10.2026 av ChatGPT/Codex, egenkontroll. Jeg har ikke tatt med skatt ved flytting til utlandet, formuesskatt eller utenlandsk kildeskatt."
+    "text": "Skatteetatens sider er udaterte. Satsen gjelder inntektsåret 2026. Skatte-ABC gjelder utgaven 2025/2026. Lest 29.10.2026 av ChatGPT/Codex, egenkontroll. Jeg har ikke tatt med skatt ved flytting til utlandet, formuesskatt eller utenlandsk kildeskatt."
   }
 ,
 "keys":["ask",
@@ -373,8 +378,8 @@ const entries=[
  "category": "bsu",
  "title": "Hva er BSU?",
  "published": "2026-10-22",
- "changed": "2026-10-28",
- "checked": "2026-10-28",
+ "changed": "2026-10-29",
+ "checked": "2026-10-29",
  "keys": [
   "bsu",
   "boligsparing"
@@ -399,7 +404,7 @@ const entries=[
   "cons": [
    {
     "title": "Tilbakebetaling ved annen bruk",
-    "text": "Du kan ta ut pengene til andre formål, men da bryter du vilkårene og må betale tilbake skattefradrag du tidligere har fått, gjennom økt skatt. Har deler av pengene gått til kjøp av egen fast bolig i tråd med vilkårene, gjelder tilbakebetalingen bare den delen som ikke er brukt slik."
+    "text": "Bruker du tidligere års innskudd til andre formål, bryter du vilkårene og må betale tilbake skattefradrag du tidligere har fått, gjennom økt skatt. Er deler brukt til kjøp av egen fast bolig etter vilkårene, gjelder tilbakebetalingen bare resten."
    }
   ]
  },
@@ -410,15 +415,16 @@ const entries=[
   },
   {
    "title": "Hva kan pengene brukes til?",
-   "text": "Blant annet kjøp av egen fast bolig, kjøpskostnader, renter og avdrag på boliglånet og oppussing og oppgradering av boligen. Det trenger ikke være ditt første boligkjøp. Når du har begynt å bruke BSU-pengene eller har brutt vilkårene, kan du ikke sette inn mer."
+   "text": "Blant annet kjøp av egen fast bolig, kjøpskostnader, renter og avdrag på boliglånet og oppussing og oppgradering av boligen. Det trenger ikke være ditt første boligkjøp. Når du har begynt å bruke bundne BSU-midler eller har brutt vilkårene, kan du ikke sette inn mer."
   },
   {
    "title": "Mer om renter og konto",
    table:bsuRates,
-   "text": "Rentene kan ikke tas ut før sparepengene brukes til bolig. Renter som påløper fra og med året du fyller 34, kan likevel tas ut. Du kan bare opprette BSU-konto én gang, men kan flytte den ved direkte overføring mellom bankene."
+   "text": "Årets innskudd kan tas ut før årsslutt uten å bryte vilkårene. Rentene er bundet til bolig. Renter som påløper fra og med året du fyller 34, kan likevel tas ut. Du kan bare opprette BSU-konto én gang, men kan flytte den ved direkte overføring mellom bankene."
   }
  ],
- "sources": [{"id":"bsu-satser-2026","title":"Skatteetaten: Fradrag for boligsparing for ungdom (BSU), 2026","url":"https://www.skatteetaten.no/satser/fradrag-for-boligsparing-for-ungdom-bsu/?year=2026"},
+ "sources": [{"id":"tax-bsu-uttak","title":"Skatteetaten: Skatte-ABC 2025/2026, uttak fra BSU","url":"https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/b-19-boligsparing-for-ungdom-bsu/B-19.034/B-19.035/"},
+  {"id":"bsu-satser-2026","title":"Skatteetaten: Fradrag for boligsparing for ungdom (BSU), 2026","url":"https://www.skatteetaten.no/satser/fradrag-for-boligsparing-for-ungdom-bsu/?year=2026"},
   {"id":"bsu-forskudd-2026","title":"Skatteetaten: Forskuddsutskrivingen 2026","url":"https://www.skatteetaten.no/rettskilder/type/uttalelser/uttalelser/forskuddsutskrivingen-2026/"},
   {
    "id": "tax-bsu",
@@ -431,7 +437,7 @@ const entries=[
    "url": "https://www.ssb.no/statbank/table/11018?sq=30128709"
   }
  ],
- "review": {"text": "Kildegrunnlag: Skatteetatens nettsider om BSU og satser for 2026, og SSBs rentestatistikk med uttrekk 28. oktober 2026. Ingen oppdateringsdato oppgitt på Skatteetatens sider. Boligeierskap kontrollert av Claude 28. oktober 2026. Egenkontroll av ChatGPT/Codex."}
+ "review": {"text": "Regelår 2026. Skatte-ABC 2025/2026. Forskuddsutskrivingen er datert 15.12.2025, øvrige skattesider er udaterte. SSB-tabellen gjelder januar 2018 til august 2026. Lest 29.10.2026 av ChatGPT/Codex, egenkontroll."}
 ,
  words:[/\bbsu\b/,/boligsparing for ungdom/]},
 {"id":"q-ips-ask",
