@@ -45,3 +45,8 @@ Lokal Chrome-visning er åpnet gjennom forhåndsvisningen. Rettet ASK-vilkår, B
 ## Etterkontroll, 29.10.2026
 
 Claude har lest diffen uavhengig av skribenten. ASK-hovedsiden nevner ikke bostedskravet, og A-10-1 lot seg ikke åpne i Claudes økt. Lars åpnet A-10-1 og bekreftet innledningen: sktl. § 10-21 gjelder personlig skattyter bosatt i EØS-området, bosted avgjøres etter landets internrett, og konto opprettet mens man bodde i EØS kan videreføres etter utflytting. Påstanden om opprettelse er dermed bekreftet mot kilden. Tre språkjusteringer i BSU-svaret, se arbeidsloggen. Ingen ny faktapåstand.
+
+
+## Presisering av bundne renter før publisering, 29.10.2026
+
+Lars bestiller retting og publisering. Forklaringen av bundne BSU-midler avgrenses til tidligere års innskudd og renter opptjent til og med året man fyller 33. Renter som påløper fra og med året man fyller 34 kan disponeres fritt. Kilde: Skatte-ABC 2025/2026, B-19-7.1.2, lest av ChatGPT/Codex i samme arbeidsøkt. Eksisterende test oppdateres til den presise avgrensningen. Datoer og cacheversjon beholdes siden dette er samme dags upubliserte revisjon. Lars har godkjent den foreslåtte rettingen og gitt publiseringsfullmakt. Kildekontrollen av denne presiseringen er egenkontroll av ChatGPT/Codex.
