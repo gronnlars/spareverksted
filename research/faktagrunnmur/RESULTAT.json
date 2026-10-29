@@ -85,8 +85,48 @@
     {
       "test": "repealed fact rejected for current display",
       "result": "pass"
+    },
+    {
+      "test": "2028 rule blocked in 2026 display",
+      "result": "pass"
+    },
+    {
+      "test": "2019 calculation blocked without historical evidence",
+      "result": "pass"
+    },
+    {
+      "test": "not applicable blocked in display",
+      "result": "pass"
+    },
+    {
+      "test": "not applicable blocked in calculation",
+      "result": "pass"
+    },
+    {
+      "test": "documented none blocked in calculation",
+      "result": "pass"
+    },
+    {
+      "test": "empty string blocked in calculation",
+      "result": "pass"
+    },
+    {
+      "test": "numeric zero allowed in calculation",
+      "result": "pass"
+    },
+    {
+      "test": "confirmation time basis enforced",
+      "result": "pass"
+    },
+    {
+      "test": "midyear effective date rejected for full year",
+      "result": "pass"
+    },
+    {
+      "test": "historical display blocked without evidence",
+      "result": "pass"
     }
   ],
-  "passed": 21,
-  "total": 21
+  "passed": 31,
+  "total": 31
 }
