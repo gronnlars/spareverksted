@@ -3,6 +3,14 @@
 En sparekalkulator med enkel inngang og mer detaljer etter behov.
 Ren HTML, CSS og JavaScript. Ingen installasjon, database eller brukerinnlogging.
 
+## Gjeldende rammer
+
+**Prosjektet er på vent** til Finanstilsynet har svart og alt er klarert. Les [AGENTS.md](AGENTS.md) og [docs/regulatorisk.md](docs/regulatorisk.md) før du gjør noe. Ikke start arbeid uten uttrykkelig beskjed fra Lars. Pausen gjelder ikke kildekrav, universell utforming, personvern, nøytrale spørsmål og svar om økonomiske begreper og retting av opplagte lovbrudd. Grensene står i regulatorisk.md under «Områder pausen ikke gjelder».
+
+**Sparekalkulatoren er fryst** (24.10.2026). Endringer krever en dokumentert regnefeil, en alvorlig brukshindring, en nødvendig kildeoppdatering eller en tilgjengelighetsfeil. Se [research/plan.md](research/plan.md), punkt 0.
+
+Denne README-en beskriver hvordan siden er bygget. Den gir ingen åpning for nytt arbeid.
+
 ## Kjør lokalt
 
 Fra prosjektmappen:
@@ -46,19 +54,25 @@ Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/packa
 - `tests/startflyt-browser.cjs` og `tests/spareform-browser.cjs`: startflyt, tomme felt, spareform, forklaringen ved resultatet og kroner mot kjøpekraft i grafen.
 - `tests/input-browser.cjs`: nettleserflyt med ugyldige tall (krever playwright): blokkert deling, lagring og eksport med fokus på feltet, dempede resultater, delte lenker, sparemål, uttak og gamle lagrede planer.
 
-## Kontroller beregningene
+## Tester
 
-Med Node.js installert:
+Fasiten for hvilke tester som kjøres, er arbeidsflyten [.github/workflows/static.yml](.github/workflows/static.yml). Den kjører på hver pull request og før publisering fra main. Filene som nevnes i denne README-en, er et utvalg, ikke en fullstendig liste.
+
+Forutsetninger:
+
+- Node-testene (`tests/*.test.cjs`) krever bare Node.js. Arbeidsflyten bruker Node 22.
+- Nettlesertestene (`tests/*-browser.cjs`) krever Playwright med nettlesere installert. Arbeidsflyten bruker Playwright 1.56.0. Testene starter og stopper sin egen lokale server. De kjører i Chromium som standard. Noen kan kjøres i Firefox eller WebKit med `SPARE_ENGINE=firefox` eller `SPARE_ENGINE=webkit`, og mange kan bruke en eksisterende Chromium-binær via `SPARE_BROWSER`. Se arbeidsflyten for hvilke som kjøres i hvilken motor.
+
+Eksempel:
 
 ```sh
 node tests/engine.test.cjs
-node tests/tax-export.test.cjs
 node tests/validation.test.cjs
-node tests/personvern-lagring.test.cjs
 node tests/results.test.cjs
+SPARE_ENGINE=firefox node tests/deling-browser.cjs
 ```
 
-Testene dekker 200 deterministisk genererte spareplaner, nødvendig månedssparing, null rente, svært lange perioder, 32 kombinasjoner av uttaksvalg og mål-alternativer.
+Beregningstestene dekker blant annet 200 deterministisk genererte spareplaner, nødvendig månedssparing, null rente, svært lange perioder, 32 kombinasjoner av uttaksvalg og mål-alternativer. Grønne tester beviser ikke full tilgjengelighet eller brukerforståelse.
 
 ## Viktige modellvalg
 
@@ -86,7 +100,7 @@ Brukeren kan velge brukskonto, sparekonto eller indeksfond under «Hva vil du re
 
 «Start på nytt» åpner startguiden med standardverdiene. Går brukeren videre, nullstilles hele planen (også børsfall, ekstrainnskudd og spareform), og det kan angres. «Tilbake til planen» endrer ingenting.
 
-Seksjonen «Dette betyr tallene dine» står rett etter resultatet. Den viser én kort forklaring og samler utdypingen i tre grupper: innbetalinger og avkastning, kroner og kjøpekraft, og forutsetninger. Kjøpekraft måles mot innskuddene i dagens kroner, regnet om med prisnivået da hvert innskudd ble satt inn. Teksten oppdateres når et felt forlates eller en skyveknapp slippes, ikke ved hvert tastetrykk, og har ingen automatisk opplesning. Ingen regel kaller en rente «uvanlig», fordi det krever en dokumentert og vedlikeholdt referanse.
+Seksjonen «Dette betyr tallene dine» står rett etter resultatet. Den viser én kort forklaring og samler utdypingen i tre grupper: innbetalinger og avkastning, kroner og kjøpekraft, og forutsetninger. Kjøpekraft måles mot innskuddene i dagens kroner, regnet om med prisnivået da hvert innskudd ble satt inn. Teksten oppdateres etter 0,5 sekunders skrivepause og når et felt forlates eller en skyveknapp slippes, ikke ved hvert tastetrykk (se BESLUTNINGER.md, 29.10.2026). Mens den venter, står forrige tekst igjen dempet. Teksten har ingen automatisk opplesning. Ingen regel kaller en rente «uvanlig», fordi det krever en dokumentert og vedlikeholdt referanse.
 
 Grafen kan vise beløpet i kroner, kjøpekraften i dagens kroner, eller begge. I «Begge» vises bare beløpet i to målestokker; innskudd, bank og bånd vises i de andre visningene, slik at linjer med ulikt grunnlag ikke sammenlignes. Linjene skilles med linjestil, og tekstalternativet oppgir sluttverdiene.
 
@@ -110,7 +124,7 @@ Grensene for alle tallfelt står i én oversikt i `dist/engine.js`. Deling, lagr
 
 ## Bidra
 
-Gjennomgå helst beregninger, numeriske grensetilfeller, tilgjengelighet og mobilflyt før nye funksjoner legges til. Nye finansielle modeller må dokumentere forutsetningene og ha uavhengige kontrollberegninger. Ikke endre en brukers innstillinger stille ved nivåbytte.
+Les «Gjeldende rammer» øverst først. Når arbeid er åpnet: gjennomgå helst beregninger, numeriske grensetilfeller, tilgjengelighet og mobilflyt før nye funksjoner legges til. Nye finansielle modeller må dokumentere forutsetningene og ha uavhengige kontrollberegninger. Ikke endre en brukers innstillinger stille ved nivåbytte.
 
 ## Lisens, opphav og viderebruk
 
@@ -133,38 +147,40 @@ og i den vellykkede publiseringsjobben. Eget domene kan settes i Pages-innstilli
 
 ## Startguide og eksport
 
-Nye besøkende velger spareutvikling eller sparemål. Alder er valgfri. Risikovalget er ikke med i startguiden, fordi det ikke endrer beregningen. Det kan oppgis under «Tilpass veiledningen» og i Spør om sparing, og brukes i sparemål og veileder. Det endrer aldri antatt vekst. 67 år er et redigerbart forslag, ikke en påstand om individuell pensjonsalder. En delt plan åpnes direkte. Startguiden kan åpnes igjen med Startvalg.
+Nye besøkende velger spareutvikling eller sparemål. Alder er valgfri. Risikovalget er ikke med i startguiden, fordi det ikke endrer beregningen. Det kan oppgis under «Tilpass veiledningen» og i Spør om sparing, og brukes i sparemål. I den publiserte veilederen styrer det ikke spørsmålsforslagene (se «Spør om sparing»). Det endrer aldri antatt vekst. 67 år er et redigerbart forslag, ikke en påstand om individuell pensjonsalder. En delt plan åpnes direkte. Startguiden kan åpnes igjen med Startvalg.
 
 Glidere er snarveier; egne tall kan være høyere enn gliderens utgangspunkt. Eksportene er øyeblikksbilder. XLSX inneholder numeriske celler og flere ark, ikke levende formler. CSV følger aktivt verktøy. PDF opprettes gjennom nettleserens utskrift. JSON inneholder gjeldende plan, ikke alle andre lokalt lagrede planer.
 
 ## Spør om sparing
 
-`dist/spor.html` gir et kort svar med to alternativer. Hvert alternativ har grønne fordeler og røde ulemper som er lukket fra start. Ett trykk åpner hele listen med forklaringer. Hvert kort har minst to fordeler, to ulemper og en linje om når valget passer dårlig. Utfyllende vurdering viser først maksimalt tre seksjoner, med resten bak «Vis flere». Kontrolldatoen vises uten å åpne kildene. Ett klikk på et tema viser svaret; søk viser det høyest rangerte temaet med eventuelle alternativer. Tall i friteksten blir ikke tolket.
+### Publisert nå
+
+`dist/spor.html` viser tre svar: BSU, aksjesparekonto (ASK) og fondskonto. Utvalget ble vedtatt 29.10.2026 og styres av `dist/veileder-published.js`. Øvrige svar er tatt ut av visningen fordi de ikke er gjennomgått etter dagens regler. De er bevart som utkast i `research/svarutkast/`.
+
+- Søk og spørsmålsforslag viser bare de tre publiserte svarene. Spørsmål som hørte til tilbaketrukne svar, gir ingen treff.
+- Spørsmålsforslagene bygger ikke på opplysninger brukeren har oppgitt. De viser de andre publiserte svarene.
+- Hvert svar viser dato for sist gjennomgått under overskriften, med varsel når det har gått mer enn 12 måneder.
+- Form, presentasjon og kontroll før publisering følger [SVARMAL.md](SVARMAL.md), [SPRAKREGLER.md](SPRAKREGLER.md) og [KILDEREGLER.md](KILDEREGLER.md).
+
+Siden sender ingenting til en KI-tjeneste. Ingen bestemte aksjeandeler eller navngitte fondsanbefalinger. Svarene er generelle, med kildelenker og datoforbehold.
+
+### Kode som finnes, men ikke vises
+
+Koden fra før utvalget ligger fortsatt i `dist/`, blant annet sammenligninger med to alternativer, relevansregler og spørsmålsforslag tilpasset alder, sparetid og risikovalg. Den er ikke tatt i bruk i den publiserte visningen. Å vise den igjen krever klarering etter [docs/regulatorisk.md](docs/regulatorisk.md) og Lars' godkjenning.
 
 - `veileder-facts.js`: felles faktatall med regelår, kontrolldato og primærkilde.
 - `veileder-engine.js`: temaruting, relevansregler, spørsmålsforslag og utfyllende forklaringer.
+- `veileder-knowledge.js`: svarbasen, også svarene som er tatt ut av visningen.
+- `veileder-sok.js`: søk og tolkning av spørsmål.
 - `veileder-cards.js`: korte sammenligninger og situasjonsbestemte forbehold.
+- `veileder-published.js`: publiseringsutvalget som avgrenser alt over til de tre svarene.
 - `veileder-context.js`: validering av samme-fane-kontekst, uten nettverkskall.
 - `veileder-bridge.js`: overfører oppgitt alder, aktuell sparetid og eksplisitt risikovalg fra kalkulatoren ved navigering.
-- `veileder-ui.js`: direkte temavalg, lukkede fordeler/ulemper og valgfrie opplysninger.
+- `veileder-ui.js`: visning, temavalg og panelet for valgfrie opplysninger.
 
-Veilederen bruker fanens `sessionStorage` under `sv-guidance-tab-v2`, uten navn, kontoinformasjon, sparebeløp eller fritekst. Opplysninger som mangler i kalkulatoren, fylles ikke fra standardverdier. Kalkulatorens sparetid brukes ikke automatisk til barnesparing. Manuell sparetid lagres per tema. Ved vanlig retur til kalkulatoren gjenbrukes kjent alder, sparetid og risikovalg. En eksplisitt plan i lenken overstyres aldri av denne konteksten. Opplysningene kan glemmes fra veilederen. Dette endrer ikke kalkulatorens egne felt. Veilederen virker også når øktlagring er blokkert, men da kan opplysninger ikke følge mellom sidene.
+Veilederen bruker fanens `sessionStorage` under `sv-guidance-tab-v2`, uten navn, kontoinformasjon, sparebeløp eller fritekst. Ved vanlig retur til kalkulatoren gjenbrukes kjent alder, sparetid og risikovalg. En eksplisitt plan i lenken overstyres aldri av denne konteksten. Veilederen virker også når øktlagring er blokkert, men da kan opplysninger ikke følge mellom sidene. Delingslenker fra kalkulatoren utelater alder, risikovalg og andre personlige profilvalg.
 
-Siden sender ingenting til en KI-tjeneste. Ingen bestemte aksjeandeler eller navngitte fondsanbefalinger. Svarene er generelle, med kildelenker og datoforbehold. Se `research/veileder-kilder.md` for bakgrunn og `research/ux-2026-10-22.md` for endringer, faktaliste og manuell testliste. Delingslenker fra kalkulatoren utelater alder, risikovalg og andre personlige profilvalg.
-
-Kontroller logikk og overføring:
-
-```sh
-node tests/veileder.test.cjs
-node tests/veileder-context.test.cjs
-```
-
-Valgfri nettleserkontroll med Playwright og Chromium installert. Testen starter og stopper sin egen lokale server. En eksisterende Chromium-binær kan angis med `SPARE_BROWSER`:
-
-```sh
-node tests/veileder-browser.cjs
-```
-
+Merk: `research/veileder-kilder.md` og `research/ux-2026-10-22.md` beskriver veilederen slik den var før utvalget 29.10.2026.
 
 ### Avgrensning av tilgjengelighetskontrollen
 
