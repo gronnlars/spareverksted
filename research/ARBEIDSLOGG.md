@@ -162,3 +162,7 @@ Endret:
 Vurdert og ikke gjort: forslag om å skjule sekundært innhold med `hidden` eller skrive ekstra brødtekst for lesemodus. Utdaterte tall skal ikke finnes i siden i det hele tatt, og «Mer om tallene» skal fortsatt være tilgjengelig.
 
 Kontroller: 18 av 18 bilder av resultatkortet og 18 av 18 helsidebilder er pikselidentiske med main (320, 390 og 1280 px; tre nivåer; lyst og mørkt tema). Ny test `tests/forklaring-oppdateres-browser.cjs` feiler på gammel kode og består på ny. Alle 20 Node-tester og alle 24 nettlesertester i CI-listen består lokalt i Chromium, inkludert a11y og html-struktur. Den nye testen besto 10 av 10 ganger. Firefox og WebKit kunne ikke lastes ned lokalt; den nye testen er lagt i CI for alle tre motorer. Ikke testet på fysisk iPhone eller i Safari Reader etter endringen. Ingen sammenslåing eller publisering.
+
+## SV-122, innlegging 29. oktober 2026
+
+ChatGPT/Codex integrerer godkjent q-fondskonto etter Lars' uttrykkelige publiseringsoppdrag. Base 57a1472. Ingen andre spørsmål eller søkeinnganger endres. Kontrollnotat: research/svarutkast/FONDSKONTO-KILDEKONTROLL-2026-10-29.md. Lokal fag- og Node-kontroll gjennomført; nettleser- og publiseringsstatus følges i PR/Actions.

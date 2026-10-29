@@ -15,7 +15,7 @@ for(const e of [...entries,...drafts]){
 }
 const text=id=>JSON.stringify(Cards.build(id,{}));
 assert.match(text('q-aksjesparekonto'),/gjenværende innskudd/i);assert.match(text('q-aksjesparekonto'),/ubenyttet skjerming fra tidligere år/);
-assert.match(text('q-fondskonto'),/uten garantert avkastning/);assert.match(text('q-fondskonto'),/også rentedelen/);assert.match(text('q-fondskonto'),/Én framgangsmåte/);
+assert.match(text('q-fondskonto'),/uten garantert avkastning/);assert.match(text('q-fondskonto'),/også rentedelen/);assert.match(text('q-fondskonto'),/må ubenyttet skjerming brukes mot gevinsten/);
 assert.match(text('q-bsu-basics'),/27 500/);assert.match(text('q-bsu-basics'),/300 000/);assert.match(text('q-bsu-basics'),/2 750/);assert.match(text('q-bsu-basics'),/Renter som påløper fra og med året du fyller 34/);assert.match(text('q-bsu-basics'),/skattefradrag du tidligere har fått/);assert.match(text('q-bsu-basics'),/januar 2018 til august 2026/);
 assert.match(text('q-ips-ask'),/25 000/);assert.match(text('q-ips-ask'),/minst til 80 år og minst 10 år/);assert.match(text('q-ips-ask'),/uførhet/);assert.match(text('q-ips-ask'),/fradrag i alminnelig inntekt/);
 assert.match(text('q-barnesparing-skatt'),/til og med året barnet fyller 16/);assert.match(text('q-barnesparing-skatt'),/året barnet fyller 17/);
