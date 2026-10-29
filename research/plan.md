@@ -160,23 +160,25 @@ Valgomaten er parkert etter Lars sin beslutning 24. oktober 2026. Den vurderes s
 | --- | --- |
 | **Safari Reader viser eksempeltallene, ikke brukerens plan.** Etter at lesemodus lukkes, er planen av og til nullstilt til eksempelplanen. Safaris KI-oppsummering gjentar eksempeltallene som om de var brukerens. | Funnet av Lars på iPhone 29.10.2026, både på spareverksted.no og på rettegrenen for #106. Gjelder ikke lesemodus i Chrome. Trolig laster Safari siden på nytt, og planen ligger bare i minnet. Mulig løsning: husk planen i fanen (`sessionStorage`) hele tiden. Det er en personvernavgjørelse og venter på Nkoms svar om fanelagring (se docs/personvern-lagring.md). Lars 29.10.2026: ingen tiltak nå, siden siden ikke er delt eller søkbar ennå. Opplysning på tilgjengelighetssiden vurderes hvis svaret drøyer. |
 
-## 11. Oppdrag: delbare svar i «Spør om sparing» (29.10.2026)
+## 11. Oppdrag: smidig deling på hele nettstedet (29.10.2026)
 
 **Status:** Bestilt inn i veikartet av Lars. Planlagt, ikke bygget. Dette oppdraget gir bare fullmakt til dokumentasjon, ikke implementering, sammenslåing eller publisering. Avklar gjennomføring mot prosjektpausen før bygging.
 
 **Problem:** Lars melder at et åpnet ASK-svar hverken kan deles ved å kopiere adresselinjen eller med en egen deleknapp. Mottakeren må kunne åpne det samme publiserte svaret direkte uten å søke på nytt.
+
+**Omfang presisert av Lars:** Deling skal fungere på alle sidene, inkludert nåværende og framtidige kalkulatorer dersom løsningen er lovlig. Én felles, gjenkjennelig delingsmåte, med navn tilpasset innholdet: «Del siden», «Del svaret» eller «Del planen». Kartlegg alle publiserte sider og kalkulatormoduser før bygging. Vanlige sidelenker åpner riktig side, svarlenker riktig svar. Kalkulatorlenker må skille tydelig mellom å dele selve siden og å dele en beregning med egne tall.
 
 **Foreslått løsning:**
 
 - Hvert publisert svar får én stabil lenke basert på svar-ID. Når brukeren åpner et svar, oppdateres adresselinjen til denne lenken uten full sidelasting. Endelig URL-format velges etter kontroll av eksisterende ruting og GitHub Pages.
 - En synlig knapp «Del svaret» ved svaroverskriften åpner mobilens delingsmeny når det støttes. Ellers kopieres lenken. «Kopier lenke» kan tilbys som egen handling hvis det gjør løsningen enklere.
 - Ved vellykket kopiering vises «Lenken er kopiert». Ved feil tilbys en synlig lenke som kan kopieres manuelt. Avbrutt deling behandles som avbrudd, ikke feil.
-- Lenken inneholder bare svaridentifikatoren. Søketekst, alder, spareplan og andre brukeropplysninger følger ikke med. Ingen ny lagring eller sporing.
+- Lenker til vanlige sider og svar inneholder bare nødvendig side- eller svaridentifikator. Søketekst, alder, spareplan og andre brukeropplysninger følger ikke med. Ved eksplisitt «Del planen» kan bare de beregningsfeltene som er nødvendige og avklart for deling følge med. Brukeren skal før deling forstå hvilke tall som blir med og at alle med lenken kan lese dem. Egne tall skal ikke automatisk legges i adresselinjen mens brukeren skriver. Ingen ny lagring eller sporing.
 - Mottakeren får gjeldende publiserte svar med overskrift og vanlig tilgang til fordypning, kilder og kontrolldato. Lenken lover ikke en historisk versjon av teksten.
 - Tilbake og fram i nettleseren må fungere for svar som brukeren bevisst åpner, uten et nytt historikkpunkt for hvert tastetrykk i søket.
 - Tilbaketrukne eller ukjente svar gir en forståelig beskjed og vei til publiserte spørsmål. Direkte lenker må respektere publiseringsutvalget.
 
-**Arbeidsgrunnlag og avgrensning:** Repo `gronnlars/spareverksted`, fersk main og åpne PR-er må kontrolleres før endring. Følg AGENTS.md, docs/regulatorisk.md og research/universell-utforming.md. Gjenbruk eksisterende svarvisning og svar-ID-er. Ingen nye faglige svar, personlig tilpasning eller endringer i kalkulatorens deling. Meldingen fra Lars er brukerobservasjonen; teknisk årsak og dagens URL-håndtering er ikke undersøkt i dette dokumentasjonsoppdraget.
+**Arbeidsgrunnlag og avgrensning:** Repo `gronnlars/spareverksted`, fersk main og åpne PR-er må kontrolleres før endring. Følg AGENTS.md, docs/regulatorisk.md og research/universell-utforming.md. Gjenbruk eksisterende svarvisning og svar-ID-er. Ingen nye faglige svar eller personlig tilpasning. Kalkulatorenes eksisterende deling kartlegges og gjenbrukes der den oppfyller kravene. Eventuelle endringer i kalkulatorene krever en egen avgrenset bestilling i tråd med kalkulatorfrysen. Lovlighet og personvern må avklares mot dokumenterte regler og relevante svar fra myndighetene før utvidet deling av beregninger bygges. Dette planpunktet fastslår ikke at løsningen er juridisk godkjent. Meldingen fra Lars er brukerobservasjonen; teknisk årsak og dagens URL-håndtering er ikke undersøkt i dette dokumentasjonsoppdraget.
 
 **Ferdigkriterier før eventuell publisering:**
 
@@ -186,6 +188,10 @@ Valgomaten er parkert etter Lars sin beslutning 24. oktober 2026. Den vurderes s
 4. Last siden på nytt med svarlenken, og prøv tilbake/fram mellom to svar. Søk uten åpning av svar skal ikke fylle nettleserhistorikken.
 5. Prøv ukjent svar-ID og et tilbaketrukket svar. Ingen upublisert tekst skal vises eller erstattes av et tilfeldig svar.
 6. Kontroller tastatur, synlig fokus, skjermlesernavn, rolig statusmelding ved kopiering, 320 px bredde og forstørring. Ingen uventet fokusflytting når et svar åpnes.
-7. Inspiser delingslenken og bekreft at den ikke inneholder brukeropplysninger. Kjør relevante eksisterende søke- og nettlesertester samt avgrensede regresjonskontroller for direkte lenker og publiseringsutvalg.
+7. Inspiser sidelenker og svarlenker og bekreft at de ikke inneholder brukeropplysninger. Kjør relevante eksisterende søke- og nettlesertester samt avgrensede regresjonskontroller for direkte lenker og publiseringsutvalg.
 
-**Leveranse:** Én avgrenset PR med valgt URL-format, begrunnelse, utførte kontroller og konkrete begrensninger. Ingen kode eller nettlesertester er utført i planleggingsoppdraget.
+8. Lag en oversikt over alle publiserte sider og kalkulatormoduser med forventet delingsmål. Test både adresselinje og deleknapp for hver type, på mobil og PC. Framtidige sider og kalkulatorer skal følge samme krav fra første leveranse.
+9. For kalkulatorer, når gjennomføring er avklart: skill «Del siden» fra «Del planen». Med oppdiktede tall, kontroller at delt plan gjenskaper inndata, modus, forutsetninger og resultat i en ny privat fane. Kontroller sparing, sparemål og uttak, og framtidige kalkulatorer når de bygges. Ugyldige tall skal stoppe plandeling med forståelig beskjed. Eksisterende delingslenker skal fortsatt fungere.
+10. Dokumenter hvilke kalkulatorfelt som deles, hva som utelates og grunnlaget for lovlighets- og personvernvurderingen. Uavklarte spørsmål får konkret status og hindrer den berørte utvidelsen fra å bli publisert.
+
+**Leveranse:** Avgrensede PR-er etter sidetype og avklaringsbehov, med felles delingsmønster. Første PR med valgt URL-format, begrunnelse, utførte kontroller og konkrete begrensninger. Ingen kode eller nettlesertester er utført i planleggingsoppdraget.
