@@ -928,3 +928,12 @@ Lars presiserer at PDF-utskriftene av nettsider bare er en intern lesemåte. De 
 Regler for hvem som flytter datoene og når: [SVARMAL.md](SVARMAL.md), «Datoer og gjennomgang». Innenfor pausens unntak for kildekrav og universell utforming. Ingen ny kalkulatorfunksjon.
 
 **Revurderes hvis:** brukere misforstår «gjennomgått», varselet vises for ofte til å bli tatt på alvor, eller kontrollrutinen ikke klarer å holde svarene innenfor 12 måneder.
+
+
+## Kildeavvik funnet under metodeprøven, 29. oktober 2026
+
+Lars gir i samtalen uttrykkelig klarsignal til å oppdatere dokumenterte funn når kilderegler og visningskrav følges. Dette oppdraget avgrenses til ASK-bosted og BSU-uttak i egen PR, uten sammenslåing eller publisering. Ingen sammenligningsfunksjon innføres.
+
+Valg: Presiser at personlige skattytere må være bosatt i EØS for å opprette ASK. Presiser at årets BSU-innskudd kan tas ut før årsslutt uten vilkårsbrudd, og avgrens tilbakebetalingssetningen til tidligere års innskudd. Kilder: Skatte-ABC 2025/2026 A-10-1 og B-19-7.1, lest 29.10.2026 av ChatGPT/Codex, egenkontroll. Full kontrolloversikt i research/svarutkast/KONTROLL-EGENSKAPSFUNN-2026-10-29.md.
+
+Alternativer: Bare loggføre feilene ville bevart for vide påstander. En bred omskriving eller generell sammenligningsdatabase går ut over den avgrensede rettingen. Usikre påstander føres som åpne i dokumentprøven, og brukes ikke til nye fakta i svarene. Ny uavhengig kontroll og visningskontroll i aktuelle størrelser kreves før sammenslåing.
