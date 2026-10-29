@@ -21,6 +21,8 @@ Gjør en liten, etterprøvbar del av [spørsmålkøen](../SPORSMALSKO.md). Norma
 
 Sjekk kontrollkalenderen i [KILDEREGLER.md](../KILDEREGLER.md), punkt K7, og tabellen «Aktive avvik» øverst i [BESLUTNINGER.md](../BESLUTNINGER.md). Er en kontrollrunde forfalt, eller utløper et avvik innen to uker, gjør og varsle det før nye spørsmål. Statsbudsjettet, 1. januar og 1. juli er faste runder. Februar (Finans Norge) og nye SSB-renter følges også opp.
 
+Ved hver kontrollrunde på publiserte svar: følg [SVARMAL.md](../SVARMAL.md), «Datoer og gjennomgang». «Sist gjennomgått» flyttes bare når alle kilder i svaret faktisk er lest og bekreftet. Svar som nærmer seg 12 måneder uten gjennomgang, går foran nye spørsmål.
+
 ## Velg dagens leveranse
 
 - Rett dokumenterte feil og utløpte faktapåstander før nye emner. Feil i nettstedet rapporteres med fil, sted og konsekvens; denne oppgaven åpner ikke kodearbeid.

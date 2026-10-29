@@ -44,7 +44,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.match(await page.locator('#mobileResultButton').innerText(),/Se resultat/);
   await page.locator('.site-menu>summary').click();await page.locator('.site-menu a[href="spor.html"]').click();
   await pick('funds');assert.match(await page.locator('#contextSummary').innerText(),/10 år til bruk/);
-  assert(await page.locator('.answer-checked').isVisible());assert.equal(await page.locator('.answer-sources').getAttribute('open'),null);
+  assert(await page.locator('.answer-dates').isVisible());assert.match(await page.locator('.answer-dates').innerText(),/^Sist gjennomgått: /);assert.equal(await page.locator('.answer-sources').getAttribute('open'),null);
   await pick('children');assert.doesNotMatch(await page.locator('#contextSummary').innerText(),/10 år/);
   await page.locator('#profileDetails>summary').click();await page.locator('#years').fill('3');
   await page.locator('#buffer').selectOption('no');await page.locator('#debt').selectOption('yes');await page.locator('#income').selectOption('uncertain');await page.locator('#risk').selectOption('low');

@@ -43,6 +43,22 @@ function suggestions(){
  for(const item of items)$('suggestedQuestions').append(button(item.title,()=>choose(item.id)));
  $('suggestedPanel').hidden=items.length===0;
 }
+const longDate=iso=>new Intl.DateTimeFormat('nb-NO',{dateStyle:'long',timeZone:'UTC'}).format(new Date(iso+'T12:00:00Z'));
+// Rett under overskriften: «Sist gjennomgått» alltid synlig. Øvrige datoer i et åpne/lukke-felt. Varsel når gjennomgangen er over 12 måneder gammel.
+function dates(a){
+ const out=[],rows=[['Først publisert',a.published],['Sist endret',a.changed]].filter(([,d])=>d);
+ const summary=el('summary','Sist gjennomgått: '+longDate(a.checked));
+ if(rows.length){
+  const box=el('details','','answer-dates'),dl=el('dl');box.append(summary);
+  for(const [label,d] of rows)dl.append(el('dt',label),el('dd',longDate(d)));
+  box.append(dl,el('p','Gjennomgått betyr at kildene og tallene er sjekket på nytt. Svaret endres bare når noe må rettes.','hint'));out.push(box);
+ }else{const p=el('p','','answer-dates');p.append(summary.textContent);out.push(p);}
+ if(V.reviewOverdue(a.checked)){
+  const warn=el('p','','answer-caution answer-overdue'),icon=el('span','⚠ ');icon.setAttribute('aria-hidden','true');
+  warn.append(icon,'Dette svaret er ikke gjennomgått på over 12 måneder. Satser, grenser og regler kan ha endret seg.');out.push(warn);
+ }
+ return out;
+}
 function render(focus=false){
  suggestions();if(!selected){if(focus){$('suggestedTitle').tabIndex=-1;$('suggestedTitle').focus();}return;}
  const partSection=part=>{const section=el('section','','answer-part');section.append(el('h3',part.title),el('p',part.text));
@@ -55,9 +71,7 @@ function render(focus=false){
   }
   return section;};
  const a=Cards.build(selected,profile());$('answerPanel').hidden=false;$('answerTitle').textContent=a.title;
- const out=$('answer');out.dataset.layout=a.layout||'';out.replaceChildren(el('p',a.intro,'answer-lead'));
- const checked=new Intl.DateTimeFormat('nb-NO',{dateStyle:'long'}).format(new Date(a.checked+'T12:00:00Z'));
- out.append(el('p','Sist sjekket: '+checked,'answer-checked'));
+ const out=$('answer');out.dataset.layout=a.layout||'';out.replaceChildren(...dates(a),el('p',a.intro,'answer-lead'));
  if(a.caveat)out.append(el('p',a.caveat,'answer-caveat'));
  if(a.kind==='explainer'){
   // Innholdstypen styrer nøytralitet; layout styrer bare presentasjonen.

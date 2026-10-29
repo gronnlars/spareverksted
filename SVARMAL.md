@@ -55,3 +55,40 @@ Lars har etter ASK-prøven bestilt språkgjennomgang og bruk av svarmalen for sv
 - Mål: inntil 300 ord per svar, med fordypning. Ordtellingen viser også totalen inkludert kildetitler og kontrolltekst som kan åpnes. Overskridelse gir et redaksjonelt varsel med begrunnelse, aldri automatisk kutt av et faglig vilkår. Antall ord er ikke i seg selv et bevis på god tekst.
 - `tests/svartekst.test.cjs` stopper identiske gjentatte setninger med minst seks ord i samme svar. Den tester den tidligere indeksfond-feilen. Korte etiketter og overskrifter er unntatt. Omskrevne gjentakelser må fortsatt finnes ved lesing.
 - Ikke gjør uavklarte faglige påstander til publiserbar tekst. Avgrens det svaret faktisk dekker, og registrer åpne temaer som publiseringssperrer i arbeidsnotatet. K1s uttrykkelige unntak for et direkte spørsmål gjelder fortsatt; dette endrer ikke kildereglene eller gir fullmakt til publisering.
+
+
+## Datoer og gjennomgang (Lars 29.10.2026)
+
+Gjelder alle publiserte svar og alle som oppdaterer dem, også ChatGPT/Codex i den faste kontrollrunden.
+
+**Tre felt per svar** i `dist/veileder-knowledge.js`, alle som `ÅÅÅÅ-MM-DD`:
+
+| Felt | Vises som | Regel |
+| --- | --- | --- |
+| `published` | Først publisert | Settes én gang, når svaret første gang kom på main. Endres aldri. |
+| `changed` | Sist endret | Bare når innholdet faktisk endres: fakta, tall, forbehold, kilder eller betydning. Ren flytting og cacheversjon teller ikke. |
+| `checked` | Sist gjennomgått | Dato for siste reelle gjennomgang. Er lik `published` til første gjennomgang. |
+
+Rekkefølgen er alltid `published` ≤ `changed` ≤ `checked`. Testen `tests/published-answers.test.cjs` stopper svar som mangler et felt eller har feil rekkefølge.
+
+**Visning:** «Sist gjennomgått» står rett under overskriften, før kortsvaret. De to andre datoene ligger i et åpne/lukke-felt (`details`) under samme linje. Sidens ansvarslinje viser til denne datoen.
+
+**«Sist gjennomgått» får ny dato bare når alt dette er gjort i samme arbeidsøkt:**
+
+1. Hver kilde i svaret er åpnet og lest i dagens versjon, etter [KILDEREGLER.md](KILDEREGLER.md).
+2. Hver sats, grense, regel og hvert regneeksempel i svaret er kontrollert mot kilden.
+3. Kildens dato eller regelår og egen lesedato er ført i «Om kildekontrollen» (K3).
+
+**Kunne en kilde ikke åpnes eller bekreftes, skal datoen ikke flyttes.** Skriv i arbeidsloggen hvilken kilde som feilet og hvorfor. Er du usikker på om noe fortsatt stemmer, merk svaret for manuell kontroll i loggen. Gjett aldri, og endre ikke teksten på usikkert grunnlag.
+
+**Hvis noe er endret:** rett innholdet, sett både `changed` og `checked` til dagens dato, og noter i arbeidsloggen hva som ble endret. Endringer med ikrafttredelsesdato kontrolleres av en annen enn den som skrev teksten (K7).
+
+**Hvis alt stemmer:** sett bare `checked` til dagens dato. Teksten endres ikke.
+
+**Varsel etter 12 måneder:** Er det gått mer enn 12 måneder siden `checked`, viser siden automatisk «Dette svaret er ikke gjennomgått på over 12 måneder. Satser, grenser og regler kan ha endret seg.» Varselet er vanlig tekst med varselfarge, ikonet er skjult for skjermleser, og det avbryter ikke opplesingen (ingen `role="alert"`). Varselet skal aldri fjernes ved å flytte datoen uten reell gjennomgang. Det er et ærlig signal til brukeren og en påminnelse internt om svar som har falt ut av rutinen.
+
+**Faste gjennomganger** følger K7: etter at statsbudsjettet legges fram, før 1. januar og før 1. juli. Svar om skatt, BSU, IPS, ASK og andre satser og grenser prioriteres.
+
+**Logg** for hver gjennomgang i `research/ARBEIDSLOGG.md`: dato, svar-ID, kilder sjekket, hva som ble endret eller «ingen endring», og hva som må kontrolleres manuelt.
+
+Nye svar får alle tre feltene ved innlegging. Et svar uten reell gjennomgang skal vise sin eldste ærlige dato, ikke dagens.
