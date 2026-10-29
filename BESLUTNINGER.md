@@ -896,3 +896,14 @@ B. Mellomrom eller skilletegn mellom `span`. Ikke valgt: virker, men sier ikke a
 ## Fondskonto revidert og godkjent 29. oktober 2026
 
 Lars bekrefter kontroll av ham og Claude og bestiller innlegging og publisering av siste tekst fra samtalen. q-fondskonto bruker samme oversiktsstruktur og renderer som BSU og ASK. Bredere utvalg og utsatt skatt beholdes som dokumenterte fordeler, og forholdsmessig uttak som ulempe. Udokumenterte kostnads- og flyttepåstander fjernes. Alternativet å utelate EØS-fordelen forkastes fordi Prop. 1 LS (2025/2026), punkt 8.10.2, dokumenterer forskjellen. Skjermingens rekkefølge gjøres ikke obligatorisk. Ingen nye funksjoner eller endret søk. Se research/svarutkast/FONDSKONTO-KILDEKONTROLL-2026-10-29.md for kilder, lengde og kontrollstatus.
+
+## W3C-validering av publisert HTML (29. oktober 2026)
+
+**Bakgrunn:** Ved publiseringen av fondskonto (#107) stoppet en automatisk godkjenningskontroll i ChatGPT/Codex opplasting til den nettbaserte validatoren. Claude fikk heller ikke installert validatoren lokalt, fordi pakkeregistrene var stengt i økten. Hva som utløste stoppen hos GPT, er ikke kjent.
+
+**Valg:** AGENTS.md sier nå uttrykkelig at publisert, offentlig HTML kan valideres med W3C Nu, lokalt eller på validator.w3.org, også ved opplasting av den ferdig viste siden. Personopplysninger og upublisert materiale lastes aldri opp. Blokkert kontroll meldes som blokkert.
+Alternativer: A. Uttrykkelig tillatelse i AGENTS.md. **Valgt:** fjerner tvil uten å svekke personvernet, siden innholdet allerede er offentlig. B. Bare lokal validering. Ikke valgt: avhenger av at arbeidsmiljøet kan installere validatoren, noe som ikke alltid går. C. Ingen regel. Ikke valgt: KI-verktøy kan tolke «ingen ekstern logging» som et forbud.
+
+**Kontroll av BSU, ASK og fondskonto:** Claude gjengav de tre svarene i spor.html (main, `f896cb7`, Chromium, 390 px, alle åpne/lukke-felt åpne). Lars lastet opp den ferdig viste HTML-en til validator.w3.org/nu 29.10.2026 med grønt resultat for alle tre.
+
+**Revurderes hvis:** validatoren begynner å lagre eller publisere opplastet innhold på en måte som får betydning, eller siden får innhold som ikke er offentlig.
