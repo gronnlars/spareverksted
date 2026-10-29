@@ -6,14 +6,14 @@
 
 Behold små faktaregistre i git og redaksjonelt skrevne svar. Legg til en kort sjekkliste per ordning og egne dekningskrav per visning. Vilkår skal være knyttet til påstanden de begrenser. En generell koblingsliste er utilstrekkelig.
 
-Den nye prototypen består 21 av 21 kontroller. Kartleggingen omfatter alle 154 tekstfelt i de tre eksporterte svarobjektene, inkludert metadata. Talljakten finner 137 linjer i sporede dist-filer med utvalgte tallvarianter. Dette er ikke 154 selvstendige fakta eller 137 feil. Kartleggingen er første sorteringsgrunnlag, ikke ferdig manuell oppdeling og kildekontroll av alle påstander.
+Den nye prototypen består 31 av 31 kontroller. Kartleggingen omfatter alle 154 tekstfelt i de tre eksporterte svarobjektene, inkludert metadata. Talljakten finner 137 linjer i sporede dist-filer med utvalgte tallvarianter. Dette er ikke 154 selvstendige fakta eller 137 feil. Kartleggingen er første sorteringsgrunnlag, ikke ferdig manuell oppdeling og kildekontroll av alle påstander.
 
 ## Arbeidsgrunnlag og utført arbeid
 
 - Autoritativt kodegrunnlag: main `5e154842f75ec4ffb8c0274fdc4bc9dcbfdb5f2d`, hentet i denne økten. Egen worktree beskytter eldre lokale endringer.
 - AGENTS.md og regulatorisk.md er lest i denne samtalens metodearbeid. CONTRIBUTING.md, SPRAKREGLER.md, SVARMAL.md og research/plan.md er lest for denne runden. Eksisterende KILDEREGLER er gjennomgått tidligere i samme samtale. Ingen ny økonomisk faktapåstand godkjennes her.
 - Åpne PR-er er kontrollert på tittel og beskrivelse. Særlig #112 om deling og #83/#82 om navigasjon og sammenhenger er relevante, men endres ikke. Ingen konkurrerende faktagrunnmur-PR ble funnet i oversikten.
-- Claudes vedlagte rapport og etterfølgende rettelser fra samtalen er vurderingsgrunnlag. `claude/vurdering-faktagrunnmur-2026-10-29.md` finnes ikke i det hentede main-treet. Den påståtte prosjektkopien er derfor ikke omtalt som lest fra main. Vedlegget er lest, og ingen fil fra Claude overskrives.
+- Claudes vedlagte rapport og etterfølgende rettelser fra samtalen er vurderingsgrunnlag. `claude/vurdering-faktagrunnmur-2026-10-29.md` finnes ikke i det hentede main-treet. Notatet ligger ifølge Claude i Claude-prosjektet, ikke i git. Prosjektkopien er ikke lest herfra. Vedlegget er lest, og ingen fil fra Claude overskrives.
 - `prove.py` leser eksisterende svar via Node, kartlegger tekstfelt og kjente tall, og kjører en separat strukturforsøksmodell. Den skriver bare KARTLEGGING.md og RESULTAT.json i forsøksmappen.
 - Første kjøring stoppet ved feil antatt BSU-ID. Den ble korrigert til eksisterende `q-bsu-basics`, og sluttskriptet er kjørt med alle tre påkrevde ID-er til stede.
 
@@ -39,7 +39,7 @@ Ordningen må i denne BSU-prøven ha årsgrense, totalgrense, alder, fradragssat
 
 Testdataene er syntetiske struktureksempler. `source: fixture` er en uttrykkelig plassholder, ikke et godkjent kildebevis. Skjemaet kontrollerer at et sted er oppgitt, ikke at kilden faktisk støtter påstanden. Det er fortsatt en faglig kontroll.
 
-## De 21 kontrollene
+## De 31 kontrollene
 
 Fullstendige testnavn og resultat ligger i RESULTAT.json. De omfatter:
 
@@ -59,7 +59,7 @@ En glemt regel i både sjekklisten og faktaregisteret er fortsatt usynlig. Feil 
 
 Talljakten søker bare utvalgte tallvarianter i sporede JS-, HTML-, JSON- og CSS-filer under dist. Den har bevisst falske treff, også tekniske mål. Den dekker ikke alle satser, tallord, bilder, uttrykk som regner ut samme verdi, framtidige funksjoner eller alle negative regelpåstander. Trefflistene skal vurderes, ikke stoppe bygget automatisk. Lange kildelinjer er avkortet i rapporten, med fil og linje for oppslag. Tekstfelt oppgir alle linjer der nøyaktig tekst gjenfinnes. Importerte eller annerledes formaterte tekster merkes uten et oppdiktet linjenummer.
 
-Ingen tidsseriemotor, forslagsfil, kildeendringsdetektor, full ASK/fondskonto-modell, syntetisk avskaffelsesøvelse eller endringsliste for alle innholdstyper er implementert i denne runden. De første kontrollene gjelder en avgrenset BSU-struktur. Den tidligere dokumentprøven av ASK/fondskonto er ikke dermed ferdig gjennomført på nytt.
+Ingen full tidsseriemotor, forslagsfil, kildeendringsdetektor, full ASK/fondskonto-modell, syntetisk avskaffelsesøvelse eller endringsliste for alle innholdstyper er implementert i denne runden. De første kontrollene gjelder en avgrenset BSU-struktur. Den tidligere dokumentprøven av ASK/fondskonto er ikke dermed ferdig gjennomført på nytt.
 
 ## Valg etter prøven
 
@@ -90,4 +90,18 @@ Ingen produksjonstester eller nettlesertester er kjørt fordi produksjonskode og
 - Trekk i retning av ett nytt stort system kan doble vedlikeholdet. Reparasjon: bygg videre på eksisterende faktaregister først.
 - Feltet «bekreftet til» kan tolkes som at regelen utløper. Reparasjon: merk det uttrykkelig som kildekontrollens rekkevidde.
 
-Korrektur: ASK, fondskonto og BSU er de eneste kartlagte svarene. IPS er ikke tatt inn. 154 tekstfelt inkluderer metadata. 137 gjelder linjer med søketreff, ikke antall tall eller feil. 21 er antall strukturelle kontroller i denne runden. Ingen tankestrek eller tre prikker er brukt i notatets egen prosa.
+Korrektur: ASK, fondskonto og BSU er de eneste kartlagte svarene. IPS er ikke tatt inn. 154 tekstfelt inkluderer metadata. 137 gjelder linjer med søketreff, ikke antall tall eller feil. 31 er antall strukturelle kontroller i denne runden. Ingen tankestrek eller tre prikker er brukt i notatets egen prosa.
+
+## Oppfølging etter Claudes gjennomgang
+
+Gjennomgangen er formidlet av Lars i samtalen. Den separate filen gjennomgang-pr114-2026-10-29.md er ikke vedlagt denne oppfølgingen og er ikke omtalt som lest. Tilbakemeldingen er ikke en uavhengig menneskelig fagkontroll.
+
+Fire reelle hull er tettet i forsøksmodellen: dokumentert startdato brukes nå, kontrollintervallet har både første og siste bekreftede år, «gjelder ikke» sperres i denne avgrensede visningen, og beregningsinnganger må ha endelige numeriske verdier. Dokumentert «ingen» kan fortsatt forklares, men kan ikke brukes som en tallverdi. Null kroner er en gyldig numerisk verdi og må ikke forveksles med tom verdi.
+
+Ti nye kontroller dekker framtidig regelstart, historisk beregning og visning, «gjelder ikke» i visning og beregning, «ingen» og tom tekst i beregning, numerisk null, feil tidsgrunnlag og regelendring midt i året. Fullårsprøven avviser endringer midt i året. En datostyrt løsning for slike tilfeller er ikke implementert. Startdato kan fortsatt være ukjent, men et bekreftet kontrollintervall må oppgis.
+
+Registerets faktiske bruk er svakere enn en opplisting av innholdet kan antyde. Søk i dist etter de fem BSU-nøklene finner produksjonsreferanser bare til bsuMaxAge utenfor definisjonsfilen. bsuAnnual, bsuTotal, bsuPercent og bsuMaxDeduction har ingen direkte referanser i de undersøkte produksjonsfilene. Registeret oppretter dessuten postene med én felles kontrolldato. Maksimalfradraget er et eget lagret tall uten uttrykkelig beregningsavhengighet. Dette dokumenterer ikke et fungerende felles vedlikehold av BSU-tallene. tests/veileder-relevance.test.cjs:28 krever Number.isFinite(fact.value) for hver oppføring. «Ingen» og «ukjent» krever derfor også en bevisst endring av registerkontrakten og testen ved eventuell senere integrasjon.
+
+En smal kontroll av regelverdier i utvalgte svartekster kan bli en byggesperre etter klassifisering og avgrensning. Den brede talljakten forblir en vurderingsliste. En identisk tallverdi dokumenterer ikke alene regelidentitet. En senere BSU-PR bør koble tekst til eksisterende register, uttrykke maksimalfradrag som avledet verdi og teste at en endring faktisk når svarteksten. Denne oppfølgingen endrer fortsatt ingen produksjonskode eller eksisterende tester, og oppretter ingen slik integrasjons-PR.
+
+Resultat etter retting: 31 av 31 strukturelle kontroller, fortsatt 154 tekstfelt og 137 linjer med talltreff. Antallet tester er ikke et fullstendighetsbevis. PR-en beholdes som utkast til videre gjennomgang.
