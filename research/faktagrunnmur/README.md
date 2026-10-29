@@ -6,7 +6,7 @@
 
 Behold små faktaregistre i git og redaksjonelt skrevne svar. Legg til en kort sjekkliste per ordning og egne dekningskrav per visning. Vilkår skal være knyttet til påstanden de begrenser. En generell koblingsliste er utilstrekkelig.
 
-Den nye prototypen består 31 av 31 kontroller. Kartleggingen omfatter alle 154 tekstfelt i de tre eksporterte svarobjektene, inkludert metadata. Talljakten finner 137 linjer i sporede dist-filer med utvalgte tallvarianter. Dette er ikke 154 selvstendige fakta eller 137 feil. Kartleggingen er første sorteringsgrunnlag, ikke ferdig manuell oppdeling og kildekontroll av alle påstander.
+Den nye prototypen består 35 av 35 kontroller. Kartleggingen omfatter alle 154 tekstfelt i de tre eksporterte svarobjektene, inkludert metadata. Talljakten finner 137 linjer i sporede dist-filer med utvalgte tallvarianter. Dette er ikke 154 selvstendige fakta eller 137 feil. Kartleggingen er første sorteringsgrunnlag, ikke ferdig manuell oppdeling og kildekontroll av alle påstander.
 
 ## Arbeidsgrunnlag og utført arbeid
 
@@ -39,7 +39,7 @@ Ordningen må i denne BSU-prøven ha årsgrense, totalgrense, alder, fradragssat
 
 Testdataene er syntetiske struktureksempler. `source: fixture` er en uttrykkelig plassholder, ikke et godkjent kildebevis. Skjemaet kontrollerer at et sted er oppgitt, ikke at kilden faktisk støtter påstanden. Det er fortsatt en faglig kontroll.
 
-## De 31 kontrollene
+## De 35 kontrollene
 
 Fullstendige testnavn og resultat ligger i RESULTAT.json. De omfatter:
 
@@ -90,7 +90,7 @@ Ingen produksjonstester eller nettlesertester er kjørt fordi produksjonskode og
 - Trekk i retning av ett nytt stort system kan doble vedlikeholdet. Reparasjon: bygg videre på eksisterende faktaregister først.
 - Feltet «bekreftet til» kan tolkes som at regelen utløper. Reparasjon: merk det uttrykkelig som kildekontrollens rekkevidde.
 
-Korrektur: ASK, fondskonto og BSU er de eneste kartlagte svarene. IPS er ikke tatt inn. 154 tekstfelt inkluderer metadata. 137 gjelder linjer med søketreff, ikke antall tall eller feil. 31 er antall strukturelle kontroller i denne runden. Ingen tankestrek eller tre prikker er brukt i notatets egen prosa.
+Korrektur: ASK, fondskonto og BSU er de eneste kartlagte svarene. IPS er ikke tatt inn. 154 tekstfelt inkluderer metadata. 137 gjelder linjer med søketreff, ikke antall tall eller feil. 35 er antall strukturelle kontroller i denne runden. Ingen tankestrek eller tre prikker er brukt i notatets egen prosa.
 
 ## Oppfølging etter Claudes gjennomgang
 
@@ -104,4 +104,18 @@ Registerets faktiske bruk er svakere enn en opplisting av innholdet kan antyde. 
 
 En smal kontroll av regelverdier i utvalgte svartekster kan bli en byggesperre etter klassifisering og avgrensning. Den brede talljakten forblir en vurderingsliste. En identisk tallverdi dokumenterer ikke alene regelidentitet. En senere BSU-PR bør koble tekst til eksisterende register, uttrykke maksimalfradrag som avledet verdi og teste at en endring faktisk når svarteksten. Denne oppfølgingen endrer fortsatt ingen produksjonskode eller eksisterende tester, og oppretter ingen slik integrasjons-PR.
 
-Resultat etter retting: 31 av 31 strukturelle kontroller, fortsatt 154 tekstfelt og 137 linjer med talltreff. Antallet tester er ikke et fullstendighetsbevis. PR-en beholdes som utkast til videre gjennomgang.
+Resultat etter retting: 35 av 35 strukturelle kontroller, fortsatt 154 tekstfelt og 137 linjer med talltreff. Antallet tester er ikke et fullstendighetsbevis. PR-en beholdes som utkast til videre gjennomgang.
+
+### Oppfølging av scope og krav til separat BSU-endring
+
+Scope var tidligere lagret uten å bli kontrollert. Det er nå rettet: kjente forsøksfakta har forventet scope, ukjente scope-verdier avvises, og visningen har tillatte scope for hovedpåstandene. Uttaksfakta kan ikke legges til et innskuddskort. Fire nye kontroller dekker feilmerket årsgrense, ukjent scope, uttaksfaktum i innskuddskort og gyldig fradragskort med alder som vilkår. Resultatet er 35 av 35. Dette er en håndskrevet policy for forsøksdataene, ikke automatisk forståelse av påstandens innhold. Scope forutsetter fortsatt korrekt redaksjonell klassifisering.
+
+Krav formidlet av Lars fra Claude for en separat BSU-integrasjons-PR:
+
+1. Årsgrense, totalgrense, sats og alder hentes med eksisterende {{nøkkel}}-mønster.
+2. Maksimalfradraget avledes av årsgrense og sats, uten et separat lagret beløp.
+3. En isolert test endrer en registerverdi og kontrollerer ferdig svartekst og avledet maksimalfradrag. Testen må ikke endre produksjonsfilen på disk.
+4. En smal kontroll finner registerverdier skrevet direkte i de avgrensede svartekstene. Søket avgrenses etter regelbetydning og filområde for å unngå at uavhengige eksempeltall eller tekniske verdier får falsk regelkobling.
+5. Offentlig tekst er identisk før og etter, og relevante eksisterende tester består.
+
+Disse kravene dokumenteres her, men produksjonsendringen er ikke utført i denne PR-en. Ingen sammenslåing eller publisering inngår i denne oppfølgingen.
