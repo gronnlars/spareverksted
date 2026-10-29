@@ -96,3 +96,8 @@ Rekkefølgen er alltid `published` ≤ `changed` ≤ `checked`. Testen `tests/pu
 **Logg** for hver gjennomgang i `research/ARBEIDSLOGG.md`: dato, svar-ID, kilder sjekket, hva som ble endret eller «ingen endring», og hva som må kontrolleres manuelt.
 
 Nye svar får alle tre feltene ved innlegging. Et svar uten reell gjennomgang skal vise sin eldste ærlige dato, ikke dagens.
+
+
+## Kort kontrolltekst for leseren (Lars 29.10.2026)
+
+«Om kildekontrollen» oppgir kildens dato eller regelår, faktisk lesedato, hvem som kontrollerte og kontrollformen, samt vesentlige avgrensninger. Bruk «jeg» om redaksjonelle avgrensninger. Ikke ta med tekniske arbeidsmetoder, interne godkjenningsprosesser eller planer og frister for neste gjennomgang. Slike opplysninger bevares i interne kontrollnotater og arbeidsloggen. Publisert, endret og gjennomgått vises gjennom egne datofelt, og varselet om manglende gjennomgang følger eksisterende regel. Interne kontrollfrister gjelder fortsatt og skal ikke fjernes fra vedlikeholdet.
