@@ -41,3 +41,7 @@ Navn, datoer og regnestykker kontrollert. BSU har 295 ord innhold, 365 med dokum
 21 Node-testfiler kjørt. Én feilet først fordi kildetallet var hardkodet til tre. Etter oppdatering til de fire faktiske ASK-kildene består den også. Dato- og kildetall i eksisterende nettlesertester oppdateres til revisjonen. To kontrollpåstander i eksisterende kunnskapstest dekker bosted og uttaksunntak. Gaps-generatorens produktkontroll, BSU-generatorens kontroll og git diff --check består.
 
 Lokal Chrome-visning er åpnet gjennom forhåndsvisningen. Rettet ASK-vilkår, BSU-unntak, kontrollhistorikk og nye kildelenker finnes i den gjengitte siden. Ingen endring i CSS. Mobilbredder 320/390 px, Firefox/WebKit og full tastatur- og skjermleserkontroll er ikke utført lokalt. PR må derfor kontrolleres før sammenslåing. Eksisterende CI har ASK/BSU-visningstester for 320/390/1280 px i Chromium, Firefox og WebKit. CI-status skal oppgis separat når den er kjent. Ingen påstand om at grønne tester beviser faglig riktighet eller full UU.
+
+## Etterkontroll, 29.10.2026
+
+Claude har lest diffen uavhengig av skribenten. ASK-hovedsiden nevner ikke bostedskravet, og A-10-1 lot seg ikke åpne i Claudes økt. Lars åpnet A-10-1 og bekreftet innledningen: sktl. § 10-21 gjelder personlig skattyter bosatt i EØS-området, bosted avgjøres etter landets internrett, og konto opprettet mens man bodde i EØS kan videreføres etter utflytting. Påstanden om opprettelse er dermed bekreftet mot kilden. Tre språkjusteringer i BSU-svaret, se arbeidsloggen. Ingen ny faktapåstand.

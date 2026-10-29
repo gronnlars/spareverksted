@@ -404,7 +404,7 @@ const entries=[
   "cons": [
    {
     "title": "Tilbakebetaling ved annen bruk",
-    "text": "Bruker du tidligere års innskudd til andre formål, bryter du vilkårene og må betale tilbake skattefradrag du tidligere har fått, gjennom økt skatt. Er deler brukt til kjøp av egen fast bolig etter vilkårene, gjelder tilbakebetalingen bare resten."
+    "text": "Bruker du tidligere års innskudd til andre formål, bryter du vilkårene og må betale tilbake skattefradrag du tidligere har fått, gjennom økt skatt. Har du brukt en del av pengene på egen bolig etter vilkårene, gjelder tilbakebetalingen bare resten."
    }
   ]
  },
@@ -415,12 +415,12 @@ const entries=[
   },
   {
    "title": "Hva kan pengene brukes til?",
-   "text": "Blant annet kjøp av egen fast bolig, kjøpskostnader, renter og avdrag på boliglånet og oppussing og oppgradering av boligen. Det trenger ikke være ditt første boligkjøp. Når du har begynt å bruke bundne BSU-midler eller har brutt vilkårene, kan du ikke sette inn mer."
+   "text": "Blant annet kjøp av egen fast bolig, kjøpskostnader, renter og avdrag på boliglånet og oppussing og oppgradering av boligen. Det trenger ikke være ditt første boligkjøp. Når du har begynt å bruke bundne BSU-midler, det vil si tidligere års innskudd og renter, eller har brutt vilkårene, kan du ikke sette inn mer."
   },
   {
    "title": "Mer om renter og konto",
    table:bsuRates,
-   "text": "Årets innskudd kan tas ut før årsslutt uten å bryte vilkårene. Rentene er bundet til bolig. Renter som påløper fra og med året du fyller 34, kan likevel tas ut. Du kan bare opprette BSU-konto én gang, men kan flytte den ved direkte overføring mellom bankene."
+   "text": "Årets innskudd kan tas ut før årets slutt uten å bryte vilkårene. Rentene er bundet til bolig. Renter som påløper fra og med året du fyller 34, kan likevel tas ut. Du kan bare opprette BSU-konto én gang, men kan flytte den ved direkte overføring mellom bankene."
   }
  ],
  "sources": [{"id":"tax-bsu-uttak","title":"Skatteetaten: Skatte-ABC 2025/2026, uttak fra BSU","url":"https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/b-19-boligsparing-for-ungdom-bsu/B-19.034/B-19.035/"},

@@ -148,6 +148,7 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
 // Vilkår som den tidligere kortformen mistet.
 { const a=Cards.build('q-aksjesparekonto',{}),b=Cards.build('q-bsu-basics',{});
  assert.match(JSON.stringify(a.parts),/Personlige skattytere bosatt i EØS kan opprette ASK/);
- assert.match(JSON.stringify(b.parts),/Årets innskudd kan tas ut før årsslutt uten å bryte vilkårene/);
+ assert.match(JSON.stringify(b.parts),/Årets innskudd kan tas ut før årets slutt uten å bryte vilkårene/);
  assert.match(JSON.stringify(b.tradeoffs),/tidligere års innskudd/);
+ assert.match(JSON.stringify(b.parts),/bundne BSU-midler, det vil si tidligere års innskudd og renter/);
 }
