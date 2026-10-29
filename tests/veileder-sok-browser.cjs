@@ -30,7 +30,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    const noOverflow=async what=>assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1),label+': ingen vannrett scrolling etter '+what);
 
    // Fra spor.html: ingen støtte for tomme felt uten melding.
-   assert.equal(await page.locator('#question').getAttribute('placeholder'),'F.eks. boliglån eller fond');
+   assert.equal(await page.locator('#question').getAttribute('placeholder'),'F.eks. hva er ASK?');
 
    // 1. Entydig treff: svaret åpnes, begrunnelsen står i statusfeltet, spørsmålet blir stående.
    await ask('bolig lån');
