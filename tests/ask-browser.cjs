@@ -31,7 +31,7 @@ const engine=process.env.SPARE_ENGINE||'chromium',browserType=require('playwrigh
    await page.locator('#answer .full-answer summary').focus();await page.keyboard.press('Enter');
    assert.match(await page.locator('#answer .full-answer').innerText(),/ubenyttet skjerming fra tidligere år/);
    await page.locator('#answer .answer-sources>summary').focus();await page.keyboard.press('Enter');
-   assert.equal(await page.locator('#answer .answer-sources a').count(),3);
+   assert.equal(await page.locator('#answer .answer-sources a').count(),4);
    await page.locator('#answer .review-details>summary').click();assert.match(await page.locator('#answer .answer-sources').innerText(),/egenkontroll/);
    // Profile mutation must not add advice to the neutral ASK explanation.
    const other=await page.evaluate(()=>{

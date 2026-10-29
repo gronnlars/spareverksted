@@ -174,3 +174,17 @@ Lars bestiller gjennomføring. Base f896cb7. Bare BSU, ASK og fondskonto forblir
 ## Sist gjennomgått og 12-månedersvarsel, 29. oktober 2026
 
 Claude, på Lars' bestilling. Base 9a382ad. q-bsu-basics, q-aksjesparekonto og q-fondskonto får `published` og `changed` fra git-historikken på main. `checked` er uendret. Ingen faktapåstander eller kilder er endret, og ingen ny kildekontroll er gjort. Bare «Sist gjennomgått» og eventuelt varsel under overskriften. Alle tre datoene under «Kilder og kontrollgrunnlag», etter Lars' tilbakemelding samme dag. Ny ansvarslinje. Regler for kontrollrunden i SVARMAL.md. Kontroll: Node-tester og Chromium-tester lokalt. Firefox og WebKit kjøres i CI. Visningen ved 320, 390 og 1280 px er kontrollert i Chromium.
+
+
+## ASK-bosted og årets BSU-innskudd, 29. oktober 2026
+
+ChatGPT/Codex. Base 29344dc343448e2d9ec5d7beadc12b0cbe21bf7a. Lars godkjenner oppfølging av dokumenterte kildefunn under metodeprøven. To avgrensede rettinger i q-aksjesparekonto og q-bsu-basics. Kildene nyåpnet, alle 208 historiske renteverdier kontrollert mot ferskt SSB-uttrekk, årssnitt kontrollregnet med eksisterende generator. ASK-eksemplet kontrollregnet til 17 028 kr. published bevares. changed og checked settes til 29.10.2026 etter gjennomgang. Kontrollform: egenkontroll, ingen ny uavhengig fagkontroll. Detaljer og gjenstående kontroller i research/svarutkast/KONTROLL-EGENSKAPSFUNN-2026-10-29.md. Ingen sammenslåing eller publisering.
+
+## Språkjustering og bekreftet ASK-bosted, 29. oktober 2026
+
+Claude, på Lars' bestilling, i PR #113. Lars har lest innledningen i Skatte-ABC A-10-1 og bekreftet at sktl. § 10-21 gir personlig skattyter bosatt i EØS-området rett til å opprette ASK, og at konto kan videreføres ved senere utflytting ut av EØS. Svarteksten om opprettelse står dermed som foreslått. Tre språkjusteringer i q-bsu-basics, uten ny faktapåstand: klarere setning om delvis boligbruk, «bundne BSU-midler» forklart som tidligere års innskudd og renter (samme innhold som B-19-7.1 og Skatteetatens rettledning for banker), og «årets slutt» brukt konsekvent. Datoer og cacheversjon uendret, siden endringen skjer samme dag og før publisering. Kontroll: Node-tester og Chromium-tester lokalt, CI for Firefox og WebKit.
+
+
+## Presisering av bundne renter før publisering, 29.10.2026
+
+Lars bestiller retting og publisering. Forklaringen av bundne BSU-midler avgrenses til tidligere års innskudd og renter opptjent til og med året man fyller 33. Renter som påløper fra og med året man fyller 34 kan disponeres fritt. Kilde: Skatte-ABC 2025/2026, B-19-7.1.2, lest av ChatGPT/Codex i samme arbeidsøkt. Eksisterende test oppdateres til den presise avgrensningen. Datoer og cacheversjon beholdes siden dette er samme dags upubliserte revisjon. Lars har godkjent den foreslåtte rettingen og gitt publiseringsfullmakt. Kildekontrollen av denne presiseringen er egenkontroll av ChatGPT/Codex.

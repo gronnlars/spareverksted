@@ -98,9 +98,9 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
  const a=Cards.build('q-aksjesparekonto',{}),f=Cards.build('q-fondskonto',{});
  for(const x of [a,f]){
   assert.equal(x.kind,'explainer');assert.deepEqual(x.options,[]);assert.match(x.example.text,/ikke en beregning av (?:din skatt|skatten din)/);
-  assert.ok(x.sources.length&&x.sources.every(s=>s.url.startsWith('https://')));assert.equal(x.checked,x===f?'2026-10-29':'2026-10-28');
+  assert.ok(x.sources.length&&x.sources.every(s=>s.url.startsWith('https://')));assert.equal(x.checked,'2026-10-29');
   assert.ok(!/[–—]|\.\.\./.test(JSON.stringify(x)));
-  assert.match(x.review.text,x===f?/Lest 29\.10\.2026/:/Lest 28\.10\.2026/,'kontrolldato og at kildene mangler oppdateringsdato skal stå i forbeholdet');
+  assert.match(x.review.text,/Lest 29\.10\.2026/,'kontrolldato og at kildene mangler oppdateringsdato skal stå i forbeholdet');
   assert.match(x.review.text,/udatert|Ingen oppdateringsdato/);
   // Ingen satser, og ingen påstander vi ikke har kontrollert mot kildene.
   if(x===f){assert.match(JSON.stringify(x),/37,84 og 22 prosent/);assert.ok(x.sources.some(s=>s.url.includes('satser/faktor-for-oppjustering')));}
@@ -143,4 +143,12 @@ assert.equal(V.findTopics('  IPS  eller ASK  ')[0],'q-ips-ask');
 
 
 // Source-checked 2026 ASK example and complete-account gift requirement.
-{ const a=Cards.build('q-aksjesparekonto',{}); assert.equal((150000-100000-5000)*0.3784,17028); assert.match(a.example.text,/17 028 kr/); assert.match(JSON.stringify(a.parts),/Ved gave|men da må hele kontoen overføres/); assert.equal(a.sources.length,3); assert.equal(a.caveat,''); }
+{ const a=Cards.build('q-aksjesparekonto',{}); assert.equal((150000-100000-5000)*0.3784,17028); assert.match(a.example.text,/17 028 kr/); assert.match(JSON.stringify(a.parts),/Ved gave|men da må hele kontoen overføres/); assert.equal(a.sources.length,4); assert.equal(a.caveat,''); }
+
+// Vilkår som den tidligere kortformen mistet.
+{ const a=Cards.build('q-aksjesparekonto',{}),b=Cards.build('q-bsu-basics',{});
+ assert.match(JSON.stringify(a.parts),/Personlige skattytere bosatt i EØS kan opprette ASK/);
+ assert.match(JSON.stringify(b.parts),/Årets innskudd kan tas ut før årets slutt uten å bryte vilkårene/);
+ assert.match(JSON.stringify(b.tradeoffs),/tidligere års innskudd/);
+ assert.match(JSON.stringify(b.parts),/bundne BSU-midler, det vil si tidligere års innskudd og renter opptjent til og med året du fyller 33/);
+}
