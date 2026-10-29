@@ -41,6 +41,7 @@ jobs:
           node tests/chart-summary.test.cjs
           node tests/band.test.cjs
           node tests/personvern-lagring.test.cjs
+          node tests/published-answers.test.cjs
           node --check dist/personvern.js
           node --check dist/kontakt.js
           node --check dist/veileder-ui.js
@@ -73,6 +74,9 @@ jobs:
         run: chown "$(id -u):$(id -g)" /github/home
       - name: Browser flows (Chromium)
         run: |
+          node tests/published-answers-browser.cjs
+          SPARE_ENGINE=firefox node tests/published-answers-browser.cjs
+          SPARE_ENGINE=webkit node tests/published-answers-browser.cjs
           node tests/svarmal-browser.cjs
           SPARE_ENGINE=firefox node tests/svarmal-browser.cjs
           SPARE_ENGINE=webkit node tests/svarmal-browser.cjs
