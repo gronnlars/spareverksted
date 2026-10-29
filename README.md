@@ -1,10 +1,14 @@
 # Spareverksted
 
-**Alfaversjon.** Spareverksted er under utvikling. Funksjoner, innhold og dokumentasjon kan endres, og det kan finnes feil.
+Denne versjonen av Spareverksted er i en tidlig fase. Jeg anbefaler å vente med ordinær bruk og med å publisere egne kopier til relevante regulatoriske spørsmål er avklart.
+
+Jeg bygger en grunnmur for personvern, universell utforming og innhold som skal være enkelt å kontrollere og oppdatere etter hvert som nettstedet vokser. Strenge regler for kilder og innhold setter grenser for både meg og KI-en jeg bruker, for å redusere risikoen for faktafeil og påstander uten kildegrunnlag.
+
+Spareverksted.no er tilgjengelig for utprøving. Jeg bruker nettstedet til å få tilbakemeldinger fra testpersoner og brukergrupper og som grunnlag for spørsmål til offentlige myndigheter.
 
 Spareverksted er et gratis verktøy for å utforske sparing og forstå forskjellen mellom beløp i kroner og kjøpekraft. Du kan justere tallene og se hvordan sparetid, innbetalinger, avkastning, kostnader og prisvekst påvirker resultatet.
 
-[Bruk Spareverksted på nett](https://spareverksted.no/)
+[Se testversjonen på nett](https://spareverksted.no/)
 
 ## Hva kan du gjøre?
 
@@ -19,14 +23,16 @@ Forklaringene er generelle. Spareverksted anbefaler ingen bestemte fond, aksjer 
 ## Start den nedlastede pakken
 
 1. Pakk ut ZIP-fila.
-2. Åpne prosjektmappen `spareverksted`.
+2. Åpne den utpakkede prosjektmappen som inneholder `dist`. GitHubs «Code → Download ZIP» gir vanligvis mappen `spareverksted-main`. Pakken fra `scripts/package-source.py` gir mappen `spareverksted`.
 3. Start en lokal webserver fra denne mappen. Med Python 3 installert:
 
 ```sh
 python3 -m http.server 8000 --bind 127.0.0.1 --directory dist
 ```
 
-4. Åpne [http://localhost:8000](http://localhost:8000) i nettleseren.
+4. Åpne [http://127.0.0.1:8000](http://127.0.0.1:8000) i nettleseren.
+
+På Windows kan kommandoen hete `py` eller `python` i stedet for `python3`.
 
 Du trenger en nettleser med JavaScript aktivert. Python brukes bare til å servere filene lokalt. En annen lokal webserver kan også brukes.
 
@@ -52,7 +58,7 @@ Eksporterte filer viser planen slik den var ved eksport. XLSX-fila inneholder be
 
 Ingen innlogging, reklame eller statistikkverktøy. Nettstedets egen kode bruker ingen informasjonskapsler og sender ikke tallene du skriver inn til en server.
 
-Å åpne siden eller en delt lenke oppretter ingen lagret plan. Bestemte handlinger lagrer planer eller valg i nettleseren. Du kan slette planer under «Mine planer» og bruke sletteknappen på personvernsiden. Lagringen er ikke kryptert.
+Å åpne siden eller en delt lenke lagrer ingenting. Bestemte handlinger lagrer planer eller valg i nettleseren. Du kan slette planer under «Mine planer» og bruke sletteknappen på personvernsiden. Lagringen er ikke kryptert. Planer lagret ved lokal kjøring er atskilt fra planer på spareverksted.no. Lagringen er knyttet til nettadressen og nettleseren du bruker.
 
 Delte lenker inneholder tallene i planen. Delen etter `#` sendes ikke i selve HTTP-forespørselen, men kan leses av tjenesten du deler lenken gjennom.
 
@@ -68,13 +74,15 @@ Se [tilgjengelighetssiden](https://spareverksted.no/tilgjengelighet.html), eller
 
 Videre utvikling er delvis satt på vent mens regulatoriske spørsmål avklares. Det arbeides innenfor avgrensede områder, blant annet personvern, tilgjengelighet og kildekontroll. Henvendelser til myndigheter er ikke en godkjenning av tjenesten.
 
-Fant du en feil? Beskriv hva du prøvde, hva som skjedde, og hvilken nettleser du brukte. Bruk oppdiktede tall i offentlige feilrapporter.
+Fant du en feil? Beskriv hva du prøvde, hva som skjedde, og hvilken nettleser du brukte. Bruk oppdiktede tall i offentlige feilrapporter. Ikke send opplysninger om din egen økonomi på e-post. Jeg tilbyr ikke personlig økonomisk rådgivning. For generell forbrukerinformasjon, se [Forbrukerrådet](https://www.forbrukerradet.no/).
 
 - [Kontakt](https://spareverksted.no/om.html)
 - [Meld en feil på GitHub](https://github.com/gronnlars/spareverksted/issues)
 - [Dokumentasjon og arbeidsregler for bidragsytere](https://github.com/gronnlars/spareverksted/blob/main/AGENTS.md)
 - [Regulatorisk status og avgrensninger](https://github.com/gronnlars/spareverksted/blob/main/docs/regulatorisk.md)
 - [Tester som kjøres automatisk](https://github.com/gronnlars/spareverksted/blob/main/.github/workflows/static.yml)
+- [Beregningsmodell](https://github.com/gronnlars/spareverksted/blob/main/docs/beregningsmodell.md)
+- [Lokal drift og publisering](https://github.com/gronnlars/spareverksted/blob/main/docs/drift.md)
 
 ## Lisens, opphav og viderebruk
 
