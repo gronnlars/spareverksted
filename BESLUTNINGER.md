@@ -867,3 +867,13 @@ B. Mellomrom eller skilletegn mellom `span`. Ikke valgt: virker, men sier ikke a
 | UU-forslag 1, 2, 3 og 5 i `research/uu-egenkontroll-uutilsynet.md` | Ikke påbegynt. 3 og 5 endrer det brukeren ser. |
 
 **Ikke gjort:** Ingen nye funksjoner. Pausen er ikke opphevet utover det Lars har vedtatt.
+
+## Avklaringer etter publiseringen (29. oktober 2026)
+
+**Status:** Vedtatt av Lars 29.10.2026, svar på det som sto igjen i «Dagens arbeid samlet og publisert».
+
+1. **Lengde på svar.** Det viktigste er kort kortsvar og korte fordeler og ulemper. Fordypningen kan gå over målet på 300 ord når det trengs for et fullstendig og opplyst svar. Lang fordypning er aldri et mål i seg selv. ASK-svaret (482 ord i svaret) er dermed i tråd med regelen: kortsvaret og fordeler og ulemper er korte, og det er fordypningen som er lang. SVARMAL.md er oppdatert.
+   Alternativer: A. Kort start og korte fordeler og ulemper, fordypning kan gå over ved behov. **Valgt.** B. Fast tak på 300 ord for hele svaret. Ikke valgt: ville kreve at vilkår om flytting, arv og gave ble kuttet. C. Ingen lengdemål. Ikke valgt: korte svar er viktig for alle, særlig for dem som lytter med skjermleser.
+2. **BSU, borettslagseksemplet.** Lars bekrefter at Skatteetatens norske og engelske satsside er samme side, bare oversatt. Eksemplet står på den norske kilden.
+3. **Grafen i lesemodus (#103).** Lars bekrefter at den fungerer i Chrome på iPhone.
+4. **PR #38 (inntastingsfeilen).** Lars' vurdering: rettingen endrer ikke kalkulatorens funksjoner for brukerne, gir ingen nye variabler og ingen nye måter å se tallene på. Den retter et stille, feil tall og faller derfor innenfor kalkulatorfrysens unntak for dokumenterte feil. Rebaset på main 29.10.2026. Gjenskapingen av feilen ga 3 av 40 før og 0 av 40 etter, og inntastingstesten 2 av 15 før og 0 av 15 etter.

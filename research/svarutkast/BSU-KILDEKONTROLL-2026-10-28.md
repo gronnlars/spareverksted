@@ -72,4 +72,4 @@ Ny del i svaret, «Hvilken bolig teller?»: «Både boligen du bor i og annen bo
 
 Lengde: 381 ord totalt og 300 i svaret, under referanseversjonen (384). Test i `tests/bsu-rates.test.cjs` hindrer at presiseringen faller ut igjen.
 
-Åpent: Borettslagseksemplet bygger på GPTs lesing av den norske satssiden. Lars kan bekrefte ved å åpne https://www.skatteetaten.no/satser/fradrag-for-boligsparing-for-ungdom-bsu/?year=2026 og se etter ordet «borettslagsandel».
+Bekreftet 29.10.2026: Lars har sett at den norske satssiden og den engelske er samme side, bare oversatt. Borettslagseksemplet står dermed på den norske kilden.
