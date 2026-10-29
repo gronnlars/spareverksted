@@ -11,6 +11,40 @@ Ren HTML, CSS og JavaScript. Ingen installasjon, database eller brukerinnlogging
 
 Denne README-en beskriver hvordan siden er bygget. Den gir ingen åpning for nytt arbeid.
 
+## Universell utforming
+
+Målet er WCAG 2.2 nivå AA på hele nettstedet, også for nye deler fra første utkast. Om forskriften om universell utforming av IKT gjelder for Spareverksted, er ikke avklart. Spørsmålet ble sendt til Uu-tilsynet 25.10.2026 og er ikke besvart.
+
+Slik kontrolleres tilgjengeligheten:
+
+- **Automatisk, ved hver endring:** `tests/a11y-browser.cjs` sjekker i Chromium kontrast, trykkflater, navn på kontroller, reflow ved 320 og 640 px, synlig fokus og flyt med bare tastatur, i alle tre fargetemaer. Noen brukerflyter kjøres også i Firefox og WebKit. WebKit er ikke det samme som Safari på iPhone.
+- **Kodevalidering:** W3C Nu HTML Checker mot de publiserte sidene. Den kontrollerer ikke innhold som lages med JavaScript.
+- **Manuelt:** gjennomgang i Chromium 23.10.2026, Lars' første test med VoiceOver og zoom på iPhone 27.10.2026 (personvernsiden) og en uformell test med skjermleser av en ekstern tester 28.10.2026.
+
+Gjenstår å kontrollere manuelt:
+
+- Hele kalkulatoren og veilederen med VoiceOver, og NVDA på PC.
+- Alle sider i Safari på iPhone og i Firefox.
+- Grafbeskrivelsene som kom etter skjermlesertesten, med skjermleser.
+- Meldinger som forsvinner av seg selv, for brukere som trenger mer tid.
+- Tester med flere brukere som er avhengige av hjelpemidler, og de delene av WCAG som ikke kan testes automatisk.
+
+Beståtte automatiske tester betyr «ingen avvik funnet i de gjennomførte kontrollene». De dokumenterer ikke full tilgjengelighet, samsvar med WCAG eller at folk forstår innholdet.
+
+Les mer: [tilgjengelighetssiden](dist/tilgjengelighet.html) (publisert som spareverksted.no/tilgjengelighet.html), [research/universell-utforming.md](research/universell-utforming.md) med krav, valg og kontrolltabell, og [research/uu-egenkontroll-uutilsynet.md](research/uu-egenkontroll-uutilsynet.md).
+
+## Personvern
+
+- **Lokal beregning.** Beregningene gjøres i nettleseren. Ingen innlogging, reklame eller statistikkverktøy. Nettstedets egen kode har ingen kall som sender det brukeren skriver inn, ingen eksterne skript, stiler eller skrifter og ingen informasjonskapsler. Dette er kontrollert i kildekoden og med `tests/personvern-browser.cjs` mot en lokal kopi, ikke med en nettverkslogg fra den publiserte siden.
+- **Lagring bare ved bestemte handlinger.** Å åpne en side eller en delt lenke lagrer ingenting. «Lagre plan» lagrer planen i nettleseren til brukeren sletter den. Arbeidsplanen, opplysningene til veilederen, visningsnivå, fargetema og startmerket huskes bare i nettleserfanen, og bare når brukeren gjør noe som krever det. Lagringen er ikke kryptert.
+- **Sletting.** Én plan kan slettes under «Mine planer». Knappen på personvernsiden sletter lagrede planer i hele nettleseren og det som er lagret i den samme fanen, men ikke kopier i andre åpne faner. «Glem opplysningene mine» i veilederen sletter veilederens opplysninger. Nettleserens egne innstillinger kan også slette alt.
+- **Delte lenker.** Tallene står etter `#` og sendes ikke i selve HTTP-forespørselen, men tjenesten lenken deles gjennom, kan se hele lenken.
+- **GitHub Pages.** GitHub logger besøkendes IP-adresser av sikkerhetshensyn. Spareverksted har ikke tilgang til loggene og vet ikke hvor lenge de lagres.
+- **E-post** er en egen behandling, atskilt fra kalkulatoren. Domene.no lagrer e-postkassene, Lars leser i Gmail-appen, og svar går ut via MailChannels. Det finnes ennå ingen fast regel for hvor lenge e-post beholdes, og ansvarsfordelingen med leverandørene er ikke avklart.
+- **Ubesvarte spørsmål.** Om fanelagring av visningsnivå og fargetema er nok etter ekomloven § 3-15, er spurt Nkom om. Svaret er ikke kommet.
+
+Les mer: [personvernsiden](dist/personvern.html) (publisert som spareverksted.no/personvern.html) og den tekniske kartleggingen med fil og linje i [docs/personvern-lagring.md](docs/personvern-lagring.md). Merk at [docs/kontakt-epost.md](docs/kontakt-epost.md) beskriver oppsettet med videresending fra 25.10.2026. Fra 27.10.2026 er adressene egne e-postkasser hos Domene.no, slik personvernsiden beskriver.
+
 ## Kjør lokalt
 
 Fra prosjektmappen:
