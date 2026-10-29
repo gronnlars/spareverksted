@@ -2,6 +2,7 @@
 'use strict';
 const V=window.SpareVeileder,C=window.SpareContext,Cards=window.SpareCards,F=window.SpareFacts;
 const $=id=>document.getElementById(id);
+if(!V.publicationReady){$('contextPanel').hidden=true;$('suggestedPanel').hidden=true;$('matchStatus').textContent='Svarene kunne ikke lastes. Last siden på nytt.';return;}
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text)n.textContent=text;if(cls)n.className=cls;return n;};
 let storage;try{storage=window.sessionStorage;}catch{}
 let context=C.read(storage),selected=null;
@@ -26,7 +27,7 @@ function fill(){
  const category=V.category(selected),funds=!selected||V.fundRelevant(selected,p);
  const show={age:!selected||['pension','bsu'].includes(category),years:!selected||V.horizonRelevant(selected)&&funds,risk:funds,discipline:!selected||['mortgage','funds','student','pension'].includes(category),fixed:category==='mortgage',owner:!selected||category==='bsu',tax:category==='bsu'};
  for(const [name,visible]of Object.entries(show)){const input=$(name);input.closest('label').hidden=!visible;input.disabled=!visible;}
- $('contextPanel').hidden=!!(selected&&V.isNeutral(selected));
+ $('contextPanel').hidden=!!(V.publishedOnly||selected&&V.isNeutral(selected));
  $('formError').hidden=true;describe();
 }
 function group(label,items,kind){
@@ -37,7 +38,7 @@ function group(label,items,kind){
 function suggestions(){
  const p=profile(),items=V.suggestions(p,selected);
  $('suggestedTitle').textContent=selected?'Neste spørsmål':'Spørsmål du kan starte med';
- $('suggestedHelp').textContent=Object.keys(context.profile).length?'Prioritert etter opplysningene dine. Alle temaer er fortsatt tilgjengelige.':'Velg et spørsmål, eller søk med egne ord.';
+ $('suggestedHelp').textContent=!V.publishedOnly&&Object.keys(context.profile).length?'Prioritert etter opplysningene dine. Alle temaer er fortsatt tilgjengelige.':'Velg et spørsmål, eller søk med egne ord.';
  $('suggestedQuestions').replaceChildren();
  for(const item of items)$('suggestedQuestions').append(button(item.title,()=>choose(item.id)));
  $('suggestedPanel').hidden=items.length===0;
@@ -142,12 +143,12 @@ function search(){
   status.textContent=negNote(r)+(sharedTypo?'Mente du «'+r.suggestions[0].via+'»? Velg et svar nedenfor.':'Dette er forslag til temaer. Velg det du mener:');
   showMatches(r.suggestions,3,sharedTypo);return;
  }
- if(r.mode==='uncovered'){$('topicPicker').open=true;status.textContent='Vi har ikke et eget svar på «'+r.uncovered.label+'» ennå. Temaet under ligger nærmest, men svarer ikke på spørsmålet ditt:';showMatches(r.hits);return;}
+ if(r.mode==='uncovered'){$('topicPicker').open=true;status.textContent='Vi har ikke et eget svar på «'+r.uncovered.label+'» ennå. Eventuelle forslag under svarer ikke på spørsmålet ditt:';showMatches(r.hits);return;}
  if(r.mode==='negated'){$('topicPicker').open=true;status.textContent='Du skriver «'+r.negated.join(' ')+'» med nekting. Vi har ikke et eget svar på det ennå. Temaene under ligger nærmest, men er ikke svar på spørsmålet ditt:';showMatches(r.hits);return;}
  $('topicPicker').open=true;
  status.textContent=r.mode==='broad'?'Spørsmålet er bredt. Velg et tema, eller skriv litt mer, for eksempel «sparing til barn».':'Vi har ikke et ferdig svar på dette ennå. Velg et tema, eller prøv andre ord.';
 }
-for(const t of V.topics.filter(t=>!t.category)){const b=button(t.title,()=>{$('matches').replaceChildren();choose(t.id);});b.dataset.topic=t.id;b.setAttribute('aria-pressed','false');$('topics').append(b);}
+for(const t of V.topics.filter(t=>V.publishedOnly||!t.category)){const b=button(t.title,()=>{$('matches').replaceChildren();choose(t.id);});b.dataset.topic=t.id;b.setAttribute('aria-pressed','false');$('topics').append(b);}
 $('questionForm').addEventListener('submit',e=>{e.preventDefault();search();});
 $('question').addEventListener('input',()=>{if(selected)clearChoice();$('matchStatus').textContent='Trykk «Vis svar» for å søke.';$('matches').replaceChildren();});
 $('profileForm').addEventListener('submit',e=>{

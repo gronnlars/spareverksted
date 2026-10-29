@@ -1,3 +1,7 @@
+// Check the actual publication policy before the retained draft regressions.
+if(require('node:child_process').spawnSync(process.execPath,['tests/published-answers-browser.cjs'],{stdio:'inherit',env:process.env}).status!==0)process.exit(1);
+// Historical draft regression: production availability is tested separately.
+const readDraftAsset=require('./helpers/draft-assets.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('node:http'),path=require('node:path');
 const engine=process.env.SPARE_ENGINE||'chromium',browserType=require('playwright')[engine];
 const entries=require('../dist/veileder-knowledge.js'),drafts=require('../research/svarutkast/gaps-2026-10-25.json').filter(e=>e.id!=='q-renters-rente');
@@ -5,7 +9,7 @@ const entries=require('../dist/veileder-knowledge.js'),drafts=require('../resear
  const root=path.resolve(__dirname,'../dist'),server=http.createServer((req,res)=>{
   const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
   if(!file.startsWith(root+path.sep)){res.writeHead(403);res.end();return;}
-  try{res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(file));}catch{res.writeHead(404);res.end();}
+  try{res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html');res.end(readDraftAsset(file));}catch{res.writeHead(404);res.end();}
  });
  await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;
  try{

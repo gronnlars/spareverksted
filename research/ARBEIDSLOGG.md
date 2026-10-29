@@ -166,3 +166,7 @@ Kontroller: 18 av 18 bilder av resultatkortet og 18 av 18 helsidebilder er pikse
 ## SV-122, innlegging 29. oktober 2026
 
 ChatGPT/Codex integrerer godkjent q-fondskonto etter Lars' uttrykkelige publiseringsoppdrag. Base 57a1472. Ingen andre spørsmål eller søkeinnganger endres. Kontrollnotat: research/svarutkast/FONDSKONTO-KILDEKONTROLL-2026-10-29.md. Lokal fag- og Node-kontroll gjennomført; nettleser- og publiseringsstatus følges i PR/Actions.
+
+## Tilbaketrekking av øvrige svar, 29. oktober 2026
+
+Lars bestiller gjennomføring. Base f896cb7. Bare BSU, ASK og fondskonto forblir tilgjengelige. Seks øvrige egne svar og sju hovedtemaer tas ut av produksjonsvisningen. Arkiv med spørsmål, kilder og gjengitt tekst ligger i TILBAKETRUKNE-SVAR-2026-10-29.json under svarutkast. Eldre tester beholdes som eksplisitte utkasttester. Nye tester kontrollerer faktisk produksjonsutvalg, manglende svar og fravær av profiltilpasset reserveveiledning. Ingen endring av kalkulatorberegninger eller de tre godkjente tekstene. Faktisk CI- og publiseringsstatus registreres i PR.

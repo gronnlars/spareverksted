@@ -9,7 +9,7 @@ const server=http.createServer((req,res)=>{
  const name=new URL(req.url,'http://localhost').pathname;
  const file=path.resolve(root,'.'+name);
  if(!file.startsWith(root+path.sep)){res.writeHead(403);res.end();return;}
- try{let data=fs.readFileSync(file);
+ try{let data=require('../../tests/helpers/draft-assets.cjs')(file);
  res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html');res.end(data);
  }catch{res.writeHead(404);res.end();}
 });

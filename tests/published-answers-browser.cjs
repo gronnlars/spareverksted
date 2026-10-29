@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
+(async()=>{const engine=process.env.SPARE_ENGINE||'chromium',root=path.resolve(__dirname,'../dist');
+const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!f.startsWith(root+path.sep)){res.writeHead(403);return res.end();}try{res.setHeader('Content-Type',f.endsWith('.js')?'text/javascript':f.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(f));}catch{res.writeHead(404);res.end();}});await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;
+try{browser=await require('playwright')[engine].launch({headless:true,...(engine==='chromium'?{args:['--no-sandbox']}: {})});
+for(const width of [320,390,1280]){const page=await browser.newPage({viewport:{width,height:900}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.goto('http://127.0.0.1:'+server.address().port+'/spor.html');
+assert.equal(await page.locator('[data-topic]').count(),3);assert.equal(await page.locator('#contextPanel').isHidden(),true);
+const submit=async q=>{await page.locator('#searchBox').evaluate(e=>e.open=true);await page.locator('#question').fill(q);await page.locator('#questionForm button').click();};
+for(const q of ['Hva er renters rente?','IPS eller ASK?','ASK eller fondskonto?','Bør jeg betale ned boliglånet eller spare i fond?','fond','utbytte','rentefond']){await submit(q);assert.equal(await page.locator('#answerPanel').isHidden(),true,q);assert.ok(await page.locator('#matchStatus').innerText());}
+for(const q of ['Hva er ASK?','Hva er BSU?','Hva er en fondskonto?']){await submit(q);assert.equal(await page.locator('#answerPanel').isHidden(),false);for(const d of await page.locator('#answer details').all())await d.evaluate(e=>e.open=true);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));assert.equal(await page.locator('#answer .poor-fit,#answer .next-steps').count(),0);}
+assert.deepEqual(errors,[]);await page.close();
+const failed=await browser.newPage({viewport:{width,height:900}});await failed.route('**/veileder-published.js*',r=>r.abort());await failed.goto('http://127.0.0.1:'+server.address().port+'/spor.html');assert.equal(await failed.locator('[data-topic]').count(),0);assert.equal(await failed.locator('#answerPanel').isHidden(),true);assert.match(await failed.locator('#matchStatus').innerText(),/kunne ikke lastes/);await failed.close();}console.log(engine+': bare tre publiserte svar, manglende svar uten tilbakefall, 320/390/1280 px.');
+}finally{if(browser)await browser.close();server.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

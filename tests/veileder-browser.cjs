@@ -1,3 +1,5 @@
+// Historical draft regression: production availability is tested separately.
+const readDraftAsset=require('./helpers/draft-assets.cjs');
 // Optional: npm install playwright, then npx playwright install chromium.
 // SPARE_BROWSER can point to an existing Chromium binary. No separate server is needed.
 const {chromium}=require('playwright'),assert=require('node:assert/strict');
@@ -7,7 +9,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
  const server=http.createServer((req,res)=>{
   const filename=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
   if(!filename.startsWith(root+path.sep)){res.writeHead(403);res.end();return;}
-  try{const data=fs.readFileSync(filename);res.setHeader('Content-Type',filename.endsWith('.js')?'text/javascript':filename.endsWith('.css')?'text/css':'text/html');res.end(data);}catch{res.writeHead(404);res.end();}
+  try{const data=readDraftAsset(filename);res.setHeader('Content-Type',filename.endsWith('.js')?'text/javascript':filename.endsWith('.css')?'text/css':'text/html');res.end(data);}catch{res.writeHead(404);res.end();}
  });
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
  const origin='http://127.0.0.1:'+server.address().port;
