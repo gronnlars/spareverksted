@@ -9,7 +9,7 @@ Ren HTML, CSS og JavaScript. Ingen installasjon, database eller brukerinnlogging
 
 **Sparekalkulatoren er fryst** (24.10.2026). Endringer krever en dokumentert regnefeil, en alvorlig brukshindring, en nødvendig kildeoppdatering eller en tilgjengelighetsfeil. Se [research/plan.md](research/plan.md), punkt 0.
 
-Denne README-en beskriver hvordan siden er bygget. Den gir ingen åpning for nytt arbeid.
+Denne README-en beskriver hvordan siden er bygget. Den gir ingen åpning for nytt arbeid. README-en skal gjennomgås samlet når prosjektet tas fullt opp igjen.
 
 ## Universell utforming
 
@@ -18,7 +18,7 @@ Målet er WCAG 2.2 nivå AA på hele nettstedet, også for nye deler fra første
 Slik kontrolleres tilgjengeligheten:
 
 - **Automatisk, ved hver endring:** `tests/a11y-browser.cjs` sjekker i Chromium kontrast, trykkflater, navn på kontroller, reflow ved 320 og 640 px, synlig fokus og flyt med bare tastatur, i alle tre fargetemaer. Noen brukerflyter kjøres også i Firefox og WebKit. WebKit er ikke det samme som Safari på iPhone.
-- **Kodevalidering:** W3C Nu HTML Checker mot de publiserte sidene. Den kontrollerer ikke innhold som lages med JavaScript.
+- **Kodevalidering:** W3C Nu HTML Checker mot de publiserte sidene. Validering direkte fra nettadressen kontrollerer HTML-en som serveres. Dynamisk innhold kontrolleres ved å validere ferdig rendret HTML.
 - **Manuelt:** gjennomgang i Chromium 23.10.2026, Lars' første test med VoiceOver og zoom på iPhone 27.10.2026 (personvernsiden) og en uformell test med skjermleser av en ekstern tester 28.10.2026.
 
 Gjenstår å kontrollere manuelt:
@@ -43,7 +43,7 @@ Les mer: [tilgjengelighetssiden](dist/tilgjengelighet.html) (publisert som spare
 - **E-post** er en egen behandling, atskilt fra kalkulatoren. Domene.no lagrer e-postkassene, Lars leser i Gmail-appen, og svar går ut via MailChannels. Det finnes ennå ingen fast regel for hvor lenge e-post beholdes, og ansvarsfordelingen med leverandørene er ikke avklart.
 - **Ubesvarte spørsmål.** Om fanelagring av visningsnivå og fargetema er nok etter ekomloven § 3-15, er spurt Nkom om. Svaret er ikke kommet.
 
-Les mer: [personvernsiden](dist/personvern.html) (publisert som spareverksted.no/personvern.html) og den tekniske kartleggingen med fil og linje i [docs/personvern-lagring.md](docs/personvern-lagring.md). Merk at [docs/kontakt-epost.md](docs/kontakt-epost.md) beskriver oppsettet med videresending fra 25.10.2026. Fra 27.10.2026 er adressene egne e-postkasser hos Domene.no, slik personvernsiden beskriver.
+Les mer: [personvernsiden](dist/personvern.html) (publisert som spareverksted.no/personvern.html) og den tekniske kartleggingen med fil og linje i [docs/personvern-lagring.md](docs/personvern-lagring.md). Merk at [docs/kontakt-epost.md](docs/kontakt-epost.md) er en historisk logg med utdatert innledning; det nye oppsettet er dokumentert lenger nede. Fra 27.10.2026 er adressene egne e-postkasser hos Domene.no, slik personvernsiden beskriver.
 
 ## Kjør lokalt
 
