@@ -71,7 +71,7 @@ Gjelder alle publiserte svar og alle som oppdaterer dem, også ChatGPT/Codex i d
 
 Rekkefølgen er alltid `published` ≤ `changed` ≤ `checked`. Testen `tests/published-answers.test.cjs` stopper svar som mangler et felt eller har feil rekkefølge.
 
-**Visning:** «Sist gjennomgått» står rett under overskriften, før kortsvaret. De to andre datoene ligger i et åpne/lukke-felt (`details`) under samme linje. Sidens ansvarslinje viser til denne datoen.
+**Visning:** Under overskriften står bare «Sist gjennomgått» og eventuelt varselet etter 12 måneder. Alle tre datoene, med en kort forklaring av «gjennomgått», står øverst i «Kilder og kontrollgrunnlag». Sidens ansvarslinje viser til datoen under overskriften.
 
 **«Sist gjennomgått» får ny dato bare når alt dette er gjort i samme arbeidsøkt:**
 

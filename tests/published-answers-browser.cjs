@@ -9,12 +9,13 @@ const submit=async q=>{await page.locator('#searchBox').evaluate(e=>e.open=true)
 for(const q of ['Hva er renters rente?','IPS eller ASK?','ASK eller fondskonto?','Bør jeg betale ned boliglånet eller spare i fond?','fond','utbytte','rentefond']){await submit(q);assert.equal(await page.locator('#answerPanel').isHidden(),true,q);assert.ok(await page.locator('#matchStatus').innerText());}
 for(const q of ['Hva er ASK?','Hva er BSU?','Hva er en fondskonto?']){await submit(q);assert.equal(await page.locator('#answerPanel').isHidden(),false);for(const d of await page.locator('#answer details').all())await d.evaluate(e=>e.open=true);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));assert.equal(await page.locator('#answer .poor-fit,#answer .next-steps').count(),0);}
 
-// Datoen rett under overskriften, før kortsvaret. Ingen varsel når gjennomgangen er fersk.
+// Bare kontrolldatoen under overskriften, før kortsvaret. Datohistorikken ligger under kildene.
 await submit('Hva er BSU?');
-assert.deepEqual(await page.evaluate(()=>{const h=document.getElementById('answerTitle'),a=document.getElementById('answer'),first=a.firstElementChild;return [h.nextElementSibling===a,first.className,first.tagName,first.querySelector('summary')?.textContent,a.children[1].className];}),[true,'answer-dates','DETAILS','Sist gjennomgått: 28. oktober 2026','answer-lead']);
-await page.locator('.answer-dates>summary').click();
-assert.deepEqual(await page.locator('.answer-dates dt').allInnerTexts(),['Først publisert','Sist endret']);
-assert.deepEqual(await page.locator('.answer-dates dd').allInnerTexts(),['22. oktober 2026','28. oktober 2026']);
+assert.deepEqual(await page.evaluate(()=>{const h=document.getElementById('answerTitle'),a=document.getElementById('answer'),first=a.firstElementChild;return [h.nextElementSibling===a,first.className,first.tagName,first.textContent,a.children[1].className];}),[true,'answer-dates','P','Sist gjennomgått: 28. oktober 2026','answer-lead']);
+assert.equal(await page.locator('#answer>.answer-history').count(),0);
+await page.locator('.answer-sources>summary').click();
+assert.deepEqual(await page.locator('.answer-sources .answer-history dt').allInnerTexts(),['Først publisert','Sist endret','Sist gjennomgått']);
+assert.deepEqual(await page.locator('.answer-sources .answer-history dd').allInnerTexts(),['22. oktober 2026','28. oktober 2026','28. oktober 2026']);
 assert.equal(await page.locator('.answer-overdue').count(),0);
 assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
 assert.deepEqual(errors,[]);await page.close();
