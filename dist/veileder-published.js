@@ -18,5 +18,5 @@ V.search=function(text){
 V.findTopics=text=>V.search(text).hits.filter(h=>!['nearest','negated'].includes(h.kind)).map(h=>h.id);
 V.answer=function(id,profile){if(!ids.has(id))throw Error('Dette svaret er tatt ut for gjennomgang.');return answer(id,profile);};
 V.suggestions=(_profile,current)=>V.topics.filter(t=>t.id!==current).map(t=>({id:t.id,title:t.title}));
-V.publishedOnly=true;
+V.publishedOnly=true;V.publicationReady=true;
 })(window);

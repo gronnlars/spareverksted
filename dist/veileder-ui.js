@@ -2,6 +2,7 @@
 'use strict';
 const V=window.SpareVeileder,C=window.SpareContext,Cards=window.SpareCards,F=window.SpareFacts;
 const $=id=>document.getElementById(id);
+if(!V.publicationReady){$('contextPanel').hidden=true;$('suggestedPanel').hidden=true;$('matchStatus').textContent='Svarene kunne ikke lastes. Last siden på nytt.';return;}
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text)n.textContent=text;if(cls)n.className=cls;return n;};
 let storage;try{storage=window.sessionStorage;}catch{}
 let context=C.read(storage),selected=null;

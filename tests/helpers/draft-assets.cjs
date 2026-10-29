@@ -1,2 +1,2 @@
 const fs=require('node:fs'),path=require('node:path');
-module.exports=file=>path.basename(file)==='veileder-published.js'?Buffer.from('/* Draft fixture: no publication policy. */'):fs.readFileSync(file);
+module.exports=file=>path.basename(file)==='veileder-published.js'?Buffer.from('window.SpareVeileder.publicationReady=true; /* Draft fixture only. */'):fs.readFileSync(file);
