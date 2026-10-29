@@ -1,0 +1,17 @@
+# Beregningsmodell
+
+Teknisk dokumentasjon flyttet fra README 29. oktober 2026. Beskriver eksisterende modell.
+
+## Viktige modellvalg
+
+Effektiv nominell avkastning før kostnader. Netto årlig vekstfaktor er `(1 + avkastning) * (1 - kostnad)`. Innskudd ved månedsslutt. Årlig endring i månedssparingen (positiv eller negativ) fordeles jevnt over månedene. Uttak skjer én gang ved slutten av hvert år. Inflasjonsøkning på ordinært årsuttak starter i år 2. Ekstrauttak kommer etter vanlig uttak i valgt år.
+
+Beløp i tekst og resultatkort følger én regel: fra 1 milliard forkortes de («433,73 milliarder kr»), under det vises hele kroner. Tabellvisningen viser eksakte beløp.
+
+Spareutviklingen er før skatt. Et separat skatteanslag for uttak bruker enten forenklet ASK med oppgitt gjenstående innskudd og kjent skjerming, eller en brukerdefinert fast skattepliktig andel. Ingen ny skjerming, løpende bankbeskatning, IPS, BSU eller formuesskatt er modellert. Båndet i grafen har to betydninger. Uten indeksfond viser det lavere og høyere vekst (valgt avkastning ± et antall prosentpoeng): en følsomhetsanalyse, ikke et sannsynlighetsintervall. Med indeksfond valgt viser det lavere og høyere scenario beregnet med Finans Norges formelverk (se under), der årsavkastningen antas normalfordelt. Det er en forenklet modell, ikke en simulering. Modellen bruker ikke Monte Carlo. Kildestatistikk er datert 20. oktober 2026 og oppdateres ikke automatisk.
+
+## Regneeksempel og risikoscenario
+
+Prisvekst og bankrente er minst 0 %. Antatt årlig vekst kan skrives inn som negativ, ned til (men ikke med) −100 %: modellen gjør årsveksten om til månedsvekst med `(1 + r)^(1/12)`, som er definert for alle r over −100 %. Glidebryteren starter på 0 %. Negativ vekst gjennom hele perioden og et enkelt «Børsfall» er forskjellige forutsetninger og nevnes hver for seg i forklaringen. Lavere vekst i båndet og stresstestene i Sparemål er risikoscenarioer, ikke forventninger. Når sluttbeløpet er lavere enn summen av innskuddene, for eksempel på grunn av kostnader eller børsfall, viser siden tapet tydelig («Tap mot innskuddene»). Tapet i kroner er alltid oppgitt i vanlige kroner, også i visningen med dagens kroner, og det står. I visningen med dagens kroner vises innskuddene også i dagens kroner: hvert innskudd regnes om med prisnivået da det ble satt inn, slik at startbeløpet beholder sin verdi. Innskudd og vekst summerer seg da til sluttbeløpet, og det faktiske kronebeløpet du setter inn står under. Er sluttbeløpet i dagens kroner lavere enn innskuddene i dagens kroner, kalles det «Tapt kjøpekraft». Har du også tapt penger i kroner, heter forskjellen «Samlet tap i dagens kroner», og teksten sier at den skyldes både tapet i kroner og prisveksten. Har sluttbeløpet ikke holdt følge med prisveksten på innskuddene, vises det som lavere kjøpekraft, ikke som tap i kroner. Verdien av et fond blir aldri negativ i modellen; et fall på 100 % gir 0 kr. Eldre lenker og lagrede planer med negativ prisvekst eller bankrente settes til 0 %, og brukeren får beskjed om hva som er endret. Negativ vekst beholdes.
+
+Vekst, prisvekst og kostnad er forhåndsutfylte startverdier (5 %, 2,5 % og 0,2 %), ikke anbefalinger, og de passer ikke for alle spareformer. En kort tekst over feltene sier hvilke som fortsatt står på startverdien, og om beløp og tid er eksempeltall. Et tomt felt er ikke 0: mens feltet redigeres står siste resultat igjen, dempet, med «Resultatet er ikke oppdatert». Forlates feltet tomt, vises en feilmelding.

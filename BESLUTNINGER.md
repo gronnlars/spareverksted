@@ -937,3 +937,12 @@ Lars gir i samtalen uttrykkelig klarsignal til å oppdatere dokumenterte funn n�
 Valg: Presiser at personlige skattytere må være bosatt i EØS for å opprette ASK. Presiser at årets BSU-innskudd kan tas ut før årsslutt uten vilkårsbrudd, og avgrens tilbakebetalingssetningen til tidligere års innskudd. Kilder: Skatte-ABC 2025/2026 A-10-1 og B-19-7.1, lest 29.10.2026 av ChatGPT/Codex, egenkontroll. Full kontrolloversikt i research/svarutkast/KONTROLL-EGENSKAPSFUNN-2026-10-29.md.
 
 Alternativer: Bare loggføre feilene ville bevart for vide påstander. En bred omskriving eller generell sammenligningsdatabase går ut over den avgrensede rettingen. Usikre påstander føres som åpne i dokumentprøven, og brukes ikke til nye fakta i svarene. Ny uavhengig kontroll og visningskontroll i aktuelle størrelser kreves før sammenslåing.
+
+
+## README for nedlasting og utprøving (29. oktober 2026)
+
+Lars bestiller brukerrettet README nå, med «Denne versjonen av Spareverksted er i en tidlig fase», anbefaling om å vente med ordinær bruk og publisering av egne kopier til relevante regulatoriske spørsmål er avklart, og lenken «Se testversjonen på nett». Strenge kildekrav setter grenser for både Lars og KI-en han bruker. Dette er en anbefaling, ikke et nytt lisensvilkår eller en myndighetsgodkjenning.
+
+Valgt: kort README med oppstart, bruk, begrensninger, personvern, tilgjengelighet, lisens og hjelp. Arbeidsdokumentasjon lenkes med full GitHub-adresse. Modellvalg og drift bevares i docs/beregningsmodell.md og docs/drift.md. Begge ZIP-mappenavn forklares. Alternativet å beholde kontrollhistorikk og detaljer i README forkastes fordi det skjuler oppstartsinstruksjonene. En utvidet ZIP med all dokumentasjon er ikke valgt; nødvendige instrukser og lisens følger pakken allerede. Pakkeskriptet endres ikke.
+
+Kontroll: pakken er laget og pakket ut i tom mappe av ChatGPT/Codex. README-kommandoen starter lokal server, og alle fem HTML-sidene svarer. Offline beregning og nettlesertester er tidligere rapportert kontrollert av Claude mot cf77f71, ikke kjørt på nytt av Codex. Ingen beregningskode er endret. Revurder README ved full oppstart, endret publisert funksjonalitet eller endret pakkestruktur.
