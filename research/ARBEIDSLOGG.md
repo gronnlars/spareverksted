@@ -150,7 +150,7 @@ Claude etter Lars' fullmakt. #100, #101, #102, #99, #103, #97, #91 og #93 er sl�
 
 ## 29.10.2026: Utdaterte tall i «Mer om tallene», uttrykkelig oppdrag fra Lars
 
-Claude etter Lars sitt oppdrag i samtalen, grunnlag main `9b15cc6`. Gren `fix/forklaring-oppdateres`. Faller inn under unntaket for universell utforming og retting av feil i publisert innhold (regulatorisk.md), ingen ny funksjon.
+Claude etter Lars sitt oppdrag i samtalen, grunnlag main `e223b74` (inkludert #38). Gren `fix/forklaring-oppdateres`. Faller inn under unntaket for universell utforming og retting av feil i publisert innhold (regulatorisk.md), ingen ny funksjon.
 
 Funn: Skjermbilder fra Safari Reader på iPhone viste 12 456 484 kr som hovedtall, men 240 000 kr innskudd i «Mer om tallene». 240 000, 65 434 og 3 292 kr er eksempelplanens tall. Gjenskapt i Chromium: «Dette betyr tallene dine» ble bare beregnet på nytt ved `change`, ikke mens brukeren skrev. Teksten ble dempet visuelt, men sto igjen i siden til feltet ble forlatt. Lesemodus, skjermlesere og kopiering fikk de gamle tallene som om de var riktige. Den grå «Oppsummering»-boksen i Safari er Safaris egen KI-oppsummering og kommer ikke fra nettsiden. Den oppsummerte den utdaterte teksten.
 
@@ -161,4 +161,4 @@ Endret:
 
 Vurdert og ikke gjort: forslag om å skjule sekundært innhold med `hidden` eller skrive ekstra brødtekst for lesemodus. Utdaterte tall skal ikke finnes i siden i det hele tatt, og «Mer om tallene» skal fortsatt være tilgjengelig.
 
-Kontroller: 18 av 18 bilder av resultatkortet og 18 av 18 helsidebilder er pikselidentiske med main (320, 390 og 1280 px; tre nivåer; lyst og mørkt tema). Ny test `tests/forklaring-oppdateres-browser.cjs` feiler på gammel kode og består på ny. Alle 20 Node-tester og alle nettlesertester i CI-listen består lokalt i Chromium, inkludert a11y og html-struktur. Firefox og WebKit kunne ikke lastes ned lokalt; den nye testen er lagt i CI for alle tre motorer. Ikke testet på fysisk iPhone eller i Safari Reader etter endringen. Ingen sammenslåing eller publisering.
+Kontroller: 18 av 18 bilder av resultatkortet og 18 av 18 helsidebilder er pikselidentiske med main (320, 390 og 1280 px; tre nivåer; lyst og mørkt tema). Ny test `tests/forklaring-oppdateres-browser.cjs` feiler på gammel kode og består på ny. Alle 20 Node-tester og alle 24 nettlesertester i CI-listen består lokalt i Chromium, inkludert a11y og html-struktur. Den nye testen besto 10 av 10 ganger. Firefox og WebKit kunne ikke lastes ned lokalt; den nye testen er lagt i CI for alle tre motorer. Ikke testet på fysisk iPhone eller i Safari Reader etter endringen. Ingen sammenslåing eller publisering.
