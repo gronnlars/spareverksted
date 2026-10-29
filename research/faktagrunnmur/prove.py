@@ -3,6 +3,8 @@ No production writes, network calls, or third-party dependencies.
 """
 from pathlib import Path
 from copy import deepcopy
+from datetime import date
+from math import isfinite
 import subprocess, json, re
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -58,7 +60,7 @@ def inventory():
  return count,hits
 
 def fact(value,scope='deposit'):
- return dict(value=value,knowledge='known',legal='in_force',review='checked',effective_from=None,confirmed={'basis':'income_year','through':2026},source={'id':'fixture','location':'synthetic fixture, not evidence'},conditions=[],related=[],scope=scope)
+ return dict(value=value,knowledge='known',legal='in_force',review='checked',effective_from=None,confirmed={'basis':'income_year','from':2026,'through':2026},source={'id':'fixture','location':'synthetic fixture, not evidence'},conditions=[],related=[],scope=scope)
 
 def fixtures():
  db={'annual':fact(27500),'total':fact(300000),'age':fact(33),
@@ -82,11 +84,17 @@ def validate(db):
   if f['knowledge']=='known' and f['value'] is None: raise ValueError('missing value')
   if f['knowledge']!='known' and f['value'] is not None: raise ValueError('inconsistent value')
   if f['knowledge'] in ['known','none','not_applicable'] and not all(f['source'].get(k) for k in ['id','location']): raise ValueError('missing evidence location')
-  if f['confirmed']['basis'] not in ['income_year','withdrawal_year','date']: raise ValueError('time basis')
+  c=f['confirmed']
+  if set(c)!={'basis','from','through'}: raise ValueError('confirmation fields')
+  if c['basis'] not in ['income_year','withdrawal_year']: raise ValueError('unsupported time basis')
+  if type(c['from']) is not int or type(c['through']) is not int or c['from']>c['through']: raise ValueError('confirmation interval')
+  if f['effective_from'] is not None:
+   try: date.fromisoformat(f['effective_from'])
+   except (ValueError,TypeError): raise ValueError('invalid effective date')
   for dep in f['conditions']+f['related']:
    if dep not in db: raise ValueError('missing link')
 
-def view(db,profile,claims,year=2026,calculation=False):
+def view(db,profile,claims,year=2026,calculation=False,basis='income_year'):
  validate(db)
  if profile not in PROFILES: raise ValueError('unknown profile')
  if not PROFILES[profile]<=set(claims): raise ValueError('view coverage')
@@ -94,9 +102,15 @@ def view(db,profile,claims,year=2026,calculation=False):
  def bundle(fid,trail=()):
   if fid in trail: raise ValueError('cycle')
   f=db[fid]
-  if f['knowledge'] in ['unknown'] or f['review']!='checked' or f['legal']!='in_force': raise ValueError('not ready')
+  if f['knowledge'] in ['unknown','not_applicable'] or f['review']!='checked' or f['legal']!='in_force': raise ValueError('not ready')
+  if f['confirmed']['basis']!=basis: raise ValueError('time basis mismatch')
+  # This prototype handles full years only. Midyear changes need a dated case.
+  if f['effective_from'] is not None and date.fromisoformat(f['effective_from'])>date(year,1,1): raise ValueError('not effective for full requested year')
+  if year<f['confirmed']['from']: raise ValueError('unconfirmed historical year')
   old=year>f['confirmed']['through']
   if calculation and old: raise ValueError('unconfirmed calculation year')
+  if calculation and f['knowledge']!='known': raise ValueError('no calculation value')
+  if calculation and fid in claims and (type(f['value']) not in [int,float] or not isfinite(f['value'])): raise ValueError('non-numeric calculation input')
   return dict(id=fid,scope=f['scope'],warning='last confirmed '+str(f['confirmed']['through']) if old else None,
       conditions=[bundle(d,trail+(fid,)) for d in f['conditions']])
  for fid in claims: out.append(bundle(fid))
@@ -137,6 +151,17 @@ def run_tests():
  check('missing condition ID rejected',lambda:blocked(lambda:view(mutate('annual','conditions',['absent']),'deposit',['annual','total'])))
  check('condition cycle rejected',lambda:blocked(lambda:view(mutate('age','conditions',['annual']),'deposit',['annual','total'])))
  check('repealed fact rejected for current display',lambda:blocked(lambda:view(mutate('annual','legal','repealed'),'deposit',['annual','total'])))
+ check('2028 rule blocked in 2026 display',lambda:blocked(lambda:view(mutate('annual','effective_from','2028-01-01'),'deposit',['annual','total'])))
+ check('2019 calculation blocked without historical evidence',lambda:blocked(lambda:view(fixtures(),'deposit',['annual','total'],year=2019,calculation=True)))
+ na=fixtures();na['annual'].update(knowledge='not_applicable',value=None)
+ check('not applicable blocked in display',lambda:blocked(lambda:view(na,'deposit',['annual','total'])))
+ check('not applicable blocked in calculation',lambda:blocked(lambda:view(na,'deposit',['annual','total'],calculation=True)))
+ check('documented none blocked in calculation',lambda:blocked(lambda:view(db,'deposit',['annual','total'],calculation=True)))
+ check('empty string blocked in calculation',lambda:blocked(lambda:view(mutate('annual','value',''),'deposit',['annual','total'],calculation=True)))
+ check('numeric zero allowed in calculation',lambda:bool(view(mutate('annual','value',0),'deposit',['annual','total'],calculation=True)))
+ check('confirmation time basis enforced',lambda:blocked(lambda:view(fixtures(),'deposit',['annual','total'],basis='withdrawal_year')))
+ check('midyear effective date rejected for full year',lambda:blocked(lambda:view(mutate('annual','effective_from','2026-07-01'),'deposit',['annual','total'])))
+ check('historical display blocked without evidence',lambda:blocked(lambda:view(fixtures(),'deposit',['annual','total'],year=2019)))
  return results
 
 if __name__=='__main__':
