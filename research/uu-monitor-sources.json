@@ -1,0 +1,11 @@
+[
+  {"id":"uu-regelverk","url":"https://www.uutilsynet.no/regelverk/","kind":"html","role":"myndighetsveiledning, juridisk omfang må vurderes"},
+  {"id":"uu-fremtid","url":"https://www.uutilsynet.no/regelverk/fremtidige-regelverk-og-krav/747","kind":"html","role":"fremtidig regelverk, ikke automatisk gjeldende"},
+  {"id":"uu-egenkontroll","url":"https://www.uutilsynet.no/veiledning/sjekk-nettstedet-ditt-selv/708","kind":"html","role":"testveiledning"},
+  {"id":"uu-testregler","url":"https://api.github.com/repos/TilsynForUniversellUtforming/testreglar-wcag-2.x/git/trees/master?recursive=1","kind":"json","role":"testregeloversikt med filhash, ikke lovtekst"},
+  {"id":"wcag-latest","url":"https://www.w3.org/TR/wcag/","kind":"html","role":"nyeste publikasjon via W3C, status må leses"},
+  {"id":"wcag22","url":"https://www.w3.org/TR/WCAG22/","kind":"html","role":"prosjektmål WCAG 2.2 AA, ikke samsvarsbevis"},
+  {"id":"wcag3","url":"https://www.w3.org/TR/wcag-3.0/","kind":"html","role":"utkast og fremtidig arbeid, ikke vedtatt standard"},
+  {"id":"wai-oversikt","url":"https://www.w3.org/WAI/standards-guidelines/wcag/","kind":"html","role":"standardoversikt og publikasjoner"},
+  {"id":"uu-aapne-data","url":"https://www.uutilsynet.no/innsikt-og-analyse/opne-data-fra-tilgjengelegheitserklaeringane/3076","kind":"html","role":"API-dokumentasjon for selvrapporterte erklæringer"}
+]
