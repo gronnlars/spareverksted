@@ -59,6 +59,8 @@ jobs:
           node --check dist/theme.js
           node --check dist/navigation.js
           node tests/w3c-status.test.cjs
+      - name: Offline resource inventory
+        run: python3 scripts/ressurskontroll.py
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
