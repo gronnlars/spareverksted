@@ -23,6 +23,8 @@ ROOT = Path(__file__).resolve().parent.parent
 PAGE = ROOT / 'dist/tilgjengelighet.html'
 START = '<!-- w3c-status:start -->'
 END = '<!-- w3c-status:end -->'
+DSTART = '<!-- w3c-detail:start -->'
+DEND = '<!-- w3c-detail:end -->'
 MONTHS = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli',
           'august', 'september', 'oktober', 'november', 'desember']
 NAMES = {
@@ -55,31 +57,41 @@ def render(result, version, now):
     errors = sum(c['feil'] for c in result.values())
     warnings = sum(c['advarsler'] for c in result.values())
     date = f'{now.day}. {MONTHS[now.month - 1]} {now.year}'
-    lines = [
+    mark = '✓' if errors == 0 else '!'
+    short = '\n'.join([
         START,
-        f'<p class="w3c-status"><strong>Siste automatiske kontroll med W3Cs validator:</strong> '
-        f'{date}. {words(errors, "feil", "feil")} og {words(warnings, "advarsel", "advarsler")} '
-        f'på {words(len(result), "side", "sider")}. Kontrollen kjøres hver gang siden publiseres, '
-        f'med Nu Html Checker versjon {version}, den samme validatoren som validator.w3.org bruker.</p>',
-        '<ul class="w3c-pages">',
-    ]
-    for page, c in result.items():
-        lines.append(f'<li>{NAMES.get(page, page)}: {words(c["feil"], "feil", "feil")}, '
-                     f'{words(c["advarsler"], "advarsel", "advarsler")}</li>')
-    lines += ['</ul>', END]
-    return '\n'.join(lines), errors
+        f'<p class="hint w3c-status"><span aria-hidden="true">{mark}</span> '
+        f'Siste W3C-kontroll: {date}. {words(errors, "feil", "feil")}.</p>',
+        END,
+    ])
+    pages = '; '.join(f'{NAMES.get(page, page)}: {words(c["feil"], "feil", "feil")}, '
+                      f'{words(c["advarsler"], "advarsel", "advarsler")}'
+                      for page, c in result.items())
+    detail = '\n'.join([
+        DSTART,
+        f'Siste automatiske kontroll var {date}, med Nu Html Checker versjon {version}, '
+        f'den samme validatoren som validator.w3.org bruker. Den kjøres hver gang siden publiseres. '
+        f'Totalt {words(errors, "feil", "feil")} og {words(warnings, "advarsel", "advarsler")} '
+        f'på {words(len(result), "side", "sider")}. {pages}.',
+        DEND,
+    ])
+    return short, detail, errors
+
+
+def replace(text, a_marker, b_marker, block):
+    a, b = text.index(a_marker), text.index(b_marker) + len(b_marker)
+    return text[:a] + block + text[b:]
 
 
 def main(argv):
     data = json.loads(Path(argv[1]).read_text())
     pages = sorted(p.name for p in (ROOT / 'dist').glob('*.html'))
     result = count(data.get('messages', []), pages)
-    block, errors = render(result, argv[2], datetime.now(ZoneInfo('Europe/Oslo')))
-    print(block)
+    short, detail, errors = render(result, argv[2], datetime.now(ZoneInfo('Europe/Oslo')))
+    print(short + '\n' + detail)
     if '--write' in argv:
-        text = PAGE.read_text()
-        a, b = text.index(START), text.index(END) + len(END)
-        PAGE.write_text(text[:a] + block + text[b:])
+        text = replace(PAGE.read_text(), START, END, short)
+        PAGE.write_text(replace(text, DSTART, DEND, detail))
     return 1 if errors else 0
 
 
