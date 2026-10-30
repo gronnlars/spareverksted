@@ -74,7 +74,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await page.locator('#withdrawalPage').click();await page.locator('#withdrawalPanel .return-fields').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'withdrawInputs');
   await page.goto(origin+'/spor.html');assert(await page.locator('.desktop-nav').isVisible());assert(await page.locator('.site-menu').isVisible());await page.setViewportSize({width:320,height:812});assert(await page.locator('.site-menu').isVisible());
   // Egenprøve 30.10: menyer på infosider må ha innhold, også ved tastatur og smal zoom-visning.
-  for(const file of ['index.html','spor.html','om.html','personvern.html','tilgjengelighet.html'])for(const width of [1280,320,256]){
+  for(const file of ['index.html','spor.html','om.html','personvern.html','tilgjengelighet.html','ressursbruk.html'])for(const width of [1280,320,256]){
    await page.setViewportSize({width,height:900});await page.goto(origin+'/'+file);
    if(file==='index.html'){await page.evaluate(()=>sessionStorage.clear());await page.reload();}
    const menu=page.locator('.site-menu>summary');assert(await menu.isVisible(),file+' '+width+': menu visible');

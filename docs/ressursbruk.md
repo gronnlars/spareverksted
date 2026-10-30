@@ -54,3 +54,7 @@ Egen liten GitHub-workflow bruker prosjektets eksisterende Playwright-testbilde 
 - Nedlasting av Chromium mislyktes i arbeidsmiljøet. Fullstendig lokal og publisert måling er derfor ikke utført. Ingen tall er lagt på siden.
 - Testreisene (startbeløp 1000, månedlig 500 endret til 750, og «Hva er BSU?») er prøvd i forhåndsvisningens nettleser. Kalkulatoren viste resultat og BSU-svaret ble åpnet. Dette verifiserer brukerhandlingene, ikke CDP-målingen.
 - Før godkjenning: kjør begge kommandoene i nettlesermiljøet, kontroller cache/komprimering og rapportenes complete-status, og gjennomgå ressurssiden på mobil og med tastatur. Oppdater sidens status først etter faktisk bestått kjøring.
+
+### Første beståtte CI-måling, 30. oktober 2026
+
+Run 41061742248, kildegren a1fbc82e571f14b5c8467fa2d46b5b27f978e1e9, syntetisk merge 82d68bc8bd83ca90ae16a3a680b7ffbac8552e15: complete, åtte delsteg og ingen feil. Første/gjentatt besøk på index, spor og ressursbruk, kalkulatorhandling og BSU-søk. Gjenbesøk fikk cache-treff for alle forespørslene. Null overførte responsbyte ved cache er ikke null energibruk. Dette er lokalt testmiljø med syntetisk gzip/cache, ikke produksjonsmåling. Ingen utslippstall publiseres. Tidligere feil skyldtes Git-eierskapskontroll i containeren før målingen; workflow tillater nå bare den konkrete checkout-mappen. W3C-testens sidetall følger antallet HTML-filer.
