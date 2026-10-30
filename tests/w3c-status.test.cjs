@@ -12,7 +12,7 @@ const html = fs.readFileSync(page, 'utf8');
 assert.strictEqual(html.split('<!-- w3c-status:start -->').length, 2, 'én startmarkør');
 assert.strictEqual(html.split('<!-- w3c-status:end -->').length, 2, 'én sluttmarkør');
 const start = html.indexOf('<!-- w3c-status:start -->');
-assert(start < html.indexOf('<details class="check-log">'), 'kortlinjen står synlig, før den utvidbare delen');
+assert(start > html.indexOf('<h1') && start < html.indexOf('<h2'), 'kortlinjen står rett under hovedoverskriften');
 assert(html.indexOf('<!-- w3c-detail:start -->') > html.indexOf('<details class="check-log">'), 'detaljene står i den utvidbare delen');
 
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'w3c-'));
