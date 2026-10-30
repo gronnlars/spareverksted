@@ -25,6 +25,8 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.56.0-noble
     steps:
       - uses: actions/checkout@v4
+      - name: Trust checked-out workspace inside container
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Install existing test dependency
         run: npm install --no-save --no-package-lock playwright@1.56.0
       - name: Measure local synthetic journeys

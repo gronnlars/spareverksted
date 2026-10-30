@@ -973,3 +973,12 @@ Revurder ved nye måledata eller dokumenterte metodebegrensninger. Se docs/ressu
 ### Avgrenset nettlesermåling, 30. oktober 2026
 
 Lars fulgte opp med «Vi følger din plan»: første/gjentatt besøk og syntetiske brukerhandlinger, lokale tester før produksjonskontroll, ingen CO₂.js ennå. Måleskript og separat, tidsavgrenset workflow er skrevet. Målingen venter på første fullstendige nettleserkjøring; dette merkes på siden. Ingen utslipps- eller miljøgevinst hevdes. Verifikasjon og mangler står i docs/ressursbruk.md.
+## Feltfeil ryddes og vises ved inntasting (30. oktober 2026)
+
+Lars bestiller retting etter egen prøving på iPhone og PC. Feiltekst og rødt aldersfelt blir stående etter retting, store beløp slipper gjennom startguiden, og kalkulatorens feiltekst ligger utenfor området brukeren ser. Valgt: samme motorgrenser i startguide og kalkulator, kontroll ved forlatt startfelt og oppdatering av allerede viste feil under retting, vedvarende tekst ved hvert ugyldige felt og rydding når verdien er gyldig. Ingen automatisk fokusflytting mens man skriver. Ved innsending med feil går fokus til første ugyldige startfelt. Beregninger og grenser endres ikke.
+
+Forkastet: bare forlenge #toast, fordi startguidens #journeyError og kalkulatorens #error er separate vedvarende elementer. Bare endre tester forkastes fordi brukeren har dokumentert feil. Den eksisterende åttesekunders statusmeldingen beholdes, men må vurderes sammen med de varige feltbeskjedene. Skjulte SliderUnlock-knapper får navn fra opprettelse. Dette er UU-retting innenfor oppdraget, ingen ny økonomisk funksjon eller regulatorisk avklaring. Revurder hvis feiltekst leses dobbelt eller blir forstyrrende med hjelpemidler. Detaljer i research/uu-egenkontroll-uutilsynet.md og #124.
+
+## Menyer skal ha innhold og fungere ved zoom (30. oktober 2026)
+
+Etter Lars' egenprøve: bare skjul doble navigasjonslenker i en bred PC-meny når menyen fortsatt inneholder kalkulatorhandlinger. Menyen på infosider, start og Spør om sparing må være tilgjengelig. Toppfeltet får vokse i høyden ved smal visning. Forkastet: skjule alle menylenker fordi det gir tom ramme på infosider. Å gjøre Shift+Tab til en ny beregning forkastes fordi navigasjon ikke skal endre planen. Ny beregning finnes allerede i menyen. Grafens linjeforklaring skjules ikke for hjelpemidler uten at faktisk brukerproblem er gjenskapt. Rapport og avgrensninger i research/uu-egenprove-2026-10-30.md. Revurder ved faktisk zoom- eller skjermleserprøve som viser tap av funksjoner eller uklar leserekkefølge.

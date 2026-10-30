@@ -356,6 +356,36 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    await q.evaluate(()=>{document.getElementById('savedDetails').open=true;});await q.locator('button[aria-label="Åpne Gammel plan"]').click();
    assert.equal(await q.locator('#monthly').inputValue(),'4 321');assert.equal(await q.locator('#years').inputValue(),'10');
    assert.match(await q.locator('#undoText').innerText(),/«Du vil spare i»/);assert.match(await q.locator('#undoText').innerText(),/«Prisvekst per år» fra −1\s%\s*til 0 %/);assert.equal(await q.evaluate(()=>s.inflation),0);assert(await q.locator('#error').isHidden());assert.deepEqual(q.errors,[]);await c.close();}
+  // Lars' feilreise 30.10: retting må rydde rødt felt og gammel tekst, og grensen må gjelde før overgang.
+  for(const width of [390,1280]){
+   const ctx=await browser.newContext({viewport:{width,height:844}});const q=await ctx.newPage();
+   await q.goto(origin);await q.locator('#chooseGrowth').click();
+   await q.locator('#onboardAge').fill('33');await q.locator('#onboardUntil67').uncheck();
+   await q.locator('#onboardAge').fill('885');await q.locator('#onboardAge').blur();
+   assert.equal(await q.locator('#onboardAge').getAttribute('aria-invalid'),'true');
+   assert(await q.locator('#onboardAgeFieldError').isVisible());
+   assert(!/1185|1 185|2326/.test(await q.locator('#journeyHorizon').innerText()),'invalid age must not produce a horizon');
+   await q.locator('#onboardAge').fill('33');
+   assert.notEqual(await q.locator('#onboardAge').getAttribute('aria-invalid'),'true');
+   assert(await q.locator('#onboardAgeFieldError').isHidden());assert(await q.locator('#journeyError').isHidden());
+   await q.locator('#onboardYears').fill('300');await q.locator('#onboardMonthly').fill('20000000000000000000');
+   await q.locator('#beginJourney').click();assert(await q.locator('#welcomeWizard').isVisible());
+   for(const id of ['onboardMonthly','onboardYears'])assert(await q.locator('#'+id+'FieldError').isVisible());
+   await q.locator('#onboardYears').fill('10');assert(await q.locator('#onboardYearsFieldError').isHidden());
+   assert(await q.locator('#onboardMonthlyFieldError').isVisible(),'other error must remain');
+   await q.locator('#onboardMonthly').fill('3000');assert(await q.locator('#journeyError').isHidden());
+   await q.locator('#beginJourney').click();assert(await q.locator('#workbench').isVisible());
+   assert.equal(await q.evaluate(()=>s.monthly),3000);
+   await q.locator('#rate').fill('500');assert(await q.locator('#rateFieldError').isVisible());
+   assert.match(await q.locator('#rate').getAttribute('aria-describedby'),/rateFieldError/);
+   const distance=await q.evaluate(()=>{const f=document.getElementById('rate').getBoundingClientRect(),n=document.getElementById('rateFieldError').getBoundingClientRect();return n.top-f.bottom;});
+   assert(distance>=0&&distance<50,'error must be beside the field, not only above the calculator');
+   await q.locator('#rate').fill('5');assert(await q.locator('#rateFieldError').isHidden());assert(await q.locator('#error').isHidden());
+   assert.notEqual(await q.locator('#rate').getAttribute('aria-invalid'),'true');
+   assert.equal(await q.locator('button[id$="SliderUnlock"]').count(),11);
+   for(const button of await q.locator('button[id$="SliderUnlock"]').all())assert((await button.textContent()).trim(),'hidden slider button must also have a name');
+   await ctx.close();
+  }
   console.log('Passed: invalid input flow, blocked share/save/export with focus, stale marking, large numbers, field-by-field shared links, goal and withdrawal validation, and old saved plans.');
  }finally{if(browser)await browser.close();server.close();}
 })().catch(e=>{console.error(e);process.exit(1);});

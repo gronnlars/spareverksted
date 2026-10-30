@@ -7,10 +7,10 @@
 <meta name="description" content="Hva jeg har gjort for at Spareverksted skal kunne brukes av alle, hva som er kontrollert, hva som ikke er det, og hvilke svar jeg venter på.">
 <meta name="theme-color" content="#183f36">
 <title>Tilgjengelighet · Spareverksted</title>
-<link rel="stylesheet" href="style.css?v=17">
+<link rel="stylesheet" href="style.css?v=18">
 <link rel="stylesheet" href="theme.css?v=2">
 <link rel="stylesheet" href="layout.css?v=10"><script defer src="layout.js?v=5"></script>
-<link rel="stylesheet" href="navigation.css?v=3">
+<link rel="stylesheet" href="navigation.css?v=5">
 <link rel="stylesheet" href="om.css?v=6">
 <script defer src="kontakt.js?v=1"></script>
 <link rel="canonical" href="https://spareverksted.no/tilgjengelighet.html">
@@ -56,7 +56,7 @@
 <li>Tekst og grafikk har god nok kontrast i alle tre fargetemaene: Nøytral, Lys og Natt.</li>
 <li>Knapper og lenker er store nok å trykke på.</li>
 <li>Siden kan forstørres til 200 % og 400 % uten at du må rulle sidelengs.</li>
-<li>Feilmeldinger står ved feltet som må rettes, og er koblet til feltet for skjermlesere.</li>
+<li>Feilmeldinger i startskjemaet og kalkulatoren står ved feltet som må rettes, og er koblet til feltet for skjermlesere. Når verdien blir gyldig, fjernes feilteksten og markeringen.</li>
 <li>Grafene har en tekstbeskrivelse og en tabell med de samme tallene.</li>
 <li>Farge er ikke eneste måte ting skilles fra hverandre på.</li>
 <li>Siden tar hensyn til at du har valgt redusert bevegelse på enheten din.</li>
@@ -78,6 +78,9 @@
 <details class="check-log"><summary>Se hva som er testet og rettet</summary>
 <ul>
 <li><strong>Automatiske tester</strong> kjører hver gang siden endres. De sjekker kontrast, trykkflater, tastatur, fokus og forstørring i tre fargetemaer og ved flere skjermbredder, i nettleseren Chromium. Noen brukerflyter testes også i Firefox og WebKit, motoren bak Safari.</li>
+<li><strong>Feltfeil rettet 30. oktober 2026.</strong> I en prøve med Safari på iPhone og Chrome på PC fant jeg at gamle feilbeskjeder og røde felt kunne bli stående etter retting. Startskjemaet kunne også slippe gjennom beløp som først ble avvist i kalkulatoren. Feilene er rettet, og feiltekst vises ved feltene. Nye automatiske tester av ugyldige verdier og retting består i Chromium ved 390 og 1280 pikslers bredde. Den eksisterende nettleserpakken med kontroller i Chromium, Firefox og WebKit består også. Rettelsene er ikke prøvd på nytt med VoiceOver eller NVDA.</li>
+<li><strong>WAVE-kontroll 30. oktober 2026.</strong> Nettversjonen av WAVE viste 11 feil merket «Empty button», 11 varsler og ingen oppdagede kontrastfeil. Kodegjennomgangen fant 11 skjulte knapper ved skyveknappene som ble opprettet uten tekst. Disse har nå tekst fra opprettelsen. En ny WAVE-kontroll samme dag, dokumentert med skjermbilder, viste 0 registrerte feil, 0 kontrastfeil og 10 varsler. Antallet varsler om svært liten tekst gikk fra 7 til 6. Kontrollen gjelder den undersøkte siden og tilstanden, ikke hele nettstedet. Varslene er ikke ferdig vurdert. <a href="https://github.com/gronnlars/spareverksted/issues/124">Se funn og oppfølging</a>. WAVE-resultatet er ingen godkjenning av tilgjengeligheten.</li>
+<li><strong>Egenprøve med tastatur og zoom 30. oktober 2026.</strong> I Chrome på laptop prøvde jeg Tab, Shift+Tab, Enter, mellomrom og piltastene i grafen. Jeg opplevde gjennomgående god flyt, men fant en tom eller manglende meny. En rask zoomprøve av kalkulatoren og Om-siden fungerte stort sett til 500 %, med en mindre plassfeil ved temavalget. Alle sider og handlinger er ikke gjennomgått. Menyfeilen følges opp i en egen retting. Dette var ingen full kontroll med skjermleser.</li>
 <li><strong>En manuell gjennomgang</strong> 23. oktober 2026 av kalkulatoren, veilederen og Om-siden i tre temaer og tre skjermbredder.</li>
 <li><strong>En første test på iPhone</strong> 27. oktober 2026, gjort av meg. Jeg er ikke vant til slike hjelpemidler, men knappene på personvernsiden virket, VoiceOver leste opp riktig, og forstørring fungerte.</li>
 <li><strong>En test med skjermleser</strong> 28. oktober 2026, gjort av en som kjenner hjelpemidlene og kravene. Det meste virket, og forstørringen fikk ros. Grafene ble ikke beskrevet i ord. Beskrivelser av grafene ble lagt til samme dag. De er ennå ikke kontrollert på nytt med skjermleser.</li>
@@ -105,7 +108,7 @@ Advarslene har så langt gjeldt overskrifter som fylles inn mens du bruker siden
 <li>Tester med flere brukere som selv er avhengige av hjelpemidler. Én test er gjort, og det er ikke nok.</li>
 <li>De delene av WCAG som ikke kan testes automatisk.</li>
 </ul>
-<p>Meldingen som vises når du åpner en delt lenke med ugyldige verdier, forsvinner av seg selv etter en stund. Det samme gjør meldingen når lagring eller deling stoppes fordi et felt er feil. Jeg har ikke vurdert om det er et problem for deg som trenger mer tid.</p>
+<p>Meldingen som vises når du åpner en delt lenke med ugyldige verdier, forsvinner av seg selv etter en stund. Det samme gjør meldingen når lagring eller deling stoppes fordi et felt er feil. Feltfeilene i startskjemaet og kalkulatoren er egne beskjeder som blir stående til verdien rettes. Jeg har fortsatt ikke kontrollert om de kortvarige statusmeldingene gir nok tid med hjelpemidler.</p>
 </section>
 
 <section class="giving-section" aria-labelledby="a11yWaiting">
@@ -130,7 +133,7 @@ Advarslene har så langt gjeldt overskrifter som fylles inn mens du bruker siden
 <p>Du kan også kontakte <a href="https://www.uutilsynet.no/om-oss/kontakt-oss/231">Tilsynet for universell utforming av ikt</a>.</p>
 </section>
 
-<p class="hint">Sist oppdatert 29. oktober 2026.</p>
+<p class="hint">Sist oppdatert 30. oktober 2026.</p>
 <footer><a href="om.html">Om Spareverksted</a><a href="personvern.html">Personvern og lokal lagring</a><a href="index.html">Tilbake til kalkulatoren</a></footer>
 </main>
 </body>
