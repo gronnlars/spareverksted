@@ -37,3 +37,5 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 
 /* Gyldig HTML (W3C-validator 28.10.2026): feltboksen er span inne i label, og hjelpeknapper står utenfor label. Utseendet skal være uendret. */
 .fieldbox{display:block}.check-with-help{display:flex;align-items:center;gap:7px}.check-with-help .check{flex:0 1 auto;margin:0}.check-with-help .help-button{margin-left:0;flex-shrink:0}
+
+.local-field-error{display:block;font-size:14px;line-height:1.5;color:var(--ink);border-inline-start:3px solid currentColor;padding:6px 10px;margin:8px 0;overflow-wrap:anywhere}
