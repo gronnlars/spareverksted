@@ -32,6 +32,7 @@ NAMES = {
     'spor.html': '«Spør om sparing»',
     'om.html': 'Om Spareverksted',
     'personvern.html': 'Personvern',
+    'ressursbruk.html': 'Ressursbruk og miljø',
     'tilgjengelighet.html': 'Tilgjengelighet',
 }
 
