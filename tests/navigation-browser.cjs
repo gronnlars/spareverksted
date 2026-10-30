@@ -72,7 +72,22 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await page.locator('#withdrawalPage').click();await page.locator('.desktop-nav a[href="index.html"]').click();assert.equal(await page.evaluate(()=>s.monthly),4000);assert.equal(await page.evaluate(()=>document.activeElement.id),'planInputs');
   await page.locator('#dreamPage').click();await page.locator('#dreamPanel .return-fields').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'dreamInputs');
   await page.locator('#withdrawalPage').click();await page.locator('#withdrawalPanel .return-fields').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'withdrawInputs');
-  await page.goto(origin+'/spor.html');assert(await page.locator('.desktop-nav').isVisible());assert(await page.locator('.site-menu').isHidden());await page.setViewportSize({width:320,height:812});assert(await page.locator('.site-menu').isVisible());
+  await page.goto(origin+'/spor.html');assert(await page.locator('.desktop-nav').isVisible());assert(await page.locator('.site-menu').isVisible());await page.setViewportSize({width:320,height:812});assert(await page.locator('.site-menu').isVisible());
+  // Egenprøve 30.10: menyer på infosider må ha innhold, også ved tastatur og smal zoom-visning.
+  for(const file of ['index.html','spor.html','om.html','personvern.html','tilgjengelighet.html'])for(const width of [1280,320,256]){
+   await page.setViewportSize({width,height:900});await page.goto(origin+'/'+file);
+   const menu=page.locator('.site-menu>summary');assert(await menu.isVisible(),file+' '+width+': menu visible');
+   await menu.focus();await page.keyboard.press('Enter');
+   assert(await page.locator('.site-menu').evaluate(e=>e.open));
+   assert(await page.locator('.site-menu .site-nav a[href="index.html"]').isVisible(),file+' '+width+': no empty menu');
+   await page.keyboard.press('Tab');assert(await page.evaluate(()=>document.activeElement.matches('.site-menu a')),file+': Tab reaches menu link');
+   await page.keyboard.press('Escape');assert.equal(await page.evaluate(()=>document.activeElement===document.querySelector('.site-menu>summary')),true);
+   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),file+' '+width+': no horizontal overflow');
+   const header=await page.locator('.site-header').boundingBox();
+   for(const button of await page.locator('.theme-picker button').all()){
+    const box=await button.boundingBox();assert(box&&box.y>=header.y&&box.y+box.height<=header.y+header.height+1,file+': theme controls inside header');
+   }
+  }
   assert.deepEqual(errors,[]);
   console.log('Passed: result → graph → fields, direction labels, three themes, 320–1280 px, keyboard focus, menus, levels, edit versus new plan, undo and all modules.');
  }finally{if(browser)await browser.close();server.close();}
