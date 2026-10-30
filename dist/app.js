@@ -52,9 +52,15 @@ function hidePending(keys){const n=$('pendingNote');if(!n||n.hidden)return;if(ke
 function clearDescribedBy(el,id){const ids=(el.getAttribute('aria-describedby')||'').split(' ').filter(x=>x&&x!==id);ids.length?el.setAttribute('aria-describedby',ids.join(' ')):el.removeAttribute('aria-describedby');}
 // Rydder koblingen til én feilmelding for en gruppe felt. Feltet med feil (field) markeres; de andre
 // mister koblingen til meldingen. aria-invalid fjernes bare når feltet faktisk har et gyldig tall.
-function syncFieldErrors(keys,messageId,field){for(const k of keys){const el=$(k);if(!el)continue;if(k===field){markInvalid(k,messageId);continue;}
+function localFieldError(key,text){const el=$(key);if(!el)return;const id=key+'FieldError';let note=$(id);
+ if(text&&!note){note=document.createElement('span');note.id=id;note.className='local-field-error';const box=el.closest('.fieldbox');if(box)box.after(note);else el.after(note);}
+ if(note){note.textContent=text||'';note.hidden=!text;}
+ if(text)markInvalid(key,id);else clearDescribedBy(el,id);
+}
+function syncFieldErrors(keys,messageId,field){for(const key of keys){const el=$(key);if(!el)continue;const text=key===pendingKey()?null:E.fieldError(key,parsedNumber(el.value),fieldLabel);localFieldError(key,text||(key===field?$(messageId)?.textContent:null));}
+ for(const k of keys){const el=$(k);if(!el)continue;if(k===field){markInvalid(k,messageId);continue;}
  const linked=(el.getAttribute('aria-describedby')||'').split(' ').includes(messageId);if(!linked&&el.getAttribute('aria-invalid')!=='true')continue;
- if(Number.isFinite(parsedNumber(el.value)))clearInvalid(el,messageId);else{clearInvalid(el,messageId);el.setAttribute('aria-invalid','true');}}}
+ if(E.fieldError(k,parsedNumber(el.value),fieldLabel)===null)clearInvalid(el,messageId);else{clearDescribedBy(el,messageId);el.setAttribute('aria-invalid','true');}}}
 const MAIN_KEYS=Object.keys(E.FIELDS),RETIREMENT_ERROR_KEYS=['retireYears','extraWithdraw','extraWithdrawYear'];
 const WITHDRAW_KEYS=['annualWithdraw','retireYears','withdrawPercent','extraWithdraw','extraWithdrawYear','withdraw'];
 const pageOf=key=>key in E.DREAM_FIELDS?'dreams':WITHDRAW_KEYS.includes(key)?'withdrawals':'calculator';

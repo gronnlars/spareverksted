@@ -66,3 +66,13 @@ Alle er retting av UU-feil eller kontroller, og tillatt under pausen etter `docs
 ## Status ved sammenslåing (28. oktober 2026, kveld)
 
 Punkt 4, 7 og 10 er oppdatert etter PR #94, #99 og #103. Forslag 1, 2, 3 og 5 er fortsatt åpne og ikke påbegynt. Forslag 3 og 5 endrer det brukeren ser og krever Lars' godkjenning. Grafforklaringen er i tillegg gjort om til en liste, så den leses riktig uten sidens stilark (PR #103, funnet i Chrome sin lesemodus).
+
+## Presisering etter brukerprøve 30. oktober 2026
+
+Lars dokumenterte i Safari på iPhone og Chrome på PC at startskjemaets feiltekst og røde markering kunne bli stående etter retting. Han fant også at kalkulatorens samlede feiltekst lå over inntastingsområdet, slik at han måtte bla opp, og at et svært stort månedsbeløp først ble avvist etter overgang fra startskjemaet. Dette er brukerfunn, ikke slutninger fra automatiske tester.
+
+Tidligere omtale av kort visningstid var en åpen hypotese basert på at blockIfInvalid bruker notice med 8000 ms. Dette er statusmeldingen #toast ved stoppet lagring/deling, ikke #journeyError i startskjemaet eller #error over kalkulatoren. Testene har ikke bevist at alle feilbeskjeder forsvinner etter åtte sekunder. Separate feltfeil og statusmelding må prøves hver for seg.
+
+Rettelse i egen PR: startskjemaet gjenbruker motorens feltgrenser før overgang, kontrollerer ved forlatt felt og oppdaterer allerede viste feil under retting. Feiltekst vises i tillegg rett ved feltene og kobles med aria-describedby. Gyldige verdier rydder markering og feiltekst, uten å flytte fokus under skriving. Ugyldig alder brukes ikke i framtidig aldersforklaring. De elleve reserveknappene for skyveknapper får tekst fra opprettelse, se #124. Ingen beregningsgrenser endres. Grensen i motoren er 10 000 000 kr per måned, ikke per år.
+
+Utført lokalt: syntakskontroll, engine.test.cjs, validation.test.cjs og tax-export.test.cjs. Nye nettlesertilfeller ved 390 og 1280 px er lagt i eksisterende input-browser.cjs, som allerede kjører i CI. Lokal Chromium-nedlasting feilet, så nettleserstatus må bekreftes i GitHub. Faktisk iPhone, VoiceOver/NVDA og ny WAVE-kontroll er ikke utført i denne rettingen.
