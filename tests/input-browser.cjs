@@ -360,7 +360,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   for(const width of [390,1280]){
    const ctx=await browser.newContext({viewport:{width,height:844}});const q=await ctx.newPage();
    await q.goto(origin);await q.locator('#chooseGrowth').click();
-   await q.locator('#onboardUntil67').uncheck();
+   await q.locator('#onboardAge').fill('33');await q.locator('#onboardUntil67').uncheck();
    await q.locator('#onboardAge').fill('885');await q.locator('#onboardAge').blur();
    assert.equal(await q.locator('#onboardAge').getAttribute('aria-invalid'),'true');
    assert(await q.locator('#onboardAgeFieldError').isVisible());
