@@ -958,6 +958,21 @@ Alternativer: Hente resultatet fra validator.w3.org i nettleseren ble forkastet:
 
 Begrensning: Validatoren sjekker HTML-en slik den lastes, ikke tilstanden etter at JavaScript har kjørt, og den sier ikke at siden er tilgjengelig. Versjonen er ikke låst, så nye regler i validatoren kan gi nye feil uten at koden er endret. Revurder hvis det skjer ofte. Kontroll: skriptet er testet med oppdiktede resultater (tests/w3c-status.test.cjs). Den ekte validatoren kunne ikke lastes ned i arbeidsmiljøet og kjøres første gang i GitHub Actions på PR-en.
 
+
+## Ressursbruk og miljø, egen redegjørelse (30. oktober 2026)
+
+Lars bestilte en egen side etter gjennomgang av tekst og metode i samtalen. Fullmakten gjelder denne informasjonssiden, lenke fra Om-siden og en lett automatisk filkontroll. Ingen endring i kalkulatorens funksjoner eller generell gjenåpning av prosjektet.
+
+Siden beskriver prosjektets grep, omfattende KI-bruk og ukjent miljøavtrykk. «Jeg er amatør» beholdes slik Lars uttrykkelig ønsket. Ingen påstand om utslippsreduksjon, bærekraftmåloppnåelse eller sertifisering. Versjonshistorikk føres på siden.
+
+Filkontrollen bruker bare Python-standardbiblioteket og eksisterende CI. Den viser ukomprimerte filstørrelser og eksterne ressursreferanser i HTML, ikke trafikk eller energi. Nettverksmålinger og CO₂.js venter på eget testoppsett og kildekontroll. Ingen ekstra analyseverktøy lastes hos brukerne.
+
+Revurder ved nye måledata eller dokumenterte metodebegrensninger. Se docs/ressursbruk.md for oppfølging. ChatGPT/Codex har skrevet kode og side i denne endringen.
+
+
+### Avgrenset nettlesermåling, 30. oktober 2026
+
+Lars fulgte opp med «Vi følger din plan»: første/gjentatt besøk og syntetiske brukerhandlinger, lokale tester før produksjonskontroll, ingen CO₂.js ennå. Måleskript og separat, tidsavgrenset workflow er skrevet. Målingen venter på første fullstendige nettleserkjøring; dette merkes på siden. Ingen utslipps- eller miljøgevinst hevdes. Verifikasjon og mangler står i docs/ressursbruk.md.
 ## Feltfeil ryddes og vises ved inntasting (30. oktober 2026)
 
 Lars bestiller retting etter egen prøving på iPhone og PC. Feiltekst og rødt aldersfelt blir stående etter retting, store beløp slipper gjennom startguiden, og kalkulatorens feiltekst ligger utenfor området brukeren ser. Valgt: samme motorgrenser i startguide og kalkulator, kontroll ved forlatt startfelt og oppdatering av allerede viste feil under retting, vedvarende tekst ved hvert ugyldige felt og rydding når verdien er gyldig. Ingen automatisk fokusflytting mens man skriver. Ved innsending med feil går fokus til første ugyldige startfelt. Beregninger og grenser endres ikke.

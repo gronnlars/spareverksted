@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<script src="theme.js?v=1"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Tiltak, planer og usikkerhet om ressursbruk i Spareverksted.">
+<meta name="theme-color" content="#183f36">
+<title>Ressursbruk og miljø</title>
+<link rel="stylesheet" href="style.css?v=17">
+<link rel="stylesheet" href="theme.css?v=2">
+<link rel="stylesheet" href="layout.css?v=10"><script defer src="layout.js?v=5"></script>
+<link rel="stylesheet" href="navigation.css?v=5">
+<link rel="stylesheet" href="om.css?v=6">
+<link rel="canonical" href="https://spareverksted.no/ressursbruk.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nb_NO">
+<meta property="og:site_name" content="Spareverksted">
+<meta property="og:title" content="Ressursbruk og miljø">
+<meta property="og:description" content="Tiltak, planer og usikkerhet om ressursbruk i Spareverksted.">
+<meta property="og:url" content="https://spareverksted.no/ressursbruk.html">
+<meta property="og:image" content="https://spareverksted.no/deling-v2.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="spareverksted i hvitt på grønn bakgrunn">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ressursbruk og miljø">
+<meta name="twitter:description" content="Tiltak, planer og usikkerhet om ressursbruk i Spareverksted.">
+<meta name="twitter:image" content="https://spareverksted.no/deling-v2.png">
+<meta name="twitter:image:alt" content="spareverksted i hvitt på grønn bakgrunn">
+</head>
+<body class="about-page">
+<a class="skip" href="#main">Hopp til innholdet</a>
+<header class="site-header"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">↗</span>spareverksted</a><details class="site-menu"><summary>Meny <span aria-hidden="true">☰</span></summary><div class="menu-panel"><nav class="site-nav" aria-label="Hovedmeny"><a href="index.html">Kalkulator</a><a href="spor.html">Spør om sparing</a><a href="om.html">Om Spareverksted</a></nav></div></details></header>
+<main id="main">
+<section class="about-intro" aria-labelledby="resourceTitle">
+<p class="eyebrow">OM SPAREVERKSTED</p>
+<h1 id="resourceTitle">Ressursbruk og miljø</h1>
+<p>Spareverksted bruker ressurser, både når nettstedet utvikles og når det brukes. Jeg vil være åpen om grepene jeg tar, hva som gjenstår og hva jeg ikke vet.</p>
+<p>Målet er å begrense unødvendig ressursbruk og samtidig lage et nettsted som er forståelig, tilgjengelig og nyttig.</p>
+<p class="giving-help">Versjon 1.0 · Sist gjennomgått <time datetime="2026-10-30">30. oktober 2026</time></p>
+<nav aria-label="På denne siden"><ul><li><a href="#grep">Grep i nettstedet</a></li><li><a href="#ki">KI i utviklingen</a></li><li><a href="#kontroller">Målinger og kontroller</a></li><li><a href="#ukjent">Det jeg ikke vet</a></li><li><a href="#historikk">Versjonshistorikk</a></li></ul></nav>
+</section>
+<section class="ki-section" id="grep" aria-labelledby="grepTitle">
+<h2 id="grepTitle">Grep i nettstedet</h2>
+<p>Spareverksted har ingen reklame eller innlogging. Svarene i «Spør om sparing» er skrevet på forhånd. Ingen KI-modell lager svar mens du bruker nettstedet. Beregningene foregår i nettleseren.</p>
+<p>Denne siden bruker nettstedets eksisterende stilark og felles kode. Den laster ikke inn et eget analyseverktøy eller miljømerke fra en ekstern tjeneste.</p>
+<p>Dette er konkrete valg i løsningen. Jeg har foreløpig ikke beregnet hvilken miljøeffekt de har.</p>
+<p>Les også om <a href="personvern.html">personvern og lokal lagring</a> og <a href="tilgjengelighet.html">tilgjengelighet</a>. Nettleverandørens behandling av besøksdata er omtalt på personvernsiden.</p>
+</section>
+<section class="ki-section" id="ki" aria-labelledby="kiTitle">
+<h2 id="kiTitle">KI i utviklingen</h2>
+<p>Jeg bruker KI til utvikling, tekst og kvalitetssikring. Prosjektet startet med at jeg ville finne ut om KI hadde kommet langt nok til å gjøre ideen min til virkelighet. Derfor bruker Spareverksted KI til oppgaver jeg lett kunne ha utført selv. Oppbyggingen av nettstedet har innebåret omfattende bruk av KI.</p>
+<p>Jeg er amatør og har fortsatt mye å lære. Jeg ser selv at jeg i mange sammenhenger har brukt mye av abonnementskvoten på modeller som jeg vil tro har vært tyngre enn nødvendig for oppgaven.</p>
+<p>Jeg prøver å velge modeller og innstillinger som gir tilstrekkelig kvalitet uten unødvendig ressursbruk eller mye ekstraarbeid. Jeg har ikke grunnlag for å tallfeste miljøeffekten av mine valg.</p>
+<p>Jeg håper det som er bygget kan brukes videre av andre, bygges videre på og kanskje inspirere større bedrifter og institusjoner til å gjøre mer omfattende grep for brukeropplevelse, tilgjengelighet, personvern og bærekraft.</p>
+<p><a href="om.html#bruk">Les vilkårene for viderebruk</a>.</p>
+</section>
+<section class="ki-section" id="kontroller" aria-labelledby="kontrollTitle">
+<h2 id="kontrollTitle">Målinger og kontroller</h2>
+<h3>En enkel filkontroll</h3>
+<p>En automatisk kontroll lister størrelsen på HTML-, CSS- og JavaScript-filene og eksterne ressurser oppgitt i HTML. Den leser filene i utviklingsmiljøet og sender ingen forespørsler til nettstedet eller besøkende.</p>
+<p>Filstørrelse er ikke det samme som datamengden ved et besøk. Kontrollen måler hverken energibruk eller utslipp. Den oppdager heller ikke alle forespørsler som kan oppstå når kode kjøres.</p>
+<details class="check-log"><summary>Målinger og videre metode</summary>
+<p>Første fullstendige nettlesermåling i et lokalt testmiljø besto 30. oktober 2026. Den omfattet første besøk, gjenbesøk, en kalkulatorhandling og et søk. Dette er ikke en måling av overføringen fra det publiserte nettstedet eller av energibruk og utslipp.</p>
+<p>Skriptet tester overført datamengde ved første besøk, gjenbesøk og utvalgte handlinger på startsiden, i kalkulatoren og i «Spør om sparing». Testoppsettet dokumenterer nettleser, mellomlagring, dato og testet kodeversjon. Lokal komprimering og mellomlagring er satt opp for testen og gjengir ikke nødvendigvis den publiserte løsningen.</p>
+<p>Testene skal bruke oppdiktede tall i et kontrollert miljø. Jeg planlegger ingen innsamling av besøkendes bruk for dette formålet.</p>
+<p>CO₂.js vurderes for modellanslag basert på måledata. Før det tas i bruk, må modell, kilder, dataår, forutsetninger og lisensvilkår kontrolleres. Det er ikke integrert nå.</p>
+<p>Eventuelle modellanslag skal stå adskilt fra måleresultatene. De skal ikke framstilles som et klimaregnskap for hele Spareverksted.</p>
+<p>Jeg vil også vurdere kriterier for ressursbruk, tilgjengelighet, forståelighet, brukerens interesser og gjenbruk. Web Sustainability Guidelines er et mulig vurderingsgrunnlag. Koblinger til FNs bærekraftmål er foreløpig ikke vurdert ferdig.</p>
+<p>Testene skal begrenses til relevante endringer, gjenbruke eksisterende testverktøy der det passer og ha avgrenset kjøretid. Nye eksterne tjenester må vurderes opp mot prosjektets personvernkrav.</p>
+</details>
+<p><a href="https://github.com/gronnlars/spareverksted/blob/main/docs/ressursbruk.md">Se testkommando, avgrensninger og videre plan</a>.</p>
+</section>
+<section class="ki-section" id="ukjent" aria-labelledby="ukjentTitle">
+<h2 id="ukjentTitle">Dette vet jeg foreløpig ikke</h2>
+<p>Jeg har ikke en samlet oversikt over energibruk, utslipp eller andre miljøbelastninger fra utvikling og drift. Det gjelder blant annet KI-bruken, testkjøringene og infrastrukturen hos leverandørene.</p>
+<p>Bruksoversikter fra KI-tjenestene gir ikke et fullstendig bilde av ressursbruken i prosjektet. Abonnementskvote og pris er ikke målinger av energi eller utslipp.</p>
+<p>Manglende tall betyr at belastningen er ukjent.</p>
+</section>
+<section class="ki-section" id="historikk" aria-labelledby="historikkTitle">
+<h2 id="historikkTitle">Versjonshistorikk</h2>
+<p>Vesentlige endringer i redegjørelsen, målingene og metoden føres her. Et metodebytte skal merkes, slik at tall fra ulike metoder ikke sammenlignes uten forklaring.</p>
+<details class="check-log"><summary>Versjon 1.0, 30. oktober 2026</summary><p>Første versjon av redegjørelsen: grep i nettstedet, KI-bruk, enkel filkontroll, første beståtte nettlesermåling i lokalt testmiljø og kjente kunnskapshull. Ingen nettverksmåling eller utslippsberegning publisert.</p></details>
+</section>
+<footer><a href="om.html">Om Spareverksted</a><a href="personvern.html">Personvern og lokal lagring</a><a href="tilgjengelighet.html">Tilgjengelighet</a><a href="https://github.com/gronnlars/spareverksted">Kildekode på GitHub</a></footer>
+</main>
+</body>
+</html>

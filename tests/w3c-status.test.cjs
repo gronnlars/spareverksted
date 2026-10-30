@@ -9,6 +9,7 @@ const { spawnSync } = require('child_process');
 const root = path.join(__dirname, '..');
 const page = path.join(root, 'dist/tilgjengelighet.html');
 const html = fs.readFileSync(page, 'utf8');
+const pageCount = fs.readdirSync(path.join(root, 'dist')).filter(name => name.endsWith('.html')).length;
 assert.strictEqual(html.split('<!-- w3c-status:start -->').length, 2, 'én startmarkør');
 assert.strictEqual(html.split('<!-- w3c-status:end -->').length, 2, 'én sluttmarkør');
 const start = html.indexOf('<!-- w3c-status:start -->');
@@ -26,7 +27,7 @@ const warn = (p) => ({ url: `file:/x/dist/${p}`, type: 'info', subType: 'warning
 let r = run([warn('index.html'), warn('index.html'), warn('spor.html'), { type: 'info', url: 'file:/x/dist/om.html', message: 'bare info' }]);
 assert.strictEqual(r.status, 0, r.stderr);
 assert.match(r.stdout, /✓<\/span> Siste W3C-kontroll: \d+\. \w+ \d{4}\. 0 feil\.<\/p>/);
-assert.match(r.stdout, /Totalt 0 feil og 3 advarsler på 5 sider/);
+assert.match(r.stdout, new RegExp(`Totalt 0 feil og 3 advarsler på ${pageCount} sider`));
 assert.match(r.stdout, /Forsiden: 0 feil, 2 advarsler;/);
 assert.match(r.stdout, /«Spør om sparing»: 0 feil, 1 advarsel;/);
 assert.match(r.stdout, /Om Spareverksted: 0 feil, 0 advarsler/);
@@ -46,7 +47,7 @@ try {
   const out = fs.readFileSync(page, 'utf8');
   const strip = (s) => s.replace(/<!-- w3c-status:start -->[\s\S]*?<!-- w3c-status:end -->/, '').replace(/<!-- w3c-detail:start -->[\s\S]*?<!-- w3c-detail:end -->/, '');
   assert.strictEqual(strip(out), strip(backup));
-  assert.match(out, /Totalt 0 feil og 1 advarsel på 5 sider/);
+  assert.match(out, new RegExp(`Totalt 0 feil og 1 advarsel på ${pageCount} sider`));
 } finally {
   fs.writeFileSync(page, backup);
 }

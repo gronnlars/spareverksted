@@ -1,0 +1,42 @@
+name: Resource measurement
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'dist/**'
+      - 'scripts/ressursmaaling.cjs'
+      - '.github/workflows/ressursmaaling.yml'
+  pull_request:
+    paths:
+      - 'dist/**'
+      - 'scripts/ressursmaaling.cjs'
+      - '.github/workflows/ressursmaaling.yml'
+permissions:
+  contents: read
+concurrency:
+  group: resources-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.0-noble
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trust checked-out workspace inside container
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Install existing test dependency
+        run: npm install --no-save --no-package-lock playwright@1.56.0
+      - name: Measure local synthetic journeys
+        timeout-minutes: 2
+        run: node scripts/ressursmaaling.cjs --output=/tmp/ressursmaaling/local.json
+      - name: Save report, including incomplete runs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ressursmaaling
+          path: /tmp/ressursmaaling/
+          retention-days: 7
+          if-no-files-found: warn
