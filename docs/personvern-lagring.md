@@ -5,7 +5,7 @@ Arbeidsnotat utført av Claude på oppdrag fra Lars, 25. oktober 2026. Ikke juri
 ## Grunnlag og kildekategorier
 
 - Repo: `gronnlars/spareverksted`. Main da kartleggingen startet: `04eed8e278d672bd4aae31213b346b8befc5e6a5`. Rettingene ligger på grenen `fix/personvern-lokal-lagring` (PR #78). Full commit-ID på siste head oppgis i PR-en.
-- Publisering: `.github/workflows/static.yml` bygger `dist/` og publiserer med `actions/deploy-pages` ved push til main. `dist/` har ingen `CNAME`-fil.
+- Publisering ved kartleggingen: `.github/workflows/static.yml` bygde `dist/` og publiserte med `actions/deploy-pages` ved push til main. `dist/CNAME` inneholder `spareverksted.no`.
 
 Hver opplysning under har én av disse kategoriene. De skal ikke blandes.
 
@@ -115,6 +115,8 @@ Se i `sammendrag`: `forespørslerTilAndreVerter`, `Set_Cookie`, `ikkeGET_ellerMe
 - GitHub skriver at besøkendes IP-adresse logges og lagres av sikkerhetshensyn, også for besøkende som ikke er logget inn ([What is GitHub Pages?](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)).
 - GitHubs generelle personvernerklæring (ikrafttredelse 27. april 2026) nevner ikke Pages særskilt, oppgir ingen lagringstid for slike logger, oppgir GitHub, Inc. og GitHub B.V. som behandlingsansvarlige og viser til standard kontraktsklausuler og EU-US Data Privacy Framework for overføring ([GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)). Ingen avtale mellom Lars og GitHub om databehandling er kjent. Roller avgjøres ut fra faktisk forhold og avtale, ikke ut av overskriften i en erklæring.
 - Serverlogger: **ikke tilgjengelig**. Lagringstid er ikke gjettet. Spørsmål til GitHub Support ligger som usendt utkast.
+
+**Endring bestilt 31.10.2026:** GitHub skal fortsatt brukes til kildekode og CI, mens bestått `dist/` skal lastes opp med S3-kompatibelt API til Bunny Storage Zone `spareverksted` i Frankfurt (`de-s3.storage.bunnycdn.com`). Dette er et vedtak om publiseringsmål, ikke dokumentasjon på at besøkenes trafikk allerede går gjennom Bunny. Pull Zone, DNS, sertifikat og svarhoder må settes opp separat. Bunny sine logger, lagringstider, databehandlerforhold og eventuelle cookies er ikke undersøkt; det konkluderes ikke med at Bunny i seg selv gir bedre personvern.
 
 ## E-post
 

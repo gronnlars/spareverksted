@@ -8,11 +8,21 @@ Publiser innholdet i `dist/` på en tjeneste for statiske nettsteder. Behold fil
 
 Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/package-source.py`. Kjør dette før publisering etter kodeendringer.
 
-## GitHub Pages
+## Bunny Storage
 
-Under Settings → Pages velger prosjekteieren **GitHub Actions** som Source.
-Åpne deretter Actions → Test and publish Spareverksted → Run workflow → main.
-Arbeidsflyten tester beregningene, lager kodepakken og publiserer `dist/`.
-Senere endringer på `main` publiseres automatisk når testene består.
-Pull requests testes uten å publiseres. Nettsidens adresse vises i Pages-innstillingene
-og i den vellykkede publiseringsjobben. Eget domene kan settes i Pages-innstillingene.
+Arbeidsflyten tester endringer på pull requests og `main`. Etter at kontrollene og
+nettlesertestene består på `main`, speiles bare `dist/` til Bunny Storage-sonen
+`spareverksted` i Frankfurt. GitHub beholder kildekode og kjører CI; Storage-nøkkelen
+brukes med S3-kompatibel tilgang: sone-navnet er Access Key ID, og GitHub Actions-secret
+`BUNNY_STORAGE_PASSWORD` er Secret Access Key. Endpoint er
+`https://de-s3.storage.bunnycdn.com`, region `de`.
+
+Opplasting til Storage Zone alene flytter ikke besøkenes trafikk. Før domenet bruker
+Bunny, må Pull Zone, HTTPS-sertifikat, DNS og sikkerhetshoder konfigureres og
+kontrolleres i Bunny og hos DNS-leverandøren. Inntil dette er bekreftet, skal ikke
+publisert trafikk omtales som rutet via Bunny.
+
+Arbeidsflyten tømmer foreløpig ikke Pull Zone-cache. Før DNS flyttes, må automatisk
+cache-purge kobles til med Pull Zone-ID og Bunny API-secret, eller cache-reglene må
+settes slik at nye filer ikke blir liggende utdatert. Kontroller en publisering
+over HTTPS før domenet flyttes.

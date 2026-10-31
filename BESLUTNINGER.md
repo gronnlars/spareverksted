@@ -14,6 +14,16 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en med unntaket er slått sammen |
 | Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en er slått sammen |
 
+## Flytting av publiseringsmål til Bunny (31. oktober 2026)
+
+**Beslutning:** Lars ba 31.10.2026 om å beholde GitHub for kildekode og CI, men sende det testede nettstedet fra `dist/` til Bunny Storage Zone `spareverksted` i Frankfurt. Deploy skjer bare fra `main` etter beregnings-/veiledningskontroller og nettlesertester. Pull requests publiseres ikke. Storage-nøkkelen brukes fra GitHub Actions-secret og skal aldri skrives i repoet.
+
+**Begrunnelse:** Målet er å redusere direkte avhengighet av GitHub Pages for besøkenes trafikk og forbedre kontrollen over sikkerhetsoppsettet. Direkte opplasting til en Storage Zone ruter ikke trafikken alene.
+
+**Avgrensning:** Bunny Pull Zone, DNS, sertifikat og HTTP-sikkerhetshoder må settes opp og verifiseres separat. Arbeidsflyten purger ikke Pull Zone-cache; det krever Pull Zone-ID og en egen Bunny API-secret, eller dokumenterte cache-regler som unngår utdaterte filer. Inntil trafikkruting, cache og svarhoder er kontrollert, er ikke flyttingen fullført. Bunny sine logger, lagringstider og databehandlerforhold er uavklart; beslutningen er ikke en konklusjon om at Bunny gir bedre personvern.
+
+**Erstatter:** Utsettelsen som står i den åpne PR #134 er erstattet av Lars' konkrete oppdrag 31.10.2026 for dette avgrensede personvern-/sikkerhetsarbeidet. Prosjektpausen og øvrige begrensninger gjelder fortsatt.
+
 ## En ulempe betyr ikke at valget var feil
 
 Som når man velger skuffer framfor skap på et kjøkken: Begge løsninger har ulemper. Et godt valg kan innebære at man aksepterer noe irriterende for å slippe noe som ville vært verre.

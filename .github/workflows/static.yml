@@ -3,11 +3,10 @@ on:
   push:
     branches: [main]
   pull_request:
-  workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: pages-${{ github.ref }}
+  group: spareverksted-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   checks:
@@ -42,6 +41,7 @@ jobs:
           node tests/band.test.cjs
           python3 scripts/security-check.py
           python3 tests/security-check.test.py
+          python3 tests/deploy_bunny.test.py
           node tests/personvern-lagring.test.cjs
           node tests/published-answers.test.cjs
           node --check dist/personvern.js
@@ -171,15 +171,8 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
   deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: [checks, browser]
-    permissions:
-      pages: write
-      id-token: write
-      contents: read
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -202,10 +195,13 @@ jobs:
           java -jar "$JAR" --format json --stdout --exit-zero-always dist/*.html > /tmp/w3c.json
           python3 scripts/w3c-status.py /tmp/w3c.json "$VERSION" --write
           java -jar "$JAR" --errors-only dist/tilgjengelighet.html
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/setup-python@v5
         with:
-          path: './dist'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+          python-version: '3.12'
+      - name: Install pinned Bunny S3 client
+        run: python3 -m pip install --disable-pip-version-check --no-input -r requirements-deploy.txt
+      - name: Deploy verified site to Bunny Storage (Frankfurt)
+        env:
+          BUNNY_STORAGE_ZONE: spareverksted
+          BUNNY_STORAGE_PASSWORD: ${{ secrets.BUNNY_STORAGE_PASSWORD }}
+        run: python3 scripts/deploy_bunny.py dist
