@@ -987,3 +987,12 @@ Etter Lars' egenprøve: bare skjul doble navigasjonslenker i en bred PC-meny nå
 ## W3C: overskriften tilhører resultatartikkelen (30. oktober 2026)
 
 Lars ber om retting av «Article lacks heading» og om at bærekraftsiden inngår i W3C-kontrollen. Alle dist/*.html, også ressursbruk.html, kontrolleres allerede automatisk. Rapporten får lesernavnet «Ressursbruk og miljø». Resultatets indre hero-beholder blir div i stedet for section, slik at eksisterende h2 tilhører resultatartikkelen. Artikkelen beholder navn, resultat og forklaring, og ingen ekstra eller skjult overskrift legges til. Forkastet: en ny overskrift bare for validatoren, eller å fjerne artikkelens samling av resultat og forklaring. Ingen beregnings- eller funksjonsendring. Ekte Nu-kontroll må bekrefte at varselet er borte før det omtales som løst.
+
+
+## WAVE: kort statuslinje og manuelt vedlikehold (31. oktober 2026)
+
+Lars bestiller samme plassering som W3C: kort linje under hovedoverskriften på tilgjengelighetssiden, med utfyllende kontrollgrunnlag lenger ned. Viser observasjonen fra 30. oktober: forsiden, AIM 9,8/10, 0 feil, 0 kontrastfeil og 10 varsler. Kilde er Lars' skjermbilder og rapport i research/uu-egenprove-2026-10-30.md. Datoen flyttes ikke ved publisering av denne teksten. Eksakt skjermbredde og motorversjon er ukjent. Lars opplyser i samtalen at alle ti varsler gjelder skjulte elementer; hvert element er ikke kontrollert av Codex.
+
+Videre kontroller gjøres manuelt av Lars. En enkelt API-prøve med én gratis kreditt er avtalt, men ikke utført eller implementert her. Ingen API-nøkkel er mottatt, og ingen automatisk WAVE-kjøring eller ny ekstern ressurs legges inn. Neste reelle kontroll skal oppdatere både kort linje og detaljene.
+
+Forkastet: hake eller godkjenningsmerke ved poengsummen, sammenligning med andre nettsteder, å avvise varsler fordi elementene er skjult, eller å begrunne liten tekst med udokumentert miljøgevinst. WAVE-resultatet er en avgrenset måling, ikke full tilgjengelighetskontroll. Metodekilder: https://wave.webaim.org/aimscore og https://wave.webaim.org/help, lest av ChatGPT/Codex 31. oktober 2026. Revurder ved ny måling eller dokumentert vurdering av varslene.
