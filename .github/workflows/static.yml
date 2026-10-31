@@ -40,6 +40,8 @@ jobs:
           node tests/meaning.test.cjs
           node tests/chart-summary.test.cjs
           node tests/band.test.cjs
+          python3 scripts/security-check.py
+          python3 tests/security-check.test.py
           node tests/personvern-lagring.test.cjs
           node tests/published-answers.test.cjs
           node --check dist/personvern.js
@@ -88,6 +90,9 @@ jobs:
         run: chown "$(id -u):$(id -g)" /github/home
       - name: Browser flows (Chromium)
         run: |
+          node tests/security-browser.cjs
+          SPARE_ENGINE=firefox node tests/security-browser.cjs
+          SPARE_ENGINE=webkit node tests/security-browser.cjs
           node tests/published-answers-browser.cjs
           SPARE_ENGINE=firefox node tests/published-answers-browser.cjs
           SPARE_ENGINE=webkit node tests/published-answers-browser.cjs

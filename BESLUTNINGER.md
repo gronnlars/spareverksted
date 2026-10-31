@@ -996,3 +996,9 @@ Lars bestiller samme plassering som W3C: kort linje under hovedoverskriften på 
 Videre kontroller gjøres manuelt av Lars. En enkelt API-prøve med én gratis kreditt er avtalt, men ikke utført eller implementert her. Ingen API-nøkkel er mottatt, og ingen automatisk WAVE-kjøring eller ny ekstern ressurs legges inn. Neste reelle kontroll skal oppdatere både kort linje og detaljene.
 
 Forkastet: hake eller godkjenningsmerke ved poengsummen, sammenligning med andre nettsteder, å avvise varsler fordi elementene er skjult, eller å begrunne liten tekst med udokumentert miljøgevinst. WAVE-resultatet er en avgrenset måling, ikke full tilgjengelighetskontroll. Metodekilder: https://wave.webaim.org/aimscore og https://wave.webaim.org/help, lest av ChatGPT/Codex 31. oktober 2026. Revurder ved ny måling eller dokumentert vurdering av varslene.
+
+## CSP og kontroll av usikre adresser (31. oktober 2026)
+
+Lars bestiller retting og forebygging etter Sitechecker-funn. Bekreftet mangel er CSP, mens HTTP allerede videresendes til HTTPS og eksplisitte HTTP-lenker/skjemamottakere ikke er funnet i undersøkt HTML. Valgt tidlig CSP-meta på alle sider, lokal behandling av skjema beskyttes med form-action none, og tre nettlesermotorer tester faktisk blokkering. Python avviser regresjoner i alle HTML-filer. CSS trenger foreløpig unsafe-inline, JavaScript får ingen slik tillatelse. XML-navnerom bevares.
+
+Alternativet ny proxy/leverandør bare for CSP-header er ikke valgt. Meta gir mindre dekning enn svarheader, og en scanner kan fortsatt melde manglende header. Ikke markedsfør dette som full XSS-beskyttelse. Revurder ved ny hosting eller behov som dagens CSP blokkerer. Se docs/sikkerhet.md. Arbeidet gjelder sikkerhet og personvern innenfor prosjektpausen. Egen PR, ikke generell publiseringsfullmakt.
