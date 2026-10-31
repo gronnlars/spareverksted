@@ -41,6 +41,8 @@ Prosjektpausen i [docs/regulatorisk.md](../docs/regulatorisk.md) gjelder. Arbeid
 3. **UU-kildeovervåking #123, til kontroll og godkjenning.** Kode og dokumentasjon ligger i åpen PR. Daglig kjøring og feilvarsling er ikke aktivert på main. Før aktivering kontrolleres siste gren mot main, og etter godkjent sammenslåing verifiseres en ekte kjøring og GitHub-sakens oppdatering. Skill lovkrav, frivillig WCAG-mål og utkast. Regel- og innholdsendringer skal fortsatt vurderes før publisering.
 4. **Ressursbruk, neste avgrensede steg.** Kontroller separat produksjonsmåling med faktisk komprimering/cache og dokumenter resultatets kodegrunnlag og begrensninger. Modellanslag, CO₂.js, terskler og eventuell miljømerking er ikke innført. Videre arbeid følger den eksisterende planen i docs/ressursbruk.md og krever avgrenset oppdrag.
 
+5. **Automatisk personvernkontroll, bestilt 31. oktober.** Egen PR utvider eksisterende tre-motorstest og legger verifisert, datert resultat på personvernsiden ved publisering. Teknisk egenkontroll med åpne tester, ikke ekstern revisjon eller menneskelig brukertest. Se docs/personvern-lagring.md. Ikke slått sammen eller publisert.
+
 ### Andre åpne spor
 
 - Deling på alle sider og svar: planforslag #112 er åpent, ingen ny svarlenke eller deleknapp levert i denne runden. Kravene i den PR-en gjentas ikke i en ny kø.
