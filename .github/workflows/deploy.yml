@@ -20,4 +20,4 @@ jobs:
         storageZoneName: 'spareverksted'
         storagePassword: ${{ secrets::BUNNY_STORAGE_PASSWORD }}
         zoneRegion: 'de' 
-        purgePullZone: true # Sletter CDN-cache automatisk slik at endringene vises umiddelbart
+        purgePullZone: true 
