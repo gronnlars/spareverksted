@@ -22,7 +22,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
    await p.evaluate(()=>{
     const s=document.createElement('script');s.textContent='window.__inlineExecuted=true';document.body.append(s);
     const b=document.createElement('button');b.setAttribute('onclick','window.__handlerExecuted=true');document.body.append(b);b.click();
-    const f=document.createElement('form');f.action='/security-must-not-submit';document.body.append(f);f.submit();
+    const f=document.createElement('form');f.action='/security-must-not-submit';document.body.append(f);try{f.submit();}catch(e){window.__formBlockedException=String(e);}
    });
    await p.waitForFunction(()=>window.__violations.length>=3);
    assert.deepEqual(await p.evaluate(()=>[!!window.__inlineExecuted,!!window.__handlerExecuted]),[false,false]);
