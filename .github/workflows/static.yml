@@ -61,6 +61,7 @@ jobs:
           node --check dist/theme.js
           node --check dist/navigation.js
           node tests/w3c-status.test.cjs
+          python3 tests/personvern-status.test.py
       - name: Offline resource inventory
         run: python3 scripts/ressurskontroll.py
       - uses: actions/setup-java@v4
@@ -76,6 +77,8 @@ jobs:
           python3 scripts/w3c-status.py /tmp/w3c.json "$(java -jar "$JAR" --version)" >> "$GITHUB_STEP_SUMMARY"
   browser:
     runs-on: ubuntu-latest
+    env:
+      SPARE_PRIVACY_REPORT: /tmp/spareverksted-privacy
     # Playwrights eget testbilde har Chromium og systempakkene ferdig installert.
     # Versjonen må være lik playwright-pakken under.
     container:
@@ -144,6 +147,21 @@ jobs:
           SPARE_ENGINE=webkit node tests/kontakt-browser.cjs
           SPARE_ENGINE=firefox node tests/felt-browser.cjs
           SPARE_ENGINE=webkit node tests/felt-browser.cjs
+      - name: Write verified privacy result
+        run: python3 scripts/personvern-status.py /tmp/spareverksted-privacy
+      - name: Privacy evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: privacy-evidence
+          path: /tmp/spareverksted-privacy
+          if-no-files-found: error
+          retention-days: 30
+      - name: Verified privacy page
+        uses: actions/upload-artifact@v4
+        with:
+          name: privacy-page
+          path: dist/personvern.html
       - name: UI review screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -165,6 +183,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: privacy-page
+          path: dist
       - name: Build source download
         run: python3 scripts/package-source.py
       - uses: actions/setup-java@v4
