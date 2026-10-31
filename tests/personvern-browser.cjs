@@ -15,8 +15,14 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // Observe every page, popup and frame. Block unexpected traffic before it leaves.
   const traffic=[],observations=[];
   const allowed=new Set(fs.readdirSync(root));
-  const permitted=r=>{const u=new URL(r.url());return u.origin===origin&&allowed.has(u.pathname.slice(1))&&
-   (!u.search||/^\?v=[0-9]+$/.test(u.search))&&r.method()==='GET'&&!r.postData();};
+  const allowedRequests=new Set([...allowed].map(f=>'/'+f));
+  for(const file of [...allowed].filter(f=>f.endsWith('.html'))){
+   for(const match of fs.readFileSync(path.join(root,file),'utf8').matchAll(/(?:src|href)="([^"]+)"/g)){
+    const u=new URL(match[1],origin+'/'+file);
+    if(u.origin===origin&&allowed.has(u.pathname.slice(1)))allowedRequests.add(u.pathname+u.search);
+   }
+  }
+  const permitted=r=>{const u=new URL(r.url());return u.origin===origin&&allowedRequests.has(u.pathname+u.search)&&r.method()==='GET'&&!r.postData();};
   context.on('request',r=>{traffic.push({url:r.url(),method:r.method(),type:r.resourceType()});});
   await context.route('**/*',route=>{
    const r=route.request();
