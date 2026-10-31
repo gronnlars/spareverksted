@@ -1,6 +1,6 @@
 # Plan for Spareverksted
 
-Én levende plan. Oppdateres her i stedet for nye planfiler. Samlet 24. oktober 2026 med main `968fa37` som kodegrunnlag. Eldre målinger nedenfor er historikk, ikke nye testresultater.
+Én levende plan. Oppdateres her i stedet for nye planfiler. Samlet 24. oktober 2026. Status gjennomgått 30. oktober 2026 mot main `6d451f1` og åpne PR-er. Oppdatert 31. oktober etter sammenslåing av W3C-rettingen #129 som `1731c1f`. Eldre målinger nedenfor er historikk, ikke nye testresultater.
 
 Redaksjonell arbeidskø ligger i [SPORSMALSKO.md](../SPORSMALSKO.md). Arbeidsinstruksen er [DAGLIG-OPPGAVE.md](DAGLIG-OPPGAVE.md). Denne filen sier hva som skal gjøres og i hvilken rekkefølge.
 
@@ -20,15 +20,33 @@ Universell utforming følger hele nettstedet. Krav, begrunnelser og gjennomført
 
 Videre arbeid gjelder helheten rundt kalkulatoren: lære, finne svar, utforske og teste forståelsen.
 
-## 1. Gjeldende rekkefølge og status
+## 1. Gjeldende rekkefølge og status, 30. oktober 2026
 
-1. Samle arbeidsregler, beslutninger, faseplan og spørsmålkø på main. Denne dokumentasjonsleveransen gjør dette.
-2. Deretter åpnes kontrollert innholdspåfyll etter punkt 6. Nattoppgaven fortsetter som upublisert research.
-3. Valgomaten venter. Ingen implementering eller ny brukerflyt inngår i innholdspåfyllet.
+Prosjektpausen i [docs/regulatorisk.md](../docs/regulatorisk.md) gjelder. Arbeid kan utføres innenfor de vedtatte unntakene og Lars' konkrete oppdrag. Ingen generell gjenåpning av innholdspåfyll, nattoppgave, nye kalkulatorfunksjoner eller tilpasning etter brukeropplysninger. Hver PR krever Lars' godkjenning før sammenslåing. Main-push starter testing og publisering, også for dokumentasjon.
 
-Kodegrunnlag ved sammenstillingen: main `968fa37`, med ASK- og fondskontoforklaringer fra #61. Søket har også fått egne moduler og tester. Historiske kartlegginger i punkt 4 og den opprinnelige leveranseskissen i punkt 5 beskriver en eldre versjon og skal ikke brukes som dagens feilliste eller åpne oppgaver uten ny kontroll.
+### Publisert og kontrollert
 
-Lars melder at iPhone-visningen fungerer godt og at andre testere liker siden. Dette er nyttige brukerinnspill, men dokumenterer ikke VoiceOver, NVDA eller alle manuelle kontrollpunkter. Skjermlesertesting står åpen. Denne dokumentasjonsrunden kjører ingen nye nettleser- eller tilgjengelighetstester og erklærer ikke fase 2 fullført.
+| Arbeid | Faktisk status og dokumentasjon |
+| --- | --- |
+| Feltfeil og startguide | #125 publisert. Retting fjerner gamle feilmarkeringer, bruker samme grenser i startguide og kalkulator og viser feil ved feltet. Skrivefeltets grense på 10 millioner kr per måned beholdes etter Lars' valg. Skyveknappen går fortsatt til 20 000 kr. |
+| Menyer og temavalg | #127 publisert. Rettet tom meny på infosider, skjult meny på Spør om sparing/startvisning og plass til temavalg ved smal visning. CI prøver Enter, Tab og Escape, synlige lenker, sidebredde og temaknapper. Smal viewport er ikke en faktisk zoomtest. |
+| Offentlig UU-status | #126 og #127 publisert. Lars' Chrome-egentest og WAVE-observasjon dokumentert i [uu-egenprove-2026-10-30.md](uu-egenprove-2026-10-30.md). Ny WAVE-observasjon: 0 feil, 0 kontrastfeil og 10 varsler i testet tilstand. Ingen full WCAG-godkjenning. |
+| Ressursbruk og miljø | #122 publisert som `6d451f1`. Egen side med lenke fra Om. Main-run 41068973533: checks, browser og deploy grønne. Ressursmåling på main 41068973825 besto. Lokal syntetisk gzip/cache og oppdiktede brukerhandlinger, ikke måling av produksjonens overføring, energibruk eller utslipp. Se [docs/ressursbruk.md](../docs/ressursbruk.md). |
+| W3C-kontroll | Alle seks HTML-sider, inkludert ressursbruk.html, inngår allerede i automatisk Nu-kontroll. Publisert resultat oppdateres ved deploy. Nyere kontroll på en PR må ikke omtales som kontroll av publisert versjon. |
+
+### Nærmeste oppfølging
+
+1. **W3C #129, sammenslått 31. oktober 2026.** «Article lacks heading» er rettet ved at eksisterende resultatoverskrift tilhører artikkelen. Ressurssiden får lesernavnet «Ressursbruk og miljø» i kontrollrapporten. Nu 26.10.12 lokalt: 0 feil og 0 advarsler på alle seks sider. CI testpakke 41074391843, ressursmåling 41074392109 og CodeQL er grønne på `76b0d68`. Sammenslått som `1731c1f` etter Lars' oppdrag om å oppdatere siste sideendringer. Publiseringskjøringen på main må fullføres før rettingen regnes som publisert.
+2. **Manuell UU-oppfølging.** Gjenskap grafens opplesning og vurder WAVE-varslene i de tilstandene innholdet vises. Prøv den publiserte menyrettingen med faktisk 400/500 % zoom. Konkrete åpne punkter står i punkt 3 og 10. Ingen ny funksjon for å starte beregning via Shift+Tab.
+3. **UU-kildeovervåking #123, til kontroll og godkjenning.** Kode og dokumentasjon ligger i åpen PR. Daglig kjøring og feilvarsling er ikke aktivert på main. Før aktivering kontrolleres siste gren mot main, og etter godkjent sammenslåing verifiseres en ekte kjøring og GitHub-sakens oppdatering. Skill lovkrav, frivillig WCAG-mål og utkast. Regel- og innholdsendringer skal fortsatt vurderes før publisering.
+4. **Ressursbruk, neste avgrensede steg.** Kontroller separat produksjonsmåling med faktisk komprimering/cache og dokumenter resultatets kodegrunnlag og begrensninger. Modellanslag, CO₂.js, terskler og eventuell miljømerking er ikke innført. Videre arbeid følger den eksisterende planen i docs/ressursbruk.md og krever avgrenset oppdrag.
+
+### Andre åpne spor
+
+- Deling på alle sider og svar: planforslag #112 er åpent, ingen ny svarlenke eller deleknapp levert i denne runden. Kravene i den PR-en gjentas ikke i en ny kø.
+- Faktagrunnmur: forsknings-PR #114 er åpen. Ikke integrert i produksjonskoden. Denne oppdateringen har ikke kjørt forsøks- eller scope-testene på nytt.
+- Overvåking av økonomikilder og statsbudsjett: Lars har etterspurt endringsvarsling. Implementerings- og driftsstatus er ikke verifisert i denne gjennomgangen. Ikke regn dette som aktiv varsling, og ikke bland budsjettforslag med vedtatte regler.
+- Valgomat, lånekalkulator, fagord i teksten og andre nye funksjoner venter på egen åpning etter prosjektpausen. Punkt 4 og 5 er fortsatt historiske skisser, ikke dagens feilliste eller fullmakt til implementering.
 
 ## 2. Fase 1: ferdig
 
@@ -44,9 +62,9 @@ Kontrollert automatisk (Chromium, og hovedflyten også i Firefox og WebKit):
 - Kontrast, trykkflater, navn, reflow ved 320 og 640 px, synlig fokus, tastatur, tre temaer.
 - Eksport har samme tall som grafen.
 
-Ingen avvik funnet i de gjennomførte kontrollene. Det er ikke en full WCAG-godkjenning.
+Historiske kontroller fant ingen avvik innenfor sitt omfang. Senere feil og rettinger står i punkt 1 og 10. Dette er ikke en full WCAG-godkjenning.
 
-Gjenstår, bare det som ikke kan gjøres herfra (Lars, iPhone Safari, rundt 10 minutter):
+Gjenstående manuelle kontroller. Punktene under har ikke fått en dokumentert fullføring i denne oppdateringen (Lars, iPhone Safari):
 1. Skjermtastaturet dekker ikke feltet du skriver i.
 2. Minus i «Antatt årlig vekst».
 3. Tilbake fra «Spør om sparing» med Safaris tilbakeknapp beholder planen.
@@ -112,7 +130,7 @@ Ferdig når: søketestsettet består, ingen spørsmål i settet gir et misvisend
 
 ## 6. Kontrollert innholdspåfyll
 
-Åpnes når denne samlingen er på main. Normalt ett til to spørsmål per PR, valgt fra køen etter kontroll av dagens dekning. Allerede eksisterende ASK- og fondskontosvar skal vurderes før det skrives nye svar med samme tema. Ingen masseimport.
+Den opprinnelige planen om åpning ved sammenslåing er overstyrt av prosjektpausen. Bare nøytrale begrepsforklaringer og øvrige vedtatte unntak kan bestilles nå, etter docs/regulatorisk.md. Normalt ett til to spørsmål per PR, valgt fra køen etter kontroll av dagens dekning. Allerede eksisterende ASK- og fondskontosvar skal vurderes før det skrives nye svar med samme tema. Ingen masseimport.
 
 Hvert nytt eller endret svar krever:
 
@@ -124,13 +142,13 @@ Hvert nytt eller endret svar krever:
 - Relevante eksisterende Node- og nettlesertester, mobilvisning, tastatur og tilgjengelighetskontroll for det som endres. Ikke testet merkes konkret.
 - Oppdatert kø og arbeidslogg med PR, kildekontroll og faktisk publiseringsstatus.
 
-Researchoppgaven lager fortsatt bare utkast i dokumentasjons-PR. Integrasjon i svarbasen er et eget avgrenset oppdrag. En kontrollert status gir ikke automatisk sammenslåing eller publisering; fullmakten oppgis i det enkelte oppdraget. Main-push utløser dagens test- og publiseringsflyt, også ved dokumentasjonsendringer.
+Den generelle daglige researchoppgaven er stanset under prosjektpausen. Særskilt bestilt research lager bare utkast i dokumentasjons-PR. Integrasjon i svarbasen er et eget avgrenset oppdrag. En kontrollert status gir ikke automatisk sammenslåing eller publisering; fullmakten oppgis i det enkelte oppdraget. Main-push utløser dagens test- og publiseringsflyt, også ved dokumentasjonsendringer.
 
 Kontroller både at kildelenken virker og at svaret fortsatt følger kilden. Lovendringer, budsjettvedtak og ikrafttredelser prioriteres foran ordinært påfyll. Forslag og kommende regler skilles fra gjeldende regler. Brutte kilder eller usikre påstander får en konkret oppfølgingsoppgave; ikke erstatt bare URL uten å lese svaret på nytt.
 
-## 7. Fase 5: lånekalkulator, eget arbeid
+## 7. Fase 5: lånekalkulator, parkert under prosjektpausen
 
-Versjon 1: annuitet, serielån, restgjeld, renteendring og ekstra innbetaling. Refinansiering og «lån eller fond?» venter.
+Ingen implementeringsfullmakt. Opprinnelig skisse for versjon 1: annuitet, serielån, restgjeld, renteendring og ekstra innbetaling. Refinansiering og «lån eller fond?» venter.
 
 ## 8. Beslutninger tatt 24.10
 
@@ -154,8 +172,11 @@ Ideer uten plass i planen. Et punkt flyttes inn bare ved en egen beslutning.
 
 Valgomaten er parkert etter Lars sin beslutning 24. oktober 2026. Den vurderes separat etter at arbeidsgrunnlaget er samlet og kontrollert innholdspåfyll har en fungerende arbeidsflyt. Målet om et nedlastbart hverdagsbudsjett beholdes som framtidig krav, ikke som vedtatt implementeringsplan.
 
-## 10. Kjente feil som venter
+## 10. Åpne feil og kontrollpunkter
 
 | Feil | Status og hva som avgjør |
 | --- | --- |
 | **Safari Reader viser eksempeltallene, ikke brukerens plan.** Etter at lesemodus lukkes, er planen av og til nullstilt til eksempelplanen. Safaris KI-oppsummering gjentar eksempeltallene som om de var brukerens. | Funnet av Lars på iPhone 29.10.2026, både på spareverksted.no og på rettegrenen for #106. Gjelder ikke lesemodus i Chrome. Trolig laster Safari siden på nytt, og planen ligger bare i minnet. Mulig løsning: husk planen i fanen (`sessionStorage`) hele tiden. Det er en personvernavgjørelse og venter på Nkoms svar om fanelagring (se docs/personvern-lagring.md). Lars 29.10.2026: ingen tiltak nå, siden siden ikke er delt eller søkbar ennå. Opplysning på tilgjengelighetssiden vurderes hvis svaret drøyer. |
+| **WAVE: 10 varsler om visuelt skjult innhold.** | Lars opplyser at alle ti viser meldingen om visuelt skjult element. Skjermbildene viser 1 redundant lenke, 2 PDF-lenker, 1 noscript-element og 6 små tekster. Ikke ti bekreftede feil i synlig innhold. Identifiser hvert element og prøv det i relevant visning, også eventuell skjermlesertilgang. Ingen blind fjerning av innhold eller justering bare for å få null varsler. |
+| **Grafens linjeforklaring oppleves som navn uten verdier ved opplesning.** | Punktavlesningen gir tall, mens chartLegend er navn på linjene. Lesemåte/skjermleser er ikke oppgitt. Gjenskap med konkret verktøy og undersøk leserekkefølge, punktverdier, beskrivelse og tabell før endring. Ikke skjul linjeforklaringen uten å bekrefte brukerproblemet. |
+| **Faktisk zoom etter menyrettingen.** | Lars' første prøve fant meny- og temaproblemer. #127 er publisert og automatiske tester består. Gjenta manuell prøve av kalkulator, Spør om sparing og infosider ved 400/500 %, med tilgjengelig meny og eksisterende «Ny beregning». Ikke regn tidligere prøve før rettingen som etterkontroll. |
