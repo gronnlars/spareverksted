@@ -31,6 +31,7 @@ assert.match(r.stdout, new RegExp(`Totalt 0 feil og 3 advarsler på ${pageCount}
 assert.match(r.stdout, /Forsiden: 0 feil, 2 advarsler;/);
 assert.match(r.stdout, /«Spør om sparing»: 0 feil, 1 advarsel;/);
 assert.match(r.stdout, /Om Spareverksted: 0 feil, 0 advarsler/);
+assert.match(r.stdout, /Ressursbruk og miljø: 0 feil, 0 advarsler/);
 assert.match(r.stdout, /versjon 99\.1\.2/);
 assert(!/[–—]/.test(r.stdout), 'ingen tankestreker');
 

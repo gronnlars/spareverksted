@@ -982,3 +982,8 @@ Forkastet: bare forlenge #toast, fordi startguidens #journeyError og kalkulatore
 ## Menyer skal ha innhold og fungere ved zoom (30. oktober 2026)
 
 Etter Lars' egenprøve: bare skjul doble navigasjonslenker i en bred PC-meny når menyen fortsatt inneholder kalkulatorhandlinger. Menyen på infosider, start og Spør om sparing må være tilgjengelig. Toppfeltet får vokse i høyden ved smal visning. Forkastet: skjule alle menylenker fordi det gir tom ramme på infosider. Å gjøre Shift+Tab til en ny beregning forkastes fordi navigasjon ikke skal endre planen. Ny beregning finnes allerede i menyen. Grafens linjeforklaring skjules ikke for hjelpemidler uten at faktisk brukerproblem er gjenskapt. Rapport og avgrensninger i research/uu-egenprove-2026-10-30.md. Revurder ved faktisk zoom- eller skjermleserprøve som viser tap av funksjoner eller uklar leserekkefølge.
+
+
+## W3C: overskriften tilhører resultatartikkelen (30. oktober 2026)
+
+Lars ber om retting av «Article lacks heading» og om at bærekraftsiden inngår i W3C-kontrollen. Alle dist/*.html, også ressursbruk.html, kontrolleres allerede automatisk. Rapporten får lesernavnet «Ressursbruk og miljø». Resultatets indre hero-beholder blir div i stedet for section, slik at eksisterende h2 tilhører resultatartikkelen. Artikkelen beholder navn, resultat og forklaring, og ingen ekstra eller skjult overskrift legges til. Forkastet: en ny overskrift bare for validatoren, eller å fjerne artikkelens samling av resultat og forklaring. Ingen beregnings- eller funksjonsendring. Ekte Nu-kontroll må bekrefte at varselet er borte før det omtales som løst.
