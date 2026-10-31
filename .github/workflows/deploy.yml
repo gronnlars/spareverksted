@@ -1,0 +1,23 @@
+name: Deploy to Bunny.net
+
+on:
+  push:
+    branches:
+      - main  # Endre til master hvis du bruker det
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Sjekk ut kode
+      uses: actions/checkout@v4
+
+    - name: Rens og last opp til Bunny Storage
+      uses: amandepmittal/bunny-storage-deploy-action@v2.0.0
+      with:
+        source: './'  # Endre til './dist' eller './build' hvis du bruker et rammeverk (React, Vite, etc.)
+        storageZoneName: 'mitt-nettsted-storage' # Erstatt med ditt faktiske lagringssonenavn
+        storagePassword: ${{ secrets::BUNNY_STORAGE_PASSWORD }}
+        zoneRegion: 'de' # Standard er 'de' (Tyskland). Endre hvis lagringssonen din er i en annen region (ny, uk, sg)
+        purgePullZone: true # Sletter CDN-cache automatisk slik at endringene vises umiddelbart
