@@ -41,7 +41,24 @@ Prosjektpausen i [docs/regulatorisk.md](../docs/regulatorisk.md) gjelder. Arbeid
 3. **UU-kildeovervåking #123, til kontroll og godkjenning.** Kode og dokumentasjon ligger i åpen PR. Daglig kjøring og feilvarsling er ikke aktivert på main. Før aktivering kontrolleres siste gren mot main, og etter godkjent sammenslåing verifiseres en ekte kjøring og GitHub-sakens oppdatering. Skill lovkrav, frivillig WCAG-mål og utkast. Regel- og innholdsendringer skal fortsatt vurderes før publisering.
 4. **Ressursbruk, neste avgrensede steg.** Kontroller separat produksjonsmåling med faktisk komprimering/cache og dokumenter resultatets kodegrunnlag og begrensninger. Modellanslag, CO₂.js, terskler og eventuell miljømerking er ikke innført. Videre arbeid følger den eksisterende planen i docs/ressursbruk.md og krever avgrenset oppdrag.
 
-5. **Automatisk personvernkontroll, bestilt 31. oktober.** Egen PR utvider eksisterende tre-motorstest og legger verifisert, datert resultat på personvernsiden ved publisering. Teknisk egenkontroll med åpne tester, ikke ekstern revisjon eller menneskelig brukertest. Se docs/personvern-lagring.md. Ikke slått sammen eller publisert.
+5. **Personvernkontroll og CSP, publisert 31. oktober.** #132 og #133 er slått sammen. Main `ec6a45c`: kjøring 41198991519 besto checks, browser og deploy. Datert resultat og utdyping er kontrollert på publisert personvernside, sammen med CSP og beskrivelse av sikkerhetstiltak. Dette er teknisk egenkontroll, ikke ekstern revisjon eller menneskelig brukertest. Manglende sikkerhetshoder fra serveren gjenstår. Se docs/personvern-lagring.md og docs/sikkerhet.md.
+
+### Før offentlig lansering: vurder bunny.net som mellomledd
+
+**Beslutning fra Lars 31. oktober 2026:** Grunnmuren og en god kunnskapsbase skal prioriteres først. Deretter undersøkes og eventuelt innføres bunny.net foran GitHub Pages før nettsiden lanseres for allmennheten. GitHub skal fortsatt brukes til kode, testing og automatisk publisering. Minstekostnaden på 1 USD per måned er akseptabel; trafikk kan gi høyere kostnad. Dette er en prioritert kandidat, ikke et endelig leverandørvalg eller en personverngodkjenning.
+
+**Avvent innføring.** Dette planvedtaket gir ingen fullmakt til å opprette konto, kjøpe tjenesten, endre DNS/navnetjenere eller aktivere proxy nå. Prosjektpausen og øvrige lanseringsvilkår gjelder fortsatt.
+
+Før eventuell innføring må følgende være dokumentert:
+
+1. Gjeldende pris, trafikkgrenser, kostnadsstyring og faktisk støtte for GitHub Pages som opprinnelsesserver og egne HTTP-svarhoder. Kontroller oppdaterte primærkilder på nytt når arbeidet starter.
+2. Databehandleravtale, underleverandører, behandlingssteder, overføringer, hvilke besøksdata/logger som behandles, lagringstid og sletting. Kontroller muligheten til å minimere logging og fjerne IP-adresser fra lagrede logger. EU-baserte logger er ikke bevis på at all behandling skjer i EU.
+3. Cookies, innskutt JavaScript, botutfordringer og sporing i valgt konfigurasjon. Prøv både vanlige besøk og eventuelle sikkerhetsutfordringer. Leverandørens generelle personvernprofil erstatter ikke måling og avtalegjennomgang.
+4. HTTPS på begge forbindelser, tilpasset CSP, HSTS innført trinnvis, nosniff og beskyttelse mot innramming. Ingen ukritisk preload eller includeSubDomains. Bevar e-postens DNS-poster, GitHub-publisering, kontakt, deling, nedlasting og andre eksisterende funksjoner. Dokumenter tilbakeføring før DNS endres.
+5. Gjenta personvern- og sikkerhetstester i tre nettlesermotorer, kontroller faktiske produksjonssvarhoder og kjør Observatory på riktig vertsnavn. Vurder hvert funn; høy poengsum er ikke full sikkerhets- eller personverngodkjenning. Kontroller cache og at nye publiseringer faktisk blir synlige.
+6. Oppdater personvernsiden og driftsdokumentasjonen til faktisk trafikkvei og behandling før den nye løsningen tas i ordinær bruk. Lars vurderer dokumentasjonen og godkjenner eventuell innføring.
+
+Arbeidsgrunnlag fra samtalen, lest 31.10.2026: [pris](https://bunny.net/pricing/cdn/), [Edge Rules](https://docs.bunny.net/docs/edge-rules-variable-expansion), [logger og IP-anonymisering](https://bunny.net/faq/), [personvern](https://bunny.net/privacy/) og [GDPR-oversikt](https://bunny.net/gdpr/). Disse avklarer ikke alle punktene over. Cloudflare og bytte av hosting er alternativer hvis bunny ikke oppfyller kravene. Svar fra Domene.no om mulig løsning innenfor eksisterende abonnement avventes også.
 
 ### Andre åpne spor
 
