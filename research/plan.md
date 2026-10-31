@@ -1,6 +1,6 @@
 # Plan for Spareverksted
 
-Én levende plan. Oppdateres her i stedet for nye planfiler. Samlet 24. oktober 2026. Status gjennomgått 30. oktober 2026 mot main `6d451f1` og åpne PR-er. Eldre målinger nedenfor er historikk, ikke nye testresultater.
+Én levende plan. Oppdateres her i stedet for nye planfiler. Samlet 24. oktober 2026. Status gjennomgått 30. oktober 2026 mot main `6d451f1` og åpne PR-er. Oppdatert 31. oktober etter sammenslåing av W3C-rettingen #129 som `1731c1f`. Eldre målinger nedenfor er historikk, ikke nye testresultater.
 
 Redaksjonell arbeidskø ligger i [SPORSMALSKO.md](../SPORSMALSKO.md). Arbeidsinstruksen er [DAGLIG-OPPGAVE.md](DAGLIG-OPPGAVE.md). Denne filen sier hva som skal gjøres og i hvilken rekkefølge.
 
@@ -36,7 +36,7 @@ Prosjektpausen i [docs/regulatorisk.md](../docs/regulatorisk.md) gjelder. Arbeid
 
 ### Nærmeste oppfølging
 
-1. **W3C #129, klar til godkjenning.** «Article lacks heading» er rettet ved at eksisterende resultatoverskrift tilhører artikkelen. Ressurssiden får lesernavnet «Ressursbruk og miljø» i kontrollrapporten. Nu 26.10.12 lokalt: 0 feil og 0 advarsler på alle seks sider. CI testpakke 41074391843, ressursmåling 41074392109 og CodeQL er grønne på `76b0d68`. Ikke sammenslått eller publisert ved denne gjennomgangen.
+1. **W3C #129, sammenslått 31. oktober 2026.** «Article lacks heading» er rettet ved at eksisterende resultatoverskrift tilhører artikkelen. Ressurssiden får lesernavnet «Ressursbruk og miljø» i kontrollrapporten. Nu 26.10.12 lokalt: 0 feil og 0 advarsler på alle seks sider. CI testpakke 41074391843, ressursmåling 41074392109 og CodeQL er grønne på `76b0d68`. Sammenslått som `1731c1f` etter Lars' oppdrag om å oppdatere siste sideendringer. Publiseringskjøringen på main må fullføres før rettingen regnes som publisert.
 2. **Manuell UU-oppfølging.** Gjenskap grafens opplesning og vurder WAVE-varslene i de tilstandene innholdet vises. Prøv den publiserte menyrettingen med faktisk 400/500 % zoom. Konkrete åpne punkter står i punkt 3 og 10. Ingen ny funksjon for å starte beregning via Shift+Tab.
 3. **UU-kildeovervåking #123, til kontroll og godkjenning.** Kode og dokumentasjon ligger i åpen PR. Daglig kjøring og feilvarsling er ikke aktivert på main. Før aktivering kontrolleres siste gren mot main, og etter godkjent sammenslåing verifiseres en ekte kjøring og GitHub-sakens oppdatering. Skill lovkrav, frivillig WCAG-mål og utkast. Regel- og innholdsendringer skal fortsatt vurderes før publisering.
 4. **Ressursbruk, neste avgrensede steg.** Kontroller separat produksjonsmåling med faktisk komprimering/cache og dokumenter resultatets kodegrunnlag og begrensninger. Modellanslag, CO₂.js, terskler og eventuell miljømerking er ikke innført. Videre arbeid følger den eksisterende planen i docs/ressursbruk.md og krever avgrenset oppdrag.
