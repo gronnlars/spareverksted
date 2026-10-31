@@ -2,6 +2,7 @@
 <html lang="nb">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; worker-src 'none'">
 <script src="theme.js?v=1"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Hva Spareverksted lagrer i nettleseren din, hvordan du sletter det, og hva nettleverandøren behandler.">
@@ -93,6 +94,12 @@
 <button type="button" id="deleteAll" class="primary" hidden>Slett Spareverksteds data i denne nettleseren</button>
 <p id="deleteStatus" role="status"></p>
 </div>
+</section>
+
+<section class="giving-section" aria-labelledby="securityTitle">
+<h2 id="securityTitle">Tiltak for å beskytte opplysningene dine</h2>
+<p>Sidene har en sikkerhetspolicy som begrenser hvilken JavaScript-kode nettleseren får kjøre. Den blokkerer også nettverkskall fra JavaScript og vanlig innsending av skjemaer til en server. Kalkulatoren og søket behandler det du skriver, lokalt i nettleseren.</p>
+<p>Automatiske kontroller skal oppdage usikre HTTP-lenker og skjemamottakere. Egne nettlesertester prøver om sikkerhetspolicyen faktisk blokkerer uønsket kode og innsending. Dette er avgrensede kontroller, ikke en garanti mot alle angrep eller en uavhengig sikkerhetsrevisjon.</p>
 </section>
 
 <section class="giving-section" aria-labelledby="mailTitle">
