@@ -1,6 +1,6 @@
 // Kontrollerer den ekte siden: omdirigering fra alle adresser, sikkerhetshoder og at ingenting lekker ekstra.
 // Bruk: node scripts/check-live.cjs [domene]   (standard spareverksted.no). Krever Node 18+ og tilgang til nettet.
-const {headers,cache}=require('../deploy/headers.cjs');
+const {headers,cache,fullObservatoryHsts,HSTS_STAGE}=require('../deploy/headers.cjs');
 const domain=(process.argv[2]||'spareverksted.no').replace(/^www\./,''),canonical='https://'+domain+'/';
 let failed=0;const ok=(c,t)=>{console.log((c?'  ok   ':'  FEIL ')+t);if(!c)failed++;};
 const get=(url,method='GET')=>fetch(url,{redirect:'manual',method});
@@ -23,5 +23,6 @@ const get=(url,method='GET')=>fetch(url,{redirect:'manual',method});
  ok((js.headers.get('cache-control')||'')===cache.assets,'Cache-Control (JS/CSS) = '+cache.assets+'  fikk: '+js.headers.get('cache-control'));
  const post=await fetch(canonical,{method:'POST',redirect:'manual'});ok(post.status>=400,'POST avvises  fikk: '+post.status);
  console.log('\nKjør deretter https://developer.mozilla.org/en-US/observatory og skriv inn '+domain+'. Mål: 100.');
+ if(!fullObservatoryHsts)console.log('\nHSTS står på trinn '+HSTS_STAGE+' i deploy/headers.cjs. Observatory gir full score først fra trinn 3 (minst 6 måneder).');
  console.log(failed?'\n'+failed+' avvik.':'\nAlt stemmer.');process.exit(failed?1:0);
 })().catch(e=>{console.error(e.message);process.exit(2);});

@@ -9,8 +9,30 @@ Mål:
 
 **Status:** Dette er skrevet ut fra bunny.nets dokumentasjon, ikke fra kontoen din. Knappenavn og variabler (merket ⚠) kan avvike litt i dashbordet, så sjekk dem mot det du ser. Kontrollskriptet nederst viser om resultatet faktisk ble riktig.
 
+## Alt som kode: rask vei
+
+Alt er styrt fra `deploy/headers.cjs`. Rediger bare den, og kjør `node scripts/sync-security.cjs`. Den oppdaterer:
+- `deploy/terraform/headers.auto.tfvars.json` (hodene som bunny-reglene bruker).
+- `<meta>`-CSP i `dist/*.html`. Den gir beskyttelse mot injisert skript selv om siden hostes et sted uten egne hoder.
+
+`tests/security-sync.test.cjs` kjører i CI og feiler hvis noe er ute av synk.
+
+1. `export BUNNYNET_API_KEY=...` (kontonøkkel fra bunny.net, aldri i en fil).
+2. `cd deploy/terraform && terraform init && terraform validate && terraform plan`. Filen er skrevet uten å kunne valideres mot leverandøren, så rett eventuelle attributtnavn som `validate` klager på.
+3. `terraform apply`. Dette lager lagringssone, pull zone med europeisk ruting og anonymisert logg, og Edge Rules.
+4. Pek DNS på bunny (punkt 3 under). Sett så `-var enable_tls=true` og kjør `terraform apply` igjen. Da får begge adresser sertifikat og tvungen HTTPS.
+5. Sett GitHub-hemmelighetene `BUNNY_STORAGE_ZONE`, `BUNNY_STORAGE_KEY`, eventuelt `BUNNY_STORAGE_HOST`, `BUNNY_API_KEY` og `BUNNY_PULLZONE_ID`. Neste push til `main` laster opp `dist/` og tømmer cachen. Uten hemmelighetene hopper jobben over.
+6. Kjør `node scripts/check-live.cjs spareverksted.no`.
+
+Det som ikke kan ligge i koden: DNS hos registraren (DS-oppføring for DNSSEC), selve bunny-kontoen og nøklene, og at du slår av GitHub Pages.
+
+Om `spareverksted.no` skrives uten `https://`: nyere nettlesere prøver HTTPS først. Andre ender på `http://`, får en omdirigering til HTTPS første gang, og HSTS sørger for HTTPS direkte etter det. Bare HSTS-preload gjør første besøk fullstendig sikkert (se punkt 5).
+
 Filene som styrer dette i repoet:
-- `deploy/headers.cjs`: fasit for alle responshoder.
+- `deploy/headers.cjs`: fasit for alle responshoder og HSTS-trinn.
+- `deploy/terraform/`: bunny-oppsettet som kode.
+- `scripts/sync-security.cjs`: holder Terraform-variabler og `<meta>`-CSP i synk.
+- `scripts/deploy-bunny.cjs`: laster opp `dist/` til lagringssonen.
 - `tests/csp-browser.cjs`: kjører appen med nøyaktig disse hodene og feiler ved brudd.
 - `scripts/check-live.cjs`: kontrollerer den ekte siden.
 
@@ -79,7 +101,7 @@ I rekkefølge. Handlinger og vilkår heter noe lignende i dashbordet (⚠).
 ## 5. Hvorfor 100, og hva jeg ikke kan love
 
 - **Content-Security-Policy:** `default-src 'none'` og bare `'self'` for skript, stil, bilder, fonter og tilkoblinger. Ingen `unsafe-inline`. Siden har ingen inline-skript eller inline-stiler. To maler satte `style=""`, og det er rettet til CSSOM via `layout.js`.
-- **HSTS:** to år, med `includeSubDomains`. Det er over Observatorys krav på seks måneder.
+- **HSTS** innføres i fire trinn (5 minutter, 1 døgn, 6 måneder, 2 år) via `HSTS_STAGE` i `deploy/headers.cjs`. Hev trinnet først når det forrige har fungert i et par dager. Full Observatory-score krever minst 6 måneder, altså trinn 3. `includeSubDomains` er av som standard, fordi det rammer alle underdomener. Slå det på i `headers.cjs` bare hvis alle skal ha HTTPS, og få bonuspoeng.
 - **Resten:** `nosniff`, `X-Frame-Options`, `Referrer-Policy` og kryss-opprinnelse-hodene gir full uttelling og ingen bivirkning, siden siden ikke bruker innhold fra andre domener.
 - **Ingen cookies**, så cookie-testene er tomme.
 - **Det jeg ikke kan garantere:** Jeg har ikke kjørt Observatory mot siden din. Verdien 100 er bare riktig når `scripts/check-live.cjs` viser «Alt stemmer», og Observatory selv bekrefter. Hvis bunny ikke legger hodene på selve omdirigeringssvaret (www → apex), vil kontrollskriptet si fra under «HSTS også på www».
