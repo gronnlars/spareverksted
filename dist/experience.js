@@ -23,8 +23,8 @@ openHelp=function(key){
  $('helpDialog').showModal();
 };
 // Field-level hints explain the four numbers without a compulsory tour.
-for(const [id,text]of [['start','Penger som er satt av fra før.'],['monthly','Nye penger du setter inn.'],['years','Tiden frem til du vil bruke pengene.'],['rate','Din antakelse, før kostnader og skatt.']]){const small=document.createElement('small');small.className='field-description';small.id=id+'Description';small.textContent=text;$(id).setAttribute('aria-describedby',small.id);$(id).closest('label').append(small);}
-const dreamInflationLabel=$('dreamInflation').closest('label'),prices=document.createElement('details');prices.innerHTML='<summary>Prisvekst for dette kjøpet</summary>';dreamInflationLabel.before(prices);prices.append(dreamInflationLabel);
+for(const [id,text]of [['start','Penger som er satt av fra før.'],['monthly','Nye penger du setter inn.'],['years','Tiden frem til du vil bruke pengene.'],['rate','Din antakelse, før kostnader og skatt.']]){const small=document.createElement('small');small.className='field-description';small.id=id+'Description';small.textContent=text;$(id).setAttribute('aria-describedby',small.id);$(id).closest('.field,label').append(small);}
+const dreamInflationLabel=$('dreamInflation').closest('.field,label'),prices=document.createElement('details');prices.innerHTML='<summary>Prisvekst for dette kjøpet</summary>';dreamInflationLabel.before(prices);prices.append(dreamInflationLabel);
 // Only apply a preset after showing the values it changes; starting capital is preserved.
 const PRESETS={
  buffer:{name:'Buffer',cost:30000,years:2,monthly:1200,type:'buffer'},
@@ -42,7 +42,7 @@ $('applyPreset').onclick=()=>{if(!pendingPreset)return;changePlan({dreamType:pen
 // Report generation snapshots all relevant assumptions, including hidden ones.
 const labelMap=Object.fromEntries(Object.values(specs).flat().map(([k,label,unit])=>[k,{label,unit}]));
 function assumptionRows(keys,state=s){return '<div class="report-assumptions">'+keys.map(k=>{const meta=labelMap[k]||{label:k,unit:''};return '<div><span>'+escapeHTML(meta.label)+'</span><b>'+escapeHTML(typeof state[k]==='number'?dec.format(state[k]):state[k])+' '+meta.unit+'</b></div>';}).join('')+'</div>';}
-function reportChart(){const svg=$('chart').querySelector('svg');if(!svg)return '';return '<div class="report-chart">'+svg.outerHTML.replaceAll('spareArea','reportArea').replaceAll('plotClip','reportClip').replace('id="chartGuide"','id="reportGuide"')+'</div><div class="legend">'+$('chartLegend').innerHTML+'</div>';}
+function reportChart(){const svg=$('chart').querySelector('svg');if(!svg)return '';return '<div class="report-chart">'+svg.outerHTML.replaceAll('spareArea','reportArea').replaceAll('plotClip','reportClip').replace('id="chartGuide"','id="reportGuide"')+'</div><ul class="legend">'+$('chartLegend').innerHTML+'</ul>';}
 function buildReport(){
  E.validate(s);if(!$('error').hidden)throw Error('Rett tallene før du lager rapporten.');
  const t=endYear(s),final=E.value(s,t),now=new Date().toLocaleDateString('nb-NO',{year:'numeric',month:'long',day:'numeric'});
@@ -60,7 +60,7 @@ function buildReport(){
  const comparisons=selectedComparisons();if(comparisons.length){html+='<div class="report-block"><h3>Sammenligning</h3><div class="report-comparison">'+$('comparison').innerHTML+'</div><p class="report-footnote">'+escapeHTML($('comparisonNote').textContent)+'</p></div>';for(const c of comparisons)html+='<div class="report-block"><h3>'+escapeHTML(c.name)+': forutsetninger</h3>'+assumptionRows(['start','monthly','years','rate','inflation','fee','growth','extra','extraYear','crash','crashYear'],c.n)+'</div>';}
  html+='<div class="report-block"><h3>Slik kan resultatet forstås</h3>'+$('plainExplanation').innerHTML+'</div>';
  }
- html+='<div class="report-block"><h3>Metode og begrensninger</h3><p>Effektiv årlig vekst etter kostnader = (1 + avkastning) × (1 − kostnad). Månedlige innskudd ved månedsslutt. Spareøkning fordeles jevnt gjennom året. Dagens kroner = beløpet / (1 + inflasjon)^år. Kostnadseffekten inkluderer tapt rentes rente.</p><p>Jevn avkastning er en forenkling. Ingen markedsavkastning er garantert. Spareutviklingen og ordinære uttaksbeløp er før skatt. Et eventuelt skatteanslag for uttak er en separat forenkling. Fremtidig skjerming, IPS, BSU og formuesskatt er ikke beregnet. Veiledningen er generell.</p><p class="report-footnote">Kilder til veiledning: Forbrukerrådet (forbrukerradet.no/sparing-i-fond-og-spareprofiler/) og Finansportalen (finansportalen.no/sparing/risiko-og-avkastning). Datakilder på nettstedet er datert 20. oktober 2026. Modellen bruker egne forutsetninger, ikke oppdaterte produkttilbud.</p></div>';
+ html+='<div class="report-block"><h3>Metode og begrensninger</h3><p>Effektiv årlig vekst etter kostnader = (1 + avkastning) × (1 − kostnad). Månedlige innskudd ved månedsslutt (kalkulatorer som regner ved månedsstart, viser litt høyere tall). Spareøkning fordeles jevnt gjennom året. Dagens kroner = beløpet / (1 + inflasjon)^år. Kostnadseffekten inkluderer tapt rentes rente.</p><p>Jevn avkastning er en forenkling. Ingen markedsavkastning er garantert. Spareutviklingen og ordinære uttaksbeløp er før skatt. Et eventuelt skatteanslag for uttak er en separat forenkling. Fremtidig skjerming, IPS, BSU og formuesskatt er ikke beregnet. Veiledningen er generell.</p><p class="report-footnote">Kilder til veiledning: Forbrukerrådet (forbrukerradet.no/sparing-i-fond-og-spareprofiler/) og Finansportalen (finansportalen.no/sparing/risiko-og-avkastning). Datakilder på nettstedet er datert 20. oktober 2026. Modellen bruker egne forutsetninger, ikke oppdaterte produkttilbud.</p></div>';
  return html;
 }
 $('reportButton').onclick=()=>{try{const html=buildReport();$('reportPreview').innerHTML=html;$('printReportContent').innerHTML=html.replaceAll('reportArea','printArea').replaceAll('reportClip','printClip').replaceAll('reportGuide','printGuide');$('reportDialog').showModal();}catch(e){notice(e.message);}};
@@ -71,7 +71,7 @@ fill();render();
 
 $('copyLink').onclick=async()=>{try{await navigator.clipboard.writeText($('shareUrl').value);notice('Lenken er kopiert.');$('copyLink').textContent='Kopiert';}catch{$('shareUrl').select();notice('Trykk Ctrl+C eller hold på teksten for å kopiere lenken.');}};
 
-$('mobileResultButton').onclick=()=>{const target=$('chart');target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});target.focus({preventScroll:true});};
+$('mobileResultButton').onclick=()=>{const target=$('savingsResult');target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});target.focus({preventScroll:true});};
 new IntersectionObserver(entries=>$('mobileSummary').classList.toggle('is-visible',!entries[0].isIntersecting),{threshold:.2}).observe(document.querySelector('.hero-result'));
 
 $('share').addEventListener('click',()=>{$('copyLink').textContent='Kopier lenke';});

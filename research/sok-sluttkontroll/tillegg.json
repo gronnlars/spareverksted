@@ -1,0 +1,268 @@
+{
+"beskrivelse": "Tillegg for sluttkontrollen 24. oktober 2026. Navngitte problemtilfeller fra oppdraget og nærliggende varianter. Forventningene er skrevet ut fra eksisterende innhold og avtalte produktvalg (SOK.md), før kjøring. Feltet «modus» betyr at utfallet er avtalt og ikke et svar.",
+"cases": [
+{
+"id": "t01",
+"group": "sluttkontroll",
+"q": "boligparing",
+"f": [
+"bsu"
+],
+"ok": [
+"q-bsu-basics"
+],
+"note": "Skrivefeil på boligsparing. Skal gi forslag, aldri ett svar."
+},
+{
+"id": "t02",
+"group": "sluttkontroll",
+"q": "bolig sparing",
+"f": [
+"bsu"
+],
+"ok": [
+"q-bsu-basics",
+"mortgage"
+],
+"note": "Særskrevet boligsparing, bredt ord. Forslag."
+},
+{
+"id": "t03",
+"group": "sluttkontroll",
+"q": "boligsparing",
+"f": [
+"bsu"
+],
+"ok": [
+"q-bsu-basics",
+"mortgage"
+],
+"note": "Bredt ord (SOK.md regel 10). Forslag."
+},
+{
+"id": "t04",
+"group": "sluttkontroll",
+"q": "aksjesparekonot",
+"f": [
+"q-aksjesparekonto"
+],
+"note": "Skrivefeil, Mente du."
+},
+{
+"id": "t05",
+"group": "sluttkontroll",
+"q": "aksje",
+"f": [
+"funds"
+]
+},
+{
+"id": "t06",
+"group": "sluttkontroll",
+"q": "aksjer",
+"f": [
+"funds"
+]
+},
+{
+"id": "t07",
+"group": "sluttkontroll",
+"q": "aksjefond",
+"f": [
+"funds"
+]
+},
+{
+"id": "t08",
+"group": "sluttkontroll",
+"q": "aksje fond",
+"f": [
+"funds"
+]
+},
+{
+"id": "t09",
+"group": "sluttkontroll",
+"q": "fond",
+"f": [
+"funds"
+]
+},
+{
+"id": "t10",
+"group": "sluttkontroll",
+"q": "fonds",
+"f": [
+"funds"
+]
+},
+{
+"id": "t11",
+"group": "sluttkontroll",
+"q": "fonds konto",
+"f": [
+"q-fondskonto"
+]
+},
+{
+"id": "t12",
+"group": "sluttkontroll",
+"q": "fond konto",
+"f": [
+"q-fondskonto"
+]
+},
+{
+"id": "t13",
+"group": "sluttkontroll",
+"q": "aksje spare konto",
+"f": [
+"q-aksjesparekonto"
+]
+},
+{
+"id": "t14",
+"group": "sluttkontroll",
+"q": "aksje sparekonto",
+"f": [
+"q-aksjesparekonto"
+]
+},
+{
+"id": "t15",
+"group": "sluttkontroll",
+"q": "fondskonto",
+"f": [
+"q-fondskonto"
+]
+},
+{
+"id": "t16",
+"group": "sluttkontroll",
+"q": "forskjellen på ASK og fondskonto",
+"f": [
+"q-ask-zero"
+],
+"nf": [
+"q-aksjesparekonto",
+"q-fondskonto"
+]
+},
+{
+"id": "t17",
+"group": "sluttkontroll",
+"q": "aksjefondd",
+"f": [
+"funds"
+],
+"note": "Skrivefeil. Rettes bare mot registrerte ord, så forslag er riktig oppførsel."
+},
+{
+"id": "t18",
+"group": "sluttkontroll",
+"q": "fondkonto",
+"f": [
+"q-fondskonto"
+]
+},
+{
+"id": "t19",
+"group": "sluttkontroll",
+"q": "Jeg vil ikke ha fond",
+"modus": "negated",
+"note": "Avtalt (nekting). Erstatter forventningen i d101."
+},
+{
+"id": "t20",
+"group": "sluttkontroll",
+"q": "hva skjer med BSU hvis jeg flytter",
+"modus": "uncovered",
+"note": "Kjent hull i GAPS."
+},
+{
+"id": "t21",
+"group": "sluttkontroll",
+"q": "hvordan fungerer renters rente",
+"modus": "uncovered",
+"note": "Kjent hull i GAPS."
+},
+{
+"id": "t22",
+"group": "sluttkontroll",
+"q": "jeg flytter",
+"none": true,
+"note": "Skal ikke utløse BSU-hullet. Ingenting åpnes."
+},
+{
+"id": "t23",
+"group": "sluttkontroll",
+"q": "bolig spare konto",
+"f": [
+"funds"
+],
+"ok": [
+"bsu"
+],
+"note": "Justert etter kjøring: sparekonto er registrert navn på temaet Sparekonto eller fond, og «spare konto» slås sammen til det (SOK.md regel 3). Fondssvaret er derfor riktig. Se RAPPORT.md for opprinnelig forventning og resultat.",
+"opprinnelig": {
+"soft": true,
+"also": [
+"bsu"
+],
+"nf": [
+"funds"
+],
+"begrunnelse": "Skrevet før jeg hadde lest innholdet: jeg antok at fondssvaret ikke var det brukeren leter etter ved «bolig spare konto»."
+}
+},
+{
+"id": "t24",
+"group": "sluttkontroll",
+"q": "aksjeutbytte",
+"modus": "uncovered",
+"note": "Funnet i sluttkontrollen: ga direkte fondssvaret, som ikke nevner utbytte. Nå kjent hull."
+},
+{
+"id": "t25",
+"group": "sluttkontroll",
+"q": "hva er et rentefond",
+"modus": "uncovered",
+"note": "Funnet i sluttkontrollen: ga direkte fondssvaret, som ikke nevner rentefond. Nå kjent hull."
+},
+{
+"id": "t26",
+"group": "sluttkontroll",
+"q": "aksjeselskap",
+"none": true,
+"note": "Funnet i oppfølgingen: Selskapsrett, ikke sparing. Skal ikke åpne fondssvaret."
+},
+{
+"id": "t27",
+"group": "sluttkontroll",
+"q": "reaksjon",
+"none": true,
+"note": "Funnet i oppfølgingen: Inneholder «aksj» midt i ordet. Skal ikke åpne fondssvaret."
+},
+{
+"id": "t28",
+"group": "sluttkontroll",
+"q": "transaksjon",
+"none": true,
+"note": "Funnet i oppfølgingen: Inneholder «aksj» midt i ordet. Skal ikke åpne fondssvaret."
+},
+{
+"id": "t29",
+"group": "sluttkontroll",
+"q": "tannbørste",
+"none": true,
+"note": "Funnet i oppfølgingen: Inneholder «børs» men ikke børs. Skal ikke åpne fondssvaret."
+},
+{
+"id": "t30",
+"group": "sluttkontroll",
+"q": "indeksregulering",
+"none": true,
+"note": "Funnet i oppfølgingen: Annen bruk av «indeks». Skal ikke åpne fondssvaret."
+}
+]
+}

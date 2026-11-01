@@ -1,0 +1,3 @@
+# Pakker lages ved behov og skal ikke ligge i repoet
+*.zip
+node_modules/

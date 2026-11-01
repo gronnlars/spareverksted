@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; worker-src 'none'">
+<script src="theme.js?v=1"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Hva jeg har gjort for at Spareverksted skal kunne brukes av alle, hva som er kontrollert, hva som ikke er det, og hvilke svar jeg venter på.">
+<meta name="theme-color" content="#183f36">
+<title>Tilgjengelighet · Spareverksted</title>
+<link rel="stylesheet" href="style.css?v=18">
+<link rel="stylesheet" href="theme.css?v=2">
+<link rel="stylesheet" href="layout.css?v=10"><script defer src="layout.js?v=5"></script>
+<link rel="stylesheet" href="navigation.css?v=5">
+<link rel="stylesheet" href="om.css?v=6">
+<script defer src="kontakt.js?v=1"></script>
+<link rel="canonical" href="https://spareverksted.no/tilgjengelighet.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nb_NO">
+<meta property="og:site_name" content="Spareverksted">
+<meta property="og:title" content="Tilgjengelighet i Spareverksted">
+<meta property="og:description" content="Hva jeg har gjort for at Spareverksted skal kunne brukes av alle, hva som er kontrollert, hva som ikke er det, og hvilke svar jeg venter på.">
+<meta property="og:url" content="https://spareverksted.no/tilgjengelighet.html">
+<meta property="og:image" content="https://spareverksted.no/deling-v2.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="spareverksted i hvitt på grønn bakgrunn">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tilgjengelighet i Spareverksted">
+<meta name="twitter:description" content="Hva jeg har gjort for at Spareverksted skal kunne brukes av alle, hva som er kontrollert, hva som ikke er det, og hvilke svar jeg venter på.">
+<meta name="twitter:image" content="https://spareverksted.no/deling-v2.png">
+<meta name="twitter:image:alt" content="spareverksted i hvitt på grønn bakgrunn">
+</head>
+<body class="about-page">
+<a class="skip" href="#main">Hopp til innholdet</a>
+<header class="site-header"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">↗</span>spareverksted</a><details class="site-menu"><summary>Meny <span aria-hidden="true">☰</span></summary><div class="menu-panel"><nav class="site-nav" aria-label="Hovedmeny"><a href="index.html">Kalkulator</a><a href="spor.html">Spør om sparing</a><a href="om.html">Om Spareverksted</a></nav></div></details></header>
+<main id="main">
+<section class="about-intro" aria-labelledby="a11yTitle">
+<p class="eyebrow">TILGJENGELIGHET</p>
+<h1 id="a11yTitle">Spareverksted skal kunne brukes av alle.</h1>
+<!-- w3c-status:start -->
+<p class="hint w3c-status">Siste W3C-kontroll: fylles inn når siden publiseres.</p>
+<!-- w3c-status:end -->
+<p class="hint wave-status">Siste WAVE-kontroll av forsiden: 30. oktober 2026. AIM-score: 9,8 av 10.</p>
+<p>Her står det hva jeg har gjort, hvordan jeg har kontrollert det, hva jeg ikke har kontrollert, og hvilke svar jeg venter på. Jeg påstår ikke at siden oppfyller alle krav.</p>
+</section>
+
+<section class="giving-section" aria-labelledby="a11yGoal">
+<h2 id="a11yGoal">Målet</h2>
+<p>Jeg bruker WCAG 2.2 nivå AA som mål. Det er den internasjonale standarden for tilgjengelige nettsider. Om forskriften om universell utforming av IKT gjelder for en gratis hobbyside som denne, vet jeg ikke. Jeg følger standarden uansett.</p>
+</section>
+
+<section class="giving-section" aria-labelledby="a11yDone">
+<h2 id="a11yDone">Dette har jeg gjort</h2>
+<ul>
+<li>Siden kan brukes med tastatur, og du ser hvor du er.</li>
+<li>Tekst og grafikk har god nok kontrast i alle tre fargetemaene: Nøytral, Lys og Natt.</li>
+<li>Knapper og lenker er store nok å trykke på.</li>
+<li>Siden kan forstørres til 200 % og 400 % uten at du må rulle sidelengs.</li>
+<li>Feilmeldinger i startskjemaet og kalkulatoren står ved feltet som må rettes, og er koblet til feltet for skjermlesere. Når verdien blir gyldig, fjernes feilteksten og markeringen.</li>
+<li>Grafene har en tekstbeskrivelse og en tabell med de samme tallene.</li>
+<li>Farge er ikke eneste måte ting skilles fra hverandre på.</li>
+<li>Siden tar hensyn til at du har valgt redusert bevegelse på enheten din.</li>
+</ul>
+</section>
+
+<section class="giving-section" aria-labelledby="a11yChoices">
+<h2 id="a11yChoices">Valg jeg har tatt</h2>
+<ul>
+<li><strong>Resultatet leses ikke opp hver gang du endrer et tall.</strong> Stadige opplesninger forstyrrer mer enn de hjelper. Du finner resultatet med overskriften «Dette betyr tallene dine».</li>
+<li><strong>Fokus flyttes bare når du må gjøre noe.</strong> Hvis du prøver å lagre eller dele med en feil i et felt, flyttes fokus til feltet som må rettes.</li>
+<li><strong>Grafene beskrives i ord.</strong> Under hver graf står det hva den viser: hvor beløpet starter og ender, om linjen blir brattere, og hvor stor avstanden er til det du har satt inn. Teksten leses av skjermleser og står der for alle. Den kom etter en test med skjermleser i oktober 2026.</li><li><strong>Et tomt felt blir ikke tolket som 0 kroner.</strong> Da står det forrige resultatet dempet, med beskjed om at det ikke er oppdatert. Et tall som ser riktig ut, men er feil, er verre enn intet tall.</li>
+</ul>
+</section>
+
+<section class="giving-section" aria-labelledby="a11yChecked">
+<h2 id="a11yChecked">Slik har jeg kontrollert</h2>
+<p>Siden testes automatisk hver gang den endres, og jeg har gjort noen tester for hånd. Flere av feilene som er funnet, er rettet. Kjente begrensninger er beskrevet nedenfor. Det er for få tester med brukere til å si at siden fungerer godt for alle, og ingenting her er en godkjenning.</p>
+<details class="check-log"><summary>Se hva som er testet og rettet</summary>
+<ul>
+<li><strong>Automatiske tester</strong> kjører hver gang siden endres. De sjekker kontrast, trykkflater, tastatur, fokus og forstørring i tre fargetemaer og ved flere skjermbredder, i nettleseren Chromium. Noen brukerflyter testes også i Firefox og WebKit, motoren bak Safari.</li>
+<li><strong>Feltfeil rettet 30. oktober 2026.</strong> I en prøve med Safari på iPhone og Chrome på PC fant jeg at gamle feilbeskjeder og røde felt kunne bli stående etter retting. Startskjemaet kunne også slippe gjennom beløp som først ble avvist i kalkulatoren. Feilene er rettet, og feiltekst vises ved feltene. Nye automatiske tester av ugyldige verdier og retting består i Chromium ved 390 og 1280 pikslers bredde. Den eksisterende nettleserpakken med kontroller i Chromium, Firefox og WebKit består også. Rettelsene er ikke prøvd på nytt med VoiceOver eller NVDA.</li>
+<li><strong>WAVE-kontroll 30. oktober 2026.</strong> Nettversjonen av WAVE viste 11 feil merket «Empty button», 11 varsler og ingen oppdagede kontrastfeil. Kodegjennomgangen fant 11 skjulte knapper ved skyveknappene som ble opprettet uten tekst. Disse har nå tekst fra opprettelsen. En ny WAVE-kontroll samme dag, dokumentert med skjermbilder, viste 0 registrerte feil, 0 kontrastfeil og 10 varsler. AIM-score var 9,8 av 10. Antallet varsler om svært liten tekst gikk fra 7 til 6. Kontrollen gjelder forsiden på spareverksted.no i den undersøkte tilstanden, ikke hele nettstedet. Eksakt skjermbredde og WAVE-versjon er ikke registrert. Jeg observerte at alle ti varslene gjaldt elementer som var skjult i den undersøkte visningen. WAVE undersøker også skjult innhold, fordi det kan bli synlig under bruk. Varslene må derfor vurderes i relevante visninger og er ikke ferdig vurdert. Jeg følger opp med manuelle WAVE-kontroller. <a href="https://github.com/gronnlars/spareverksted/issues/124">Se funn og oppfølging</a>. En høy AIM-score dokumenterer ikke full tilgjengelighet. <a href="https://wave.webaim.org/aimscore">Om AIM-score</a> og <a href="https://wave.webaim.org/help">WAVEs forklaring av skjult innhold</a>.</li>
+<li><strong>Egenprøve med tastatur og zoom 30. oktober 2026.</strong> I Chrome på laptop prøvde jeg Tab, Shift+Tab, Enter, mellomrom og piltastene i grafen. Jeg opplevde gjennomgående god flyt, men fant en tom eller manglende meny. En rask zoomprøve av kalkulatoren og Om-siden fungerte stort sett til 500 %, med en mindre plassfeil ved temavalget. Alle sider og handlinger er ikke gjennomgått. Menyfeilen følges opp i en egen retting. Dette var ingen full kontroll med skjermleser.</li>
+<li><strong>En manuell gjennomgang</strong> 23. oktober 2026 av kalkulatoren, veilederen og Om-siden i tre temaer og tre skjermbredder.</li>
+<li><strong>En første test på iPhone</strong> 27. oktober 2026, gjort av meg. Jeg er ikke vant til slike hjelpemidler, men knappene på personvernsiden virket, VoiceOver leste opp riktig, og forstørring fungerte.</li>
+<li><strong>En test med skjermleser</strong> 28. oktober 2026, gjort av en som kjenner hjelpemidlene og kravene. Det meste virket, og forstørringen fikk ros. Grafene ble ikke beskrevet i ord. Beskrivelser av grafene ble lagt til samme dag. De er ennå ikke kontrollert på nytt med skjermleser.</li>
+<li><strong>Kontroll av koden</strong> med <a href="https://validator.w3.org/">W3Cs validator</a> 28. oktober 2026. Den fant 16 feil på forsiden og på «Spør om sparing». De er rettet.
+<!-- w3c-detail:start -->
+<!-- w3c-detail:end -->
+Advarslene har så langt gjeldt overskrifter som fylles inn mens du bruker siden. Validatoren sjekker bare koden slik siden lastes inn, ikke det som skjer når du regner. Du kan kjøre den samme kontrollen selv:
+<ul>
+<li><a href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fspareverksted.no%2F">Kontroller forsiden med W3Cs validator</a></li>
+<li><a href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fspareverksted.no%2Fspor.html">Kontroller «Spør om sparing» med W3Cs validator</a></li>
+<li><a href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fspareverksted.no%2Fom.html">Kontroller Om-siden med W3Cs validator</a></li>
+<li><a href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fspareverksted.no%2Fpersonvern.html">Kontroller personvernsiden med W3Cs validator</a></li>
+<li><a href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fspareverksted.no%2Ftilgjengelighet.html">Kontroller denne siden med W3Cs validator</a></li>
+</ul></li>
+</ul>
+</details>
+<p>Koden og testene ligger åpent på <a href="https://github.com/gronnlars/spareverksted">GitHub</a>, så du kan se hva som faktisk er sjekket.</p>
+</section>
+
+<section class="giving-section" aria-labelledby="a11yNot">
+<h2 id="a11yNot">Dette har jeg ikke kontrollert</h2>
+<ul>
+<li>Hele kalkulatoren og veilederen med VoiceOver, og skjermleseren NVDA på PC.</li>
+<li>Alle sider i Safari på iPhone og i Firefox.</li>
+<li>Tester med flere brukere som selv er avhengige av hjelpemidler. Én test er gjort, og det er ikke nok.</li>
+<li>De delene av WCAG som ikke kan testes automatisk.</li>
+</ul>
+<p>Meldingen som vises når du åpner en delt lenke med ugyldige verdier, forsvinner av seg selv etter en stund. Det samme gjør meldingen når lagring eller deling stoppes fordi et felt er feil. Feltfeilene i startskjemaet og kalkulatoren er egne beskjeder som blir stående til verdien rettes. Jeg har fortsatt ikke kontrollert om de kortvarige statusmeldingene gir nok tid med hjelpemidler.</p>
+</section>
+
+<section class="giving-section" aria-labelledby="a11yWaiting">
+<h2 id="a11yWaiting">Svar jeg venter på</h2>
+<p>25. oktober 2026 spurte jeg Tilsynet for universell utforming av ikt om forskriften gjelder for Spareverksted, og om hva jeg bør prioritere. Henvendelsen er registrert, men jeg har ikke fått svar ennå. Jeg oppdaterer siden når svaret kommer.</p>
+<p>At jeg har spurt, betyr ikke at tilsynet har vurdert eller godkjent siden.</p>
+</section>
+
+<section class="giving-section" aria-labelledby="a11yReport">
+<h2 id="a11yReport">Fant du noe som ikke fungerer?</h2>
+<p>Si gjerne fra. Skriv hvilken side du var på, hva du prøvde å gjøre, og hvilken enhet, nettleser og eventuell skjermleser du brukte. Jeg prøver å gjenskape feilen før jeg retter den.</p>
+<div class="kontakt" data-kontakt="generell">
+<button type="button" class="kontakt-vis" aria-expanded="false" aria-controls="kontaktGenerell" hidden>Vis e-postadresse</button>
+<div class="kontakt-resultat" id="kontaktGenerell" hidden>
+<p><a class="kontakt-lenke"></a></p>
+<button type="button" class="kontakt-kopier" aria-label="Kopier e-postadressen">Kopier e-postadresse</button>
+</div>
+<p class="kontakt-status hint" role="status"></p>
+<noscript><p>Uten JavaScript kan du sette adressen sammen selv: skriv ordet «post», deretter tegnet krøllalfa (@), deretter «spareverksted.no». Ingen mellomrom.</p></noscript>
+</div>
+<p>Du kan også melde fra på <a href="https://github.com/gronnlars/spareverksted/issues/new">GitHub</a>. Det du skriver der, er offentlig. Hva som skjer med e-post du sender, står på siden om <a href="personvern.html">personvern</a>.</p>
+<p>Du kan også kontakte <a href="https://www.uutilsynet.no/om-oss/kontakt-oss/231">Tilsynet for universell utforming av ikt</a>.</p>
+</section>
+
+<p class="hint">Sist oppdatert 31. oktober 2026.</p>
+<footer><a href="om.html">Om Spareverksted</a><a href="personvern.html">Personvern og lokal lagring</a><a href="index.html">Tilbake til kalkulatoren</a></footer>
+</main>
+</body>
+</html>

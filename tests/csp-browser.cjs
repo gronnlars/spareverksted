@@ -21,7 +21,7 @@ const {headers}=require('../deploy/headers.cjs');
   await p.locator('#chooseGrowth').click();await p.locator('#beginJourney').click();
   await p.locator('#showRange').check();await p.locator('#showBank').check().catch(()=>{});
   assert(await p.locator('#chartLegend [data-series]').count()>0,'legend rendered');
-  assert((await p.locator('#chartLegend span').first().evaluate(e=>e.style.getPropertyValue('--series')))!=='','legend colour must be set through CSSOM');
+  assert((await p.locator('#chartLegend [data-series]').first().evaluate(e=>e.style.getPropertyValue('--series')))!=='','legend colour must be set through CSSOM');
   await p.locator('summary:has-text("Hva er vanlig")').click();
   const bars=p.locator('.dist-track i[data-width]');await bars.first().waitFor();
   assert(await bars.first().evaluate(e=>e.style.width)!=='','distribution bars must get a width');
@@ -31,13 +31,13 @@ const {headers}=require('../deploy/headers.cjs');
   await click('exportXlsx');await p.waitForTimeout(300);
   await p.goto(origin+'/spor.html');await p.locator('#question').fill('Bør jeg spare i barnets navn?');await p.locator('#questionForm button').click();await p.waitForTimeout(400);
   assert.deepEqual(problems,[]);
-  // Uten noen hoder (for eksempel annen hosting) skal <meta>-CSP alene stoppe injisert skript og inline stil.
+  // Uten noen hoder (for eksempel annen hosting) skal HTML-ens <meta>-CSP alene stoppe injisert skript.
   const bare=await ctx.newPage(),barelog=[];bare.on('console',m=>{if(m.type()==='error')barelog.push(m.text());});
   await bare.addInitScript(()=>{document.addEventListener('securitypolicyviolation',e=>console.error('CSP '+e.violatedDirective));});
   await bare.goto(origin+'/bare/index.html');
-  await bare.evaluate(()=>{const s=document.createElement('script');s.textContent='window.__xss=1';document.body.append(s);const d=document.createElement('div');d.setAttribute('style','color:red');document.body.append(d);});
+  await bare.evaluate(()=>{const s=document.createElement('script');s.textContent='window.__xss=1';document.body.append(s);});
   assert.equal(await bare.evaluate(()=>window.__xss),undefined,'inline script must be blocked by meta CSP');
-  assert(barelog.some(x=>x.includes('script-src')),'script-src violation expected');assert(barelog.some(x=>x.includes('style-src')),'style-src violation expected');
+  assert(barelog.some(x=>x.includes('script-src')),'script-src violation expected');
   console.log('Passed: app runs under the production CSP and security headers with no violations, JS errors or external requests.');
  }finally{if(browser)await browser.close();server.close();}
 })().catch(e=>{console.error(e);process.exit(1);});

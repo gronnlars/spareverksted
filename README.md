@@ -1,107 +1,98 @@
 # Spareverksted
 
-En sparekalkulator med enkel inngang og mer detaljer etter behov.
-Ren HTML, CSS og JavaScript. Ingen installasjon, database eller brukerinnlogging.
+Denne versjonen av Spareverksted er i en tidlig fase. Jeg anbefaler å vente med ordinær bruk og med å publisere egne kopier til relevante regulatoriske spørsmål er avklart.
 
-## Kjør lokalt
+Jeg bygger en grunnmur for personvern, universell utforming og innhold som skal være enkelt å kontrollere og oppdatere etter hvert som nettstedet vokser. Strenge regler for kilder og innhold setter grenser for både meg og KI-en jeg bruker, for å redusere risikoen for faktafeil og påstander uten kildegrunnlag.
 
-Fra prosjektmappen:
+Spareverksted.no er tilgjengelig for utprøving. Jeg bruker nettstedet til å få tilbakemeldinger fra testpersoner og brukergrupper og som grunnlag for spørsmål til offentlige myndigheter.
 
-```sh
-python3 -m http.server 8000 --directory dist
-```
+Spareverksted er et gratis verktøy for å utforske sparing og forstå forskjellen mellom beløp i kroner og kjøpekraft. Du kan justere tallene og se hvordan sparetid, innbetalinger, avkastning, kostnader og prisvekst påvirker resultatet.
 
-Åpne http://localhost:8000. Filene kan også åpnes direkte, men lokal lagring og kopiering av lenker virker best fra en nettadresse.
+[Se testversjonen på nett](https://spareverksted.no/)
 
-## Flytt til et annet nettsted
+## Hva kan du gjøre?
 
-Publiser innholdet i `dist/` på en tjeneste for statiske nettsteder. Behold filene i samme mappe. Domenet håndteres hos valgt driftsleverandør. Kalkulatoren har ingen binding til Sites for selve beregningene.
+- Beregne spareutvikling, sparemål og uttak.
+- Se resultatet som tall, graf og tabell.
+- Sammenligne kroner med kjøpekraft i dagens kroner.
+- Lagre planer i egen nettleser, dele en plan med lenke og eksportere resultater.
+- Lese forhåndsskrevne forklaringer om BSU, aksjesparekonto (ASK) og fondskonto.
 
-Oppsett for bunny.net (Europa-ruting, anonymisert logg, sikkerhetshoder, www og HTTPS) står i `deploy/bunny-oppsett.md`. `deploy/headers.cjs` er eneste kilde til sikkerhetshodene, og `node scripts/sync-security.cjs` oppdaterer Terraform og `<meta>`-CSP fra den. `node scripts/check-live.cjs` kontrollerer den ekte siden, og `tests/csp-browser.cjs` kjører appen under de samme hodene.
+Forklaringene er generelle. Spareverksted anbefaler ingen bestemte fond, aksjer eller tilbydere. Ingen KI-modell lager svar mens du bruker siden.
 
-Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/package-source.py`. Kjør dette før publisering etter kodeendringer.
+## Start den nedlastede pakken
 
-## Filer
-
-- `dist/engine.js`: beregning av sparing, mål og uttak. Kan også importeres fra Node.
-- `dist/app.js`: skjemaverdier, graf, scenarioer og hendelser.
-- `dist/guidance.js`: kilder, datagrunnlag, hjelpetekster og mål-alternativer.
-- `dist/journey.js`: startguide, alder, glidere, skattevisning og eksportknapper.
-- `dist/tax.js`: ren beregning av skatteanslag på uttak.
-- `dist/export-kit.js`: CSV og ekte XLSX (OOXML i ZIP), uten eksterne biblioteker.
-- `dist/experience.js`: nivåtilpasset hjelp, maler og utskriftsrapport.
-- `dist/style.css`: responsiv utforming og utskriftsstil.
-- `dist/index.html`: sidens struktur.
-- `tests/engine.test.cjs`: uavhengig kontroll mot månedlige og årlige løkker.
-- `tests/input-browser.cjs`: nettleserflyt med ugyldige tall (krever playwright): blokkert deling, lagring og eksport, dempede resultater og delte lenker med ugyldige verdier.
-
-## Kontroller beregningene
-
-Med Node.js installert:
+1. Pakk ut ZIP-fila.
+2. Åpne den utpakkede prosjektmappen som inneholder `dist`. GitHubs «Code → Download ZIP» gir vanligvis mappen `spareverksted-main`. Pakken fra `scripts/package-source.py` gir mappen `spareverksted`.
+3. Start en lokal webserver fra denne mappen. Med Python 3 installert:
 
 ```sh
-node tests/engine.test.cjs
-node tests/tax-export.test.cjs
+python3 -m http.server 8000 --bind 127.0.0.1 --directory dist
 ```
 
-Testene dekker 200 deterministisk genererte spareplaner, nødvendig månedssparing, null rente, svært lange perioder, 32 kombinasjoner av uttaksvalg og mål-alternativer.
+4. Åpne [http://127.0.0.1:8000](http://127.0.0.1:8000) i nettleseren.
 
-## Viktige modellvalg
+På Windows kan kommandoen hete `py` eller `python` i stedet for `python3`.
 
-Effektiv nominell avkastning før kostnader. Netto årlig vekstfaktor er `(1 + avkastning) * (1 - kostnad)`. Innskudd ved månedsslutt. Spareøkning fordeles jevnt over månedene. Uttak skjer én gang ved slutten av hvert år. Inflasjonsøkning på ordinært årsuttak starter i år 2. Ekstrauttak kommer etter vanlig uttak i valgt år.
+Du trenger en nettleser med JavaScript aktivert. Python brukes bare til å servere filene lokalt. En annen lokal webserver kan også brukes.
 
-Spareutviklingen er før skatt. Et separat skatteanslag for uttak bruker enten forenklet ASK med oppgitt gjenstående innskudd og kjent skjerming, eller en brukerdefinert fast skattepliktig andel. Ingen ny skjerming, løpende bankbeskatning, IPS, BSU eller formuesskatt er modellert. Scenarioavvik er en følsomhetsanalyse, ikke et sannsynlighetsintervall. Modellen bruker ikke Monte Carlo. Kildestatistikk er datert 20. oktober 2026 og oppdateres ikke automatisk.
+Du kan forsøke å åpne `dist/index.html` direkte. Lokal lagring og kopiering av lenker fungerer best når siden åpnes fra en nettadresse.
 
-## Lagring og deling
+## Bruk og lokal drift
 
-Planer lagres lokalt i nettleseren under `sv-scenarios`. En delt lenke inneholder skjemaverdiene og visningsnivået, men ikke andre lagrede planer. Ingen av beregningene sendes til en kalkulatortjener. Nettstedets driftsleverandør kan behandle vanlig trafikkmetadata.
+Velg spareutvikling eller sparemål, fyll inn tallene og se resultatet. Prøv deretter å endre én forutsetning om gangen. For eksempel viser høyere prisvekst hvordan kjøpekraften kan bli lavere selv om beløpet i kroner vokser.
 
-## Bidra
+Beregningene skjer i nettleseren. Når pakken er lastet ned og en lokal server er startet, trenger selve beregningene ingen internettilkobling. Eksterne kilder, GitHub-dokumentasjon og e-post krever nett. En lenke med en lokal adresse virker bare hos den som har tilgang til den adressen.
 
-Gjennomgå helst beregninger, numeriske grensetilfeller, tilgjengelighet og mobilflyt før nye funksjoner legges til. Nye finansielle modeller må dokumentere forutsetningene og ha uavhengige kontrollberegninger. Ikke endre en brukers innstillinger stille ved nivåbytte.
+ZIP-fila er et øyeblikksbilde. Den henter ikke nye regler, satser eller rettelser automatisk. Se datoene ved kildene, og hent en nyere utgave når du trenger oppdatert innhold.
 
-Koden er åpen kildekode under [MIT-lisensen](LICENSE). Se [bidragsveiledningen](CONTRIBUTING.md).
+## Slik skal resultatene forstås
 
-## GitHub Pages
+Resultatene er regneeksempler basert på forutsetningene du velger. Jevn avkastning gjennom mange år er en forenkling. Faktisk rente, avkastning og prisvekst vil variere.
 
-Under Settings → Pages velger prosjekteieren **GitHub Actions** som Source.
-Åpne deretter Actions → Test and publish Spareverksted → Run workflow → main.
-Arbeidsflyten tester beregningene, lager kodepakken og publiserer `dist/`.
-Senere endringer på `main` publiseres automatisk når testene består.
-Pull requests testes uten å publiseres. Nettsidens adresse vises i Pages-innstillingene
-og i den vellykkede publiseringsjobben. Eget domene kan settes i Pages-innstillingene.
+Spareutviklingen vises før skatt. Et eventuelt separat skatteanslag på uttak er forenklet og dekker ikke alle skatteregler. Lavere og høyere scenarioer viser modellens utslag, ikke et løfte om hva du vil få.
 
-## Startguide og eksport
+Eksporterte filer viser planen slik den var ved eksport. XLSX-fila inneholder beregnede tall, ikke formler som regner planen på nytt når du endrer cellene.
 
-Nye besøkende velger spareutvikling eller sparemål. Alder og risikovalget er valgfrie. 67 år er et redigerbart forslag, ikke en påstand om individuell pensjonsalder. En delt plan åpnes direkte. Startguiden kan åpnes igjen med Startvalg.
+## Personvern
 
-Glidere er snarveier; egne tall kan være høyere enn gliderens utgangspunkt. Eksportene er øyeblikksbilder. XLSX inneholder numeriske celler og flere ark, ikke levende formler. CSV følger aktivt verktøy. PDF opprettes gjennom nettleserens utskrift. JSON inneholder gjeldende plan, ikke alle andre lokalt lagrede planer.
+Ingen innlogging, reklame eller statistikkverktøy. Nettstedets egen kode bruker ingen informasjonskapsler og sender ikke tallene du skriver inn til en server.
 
-## Spør om sparing
+Å åpne siden eller en delt lenke lagrer ingenting. Bestemte handlinger lagrer planer eller valg i nettleseren. Du kan slette planer under «Mine planer» og bruke sletteknappen på personvernsiden. Lagringen er ikke kryptert. Planer lagret ved lokal kjøring er atskilt fra planer på spareverksted.no. Lagringen er knyttet til nettadressen og nettleseren du bruker.
 
-`dist/spor.html` gir et kort svar med to alternativer. Hvert alternativ har grønne fordeler og røde ulemper som er lukket fra start. Ett trykk åpner hele listen med forklaringer. Hvert kort har minst to fordeler, to ulemper og en linje om når valget passer dårlig. Utfyllende vurdering viser først maksimalt tre seksjoner, med resten bak «Vis flere». Kontrolldatoen vises uten å åpne kildene. Ett klikk på et tema viser svaret; søk viser det høyest rangerte temaet med eventuelle alternativer. Tall i friteksten blir ikke tolket.
+Delte lenker inneholder tallene i planen. Delen etter `#` sendes ikke i selve HTTP-forespørselen, men kan leses av tjenesten du deler lenken gjennom.
 
-- `veileder-facts.js`: felles faktatall med regelår, kontrolldato og primærkilde.
-- `veileder-engine.js`: temaruting, relevansregler, spørsmålsforslag og utfyllende forklaringer.
-- `veileder-cards.js`: korte sammenligninger og situasjonsbestemte forbehold.
-- `veileder-context.js`: validering av samme-fane-kontekst, uten nettverkskall.
-- `veileder-bridge.js`: overfører oppgitt alder, aktuell sparetid og eksplisitt risikovalg fra kalkulatoren ved navigering.
-- `veileder-ui.js`: direkte temavalg, lukkede fordeler/ulemper og valgfrie opplysninger.
+Ved bruk av spareverksted.no logger GitHub Pages IP-adresser av sikkerhetshensyn. E-post er en egen behandling hos e-postleverandørene. Disse forholdene er beskrevet på [personvernsiden](https://spareverksted.no/personvern.html), som også finnes som `dist/personvern.html` i pakken.
 
-Veilederen bruker fanens `sessionStorage` under `sv-guidance-tab-v2`, uten navn, kontoinformasjon, sparebeløp eller fritekst. Opplysninger som mangler i kalkulatoren, fylles ikke fra standardverdier. Kalkulatorens sparetid brukes ikke automatisk til barnesparing. Manuell sparetid lagres per tema. Ved vanlig retur til kalkulatoren gjenbrukes kjent alder, sparetid og risikovalg. En eksplisitt plan i lenken overstyres aldri av denne konteksten. Opplysningene kan glemmes fra veilederen. Dette endrer ikke kalkulatorens egne felt. Veilederen virker også når øktlagring er blokkert, men da kan opplysninger ikke følge mellom sidene.
+## Universell utforming
 
-Ingen eksterne KI-kall, bestemte aksjeandeler eller navngitte fondsanbefalinger. Svarene er generelle, med kildelenker og datoforbehold. Se `research/veileder-kilder.md` for bakgrunn og `research/ux-2026-10-22.md` for endringer, faktaliste og manuell testliste. Delingslenker fra kalkulatoren utelater alder, risikovalg og andre personlige profilvalg.
+Målet er WCAG 2.2 nivå AA. Siden kontrolleres med automatiske tester og manuelle gjennomganger, men full tilgjengelighet er ikke dokumentert. Blant annet gjenstår en full gjennomgang med VoiceOver og NVDA.
 
-Kontroller logikk og overføring:
+Se [tilgjengelighetssiden](https://spareverksted.no/tilgjengelighet.html), eller åpne `dist/tilgjengelighet.html` i pakken, for utførte kontroller og kjente begrensninger.
 
-```sh
-node tests/veileder.test.cjs
-node tests/veileder-context.test.cjs
-```
+## Prosjektstatus og hjelp
 
-Valgfri nettleserkontroll med Playwright og Chromium installert. Testen starter og stopper sin egen lokale server. En eksisterende Chromium-binær kan angis med `SPARE_BROWSER`:
+Videre utvikling er delvis satt på vent mens regulatoriske spørsmål avklares. Det arbeides innenfor avgrensede områder, blant annet personvern, tilgjengelighet og kildekontroll. Henvendelser til myndigheter er ikke en godkjenning av tjenesten.
 
-```sh
-node tests/veileder-browser.cjs
-```
+Fant du en feil? Beskriv hva du prøvde, hva som skjedde, og hvilken nettleser du brukte. Bruk oppdiktede tall i offentlige feilrapporter. Ikke send opplysninger om din egen økonomi på e-post. Jeg tilbyr ikke personlig økonomisk rådgivning. For generell forbrukerinformasjon, se [Forbrukerrådet](https://www.forbrukerradet.no/).
 
+- [Kontakt](https://spareverksted.no/om.html)
+- [Meld en feil på GitHub](https://github.com/gronnlars/spareverksted/issues)
+- [Dokumentasjon og arbeidsregler for bidragsytere](https://github.com/gronnlars/spareverksted/blob/main/AGENTS.md)
+- [Regulatorisk status og avgrensninger](https://github.com/gronnlars/spareverksted/blob/main/docs/regulatorisk.md)
+- [Tester som kjøres automatisk](https://github.com/gronnlars/spareverksted/blob/main/.github/workflows/static.yml)
+- [Beregningsmodell](https://github.com/gronnlars/spareverksted/blob/main/docs/beregningsmodell.md)
+- [Lokal drift og publisering](https://github.com/gronnlars/spareverksted/blob/main/docs/drift.md)
+
+## Lisens, opphav og viderebruk
+
+Alle kan bruke den publiserte kalkulatoren gratis til egen økonomi og teste den for å gi tilbakemelding, også ansatte i kommersielle virksomheter. Egen sparing og avkastning er tillatt.
+
+Fra 24. oktober 2026 tilbys nye originale bidrag etter commit `8392d9adb934533ceca9627a93b768c223a1b704` under PolyForm Noncommercial 1.0.0, med tilleggstillatelsen i [LICENSE](https://github.com/gronnlars/spareverksted/blob/main/LICENSE). Kommersiell viderebruk av disse bidragene krever egen avtale med de aktuelle rettighetshaverne. Dette gjelder blant annet salg av tjenester, kommersiell integrasjon og markedsføring. En donasjon gir ingen kommersiell lisens. Kildekoden er tilgjengelig, men de nye vilkårene er ikke en åpen kildekode-lisens.
+
+**Den tidligere kalkulatoren er fortsatt MIT-lisensiert.** Materialet til og med commiten ovenfor kan fortsatt brukes kommersielt under MIT, også når det inngår i en nyere utgave. Endringen trekker ikke tilbake tidligere tillatelser. Git-historikken skiller grunnlaget fra senere bidrag. Andres materiale følger sine egne vilkår; vi kan bare lisensiere rettigheter vi faktisk har.
+
+Prosjektet er utviklet av Lars med hjelp fra ChatGPT og Claude, med innspill fra Vibe og andre. KI er brukt i stor grad til kode, tekster, feilsøking og forslag. Svarene i veilederen skrives og kildekontrolleres før publisering. Kildekontrollen kan være utført med KI; menneskelig eller uavhengig fagkontroll oppgis bare når den er dokumentert. Ingen KI-modell lager svar under brukerens besøk. Se [PROVENANCE.md](https://github.com/gronnlars/spareverksted/blob/main/PROVENANCE.md) for avgrensninger og kilder og [CONTRIBUTING.md](https://github.com/gronnlars/spareverksted/blob/main/CONTRIBUTING.md) for nye bidrag. Gaver er frivillige og er aldri et vilkår for personlig bruk.
+
+
+Lisensvilkårene følger også pakken i fila `LICENSE`. Opphavsopplysninger finnes i `PROVENANCE.md`.

@@ -11,17 +11,17 @@ Mål:
 
 ## Alt som kode: rask vei
 
-Alt er styrt fra `deploy/headers.cjs`. Rediger bare den, og kjør `node scripts/sync-security.cjs`. Den oppdaterer:
-- `deploy/terraform/headers.auto.tfvars.json` (hodene som bunny-reglene bruker).
-- `<meta>`-CSP i `dist/*.html`. Den gir beskyttelse mot injisert skript selv om siden hostes et sted uten egne hoder.
+Hodene styres fra `deploy/headers.cjs`. Rediger bare den, og kjør `node scripts/sync-security.cjs`. Den oppdaterer `deploy/terraform/headers.auto.tfvars.json`, som Edge Rules bruker. `tests/security-sync.test.cjs` kjører i CI og feiler hvis noe er ute av synk.
 
-`tests/security-sync.test.cjs` kjører i CI og feiler hvis noe er ute av synk.
+HTML-sidene har i tillegg `<meta>`-CSP (kontrolleres av `scripts/security-check.py`). Nettleseren bruker meta og header sammen, så den strengeste gjelder. Headeren er strengere enn meta: ingen inline stil, og `frame-ancestors`, som ikke kan settes i meta.
+
+Opplasting av `dist/` til lagringssonen skjer allerede i `.github/workflows/static.yml` (S3, hemmeligheten `BUNNY_STORAGE_PASSWORD`, se `docs/drift.md`). Den er ikke en del av dette oppsettet.
 
 1. `export BUNNYNET_API_KEY=...` (kontonøkkel fra bunny.net, aldri i en fil).
 2. `cd deploy/terraform && terraform init && terraform validate && terraform plan`. Filen er skrevet uten å kunne valideres mot leverandøren, så rett eventuelle attributtnavn som `validate` klager på.
 3. `terraform apply`. Dette lager lagringssone, pull zone med europeisk ruting og anonymisert logg, og Edge Rules.
 4. Pek DNS på bunny (punkt 3 under). Sett så `-var enable_tls=true` og kjør `terraform apply` igjen. Da får begge adresser sertifikat og tvungen HTTPS.
-5. Sett GitHub-hemmelighetene `BUNNY_STORAGE_ZONE`, `BUNNY_STORAGE_KEY`, eventuelt `BUNNY_STORAGE_HOST`, `BUNNY_API_KEY` og `BUNNY_PULLZONE_ID`. Neste push til `main` laster opp `dist/` og tømmer cachen. Uten hemmelighetene hopper jobben over.
+5. Cache: arbeidsflyten tømmer ikke Pull Zone-cachen. Cache-reglene (HTML `no-cache`, JS og CSS én time) gjør at nye filer får fram på høyst en time.
 6. Kjør `node scripts/check-live.cjs spareverksted.no`.
 
 Det som ikke kan ligge i koden: DNS hos registraren (DS-oppføring for DNSSEC), selve bunny-kontoen og nøklene, og at du slår av GitHub Pages.
@@ -31,8 +31,7 @@ Om `spareverksted.no` skrives uten `https://`: nyere nettlesere prøver HTTPS f�
 Filene som styrer dette i repoet:
 - `deploy/headers.cjs`: fasit for alle responshoder og HSTS-trinn.
 - `deploy/terraform/`: bunny-oppsettet som kode.
-- `scripts/sync-security.cjs`: holder Terraform-variabler og `<meta>`-CSP i synk.
-- `scripts/deploy-bunny.cjs`: laster opp `dist/` til lagringssonen.
+- `scripts/sync-security.cjs`: holder Terraform-variablene i synk med fasiten.
 - `tests/csp-browser.cjs`: kjører appen med nøyaktig disse hodene og feiler ved brudd.
 - `scripts/check-live.cjs`: kontrollerer den ekte siden.
 
@@ -100,7 +99,7 @@ I rekkefølge. Handlinger og vilkår heter noe lignende i dashbordet (⚠).
 
 ## 5. Hvorfor 100, og hva jeg ikke kan love
 
-- **Content-Security-Policy:** `default-src 'none'` og bare `'self'` for skript, stil, bilder, fonter og tilkoblinger. Ingen `unsafe-inline`. Siden har ingen inline-skript eller inline-stiler. To maler satte `style=""`, og det er rettet til CSSOM via `layout.js`.
+- **Content-Security-Policy:** `default-src 'none'` og bare `'self'` for skript, stil og fonter. Bilder tillater også `data:` og `blob:` (lokal eksport), og `connect-src` er `'none'`. Ingen `unsafe-inline`. HTML-meta tillater fortsatt inline stil, men siden har ingen igjen: to maler satte `style=""`, og det er rettet til CSSOM via `layout.js`.
 - **HSTS** innføres i fire trinn (5 minutter, 1 døgn, 6 måneder, 2 år) via `HSTS_STAGE` i `deploy/headers.cjs`. Hev trinnet først når det forrige har fungert i et par dager. Full Observatory-score krever minst 6 måneder, altså trinn 3. `includeSubDomains` er av som standard, fordi det rammer alle underdomener. Slå det på i `headers.cjs` bare hvis alle skal ha HTTPS, og få bonuspoeng.
 - **Resten:** `nosniff`, `X-Frame-Options`, `Referrer-Policy` og kryss-opprinnelse-hodene gir full uttelling og ingen bivirkning, siden siden ikke bruker innhold fra andre domener.
 - **Ingen cookies**, så cookie-testene er tomme.

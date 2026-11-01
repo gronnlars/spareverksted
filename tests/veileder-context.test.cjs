@@ -34,3 +34,17 @@ assert.deepEqual(C.calculatorPatch(ctx,true),{},'a shared plan must never inheri
 assert.deepEqual(C.calculatorPatch(C.empty(),false),{});
 assert.equal(returned.years,10,'a child’s three- or four-year horizon must not overwrite the calculator horizon');
 
+// Når hele planen hentes tilbake, legges bare opplysninger endret i veilederen oppå, og sparetiden går til riktig felt.
+{
+ const ctx=C.clean({profile:{age:40,years:12,risk:'high'},origins:{age:'calculator',years:'guide',risk:'calculator'}});
+ assert.deepEqual(C.calculatorPatch(ctx,false,{onlyGuide:true}),{years:12});
+ assert.deepEqual(C.calculatorPatch(ctx,false,{onlyGuide:true,page:'dreams'}),{dreamYears:12});
+ assert.deepEqual(C.calculatorPatch(ctx,true,{onlyGuide:true}),{});
+ const mem=new Map(),store={getItem:k=>mem.has(k)?mem.get(k):null,setItem:(k,v)=>mem.set(k,String(v)),removeItem:k=>mem.delete(k)};
+ assert.equal(C.readPlan(store),null);
+ C.writePlan(store,{monthly:4000},'goal',{showRange:true,both:'ja'});
+ assert.deepEqual(C.readPlan(store),{state:{monthly:4000},mode:'goal',view:{showBank:false,showRange:true,showGoal:false,both:false}});
+ store.setItem(C.PLAN_KEY,'[1,2]');assert.equal(C.readPlan(store),null);store.setItem(C.PLAN_KEY,'{ugyldig');assert.equal(C.readPlan(store),null);
+ C.writePlan(store,{monthly:1},'explore',{});C.clearPlan(store);assert.equal(C.readPlan(store),null);
+}
+console.log('Context: working plan storage and guide-only patch passed.');

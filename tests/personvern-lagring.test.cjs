@@ -1,0 +1,109 @@
+// Personvern: hva som lagres, når, og at sletting bare rører Spareverksteds egne nøkler.
+// Kjøres uten nettleser. Hele flyten i ekte nettleser står i tests/personvern-browser.cjs.
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const dist=f=>fs.readFileSync(path.join(__dirname,'..','dist',f),'utf8');
+
+class Store{constructor(o={}){this.m=new Map(Object.entries(o));this.writes=[];}getItem(k){return this.m.has(k)?this.m.get(k):null;}setItem(k,v){this.writes.push(k);this.m.set(k,String(v));}removeItem(k){this.m.delete(k);}keys(){return [...this.m.keys()].sort();}}
+
+// 1. Ingen kode skriver sv-started permanent, og nøkkelen leses bare fra fanen.
+const journey=dist('journey.js'),app=dist('app.js');
+assert(!/localStorage\.setItem\(\s*'sv-started'/.test(journey+app),'sv-started skal ikke lagres permanent');
+assert(/sessionStorage\.setItem\('sv-started','1'\)/.test(journey));
+assert(/localStorage\.removeItem\('sv-started'\)/.test(journey),'gammel permanent nøkkel ryddes');
+
+// 1b. Alternativ B (vedtatt 26.10.2026): tema og nivå skrives aldri til permanent lagring, og gamle nøkler leses ikke.
+assert(!/localStorage\.setItem\(\s*(key|'sv-level'|'sv-color-theme')/.test(dist('theme.js')+app),'tema og nivå skal ikke i localStorage');
+assert(/localStorage\.removeItem\(key\)/.test(dist('theme.js'))&&!/localStorage\.getItem\(key\)/.test(dist('theme.js')),'gammel tema-nøkkel ryddes, leses ikke');
+assert(!/localStorage\.getItem\('sv-level'\)/.test(app),'gammel nivånøkkel leses ikke');
+
+// 2. Visningsnivå: bare nivåknappene lagrer. Automatiske tilbakestillinger og «Se innstillingene» lagrer ikke.
+const calls=(journey+app).match(/setLevel\([^)]*\)/g);
+for(const c of calls){
+ if(c==="setLevel(b.dataset.level)"||c.startsWith("setLevel(value"))continue;
+ assert(/remember:false/.test(c),'Automatisk nivåskifte skal ikke lagres: '+c);
+}
+{
+ // Funksjonene kobles sammen slik nettsiden gjør: app.js definerer setLevel, journey.js pakker den inn.
+ // Innpakningen må sende videre alle argumentene, ellers går {remember:false} tapt (feil funnet i kontroll 25.10.2026).
+ const local=new Store({'sv-level':'advanced'}),session=new Store();const ctx={localStorage:local,sessionStorage:session,level:'simple',syncLevel(){},syncSliders(){},window:{}};vm.createContext(ctx);
+ const def=app.match(/function setLevel\([\s\S]*?\n/)[0];
+ const wrappers=journey.match(/const previousSetLevel=setLevel;setLevel=function[^\n]*/g)||[];
+ assert.equal(wrappers.length,1,'forventet én innpakning av setLevel i journey.js');
+ vm.runInContext('var setLevel;'+def.replace('function setLevel','setLevel=function')+';'+wrappers[0]+';this.call=(...a)=>setLevel(...a);',ctx);
+ ctx.call('simple',{remember:false});assert.equal(session.getItem('sv-level'),null);
+ ctx.call('advanced');assert.equal(session.getItem('sv-level'),'advanced');assert.equal(local.getItem('sv-level'),'advanced','setLevel rører ikke gammel permanent nøkkel');
+ ctx.call('advanced',{remember:false});assert.equal(session.getItem('sv-level'),null,'automatisk skifte gjennom innpakningen fjerner lagret valg');
+ ctx.call('explore');ctx.call('simple');assert.equal(session.getItem('sv-level'),null,'«Enkel» er standard og lagres ikke');
+ for(const w of (journey+app).match(/setLevel=function\([^)]*\)\{[^}]*\}/g)||[])assert(/\(\.\.\.args\)/.test(w),'Innpakning må sende videre alle argumenter: '+w);
+}
+// «Tilbake til planen» må finnes når planen er åpnet fra delt lenke, uten at noe lagres.
+assert(/\$\('closeJourney'\)\.hidden=!\(hasStarted\(\)\|\|planShown\)/.test(journey),'Tilbake til planen må vises når planen er åpen');
+// Ved lasting skrives ingenting, heller ikke ved delt lenke.
+assert(/stage\(!\(hasStarted\(\)\|\|sharedPlan\),\{remember:false\}\)/.test(journey),'lasting skal ikke skrive sv-started');
+
+// 3. Broen til veilederen: ingenting skrives før brukeren går til «Spør om sparing».
+function bridge(session,{started=true}={}){
+ const listeners={},doc={getElementById:()=>({hidden:!started}),addEventListener:(t,f)=>(listeners['doc:'+t]=f),querySelectorAll:()=>[]};
+ const win={sessionStorage:session,addEventListener:(t,f)=>(listeners['win:'+t]=f)};
+ const ctx={window:win,document:doc,location:{hash:''},s:{start:1000,monthly:500,years:10,activePage:'calculator',ageKnown:false,riskChosen:false,dreamYears:5},mode:'explore',view:{showBank:false},E:{sanitize:x=>({state:x,rejected:[],allReset:false})},
+  fill(){},render(){},setPage(){},currentHorizon(){},updateStartNote(){},notice(){},quoted:x=>x,ageGroupFor:()=>'all',console};
+ vm.createContext(ctx);ctx.globalThis=ctx;
+ vm.runInContext(dist('veileder-context.js'),ctx);ctx.SpareContext=ctx.SpareContext||ctx.window.SpareContext;
+ vm.runInContext(dist('veileder-bridge.js'),ctx);
+ return {pagehide:()=>listeners['win:pagehide'](),clickGuide:()=>listeners['doc:click']({target:{closest:sel=>sel==='a[href="spor.html"]'?{}:null}}),clickOther:()=>listeners['doc:click']({target:{closest:()=>null}})};
+}
+{
+ const session=new Store(),b=bridge(session);
+ b.pagehide();b.clickOther();assert.deepEqual(session.keys(),[],'pagehide uten tur til veilederen lagrer ingenting');
+ b.clickGuide();assert.deepEqual(session.keys(),['sv-guidance-tab-v2','sv-working-plan-v1']);
+ const plan=JSON.parse(session.getItem('sv-working-plan-v1'));assert.equal(plan.state.monthly,500,'arbeidsplanen inneholder beløp');
+ const guide=JSON.parse(session.getItem('sv-guidance-tab-v2'));assert(!JSON.stringify(guide).includes('500'),'veilederkonteksten har ikke beløp');
+ const before=session.writes.length;b.pagehide();assert(session.writes.length>before,'pagehide oppdaterer en plan som allerede finnes');
+}
+{
+ const session=new Store(),b=bridge(session,{started:false});
+ b.clickGuide();assert.deepEqual(session.keys(),[],'fra startguiden uten plan lagres ingenting');
+}
+
+// 4. Sletting: bare egne nøkler, også i fanen.
+{
+ const P=require('../dist/personvern.js');
+ const local=new Store({'sv-scenarios':JSON.stringify([{name:'A',state:{}},{name:'B',state:{}}]),'sv-level':'advanced','sv-color-theme':'night','sv-started':'1','annen-tjeneste':'x'});
+ const session=new Store({'sv-working-plan-v1':'{}','sv-guidance-tab-v2':'{}','sv-started':'1','annen':'y'});
+ assert.equal(P.planCount(local),2);assert.equal(P.stored(local,session).length,6);
+ assert.equal(P.clearAll(local,session),true);
+ assert.deepEqual(local.keys(),['annen-tjeneste']);assert.deepEqual(session.keys(),['annen']);
+ assert.equal(P.stored(local,session).length,0);
+ const blocked={getItem(){throw Error('blokkert');},removeItem(){throw Error('blokkert');}};
+ assert.equal(P.planCount(blocked),0);assert.deepEqual(P.stored(blocked,blocked),[]);assert.equal(P.clearAll(blocked,blocked),false);
+}
+
+// 5. Alle nøkler som koden bruker, er med i slettelisten.
+{
+ const P=require('../dist/personvern.js'),all=new Set([...P.LOCAL,...P.SESSION]);
+ const code=fs.readdirSync(path.join(__dirname,'..','dist')).filter(f=>f.endsWith('.js')).map(dist).join('\n');
+ for(const k of new Set(code.match(/'sv-[a-z0-9-]+'/g).map(x=>x.slice(1,-1))))assert(all.has(k),'Mangler i slettelisten: '+k);
+}
+
+// 5b. Kontaktadresser: ingen komplett adresse i filer som publiseres, og privatadressen finnes ikke i produktfilene.
+{
+ const K=require('../dist/kontakt.js'),AT=String.fromCharCode(64),priv='giaever'+'.com';
+ assert.deepEqual(K.kinds.sort(),['generell','personvern']);
+ assert.equal(K.address('personvern'),'personvern'+AT+'spareverksted.no');assert.equal(K.address('generell'),'post'+AT+'spareverksted.no');
+ assert.equal(K.address('annet'),'');
+ const texts={};for(const f of fs.readdirSync(path.join(__dirname,'..','dist')))if(/\.(html|js|css|json|txt|xml|webmanifest)$/.test(f))texts['dist/'+f]=dist(f);
+ for(const f of ['README.md','AGENTS.md','PROVENANCE.md','CONTRIBUTING.md','docs/personvern-lagring.md','docs/kontakt-epost.md','docs/utkast-henvendelser.md'])try{texts[f]=fs.readFileSync(path.join(__dirname,'..',f),'utf8');}catch{}
+ for(const [f,txt] of Object.entries(texts)){
+  for(const kind of K.kinds)assert(!txt.includes(K.address(kind)),f+' inneholder komplett adresse');
+  assert(!txt.includes(AT+'spareverksted.no'),f+' inneholder @spareverksted.no');
+  assert(!txt.toLowerCase().includes(priv),f+' inneholder privatadressen');
+  assert(!/mailto:[^'"\s+<]+/.test(txt),f+' inneholder statisk mailto-lenke');
+ }
+}
+
+// 6. Sidene lenker til personvernsiden.
+for(const f of ['index.html','spor.html','om.html'])assert(dist(f).includes('href="personvern.html"'),f+' mangler lenke');
+// Avbryt «Start på nytt» skal ikke lagre noe, og sletting skal håndtere blokkert lagring.
+assert(/closeJourney'\)\.onclick=\(\)=>\{[^}]*stage\(false,\{remember:false\}\)/.test(journey),'Tilbake til planen skal ikke skrive');
+assert(/blokkert|ikke Spareverksted tilgang til lagring/.test(dist('personvern.js')) );
+console.log('Personvern: ingen permanent startnøkkel, nivå lagres bare ved eget valg, veilederbroen skriver bare ved tur til veilederen, sletting rører bare egne nøkler.');

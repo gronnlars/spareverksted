@@ -1,3 +1,5 @@
+// Historical draft regression: production availability is tested separately.
+const readDraftAsset=require('./helpers/draft-assets.cjs');
 // Optional: npm install playwright, then npx playwright install chromium.
 // SPARE_BROWSER can point to an existing Chromium binary. No separate server is needed.
 const {chromium}=require('playwright'),assert=require('node:assert/strict');
@@ -7,7 +9,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
  const server=http.createServer((req,res)=>{
   const filename=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
   if(!filename.startsWith(root+path.sep)){res.writeHead(403);res.end();return;}
-  try{const data=fs.readFileSync(filename);res.setHeader('Content-Type',filename.endsWith('.js')?'text/javascript':filename.endsWith('.css')?'text/css':'text/html');res.end(data);}catch{res.writeHead(404);res.end();}
+  try{const data=readDraftAsset(filename);res.setHeader('Content-Type',filename.endsWith('.js')?'text/javascript':filename.endsWith('.css')?'text/css':'text/html');res.end(data);}catch{res.writeHead(404);res.end();}
  });
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
  const origin='http://127.0.0.1:'+server.address().port;
@@ -19,13 +21,13 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   page.setDefaultTimeout(10000);
   page.on('pageerror',e=>errors.push(e.message));
   page.on('request',r=>{if(!r.url().startsWith(origin))external.push(r.url());});
-  const pick=async id=>{if(!await page.locator('#topicPicker').getAttribute('open'))await page.locator('#topicPicker>summary').click();await page.locator('[data-topic="'+id+'"]').click();};
-  const search=async value=>{if(!await page.locator('#searchBox').getAttribute('open'))await page.locator('#searchBox>summary').click();await page.locator('#question').fill(value);await page.locator('#questionForm button').click();};
+  const pick=async id=>{await page.locator('#topicPicker').waitFor({state:'attached'});if(!await page.evaluate(()=>document.getElementById('topicPicker').open))await page.locator('#topicPicker>summary').click();await page.locator('[data-topic="'+id+'"]').click();};
+  const search=async value=>{if(!await page.evaluate(()=>document.getElementById('searchBox').open))await page.locator('#searchBox>summary').click();await page.locator('#question').fill(value);await page.locator('#questionForm button').click();};
   const noOverflow=async()=>assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Horizontal scrolling');
   await page.goto(origin+'/index.html');
   assert(await page.locator('.welcome-question').isVisible());
   await page.locator('#chooseGrowth').click();await page.locator('#onboardAge').fill('57');await page.locator('#onboardYears').fill('10');
-  await page.locator('.journey-risk>summary').click();await page.locator('#onboardRisk').selectOption('low');await page.locator('#beginJourney').click();
+  await page.locator('#beginJourney').click();
   for(const id of ['start','monthly','years','rate'])assert(await page.locator('#'+id+'Slider').isVisible());
   const slider=page.locator('#monthlySlider');await slider.scrollIntoViewIfNeeded();
   const box=await slider.boundingBox(),before=await page.locator('#total').textContent();
@@ -35,10 +37,14 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.equal(await page.locator('#mobileTotal').textContent(),await page.locator('#total').textContent());
   assert(await page.locator('#mobileValueCurve').getAttribute('d'));
   await page.locator('#mobileResultButton').click();await page.waitForTimeout(500);
-  assert.equal(await page.evaluate(()=>document.activeElement.id),'chart');
+  assert.equal(await page.evaluate(()=>document.activeElement.id),'savingsResult');
+  const resultBounds=await page.locator('#savingsResult').boundingBox();
+  assert(resultBounds.y>=-9&&resultBounds.y<120,'Result card must be at the top of the viewport');
+  assert((await page.locator('.before-tax-badge').boundingBox()).y>=0,'Result badge stays in view');
+  assert.match(await page.locator('#mobileResultButton').innerText(),/Se resultat/);
   await page.locator('.site-menu>summary').click();await page.locator('.site-menu a[href="spor.html"]').click();
   await pick('funds');assert.match(await page.locator('#contextSummary').innerText(),/10 år til bruk/);
-  assert(await page.locator('.answer-checked').isVisible());assert.equal(await page.locator('.answer-sources').getAttribute('open'),null);
+  assert(await page.locator('.answer-dates').isVisible());assert.match(await page.locator('.answer-dates').innerText(),/^Sist gjennomgått: /);assert.equal(await page.locator('.answer-sources').getAttribute('open'),null);
   await pick('children');assert.doesNotMatch(await page.locator('#contextSummary').innerText(),/10 år/);
   await page.locator('#profileDetails>summary').click();await page.locator('#years').fill('3');
   await page.locator('#buffer').selectOption('no');await page.locator('#debt').selectOption('yes');await page.locator('#income').selectOption('uncertain');await page.locator('#risk').selectOption('low');
@@ -67,7 +73,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await page.locator('#profileDetails>summary').click();await page.locator('#resetGuidance').click();
   assert.equal(await page.evaluate(()=>sessionStorage.getItem('sv-guidance-tab-v2')),null);
   await search('Hva er BSU?');assert.equal(await page.locator('#answerTitle').innerText(),'Hva er BSU?');
-  await page.locator('.full-answer>summary').click();assert.match(await page.locator('.full-answer').innerText(),/27 500/);
+  assert.match(await page.locator('.answer-lead').innerText(),/27 500/);
+  await page.locator('.full-answer>summary').click();assert.match(await page.locator('.full-answer').innerText(),/oppussing og oppgradering/);
   await search('<img src=x onerror="window.injected=true">');assert(await page.locator('#answerPanel').isHidden());assert.equal(await page.evaluate(()=>window.injected),undefined);
   for(const id of ['mortgage','student','children','buffer','funds','pension','bsu']){await pick(id);assert(await page.locator('#answerPanel').isVisible());assert.equal(await page.locator('.option-card').count(),2);}
   for(const width of [320,360,390,768,1280]){await page.setViewportSize({width,height:844});await noOverflow();}
@@ -81,11 +88,88 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await desktop.mouse.move(b.x+b.width*.1,b.y+b.height/2);await desktop.mouse.down();await desktop.mouse.move(b.x+b.width*.7,b.y+b.height/2,{steps:5});
   assert.notEqual(await desktop.locator('#total').textContent(),total);assert.notEqual(await desktop.locator('#chart svg').innerHTML(),graph);await desktop.mouse.up();
   const value=await desktop.locator('#monthly').inputValue();await range.press('ArrowRight');assert.notEqual(await desktop.locator('#monthly').inputValue(),value);
-  await desktop.locator('#monthly').fill('50000');await desktop.locator('#monthly').press('Tab');assert.equal(await desktop.locator('#monthly').inputValue(),'50000');assert(Number(await range.getAttribute('max'))>=50000);
+  await desktop.locator('#monthly').fill('50000');await desktop.locator('#monthly').press('Tab');assert.equal(await desktop.locator('#monthly').inputValue(),'50 000');assert.equal(await range.getAttribute('max'),'20000','monthly slider keeps its fixed range');assert(await range.isDisabled(),'slider waits for a deliberate choice when the typed amount is outside its range');assert.match(await desktop.locator('#monthlySliderNote').innerText(),/går til 20\s000 kr/);
   await desktop.locator('.site-menu>summary').click();await desktop.locator('#share').click();
   const shared=new URLSearchParams(new URL(await desktop.locator('#shareUrl').inputValue()).hash.slice(1));
   assert.equal(shared.get('monthly'),'50000');
   for(const key of ['userAge','ageKnown','riskChosen','stress','ageGroup','purpose','buffer','debt','income','discipline'])assert.equal(shared.has(key),false,'Private field in shared URL: '+key);
+  // Forklaring: søk på «inflasjon» gir en forklaring uten alternativkort, med tastatur, uten sideveis scrolling.
+  for(const width of [320,390]){
+   const ectx=await browser.newContext({viewport:{width,height:844},isMobile:true,hasTouch:true}),page=await ectx.newPage(),eerrors=[];
+   page.setDefaultTimeout(10000);page.on('pageerror',e=>eerrors.push(e.message));
+   const search=async value=>{if(!await page.evaluate(()=>document.getElementById('searchBox').open))await page.locator('#searchBox>summary').click();await page.locator('#question').fill(value);await page.locator('#questionForm button').click();};
+   const noOverflow=async()=>assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Horizontal scrolling');
+   await page.goto(origin+'/spor.html');
+   await search('inflasjon');
+   await page.locator('#answerTitle').waitFor();
+   assert.equal(await page.locator('#answerTitle').textContent(),'Hva er kjøpekraft?');
+   assert.equal(await page.locator('#answer .option-card').count(),0,'grunnbegrepet trenger ingen kunstige alternativkort');
+   assert.equal(await page.locator('#contextPanel').isHidden(),true,'profilfeltene skal ikke vises for en ren forklaring');
+   assert.match(await page.locator('#answer .answer-lead').textContent(),/inflasjon/);
+   assert.match(await page.locator('#answer .explain-example').textContent(),/(?:ikke en|ingen) prognose/);
+   assert.equal(await page.locator('#answer .explain-terms').count(),0);
+   assert.equal(await page.evaluate(()=>document.activeElement.id),'answerTitle','fokus skal flyttes til svaret');
+   const deep=page.locator('#answer details.full-answer');
+   assert.equal(await deep.getAttribute('open'),null,'fordypning er lukket til brukeren åpner den');
+   await deep.locator('summary').focus();await page.keyboard.press('Enter');
+   assert.notEqual(await deep.getAttribute('open'),null,'Enter åpner fordypning');
+   assert.equal(await page.evaluate(()=>document.activeElement.tagName),'SUMMARY','fokus blir på knappen');
+   await page.keyboard.press('Enter');assert.equal(await deep.getAttribute('open'),null,'Enter lukker igjen');
+   await noOverflow();
+   // ASK og fondskonto: egne forklaringer, sammenligningen for spørsmål om begge, og uavklart står som uavklart.
+   const titleFor=async q=>{await search(q);await page.locator('#answerTitle').waitFor();return page.locator('#answerTitle').textContent();};
+   assert.equal(await titleFor('ASK'),'Hva er en aksjesparekonto (ASK)?');
+   assert.equal(await page.locator('#answer .explain-overview').count(),1);
+   assert.equal(await page.locator('#contextPanel').isHidden(),true);
+   assert.equal(await page.locator('#answer .answer-caution').count(),0);
+   assert.equal(await page.locator('#answer .explain-terms').isVisible(),false,'ordlisten avbryter ikke hovedsvaret');
+   for(const kind of ['pro','con']){
+    const group=page.locator('#answer .explain-overview .'+kind);
+    await group.locator('summary').focus();await page.keyboard.press('Enter');
+    assert.notEqual(await group.getAttribute('open'),null);
+    assert.ok(await group.locator('li').count()>=2);
+   }
+   const detail=page.locator('#answer details.full-answer');
+   await detail.locator('summary').focus();await page.keyboard.press('Enter');
+   assert.match(await detail.innerText(),/ubenyttet skjerming fra tidligere år/);
+   await noOverflow();
+   assert.equal(await titleFor('aksje spare konto'),'Hva er en aksjesparekonto (ASK)?');
+   assert.equal(await titleFor('Hva er en investeringskonto?'),'Hva er en fondskonto?');
+   assert.equal(await titleFor('fonds konto'),'Hva er en fondskonto?');
+   assert.equal(await page.locator('#answer .explain-terms').count(),0);
+   assert.equal(await page.locator('#answer .explain-overview').count(),1);
+   await page.locator('#answer details.answer-sources>summary').focus();await page.keyboard.press('Enter');
+   const sourcesText=await page.locator('#answer details.answer-sources').textContent();
+   assert.match(await page.locator('#answer .tradeoff.pro').textContent(),/Avhengig av tilbyderen/);assert.match(sourcesText,/Ingen oppdateringsdato/);assert.match(sourcesText,/29\.10\.2026/);
+   assert.equal(await page.locator('#answer details.answer-sources a').count(),6,'Seks norske primærkilder, uten tilbyderens side');
+   await noOverflow();
+   assert.equal(await titleFor('forskjellen på ASK og fondskonto'),'ASK eller fondskonto?');
+   assert.equal(await page.locator('#answer .option-card').count(),2);
+   // Skrivefeil gir et merket forslag, ikke et svar. Valg av forslaget åpner forklaringen.
+   await search('fondskotno');
+   assert.equal(await page.locator('#answerPanel').isVisible(),false,'skrivefeil åpner ikke et svar');
+   const sug=page.locator('#matches .match-list button').first();
+   assert.equal(await page.locator('#matchStatus').innerText(),'Mente du «fondskonto»? Velg et svar nedenfor.');
+   assert.match(await sug.innerText(),/Hva er en fondskonto\?/);
+   assert.ok((await sug.boundingBox()).height>=44,'forslaget har stor nok trykkflate');
+   await sug.focus();await page.keyboard.press('Enter');await page.locator('#answerTitle').waitFor();
+   assert.equal(await page.locator('#answerTitle').textContent(),'Hva er en fondskonto?');
+   await noOverflow();
+   // Tilbake til et sammenligningssvar: profilfeltene kommer tilbake.
+   await search('sparekonto');
+   assert.equal(await page.locator('#contextPanel').isHidden(),false);
+   assert.ok(await page.locator('#answer .option-card').count()>0);
+   for(const [query,title,checked] of [['indeks fond','Hva er et indeksfond?',/28. oktober 2026/],['Er fond sparing?','Hva er forskjellen på sparing og investering?',/25. oktober 2026/]]){
+    assert.equal(await titleFor(query),title);
+    assert.equal(await page.locator('#contextPanel').isHidden(),true);
+    assert.equal(await page.locator('#answer .explain-terms').count(),0);
+    assert.equal(await page.locator('#answer .explain-terms').isVisible(),false);
+    await page.locator('#answer details.answer-sources>summary').focus();await page.keyboard.press('Enter');
+    assert.match(await page.locator('#answer details.answer-sources').textContent(),checked);
+    await noOverflow();
+   }
+   assert.deepEqual(eerrors,[]);await ectx.close();
+  }
   assert.deepEqual(errors,[]);
   console.log('Browser: mobile touch, live result and curve, keyboard, profile relevance, independent horizons, preserved hidden fields, disclosure, privacy and responsive layouts passed.');
  }finally{if(browser)await browser.close();server.close();}

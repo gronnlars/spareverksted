@@ -3,11 +3,10 @@ on:
   push:
     branches: [main]
   pull_request:
-  workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: pages-${{ github.ref }}
+  group: spareverksted-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   checks:
@@ -23,54 +22,188 @@ jobs:
           node tests/tax-export.test.cjs
           node tests/veileder.test.cjs
           node tests/veileder-context.test.cjs
+          node tests/veileder-grunnbegreper.test.cjs
+          python3 research/svarutkast/generer-gaps.py --check --product
           node tests/veileder-knowledge.test.cjs
+          python3 scripts/generate-bsu-rates.py --check
+          node tests/bsu-rates.test.cjs
+          node tests/svarmal.test.cjs
+          node tests/svartekst.test.cjs
           node tests/veileder-relevance.test.cjs
+          node tests/veileder-sok.test.cjs
+          node tests/veileder-sok-utvidet.test.cjs
+          node tests/veileder-sok-rettinger.test.cjs
+          node tests/validation.test.cjs
+          node tests/kjopekraft.test.cjs
+          node tests/results.test.cjs
+          node tests/meaning.test.cjs
+          node tests/chart-summary.test.cjs
+          node tests/band.test.cjs
+          python3 scripts/security-check.py
+          python3 tests/security-check.test.py
+          python3 tests/deploy_bunny.test.py
           node tests/security-sync.test.cjs
+          node tests/personvern-lagring.test.cjs
+          node tests/published-answers.test.cjs
+          node --check dist/personvern.js
+          node --check dist/kontakt.js
           node --check dist/veileder-ui.js
+          node --check dist/veileder-sok.js
           node --check dist/veileder-bridge.js
           node --check dist/veileder-facts.js
           node --check dist/app.js
           node --check dist/layout.js
+          node --check dist/engine.js
+          node --check dist/guidance.js
+          node --check dist/journey.js
+          node --check dist/meaning.js
+          node --check dist/chart-summary.js
+          node --check dist/assumptions.js
+          node --check dist/theme.js
+          node --check dist/navigation.js
+          node tests/w3c-status.test.cjs
+          python3 tests/personvern-status.test.py
+      - name: Offline resource inventory
+        run: python3 scripts/ressurskontroll.py
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      # Nu Html Checker, the validator behind validator.w3.org. Fails on errors, reports warnings.
+      - name: W3C validator on all pages
+        run: |
+          npm install --no-save --no-package-lock vnu-jar
+          JAR=node_modules/vnu-jar/build/dist/vnu.jar
+          java -jar "$JAR" --format json --stdout --exit-zero-always dist/*.html > /tmp/w3c.json
+          python3 scripts/w3c-status.py /tmp/w3c.json "$(java -jar "$JAR" --version)" >> "$GITHUB_STEP_SUMMARY"
+  browser:
+    runs-on: ubuntu-latest
+    env:
+      SPARE_PRIVACY_REPORT: /tmp/spareverksted-privacy
+    # Playwrights eget testbilde har Chromium og systempakkene ferdig installert.
+    # Versjonen må være lik playwright-pakken under.
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.0-noble
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Playwright
+        run: npm install --no-save --no-package-lock playwright@1.56.0
+      # Actions mounts /github/home with the host runner's uid; the container runs as root.
+      # Firefox requires the home directory to belong to the browser's current user.
+      - name: Match CI home ownership for Firefox
+        run: chown "$(id -u):$(id -g)" /github/home
+      - name: Browser flows (Chromium)
+        run: |
+          node tests/security-browser.cjs
+          node tests/csp-browser.cjs
+          SPARE_ENGINE=firefox node tests/security-browser.cjs
+          SPARE_ENGINE=webkit node tests/security-browser.cjs
+          node tests/published-answers-browser.cjs
+          SPARE_ENGINE=firefox node tests/published-answers-browser.cjs
+          SPARE_ENGINE=webkit node tests/published-answers-browser.cjs
+          node tests/svarmal-browser.cjs
+          SPARE_ENGINE=firefox node tests/svarmal-browser.cjs
+          SPARE_ENGINE=webkit node tests/svarmal-browser.cjs
+          node tests/bsu-browser.cjs
+          SPARE_ENGINE=firefox node tests/bsu-browser.cjs
+          SPARE_ENGINE=webkit node tests/bsu-browser.cjs
+          node tests/ask-browser.cjs
+          SPARE_ENGINE=firefox node tests/ask-browser.cjs
+          SPARE_ENGINE=webkit node tests/ask-browser.cjs
+          node tests/veileder-browser.cjs
+          node tests/input-browser.cjs
+          node research/svarutkast/prov-renters-browser.cjs
+          SPARE_ENGINE=firefox node research/svarutkast/prov-renters-browser.cjs
+          SPARE_ENGINE=webkit node research/svarutkast/prov-renters-browser.cjs
+          node tests/veileder-sok-browser.cjs
+          node tests/veileder-sok-rettinger-browser.cjs
+          SPARE_ENGINE=firefox node tests/veileder-sok-rettinger-browser.cjs
+          SPARE_ENGINE=webkit node tests/veileder-sok-rettinger-browser.cjs
+          node tests/startflyt-browser.cjs
+          node tests/ki-info-browser.cjs
+          SPARE_ENGINE=firefox node tests/ki-info-browser.cjs
+          SPARE_ENGINE=webkit node tests/ki-info-browser.cjs
+          node tests/spareform-browser.cjs
+          node tests/theme-browser.cjs
+          node tests/navigation-browser.cjs
+          node tests/roundtrip-browser.cjs
+          node tests/deling-browser.cjs
+          SPARE_ENGINE=firefox node tests/deling-browser.cjs
+          SPARE_ENGINE=webkit node tests/deling-browser.cjs
+          node tests/a11y-browser.cjs
+          node tests/html-struktur-browser.cjs
+          node tests/akse-browser.cjs
+          node tests/uten-stil-browser.cjs
+          node tests/polish-browser.cjs
+          SPARE_ENGINE=firefox node tests/polish-browser.cjs
+          SPARE_ENGINE=webkit node tests/polish-browser.cjs
+          node tests/felt-browser.cjs
+          node tests/forklaring-oppdateres-browser.cjs
+          SPARE_ENGINE=firefox node tests/forklaring-oppdateres-browser.cjs
+          SPARE_ENGINE=webkit node tests/forklaring-oppdateres-browser.cjs
+          node tests/personvern-browser.cjs
+          SPARE_ENGINE=firefox node tests/personvern-browser.cjs
+          SPARE_ENGINE=webkit node tests/personvern-browser.cjs
+          node tests/kontakt-browser.cjs
+          SPARE_ENGINE=firefox node tests/kontakt-browser.cjs
+          SPARE_ENGINE=webkit node tests/kontakt-browser.cjs
+          SPARE_ENGINE=firefox node tests/felt-browser.cjs
+          SPARE_ENGINE=webkit node tests/felt-browser.cjs
+      - name: Write verified privacy result
+        run: python3 scripts/personvern-status.py /tmp/spareverksted-privacy
+      - name: Privacy evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: privacy-evidence
+          path: /tmp/spareverksted-privacy
+          if-no-files-found: error
+          retention-days: 30
+      - name: Verified privacy page
+        uses: actions/upload-artifact@v4
+        with:
+          name: privacy-page
+          path: dist/personvern.html
+      - name: UI review screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-review
+          path: /tmp/spareverksted-ui-review
+          if-no-files-found: ignore
+          retention-days: 7
   deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    needs: checks
-    permissions:
-      pages: write
-      id-token: write
-      contents: read
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: [checks, browser]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: privacy-page
+          path: dist
       - name: Build source download
         run: python3 scripts/package-source.py
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/setup-java@v4
         with:
-          path: './dist'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
-  bunny:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    needs: checks
-    permissions:
-      contents: read
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+          distribution: temurin
+          java-version: '21'
+      # Writes the result into the published copy of tilgjengelighet.html only. Nothing is committed.
+      - name: Write W3C result into the accessibility page
+        run: |
+          npm install --no-save --no-package-lock vnu-jar
+          JAR=node_modules/vnu-jar/build/dist/vnu.jar
+          VERSION="$(java -jar "$JAR" --version)"
+          java -jar "$JAR" --format json --stdout --exit-zero-always dist/*.html > /tmp/w3c.json
+          python3 scripts/w3c-status.py /tmp/w3c.json "$VERSION" --write
+          java -jar "$JAR" --errors-only dist/tilgjengelighet.html
+      - uses: actions/setup-python@v5
         with:
-          node-version: '22'
-      - name: Build source download
-        run: python3 scripts/package-source.py
-      - name: Upload to bunny.net (skipped without secrets)
+          python-version: '3.12'
+      - name: Install pinned Bunny S3 client
+        run: python3 -m pip install --disable-pip-version-check --no-input -r requirements-deploy.txt
+      - name: Deploy verified site to Bunny Storage (Frankfurt)
         env:
-          BUNNY_STORAGE_ZONE: ${{ secrets.BUNNY_STORAGE_ZONE }}
-          BUNNY_STORAGE_KEY: ${{ secrets.BUNNY_STORAGE_KEY }}
-          BUNNY_STORAGE_HOST: ${{ secrets.BUNNY_STORAGE_HOST }}
-          BUNNY_API_KEY: ${{ secrets.BUNNY_API_KEY }}
-          BUNNY_PULLZONE_ID: ${{ secrets.BUNNY_PULLZONE_ID }}
-        run: node scripts/deploy-bunny.cjs
+          BUNNY_STORAGE_ZONE: spareverksted
+          BUNNY_STORAGE_PASSWORD: ${{ secrets.BUNNY_STORAGE_PASSWORD }}
+        run: python3 scripts/deploy_bunny.py dist

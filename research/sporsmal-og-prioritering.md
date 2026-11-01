@@ -1,5 +1,7 @@
 # Spørsmål til Spareverksted
 
+> Historisk notat fra 22. oktober. Fra 24. oktober 2026 brukes [SPORSMALSKO.md](../SPORSMALSKO.md) som felles arbeidskø og [DAGLIG-OPPGAVE.md](DAGLIG-OPPGAVE.md) som arbeidsinstruks. Eldre publiseringsplaner nedenfor gjelder ikke under publiseringspausen.
+
 Undersøkt 22. oktober 2026. Første pulje er forberedt til publiseringsjobben kl. 14 denne dagen. Filen er en redaksjonell arbeidsliste, ikke statistikk over norske søkevolum.
 
 ## Hva prioriteringen bygger på

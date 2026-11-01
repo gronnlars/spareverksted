@@ -1,0 +1,161 @@
+[
+  {
+    "id": "q-renters-rente",
+    "keys": [
+      "rentersrente",
+      "rentesrente"
+    ],
+    "questions": [
+      "Hva er renters rente?",
+      "Hvordan fungerer renters rente?",
+      "Hva er rentes rente?",
+      "Hva betyr rente på rente?",
+      "Får jeg renter på rentene?"
+    ],
+    "words": [
+      "/rente(?:rs?|s) ?rente/",
+      "/rente på rente/",
+      "/renter på rentene/"
+    ]
+  },
+  {
+    "id": "q-indeksfond",
+    "keys": [
+      "indeksfond",
+      "passivforvaltning"
+    ],
+    "questions": [
+      "Hva er et indeksfond?",
+      "Hva er indeksfond?",
+      "Hva betyr indeksfond?",
+      "Hvordan fungerer indeksfond?",
+      "Hva betyr passiv forvaltning?",
+      "Hva betyr passivt forvaltet fond?"
+    ],
+    "words": [
+      "/\\bindeksfond\\b/",
+      "/passiv(?:t)? (?:forvaltning|forvaltet fond)/"
+    ]
+  },
+  {
+    "id": "q-sparing-investering",
+    "keys": [],
+    "questions": [
+      "Hva er forskjellen på sparing og investering?",
+      "Er fond sparing?",
+      "Er investering det samme som sparing?",
+      "Må jeg investere for å spare?"
+    ],
+    "words": [
+      "/(?:forskjell|samme).*(?:sparing.*investering|investering.*sparing)/",
+      "/\\ber fond sparing\\b/",
+      "/\\bmå jeg investere for å spare\\b/"
+    ]
+  },
+  {
+    "id": "q-aksjesparekonto",
+    "keys": [
+      "ask",
+      "aksjesparekonto"
+    ],
+    "questions": [
+      "Hva er ASK?",
+      "Hva er en aksjesparekonto?",
+      "Hva er aksjesparekonto?",
+      "Hva betyr ASK?",
+      "Hva er en aksjesparekonto (ASK)?"
+    ],
+    "words": [
+      "/(?<!(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link).*)(?:\\bask\\b)(?!.*(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link))/",
+      "/(?<!(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link).*)(?:aksjesparekonto)(?!.*(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link))/"
+    ]
+  },
+  {
+    "id": "q-fondskonto",
+    "keys": [
+      "fondskonto",
+      "investeringskonto",
+      "kapitalforsikring"
+    ],
+    "questions": [
+      "Hva er en fondskonto?",
+      "Hva er fondskonto?",
+      "Hva er kapitalforsikring?",
+      "Hva er en investeringskonto?"
+    ],
+    "words": [
+      "/(?<!(?:\\bask\\b|aksjesparekonto).*)(?:fondskonto)(?!.*(?:\\bask\\b|aksjesparekonto))/",
+      "/(?<!(?:\\bask\\b|aksjesparekonto).*)(?:kapitalforsikring)(?!.*(?:\\bask\\b|aksjesparekonto))/",
+      "/(?<!(?:\\bask\\b|aksjesparekonto).*)(?:investeringskonto)(?!.*(?:\\bask\\b|aksjesparekonto))/",
+      "/(?<!(?:\\bask\\b|aksjesparekonto).*)(?:unit ?link)(?!.*(?:\\bask\\b|aksjesparekonto))/"
+    ]
+  },
+  {
+    "id": "q-bsu-basics",
+    "keys": [
+      "bsu",
+      "boligsparing"
+    ],
+    "questions": [
+      "Hva er BSU?",
+      "Hva betyr BSU?",
+      "Hvordan fungerer boligsparing for ungdom?"
+    ],
+    "words": [
+      "/\\bbsu\\b/",
+      "/boligsparing for ungdom/"
+    ]
+  },
+  {
+    "id": "q-ips-ask",
+    "keys": [
+      "ips"
+    ],
+    "questions": [
+      "Bør jeg velge IPS eller ASK?",
+      "IPS eller ASK?",
+      "Hva er forskjellen på IPS og ASK?",
+      "Hva er IPS?"
+    ],
+    "words": [
+      "/\\bips\\b/",
+      "/individuell pensjonssparing/",
+      "/individuell sparing til pensjon/",
+      "/(?:aksjesparekonto|\\bask\\b).*\\bips\\b|\\bips\\b.*(?:aksjesparekonto|\\bask\\b)/"
+    ]
+  },
+  {
+    "id": "q-ask-zero",
+    "questions": [
+      "Hva er forskjellen på aksjesparekonto og fondskonto?",
+      "ASK eller fondskonto?",
+      "ASK eller investeringskonto?"
+    ],
+    "words": [
+      "/(?:\\bask\\b|aksjesparekonto).*(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link)|(?:fondskonto|kapitalforsikring|investeringskonto|unit ?link).*(?:\\bask\\b|aksjesparekonto)/"
+    ]
+  },
+  {
+    "id": "q-kjopekraft",
+    "keys": [
+      "kjøpekraft",
+      "inflasjon",
+      "prisvekst"
+    ],
+    "questions": [
+      "Hva er kjøpekraft?",
+      "Hva er prisvekst?",
+      "Hva er inflasjon?",
+      "Hva betyr dagens kroner?",
+      "Hvorfor blir pengene mindre verdt på konto?"
+    ],
+    "words": [
+      "/kj[øo]pekraft/",
+      "/prisvekst/",
+      "/inflasjon/",
+      "/dagens kroner/",
+      "/mindre verdt/",
+      "/mister verdi/"
+    ]
+  }
+]
