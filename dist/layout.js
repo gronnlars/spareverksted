@@ -25,3 +25,8 @@ if(liveSummary){
  document.addEventListener('focusout',event=>{if(!event.relatedTarget?.closest('#basic,#mobileSummary'))liveSummary.classList.remove('is-editing');});
  document.addEventListener('pointerdown',event=>{liveSummary.classList.toggle('is-editing',Boolean(event.target.closest('#basic,#mobileSummary')));});
 }
+
+// CSP uten unsafe-inline: stiler som beregnes i JS settes via CSSOM fra data-attributter, aldri som innebygd style-attributt.
+(function(){const apply=root=>{if(root.nodeType!==1)return;for(const el of [root,...root.querySelectorAll('[data-series],[data-width]')]){if(el.dataset&&el.dataset.series)el.style.setProperty('--series',el.dataset.series);if(el.dataset&&el.dataset.width)el.style.width=Math.min(100,Math.max(0,Number(el.dataset.width)||0))+'%';}};
+const start=()=>{apply(document.body);new MutationObserver(list=>{for(const m of list)for(const n of m.addedNodes)apply(n);}).observe(document.body,{childList:true,subtree:true});};
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start):start();})();

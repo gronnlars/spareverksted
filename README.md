@@ -17,6 +17,8 @@ python3 -m http.server 8000 --directory dist
 
 Publiser innholdet i `dist/` på en tjeneste for statiske nettsteder. Behold filene i samme mappe. Domenet håndteres hos valgt driftsleverandør. Kalkulatoren har ingen binding til Sites for selve beregningene.
 
+Oppsett for bunny.net (Europa-ruting, anonymisert logg, sikkerhetshoder, www og HTTPS) står i `deploy/bunny-oppsett.md`. `node scripts/check-live.cjs` kontrollerer den ekte siden, og `tests/csp-browser.cjs` kjører appen under de samme hodene.
+
 Kodepakken som lenkes fra bunnteksten, kan oppdateres med `python3 scripts/package-source.py`. Kjør dette før publisering etter kodeendringer.
 
 ## Filer
