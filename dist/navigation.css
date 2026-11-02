@@ -43,3 +43,9 @@
 @media(min-width:761px){:root footer a{white-space:nowrap}}
 :root footer>span{flex:1 0 100%;grid-column:1/-1;font-size:13px;margin-top:6px}
 @media print{.site-header>.site-nav{display:none!important}}
+/* Felles bunntekst: samme lenker i samme rekkefølge på alle sider */
+footer .footer-links{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:4px 24px;align-items:center}
+footer .footer-links a,footer .footer-current{display:inline-flex;align-items:center;min-height:44px}
+footer .footer-current{font-weight:600;color:var(--ink)}
+footer .footer-note{flex-basis:100%;color:var(--muted);font-size:13px}
+@media(max-width:760px){footer .footer-links{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;width:100%;align-self:stretch;flex:1 1 100%;grid-column:1/-1}}
