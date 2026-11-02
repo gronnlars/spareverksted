@@ -37,7 +37,8 @@
 }
 .guide-return{margin-left:auto}
 /* Bunnlinjen: lenkene ved siden av hverandre, større skrift og trykkflate på 44 px. */
-:root footer,:root .about-page footer{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:0 20px;font-size:14px}
+:root footer,:root .about-page footer{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:0 28px;font-size:14px}
+@media(max-width:760px){:root footer,:root .about-page footer{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0 16px}}
 :root footer a{display:inline-flex;align-items:center;min-height:44px;padding:0 2px}
-:root footer>span{flex:1 0 100%;font-size:13px;margin-top:6px}
+:root footer>span{flex:1 0 100%;grid-column:1/-1;font-size:13px;margin-top:6px}
 @media print{.site-header>.site-nav{display:none!important}}
