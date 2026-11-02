@@ -59,3 +59,5 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 #chartPanel{scroll-margin-top:90px}
 #saved>.saved-row:nth-child(even),tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface-soft,#eaf1e3) 70%,transparent)}
 @media print{#saved>.saved-row:nth-child(even),tbody tr:nth-child(even){background:#f1f4ee;print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+/* Utfallsrom: beløpene står på linje selv om en overskrift går over to linjer */
+@media(min-width:391px){@supports(grid-template-rows:subgrid){.fan-summary{grid-template-rows:auto auto auto;row-gap:0}.fan-outcome{display:grid;grid-row:span 3;grid-template-rows:subgrid;align-content:start}.fan-outcome strong{align-self:start}}}
