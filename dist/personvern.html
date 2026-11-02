@@ -95,16 +95,39 @@
 
 <section class="giving-section" aria-labelledby="hostTitle">
 <h2 id="hostTitle">Hvem leverer sidene?</h2>
-<p>Siden 1. november 2026 leveres spareverksted.no av <a href="https://bunny.net/">Bunny</a> (BunnyWay d.o.o. i Slovenia, i EU). Bunny håndterer også domenenavnet (DNS). Filene ligger lagret i Tyskland, med reservekopier i Sverige og Storbritannia.</p>
-<p>Når du besøker siden, ser Bunny det alle nettleverandører må se for å sende deg sidene: IP-adressen din, hvilken side du ber om, tidspunkt og hva slags nettleser du bruker. Jeg har slått av tilgangslogger for Spareverksted. Brannmuren hos Bunny lagrer bare forespørsler den stopper eller flagger som mistenkelige, for eksempel forsøk på å hente skjulte filer. Da lagres tidspunkt, land og adressen som ble forsøkt, men ikke IP-adressen. Ifølge databehandleravtalen min med Bunny ligger rådata fra besøk bare i minnet på serveren i 20 til 30 sekunder.</p>
-<p>Kildekoden og de automatiske testene ligger fortsatt på GitHub, men besøket ditt går ikke via GitHub med mindre du klikker deg dit.</p>
-<p class="privacy-status"><strong>Det jeg ikke vet sikkert.</strong> Bunny har servere over hele verden. Besøker du siden fra et annet sted enn Europa, kan svaret komme fra en server der. Les <a href="https://bunny.net/privacy">Bunnys personvernerklæring</a> og <a href="https://bunny.net/gdpr/sub-processors/">listen over underleverandører</a> (på engelsk).</p>
+<p>Siden 1. november 2026 leveres spareverksted.no av <a href="https://bunny.net/">Bunny</a> (BunnyWay d.o.o. i Ljubljana, Slovenia, i EU). Bunny håndterer også domenenavnet (DNS). Jeg har inngått databehandleravtale med Bunny.</p>
+<p>Når du besøker siden, ser Bunny det alle nettleverandører må se for å sende deg sidene: IP-adressen din, hvilken side du ber om, tidspunkt og hva slags nettleser du bruker. Jeg har slått av tilgangslogger både for nettsiden og for DNS. Ifølge databehandleravtalen ligger rådata fra besøk bare i minnet på serveren i 20 til 30 sekunder.</p>
+<p>Brannmuren hos Bunny lagrer bare forespørsler den stopper eller flagger som mistenkelige, for eksempel forsøk på å hente skjulte filer. Da lagres tidspunkt, land og adressen som ble forsøkt, men ikke IP-adressen.</p>
+<p class="privacy-status"><strong>Det jeg ikke vet sikkert.</strong> Filene ligger lagret i Tyskland, med kopier i Sverige og Storbritannia. Storbritannia er utenfor EU, men har godkjent personvernnivå etter EUs regler. Bunny har servere over hele verden, og besøker du siden fra et annet sted enn Europa, kan svaret komme fra en server der. Hvor lenge brannmurloggen beholdes, har jeg ikke funnet. Les <a href="https://bunny.net/privacy">Bunnys personvernerklæring</a> og <a href="https://bunny.net/gdpr/sub-processors/">listen over underleverandører</a> (begge på engelsk).</p>
+<p>Kildekoden og de automatiske testene ligger på GitHub. Besøket ditt går ikke via GitHub med mindre du klikker deg dit.</p>
 </section>
 
 <section class="giving-section" aria-labelledby="securityTitle">
 <h2 id="securityTitle">Sikkerhet</h2>
-<p>All trafikk går kryptert over HTTPS, og nettleseren får beskjed om aldri å bruke ukryptert tilkobling (HSTS). Sidene har en sikkerhetspolicy som begrenser hvilken kode nettleseren får kjøre, og som blokkerer at JavaScript sender data ut eller at skjemaer sendes til en server.</p>
-<p>Automatiske tester sjekker at policyen faktisk virker i tre nettlesere. Dette er avgrensede kontroller, ikke en garanti mot alle angrep eller en uavhengig revisjon.</p>
+<p>All trafikk går kryptert over HTTPS. Sidene har en sikkerhetspolicy som bare lar nettleseren kjøre Spareverksteds egen kode, og som blokkerer at kode sender data ut. En brannmur stopper kjente angrepsforsøk før de når sidene.</p>
+<p>Dette er avgrensede tiltak og egne kontroller, ikke en garanti mot alle angrep eller en uavhengig revisjon.</p>
+<details class="check-log"><summary>Se tekniske tiltak og testresultater</summary>
+<p><strong>Tiltak hos Bunny</strong></p>
+<ul>
+<li>HTTPS tvunget, med HSTS (nettleseren husker å bruke kryptert tilkobling i ett år, også for underdomener).</li>
+<li>Content-Security-Policy både som HTTP-header og i selve sidene. Bare egen kode får kjøre, nettverkskall fra kode og innsending av skjemaer er blokkert, og andre nettsteder kan ikke vise Spareverksted inni sine sider.</li>
+<li>Referrer-Policy: no-referrer. Klikker du på en lenke til et annet nettsted, får det ikke vite at du kom fra Spareverksted.</li>
+<li>Permissions-Policy sperrer kamera, mikrofon og posisjon.</li>
+<li>X-Content-Type-Options, X-Frame-Options og Cross-Origin-Opener-Policy.</li>
+<li>Brannmur (Bunny Shield) i blokkeringsmodus. Robotgjenkjenning er slått av, fordi den bruker fingeravtrykk av nettleseren.</li>
+<li>Tilgangslogger og DNS-logger av. IP-adresser fjernes helt i loggene som finnes.</li>
+<li>Nettverksrutene til Bunny er signert (RPKI), så trafikken er vanskeligere å omdirigere. DNSSEC er klargjort, men ikke aktivert ennå.</li>
+</ul>
+<p><strong>Tester kjørt 1. november 2026</strong></p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/observatory/analyze?host=spareverksted.no">Mozilla Observatory</a>: alle testene bestått.</li>
+<li><a href="https://securityheaders.com/?q=spareverksted.no">securityheaders.com</a>: alle anbefalte headere på plass.</li>
+<li><a href="https://webbkoll.5july.net/">Webbkoll</a>: 0 informasjonskapsler og 0 forespørsler til tredjeparter.</li>
+<li><a href="https://themarkup.org/blacklight">Blacklight</a>: ingen sporing funnet.</li>
+<li><a href="https://internet.nl/">internet.nl</a>: HTTPS, IPv6 og RPKI i orden. DNSSEC mangler. Sikkerhetspolicyen tillater innebygd stil (CSS), fordi grafene trenger det. JavaScript har ingen slik tillatelse.</li>
+</ul>
+<p>Resultatene gjelder dagen de ble kjørt. Lenkene kjører testen på nytt.</p>
+</details>
 </section>
 
 <section class="giving-section" aria-labelledby="shareTitle">
@@ -119,10 +142,11 @@
 <ul>
 <li><strong>Formål:</strong> å svare på spørsmål, feilmeldinger og tips.</li>
 <li><strong>Opplysninger:</strong> avsenderadresse, tidspunkt, innholdet og navnet ditt hvis du oppgir det.</li>
-<li><strong>Hvem behandler den:</strong> e-postkassen ligger hos Domene.no. Jeg leser og svarer i Gmail-appen, så Google behandler også meldingene. Svar sendes ut via MailChannels, som Domene.no bruker.</li>
+<li><strong>Hvem behandler den:</strong> e-postkassen ligger hos Domene.no. Jeg leser og svarer i Gmail-appen, så Google behandler også meldingene. Svar sendes ut via MailChannels, som Domene.no bruker. E-posten går ikke via Bunny.</li>
 <li><strong>Grunnlag:</strong> berettiget interesse (personvernforordningen artikkel 6 nr. 1 bokstav f), fordi du har skrevet og venter svar.</li>
 <li><strong>Hvor lenge:</strong> ingen fast regel ennå. Ber du om sletting, sletter jeg e-posten fra e-postkassen. Kopier hos Domene.no og Google kan jeg ikke slette selv.</li>
 </ul>
+<p class="privacy-status"><strong>Det jeg ikke vet ennå.</strong> Hvor lenge Domene.no, Google og MailChannels beholder kopier og logger, har jeg ikke fått svar på. Jeg vurderer å flytte e-posten til en annen leverandør.</p>
 <p>Generell kontakt finner du på <a href="om.html#kontakt">Om Spareverksted</a>.</p>
 </section>
 
@@ -131,7 +155,7 @@
 <p>Du kan be om innsyn i, retting av og sletting av opplysninger jeg har om deg. I praksis gjelder det e-post. Tallene fra kalkulatoren har jeg ikke. Bruk personvernadressen over. Du kan klage til <a href="https://www.datatilsynet.no/">Datatilsynet</a>.</p>
 </section>
 
-<p class="hint">Sist oppdatert 1. november 2026.</p>
+<p class="hint">Sist oppdatert 2. november 2026.</p>
 <footer><a href="index.html">Tilbake til kalkulatoren</a><a href="om.html">Om Spareverksted</a><a href="tilgjengelighet.html">Tilgjengelighet</a><a href="https://github.com/gronnlars/spareverksted">Kildekode på GitHub</a></footer>
 </main>
 </body>

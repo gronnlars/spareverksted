@@ -17,3 +17,7 @@ Kilder lest av ChatGPT/Codex 31.10.2026:
 - https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https
 
 Status ved gjennomgangen 31.10.2026: lokal Python-kontroll, negative tester og syntakskontroll bestått. Ekte nettlesertester avventer CI. Bunny-deployen er ikke aktiv på main, og produksjonshoder er ikke kontrollert mot Bunny.
+
+## Oppdatering 2. november 2026
+
+Domenet går nå via Bunny. CSP sendes også som HTTP-header fra Bunny, med `frame-ancestors 'none'` i tillegg til policyen i HTML. Øvrige sikkerhetshoder er satt i Bunny. Se docs/drift.md. Lars kjørte Mozilla Observatory, securityheaders.com, internet.nl, Webbkoll og Blacklight 1. november 2026; resultatene står på personvernsiden med dato, uten sammenligning med andre nettsteder.
