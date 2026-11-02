@@ -202,3 +202,14 @@ input[aria-invalid=true]{border-color:var(--control-border,#b3452c);outline-colo
 
 .ki-note{max-width:680px;margin:14px 0 0;font-size:15px;line-height:1.6;color:var(--ink)}
 .metrics{margin-bottom:0}.metrics dt,.metrics dd{margin:0}
+/* Liggende mobil: lav skjerm. Tettere topp så resultatet synes uten å scrolle. */
+@media (orientation:landscape) and (max-height:500px){
+ body .site-header{min-height:52px;padding-block:4px}
+ body main{padding-top:12px}
+ .intro{padding-top:0;margin-bottom:4px}
+ .intro h1,.welcome-intro h1{font-size:24px;line-height:1.2;margin:0 0 2px}
+ .intro #introText,.welcome-intro>p:last-child{font-size:13px;margin:0}
+ .welcome-intro{margin-bottom:12px}
+ .workbench-toolbar{margin-top:0;margin-bottom:8px}
+ body .hero-result{padding-top:16px;padding-bottom:16px}
+}
