@@ -29,7 +29,7 @@ Domenet bruker Bunny fra 1. november 2026. Opplysningene under er gitt av Lars m
 - Headere settes i Edge rule `Spareverksted_Personvern`: HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy (no-referrer), Permissions-Policy, Cross-Origin-Opener-Policy og Content-Security-Policy. CSP-headeren er lik meta-taggen i HTML, pluss `frame-ancestors 'none'`. **Endres CSP i koden, må headeren i Bunny endres samtidig**, ellers gjelder den strengeste.
 - Databehandleravtale med BunnyWay d.o.o. signert 31. oktober 2026. PDF-en inneholder privat adresse og ligger ikke i repoet.
 
-Gjenstår: DNSSEC. DS-oppføring (key tag 28434, algoritme 13, digest type 2) sendt til Domene.no 2. november 2026 for registrering; kontroller med dnscheck.norid.no og internet.nl når de bekrefter, automatisk cache-tømming etter publisering,. Shield-hendelser (brannmurlogg) beholdes i 3 dager ifølge Bunny-panelet, opplyst av Lars 2. november 2026.
+DNSSEC aktivert 2. november 2026 (DS key tag 28434, algoritme 13, digest type 2, registrert via Domene.no). DNSViz viser gyldig kjede samme dag, opplyst av Lars med skjermbilder. Cache-tømming: workflowen kaller Bunny purgeCache etter opplasting, med secret `BUNNY_API_KEY` (konto-API-nøkkel) og variabel `BUNNY_PULLZONE_ID`. Nøkkelen gir tilgang til hele Bunny-kontoen; krever tofaktor på GitHub. Shield-hendelser (brannmurlogg) beholdes i 3 dager ifølge Bunny-panelet, opplyst av Lars 2. november 2026.
 
 ## Tidligere notat før flytting
 
@@ -38,7 +38,5 @@ Bunny, må Pull Zone, HTTPS-sertifikat, DNS og sikkerhetshoder konfigureres og
 kontrolleres i Bunny og hos DNS-leverandøren. Inntil dette er bekreftet, skal ikke
 publisert trafikk omtales som rutet via Bunny.
 
-Arbeidsflyten tømmer foreløpig ikke Pull Zone-cache. Før DNS flyttes, må automatisk
-cache-purge kobles til med Pull Zone-ID og Bunny API-secret, eller cache-reglene må
-settes slik at nye filer ikke blir liggende utdatert. Kontroller en publisering
+Cache-purge er koblet til (se over). Kontroller en publisering
 over HTTPS før domenet flyttes.

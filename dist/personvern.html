@@ -116,7 +116,7 @@
 <li>X-Content-Type-Options, X-Frame-Options og Cross-Origin-Opener-Policy.</li>
 <li>Brannmur (Bunny Shield) i blokkeringsmodus. Robotgjenkjenning er slått av, fordi den bruker fingeravtrykk av nettleseren.</li>
 <li>Tilgangslogger og DNS-logger av. IP-adresser fjernes helt i loggene som finnes.</li>
-<li>Nettverksrutene til Bunny er signert (RPKI), så trafikken er vanskeligere å omdirigere. DNSSEC er klargjort hos Bunny, og domeneleverandøren er i gang med å aktivere det (2. november 2026).</li>
+<li>Nettverksrutene til Bunny er signert (RPKI), så trafikken er vanskeligere å omdirigere. Domenet er signert med DNSSEC fra 2. november 2026, så svar om hvor siden ligger, kan ikke forfalskes underveis uten at det oppdages.</li>
 </ul>
 <p><strong>Tester kjørt 1. november 2026</strong></p>
 <ul>
@@ -124,7 +124,12 @@
 <li><a href="https://securityheaders.com/?q=spareverksted.no">securityheaders.com</a>: alle anbefalte headere på plass.</li>
 <li><a href="https://webbkoll.5july.net/">Webbkoll</a>: 0 informasjonskapsler og 0 forespørsler til tredjeparter.</li>
 <li><a href="https://themarkup.org/blacklight">Blacklight</a>: ingen sporing funnet.</li>
-<li><a href="https://internet.nl/">internet.nl</a>: HTTPS, IPv6 og RPKI i orden. DNSSEC mangler. Sikkerhetspolicyen tillater innebygd stil (CSS), fordi grafene trenger det. JavaScript har ingen slik tillatelse.</li>
+<li><a href="https://internet.nl/">internet.nl</a>: HTTPS, IPv6 og RPKI i orden. DNSSEC manglet da testen ble kjørt, og er aktivert senere (se under). Sikkerhetspolicyen tillater innebygd stil (CSS), fordi grafene trenger det. JavaScript har ingen slik tillatelse.</li>
+</ul>
+<p><strong>Tester kjørt 2. november 2026</strong></p>
+<ul>
+<li><a href="https://dnsviz.net/d/spareverksted.no/dnssec/">DNSViz</a>: DNSSEC-kjeden fra .no til spareverksted.no er gyldig.</li>
+<li><a href="https://securityheaders.com/?q=spareverksted.no">securityheaders.com</a>: karakter A+.</li>
 </ul>
 <p>Resultatene gjelder dagen de ble kjørt. Lenkene kjører testen på nytt.</p>
 </details>
