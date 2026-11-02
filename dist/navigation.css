@@ -3,7 +3,7 @@
 .input-result{display:none}
 .hero-result .result-assumptions{font-size:13px;line-height:1.5;color:inherit;margin:10px 0 0}
 .result-navigation button{min-height:44px}
-.result-navigation .text-link,.return-fields{min-height:44px;padding-block:10px}
+.result-navigation .text-link,.return-fields{min-height:44px;padding-block:10px}.return-fields{margin-right:20px}
 #planInputs,#dreamInputs,#withdrawInputs,#chartPanel,#savedHeading{scroll-margin-block-start:20px}
 #planInputs:focus-visible,#dreamInputs:focus-visible,#withdrawInputs:focus-visible,#chartPanel:focus-visible,#savedHeading:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
 .desktop-nav{display:none!important}
