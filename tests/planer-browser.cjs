@@ -71,7 +71,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    // Lagre-dialogen: Oppdater kontra Lagre ny, og unike navn.
    await q.locator('#monthly').fill('2600');await q.locator('#monthly').blur();await q.waitForTimeout(200);
    await q.evaluate(()=>document.getElementById('save').click());
-   assert(await q.locator('#saveUpdate').isVisible());assert.equal(await q.locator('#scenarioName').inputValue(),'Lars (2)');
+   assert(await q.locator('#saveUpdate').isVisible());assert.equal(await q.locator('#scenarioName').inputValue(),'Lars (2)');assert.equal(await q.locator('#saveForm .primary').innerText(),'Lagre som ny plan','ny plan er hovedvalget');
    await q.locator('#saveNew').click();
    let names=(await stored()).map(x=>x.name);assert.deepEqual(names,['Lars','Plan 1','Bil','Pensjon','Hus','Lars (2)']);
    assert.equal(await q.locator('#planName').innerText(),'Lars (2)');
@@ -84,6 +84,10 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    assert(await q.locator('#planBar').isHidden(),'slettet plan er ikke lenger åpen');
    await q.locator('#undo').click();assert.equal((await stored()).length,7);
 
+   // Plan-navn får neste ledige nummer, ikke «Plan 1 (2)».
+   await q.locator('button[aria-label="Åpne Plan 1"]').click();await q.evaluate(()=>document.getElementById('save').click());assert.equal(await q.locator('#scenarioName').inputValue(),'Plan 2');await q.locator('#cancelSave').click();
+   // Å sammenligne åpen, uendret plan med seg selv gir beskjed og ingen hopp.
+   await q.evaluate(()=>{document.getElementById('savedDetails').open=true;});await q.locator('input[aria-label="Velg Plan 1"]').check();await q.locator('#compareSelected').click();assert.match(await q.locator('#pickHint').innerText(),/står i kalkulatoren nå/);assert.equal(await q.evaluate(()=>selectedPlans.size),0);await q.locator('#pickAll').click();
    // Uten åpen plan foreslås første ledige Plan-navn.
    await q.evaluate(()=>{activePlan=null;savedRender();document.getElementById('save').click();});
    assert.equal(await q.locator('#scenarioName').inputValue(),'Plan 2');assert(await q.locator('#saveUpdate').isHidden());
