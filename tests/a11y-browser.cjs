@@ -19,13 +19,15 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    kalkulator:async p=>{await p.goto(origin+'/index.html#'+PLAN);await p.reload();await p.evaluate(()=>{for(const d of document.querySelectorAll('#workbench details'))d.open=true;});},
    veileder:async p=>{await p.goto(origin+'/spor.html');await p.evaluate(()=>{for(const d of document.querySelectorAll('details'))d.open=true;});await p.locator('[data-topic]').first().click();},
    om:async p=>{await p.goto(origin+'/om.html');},
-   personvern:async p=>{await p.goto(origin+'/personvern.html');},
-   tilgjengelighet:async p=>{await p.goto(origin+'/tilgjengelighet.html');}};
+   personvern:async p=>{await p.goto(origin+'/personvern.html');await p.evaluate(()=>{for(const d of document.querySelectorAll('details'))d.open=true;});},
+   tilgjengelighet:async p=>{await p.goto(origin+'/tilgjengelighet.html');await p.evaluate(()=>{for(const d of document.querySelectorAll('details'))d.open=true;});}};
   const page=async(theme,width,height=800)=>{const ctx=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});const p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message));await p.addInitScript(t=>{try{sessionStorage.setItem('sv-color-theme',t);}catch{}},theme);return p;};
 
   // Målingene kjører i siden. De er de samme som i revisjonen 23.10.2026 (se docs i prosjektet).
   const measure=p=>p.evaluate(()=>{
-   const vis=e=>{const st=getComputedStyle(e),rc=e.getBoundingClientRect();return st.visibility!=='hidden'&&st.display!=='none'&&rc.width>0&&rc.height>0&&!e.closest('[hidden],dialog:not([open])')&&st.opacity!=='0';};
+   const vis=e=>{const st=getComputedStyle(e),rc=e.getBoundingClientRect();return st.visibility!=='hidden'&&st.display!=='none'&&rc.width>0&&rc.height>0&&!e.closest('[hidden],dialog:not([open])')&&st.opacity!=='0'&&!inClosedDetails(e);};
+   // Innhold i lukket <details> har fortsatt bokser i Chromium, men kan ikke trykkes på.
+   const inClosedDetails=e=>{const d=e.closest('details:not([open])');if(!d)return false;const sm=e.closest('summary');return !(sm&&sm.parentElement===d);};
    const sel=e=>{let s=e.tagName.toLowerCase();if(e.id)return s+'#'+e.id;const c=[...e.classList].slice(0,2).join('.');if(c)s+='.'+c;return (e.parentElement&&e.parentElement.id?'#'+e.parentElement.id+'>':'')+s;};
    const rgb=c=>{const m=c&&c.match(/rgba?\(([^)]+)\)/);if(!m)return null;const v=m[1].split(/[ ,\/]+/).filter(Boolean).map(Number);return {r:v[0],g:v[1],b:v[2],a:v.length>3?v[3]:1};};
    const lum=({r,g,b})=>{const f=x=>{x/=255;return x<=0.03928?x/12.92:((x+0.055)/1.055)**2.4};return 0.2126*f(r)+0.7152*f(g)+0.0722*f(b);};
