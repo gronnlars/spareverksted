@@ -31,3 +31,23 @@ if(liveSummary){
   if(shown(target))target.focus();
  }));
 })();
+// Lav synlig flate med tastatur (liggende mobil): når et tallfelt får fokus, vis ledeteksten og feltet øverst
+// i det synlige området, så feltet ikke havner rett over tastaturet. Gjør ingenting når alt allerede synes.
+(function(){
+ const vv=window.visualViewport;if(!vv)return;
+ let timer=0;
+ function reveal(field){
+  if(document.activeElement!==field)return;
+  const label=field.closest('label')||field,top=vv.offsetTop,bottom=vv.offsetTop+vv.height;
+  const a=label.getBoundingClientRect(),b=field.getBoundingClientRect();
+  if(a.top>=top+4&&b.bottom<=bottom-8)return;
+  window.scrollBy({top:a.top-top-8,behavior:'instant'});
+ }
+ document.addEventListener('focusin',event=>{
+  const field=event.target;
+  if(!field.matches('input[inputmode=decimal],input[type=text],input[type=number]'))return;
+  if(innerHeight>500&&vv.height>500)return;
+  clearTimeout(timer);timer=setTimeout(()=>reveal(field),350);
+ });
+ vv.addEventListener('resize',()=>{const field=document.activeElement;if(field&&field.matches&&field.matches('input')&&vv.height<=500){clearTimeout(timer);timer=setTimeout(()=>reveal(field),120);}});
+})();
