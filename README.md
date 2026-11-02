@@ -1,6 +1,6 @@
 # Spareverksted
 
-Denne versjonen av Spareverksted er i en tidlig fase. Jeg anbefaler å vente med ordinær bruk og med å publisere egne kopier til relevante regulatoriske spørsmål er avklart.
+Spareverksted er i testfase. Beregninger og innhold kan endres, og tilbakemeldinger tas imot med takk.
 
 Jeg bygger en grunnmur for personvern, universell utforming og innhold som skal være enkelt å kontrollere og oppdatere etter hvert som nettstedet vokser. Strenge regler for kilder og innhold setter grenser for både meg og KI-en jeg bruker, for å redusere risikoen for faktafeil og påstander uten kildegrunnlag.
 
