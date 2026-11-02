@@ -56,3 +56,6 @@ svg [stroke="#93a18c"]{stroke:#6f8068}
 :root[data-theme=night] #chart path[stroke="#637ca2"]{stroke:#aec7f4}
 :root[data-theme=night] #chart path[fill="#c5d9b5"]{fill:#44604f}
 }
+/* Lenker til andre nettsteder: synlig ↗ og tekst for skjermlesere (tekst etter / er alternativtekst). */
+a[href^="http"]:not([href^="https://spareverksted.no"])::after{content:"\00a0↗";content:"\00a0↗"/" (annen nettside)";font-size:.85em;text-decoration:none;display:inline-block}
+a[href^="http"][target="_blank"]:not([href^="https://spareverksted.no"])::after{content:"\00a0↗";content:"\00a0↗"/" (annen nettside, åpnes i ny fane)"}
