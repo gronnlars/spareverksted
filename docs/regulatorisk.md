@@ -2,7 +2,17 @@
 
 Opprettet 25. oktober 2026. Intern statusnotis. Gjelder alle bidragsytere, inkludert ChatGPT/Codex, Claude, Gemini og Vibe.
 
-## Status: prosjektet er på vent
+## Status: pausen er avsluttet (2. november 2026)
+
+Lars avsluttet pausen 2.11.2026. Begrunnelse: Pausen er brukt til å stramme inn kildekrav, personvern og universell utforming, og innholdet bygger på offentlige og dokumenterte kilder. Finanstilsynet har ikke gitt faglig svar. Avslutningen er Lars' egen vurdering, ikke en avklaring fra tilsynet.
+
+Finanstilsynet ble orientert på e-post 2.11.2026 og bekreftet mottak kl. 12.27. Det er en mottaksbekreftelse, ikke et faglig svar eller en godkjenning. Teksten Lars sendte bygger på utkastet fra samtalen samme dag og er ikke kontrollert mot sendt-versjonen. Hovedinnholdet: utviklingen starter igjen, også forslag til relevante spørsmål ut fra alder, sparehorisont og sparemål. Siden nevner ingen bestemte produkter, fond eller tilbydere og sier ikke hva den enkelte bør kjøpe eller selge. Tilpasningen velger hvilke forklaringer som vises først, alle temaer er åpne for alle, og brukeren ser hvilke opplysninger som er brukt. Lars ber fortsatt om tilsynets vurdering og retter seg etter eventuelle signaler.
+
+**Hva som får oss til å revurdere:** Et svar fra Finanstilsynet som trekker grensen for investeringsrådgivning et annet sted enn over. Da vurderes publisert tilpasning på nytt før videre arbeid.
+
+Avsnittene under om pausen er historikk og gjelder ikke lenger, bortsett fra «Sperrer som gjelder også etter oppstart».
+
+## Historikk: prosjektet var på vent (25. oktober til 2. november 2026)
 
 Spareverksted er satt på vent til Finanstilsynet har gitt svar og veiledning, og alt er klarert. Prosjektet startes først opp igjen når Lars uttrykkelig melder fra om det, etter egen vurdering av svaret.
 
@@ -69,7 +79,7 @@ Lars sendte en ny presisering til Finanstilsynet 28.10.2026. Finanstilsynet bekr
 
 Disse oppheves ikke av at pausen avsluttes:
 
-1. **Kontekstuell spørsmålsveiledning** (fase 3, bruk av alder, sparehorisont og sparemål til å velge spørsmål) er sperret til Lars uttrykkelig åpner for den, etter å ha vurdert svaret.
+1. **Kontekstuell spørsmålsveiledning** (fase 3) er åpnet av Lars 2.11.2026, med disse vilkårene: Tilpasningen velger hvilke spørsmål og forklaringer som vises først, men konkluderer ikke med hva brukeren bør gjøre. Alle temaer forblir tilgjengelige. Brukeren ser hvilke opplysninger som er brukt og kan endre dem. Siden later ikke som den kjenner mer til brukerens økonomi enn det som er fylt inn.
 2. **Ingen produktanbefalinger** og ingen «best egnet for deg». Ingen anbefaling av bestemte fond, aksjer eller tilbydere. Omtale av produkter og tilbydere skal bare forklare begreper og kontotyper.
 3. **Kildekontrollen må være fullført** før nye råd legges ut.
 

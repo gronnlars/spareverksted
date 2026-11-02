@@ -11,8 +11,22 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | Hva | Regel | Godkjent av | Utløper | Fornyes av | Status |
 | --- | --- | --- | --- | --- | --- |
 | Varsel om sparehorisont for Indeksfond under 5 år på kalkulatorsiden (PR #67) | Kalkulatorfrysen (plan, punkt 0) | Lars ved sammenslåing | 31.01.2027 | Lars | Foreslått. Aktivt først når #67 er slått sammen |
-| Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en med unntaket er slått sammen |
-| Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Vedtatt. Aktivt når PR-en er slått sammen |
+| Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
+| Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
+
+## Pausen avsluttes (2. november 2026)
+
+**Beslutning:** Lars avsluttet prosjektpausen 2.11.2026 og orienterte Finanstilsynet samme dag. Hele siden kan utvikles igjen etter faseplanen: kvalitetssikring, brukergrensesnitt, kontekstuell veiledning, kunnskapsbase og til slutt lånekalkulator.
+
+**Begrunnelse:** Pausen ga et grundigere fundament og bedre retningslinjer. Informasjonen bygger på åpne, dokumenterte kilder som SSB og Skatteetaten. Det avgjørende skillet mot investeringsrådgivning er etter prosjektets forståelse personlige anbefalinger om bestemte finansielle instrumenter, og slike gis ikke. Dette er ikke juridisk avklart.
+
+**Vilkår som består:** Ingen navngitte produkter, fond eller tilbydere og ingen «best for deg». Kildekontroll før nye råd. Tilpasning velger forklaringer, men konkluderer ikke for brukeren. Hver PR godkjennes av Lars.
+
+**Alternativ som ble forkastet:** Å vente på skriftlig svar. Det kan ta lang tid og ventes uansett å bli generell veiledning.
+
+**Revurderes hvis:** Finanstilsynet trekker grensen et annet sted.
+
+**Erstatter:** Avvikene i tabellen over som gjaldt «når pausen oppheves», er utløpt.
 
 ## Flytting av publiseringsmål til Bunny (31. oktober 2026)
 
