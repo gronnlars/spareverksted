@@ -4,7 +4,8 @@
    - Med støtte blir ordet en knapp som åpner én felles boks (native popover: Esc og klikk utenfor lukker).
    - Boksen legger seg over innholdet og flytter ingenting (ingen layoutskift).
    - Fokus flyttes til boksen ved åpning og tilbake til ordet ved lukking.
-   - «Les mer» vises bare når svaret i «Spør om sparing» er publisert. */
+   - «Les mer» vises bare når svaret i «Spør om sparing» er publisert.
+   - Inne i et svar (data-svar) forklares ikke ord som hører til det samme svaret. */
 (function(){
 'use strict';
 const B=window.SpareBegreper;
@@ -46,7 +47,11 @@ function vis(knapp){
 }
 function oppgrader(rot){
  for(const s of rot.querySelectorAll('span[data-begrep]')){
-  if(!B.hent(s.dataset.begrep))continue;
+  const b=B.hent(s.dataset.begrep);if(!b)continue;
+  // Inne i et svar om samme tema forklares ikke ordet: leseren er allerede der forklaringen står.
+  // Svar merkes med data-svar="<id>" på et omsluttende element.
+  const svar=s.closest('[data-svar]')?.dataset.svar;
+  if(svar&&(svar===b.svar||svar===b.id)){s.replaceWith(document.createTextNode(s.textContent));continue;}
   const k=document.createElement('button');k.type='button';k.className='begrep';k.dataset.begrep=s.dataset.begrep;
   k.setAttribute('aria-haspopup','dialog');k.setAttribute('aria-expanded','false');k.setAttribute('aria-controls','begrepBoks');
   k.textContent=s.textContent;k.addEventListener('click',()=>vis(k));s.replaceWith(k);

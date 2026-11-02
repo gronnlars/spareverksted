@@ -75,6 +75,8 @@ Ordbok-setningen skal:
 
 En valgfri utdyping på høyst 25 ord kan si hvorfor ordet betyr noe. Eksempler, tall og forbehold hører hjemme i svaret.
 
+Inne i et svar markeres ikke ord som hører til det samme svaret. Den som leser om renters rente, skal ikke få en boks som forklarer renters rente. Svaret merkes med `data-svar`, og komponenten hopper over slike ord.
+
 Punkt 1, 2 og 5 og kravet om ordrett samsvar med svaret sjekkes automatisk (`tests/begreper.test.cjs`). Punkt 3 og 4 må vurderes av den som kontrollerer teksten.
 
 ## 5. Vis hva vi vet og hva vi antar

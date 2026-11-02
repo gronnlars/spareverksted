@@ -47,6 +47,14 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    assert.deepEqual(errors,[]);
    await page.close();
   }
+  {// Inne i svaret om kjøpekraft blir «kjøpekraft» vanlig tekst, mens andre ord fortsatt forklares.
+   const page=await browser.newPage();await page.goto(base+'index.html');
+   await page.evaluate(()=>{const a=document.createElement('article');a.dataset.svar='q-kjopekraft';a.innerHTML='<p><span data-begrep="kjopekraft">Kjøpekraft</span> og <span data-begrep="renters-rente">renters rente</span>.</p>';document.querySelector('main').prepend(a);});
+   await page.locator('[data-svar] button.begrep').first().waitFor();
+   assert.equal(await page.locator('[data-svar] button.begrep').count(),1);
+   assert.equal(await page.locator('[data-svar] button.begrep').getAttribute('data-begrep'),'renters-rente');
+   assert.match(await page.locator('[data-svar]').innerText(),/^Kjøpekraft og/);
+   await page.close();}
   // «Les mer» når svaret er publisert: simuler at kjøpekraft-svaret er med på listen.
   const ctx=await browser.newContext({viewport:{width:390,height:844}});
   await ctx.route('**/publiserte-svar.js*',r=>r.fulfill({contentType:'text/javascript',body:"window.SparePubliserteSvar=['q-bsu-basics','q-aksjesparekonto','q-fondskonto','q-kjopekraft'];"}));
