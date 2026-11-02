@@ -37,7 +37,12 @@
    group.append(button);
   }
   picker.addEventListener('keydown',event=>{if(event.key==='Escape'&&!group.hidden){event.preventDefault();setOpen(false,true);}});
-  picker.addEventListener('focusout',event=>{if(!group.hidden&&!picker.contains(event.relatedTarget))setOpen(false,false);});
+  // Safari på iPhone gir ikke knapper fokus ved trykk, så fokus forsvinner (relatedTarget er null) før click.
+  // Et trykk inne i pillen skal derfor ikke lukke den. Tab ut og trykk utenfor lukker som før.
+  let pressInside=false;
+  picker.addEventListener('pointerdown',()=>{pressInside=true;});
+  document.addEventListener('pointerup',()=>setTimeout(()=>{pressInside=false;},0));
+  picker.addEventListener('focusout',event=>{if(group.hidden||pressInside||picker.contains(event.relatedTarget))return;setOpen(false,false);});
   document.addEventListener('click',event=>{if(!group.hidden&&!picker.contains(event.target))setOpen(false,false);});
   picker.append(toggle,group);showCurrent();
   const groupForWrapper=picker;
