@@ -24,7 +24,7 @@ const contrast=(a,b)=>{const lum=c=>{const v=c.match(/[\d.]+/g).slice(0,3).map(N
     assert.equal(await page.locator('html').getAttribute('data-theme'),theme);await overflow();
     await page.locator('.theme-toggle').click();
     await checkContrast('.brand');await checkContrast('.theme-picker [aria-pressed=true]',3);await checkContrast('.theme-picker [aria-pressed=false]',3);
-    const boxes=await page.locator('.theme-picker button').evaluateAll(els=>els.map(e=>{const r=e.getBoundingClientRect();return {w:r.width,h:r.height};}));assert(boxes.every(b=>b.w>=24&&b.h>=44));
+    const boxes=await page.locator('.theme-picker button:visible').evaluateAll(els=>els.map(e=>{const r=e.getBoundingClientRect();return {w:r.width,h:r.height};}));assert(boxes.every(b=>b.w>=24&&b.h>=44));
     await page.keyboard.press('Escape');assert.equal(await page.locator('#themeOptions').isHidden(),true,'Esc lukker temavalget');assert.equal(await page.evaluate(()=>document.activeElement.className),'theme-toggle','Fokus tilbake på temaknappen');
     const a=await page.locator('.brand-tools').boundingBox(),b=await page.locator('.site-header>.site-nav').boundingBox();if(b&&b.y<a.y+a.height-1)assert(a.x+a.width<=b.x+1,'Header controls do not overlap');
    }
