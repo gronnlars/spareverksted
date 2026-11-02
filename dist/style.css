@@ -101,3 +101,5 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 .hero-download{min-height:44px;padding:6px 14px;background:transparent;color:inherit;border:1px solid var(--control-border,#67816a);border-radius:22px;font-size:14px;font-weight:600}
 .hero-download:hover{background:rgba(255,255,255,.08)}
 @media print{.hero-download{display:none}}
+/* Mobil: dialoger festes øverst, så de ikke hopper når tastaturet åpnes */
+@media(max-width:760px){dialog[open]{margin:max(12px,env(safe-area-inset-top)) auto auto;max-height:calc(100dvh - 24px)}}
