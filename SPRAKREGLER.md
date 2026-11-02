@@ -61,6 +61,24 @@ Ikke lag ekstra fordeler eller ulemper for å fylle en mal. Hvis samme forhold h
 - Bruk «hverken». Unngå tankestrek, tre prikker, doble mellomrom og unødvendige utropstegn.
 - Skriv naturlig norsk. Kutt tomme innledninger og gjentakelser. Dette gjelder skrivestilen, også når teksten er skrevet med hjelp av KI. Ingen fast ordgrense skal tvinge bort nødvendig mening.
 
+### Ordbok-setningen
+
+Hvert begrep i begrepsregisteret (`dist/begreper.js`) har én ordbok-setning. Den vises der ordet står, og samme setning står ordrett i svaret begrepet lenker til, først eller sist. Da finnes det én forklaring, ikke to som kan gli fra hverandre.
+
+Ordbok-setningen skal:
+
+1. Starte med ordet selv og si hva det **er** eller **betyr**: «Kjøpekraft er hvor mye du kan kjøpe for pengene.»
+2. Være én setning på høyst 25 ord, og gi mening alene. Ingen «dette» eller «den» som peker bakover.
+3. Si hva slags ting ordet er, og hva som skiller det fra lignende ting.
+4. Bruke enklere ord enn ordet som forklares. Ikke forklare ordet med seg selv.
+5. Gjelde for alle. Ingen råd, ingen produkter, ingen tall eller satser som endrer seg, ingen eksempler.
+
+En valgfri utdyping på høyst 25 ord kan si hvorfor ordet betyr noe. Eksempler, tall og forbehold hører hjemme i svaret.
+
+Inne i et svar markeres ikke ord som hører til det samme svaret. Den som leser om renters rente, skal ikke få en boks som forklarer renters rente. Svaret merkes med `data-svar`, og komponenten hopper over slike ord.
+
+Punkt 1, 2 og 5 og kravet om ordrett samsvar med svaret sjekkes automatisk (`tests/begreper.test.cjs`). Punkt 3 og 4 må vurderes av den som kontrollerer teksten.
+
 ## 5. Vis hva vi vet og hva vi antar
 
 Skill mellom brukerens egne tall, eksempeltall, observerte historiske tall og antakelser om framtiden.

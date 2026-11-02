@@ -1,7 +1,7 @@
 const assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs');
 const V=require('../dist/veileder-engine.js');for(const e of require('../dist/veileder-knowledge.js'))V.register(e);
 const withheld=V.topics.filter(t=>!['q-bsu-basics','q-aksjesparekonto','q-fondskonto'].includes(t.id));
-vm.runInNewContext(fs.readFileSync('dist/veileder-published.js','utf8'),{window:{SpareVeileder:V}});
+vm.runInNewContext(fs.readFileSync('dist/veileder-published.js','utf8'),{window:{SpareVeileder:V,SparePubliserteSvar:require('../dist/publiserte-svar.js')}});
 const allowed=['q-aksjesparekonto','q-bsu-basics','q-fondskonto'];
 assert.deepEqual(V.topics.map(t=>t.id).sort(),allowed);
 for(const t of withheld){assert.throws(()=>V.answer(t.id,{}));for(const q of [t.title,...t.questions]){const r=V.search(q);assert.equal(r.mode,'none',q);assert.equal(r.hits.length,0,q);}}

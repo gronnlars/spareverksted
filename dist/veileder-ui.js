@@ -182,5 +182,7 @@ $('profileForm').addEventListener('input',()=>{if(selected){$('answerPanel').hid
 $('profileForm').addEventListener('change',()=>{if(selected)$('answerPanel').hidden=true;});
 $('resetGuidance').addEventListener('click',()=>{context=C.empty();C.clear(storage);$('question').value='';$('matches').replaceChildren();$('matchStatus').textContent='Opplysningene er glemt. Kalkulatorens egne felter er ikke endret.';fill();$('profileDetails').open=false;render(true);});
 fill();suggestions();
+// Lenke fra en begrepsforklaring: spor.html#svar=<id> åpner svaret hvis det er publisert.
+{const m=/^#svar=([\w-]+)$/.exec(location.hash);if(m&&V.topics.some(t=>t.id===m[1]))choose(m[1]);}
 })();
 
