@@ -37,7 +37,7 @@
   const link=event.target.closest('.site-header a[href="index.html"]');
   if(link&&link.id!=='brandHome'&&!wizardActive){event.preventDefault();setPage('calculator');go(fields());}
  });
- get('plansMenu').onclick=()=>{get('savedDetails').open=true;go(get('savedHeading'));};
+ if(get('plansMenu'))get('plansMenu').onclick=()=>{get('savedDetails').open=true;go(get('savedHeading'));};
  let scheduled=false;
  function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;syncJump();});}
  addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule);

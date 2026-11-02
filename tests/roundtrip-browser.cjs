@@ -82,11 +82,11 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.deepEqual(await rs(),{start:E_DEF.start,monthly:E_DEF.monthly,type:''},'Etter Nullstill kommer ikke den gamle planen tilbake');
   // b) Ny beregning fullført med nye tall: de nye tallene følger med, ikke de gamle.
   await makePlan();
-  await reset.locator('.site-menu>summary').click();await reset.locator('#startAgain').click();await reset.locator('#onboardStart').fill('500');await reset.locator('#onboardMonthly').fill('700');await reset.locator('#onboardYears').fill('8');await reset.locator('#beginJourney').click();
+  await reset.locator('#startAgain').click();await reset.locator('#onboardStart').fill('500');await reset.locator('#onboardMonthly').fill('700');await reset.locator('#onboardYears').fill('8');await reset.locator('#beginJourney').click();
   await goGuideAndBack();assert.deepEqual(await rs(),{start:500,monthly:700,type:''},'Ny beregning erstatter den gamle planen');
   // c) Ny beregning åpnet, siden lastet på nytt fra startskjermen: den gamle planen er fjernet.
   await makePlan();
-  await reset.locator('.site-menu>summary').click();await reset.locator('#startAgain').click();await reset.reload();
+  await reset.locator('#startAgain').click();await reset.reload();
   assert.notDeepEqual(await rs(),{start:12000,monthly:4000,type:'index'},'Gammel plan dukker ikke opp etter Ny beregning og ny lasting');
   assert.equal(await reset.evaluate(()=>sessionStorage.getItem('sv-working-plan-v1')),null);
 

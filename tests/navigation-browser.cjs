@@ -51,7 +51,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert((await page.locator('.before-tax-badge').boundingBox()).y>=0,'Badge is not scrolled away');
   assert((await page.locator('#resultLabel').boundingBox()).y>=0,'Heading is not scrolled away');
   const nextAction=await page.locator('#seeGraph').boundingBox();assert(nextAction.y+nextAction.height<=712,'Both actions fit above a 100 px browser-toolbar allowance in the 812 px test viewport');
-  await page.locator('.site-menu>summary').click();await page.locator('#plansMenu').click();assert.equal(await page.locator('#savedDetails').getAttribute('open'),'');assert.equal(await page.evaluate(()=>document.activeElement.id),'savedHeading');
+  assert.match(await page.locator('#savedHeading').innerText(),/Ta vare på planen/);
   // Hidden assumptions and display settings survive editing the start choices.
   await page.evaluate(()=>{s.crash=30;s.crashYear=5;s.extra=50000;s.extraYear=3;view.showBank=true;mode='goal';fill();render();});
   const beforeEdit=await state();
@@ -64,25 +64,23 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert(await page.locator('#meaning').isHidden());await page.locator('#seeGraph').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'chartPanel');
   await page.locator('#undo').click();assert.equal(await state(),beforeEdit,'Edit can be undone');
   // A new calculation is a separate action and explains what will happen.
-  await page.locator('.site-menu>summary').click();assert.equal(await page.locator('#startAgain').innerText(),'Ny beregning');await page.locator('#startAgain').click();
+  assert.equal(await page.locator('#startAgain').innerText(),'Ny beregning');await page.locator('#startAgain').click();
   assert(await page.locator('#journeyFreshNote').isVisible());assert.equal(await page.locator('#onboardStart').inputValue(),'0');await page.locator('#closeJourney').click();assert.equal(await state(),beforeEdit);
   // Desktop uses visible primary navigation, and calculator links keep the current plan.
-  await page.setViewportSize({width:1280,height:900});assert(await page.locator('.desktop-nav').isVisible());assert.equal(await page.locator('.site-menu a[href*="github.com"]').count(),0);
+  await page.setViewportSize({width:1280,height:900});assert(await page.locator('.site-header>.site-nav').isVisible());assert.equal(await page.locator('.site-header a[href*="github.com"]').count(),0);assert.equal(await page.locator('nav[aria-label=Hovedmeny]').count(),1,'Én hovedmeny');
   await page.locator('#monthly').scrollIntoViewIfNeeded();await page.evaluate(()=>document.getElementById('mobileResultButton').click());const desktopTop=(await page.locator('#savingsResult').boundingBox()).y;assert(desktopTop>=19&&desktopTop<=21,'Desktop retains the 20 px margin');
-  await page.locator('#withdrawalPage').click();await page.locator('.desktop-nav a[href="index.html"]').click();assert.equal(await page.evaluate(()=>s.monthly),4000);assert.equal(await page.evaluate(()=>document.activeElement.id),'planInputs');
+  await page.locator('#withdrawalPage').click();await page.locator('.site-header>.site-nav a[href="index.html"]').click();assert.equal(await page.evaluate(()=>s.monthly),4000);assert.equal(await page.evaluate(()=>document.activeElement.id),'planInputs');
   await page.locator('#dreamPage').click();await page.locator('#dreamPanel .return-fields').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'dreamInputs');
   await page.locator('#withdrawalPage').click();await page.locator('#withdrawalPanel .return-fields').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'withdrawInputs');
-  await page.goto(origin+'/spor.html');assert(await page.locator('.desktop-nav').isVisible());assert(await page.locator('.site-menu').isVisible());await page.setViewportSize({width:320,height:812});assert(await page.locator('.site-menu').isVisible());
+  await page.goto(origin+'/spor.html');assert(await page.locator('.site-header>.site-nav').isVisible());await page.setViewportSize({width:320,height:812});assert(await page.locator('.site-header>.site-nav').isVisible());
   // Egenprøve 30.10: menyer på infosider må ha innhold, også ved tastatur og smal zoom-visning.
   for(const file of ['index.html','spor.html','om.html','personvern.html','tilgjengelighet.html','ressursbruk.html'])for(const width of [1280,320,256]){
    await page.setViewportSize({width,height:900});await page.goto(origin+'/'+file);
    if(file==='index.html'){await page.evaluate(()=>sessionStorage.clear());await page.reload();}
-   const menu=page.locator('.site-menu>summary');assert(await menu.isVisible(),file+' '+width+': menu visible');
-   await menu.focus();await page.keyboard.press('Enter');
-   assert(await page.locator('.site-menu').evaluate(e=>e.open));
-   assert(await page.locator('.site-menu .site-nav a[href="index.html"]').isVisible(),file+' '+width+': no empty menu');
-   await page.keyboard.press('Tab');assert(await page.evaluate(()=>document.activeElement.matches('.site-menu a')),file+': Tab reaches menu link');
-   await page.keyboard.press('Escape');assert.equal(await page.evaluate(()=>document.activeElement===document.querySelector('.site-menu>summary')),true);
+   // Hovedmenyen er alltid synlig: tre lenker, nåelige med tastatur, ingen nedtrekk.
+   const links=page.locator('.site-header>.site-nav a');assert.equal(await links.count(),3,file+' '+width+': tre lenker');
+   for(const link of await links.all())assert(await link.isVisible(),file+' '+width+': lenken synes');
+   await links.first().focus();assert(await page.evaluate(()=>document.activeElement.closest('.site-nav')!==null),file+': Tab når menylenke');
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),file+' '+width+': no horizontal overflow');
    const header=await page.locator('.site-header').boundingBox();
    for(const button of await page.locator('.theme-picker button').all()){
