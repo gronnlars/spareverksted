@@ -2,7 +2,7 @@
 (function(root){
 'use strict';
 const V=root.SpareVeileder;
-const ids=new Set(['q-bsu-basics','q-aksjesparekonto','q-fondskonto']);
+const ids=new Set(root.SparePubliserteSvar);
 const withheld=V.topics.filter(t=>!ids.has(t.id));
 const clean=s=>String(s).toLocaleLowerCase('nb').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const oldQuestions=new Set(withheld.flatMap(t=>[t.title,...t.questions]).map(clean));

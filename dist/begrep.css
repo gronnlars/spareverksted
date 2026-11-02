@@ -1,0 +1,15 @@
+/* Forklaring der ordet står. Ordet ser ut som tekst med prikket understrek. */
+button.begrep{all:unset;display:inline;font:inherit;color:inherit;cursor:pointer;text-decoration:underline dotted;text-decoration-thickness:1.5px;text-underline-offset:3px;padding:6px 0;margin:-6px 0;border-radius:3px;-webkit-tap-highlight-color:transparent}
+button.begrep:hover{text-decoration-style:solid}
+button.begrep:focus-visible{outline:3px solid #b58a40;outline-offset:2px}
+button.begrep[aria-expanded=true]{background:var(--surface-soft,#e8efdf)}
+.begrep-boks{position:fixed;inset:auto;margin:0;width:min(360px,calc(100vw - 24px));max-height:min(70vh,520px);overflow:auto;padding:18px 20px 16px;border:1px solid var(--line);border-radius:14px;background:var(--surface,#fff);color:var(--ink);box-shadow:0 14px 44px #172c3333;font-size:15px;line-height:1.55}
+.begrep-boks:focus{outline:none}.begrep-boks:focus-visible{outline:3px solid #b58a40;outline-offset:2px}
+.begrep-tittel{font-size:17px;margin:0 0 6px}
+.begrep-tekst{margin:0 0 10px}
+.begrep-videre{margin:0 0 12px;font-size:13px;color:var(--muted)}
+.begrep-videre a:first-child:not(.begrep-kilde a){display:block;font-size:15px;font-weight:600;margin-bottom:8px}
+.begrep-kilde{display:block}
+.begrep-lukk{min-height:44px;min-width:88px}
+@media(max-width:640px){.begrep-boks{left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));top:auto;width:auto}}
+@media(forced-colors:active){button.begrep{text-decoration-color:LinkText}.begrep-boks{border:2px solid CanvasText}}
