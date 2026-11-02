@@ -1,0 +1,9 @@
+.privacy-table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.5;white-space:normal}
+.privacy-table th{position:static}
+.privacy-table th,.privacy-table td{border-top:1px solid var(--line,#d6dbd2);padding:10px 8px;text-align:left;vertical-align:top}
+.privacy-table th{font-weight:650}
+.table-scroll{overflow-x:auto}
+.privacy-status{border-left:4px solid var(--line,#d6dbd2);padding:4px 14px}
+.delete-box{margin-top:16px}
+.delete-box button{min-height:48px}
+@media(max-width:640px){.privacy-table,.privacy-table tbody{display:block;width:100%}.privacy-table thead{position:absolute;left:-9999px}.privacy-table tr{display:block;border-top:1px solid var(--line,#d6dbd2);padding:8px 0}.privacy-table td{display:block;border:0;padding:4px 0}.privacy-table td::before{content:attr(data-label) ": ";font-weight:650}}

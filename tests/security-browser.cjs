@@ -28,6 +28,19 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
    assert.deepEqual(await p.evaluate(()=>[!!window.__inlineExecuted,!!window.__handlerExecuted]),[false,false]);
    assert(!requests.some(u=>u.includes('security-must-not-submit')),'form request blocked');
   }
+  // Inline styles are blocked too: the chart legend and statistics bars must still get their colors and widths.
+  await p.goto(origin+'/index.html');await p.waitForLoadState('networkidle');
+  await p.evaluate(()=>{const e=document.createElement('div');e.setAttribute('style','color:red');document.body.append(e);});
+  await p.waitForFunction(()=>window.__violations.includes('style-src-attr')||window.__violations.includes('style-src'));
+  await p.evaluate(()=>{window.__violations=[];});
+  const legend=()=>p.$$eval('#chartLegend li[data-series]',l=>l.map(li=>[li.dataset.series,getComputedStyle(li).getPropertyValue('--series').trim()]));
+  const day=await legend();assert(day.length>0,'legend rendered');assert(day.every(([,v])=>v.length>0),'legend colors applied');
+  await p.locator('[data-color-theme=night]').click();
+  const night=await legend();assert(night.some(([c,bg],i)=>c==='#24684f'&&bg!==day[i][1])||!day.some(([c])=>c==='#24684f'),'night theme recolors legend');
+  const widths=await p.$$eval('#ageInfo .dist-track i',l=>l.map(i=>[Number(i.dataset.width),i.style.width]));
+  assert(widths.length>0,'distribution bars rendered');
+  for(const [w,css] of widths)assert.equal(css,w+'%','bar width');
+  assert.deepEqual(await p.evaluate(()=>window.__violations),[],'no CSP violations in legend, theme or statistics');
   console.log(engine+': CSP blocks inline script, event handlers and native form submission on every page.');
  }finally{if(browser)await browser.close();await new Promise(r=>server.close(r));}
 })().catch(e=>{console.error(e);process.exitCode=1;});

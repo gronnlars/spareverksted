@@ -17,7 +17,7 @@ openHelp=function(key){
  if(level==='advanced'||!SIMPLE_HELP[key]){fullOpenHelp(key);return;}
  const [title,body]=HELP[key];$('helpTitle').textContent=title;
  $('helpBody').innerHTML='<p>'+SIMPLE_HELP[key]+'</p><details><summary>'+ (key==='monthly'?'Se statistikk og sammenligning':'Mer om forutsetninger og metode')+'</summary>'+body+'</details>';
- if($('helpAge'))$('helpAge').innerHTML=ageText();
+ if($('helpAge'))($('helpAge').innerHTML=ageText(),typeof applyBarWidths==='function'&&applyBarWidths($('helpAge')));
  if($('goAge'))$('goAge').onclick=()=>{$('helpDialog').close();$('ageGroup').closest('details').open=true;$('ageGroup').focus();};
  for(const b of $('helpBody').querySelectorAll('[data-inflation]'))b.onclick=()=>{changePlan({inflation:Number(b.dataset.inflation)},'Prisveksten er endret.');$('helpDialog').close();};
  $('helpDialog').showModal();
