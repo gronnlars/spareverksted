@@ -111,7 +111,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    await p.locator('#workbench').waitFor();assert.equal(await p.evaluate(()=>s.monthly),4000);
    await tabTo(isId('monthly'),'Du sparer hver måned');await p.keyboard.press('Control+A');await p.keyboard.type('3000');await p.keyboard.press('Tab');
    assert.equal(await p.evaluate(()=>s.monthly),3000,'Endring med tastatur gir nytt resultat');
-   // Del plan ligger i panelet «Ta vare på planen». Tastaturbrukeren åpner panelet og trykker Enter.
+   // Del plan ligger i panelet «Lagre, del og sammenlign planer». Tastaturbrukeren åpner panelet og trykker Enter.
    await p.evaluate(()=>document.getElementById('savedDetails').open=true);await p.locator('#share').focus();await p.keyboard.press('Enter');
    assert(await p.evaluate(()=>document.getElementById('shareDialog').open),'Delingsvinduet åpnes med Enter');
    assert(await p.evaluate(()=>document.getElementById('shareDialog').contains(document.activeElement)),'Fokus står i delingsvinduet');
