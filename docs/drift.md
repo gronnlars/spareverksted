@@ -17,6 +17,22 @@ brukes med S3-kompatibel tilgang: sone-navnet er Access Key ID, og GitHub Action
 `BUNNY_STORAGE_PASSWORD` er Secret Access Key. Endpoint er
 `https://de-s3.storage.bunnycdn.com`, region `de`.
 
+## Status i produksjon (2. november 2026)
+
+Domenet bruker Bunny fra 1. november 2026. Opplysningene under er gitt av Lars med skjermbilder fra Bunny-panelet, ikke kontrollert fra arbeidsmiljøet (egress-proxyen avviser spareverksted.no).
+
+- Navnetjenere: `coco.bunny.net` og `kiki.bunny.net` (bekreftet med dnscheck.norid.no). Registrar er fortsatt Domene.no.
+- DNS: `spareverksted.no` og `www` er CNAME til `spareverksted.b-cdn.net`. `mail` er A-oppføring til cPanel-serveren hos Domene.no, uten CDN. MX peker til `mail.spareverksted.no`. SPF, DKIM og DMARC er lagt inn.
+- Pull Zone: Origin er Storage Zone `spareverksted`. Hostnavn `spareverksted.no` og `www.spareverksted.no` med SSL og Force SSL.
+- Storage Zone: Frankfurt, med replikaer i Stockholm og London. Replikaer kan ikke fjernes uten ny sone.
+- Logging: tilgangslogg av for Pull Zone og DNS, IP-anonymisering «Drop». Shield logger ikke headere eller innhold. WAF i blokkeringsmodus. Robotgjenkjenning av.
+- Headere settes i Edge rule `Spareverksted_Personvern`: HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy (no-referrer), Permissions-Policy, Cross-Origin-Opener-Policy og Content-Security-Policy. CSP-headeren er lik meta-taggen i HTML, pluss `frame-ancestors 'none'`. **Endres CSP i koden, må headeren i Bunny endres samtidig**, ellers gjelder den strengeste.
+- Databehandleravtale med BunnyWay d.o.o. signert 31. oktober 2026. PDF-en inneholder privat adresse og ligger ikke i repoet.
+
+Gjenstår: DNSSEC. DS-oppføring (key tag 28434, algoritme 13, digest type 2) sendt til Domene.no 2. november 2026 for registrering; kontroller med dnscheck.norid.no og internet.nl når de bekrefter, automatisk cache-tømming etter publisering,. Shield-hendelser (brannmurlogg) beholdes i 3 dager ifølge Bunny-panelet, opplyst av Lars 2. november 2026.
+
+## Tidligere notat før flytting
+
 Opplasting til Storage Zone alene flytter ikke besøkenes trafikk. Før domenet bruker
 Bunny, må Pull Zone, HTTPS-sertifikat, DNS og sikkerhetshoder konfigureres og
 kontrolleres i Bunny og hos DNS-leverandøren. Inntil dette er bekreftet, skal ikke
