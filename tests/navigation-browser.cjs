@@ -52,7 +52,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert((await page.locator('.before-tax-badge').boundingBox()).y>=0,'Badge is not scrolled away');
   assert((await page.locator('#resultLabel').boundingBox()).y>=0,'Heading is not scrolled away');
   const nextAction=await page.locator('#seeGraph').boundingBox();assert(nextAction.y+nextAction.height<=712,'Both actions fit above a 100 px browser-toolbar allowance in the 812 px test viewport');
-  assert.match(await page.locator('#savedHeading').innerText(),/Ta vare på planen/);
+  assert.match(await page.locator('#savedHeading').innerText(),/Lagre, del og sammenlign planer/);
   // Hidden assumptions and display settings survive editing the start choices.
   await page.evaluate(()=>{s.crash=30;s.crashYear=5;s.extra=50000;s.extraYear=3;view.showBank=true;mode='goal';fill();render();});
   const beforeEdit=await state();

@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#183f36">
 <title>Personvern og lokal lagring · Spareverksted</title>
 <link rel="stylesheet" href="style.css?v=19">
-<link rel="stylesheet" href="theme.css?v=3">
+<link rel="stylesheet" href="theme.css?v=4">
 <link rel="stylesheet" href="layout.css?v=11"><script defer src="layout.js?v=6"></script>
 <link rel="stylesheet" href="navigation.css?v=6">
 <link rel="stylesheet" href="om.css?v=6">
@@ -71,8 +71,8 @@
 <div class="table-scroll"><table class="privacy-table">
 <thead><tr><th scope="col">Hva</th><th scope="col">Når</th><th scope="col">Hvorfor</th><th scope="col">Hvor lenge</th></tr></thead>
 <tbody>
-<tr><td data-label="Hva"><strong>Lagrede planer.</strong> Navnet på planen og alle tallene i den.</td><td data-label="Når">Når du trykker «Lagre plan».</td><td data-label="Hvorfor">Så du finner planen igjen.</td><td data-label="Hvor lenge">Til du sletter den. Nettleseren kan også fjerne den når den rydder plass.</td></tr>
-<tr><td data-label="Hva"><strong>Visningsnivå.</strong> Utforsk eller Avansert.</td><td data-label="Når">Når du trykker på nivået. «Enkel» er standard og lagres ikke.</td><td data-label="Hvorfor">Så siden åpner på nivået du valgte.</td><td data-label="Hvor lenge">I denne nettleserfanen.</td></tr>
+<tr><td data-label="Hva"><strong>Lagrede planer.</strong> Navnet på planen og alle tallene i den.</td><td data-label="Når">Når du trykker «Lagre denne planen» under «Lagre, del og sammenlign planer».</td><td data-label="Hvorfor">Så du finner planen igjen.</td><td data-label="Hvor lenge">Til du sletter den. Nettleseren kan også fjerne den når den rydder plass.</td></tr>
+<tr><td data-label="Hva"><strong>Detaljnivå.</strong> Utforsk eller Avansert.</td><td data-label="Når">Når du trykker på nivået. «Enkel» er standard og lagres ikke.</td><td data-label="Hvorfor">Så siden åpner på nivået du valgte.</td><td data-label="Hvor lenge">I denne nettleserfanen.</td></tr>
 <tr><td data-label="Hva"><strong>Fargetema.</strong> Nøytral, Lys eller Natt.</td><td data-label="Når">Når du trykker på et tema.</td><td data-label="Hvorfor">Så temaet er likt på alle sidene.</td><td data-label="Hvor lenge">I denne nettleserfanen.</td></tr>
 <tr><td data-label="Hva"><strong>Arbeidsplanen.</strong> Tallene i planen du jobber med.</td><td data-label="Når">Når du går fra kalkulatoren til «Spør om sparing».</td><td data-label="Hvorfor">Så planen er uendret når du kommer tilbake.</td><td data-label="Hvor lenge">I denne nettleserfanen.</td></tr>
 <tr><td data-label="Hva"><strong>Opplysninger til veilederen.</strong> Alder, sparetid og valgene i veilederen. Ingen beløp, navn eller spørsmål.</td><td data-label="Når">Når du går til veilederen eller trykker «Oppdater vurderingen».</td><td data-label="Hvorfor">Så du slipper å fylle inn det samme to ganger.</td><td data-label="Hvor lenge">I denne nettleserfanen. «Glem opplysningene mine» sletter dem med en gang.</td></tr>
@@ -85,7 +85,7 @@
 
 <section class="giving-section" aria-labelledby="deleteTitle">
 <h2 id="deleteTitle">Slik sletter du</h2>
-<p>Én plan sletter du under «Ta vare på planen» i kalkulatoren. Knappen under sletter alle lagrede planer i denne nettleseren, og det som er lagret i denne fanen. Det kan ikke angres. Andre åpne faner med Spareverksted har egne kopier som forsvinner når du lukker dem.</p>
+<p>Én plan sletter du under «Lagre, del og sammenlign planer» i kalkulatoren. Knappen under sletter alle lagrede planer i denne nettleseren, og det som er lagret i denne fanen. Det kan ikke angres. Andre åpne faner med Spareverksted har egne kopier som forsvinner når du lukker dem.</p>
 <div class="delete-box">
 <p id="deleteSummary" class="hint">Sletteknappen trenger JavaScript. Du kan også slette nettstedsdata for spareverksted.no i nettleserens innstillinger.</p>
 <button type="button" id="deleteAll" class="primary" hidden>Slett Spareverksteds data i denne nettleseren</button>
@@ -100,6 +100,7 @@
 <p>Brannmuren hos Bunny lagrer bare forespørsler den stopper eller flagger som mistenkelige, for eksempel forsøk på å hente skjulte filer. Da lagres tidspunkt, land og adressen som ble forsøkt, men ikke IP-adressen. Denne loggen slettes etter tre dager.</p>
 <p class="privacy-status"><strong>Det jeg ikke vet sikkert.</strong> Filene ligger lagret i Tyskland, med kopier i Sverige og Storbritannia. Storbritannia er utenfor EU, men har godkjent personvernnivå etter EUs regler. Bunny har servere over hele verden, og besøker du siden fra et annet sted enn Europa, kan svaret komme fra en server der. Les <a href="https://bunny.net/privacy">Bunnys personvernerklæring</a> og <a href="https://bunny.net/gdpr/sub-processors/">listen over underleverandører</a> (begge på engelsk).</p>
 <p>Kildekoden og de automatiske testene ligger på GitHub. Besøket ditt går ikke via GitHub med mindre du klikker deg dit.</p>
+<p>Lenker til andre nettsteder er merket med ↗. Følger du en slik lenke, gjelder det nettstedets egne regler for personvern. Spareverksted sender ikke med hvor du kom fra.</p>
 </section>
 
 <section class="giving-section" aria-labelledby="securityTitle">
@@ -139,6 +140,7 @@
 <h2 id="shareTitle">Deling og nedlasting</h2>
 <p>«Del plan» lager en lenke med tallene for delen du ser på. Tallene står etter tegnet # i lenken. Den delen sendes ikke til nettstedet når lenken åpnes, men tjenesten du deler gjennom, for eksempel e-post eller en meldingsapp, kan se hele lenken. Alle som får lenken, kan se tallene.</p>
 <p>Nedlastinger og utskrifter lages i nettleseren din og sendes ikke noe sted. De inneholder alle tallene, også alder hvis du har oppgitt den.</p>
+<p>Fila lagres på din egen enhet og er ikke kryptert av Spareverksted. Jeg vurderte egen kryptering med passord, men valgte det bort: Et glemt passord gjør fila ubrukelig, kryptert fil kan ikke åpnes i vanlige regneark og PDF-lesere, og egen krypteringskode er en ekstra kilde til feil. De fleste telefoner og datamaskiner krypterer allerede det som er lagret på dem. Behandle fila som andre private dokumenter, og tenk over hvem du sender den til.</p>
 </section>
 
 <section class="giving-section" aria-labelledby="mailTitle">
