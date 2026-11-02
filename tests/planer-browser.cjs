@@ -38,10 +38,12 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await q.locator('#pickAll').click();assert.equal(await q.evaluate(()=>pickedPlans.size),0);
    await q.locator('#pickAll').click();assert.equal(await q.evaluate(()=>pickedPlans.size),5);
    assert(await q.locator('#compareSelected').isDisabled(),'fire sammenlignbare planer: for mange å sammenligne');
-   assert.match(await q.locator('#pickHint').innerText(),/tre planer om gangen/);
+   assert.match(await q.locator('#pickHint').innerText(),/hver for seg/);
    await q.locator('input[aria-label="Velg Pensjon"]').uncheck();
-   assert(await q.locator('#compareSelected').isEnabled(),'tre valgt, ett sparemål hoppes over');
-   assert.match(await q.locator('#pickHint').innerText(),/hoppes over/);
+   assert(await q.locator('#compareSelected').isDisabled(),'sparemål og spareplaner blandes ikke');
+   assert.match(await q.locator('#pickHint').innerText(),/hver for seg/);
+   await q.locator('input[aria-label="Velg Bil"]').uncheck();
+   assert(await q.locator('#compareSelected').isEnabled(),'tre spareplaner kan sammenlignes');
    await q.locator('#compareSelected').click();
    assert.equal(await q.evaluate(()=>s.activePage),'withdrawals','Sammenlign bytter ikke side');
    assert(await q.locator('#comparison svg rect[data-cmp]').count()>0,'søyler vises');
@@ -50,6 +52,10 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    assert.deepEqual(await q.evaluate(()=>[...selectedPlans].sort()),[0,1,4]);
    assert.match(await q.locator('#comparison').innerText(),/Nå i kalkulatoren/);
    assert.equal(await q.locator('#saved .compared').count(),3);
+   // Sparemål sammenlignes for seg, med tre søyler per mål.
+   await q.locator('#stopCompare').click();await q.locator('input[aria-label="Velg Bil"]').check();await q.locator('#compareSelected').click();
+   assert.equal(await q.locator('#comparison rect.alt-safe').count(),1,'én trygg søyle for Bil');assert.match(await q.locator('#comparison').innerText(),/Du sparer nå/);
+   await q.locator('#stopCompare').click();await q.locator('#pickAll').click();await q.locator('#pickAll').click();for(const n of ['Lars','Plan 1','Hus'])await q.locator(`input[aria-label="Velg ${n}"]`).check();await q.locator('#compareSelected').click();
    // Flytt med piltast på håndtaket.
    await q.locator('[data-move="1"]').focus();await q.keyboard.press('ArrowUp');
    assert.equal((await q.evaluate(()=>JSON.parse(localStorage.getItem('sv-scenarios'))))[0].name,'Plan 1','Plan 1 flyttet øverst');assert.match(await q.locator('#pickHint').innerText(),/plass 1 av 5/);
@@ -95,6 +101,8 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await q.locator('button[aria-label="Åpne Plan 1"]').click();await q.evaluate(()=>document.getElementById('save').click());assert.equal(await q.locator('#scenarioName').inputValue(),'Plan 2');await q.locator('#cancelSave').click();
    // Å sammenligne åpen, uendret plan med seg selv gir beskjed og ingen hopp.
    await q.evaluate(()=>{document.getElementById('savedDetails').open=true;});await q.locator('input[aria-label="Velg Plan 1"]').check();await q.locator('#compareSelected').click();assert.match(await q.locator('#pickHint').innerText(),/står i kalkulatoren nå/);assert.equal(await q.evaluate(()=>selectedPlans.size),0);await q.locator('#pickAll').click();
+   // Store og små bokstaver: «plan 2» finnes, så neste forslag er ikke «Plan 2».
+   assert.equal(await q.evaluate(()=>{saved.push({name:'plan 2',state:{...s},mode:'explore',view:{}});activePlan=null;return firstFreePlanName();}),'Plan 3');await q.evaluate(()=>{saved.pop();savedRender();});
    // Uten åpen plan foreslås første ledige Plan-navn.
    await q.evaluate(()=>{activePlan=null;savedRender();document.getElementById('save').click();});
    assert.equal(await q.locator('#scenarioName').inputValue(),'Plan 2');assert(await q.locator('#saveUpdate').isHidden());
