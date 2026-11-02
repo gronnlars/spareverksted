@@ -26,12 +26,13 @@ const contrast=(a,b)=>{const lum=c=>{const v=c.match(/[\d.]+/g).slice(0,3).map(N
     await checkContrast('.brand');await checkContrast('.theme-picker [aria-pressed=true]',3);await checkContrast('.theme-picker [aria-pressed=false]',3);
     const boxes=await page.locator('.theme-picker button:visible').evaluateAll(els=>els.map(e=>{const r=e.getBoundingClientRect();return {w:r.width,h:r.height};}));assert(boxes.every(b=>b.w>=24&&b.h>=44));
     await page.keyboard.press('Escape');assert.equal(await page.locator('#themeOptions').isHidden(),true,'Esc lukker temavalget');assert.equal(await page.evaluate(()=>document.activeElement.className),'theme-toggle','Fokus tilbake på temaknappen');
+    await page.locator('.theme-toggle').click();for(let i=0;i<4;i++)await page.keyboard.press('Tab');assert.equal(await page.locator('#themeOptions').isHidden(),true,'Tab ut av pillen lukker den');
     const a=await page.locator('.brand-tools').boundingBox(),b=await page.locator('.site-header>.site-nav').boundingBox();if(b&&b.y<a.y+a.height-1)assert(a.x+a.width<=b.x+1,'Header controls do not overlap');
    }
   }
-  // Safari på iPhone gir ikke knapper fokus ved trykk. Pillen må holde seg åpen til trykket når fram (Lars 2.11.2026).
+  // iPhone (WebKit) gir ikke knapper fokus ved trykk, og fokus forsvinner etter pointerup, rett før click. Pillen må holde seg åpen til trykket når fram (Lars 2.11.2026, to runder).
   await page.locator('.theme-toggle').click();
-  assert.equal(await page.evaluate(()=>{const b=document.querySelector('[data-color-theme=night]');b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerType:'touch'}));document.activeElement.blur();const open=!document.getElementById('themeOptions').hidden;b.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerType:'touch'}));b.click();return open&&document.documentElement.dataset.theme==='night';}),true,'Trykk uten fokus velger tema');
+  assert.equal(await page.evaluate(()=>{const b=document.querySelector('[data-color-theme=night]');b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerType:'touch'}));b.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerType:'touch'}));return new Promise(done=>setTimeout(()=>{document.activeElement.blur();const open=!document.getElementById('themeOptions').hidden;b.click();done(open&&document.documentElement.dataset.theme==='night');},30));}),true,'Trykk uten fokus velger tema');
   await pickTheme(page,'neutral');
   await page.locator('.theme-toggle').focus();await page.keyboard.press('Enter');await page.locator('[data-color-theme=light]').focus();await page.keyboard.press('Space');assert.equal(await page.locator('#themeOptions').isHidden(),true,'Valget lukker');assert.match(await page.locator('.theme-toggle').getAttribute('aria-label'),/Lys/);assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
   await pickTheme(page,'night');await page.reload();assert.equal(await page.locator('html').getAttribute('data-theme'),'night');
