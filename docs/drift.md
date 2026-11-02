@@ -24,6 +24,7 @@ Domenet bruker Bunny fra 1. november 2026. Opplysningene under er gitt av Lars m
 - Navnetjenere: `coco.bunny.net` og `kiki.bunny.net` (bekreftet med dnscheck.norid.no). Registrar er fortsatt Domene.no.
 - DNS: `spareverksted.no` og `www` er CNAME til `spareverksted.b-cdn.net`. `mail` er A-oppføring til cPanel-serveren hos Domene.no, uten CDN. MX peker til `mail.spareverksted.no`. SPF, DKIM og DMARC er lagt inn.
 - Pull Zone: Origin er Storage Zone `spareverksted`. Hostnavn `spareverksted.no` og `www.spareverksted.no` med SSL og Force SSL.
+- Pricing & routing: bare sonen Europa er valgt (2. november 2026). Besøk fra andre verdensdeler betjenes fra Europa.
 - Storage Zone: Frankfurt, med replikaer i Stockholm og London. Replikaer kan ikke fjernes uten ny sone.
 - Logging: tilgangslogg av for Pull Zone og DNS, IP-anonymisering «Drop». Shield logger ikke headere eller innhold. WAF i blokkeringsmodus. Robotgjenkjenning av.
 - Headere settes i Edge rule `Spareverksted_Personvern`: HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy (no-referrer), Permissions-Policy, Cross-Origin-Opener-Policy og Content-Security-Policy. CSP-headeren er lik meta-taggen i HTML, pluss `frame-ancestors 'none'`. **Endres CSP i koden, må headeren i Bunny endres samtidig**, ellers gjelder den strengeste.
