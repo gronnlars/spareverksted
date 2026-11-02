@@ -63,8 +63,10 @@ svg [stroke="#93a18c"]{stroke:#6f8068}
 .theme-picker .theme-toggle:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
 .theme-picker .theme-toggle svg{width:20px;height:20px;pointer-events:none}
 .theme-picker.is-open .theme-toggle{background:var(--soft)}
-.theme-options{display:flex;align-items:center;gap:2px;padding:0 4px;border-radius:22px;background:var(--surface-soft,var(--soft));overflow:hidden;animation:theme-slide .18s ease-out}
+.theme-options{display:flex;align-items:center;gap:0;height:44px;padding:0;border:1px solid var(--line);border-radius:22px;background:var(--surface,#fff);overflow:hidden;animation:theme-slide .18s ease-out}
 .theme-options[hidden]{display:none}
-.theme-picker .theme-options button{width:40px}
-@keyframes theme-slide{from{max-width:0;opacity:0}to{max-width:160px;opacity:1}}
+.theme-picker.is-open .theme-toggle{display:none}
+.theme-picker .theme-options button{width:44px;height:42px;border-radius:21px}
+.theme-picker .theme-options button[aria-pressed=true]{background:var(--soft);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--green)}
+@keyframes theme-slide{from{max-width:44px}to{max-width:140px}}
 @media(prefers-reduced-motion:reduce){.theme-options{animation:none}}

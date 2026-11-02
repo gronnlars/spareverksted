@@ -24,7 +24,10 @@
   const toggle=document.createElement('button');toggle.type='button';toggle.className='theme-toggle';toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-controls','themeOptions');
   const group=document.createElement('div');group.id='themeOptions';group.className='theme-options';group.setAttribute('role','group');group.setAttribute('aria-label','Velg fargetema');group.hidden=true;
   const showCurrent=()=>{toggle.innerHTML=svg(current);toggle.setAttribute('aria-label','Fargetema: '+names[current]);toggle.title='Fargetema: '+names[current];};
-  const setOpen=(open,focusToggle)=>{group.hidden=!open;picker.classList.toggle('is-open',open);toggle.setAttribute('aria-expanded',String(open));
+  // Åpen: knappen blir selve pillen. Valgt tema står først, der knappen var, og de to andre folder seg ut ved siden av.
+  const setOpen=(open,focusToggle)=>{
+   if(open){const chosen=group.querySelector('[data-color-theme="'+current+'"]');if(chosen)group.prepend(chosen);}
+   group.hidden=!open;picker.classList.toggle('is-open',open);toggle.setAttribute('aria-expanded',String(open));
    if(open)(group.querySelector('[aria-pressed=true]')||group.firstElementChild).focus();else if(focusToggle)toggle.focus();};
   toggle.addEventListener('click',()=>setOpen(group.hidden,false));
   for(const theme of themes){
