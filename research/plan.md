@@ -22,7 +22,7 @@ Videre arbeid gjelder helheten rundt kalkulatoren: lære, finne svar, utforske o
 
 ## 1. Gjeldende rekkefølge og status, 30. oktober 2026
 
-Prosjektpausen i [docs/regulatorisk.md](../docs/regulatorisk.md) gjelder. Arbeid kan utføres innenfor de vedtatte unntakene og Lars' konkrete oppdrag. Ingen generell gjenåpning av innholdspåfyll, nattoppgave, nye kalkulatorfunksjoner eller tilpasning etter brukeropplysninger. Hver PR krever Lars' godkjenning før sammenslåing. Main-push starter testing og publisering, også for dokumentasjon.
+Prosjektpausen ble avsluttet 2.11.2026, se [docs/regulatorisk.md](../docs/regulatorisk.md). Arbeidet følger fasene i rekkefølge, og sperrene som gjelder etter oppstart, står der. Hver PR krever Lars' godkjenning før sammenslåing. Main-push starter testing og publisering, også for dokumentasjon.
 
 ### Publisert og kontrollert
 

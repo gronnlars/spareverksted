@@ -1,6 +1,6 @@
 # Spareverksted
 
-Denne versjonen av Spareverksted er i en tidlig fase. Jeg anbefaler å vente med ordinær bruk og med å publisere egne kopier til relevante regulatoriske spørsmål er avklart.
+Spareverksted er i testfase. Beregninger og innhold kan endres, og tilbakemeldinger tas imot med takk.
 
 Jeg bygger en grunnmur for personvern, universell utforming og innhold som skal være enkelt å kontrollere og oppdatere etter hvert som nettstedet vokser. Strenge regler for kilder og innhold setter grenser for både meg og KI-en jeg bruker, for å redusere risikoen for faktafeil og påstander uten kildegrunnlag.
 
@@ -72,7 +72,7 @@ Se [tilgjengelighetssiden](https://spareverksted.no/tilgjengelighet.html), eller
 
 ## Prosjektstatus og hjelp
 
-Videre utvikling er delvis satt på vent mens regulatoriske spørsmål avklares. Det arbeides innenfor avgrensede områder, blant annet personvern, tilgjengelighet og kildekontroll. Henvendelser til myndigheter er ikke en godkjenning av tjenesten.
+Utviklingen er tatt opp igjen etter en pause for å stramme inn kildekrav, personvern og tilgjengelighet. Spareverksted gir ingen anbefalinger om bestemte produkter. Henvendelser til myndigheter er ikke en godkjenning av tjenesten.
 
 Fant du en feil? Beskriv hva du prøvde, hva som skjedde, og hvilken nettleser du brukte. Bruk oppdiktede tall i offentlige feilrapporter. Ikke send opplysninger om din egen økonomi på e-post. Jeg tilbyr ikke personlig økonomisk rådgivning. For generell forbrukerinformasjon, se [Forbrukerrådet](https://www.forbrukerradet.no/).
 
