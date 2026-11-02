@@ -409,3 +409,4 @@ for(const ev of ['input','change'])document.addEventListener(ev,()=>setTimeout((
 
 if($('saveDream'))$('saveDream').onclick=openSave;
 $('reportButton').addEventListener('click',()=>{window.reportComparisonOnly=!!window.cmpExportRequest;window.cmpExportRequest=false;},true);
+if($('heroDownload'))$('heroDownload').onclick=()=>$('reportButton').click();

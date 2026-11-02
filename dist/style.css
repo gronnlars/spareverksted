@@ -95,3 +95,9 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 .dream-save{margin:12px 0}
 .cmp-mid{margin:4px 0 12px}
 #comparison{scroll-margin-top:16px}
+/* Last ned fra resultatkortet */
+.hero-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.hero-top .before-tax-badge{float:none;margin:0}
+.hero-download{min-height:44px;padding:6px 14px;background:transparent;color:inherit;border:1px solid var(--control-border,#67816a);border-radius:22px;font-size:14px;font-weight:600}
+.hero-download:hover{background:rgba(255,255,255,.08)}
+@media print{.hero-download{display:none}}
