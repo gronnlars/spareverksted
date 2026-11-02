@@ -59,3 +59,27 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 #chartPanel{scroll-margin-top:90px}
 #saved>.saved-row:nth-child(even),tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface-soft,#eaf1e3) 70%,transparent)}
 @media print{#saved>.saved-row:nth-child(even),tbody tr:nth-child(even){background:#f1f4ee;print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+/* Utfallsrom: beløpene står på linje selv om en overskrift går over to linjer */
+@media(min-width:391px){@supports(grid-template-rows:subgrid){.fan-summary{grid-template-rows:auto auto auto;row-gap:0}.fan-outcome{display:grid;grid-row:span 3;grid-template-rows:subgrid;align-content:start}.fan-outcome strong{align-self:start}}}
+/* Sammenligning som grupperte søyler */
+:root{--cmp-0:#24684f;--cmp-1:#9b6837;--cmp-2:#6879a5;--cmp-3:#9b6480}
+:root[data-theme=night]{--cmp-0:#9bdcb5;--cmp-1:#efbf86;--cmp-2:#aec7f4;--cmp-3:#edb3d9}
+.cmp-0{fill:var(--cmp-0);background:var(--cmp-0)}.cmp-1{fill:var(--cmp-1);background:var(--cmp-1)}.cmp-2{fill:var(--cmp-2);background:var(--cmp-2)}.cmp-3{fill:var(--cmp-3);background:var(--cmp-3)}
+.cmp-soft{opacity:.35}
+.cmp-grid{stroke:var(--line)}.cmp-axis{fill:var(--muted)}
+.cmp-picked{stroke:var(--ink);stroke-width:2}
+.cmp-chart{margin:14px 0 4px}.cmp-chart svg{display:block;max-width:100%;height:auto}
+.cmp-chart rect[data-cmp]{cursor:pointer}
+.cmp-legend{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+.cmp-key{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:14px}
+.cmp-key[aria-pressed=true]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.cmp-swatch{display:inline-block;width:14px;height:14px;border-radius:3px;flex:none;vertical-align:-2px}
+.cmp-hatch{background:repeating-linear-gradient(45deg,var(--muted) 0 2px,transparent 2px 5px);border:1px solid var(--muted)}
+.cmp-detail{font-size:15px;min-height:1.5em;margin:8px 0}
+.cmp-ext{font-size:11px;color:var(--muted)}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.drag-handle{min-width:44px;min-height:44px;padding:0;border:0;background:none;color:var(--muted);font-size:18px;letter-spacing:-3px;cursor:grab;touch-action:none;align-self:center}
+.saved-row.dragging{position:relative;z-index:2;background:var(--surface);box-shadow:0 6px 18px rgba(0,0,0,.18);cursor:grabbing}
+.saved-row.drop-target{box-shadow:inset 0 3px 0 var(--green)}
+@media(max-width:760px){.saved-row .drag-handle{order:-1}.saved-row .check{flex-basis:calc(100% - 56px)}}
