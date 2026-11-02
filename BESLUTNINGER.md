@@ -1034,3 +1034,21 @@ Lars bestiller automatisert brukertest med Playwright og andre verktøy etter mo
 Python skriver dato, kodeversjon, testomfang og motorversjoner i personvernsidens publiserte kopi. Alle tre rapporter må tilhøre samme commit og dekke dagens sider. Feil eller manglende rapport stopper publisering. Resultatet lastes som artifact fra samme workflow-kjøring, uten nye kall fra besøkende eller automatisk commit til main. Rårapporter beholdes i Actions i 30 dager. Ingen tidsstyrt jobb opprettes, kontrollen følger eksisterende endrings- og publiseringsflyt.
 
 Uavhengig verktøy er ikke uavhengig revisjon. Offentlig tekst sier teknisk egenkontroll og skiller syntetiske handlinger fra menneskers forståelse, faktisk produksjonstrafikk, juridisk vurdering og leverandørenes interne behandling. Alternativet å kalle grønne Playwright-tester en personverngodkjenning forkastes. Revurder når nye lagringsformer, sider, endepunkter eller brukerflyter innføres. Bidrag: ChatGPT/Codex. Egen PR, ingen sammenslåing eller publisering i dette oppdraget.
+
+## Ordbok-setning som felles forklaring for begrep og svar (2. november 2026)
+
+**Status:** Vedtatt av Lars 2.11.2026. Regler i SPRAKREGLER.md, «Ordbok-setningen». Prøves i PR #156.
+
+**Beslutning:** Forklaringen der ordet står, er én ordbok-setning per begrep, med en valgfri kort utdyping. Når begrepet lenker til et svar i «Spør om sparing», skal samme setning stå ordrett i svaret, først eller sist. En test stopper avvik.
+
+**Bakgrunn:** Lars ville hente forklaringen fra første linje i svarene, men med strenge regler for at linjen faktisk forklarer ordet som i en ordbok.
+
+**Alternativer:**
+A. Egen ordbok-setning i registeret, testet mot svaret. **Valgt.** Kalkulatorsiden slipper å laste hele svarbasen, og testen sikrer én tekst.
+B. Hente første setning fra svaret mens siden lastes. Ikke valgt: kalkulatoren må da laste hele svarbasen, og en omskriving av svaret kan endre forklaringen uten at noen merker det.
+C. Egne tekster i registeret uten kobling til svarene. Ikke valgt: to forklaringer av samme ord kan gli fra hverandre.
+
+**Akseptert ulempe:** Setningen står to steder i koden. Testen gjør at de ikke kan bli ulike.
+
+**Vurder på nytt når:** svarbasen blir så stor at det lønner seg å bygge registeret automatisk fra svarene.
+

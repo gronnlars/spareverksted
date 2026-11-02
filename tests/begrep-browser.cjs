@@ -51,9 +51,11 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   const ctx=await browser.newContext({viewport:{width:390,height:844}});
   await ctx.route('**/publiserte-svar.js*',r=>r.fulfill({contentType:'text/javascript',body:"window.SparePubliserteSvar=['q-bsu-basics','q-aksjesparekonto','q-fondskonto','q-kjopekraft'];"}));
   const page=await ctx.newPage();await page.goto(base+'index.html');
-  await page.locator('button.begrep[data-begrep="dagens-kroner"]').evaluate(b=>b.click());
+  await page.evaluate(()=>{const p=document.createElement('p');p.innerHTML='<span data-begrep="kjopekraft">kjøpekraft</span>';document.querySelector('main').prepend(p);});
+  await page.locator('button.begrep[data-begrep="kjopekraft"]').first().evaluate(b=>b.click());
+  // Begrep uten lenket svar får aldri «Les mer».
   const les=page.locator('#begrepBoks a[href="spor.html#svar=q-kjopekraft"]');assert.equal(await les.count(),1);
-  assert.match(await les.innerText(),/Les mer om dagens kroner/);
+  assert.match(await les.innerText(),/Les mer om kjøpekraft/);
   await page.goto(base+'spor.html#svar=q-kjopekraft');
   await page.locator('#answerTitle').waitFor();assert.match(await page.locator('#answerTitle').innerText(),/kjøpekraft/i);
   // Upublisert svar via lenke åpnes ikke.

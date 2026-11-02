@@ -35,7 +35,7 @@ function vis(knapp){
  if(aktiv===knapp&&boks.matches(':popover-open')){boks.hidePopover();return;}
  if(boks.matches(':popover-open'))boks.hidePopover();
  boks.querySelector('.begrep-tittel').textContent=b.ord;
- boks.querySelector('.begrep-tekst').textContent=b.kort;
+ boks.querySelector('.begrep-tekst').textContent=b.utdyping?b.definisjon+' '+b.utdyping:b.definisjon;
  const videre=boks.querySelector('.begrep-videre');videre.replaceChildren();
  if(b.svar&&publisert.has(b.svar)){const a=document.createElement('a');a.href='spor.html#svar='+encodeURIComponent(b.svar);a.textContent='Les mer om '+b.ord.toLocaleLowerCase('nb');videre.append(a);}
  const kilde=document.createElement('span');kilde.className='begrep-kilde';kilde.textContent='Kilde: ';

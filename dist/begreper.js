@@ -1,12 +1,15 @@
 /* Begrepsregister: én kilde for korte forklaringer av fagord.
-   Prøveversjon på grenen claude/begrepsforklaring-prove. Tekstene er hentet fra eksisterende
-   svar (q-kjopekraft, q-renters-rente) eller bygd på dem, og må godkjennes før publisering.
+   Prøveversjon på grenen claude/begrepsforklaring-prove. Definisjonene for kjøpekraft og renters rente
+   er første setning i de eksisterende svarene. Prisvekst og dagens kroner er nye og må godkjennes.
 
    Felt per begrep:
    - id:        fast nøkkel, brukes i markeringen <span data-begrep="id">
    - ord:       oppslagsordet slik det vises i overskriften
-   - kort:      ett kort avsnitt, helst under 40 ord. Ingen råd, ingen produkter, ingen tilpasning.
-   - svar:      (valgfritt) id til et svar i «Spør om sparing». «Les mer» vises bare når svaret er publisert.
+   - definisjon: ordbok-setningen. Én setning som starter med ordet og sier hva det er eller betyr.
+                Reglene står i SPRAKREGLER.md, «Ordbok-setningen».
+   - utdyping:  (valgfritt) én kort setning om hvorfor ordet betyr noe.
+   - svar:      (valgfritt) id til et svar i «Spør om sparing». Svaret må inneholde definisjonen ordrett
+                (testes). «Les mer» vises bare når svaret er publisert.
    - kilder:    primærkilder for forklaringen
    - kontrollert: dato teksten sist ble kontrollert mot kildene
    Plass til senere: «lang» (fordypning) og «sok» (søkeord). Ikke lagt inn før de trengs. */
@@ -14,16 +17,26 @@
 'use strict';
 const ssb={title:'SSB: Hva er inflasjon?',url:'https://www.ssb.no/priser-og-prisindekser/konsumpriser/artikler/hva-er-inflasjon'};
 const liste=[
- {id:'kjopekraft',ord:'Kjøpekraft',kort:'Kjøpekraft er hvor mye du kan kjøpe for pengene. Når prisene stiger, rekker det samme kronebeløpet til mindre.',svar:'q-kjopekraft',kilder:[ssb],kontrollert:'2026-10-24'},
- {id:'prisvekst',ord:'Prisvekst (inflasjon)',kort:'Prisvekst betyr at varer og tjenester blir dyrere over tid. Det kalles også inflasjon. Da kan de samme pengene kjøpe mindre enn før.',svar:'q-kjopekraft',kilder:[ssb],kontrollert:'2026-10-24'},
- {id:'dagens-kroner',ord:'Dagens kroner',kort:'Et beløp i dagens kroner viser hva et framtidig beløp kan kjøpe med prisene i dag. Det gjør det lettere å sammenligne beløp fra ulike år.',svar:'q-kjopekraft',kilder:[ssb],kontrollert:'2026-10-24'},
- {id:'renters-rente',ord:'Renters rente',kort:'Renters rente betyr at du får renter også på renter du har fått tidligere. Når rentene blir stående, kan også de gi nye renter.',svar:'q-renters-rente',kilder:[{title:'Skatteetaten: Skatte-ABC, renteinntekter',url:'https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/r-10-renteinntekter/R-10.001/R-10.002/'},{title:'OpenStax: Exponential functions',url:'https://openstax.org/books/algebra-and-trigonometry-2e/pages/6-1-exponential-functions'}],kontrollert:'2026-10-25'}
+ {id:'kjopekraft',ord:'Kjøpekraft',definisjon:'Kjøpekraft er hvor mye du kan kjøpe for pengene.',utdyping:'Når prisene stiger, rekker det samme kronebeløpet til mindre.',svar:'q-kjopekraft',kilder:[ssb],kontrollert:'2026-10-24'},
+ {id:'prisvekst',ord:'Prisvekst (inflasjon)',definisjon:'Prisvekst er at prisene på varer og tjenester stiger over tid.',utdyping:'Det kalles også inflasjon. Da kan de samme pengene kjøpe mindre enn før.',kilder:[ssb],kontrollert:'2026-11-02'},
+ {id:'dagens-kroner',ord:'Dagens kroner',definisjon:'Dagens kroner er et framtidig beløp regnet om til hva det kan kjøpe med prisene i dag.',utdyping:'Det gjør det lettere å sammenligne beløp fra ulike år.',kilder:[ssb],kontrollert:'2026-11-02'},
+ {id:'renters-rente',ord:'Renters rente',definisjon:'Renters rente betyr at du får renter også på renter du har fått tidligere.',utdyping:'Når rentene blir stående, kan også de gi nye renter.',svar:'q-renters-rente',kilder:[{title:'Skatteetaten: Skatte-ABC, renteinntekter',url:'https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/r-10-renteinntekter/R-10.001/R-10.002/'},{title:'OpenStax: Exponential functions',url:'https://openstax.org/books/algebra-and-trigonometry-2e/pages/6-1-exponential-functions'}],kontrollert:'2026-10-25'}
 ];
 const byId=new Map(liste.map(b=>[b.id,b]));
+function ord(t){return t.trim().split(/\s+/).length;}
+// Ordbokreglene står i SPRAKREGLER.md, «Ordbok-setningen». Det som kan sjekkes maskinelt, sjekkes her.
 function kontroller(b){
- if(!b.id||!b.ord||!b.kort||!b.kontrollert||!b.kilder?.length)throw Error('Ufullstendig begrep: '+b.id);
- if(/[\u2013\u2014]|\.\.\./.test(b.kort))throw Error('Tankestrek eller tre prikker i '+b.id);
- if(b.kort.split(/\s+/).length>40)throw Error('For lang kortforklaring: '+b.id);
+ if(!b.id||!b.ord||!b.definisjon||!b.kontrollert||!b.kilder?.length)throw Error('Ufullstendig begrep: '+b.id);
+ const d=b.definisjon,hode=b.ord.replace(/\s*\(.*\)$/,'');
+ if(!d.toLocaleLowerCase('nb').startsWith(hode.toLocaleLowerCase('nb')+' '))throw Error('Definisjonen må starte med ordet: '+b.id);
+ if(!/^\S+(?:\s\S+)*?\s(?:er|betyr)\s/.test(d))throw Error('Definisjonen må si hva ordet er eller betyr: '+b.id);
+ if((d.match(/[.!?]/g)||[]).length!==1||!d.endsWith('.'))throw Error('Definisjonen skal være én setning: '+b.id);
+ if(ord(d)>25)throw Error('Definisjonen er over 25 ord: '+b.id);
+ if(b.utdyping&&ord(b.utdyping)>25)throw Error('Utdypingen er over 25 ord: '+b.id);
+ const alt=d+' '+(b.utdyping||'');
+ if(/[\u2013\u2014]|\.\.\./.test(alt))throw Error('Tankestrek eller tre prikker i '+b.id);
+ if(/\b(?:du bør|bør du|anbefal|lønner seg)/i.test(alt))throw Error('Råd hører ikke hjemme i en definisjon: '+b.id);
+ if(/\d/.test(d))throw Error('Ingen tall i definisjonen: '+b.id);
 }
 liste.forEach(kontroller);
 const api={liste,hent:id=>byId.get(id)||null,kontroller};

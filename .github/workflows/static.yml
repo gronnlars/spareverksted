@@ -44,6 +44,7 @@ jobs:
           python3 tests/deploy_bunny.test.py
           node tests/personvern-lagring.test.cjs
           node tests/published-answers.test.cjs
+          node tests/begreper.test.cjs
           node --check dist/personvern.js
           node --check dist/kontakt.js
           node --check dist/veileder-ui.js
