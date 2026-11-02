@@ -93,4 +93,5 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 .cmp-now-swatch{height:0;border-top:2.5px dashed var(--alt-now);border-radius:0;width:18px}
 .cmp-key-static{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:14px;padding:0 8px}
 .dream-save{margin:12px 0}
-.cmp-top{margin:4px 0 8px}
+.cmp-mid{margin:4px 0 12px}
+#comparison{scroll-margin-top:16px}
