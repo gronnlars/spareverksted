@@ -1,4 +1,5 @@
 // Navigation must keep the plan intact, preserve focus and make the next action clear.
+const pickTheme=async(pg,t)=>{const b=pg.locator('[data-color-theme='+t+']');if(!await b.isVisible())await pg.locator('.theme-toggle').click();await b.click();};
 const {chromium}=require('playwright'),assert=require('node:assert/strict');
 const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
 (async()=>{
@@ -17,7 +18,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   const state=()=>page.evaluate(()=>JSON.stringify({s,view,mode}));
   const unchanged=await state();
   for(const theme of ['neutral','light','night']){
-   await page.locator('[data-color-theme='+theme+']').click();
+   await pickTheme(page,theme);
    for(const width of [320,375,390,768,1280]){
     await page.setViewportSize({width,height:812});
     assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'No horizontal scrolling at '+width+' in '+theme);
@@ -83,7 +84,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    await links.first().focus();assert(await page.evaluate(()=>document.activeElement.closest('.site-nav')!==null),file+': Tab når menylenke');
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),file+' '+width+': no horizontal overflow');
    const header=await page.locator('.site-header').boundingBox();
-   for(const button of await page.locator('.theme-picker button').all()){
+   for(const button of await page.locator('.theme-picker button:visible').all()){
     const box=await button.boundingBox();assert(box&&box.y>=header.y&&box.y+box.height<=header.y+header.height+1,file+': theme controls inside header');
    }
   }
