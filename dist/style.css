@@ -103,3 +103,5 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 @media print{.hero-download{display:none}}
 /* Mobil: dialoger festes øverst, så de ikke hopper når tastaturet åpnes */
 @media(max-width:760px){dialog[open]{margin:max(12px,env(safe-area-inset-top)) auto auto;max-height:calc(100dvh - 24px)}}
+/* Resultatkortet: beløpene står på linje selv om en overskrift går over to linjer */
+@supports(grid-template-rows:subgrid){.metrics{row-gap:0}.metrics>div{display:grid;grid-row:span 2;grid-template-rows:subgrid;align-content:start}.metrics>div>dt{align-self:end}.metrics>div>dd{margin-bottom:12px}.metrics strong{margin-top:4px}}
