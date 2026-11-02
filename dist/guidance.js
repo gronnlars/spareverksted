@@ -65,6 +65,8 @@ function setPage(page){
  for(const [id,p]of [['calculatorPanel','calculator'],['dreamPanel','dreams'],['withdrawalPanel','withdrawals']])$(id).hidden=s.activePage!==p;
  for(const [id,p]of [['calculatorPage','calculator'],['dreamPage','dreams'],['withdrawalPage','withdrawals']])$(id).setAttribute('aria-pressed',s.activePage===p);
  if(s.activePage==='calculator'&&rows.length)chart();
+ // Planlista viser planene for kalkulatoren du står i (Lars 3.11.2026).
+ if(typeof savedRender==='function'&&typeof saved!=='undefined')savedRender();
 }
 $('calculatorPage').onclick=()=>setPage('calculator');
 $('dreamPage').onclick=()=>{setPage('dreams');renderDream();};

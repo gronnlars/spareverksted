@@ -36,13 +36,14 @@ const engine=process.env.SPARE_ENGINE||'chromium';
 
    // Hovedboksen: delvis valgt -> fjern valg. Ingen valgt -> velg alle.
    await q.locator('#pickAll').click();assert.equal(await q.evaluate(()=>pickedPlans.size),0);
-   await q.locator('#pickAll').click();assert.equal(await q.evaluate(()=>pickedPlans.size),5);
-   assert(await q.locator('#compareSelected').isDisabled(),'fire sammenlignbare planer: for mange å sammenligne');
-   assert.match(await q.locator('#pickHint').innerText(),/hver for seg/);
+   // Spareplaner og sparemål vises hver for seg (Lars 3.11.2026). «Velg alle» gjelder typen du står i.
+   assert.equal(await q.locator('#saved>.saved-row').count(),4,'fire spareplaner i hovedlista');
+   assert.equal(await q.locator('#saved .saved-other .saved-row').count(),1,'sparemålet ligger for seg');
+   assert(await q.locator('input[aria-label="Velg Bil"]').isHidden(),'sparemålet er lukket inntil man åpner det');
+   await q.locator('#pickAll').click();assert.equal(await q.evaluate(()=>pickedPlans.size),4);
+   assert(await q.locator('#compareSelected').isDisabled(),'fire planer: for mange å sammenligne');
+   assert.match(await q.locator('#pickHint').innerText(),/tre planer om gangen/);
    await q.locator('input[aria-label="Velg Pensjon"]').uncheck();
-   assert(await q.locator('#compareSelected').isDisabled(),'sparemål og spareplaner blandes ikke');
-   assert.match(await q.locator('#pickHint').innerText(),/hver for seg/);
-   await q.locator('input[aria-label="Velg Bil"]').uncheck();
    assert(await q.locator('#compareSelected').isEnabled(),'tre spareplaner kan sammenlignes');
    await q.locator('#compareSelected').click();
    assert.equal(await q.evaluate(()=>s.activePage),'withdrawals','Sammenlign bytter ikke side');
@@ -53,7 +54,8 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    assert.match(await q.locator('#comparison').innerText(),/Nå i kalkulatoren/);
    assert.equal(await q.locator('#saved .compared').count(),3);
    // Sparemål sammenlignes for seg, med tre søyler per mål.
-   await q.locator('#stopCompare').click();await q.locator('input[aria-label="Velg Bil"]').check();await q.locator('#compareSelected').click();
+   await q.locator('#stopCompare').click();await q.locator('#saved .saved-other>summary').click();await q.locator('input[aria-label="Velg Bil"]').check();await q.locator('#compareSelected').click();
+   assert.equal(await q.evaluate(()=>document.activeElement.id),'cmpHeading','Sammenlign lander på overskriften');
    assert.equal(await q.locator('#comparison rect.alt-safe').count(),1,'én trygg søyle for Bil');assert.match(await q.locator('#comparison').innerText(),/Du sparer nå/);
    await q.locator('#stopCompare').click();await q.locator('#pickAll').click();await q.locator('#pickAll').click();for(const n of ['Lars','Plan 1','Hus'])await q.locator(`input[aria-label="Velg ${n}"]`).check();await q.locator('#compareSelected').click();
    // Flytt med piltast på håndtaket.

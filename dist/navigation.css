@@ -55,3 +55,6 @@ footer .footer-note{flex-basis:100%;color:var(--muted);font-size:13px}
 /* Til toppen: egen linje over bunnlenkene på alle sider. */
 footer .to-top{gap:6px;flex:1 0 100%;grid-column:1/-1;display:inline-flex;align-items:center;min-height:44px;font-weight:600;color:var(--green);text-underline-offset:3px}
 #toppen{scroll-margin-top:0}#toppen:focus{outline:none}#toppen:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}
+/* Første rad i toppfeltet er like høy før og etter at temaknappen settes inn. Ellers hopper meny og innhold ned når siden lastes (3.11.2026). */
+:root .site-header .brand{display:inline-flex;align-items:center;min-height:44px}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
