@@ -213,3 +213,13 @@ input[aria-invalid=true]{border-color:var(--control-border,#b3452c);outline-colo
  .workbench-toolbar{margin-top:0;margin-bottom:8px}
  body .hero-result{padding-top:16px;padding-bottom:16px}
 }
+
+/* Detaljnivå er en innstilling, ikke en fane: alltid synlig, eget utseende og valgt nivå markert. */
+.workbench-toolbar{flex-wrap:wrap}
+.display-options{display:flex;align-items:center;gap:8px;margin-left:auto}
+.display-options #levelLabel{font-size:12px;color:var(--muted);white-space:nowrap}
+.display-options #levels{margin:0}
+.display-options #levels button{min-height:36px;padding:6px 12px;color:var(--ink)}
+.display-options #levels button[aria-pressed=true]{background:var(--surface,#fff);color:var(--green);font-weight:700;box-shadow:inset 0 0 0 1.5px var(--green)}
+.display-options #levelDescription{display:none}
+@media(max-width:760px){.display-options{width:100%;margin-left:0}.display-options #levels{flex:1}.display-options #levels button{flex:1;padding-inline:6px}}

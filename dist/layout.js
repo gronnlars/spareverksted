@@ -3,7 +3,7 @@
 const siteMenu=document.querySelector('.site-menu'),siteNav=siteMenu?.querySelector('.site-nav');
 if(siteNav){const desktopNav=siteNav.cloneNode(true);desktopNav.classList.add('desktop-nav');siteMenu.before(desktopNav);}
 // Native details keep menus usable with keyboard, touch and without JavaScript.
-const layoutMenus=[...document.querySelectorAll('.site-menu,.display-options')];
+const layoutMenus=[...document.querySelectorAll('.site-menu')];
 document.addEventListener('click',event=>{
  for(const menu of layoutMenus){
   if(!menu.contains(event.target))menu.open=false;

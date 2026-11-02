@@ -43,7 +43,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await page.locator('#seeGraph').focus();await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.activeElement.id),'chartPanel');
   await page.locator('#chartPanel [data-edit-fields]').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'planInputs');
   // Menus contain the useful actions. Level choice is visible without opening its menu.
-  await page.locator('.display-options>summary').click();await page.locator('#levels [data-level=advanced]').click();assert.equal(await page.locator('#displaySummary').innerText(),'Visning: Avansert');
+  await page.locator('#levels [data-level=advanced]').click();assert.equal(await page.locator('#levels [data-level=advanced]').getAttribute('aria-pressed'),'true');
   // Phone anchor leaves room for a browser toolbar even with the extra cost row.
   // Fokus i feltet, slik en bruker som redigerer har. Knappen skjules med vilje når resultatet allerede er synlig.
   await page.locator('#monthly').focus();await page.waitForFunction(()=>document.getElementById('mobileResultButton').textContent==='Se resultat ↓');await page.locator('#mobileResultButton').click();
@@ -59,7 +59,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await page.locator('#closeJourney').click();assert.equal(await state(),beforeEdit,'Cancel changes nothing');
   await page.locator('#editHorizon').click();await page.locator('#onboardMonthly').fill('4500');await page.locator('#beginJourney').click();
   const afterEdit=JSON.parse(await state()),expected=JSON.parse(beforeEdit);expected.s.monthly=4500;
-  assert.deepEqual(afterEdit,expected,'Only the edited input changes; crashes, extras, risk, mode and view remain');assert.equal(await page.locator('#displaySummary').innerText(),'Visning: Avansert');
+  assert.deepEqual(afterEdit,expected,'Only the edited input changes; crashes, extras, risk, mode and view remain');assert.equal(await page.locator('#levels [data-level=advanced]').getAttribute('aria-pressed'),'true');
   // Graph navigation also works while the meaning panel is hidden in goal mode.
   assert(await page.locator('#meaning').isHidden());await page.locator('#seeGraph').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'chartPanel');
   await page.locator('#undo').click();assert.equal(await state(),beforeEdit,'Edit can be undone');
