@@ -29,7 +29,7 @@ Domenet bruker Bunny fra 1. november 2026. Opplysningene under er gitt av Lars m
 - Headere settes i Edge rule `Spareverksted_Personvern`: HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy (no-referrer), Permissions-Policy, Cross-Origin-Opener-Policy og Content-Security-Policy. CSP-headeren er lik meta-taggen i HTML, pluss `frame-ancestors 'none'`. **Endres CSP i koden, må headeren i Bunny endres samtidig**, ellers gjelder den strengeste.
 - Databehandleravtale med BunnyWay d.o.o. signert 31. oktober 2026. PDF-en inneholder privat adresse og ligger ikke i repoet.
 
-Gjenstår: DNSSEC (DS-oppføring hos registrar), automatisk cache-tømming etter publisering,. Shield-hendelser (brannmurlogg) beholdes i 3 dager ifølge Bunny-panelet, opplyst av Lars 2. november 2026.
+Gjenstår: DNSSEC. DS-oppføring (key tag 28434, algoritme 13, digest type 2) sendt til Domene.no 2. november 2026 for registrering; kontroller med dnscheck.norid.no og internet.nl når de bekrefter, automatisk cache-tømming etter publisering,. Shield-hendelser (brannmurlogg) beholdes i 3 dager ifølge Bunny-panelet, opplyst av Lars 2. november 2026.
 
 ## Tidligere notat før flytting
 
