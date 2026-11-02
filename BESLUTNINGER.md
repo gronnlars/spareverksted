@@ -1052,3 +1052,20 @@ C. Egne tekster i registeret uten kobling til svarene. Ikke valgt: to forklaring
 
 **Vurder på nytt når:** svarbasen blir så stor at det lønner seg å bygge registeret automatisk fra svarene.
 
+
+## Fast farge per plan i sammenligningen (2. november 2026)
+
+**Status:** Foreslått av Claude 2.11.2026 etter Lars sin iPhone-test. Venter på godkjenning i PR.
+
+**Beslutning:** «Nå i kalkulatoren» har alltid første farge. Lagrede planer får farge 2, 3 og 4 etter rekkefølgen i lista. Plan 1 skifter derfor ikke farge når kalkulatoren tas med eller ikke.
+
+**Bakgrunn:** Fargen fulgte plassen i grafen. Når kalkulatoren ble tatt med, ble Plan 1 brun i stedet for grønn, og man kunne lese feil plan.
+
+**Alternativer:**
+A. Kalkulatoren fast på farge 1, planene etter rekkefølge. **Valgt.** Enkelt, og de fire fargene holder for maks tre planer pluss kalkulatoren.
+B. Farge etter planens plass i hele lagringslista. Ikke valgt: med mer enn fire planer går fargene i ring, og to planer kan få samme farge.
+C. Beholde farge etter plass i grafen. Ikke valgt: det var feilen.
+
+**Akseptert ulempe:** Flytter du planene i lista, kan fargene bytte plass.
+
+**Vurder på nytt når:** det blir lov å sammenligne flere enn tre planer.
