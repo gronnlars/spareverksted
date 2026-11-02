@@ -205,3 +205,16 @@ jobs:
           BUNNY_STORAGE_ZONE: spareverksted
           BUNNY_STORAGE_PASSWORD: ${{ secrets.BUNNY_STORAGE_PASSWORD }}
         run: python3 scripts/deploy_bunny.py dist
+      # Tømmer CDN-cachen så besøkende ikke får blanding av gamle og nye filer.
+      - name: Purge Bunny CDN cache
+        env:
+          BUNNY_API_KEY: ${{ secrets.BUNNY_API_KEY }}
+          BUNNY_PULLZONE_ID: ${{ vars.BUNNY_PULLZONE_ID }}
+        run: |
+          test -n "$BUNNY_API_KEY" || { echo "BUNNY_API_KEY mangler"; exit 1; }
+          case "$BUNNY_PULLZONE_ID" in ''|*[!0-9]*) echo "BUNNY_PULLZONE_ID må være et tall"; exit 1;; esac
+          curl -fsS -X POST \
+            "https://api.bunny.net/pullzone/${BUNNY_PULLZONE_ID}/purgeCache" \
+            -H "AccessKey: ${BUNNY_API_KEY}" \
+            -H "Content-Type: application/json" \
+            -d '{}'
