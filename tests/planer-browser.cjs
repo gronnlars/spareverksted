@@ -95,6 +95,8 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await q.locator('button[aria-label="Åpne Plan 1"]').click();await q.evaluate(()=>document.getElementById('save').click());assert.equal(await q.locator('#scenarioName').inputValue(),'Plan 2');await q.locator('#cancelSave').click();
    // Å sammenligne åpen, uendret plan med seg selv gir beskjed og ingen hopp.
    await q.evaluate(()=>{document.getElementById('savedDetails').open=true;});await q.locator('input[aria-label="Velg Plan 1"]').check();await q.locator('#compareSelected').click();assert.match(await q.locator('#pickHint').innerText(),/står i kalkulatoren nå/);assert.equal(await q.evaluate(()=>selectedPlans.size),0);await q.locator('#pickAll').click();
+   // Store og små bokstaver: «plan 2» finnes, så neste forslag er ikke «Plan 2».
+   assert.equal(await q.evaluate(()=>{saved.push({name:'plan 2',state:{...s},mode:'explore',view:{}});activePlan=null;return firstFreePlanName();}),'Plan 3');await q.evaluate(()=>{saved.pop();savedRender();});
    // Uten åpen plan foreslås første ledige Plan-navn.
    await q.evaluate(()=>{activePlan=null;savedRender();document.getElementById('save').click();});
    assert.equal(await q.locator('#scenarioName').inputValue(),'Plan 2');assert(await q.locator('#saveUpdate').isHidden());

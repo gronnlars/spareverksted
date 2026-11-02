@@ -51,3 +51,5 @@ if(liveSummary){
  });
  vv.addEventListener('resize',()=>{const field=document.activeElement;if(field&&field.matches&&field.matches('input')&&vv.height<=500){clearTimeout(timer);timer=setTimeout(()=>reveal(field),120);}});
 })();
+// Ingen autoutfylling på Spareverksted: nettleseren skal ikke foreslå kontakter, adresser eller tidligere svar.
+(function(){const sel='input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=hidden]),textarea,select';const off=root=>{if(root.matches&&root.matches(sel))root.setAttribute('autocomplete','off');root.querySelectorAll&&root.querySelectorAll(sel).forEach(el=>el.setAttribute('autocomplete','off'));};const start=()=>{off(document);new MutationObserver(list=>{for(const m of list)m.addedNodes.forEach(n=>{if(n.nodeType===1)off(n);});}).observe(document.body,{childList:true,subtree:true});};document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start):start();})();
