@@ -40,7 +40,8 @@
   // Lukk når tastaturfokus går til noe annet utenfor pillen. På iPhone (alle nettlesere bruker WebKit) får en trykket
   // knapp ikke fokus, og fokus forsvinner uten mål (relatedTarget er null) før trykket når fram. Da lukker vi ikke her;
   // trykk utenfor håndteres av klikklytteren under.
-  picker.addEventListener('focusout',event=>{if(group.hidden||!event.relatedTarget||picker.contains(event.relatedTarget))return;setOpen(false,false);});
+  // Et trykk kan også gi fokus til en forelder som har tabindex (f.eks. toppfeltet). Det er ikke tastaturfokus som går videre.
+  picker.addEventListener('focusout',event=>{const to=event.relatedTarget;if(group.hidden||!to||picker.contains(to)||to.contains(picker))return;setOpen(false,false);});
   document.addEventListener('click',event=>{if(!group.hidden&&!picker.contains(event.target))setOpen(false,false);});
   picker.append(toggle,group);showCurrent();
   const groupForWrapper=picker;
