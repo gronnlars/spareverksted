@@ -1053,7 +1053,7 @@ C. Egne tekster i registeret uten kobling til svarene. Ikke valgt: to forklaring
 **Vurder på nytt når:** svarbasen blir så stor at det lønner seg å bygge registeret automatisk fra svarene.
 
 
-## Fast farge per plan i sammenligningen
+## Fast farge per plan i sammenligningen (2. november 2026)
 
 **Status:** Foreslått av Claude 2.11.2026 etter Lars sin iPhone-test. Venter på godkjenning i PR.
 
