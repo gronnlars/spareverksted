@@ -32,8 +32,8 @@
 :root .site-header>.site-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;border-radius:9px;text-decoration:none;color:var(--ink);font-weight:600;text-align:center;line-height:1.25}
 :root .site-header>.site-nav a[aria-current=page]{background:var(--soft,#e9f0e0);color:var(--green)}
 @media(max-width:760px){
- :root .site-header>.site-nav{order:3;flex:1 0 100%;margin:4px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;border-top:1px solid var(--line);padding-top:6px}
- :root .site-header>.site-nav a{padding:6px 4px;font-size:14px;white-space:normal;min-width:0}
+ :root .site-header>.site-nav{order:3;flex:1 0 100%;margin:4px 0 0;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:stretch;gap:4px;border-top:1px solid var(--line);padding-top:6px}
+ :root .site-header>.site-nav a{padding:6px 8px;font-size:14px;white-space:nowrap;min-width:0}
 }
 .guide-return{margin-left:auto}
 /* Bunnlinjen: lenkene ved siden av hverandre, større skrift og trykkflate på 44 px. */
@@ -44,7 +44,7 @@
 :root footer>span{flex:1 0 100%;grid-column:1/-1;font-size:13px;margin-top:6px}
 @media print{.site-header>.site-nav{display:none!important}}
 .site-nav a{white-space:nowrap}
-@media(max-width:359px){.site-nav a{white-space:normal}}
+@media(max-width:359px){.site-nav a,:root .site-header>.site-nav a{white-space:normal}:root .site-header>.site-nav{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:760px){:root .site-header.site-header{row-gap:8px}}
 /* Felles bunntekst: samme lenker i samme rekkefølge på alle sider */
 footer .footer-links{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:4px 24px;align-items:center}
@@ -55,3 +55,6 @@ footer .footer-note{flex-basis:100%;color:var(--muted);font-size:13px}
 /* Til toppen: egen linje over bunnlenkene på alle sider. */
 footer .to-top{gap:6px;flex:1 0 100%;grid-column:1/-1;display:inline-flex;align-items:center;min-height:44px;font-weight:600;color:var(--green);text-underline-offset:3px}
 #toppen{scroll-margin-top:0}#toppen:focus{outline:none}#toppen:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}
+/* Første rad i toppfeltet er like høy før og etter at temaknappen settes inn. Ellers hopper meny og innhold ned når siden lastes (3.11.2026). */
+:root .site-header .brand{display:inline-flex;align-items:center;min-height:44px}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
