@@ -1,19 +1,7 @@
 'use strict';
-// Main destinations stay visible when the desktop has room for them.
-const siteMenu=document.querySelector('.site-menu'),siteNav=siteMenu?.querySelector('.site-nav');
-if(siteNav){const desktopNav=siteNav.cloneNode(true);desktopNav.classList.add('desktop-nav');siteMenu.before(desktopNav);}
-// Native details keep menus usable with keyboard, touch and without JavaScript.
-const layoutMenus=[...document.querySelectorAll('.site-menu')];
+// Hovedmenyen er en vanlig, alltid synlig nav. Ingen nedtrekk som kan bli stående åpen.
 document.addEventListener('click',event=>{
- for(const menu of layoutMenus){
-  if(!menu.contains(event.target))menu.open=false;
-  else if(event.target.closest('button,a'))menu.open=false;
- }
  if(event.target.closest('#chooseGrowth,#chooseGoal'))document.getElementById('welcomeWizard').classList.add('journey-open');
-});
-document.addEventListener('keydown',event=>{
- if(event.key!=='Escape')return;
- for(const menu of layoutMenus)if(menu.open){menu.open=false;menu.querySelector('summary').focus();event.preventDefault();}
 });
 const liveSummary=document.getElementById('mobileSummary');
 if(liveSummary){
@@ -28,9 +16,9 @@ if(liveSummary){
  document.addEventListener('focusout',event=>{if(!event.relatedTarget?.closest('#basic,#mobileSummary'))liveSummary.classList.remove('is-editing');});
  document.addEventListener('pointerdown',event=>{liveSummary.classList.toggle('is-editing',Boolean(event.target.closest('#basic,#mobileSummary')));});
 }
-// Fokus etter lukket dialog (WCAG 2.4.3). Handlingene i menyen lukker menyen når de trykkes, så knappen som åpnet
+// Fokus etter lukket dialog (WCAG 2.4.3). Knapper inne i et sammenleggbart panel kan være skjult når dialogen lukkes, så knappen som åpnet
 // dialogen er skjult når dialogen lukkes, og nettleseren kan ikke gi den fokus. Da blir fokus stående i den lukkede
-// dialogen. Vi sender fokus til knappen hvis den er synlig, ellers til menyknappen den ligger under.
+// dialogen. Vi sender fokus til knappen hvis den er synlig, ellers til overskriften på panelet den ligger i.
 (function(){
  let opener=null;
  document.addEventListener('focusin',event=>{if(!event.target.closest('dialog'))opener=event.target;});

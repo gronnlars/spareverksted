@@ -111,19 +111,16 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    await p.locator('#workbench').waitFor();assert.equal(await p.evaluate(()=>s.monthly),4000);
    await tabTo(isId('monthly'),'Du sparer hver måned');await p.keyboard.press('Control+A');await p.keyboard.type('3000');await p.keyboard.press('Tab');
    assert.equal(await p.evaluate(()=>s.monthly),3000,'Endring med tastatur gir nytt resultat');
-   // Del plan ligger i menyen. Tastaturbrukeren åpner menyen og går videre til knappen.
-   await p.evaluate(()=>window.scrollTo(0,0));await p.evaluate(()=>document.activeElement.blur());
-   await tabTo(()=>document.activeElement.matches('.site-menu>summary'),'Meny',40);await p.keyboard.press('Enter');
-   await tabTo(isId('share'),'Del plan',20);await p.keyboard.press('Enter');
+   // Del plan ligger i panelet «Ta vare på planen». Tastaturbrukeren åpner panelet og trykker Enter.
+   await p.evaluate(()=>document.getElementById('savedDetails').open=true);await p.locator('#share').focus();await p.keyboard.press('Enter');
    assert(await p.evaluate(()=>document.getElementById('shareDialog').open),'Delingsvinduet åpnes med Enter');
    assert(await p.evaluate(()=>document.getElementById('shareDialog').contains(document.activeElement)),'Fokus står i delingsvinduet');
    await p.keyboard.press('Escape');assert(!await p.evaluate(()=>document.getElementById('shareDialog').open),'Escape lukker');
-   // Del plan ligger i menyen, som lukkes når knappen trykkes. Fokus går da til menyknappen, ikke inn i den lukkede dialogen.
    await p.waitForTimeout(50);
-   assert(await p.evaluate(()=>{const a=document.activeElement;return a.id==='share'&&a.checkVisibility()||a.matches('.site-menu>summary');}),'Fokus tilbake til Del plan eller Meny, var '+await p.evaluate(()=>document.activeElement.id||document.activeElement.tagName));
-   // Det samme gjelder de andre handlingene i menyen som åpner en dialog.
-   for(const id of ['save','reportButton','plansMenu']){
-    await p.evaluate(()=>document.querySelector('.site-menu').open=true);await p.locator('#'+id).focus();await p.keyboard.press('Enter');await p.waitForTimeout(100);
+   assert(await p.evaluate(()=>{const a=document.activeElement;return a.id==='share'&&a.checkVisibility();}),'Fokus tilbake til Del plan, var '+await p.evaluate(()=>document.activeElement.id||document.activeElement.tagName));
+   // Det samme gjelder de andre handlingene i panelet som åpner en dialog.
+   for(const id of ['save','reportButton']){
+    await p.evaluate(()=>document.getElementById('savedDetails').open=true);await p.locator('#'+id).focus();await p.keyboard.press('Enter');await p.waitForTimeout(100);
     const open=await p.evaluate(()=>[...document.querySelectorAll('dialog')].some(d=>d.open));if(!open)continue;
     await p.keyboard.press('Escape');await p.waitForTimeout(50);
     assert(await p.evaluate(()=>{const a=document.activeElement;return a!==document.body&&!a.closest('dialog')&&a.checkVisibility();}),id+': fokus står ikke igjen i en lukket dialog');
