@@ -104,7 +104,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.equal(await page.evaluate(()=>level),'simple');
 
   // 4. Lagre en plan, åpne en fane til, slett fra personvernsiden.
-  const savePlan=async(p,name)=>{await p.evaluate(()=>document.getElementById('save').click());await p.locator('#scenarioName').fill(name);await p.locator('#saveForm button[type=submit]').click();};
+  const savePlan=async(p,name)=>{await p.evaluate(()=>document.getElementById('save').click());await p.locator('#scenarioName').fill(name);await p.locator('#saveNew').click();};
   await savePlan(page,'Test A');
   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('sv-scenarios')).length),1);
   const other=await open('/index.html');
