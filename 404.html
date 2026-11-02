@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Spareverksted har flyttet</title>
+<link rel="canonical" href="https://spareverksted.no/">
+<meta http-equiv="refresh" content="0; url=https://spareverksted.no/">
+<script>
+// Gamle lenker til gronnlars.github.io/spareverksted sendes til samme side på
+// spareverksted.no. Delen etter # (tallene i en delt plan) beholdes.
+(function () {
+  var path = location.pathname.replace(/^\/spareverksted/, "").replace(/^\/dist/, "");
+  if (!/^\/[A-Za-z0-9._\/-]*$/.test(path) || /^\/README|\.md$/i.test(path)) path = "/";
+  location.replace("https://spareverksted.no" + path + location.search + location.hash);
+})();
+</script>
+</head>
+<body>
+<p>Spareverksted har flyttet til <a href="https://spareverksted.no/">spareverksted.no</a>.</p>
+</body>
+</html>
