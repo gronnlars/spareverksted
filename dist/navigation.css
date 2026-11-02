@@ -43,3 +43,6 @@
 @media(min-width:761px){:root footer a{white-space:nowrap}}
 :root footer>span{flex:1 0 100%;grid-column:1/-1;font-size:13px;margin-top:6px}
 @media print{.site-header>.site-nav{display:none!important}}
+.site-nav a{white-space:nowrap}
+@media(max-width:359px){.site-nav a{white-space:normal}}
+@media(max-width:760px){:root .site-header.site-header{row-gap:8px}}
