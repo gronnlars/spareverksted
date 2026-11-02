@@ -33,7 +33,7 @@
 .welcome-question small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 .welcome-question:hover{border-color:var(--green);background:var(--soft)}
 .journey-open .welcome-intro{display:none}
-.journey-open .start-choices{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.journey-open .start-choices{display:grid;grid-template-columns:1fr 1fr;gap:8px}.journey-open #chooseWithdraw{display:none}
 .journey-open .start-choices button,.journey-open .start-choices button[aria-pressed=true]{display:block;padding:11px 12px;border-radius:10px;text-align:center}
 .journey-open .start-choices .choice-icon,.journey-open .start-choices button>span:last-child{display:none}
 .journey-open .start-choices strong{font-size:14px;line-height:1.4}

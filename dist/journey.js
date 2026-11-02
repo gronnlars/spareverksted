@@ -53,6 +53,7 @@ $('journeyForm').onsubmit=event=>{event.preventDefault();try{const start=inputNu
  if(goal)Object.assign(s,{dreamStart:start,dreamMonthly:monthly,dreamYears:years,dreamCost:amount});else Object.assign(s,{start,monthly,years});
  if(journeyEditing){$('undoText').textContent='Startvalgene er oppdatert.';$('undoBar').hidden=false;}else{mode='explore';setLevel('simple',{remember:false});}journeyEditing=false;fill();stage(false);
  }catch(error){$('journeyError').textContent=error.message;$('journeyError').hidden=false;$('journeyError').scrollIntoView({block:'nearest'});}};
+$('chooseWithdraw').onclick=()=>{freshPlan();fill();setLevel('simple',{remember:false});s.activePage='withdrawals';stage(false);};
 $('exampleJourney').onclick=()=>{freshPlan();fill();setLevel('simple',{remember:false});s.activePage=journeyKind==='goal'?'dreams':'calculator';stage(false);};
 // Skyveknapper er snarveier, aldri grenser. Skrivefeltet er alltid den gjeldende verdien.
 const SLIDER_SPECS={start:[0,1000000,1000],monthly:[0,20000,100],years:[0.5,50,.5],rate:[0,15,.1],spread:[0,5,.1],dreamStart:[0,500000,1000],dreamMonthly:[0,20000,100],dreamYears:[0.5,30,.5],dreamCost:[0,1000000,1000],annualWithdraw:[0,600000,1000],withdrawPercent:[0,10,.1]};
