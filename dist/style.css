@@ -85,3 +85,12 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 @media(max-width:760px){.saved-row .drag-handle{order:-1}.saved-row .check{flex-basis:calc(100% - 56px)}}
 .cmp-current{margin:10px 0 0}
 .cmp-actions{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-top:12px}
+/* Sparemål sammenlignet: én farge per alternativ */
+:root{--alt-safe:#6879a5;--alt-moderate:#24684f;--alt-risk:#9b6837;--alt-now:#a6452a}
+:root[data-theme=night]{--alt-safe:#aec7f4;--alt-moderate:#9bdcb5;--alt-risk:#efbf86;--alt-now:#f2a58e}
+.alt-safe{fill:var(--alt-safe);background:var(--alt-safe)}.alt-moderate{fill:var(--alt-moderate);background:var(--alt-moderate)}.alt-risk{fill:var(--alt-risk);background:var(--alt-risk)}
+.cmp-now{stroke:var(--alt-now);stroke-width:2.5;stroke-dasharray:6 4}
+.cmp-now-swatch{height:0;border-top:2.5px dashed var(--alt-now);border-radius:0;width:18px}
+.cmp-key-static{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:14px;padding:0 8px}
+.dream-save{margin:12px 0}
+.cmp-top{margin:4px 0 8px}
