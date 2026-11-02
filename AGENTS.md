@@ -23,6 +23,10 @@ KI brukes i stor grad til å utvikle innhold og kode. Svarene i «Spør om spari
 
 Oppgi utførte kontroller, begrensninger og faktisk status. Grønne tester beviser ikke full tilgjengelighet eller brukerforståelse. Main-push starter automatisk testing og publisering; ikke beskriv sammenslåing som en upublisert handling.
 
+## Mellomlagring
+
+Når en CSS- eller JS-fil i `dist/` endres, øk `?v=` for den filen i alle HTML-filer som laster den. Ellers kan nettleseren og Bunny blande ny HTML med gamle filer. Det skjedde 2.11.2026: ny navigasjon med gammel temaknapp la seg oppå hverandre på iPhone.
+
 ## Sikkerhet ved endringer
 
 Alle publiserte HTML-sider skal ha CSP før første script. Ingen HTTP-lenker, usikre ressursadresser, inline JavaScript eller skjemainnsending til server. Skjemaer behandles lokalt. Kjør `python3 scripts/security-check.py` og relevante nettlesertester ved endring. XML-navnerom i XLSX er identifikatorer, ikke HTTP-forespørsler, og skal bevares. Ikke svekk CSP for å få en test grønn. Nye behov må vurderes og dokumenteres. Se docs/sikkerhet.md.
