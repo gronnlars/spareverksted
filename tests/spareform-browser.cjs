@@ -1,6 +1,8 @@
 // Spareform, «Dette betyr tallene dine» og kroner mot kjøpekraft i grafen (fase 2, PR 3). Krever playwright.
 const {chromium}=require('playwright'),assert=require('node:assert/strict');
 const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
+// Sparekontorenten kommer fra kilder/fakta.json og endres når SSB publiserer nye tall.
+const FACTS=require('../dist/veileder-facts.js'),SAVINGS=FACTS.value('savingsRate'),SAVINGS_TEXT=FACTS.text('savingsRate');
 (async()=>{
  const root=path.resolve(__dirname,'../dist');
  const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!f.startsWith(root+path.sep)){res.writeHead(403);res.end();return;}try{const d=fs.readFileSync(f);res.setHeader('Content-Type',f.endsWith('.js')?'text/javascript':f.endsWith('.css')?'text/css':'text/html');res.end(d);}catch{res.writeHead(404);res.end();}});
@@ -35,7 +37,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.deepEqual(await p.evaluate(()=>['start','monthly','years','rate','inflation','fee'].map(k=>document.getElementById(k).value)),inputs);
   // Sparekonto: gjennomsnittsrenten fra SSB, med kilde og dato i teksten.
   await p.locator('#savingsTypes [data-type=savings]').click();
-  assert.deepEqual(await p.evaluate(()=>[s.rate,s.fee]),[2.87,0]);assert.match(await text(p,'#startNote'),/2,87 % er gjennomsnittet for husholdningers innskudd uten binding \(SSB, august 2026\)/);
+  assert.deepEqual(await p.evaluate(()=>[s.rate,s.fee]),[SAVINGS,0]);assert.match(await text(p,'#startNote'),new RegExp(SAVINGS_TEXT+' % er gjennomsnittet for husholdningers innskudd uten binding \\(SSB, '+FACTS.data.savingsRate.periodText+'\\)'));
   assert.match(await text(p,'#meaningMain'),/Renter beskattes hvert år|skatt på rentene/);
   // Indeksfond: Finans Norge-forutsetning og utfallsrom som avhenger av sparetiden.
   await p.locator('#savingsTypes [data-type=index]').click();assert.equal(await p.locator('#savingsTypes [data-type=savings]').getAttribute('aria-pressed'),'false');

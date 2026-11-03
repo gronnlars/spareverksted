@@ -63,7 +63,7 @@ Ikke lag ekstra fordeler eller ulemper for å fylle en mal. Hvis samme forhold h
 
 ### Ordbok-setningen
 
-Hvert begrep i begrepsregisteret (`dist/begreper.js`) har én ordbok-setning. Den vises der ordet står, og samme setning står ordrett i svaret begrepet lenker til, først eller sist. Da finnes det én forklaring, ikke to som kan gli fra hverandre.
+Hvert begrep i begrepsregisteret (`kilder/begreper/`) har én ordbok-setning. Den vises der ordet står. Svaret begrepet lenker til, henter samme setning med `{{begrep:ID}}`, først eller sist, og utdypingen med `{{begrep:ID.utdyping}}`. Setningen skrives aldri av i teksten. Da finnes det én forklaring, ikke to som kan gli fra hverandre.
 
 Ordbok-setningen skal:
 
@@ -77,7 +77,7 @@ En valgfri utdyping på høyst 25 ord kan si hvorfor ordet betyr noe. Eksempler,
 
 Inne i et svar markeres ikke ord som hører til det samme svaret. Den som leser om renters rente, skal ikke få en boks som forklarer renters rente. Svaret merkes med `data-svar`, og komponenten hopper over slike ord.
 
-Punkt 1, 2 og 5 og kravet om ordrett samsvar med svaret sjekkes automatisk (`tests/begreper.test.cjs`). Punkt 3 og 4 må vurderes av den som kontrollerer teksten.
+Punkt 1, 2 og 5 og at svaret henter setningen fra registeret sjekkes automatisk (`tests/begreper.test.cjs`, `scripts/fakta.py --check`). Punkt 3 og 4 må vurderes av den som kontrollerer teksten.
 
 ## 5. Vis hva vi vet og hva vi antar
 

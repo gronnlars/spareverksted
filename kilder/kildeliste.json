@@ -1,0 +1,127 @@
+{
+  "_om": "Kilder som Kildevakt følger. Hver kilde kobles til fakta i kilder/fakta/. Kildevakt varsler og foreslår, men retter aldri tall selv. Se docs/kildevakt.md.",
+  "_trinn": {
+    "1": "Forslag (Stortinget)",
+    "2": "Vedtatt (Stortinget)",
+    "3": "Kunngjort (Norsk Lovtidend), med dato for ikrafttredelse",
+    "4": "I kraft (gjeldende lover og forskrifter hos Lovdata)",
+    "5": "Etaten oppdatert (Skatteetaten)",
+    "statistikk": "Ny periode eller revisjon (SSB, Norges Bank)"
+  },
+  "kilder": [
+    {
+      "id": "ssb-11018",
+      "type": "ssb",
+      "navn": "SSB tabell 11018: renter på innskudd, husholdninger",
+      "trinn": "statistikk",
+      "tabell": "11018",
+      "spørring": {"Innskuddstype": ["20", "16", "15"], "Sektor": ["04b"], "ContentsCode": ["Innskudd"], "Tid": "top(13)"},
+      "forventet": {"Innskuddstype": {"20": "BSU", "16": "Bundne innskudd", "15": "Ikke-bundne innskudd"}, "Sektor": {"04b": "Husholdninger"}},
+      "serier": {
+        "bsuRate": {"Innskuddstype": "20", "Sektor": "04b"},
+        "boundRate": {"Innskuddstype": "16", "Sektor": "04b"},
+        "savingsRate": {"Innskuddstype": "15", "Sektor": "04b"}
+      },
+      "manuell_kontroll": [
+        {"fakta": "bsuRate", "periode": "2026M09", "verdi": 5.60, "avlest_av": "Lars", "dato": "2026-11-02", "hvor": "SSB statbank, husholdninger. Manuelt avlest, ikke hentet."}
+      ],
+      "lisens": "CC BY 4.0. Kilde: Statistisk sentralbyrå.",
+      "oppdatering": "pr"
+    },
+    {
+      "id": "skatteetaten-bsu",
+      "type": "side",
+      "navn": "Skatteetaten: BSU (bokmål)",
+      "trinn": "5",
+      "url": "https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/bank-og-lan/bsu/",
+      "nøkkeltall": [
+        {"fakta": "bsuAnnual", "mønster": "Årlig sparebeløp kan ikke overstige ([\\d  ]+) kroner"},
+        {"fakta": "bsuTotal", "mønster": "Samlet innbetalt sparebeløp kan ikke overstige ([\\d  ]+) kroner"},
+        {"fakta": "bsuPercent", "mønster": "fradraget (\\d+) ?%"},
+        {"fakta": "bsuMaxAge", "mønster": "under (\\d+) år", "justering": -1},
+        {"navn": "Regelår nevnt på siden", "mønster": "For inntektsåret (\\d{4})"}
+      ],
+      "lisens": "Skatteetaten. Bare uttrukket hovedtekst lagres i repoet."
+    },
+    {
+      "id": "skatteetaten-bsu-nn",
+      "type": "side",
+      "navn": "Skatteetaten: BSU (nynorsk, kilden i svaret)",
+      "trinn": "5",
+      "url": "https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/",
+      "nøkkeltall": [],
+      "lisens": "Skatteetaten. Bare uttrukket hovedtekst lagres i repoet."
+    },
+    {
+      "id": "skatteetaten-bsu-satser-neste-ar",
+      "type": "side",
+      "navn": "Skatteetaten: BSU-satser for neste år",
+      "trinn": "5",
+      "url": "https://www.skatteetaten.no/satser/fradrag-for-boligsparing-for-ungdom-bsu/?year={neste_år}",
+      "neste_år": true,
+      "fakta": ["bsuAnnual", "bsuTotal", "bsuPercent", "bsuMaxDeduction"],
+      "nøkkeltall": [],
+      "lisens": "Skatteetaten. Bare uttrukket hovedtekst lagres i repoet."
+    },
+    {
+      "id": "skatteetaten-ips",
+      "type": "side",
+      "navn": "Skatteetaten: individuell sparing til pensjon (ny ordning)",
+      "trinn": "5",
+      "url": "https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid-trygd-og-pensjon/pensjon-og-uforetrygd/ny-ordning-for-skattefavorisert-individuell-sparing-til-pensjon/",
+      "nøkkeltall": [
+        {"fakta": "ipsAnnual", "mønster": "inntektsåret \\d{4} kan samlet innbetaling maksimalt være på ([\\d  ]+) kroner"},
+        {"fakta": "ipsStartAge", "mønster": "tidligst ta ut alderspensjon fra fylte (\\d+) år"},
+        {"fakta": "ipsEndAge", "mønster": "minst til fylte (\\d+) år"},
+        {"fakta": "ipsMinYears", "mønster": "ikke mindre enn (\\d+) år"}
+      ],
+      "lisens": "Skatteetaten. Bare uttrukket hovedtekst lagres i repoet."
+    },
+    {
+      "id": "lovdata-skatteloven",
+      "type": "lovdata",
+      "navn": "Lovdata: skatteloven (gjeldende)",
+      "trinn": "4",
+      "pakke": "gjeldende-lover.tar.bz2",
+      "dokument": "nl/nl-19990326-014.xml",
+      "paragrafer": {"§16-10": ["bsuMaxAge", "bsuAnnual", "bsuTotal", "bsuPercent", "bsuMaxDeduction"], "§6-47": ["ipsAnnual", "ipsStartAge", "ipsEndAge", "ipsMinYears"]},
+      "lisens": "NLOD 2.0. Kilde: Lovdata."
+    },
+    {
+      "id": "lovdata-fsfin",
+      "type": "lovdata",
+      "navn": "Lovdata: Finansdepartementets skatteforskrift (gjeldende)",
+      "trinn": "4",
+      "pakke": "gjeldende-sentrale-forskrifter.tar.bz2",
+      "dokument": "sf/sf-19991119-1158.xml",
+      "paragrafer": {"§16-10": ["bsuMaxAge", "bsuAnnual", "bsuTotal", "bsuPercent", "bsuMaxDeduction"], "§6-47": ["ipsAnnual", "ipsStartAge", "ipsEndAge", "ipsMinYears"]},
+      "lisens": "NLOD 2.0. Kilde: Lovdata."
+    },
+    {
+      "id": "lovtidend",
+      "type": "lovtidend",
+      "navn": "Norsk Lovtidend avd. I: nye endringer i skatteloven og skatteforskriften",
+      "trinn": "3",
+      "pakke": "lovtidend-avd1-{år}.tar.bz2",
+      "følger": {"1999-03-26-14": "skatteloven", "1999-11-19-1158": "skatteforskriften (FSFIN)"},
+      "lisens": "NLOD 2.0. Kilde: Lovdata."
+    },
+    {
+      "id": "stortinget",
+      "type": "stortinget",
+      "navn": "Stortinget: saker om BSU, IPS, ASK og skatteloven",
+      "trinn": "1",
+      "ord": ["BSU", "boligsparing for ungdom", "individuell pensjonssparing", "individuell sparing til pensjon", "aksjesparekonto", "skatteloven", "Skatter, avgifter og toll"],
+      "lisens": "NLOD 2.0. Kilde: Stortinget."
+    },
+    {
+      "id": "norges-bank-styringsrente",
+      "type": "norges-bank",
+      "navn": "Norges Bank: styringsrenten",
+      "trinn": "statistikk",
+      "flyt": "IR",
+      "nøkkel": "B.KPRA.SD.R",
+      "lisens": "Kilde: Norges Bank. Rådata lagres uendret."
+    }
+  ]
+}

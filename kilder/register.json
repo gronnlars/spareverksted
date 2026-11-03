@@ -1,0 +1,13 @@
+{
+  "_om": "Felles for faktaregisteret og begrepsregisteret. Faktaene ligger i kilder/fakta/*.json, begrepene i kilder/begreper/*.json. Kjør python3 scripts/fakta.py etter endring. Se docs/kildevakt.md.",
+  "_status": "Regelverdier har status 'i kraft', 'vedtatt' eller 'foreslått' (KILDEREGLER K4). Nettsiden bruker bare 'i kraft' og 'vedtatt', og bare fra datoen i 'fra'. 'foreslått' vises aldri.",
+  "sjekket": "2026-10-22",
+  "kilder": {
+    "tax-bsu": "https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/",
+    "tax-ips": "https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid-trygd-og-pensjon/pensjon-og-uforetrygd/ny-ordning-for-skattefavorisert-individuell-sparing-til-pensjon/",
+    "statsforvalter-barn": "https://www.statsforvalteren.no/contentassets/d753fae5ad9842839799794e6f903cd2/svar-pa-sporsmal-om-inntektsberekning-av-barns-stipend-i-saka-til-foreldra.pdf",
+    "lanekassen-formue": "https://lanekassen.no/nb-NO/stipend-og-lan/omgjoring-av-basislan/",
+    "forbrukerradet-fond": "https://www.forbrukerradet.no/sparing-i-fond-og-spareprofiler/",
+    "ssb-11018": "https://www.ssb.no/statbank/table/11018/"
+  }
+}
