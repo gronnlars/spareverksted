@@ -61,7 +61,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
    assert.equal(top,navTop,'submenu stays in the same place across pages');
    assert(await page.locator('h1 + .info-tools').count(),'tools immediately follow heading');
    assert.equal(await page.locator('.info-tools a').evaluate(e=>Boolean(e.closest('details'))),false);
-   if(file==='personvern.html')assert(await page.locator('#kontakt').getByRole('link',{name:'Datatilsynet',exact:true}).count());
+   if(file==='personvern.html')assert(await page.locator('#kontakt a[href="https://www.datatilsynet.no/"]').isVisible());
    if(file==='tilgjengelighet.html')assert(await page.locator('#kontakt a[href*=uutilsynet]').count());
    await page.locator('.info-tools').getByRole('link',{name:'Kontakt',exact:true}).click();
    assert.equal(new URL(page.url()).hash,'#kontakt');
