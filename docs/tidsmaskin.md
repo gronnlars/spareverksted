@@ -30,6 +30,8 @@ Seriene på nettsidene er de mest oppdaterte versjonene. Varsler om nye publiser
 
 E-posten oppbevares av Lars. Det er ikke avklart om aksjeseriene har egne tredjepartsvilkår.
 
+**Siteringskrav i filene.** Hvert ark i HMS-filene starter med «When using these data, please cite …» og navngir forfatterne (for eksempel Eitrheim, Gerdrup og Klovland for aksjeindeksene, Eitrheim og Klovland for kortsiktige renter, Grytten for KPI). Når en serie tas i bruk, skal kildeteksten på siden ha både Norges Bank og den publikasjonen arket ber om. Den nøyaktige teksten leses fra arket i første henting.
+
 **SSB.** CC BY 4.0. SSB oppgis som kilde.
 
 ## Slik følges vilkårene
@@ -46,7 +48,7 @@ E-posten oppbevares av Lars. Det er ikke avklart om aksjeseriene har egne tredje
 
 ## Neste steg
 
-1. Første kjøring: se gjennom PR-en og `OVERSIKT.md`.
+1. Første kjøring: se gjennom PR-en og `OVERSIKT.md`. Prøvehentingen 3.11.2026 fant ni filer, alle gyldige. Oversiktssiden har fem filer til som ikke er tatt med (BNP, NIBOR 1982 til 2013, penger og kreditt, og to bankbalanser).
 2. Velg serier og kolonner til beregningen, med kontroll mot JST Macrohistory der det er mulig.
 3. Beregning og graf etter planen i prosjektnotatet `historisk-pengereise-plan-2026-11-02.md`.
 
