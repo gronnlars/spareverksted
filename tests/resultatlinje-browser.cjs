@@ -54,7 +54,6 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    for(const height of [664,760,664]){
     await q.setViewportSize({width:390,height});
     const b=await q.evaluate(()=>{const s=document.getElementById('mobileSummary'),t=document.getElementById('mobileSummaryToggle'),a=s.getBoundingClientRect(),b=t.getBoundingClientRect();return {bottom:a.bottom,buttonBottom:b.bottom,height:a.height,buttonHeight:b.height,padding:getComputedStyle(s).paddingBottom,background:getComputedStyle(t).backgroundColor,hit:document.elementFromPoint(innerWidth/2,innerHeight-2)?.id,overflow:document.documentElement.scrollWidth-innerWidth};});
-    console.log('sikkerhetsfelt',engine,inset,height,await state(q),b);
     assert.equal(b.bottom,height,'linjen følger vindusbunnen');
     assert.equal(b.buttonBottom,height,'knappen fyller også sikkerhetsfeltet');
     assert.equal(b.height,b.buttonHeight,'ingen tom stripe under knappen');

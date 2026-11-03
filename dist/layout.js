@@ -9,7 +9,8 @@ if(liveSummary){
  // dekket mer enn en tredjedel av skjermen. Brukerens eget valg gjelder resten av besøket (WCAG 1.4.10, 2.4.11; 3.11.2026).
  const toggle=document.getElementById('mobileSummaryToggle');let chosen=null;
  const shown=()=>getComputedStyle(liveSummary).display!=='none';
- const setCollapsed=c=>{liveSummary.classList.toggle('is-collapsed',c);toggle.innerHTML=c?'Vis resultat':'<span aria-hidden="true">×</span>';toggle.setAttribute('aria-label',c?'Vis resultatlinjen':'Skjul resultatlinjen');};
+ // Behold knappeinnholdet når tilstanden er uendret: fokus under et trykk må ikke fjerne klikkmålet.
+ const setCollapsed=c=>{if(liveSummary.classList.contains('is-collapsed')===c)return;liveSummary.classList.toggle('is-collapsed',c);toggle.innerHTML=c?'Vis resultat':'<span aria-hidden="true">×</span>';toggle.setAttribute('aria-label',c?'Vis resultatlinjen':'Skjul resultatlinjen');};
  setCollapsed(false);
  toggle.addEventListener('click',()=>{chosen=!liveSummary.classList.contains('is-collapsed');setCollapsed(chosen);});
  const fit=()=>{if(chosen===null&&shown()){setCollapsed(false);if(liveSummary.offsetHeight>innerHeight/3)setCollapsed(true);}};

@@ -1265,3 +1265,14 @@ Ved maksimalt 760 px bredde og 420 px høyde får mus med hover en lukket knapp 
 Eksisterende resultatlinjetest utvides med simulert sikkerhetsfelt på 0 og 34 px, endring av vindushøyde, trefflate nederst, sidebredde og mus mot berøring ved liten høyde. Smal viewport er ikke faktisk nettleserzoom, og skrivebords-WebKit er ikke Safari på iPhone. Lars må fortsatt prøve sammenfoldet og utvidet Safari-meny på iPhone. Lokale sikkerhets-, versjons- og gammel-kodekontroller består. Nettlesernedlasting feilet lokalt, så nettlesertestene kjøres i PR-ens eksisterende Chromium- og WebKit-jobb. ChatGPT/Codex. Ingen sammenslåing eller publisering i dette oppdraget.
 
 Revurder hvis faktisk Safari-prøving fortsatt viser et mellomrom eller knappen blir vanskelig å treffe ved zoom.
+
+
+## Etterkontroll av resultatlinjen og mobil-WAVE (4. november 2026)
+
+PR #206, opprinnelig Actions-kjøring #654, er gjennomgått på Lars sitt oppdrag. Designendringen er begrenset til sikkerhetsfeltet i den lukkede knappen og lavere høyde med mus på korte vinduer. Farger, tekst og den åpne linjen er bevart. Samordnet med main 525160e.
+
+Nettlesertesten avdekket en reell klikkfeil: fokus utløste setCollapsed(false), som erstattet knappens kryss selv når tilstanden allerede var åpen. Klikkmålet kunne forsvinne under trykket. setCollapsed returnerer nå når tilstanden er uendret. Den eksisterende testen kontrollerer eksplisitt lukket tilstand før geometrien måles. Samme test feiler lokalt med gammel JavaScript og består med rettingen i Chromium. Testen måler sikkerhetsfelt på 0 og 34 px, endret vindushøyde, trykkflate, mus/berøring og tastatur. Ingen geometri- eller tilgjengelighetskrav er fjernet. Manglende personvernrapport i CI var en følge av at denne testen stoppet før personverntestene.
+
+Lars sitt mobilbilde fra WAVE viser siden uten vanlig utforming og hvit tekst på #0088FF (3,52:1). Manglende utforming ble gjenskapt i WAVE på PC, hvor knappen fikk nettleserens grå/svarte standardfarger. WAVE-kopien ligger på wave.webaim.org, beholder sidens CSP med style-src self og peker på stilark fra spareverksted.no. Dette forklarer at den ikke bruker sidens utforming. Den direkte publiserte knappen er kontrollert i Chromium: hvit på #183F36 (11,65:1) i Nøytral/Lys og #13291D på #ACDCB9 (10,05:1) i Natt. Ingen design- eller CSP-endring er gjort for WAVE-kopien. WAVE-utvidelsen anbefales for kontroll av siden i opprinnelig nettleserkontekst, jf. https://wave.webaim.org/help (lest 3.11.2026).
+
+Direkte Safari på iPhone og bevegelig Safari-meny er ikke testet i denne økten. Skrivebords-WebKit og smal viewport erstatter ikke den prøven. ChatGPT/Codex, egenkontroll.
