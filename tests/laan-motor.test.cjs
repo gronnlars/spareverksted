@@ -82,7 +82,8 @@ for(const rate of [1e-15,1e-12,1e-10,1e-8,1e-6,1e-4]){
  const e=plan({rate,extraPayments:[{term:60,amount:500000}]}),z=plan({rate:0,extraPayments:[{term:60,amount:500000}]});
  assert.equal(e.payoffTerm,z.payoffTerm,`${rate} %: forkortet løpetid som ved 0 %`);
  for(const r of e.rows.slice(0,-1))near(r.payment,z.rows[r.term-1].payment,`${rate} %: ekstra, termin ${r.term}`,Math.max(1e-9,2*i*n));
- // Siste termin er resten. Ved positiv rente er terminbeløpet litt høyere enn ved 0 %, så resten blir litt lavere.
+ // Siste termin er resten. Her har en ekstra innbetaling forkortet lånet. Ved positiv rente er terminbeløpet da litt
+ // høyere enn ved 0 %, så det som gjenstår til slutt, blir litt mindre. Uten ekstra innbetaling er siste termin lik de andre.
  near(e.lastPayment,e.rows.at(-2).balance*(1+i),`${rate} %: siste termin er restgjeld pluss rente`,1e-12);
  if(rate<=1e-6)assert.ok(Math.abs(e.lastPayment-z.lastPayment)<1,`${rate} %: siste termin ${e.lastPayment} mot ${z.lastPayment}`);
  invariants(e,`${rate} % ekstra`);
