@@ -66,10 +66,21 @@ function buildReport(){
  html+='<div class="report-block"><h3>Metode og begrensninger</h3><p>Effektiv årlig vekst etter kostnader = (1 + avkastning) × (1 − kostnad). Månedlige innskudd ved månedsslutt (kalkulatorer som regner ved månedsstart, viser litt høyere tall). Spareøkning fordeles jevnt gjennom året. Dagens kroner = beløpet / (1 + inflasjon)^år. Kostnadseffekten inkluderer tapt rentes rente.</p><p>Jevn avkastning er en forenkling. Ingen markedsavkastning er garantert. Spareutviklingen og ordinære uttaksbeløp er før skatt. Et eventuelt skatteanslag for uttak er en separat forenkling. Fremtidig skjerming, IPS, BSU og formuesskatt er ikke beregnet. Veiledningen er generell.</p><p class="report-footnote">'+reportSources()+escapeHTML(DATA_STATUS)+' Modellen bruker egne forutsetninger, ikke oppdaterte produkttilbud.</p></div>';
  return html;
 }
-$('reportButton').onclick=()=>{try{const html=buildReport();$('reportPreview').innerHTML=html;$('printReportContent').innerHTML=html.replaceAll('reportArea','printArea').replaceAll('reportClip','printClip').replaceAll('reportGuide','printGuide');$('reportDialog').showModal();}catch(e){notice(e.message);}};
-$('closeReport').onclick=()=>$('reportDialog').close();$('printReport').onclick=()=>window.print();
+$('reportButton').onclick=()=>{try{const html=buildReport();$('reportPreview').innerHTML=html;$('printReportContent').innerHTML=forPrint(html);$('reportDialog').showModal();}catch(e){notice(e.message);}};
+// Utskriftskopien av rapporten (Lars 3.11.2026, PDF-sjekk). Overskriftene flyttes ett nivå opp, slik at PDF-en starter med h1 uten hopp i nivåene.
+// Begrepsknappene blir vanlig tekst: en knapp i en PDF kan ikke trykkes på, men blir likevel lest opp som knapp.
+function forPrint(html){return html.replaceAll('reportArea','printArea').replaceAll('reportClip','printClip').replaceAll('reportGuide','printGuide').replace(/<(\/?)h([2-6])\b/g,(m,slash,n)=>'<'+slash+'h'+(n-1)).replace(/<button type="button" class="begrep"[^>]*>([\s\S]*?)<\/button>/g,'$1');}
+window.forPrint=forPrint;
+// «Lagre som PDF» bruker nettleserens utskrift. Chrome og Edge merker PDF-en (overskrifter, avsnitt, tabeller, bokmerker) ut fra det skjermlesere ser.
+// Et åpent modalt <dialog> gjør resten av siden inert, og da kom utskriftskopien ikke med i merkingen. Derfor lukkes dialogen mens utskriften lages og åpnes igjen etterpå.
+// Sidetittelen blir PDF-ens tittel og forslag til filnavn.
+let printRestore=null;
+function restoreAfterPrint(){if(!printRestore)return;const r=printRestore;printRestore=null;document.title=r.title;if(!$('reportDialog').open)$('reportDialog').showModal();$('printReport').focus();}
+function printReportNow(){const h=$('printReportContent').querySelector('h1');const name=h?h.textContent.trim():'Rapport';const date=new Date().toLocaleDateString('nb-NO',{year:'numeric',month:'long',day:'numeric'});printRestore={title:document.title};document.title=name+', Spareverksted, '+date;$('reportDialog').close();window.print();if(!matchMedia('(hover: none)').matches)setTimeout(restoreAfterPrint,0);}
+window.addEventListener('afterprint',()=>setTimeout(restoreAfterPrint,0));
+$('closeReport').onclick=()=>$('reportDialog').close();$('printReport').onclick=printReportNow;
 // A normal browser print also gets the complete report, rather than a half-hidden interface.
-window.addEventListener('beforeprint',()=>{if($('reportDialog').open)return;try{$('printReportContent').innerHTML=buildReport().replaceAll('reportArea','printArea').replaceAll('reportClip','printClip').replaceAll('reportGuide','printGuide');}catch{$('printReportContent').textContent='Rapporten kunne ikke beregnes. Rett ugyldige felt og prøv igjen.';}});
+window.addEventListener('beforeprint',()=>{if($('reportDialog').open||printRestore)return;try{$('printReportContent').innerHTML=forPrint(buildReport());}catch{$('printReportContent').textContent='Rapporten kunne ikke beregnes. Rett ugyldige felt og prøv igjen.';}});
 fill();render();
 
 $('copyLink').onclick=async()=>{try{await navigator.clipboard.writeText($('shareUrl').value);notice('Lenken er kopiert.');$('copyLink').textContent='Kopiert';}catch{$('shareUrl').select();notice('Trykk Ctrl+C eller hold på teksten for å kopiere lenken.');}};
