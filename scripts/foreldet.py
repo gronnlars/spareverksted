@@ -43,7 +43,8 @@ def historikk(base, path, cwd):
     tidligere = {}
     for linje in git('log', '--format=@%h %cs', '--raw', '--no-abbrev', '--no-renames', base, '--', path, cwd=cwd).splitlines():
         if linje.startswith('@'):
-            commit = linje[1:]
+            sha, dato = linje[1:].split()
+            commit = f'{sha[:9]} fra {dato}'
         elif linje.startswith(':'):
             ny = linje.split()[3]
             tidligere.setdefault(ny, commit)
