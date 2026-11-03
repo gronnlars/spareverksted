@@ -6,6 +6,7 @@ Felles overlevering for ChatGPT/Codex og Claude. Tid oppgis i Europe/Oslo.
 
 | ID-er | Aktør | Start | Utløp | Gren/PR |
 | --- | --- | --- | --- | --- |
+| SV-022 | ChatGPT/Codex | 03.11.2026 kl. 21.07 | 04.11.2026 kl. 01.07 | docs/referansesvar-renters-rente. Ett referansesvar med kildekontroll og utfyllingsveiledning. |
 
 Ingen aktive reservasjoner fra denne økten. SV-035 og SV-017 avsluttet ved leveranse i PR #64.
 
