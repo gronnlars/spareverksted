@@ -34,7 +34,7 @@ De to nye skjemaene etter #197 var BSU og renters rente. Oppføringene over er e
 1. Finn eksisterende SV-ID og `q-`-ID. Filnavnet bruker kø-ID, offentlig svar bruker `q-`-ID. Ikke opprett en ny ID for et spørsmål som allerede finnes.
 2. Velg hva svaret forklarer. SV-022 er `regnemåte`, derfor `kind: explainer` og `layout: overview`. Det har ingen fordeler og ulemper. Kopier ikke dette valget til BSU, ASK eller en sammenligning uten å vurdere svarformen.
 3. Les kildene før du skriver. Noter kildens dato og avsnitt, egen lesedato og hvem som leste. `Kilde-ID` er en lokal identifikator, ikke et bevis på at kilden støtter teksten.
-4. Skriv påstandstabellen først. Skill skatteregel, matematikk og prisvekst. En beregning får metodekilden og teksten «egen beregning». Ikke skriv at SSB publiserte våre valgte eksempeltall.
+4. Skriv påstandstabellen først. Skill skatteregel, matematikk og prisvekst. En beregning får metodekilden og teksten «egen beregning». Ikke skriv at SSB publiserte de valgte eksempeltallene.
 5. Skriv kortsvaret, deretter ett enkelt eksempel. SV-022 forklarer nøyaktig hva de ekstra 25 kronene er. Den forteller ikke bare at sluttbeløpet øker.
 6. Legg hvert faglige poeng ett sted i fordypningen. Bevar forutsetninger ved tallet de gjelder. Et forbehold må ikke gjemmes i kontrollteksten hvis det endrer forståelsen av eksemplet.
 7. Sett inn registerreferanser. `{{begrep:renters-rente}}` er den eksisterende definisjonen. `{{ID}}` brukes for endringsutsatte fakta. Valgte 5 % og 10 000 kr er eksempeltall, ikke nye faktaoppføringer. Du skal ikke bruke faktisk bankrente som en prognose.
@@ -62,7 +62,7 @@ Relevans og «Se også» er interne koblinger i dagens grunnmur. Ikke lov at de 
 
 ## Utførte kontroller og forventede tall
 
-Tre myndighetskilder på nivå 1 og én metodekilde på nivå R er åpnet og lest 3.11.2026. Presise avsnitt og avgrensninger står i skjemaet. Formlene brukes selvstendig, uten kopierte lærebokeksempler, figurer eller oppgaver. Referansen har 252 ord i kortsvar, eksempel og fordypning når registerdefinisjonen er løst ut. Kontrolltekst, titler og kildeliste kommer i tillegg. Den passerer også validatorens samlede lengdekontroll.
+Tre myndighetskilder på nivå 1 og én metodekilde på nivå R er åpnet og lest 3.11.2026. Presise avsnitt og avgrensninger står i skjemaet. Formlene brukes selvstendig, uten kopierte lærebokeksempler, figurer eller oppgaver. Referansen har 248 ord i kortsvar, eksempel og fordypning når registerdefinisjonen er løst ut. Kontrolltekst, titler og kildeliste kommer i tillegg. Den passerer også validatorens samlede lengdekontroll.
 
 | Tilfelle | Forutsetning | Forventet resultat |
 | --- | --- | --- |
@@ -118,3 +118,5 @@ Kortsvaret er skjerpet med vilkåret fast, positiv rente, og P2 er oppdatert til
 Sju korte sjekkpunkter er lagt foran detaljene. Kontrollskriptet er presisert som en særskilt prøve for SV-022, uten krav om eget skript for hvert svar. Kjørbar kontrollregning i skjemaet er normal arbeidsform. En felles regnekontroll er et mulig senere tiltak, ikke implementert her.
 
 Referansekontrollen, `svar.py --check`, alle 35 tester i `svar.test.py`, faktaregisteret, Node-kontrollene av generert svarbase og publiseringsutvalg og de åtte tilfellene i testen av foreldet kode består etter rettingen. De eksisterende BSU-lengdevarslene gjenstår. Videresendt delkontroll er ikke registrert som fullført separat 4C-kontroll. Status er fortsatt `til kontroll`.
+
+Siste språkretting etter ny delkontroll 3.11.2026: kortsvaret bruker «blir effekten større jo høyere renten er og jo lenger rentene får stå». P2 har samme ordlyd. «Vår anvendelse» og «vår prosentvariabel» er erstattet med nøytrale formuleringer i den interne tabellen. To eksempelsetninger er komprimert med samme tall og forutsetninger. Referansekontrollen, skjemakontrollen og alle 35 Python-tester består. PDF-endringene fra main `6895429` er innflettet og bevart. Full 4C-kontroll og godkjenning gjenstår fortsatt.

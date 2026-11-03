@@ -55,6 +55,8 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    for(const n of ['Lars','Plan 1','Bil','Pensjon','Hus','Hytte: [plan]/2'])assert(report.includes(n),n+' i rapporten');
    assert.match(report,/Igjen etter \d+ år: .* i dagens kjøpekraft/);
    assert.equal(await q.locator('#reportPreview .report-cmp-chart svg[role=img]').count(),2,'søyler og linjer for sammenligningen av spareplaner');
+   // <figure> uten navn blir en /Figure uten /Alt i PDF-en (Lars 3.11.2026). role=group gjør den til en Div rundt grafen.
+   assert.equal(await q.locator('#printReportContent figure:not([role=group])').count(),0,'figure i rapporten har role=group');
    assert(await q.locator('#reportPreview .report-cmp-chart').first().locator('rect').count()>=2,'søylegraf først, som på skjermen');
    assert.equal(await q.locator('#reportPreview section').first().evaluate(e=>e.classList.contains('report-page')),false,'første sammenligning på samme side som overskriften');assert.doesNotMatch(report,/frarå|undefined|NaN/);
    // Tabellene får plass på mobil, eller ruller i sitt eget område.
