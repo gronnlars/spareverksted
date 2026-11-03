@@ -58,7 +58,8 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    const records=csv.trim().split(/\r?\n/).map(l=>l.split(';')),last=records.at(-1);
    assert.match(records[0].at(-2),/Lavere scenario før skatt/);
    const low=Number(last.at(-2).replace(',','.')),high=Number(last.at(-1).replace(',','.'));
-   const near=(a,b)=>assert(Math.abs(a-b)<=Math.max(1,Math.abs(b))*1e-10,`${savingsType} ${years} ${real}: ${a} versus ${b}`);
+   // Eksporten avrunder til hele kroner (3.11.2026), så avviket kan være inntil en halv krone.
+   const near=(a,b)=>assert(Math.abs(a-b)<=0.5+Math.max(1,Math.abs(b))*1e-10,`${savingsType} ${years} ${real}: ${a} versus ${b}`);
    near(low/expected.factor,expected.low);near(high/expected.factor,expected.high);
    near(low,expected.matrix.at(-1).at(-2));near(high,expected.matrix.at(-1).at(-1));
   }
