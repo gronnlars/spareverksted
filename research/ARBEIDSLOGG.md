@@ -188,3 +188,9 @@ Claude, på Lars' bestilling, i PR #113. Lars har lest innledningen i Skatte-ABC
 ## Presisering av bundne renter før publisering, 29.10.2026
 
 Lars bestiller retting og publisering. Forklaringen av bundne BSU-midler avgrenses til tidligere års innskudd og renter opptjent til og med året man fyller 33. Renter som påløper fra og med året man fyller 34 kan disponeres fritt. Kilde: Skatte-ABC 2025/2026, B-19-7.1.2, lest av ChatGPT/Codex i samme arbeidsøkt. Eksisterende test oppdateres til den presise avgrensningen. Datoer og cacheversjon beholdes siden dette er samme dags upubliserte revisjon. Lars har godkjent den foreslåtte rettingen og gitt publiseringsfullmakt. Kildekontrollen av denne presiseringen er egenkontroll av ChatGPT/Codex.
+
+## Svargrunnmur, 3. november 2026
+
+ChatGPT/Codex, lest main `d254229cda4e9157c8d85b0e312314597888ce29`, gren `feat/svargrunnmur`. Lars bestilte implementering av vedlagte SVARSKJEMA og plan. Claudes dokumentpatch er bevart og presisert med maskinell kontrakt. Piloter SV-133 og SV-022 er mekanisk overført som utkast, ikke ny fagkontroll. Publiserte svar og publiseringsutvalg er uendret. Ingen aktiv innholdsreservasjon eller nattkjøring er startet.
+
+Validator, generator, kontrollbevis, avhengighetsindeks, CI og regresjonstester er lagt til. Retter navneoppslag i Kildevakt, HTTP-returkoder, pipefail og Tidsmaskins feilstatus ved hentefeil/manglende kilder. Detaljer, utførte kontroller og gjenstående oppgaver står i PR og docs/svargrunnmur.md. Automatisk test av struktur er egenkontroll, ikke separat kildekontroll.

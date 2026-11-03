@@ -14,6 +14,39 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 | Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 
+## Utviklingsfrys opphevet og PR godkjent for opplasting (3. november 2026)
+
+Lars presiserte 3.11.2026 at kalkulatoren og hele nettstedet er åpnet for videre utvikling. Den tidligere kalkulatorfrysen og generelle utviklingspausen gjelder ikke. Strenge kildekriterier, ingen personlige råd eller produktanbefalinger, universell utforming og personvern gjelder alle endringer. Ambisjonen om å være best i klassen er et utviklingsmål, ikke en dokumentert rangering.
+
+Lars godkjente uttrykkelig opplasting av svargrunnmur til `gronnlars/spareverksted` og opprettelse av PR uten sammenslåing. Eksisterende Kildevakt og Tidsmaskin videreføres. Ingen ny nattkjøring eller faglig godkjenning av pilotsvar følger av denne tillatelsen.
+
+## Svargrunnmur implementert (3. november 2026)
+
+Lars ba om å fullføre og implementere Claudes rammeverk som grunnmur. Codex har lagt anbefalingene D1 A, D2 A, D3 A, D4 B, D5 A og D6 A til grunn for implementeringen. Dette er ikke en påstand om at Lars har gitt særskilt faglig godkjenning av hvert pilotsvar.
+
+Markdown i `kilder/svar/` er redaksjonell fasit. `scripts/svar.py` kontrollerer struktur, påstands- og kildereferanser, registerreferanser og dokumentert kontroll/godkjenning. Kode genereres deterministisk. Separate kontroll- og godkjenningsrader knyttes til en SHA256 som også omfatter brukte fakta og begreper. Dette oppdager foreldet kontroll, men beviser hverken kontrollørens identitet eller at en kilde støtter påstanden. Git-historikk og Lars sin PR-godkjenning er fortsatt nødvendige.
+
+Ingen publiseringsliste er utvidet. Pilotene SV-133 og SV-022 er mekanisk overført med åpne sperrer. Ny kildekontroll, separat kontroll og godkjenning gjenstår. Nattkjøring startes ikke. De bekreftede innhentingsfeilene 1 og 2 er rettet. Funn 3 til 7 er ikke erklært løst.
+
+Se [teknisk kontrakt og avgrensning](docs/svargrunnmur.md). Ingen kalkulatorberegninger er endret.
+
+## Opprinnelig forslag til svarskjema (3. november 2026, historikk)
+
+**Status:** Historisk forslag fra Claude. Erstattet av implementeringsbeslutningen ovenfor. De opprinnelige alternativene står i [research/plan-svararbeid-2026-11-03.md](research/plan-svararbeid-2026-11-03.md).
+
+**Bakgrunn:** Lars vil at han og ChatGPT kan fylle ut spørsmål og svar på en fast måte, også med mindre modeller når Claude ikke er tilgjengelig. Reglene finnes, men er spredt over flere dokumenter, noen linjer er utdaterte, og ingen utfyllingsform speiler svarbasen. Publiserte svar mangler kobling mellom påstand og kilde.
+
+**Forslag:** Ett skjema per svar i `kilder/svar/SV-xxx.md` med faste overskrifter, en påstandstabell som kobler hver påstand til stedet i kilden, faste statuser og roller, stoppregler og ferdige oppdragstekster. Se [SVARSKJEMA.md](SVARSKJEMA.md). Skjemaet erstatter malen i research/DAGLIG-OPPGAVE.md. Det endrer ingen regler i KILDEREGLER, SPRAKREGLER, SVARMAL eller docs/regulatorisk.md, og de går foran skjemaet.
+
+**Alternativer:**
+A. Skjema i Markdown med faste overskrifter, kontrollert av skript, svarbasen generert senere. **Anbefalt.** Lars og ChatGPT kan lese og skrive det i samtale uten omgjøring, mindre modeller følger faste overskrifter godt, og et skript kan stoppe avvik.
+B. JSON per svar som fasit, som faktaregisteret. Ikke anbefalt: sikkert for maskiner, men tungt å skrive og lese lang tekst i JSON i en samtale.
+C. Fortsette å skrive rett i `dist/veileder-knowledge.js` etter malen i DAGLIG-OPPGAVE. Ikke anbefalt: ingen kobling mellom påstand og kilde, og hver tekstendring krever en modell som håndterer JavaScript.
+
+**Akseptert ulempe:** Til generatoren finnes, står teksten både i skjemaet og i svarbasen, og integrasjonen må sammenlignes ord for ord. Påstandstabellen gir mer arbeid for skribenten, men mindre for kontrolløren og Lars.
+
+**Vurder på nytt når:** piloten med BSU og renters rente er gjennomført, eller skjemaet gir mer arbeid enn det sparer etter ti svar.
+
 ## Informasjonssidene: utvidbare kapitler (3. november 2026)
 
 **Oppdrag fra Lars:** Rydd Om, Personvern, Tilgjengelighet og Ressursbruk, med NRKs utvidbare kapitler som inspirasjon. Bevar grunnkoden og Claudes pågående kalkulator- og rapportarbeid. Ingen endringer i kalkulator, grafer, svarbase, felles toppmeny eller rapportmotor.

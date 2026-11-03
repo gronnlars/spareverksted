@@ -4,6 +4,12 @@
 
 Gjelder hele repoet og alle bidragsytere, inkludert ChatGPT/Codex, Claude, Gemini og Vibe.
 
+## Gjeldende utviklingsramme, 3. november 2026
+
+Lars presiserte 3.11.2026 at kalkulatoren og hele nettstedet er åpnet for videre utvikling. Den tidligere kalkulatorfrysen og generelle utviklingspausen gjelder ikke. Strenge kildekriterier, ingen personlige råd eller produktanbefalinger, universell utforming og personvern gjelder alle endringer. Ambisjonen om å være best i klassen er et utviklingsmål, ikke en dokumentert rangering.
+
+Kildevakt (`scripts/kildevakt.py`) og Tidsmaskin (`scripts/tidsmaskin.py`) er eksisterende innhentingsløp med egne arbeidsflyter. Bygg videre på dem og faktaregisteret. Ikke opprett en parallell innhenter i svargrunnmuren. Teknisk vellykket henting er aldri faglig godkjenning.
+
 Les før arbeid:
 
 1. [CONTRIBUTING.md](CONTRIBUTING.md): bidrag, lisens og selvstendige overleveringer.
@@ -11,9 +17,10 @@ Les før arbeid:
 3. [SPRAKREGLER.md](SPRAKREGLER.md): språk og faglig presisjon.
 4. [SVARMAL.md](SVARMAL.md): valg av svarform, presentasjon og kontroll før publisering.
 5. [KILDEREGLER.md](KILDEREGLER.md): kilder, datoer, foreslått mot vedtatt og når en regel må brytes.
-6. [research/plan.md](research/plan.md): faser, kalkulatorfrys og åpning for kontrollert innholdspåfyll.
+6. [research/plan.md](research/plan.md): faser, videreutvikling av kalkulatoren og kontrollert innholdspåfyll.
 7. [research/universell-utforming.md](research/universell-utforming.md): krav og åpne kontroller.
 8. [SPORSMALSKO.md](SPORSMALSKO.md), [daglig oppgave](research/DAGLIG-OPPGAVE.md) og [arbeidslogg](research/ARBEIDSLOGG.md) ved innholdsarbeid.
+9. [SVARSKJEMA.md](SVARSKJEMA.md) ved arbeid med spørsmål og svar: skjema, statuser, roller og oppdragstekster. Implementert etter Lars sitt oppdrag 3.11.2026. Kjør `python3 scripts/svar.py --check`. Se `docs/svargrunnmur.md` for bygging og kontrollbevis.
 
 Main er autoritativt arbeidsgrunnlag. Hent fersk status og les åpne PR-er før endring. Ikke anta at en samtale eller usammenslått gren er kjent for neste bidragsyter. Ikke overskriv andres arbeid eller opprett konkurrerende køer. Dokumenter viktige beslutninger og hva som kan få oss til å revurdere dem.
 

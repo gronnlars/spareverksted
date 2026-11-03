@@ -29,6 +29,9 @@ jobs:
           python3 tests/versjoner.test.py
           python3 scripts/fakta.py --check
           python3 tests/fakta.test.py
+          python3 scripts/svar.py --check
+          python3 tests/svar.test.py
+          node tests/svar-generated.test.cjs
           python3 tests/kildevakt.test.py
           python3 scripts/generate-bsu-rates.py --check
           node tests/bsu-rates.test.cjs

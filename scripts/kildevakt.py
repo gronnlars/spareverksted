@@ -809,21 +809,24 @@ def load_sources():
     return json.loads(SOURCES.read_text(encoding='utf-8'))
 
 
-def access(get):
+def access(get, with_status=False):
     tests = [('data.ssb.no', 'https://data.ssb.no/api/pxwebapi/v2/tables/11018/metadata?lang=no'),
              ('data.norges-bank.no', NORGES_BANK.format(flyt='IR', nøkkel='B.KPRA.SD.R') + '?format=sdmx-json&lastNObservations=1'),
              ('www.norges-bank.no', 'https://www.norges-bank.no/'),
              ('api.lovdata.no', LOVDATA + '/list'),
-             ('www.skatteetaten.no', load_sources()['kilder'][1]['url']),
+             ('www.skatteetaten.no', next(s['url'] for s in load_sources()['kilder'] if s['id'] == 'skatteetaten-bsu')),
              ('data.stortinget.no', STORTINGET + '/sesjoner?format=json')]
+    failed = False
     lines = ['| Vert | HTTP |', '| --- | --- |']
     for host, url in tests:
         try:
             status = get(url).status
         except Exception as error:  # noqa: BLE001  rapporteres, ikke skjules
             status = f'feil: {error}'
+        failed = failed or not isinstance(status, int) or not 200 <= status < 300
         lines.append(f'| {host} | {status} |')
-    return '\n'.join(lines)
+    text = '\n'.join(lines)
+    return (text, failed) if with_status else text
 
 
 def main(argv):
@@ -837,8 +840,9 @@ def main(argv):
     args = parser.parse_args(argv)
     today = dt.date.fromisoformat(os.environ['KILDEVAKT_DATO']) if os.environ.get('KILDEVAKT_DATO') else dt.date.today()
     if args.cmd == 'tilgang':
-        print(access(http_get))
-        return 0
+        text, failed = access(http_get, with_status=True)
+        print(text)
+        return int(failed)
     if args.cmd == 'kjør':
         reg = fakta.load()
         errors = fakta.validate(reg)
