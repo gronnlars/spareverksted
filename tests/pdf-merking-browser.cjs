@@ -5,6 +5,7 @@
 // Testen trykker på «Skriv ut / lagre som PDF», lager PDF-en mens utskriften pågår og kontrollerer merkene.
 // Dette er Chromium. Safari og Firefox lager PDF på sin egen måte, og det kan ikke denne testen si noe om.
 // XMP, PDF/UA-merke og «fast web view» settes ikke av nettleserens utskrift og testes ikke her.
+// Bokmerker (/Outlines) kommer bare fordi testen ber om dem (outline:true). Vanlig Chrome på PC lager dem ikke (Lars, Windows, 3.11.2026).
 const {chromium}=require('playwright'),assert=require('node:assert/strict');
 const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
 (async()=>{
