@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const generated=require('../dist/veileder-svar-generert.js');
+assert.deepEqual(generated,[],'Pilotene er ikke godkjent og skal ikke leveres til nettleseren');
+const root={SpareBsuRates:require('../dist/bsu-rates.js')};
+vm.runInNewContext(fs.readFileSync('dist/veileder-svar-generert.js','utf8'),{window:root});
+assert.equal(root.SpareSvarGenerert.length,0);
+const html=fs.readFileSync('dist/spor.html','utf8');
+assert(html.indexOf('src="veileder-svar-generert.js')<html.indexOf('src="veileder-knowledge.js'));
+assert.equal(require('../dist/veileder-knowledge.js').length,9);
+console.log('Generert svarbase: nettleser og Node, lastrekkefølge, uendrede publiserte svar.');

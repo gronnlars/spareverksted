@@ -4,21 +4,13 @@
 
 Redaksjonell arbeidskø ligger i [SPORSMALSKO.md](../SPORSMALSKO.md). Arbeidsinstruksen er [DAGLIG-OPPGAVE.md](DAGLIG-OPPGAVE.md). Denne filen sier hva som skal gjøres og i hvilken rekkefølge.
 
-## 0. Sparekalkulatoren er fryst (24.10.2026)
+## 0. Videre utvikling er åpnet (3.11.2026)
 
-Kalkulatoren er ferdig og er grunnmuren i Spareverksted.
+Lars presiserte 3.11.2026 at kalkulatoren og hele nettstedet er åpnet for videre utvikling. Den tidligere kalkulatorfrysen og generelle utviklingspausen gjelder ikke. Strenge kildekriterier, ingen personlige råd eller produktanbefalinger, universell utforming og personvern gjelder alle endringer. Ambisjonen om å være best i klassen er et utviklingsmål, ikke en dokumentert rangering.
 
-- Ingen nye funksjoner, ingen ombygging, ingen kosmetisk finpuss.
-- Endringer krever en av disse begrunnelsene: dokumentert regnefeil, alvorlig brukshindring, nødvendig kildeoppdatering (satser, renter, forutsetninger i `dist/assumptions.js`) eller tilgjengelighetsfeil.
-- Gjenstående kontroller er kvalitetssikring. Funn som ikke faller inn under begrunnelsene over, parkeres.
-- Nye ideer går til parkeringslisten (punkt 9). De får ikke automatisk plass i planen.
-- Andre deler kan lenke til kalkulatoren med delingslenker som finnes i dag, uten å endre den.
+Arbeid i avgrensede endringer med dokumentert brukernytte. Kontroller beregninger, grenseverdier, tilgjengelighet, mobil/PC og personvern før publisering. Oppgi det som faktisk er testet og det som gjenstår. Åpningen er ikke en bestilling om å implementere alle parkerte ideer samtidig. Hver PR godkjennes fortsatt av Lars før sammenslåing.
 
-Offentlig beskriver vi bare det vi kan dokumentere: hvilke beregninger som er uavhengig kontrollert, hvilke tester som kjøres, og hva som ikke er testet. Ingen påstander om å være best.
-
-Universell utforming følger hele nettstedet. Krav, begrunnelser og gjennomførte kontroller står i `research/universell-utforming.md` og gjelder hver ny del fra første utkast.
-
-Videre arbeid gjelder helheten rundt kalkulatoren: lære, finne svar, utforske og teste forståelsen.
+Datainnhenting bygger på eksisterende Kildevakt og Tidsmaskin. Svargrunnmuren kontrollerer og genererer innhold fra kilderegisteret, uten et tredje innhentingsløp. Se `docs/kildevakt.md`, `docs/tidsmaskin.md` og `docs/svargrunnmur.md`.
 
 ## 1. Gjeldende rekkefølge og status, 30. oktober 2026
 
@@ -48,7 +40,7 @@ Prosjektpausen ble avsluttet 2.11.2026, se [docs/regulatorisk.md](../docs/regula
 - Deling på alle sider og svar: planforslag #112 er åpent, ingen ny svarlenke eller deleknapp levert i denne runden. Kravene i den PR-en gjentas ikke i en ny kø.
 - Faktagrunnmur: forsknings-PR #114 er åpen. Ikke integrert i produksjonskoden. Denne oppdateringen har ikke kjørt forsøks- eller scope-testene på nytt.
 - Overvåking av økonomikilder og statsbudsjett: Lars har etterspurt endringsvarsling. Implementerings- og driftsstatus er ikke verifisert i denne gjennomgangen. Ikke regn dette som aktiv varsling, og ikke bland budsjettforslag med vedtatte regler.
-- Valgomat, lånekalkulator, fagord i teksten og andre nye funksjoner venter på egen åpning etter prosjektpausen. Punkt 4 og 5 er fortsatt historiske skisser, ikke dagens feilliste eller fullmakt til implementering.
+- Videre utvikling av kalkulator og nye funksjoner er åpnet 3.11.2026. Prioriter avgrensede oppdrag og brukernytte. Eldre skisser er grunnlag for planlegging, ikke krav om å bygge alt samtidig.
 
 ## 2. Fase 1: ferdig
 
@@ -132,7 +124,7 @@ Ferdig når: søketestsettet består, ingen spørsmål i settet gir et misvisend
 
 ## 6. Kontrollert innholdspåfyll
 
-Den opprinnelige planen om åpning ved sammenslåing er overstyrt av prosjektpausen. Bare nøytrale begrepsforklaringer og øvrige vedtatte unntak kan bestilles nå, etter docs/regulatorisk.md. Normalt ett til to spørsmål per PR, valgt fra køen etter kontroll av dagens dekning. Allerede eksisterende ASK- og fondskontosvar skal vurderes før det skrives nye svar med samme tema. Ingen masseimport.
+Prosjektpausen ble avsluttet 2.11.2026. Kontrollert innholdspåfyll følger docs/regulatorisk.md og SVARSKJEMA.md. Normalt ett til to spørsmål per PR, valgt fra køen etter kontroll av dagens dekning. Allerede eksisterende ASK- og fondskontosvar skal vurderes før det skrives nye svar med samme tema. Ingen masseimport.
 
 Hvert nytt eller endret svar krever:
 
@@ -144,20 +136,20 @@ Hvert nytt eller endret svar krever:
 - Relevante eksisterende Node- og nettlesertester, mobilvisning, tastatur og tilgjengelighetskontroll for det som endres. Ikke testet merkes konkret.
 - Oppdatert kø og arbeidslogg med PR, kildekontroll og faktisk publiseringsstatus.
 
-Den generelle daglige researchoppgaven er stanset under prosjektpausen. Særskilt bestilt research lager bare utkast i dokumentasjons-PR. Integrasjon i svarbasen er et eget avgrenset oppdrag. En kontrollert status gir ikke automatisk sammenslåing eller publisering; fullmakten oppgis i det enkelte oppdraget. Main-push utløser dagens test- og publiseringsflyt, også ved dokumentasjonsendringer.
+Automatisk research venter til begge pilotene i svarskjemaet har bestått separat kontroll og Lars sin godkjenning. Særskilt bestilt research lager bare utkast i dokumentasjons-PR. Integrasjon i svarbasen er et eget avgrenset oppdrag. En kontrollert status gir ikke automatisk sammenslåing eller publisering; fullmakten oppgis i det enkelte oppdraget. Main-push utløser dagens test- og publiseringsflyt, også ved dokumentasjonsendringer.
 
 Kontroller både at kildelenken virker og at svaret fortsatt følger kilden. Lovendringer, budsjettvedtak og ikrafttredelser prioriteres foran ordinært påfyll. Forslag og kommende regler skilles fra gjeldende regler. Brutte kilder eller usikre påstander får en konkret oppfølgingsoppgave; ikke erstatt bare URL uten å lese svaret på nytt.
 
-## 7. Fase 5: lånekalkulator, parkert under prosjektpausen
+## 7. Fase 5: lånekalkulator, videre utvikling åpnet
 
-Ingen implementeringsfullmakt. Opprinnelig skisse for versjon 1: annuitet, serielån, restgjeld, renteendring og ekstra innbetaling. Refinansiering og «lån eller fond?» venter.
+Utviklingspausen er opphevet. Prioritering følger fasene og avgrensede oppdrag. Opprinnelig skisse for versjon 1: annuitet, serielån, restgjeld, renteendring og ekstra innbetaling. Refinansiering og «lån eller fond?» venter.
 
 ## 8. Beslutninger tatt 24.10
 
 - Brukerpanel er ikke et krav. Fase 2 kan avsluttes etter tekniske og manuelle kontroller, med ærlig forbehold om forståelse.
 - Ingen egen bank-fond-prototype nå.
 - «10 til 12 svar» var en første leveranse, ikke et tak. Målet er bred dekning.
-- Sparekalkulatoren er fryst (punkt 0).
+- Historisk beslutning: sparekalkulatoren var fryst. Frysen ble opphevet 3.11.2026 (punkt 0).
 
 ## 9. Parkert
 

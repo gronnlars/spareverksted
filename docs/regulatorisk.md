@@ -2,6 +2,10 @@
 
 Opprettet 25. oktober 2026. Intern statusnotis. Gjelder alle bidragsytere, inkludert ChatGPT/Codex, Claude, Gemini og Vibe.
 
+## Presisering av utviklingsrammen (3. november 2026)
+
+Lars presiserte 3.11.2026 at kalkulatoren og hele nettstedet er åpnet for videre utvikling. Den tidligere kalkulatorfrysen og generelle utviklingspausen gjelder ikke. Strenge kildekriterier, ingen personlige råd eller produktanbefalinger, universell utforming og personvern gjelder alle endringer. Ambisjonen om å være best i klassen er et utviklingsmål, ikke en dokumentert rangering. Dette er Lars sin prosjektbeslutning, ingen ny juridisk avklaring.
+
 ## Status: pausen er avsluttet (2. november 2026)
 
 Lars avsluttet pausen 2.11.2026. Begrunnelse: Pausen er brukt til å stramme inn kildekrav, personvern og universell utforming, og innholdet bygger på offentlige og dokumenterte kilder. Finanstilsynet har ikke gitt faglig svar. Avslutningen er Lars' egen vurdering, ikke en avklaring fra tilsynet.
@@ -81,7 +85,7 @@ Disse oppheves ikke av at pausen avsluttes:
 
 1. **Kontekstuell spørsmålsveiledning** (fase 3) er åpnet av Lars 2.11.2026, med disse vilkårene: Tilpasningen velger hvilke spørsmål og forklaringer som vises først, men konkluderer ikke med hva brukeren bør gjøre. Alle temaer forblir tilgjengelige. Brukeren ser hvilke opplysninger som er brukt og kan endre dem. Siden later ikke som den kjenner mer til brukerens økonomi enn det som er fylt inn.
 2. **Ingen produktanbefalinger** og ingen «best egnet for deg». Ingen anbefaling av bestemte fond, aksjer eller tilbydere. Omtale av produkter og tilbydere skal bare forklare begreper og kontotyper.
-3. **Kildekontrollen må være fullført** før nye råd legges ut.
+3. **Kildekontrollen må være fullført** før nye forklaringer eller faglige endringer legges ut. Kildekontroll gir ingen adgang til å gi personlige råd.
 
 ## Unntak fra pausen: nøytrale begrepsforklaringer (vedtatt 28. oktober 2026 kl. 10.09)
 

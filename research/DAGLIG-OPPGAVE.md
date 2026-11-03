@@ -1,6 +1,6 @@
 # Daglig arbeid med spørsmålkøen
 
-> **STANS: Daglig oppgave er satt på vent. Prosjektet er pauset til Finanstilsynet har svart og alt er klarert. Se [docs/regulatorisk.md](../docs/regulatorisk.md). Ikke utfør oppgaven uten uttrykkelig beskjed fra Lars.**
+> **Status 3.11.2026: Prosjektpausen er avsluttet. Automatisk nattarbeid venter til pilotene er separat kontrollert og godkjent. Manuelt bestilt research følger [SVARSKJEMA.md](../SVARSKJEMA.md).**
 
 Opprettet 24. oktober 2026. Kan utføres av ChatGPT/Codex eller Claude.
 
@@ -35,7 +35,7 @@ Ved hver kontrollrunde på publiserte svar: følg [SVARMAL.md](../SVARMAL.md), �
 
 1. Les aktuelle primærkilder ved hver ny faktakontroll. Bruk relevante sider fra Skatteetaten, Nav, Lånekassen, Finanstilsynet, Finansdepartementet, Kartverket, Statsforvalteren, Altinn, Brønnøysundregistrene eller lov/forskrift. Bruk tilbydervilkår for produktfakta og merk kommersielle kilder. Kildeorganisasjonen er ikke i seg selv nok; kontroller den konkrete påstanden.
 2. Registrer URL, sidetittel, faktisk lesedato, regelår, påstand kilden støtter og vesentlige unntak. Skill vedtatte regler fra forslag og kjente fakta fra egne eksempler. Ikke kopier dato eller satser fra gammel research som om de var kontrollert i dag. Ved utilgjengelig kilde: marker hva som mangler og stopp den berørte konklusjonen.
-3. Les [SVARMAL.md](../SVARMAL.md) og begrunn svarformen før integrasjon. Lag eller oppdater `research/svarutkast/SV-xxx.md` etter malen under. Gjenbruk kilder og beslektede utkast med lenker. Ikke lag et kunstig valg eller like lange fordeler/ulemper for å fylle malen. Et grunnbegrep trenger ofte forklaring og eksempel framfor to kort.
+3. Les [SVARMAL.md](../SVARMAL.md) og begrunn svarformen før integrasjon. Lag eller oppdater `kilder/svar/SV-xxx.md` etter SVARSKJEMA punkt 5. Gjenbruk kilder og beslektede utkast med lenker. Ikke lag et kunstig valg eller like lange fordeler/ulemper for å fylle malen. Et grunnbegrep trenger ofte forklaring og eksempel framfor to kort.
 4. Undersøk om spørsmålet bygger på et feilaktig eller udokumentert premiss. Rett premisset kort før du forklarer begrepet. Ikke bekreft brukerens antakelse bare for å gi et direkte svar. Ta med begrensninger og moteksempler når de trengs for å forstå. Redaksjonelle kontrolltilfeller, ikke testet i søket:
    - «Hvorfor dobler fond pengene hvert tiende år?» skal rette antakelsen om fast doblingstid.
    - «Betyr 0 prosent gjennomsnitt at jeg har like mye penger?» skal forklare forskjellen mellom gjennomsnittet av årsprosentene og utviklingen i beløpet.
@@ -59,36 +59,7 @@ Særlige faggrenser: Konto er ikke investering. Zero er et produktnavn, ikke et 
 
 ## Mal for et svarutkast
 
-```markdown
-# SV-xxx: Spørsmålet
-
-Upublisert utkast. Arbeidsstatus: Utkast.
-Lest main: <SHA>. Forfatter/verktøy: <navn>. Dato: <dato>.
-Dekning: <fil, svar-ID, hva som finnes og hva som mangler>.
-Avhenger av: <ID-er eller ingen>. Alternative formuleringer: <liste>.
-
-## Kort svar
-<Svar først. Viktigste forbehold.>
-
-## Forklaring eller sammenligning
-<Konsekvenser, fordeler/ulemper der det passer, hvem det passer dårlig for.>
-
-## Eksempel og fordypning
-<Frivillig. Tydelige forutsetninger. Skill eksempeltall fra faktiske satser.>
-
-## Kilder og faktakontroll
-| Påstand | Primærkilde og tittel | Regelår | Lest dato | Unntak/usikkerhet |
-| --- | --- | --- | --- | --- |
-
-## Angrepsflater og reparasjoner
-<Minst tre konkrete feiltolkninger og hvordan teksten forebygger dem.>
-Premiss: <ingen identifisert ved egenkontroll, eller hva som ble rettet>.
-Mulig oppfattet anbefaling: <ingen identifisert ved egenkontroll, eller hva som ble justert>.
-Begge er egenkontroll, ikke uavhengig kontroll, juridisk vurdering eller garanti.
-
-## Korrektur og overlevering
-<Navn, tall, språk. Hva ble kontrollert? Hva gjenstår? Neste anbefalte oppgave.>
-```
+Bruk [SVARSKJEMA.md](../SVARSKJEMA.md), punkt 5. Opprett med `python3 scripts/svar.py ny SV-xxx`, fyll feltene og kjør `python3 scripts/svar.py bygg` og `python3 scripts/svar.py --check`. Kanoniske skjemaer ligger i `kilder/svar/`. Tidligere research bevares som historikk.
 
 ## Kjør manuelt hos ChatGPT eller Claude
 
@@ -98,4 +69,4 @@ Lim inn dette som oppdrag:
 
 ## Nattkjøring
 
-Planlagt ChatGPT-kjøring starter daglig kl. 02.00 i `Europe/Oslo`, med ønske om hovedarbeid mellom 02 og 04. Dette er én avgrenset kjøring, ikke to timers garantert kontinuerlig arbeid. Samme instruks kan startes manuelt hos Claude; ChatGPT-planen starter ikke Claude. Følg reservasjonene for å unngå dobbeltarbeid.
+**Ikke start før pilotene er fagkontrollert og godkjent.** Den tidligere planen var daglig kl. 02.00 i `Europe/Oslo`, med ønske om hovedarbeid mellom 02 og 04. Dette er én avgrenset kjøring, ikke to timers garantert kontinuerlig arbeid. Samme instruks kan startes manuelt hos Claude; ChatGPT-planen starter ikke Claude. Følg reservasjonene for å unngå dobbeltarbeid.
