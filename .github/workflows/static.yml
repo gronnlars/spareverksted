@@ -155,6 +155,8 @@ jobs:
           SPARE_ENGINE=webkit node tests/last-ned-browser.cjs
           node tests/resultatlinje-browser.cjs
           SPARE_ENGINE=webkit node tests/resultatlinje-browser.cjs
+          node tests/eksport-innhold-browser.cjs
+          SPARE_ENGINE=webkit node tests/eksport-innhold-browser.cjs
           node tests/personvern-browser.cjs
           SPARE_ENGINE=firefox node tests/personvern-browser.cjs
           SPARE_ENGINE=webkit node tests/personvern-browser.cjs
