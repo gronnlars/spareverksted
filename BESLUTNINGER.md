@@ -14,6 +14,18 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 | Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 
+## Informasjonssidene: utvidbare kapitler (3. november 2026)
+
+**Oppdrag fra Lars:** Rydd Om, Personvern, Tilgjengelighet og Ressursbruk, med NRKs utvidbare kapitler som inspirasjon. Bevar grunnkoden og Claudes pågående kalkulator- og rapportarbeid. Ingen endringer i kalkulator, grafer, svarbase, felles toppmeny eller rapportmotor.
+
+**Valg i denne PR-en:** Samme lenker mellom informasjonssidene, korte innledninger, native `details`/`summary` for kapitlene og en knapp som åpner alle. Flere kapitler kan være åpne samtidig. Kontakt, sletting og rettigheter er synlige. Eksisterende ID-er beholdes. Et eget stilark og lite skript lastes bare på de fire sidene. Lenker til kapitler åpner riktig innhold. Ved utskrift åpnes også underliggende logger, og tidligere tilstand gjenopprettes etterpå. Felles utskrifts-CSS skjulte tidligere hele informasjonssiden; en avgrenset regel retter det på disse sidene.
+
+**Alternativer:** Hamburgerknapp per kapittel gir svakere informasjon om hva som kan åpnes. Eget accordion-bibliotek og endringer i felles layout gir større inngrep enn oppgaven trenger. Bare ett åpent kapittel gjør det vanskeligere å sammenholde opplysninger. Disse er valgt bort. Viktig informasjon i introen, kontakt og sletting skjules ikke.
+
+**Statusgrunnlag:** Lars opplyste 3. november at WAVE viser to varsler, bevisst beholdt. Topplinjen oppdateres, mens eldre målinger og vurderingene av dem beholdes som historikk. Ingen ny WAVE-kjøring utført av Codex. Ressurssidens målegrunnlag er fortsatt fra 30. oktober. Opprydding av oppsettet flytter ikke datoen for en miljømåling eller kildekontroll.
+
+**Revurderes hvis:** Brukere ikke finner et kapittel, gamle lenker ikke åpner innholdet, eller tester med VoiceOver/NVDA avdekker problemer. Da justeres den berørte informasjonssiden, ikke kalkulatoren.
+
 ## Prisvekst: egen forutsetning i kalkulatoren, ferske tall i forklaringen (3. november 2026)
 
 **Beslutning (Lars):** Kalkulatoren bruker fortsatt 2,5 % prisvekst som egen regneforutsetning. Forklaringen viser siste tolvmånedersvekst fra SSB og Norges Banks anslag fra siste Pengepolitiske rapport, hentet fra `kilder/fakta/prisvekst.json`. Ved kort sparetid foreslås ikke dagens prisvekst som tall. Vi holder oss til det Norges Bank selv anslår.

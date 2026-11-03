@@ -155,6 +155,9 @@ jobs:
           node tests/begrep-browser.cjs
           SPARE_ENGINE=firefox node tests/begrep-browser.cjs
           SPARE_ENGINE=webkit node tests/begrep-browser.cjs
+          node tests/infosider-browser.cjs
+          SPARE_ENGINE=firefox node tests/infosider-browser.cjs
+          SPARE_ENGINE=webkit node tests/infosider-browser.cjs
           node tests/kontakt-browser.cjs
           SPARE_ENGINE=firefox node tests/kontakt-browser.cjs
           SPARE_ENGINE=webkit node tests/kontakt-browser.cjs
