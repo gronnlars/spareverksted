@@ -46,6 +46,18 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await d.evaluate(()=>reportAction());await d.waitForSelector('#reportDialog[open]');await d.click('#printReport');await d.waitForTimeout(50);
   assert.equal(await d.evaluate(()=>document.getElementById('reportDialog').open),true,'PC: rapportvinduet skal åpnes igjen');
   assert.match(await d.title(),/^Spareverksted · /,'PC: sidetittelen skal settes tilbake');
+  // Lånekalkulatoren deler utskriftsflyten og skal gi samme tilgjengelige PDF-struktur.
+  const loan=await browser.newPage();loan.on('pageerror',e=>errors.push(e.message));
+  await loan.addInitScript(()=>{const mm=matchMedia.bind(window);window.matchMedia=q=>q==='(hover: none)'?{matches:true}:mm(q);window.print=()=>{window.__loanPrint={dialog:document.getElementById('reportDialog').open,title:document.title};};});
+  await loan.goto(origin+'/laan.html');await loan.fill('#rate','5');await loan.locator('#rate').blur();
+  await loan.click('#heroDownload');await loan.click('#exportPdf');await loan.click('#printReport');
+  const ls=await loan.evaluate(()=>window.__loanPrint);assert.equal(ls.dialog,false);assert.match(ls.title,/^Låneberegning, Spareverksted/);
+  await loan.emulateMedia({media:'print'});const loanPdf=(await loan.pdf({format:'A4',tagged:true,outline:true})).toString('latin1');
+  for(const key of ['/StructTreeRoot','/ParentTree','/MarkInfo','/Lang'])assert.ok(loanPdf.includes(key),'låne-PDF mangler '+key);
+  assert.ok(/\/S\s*\/H1\b/.test(loanPdf));assert.ok(/\/S\s*\/Figure\b/.test(loanPdf));assert.ok(/\/S\s*\/Table\b/.test(loanPdf));
+  await loan.evaluate(()=>dispatchEvent(new Event('afterprint')));await loan.waitForTimeout(50);
+  assert.equal(await loan.evaluate(()=>document.getElementById('reportDialog').open),true);
+  assert.equal(await loan.title(),'Lån · Spareverksted');
   assert.deepEqual(errors,[]);
   console.log('PDF-merking: ok (Chromium). Merket struktur, språk, tittel og figur finnes (bokmerker bare fordi testen ber om dem).');
  }finally{if(browser)await browser.close();server.close();}

@@ -17,6 +17,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   const screens={
    start:async p=>{await p.goto(origin+'/index.html');await p.evaluate(()=>{localStorage.removeItem('sv-started');sessionStorage.clear();});await p.reload();},
    kalkulator:async p=>{await p.goto(origin+'/index.html#'+PLAN);await p.reload();await p.evaluate(()=>{for(const d of document.querySelectorAll('#workbench details'))d.open=true;});},
+   laan:async p=>{await p.goto(origin+'/laan.html');await p.fill('#rate','5');await p.locator('#rate').blur();await p.click('[data-level=explore]');await p.evaluate(()=>{for(const d of document.querySelectorAll('details'))d.open=true;});},
    veileder:async p=>{await p.goto(origin+'/spor.html');await p.evaluate(()=>{for(const d of document.querySelectorAll('details'))d.open=true;});await p.locator('[data-topic]').first().click();},
    om:async p=>{await p.goto(origin+'/om.html');},
    personvern:async p=>{await p.goto(origin+'/personvern.html');await p.evaluate(()=>{for(const d of document.querySelectorAll('details'))d.open=true;});},

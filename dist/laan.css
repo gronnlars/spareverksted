@@ -11,6 +11,7 @@
 .loan-metrics [hidden]{display:none}
 body.loan-empty #payment{font-size:clamp(28px,6vw,40px)}
 body.loan-empty .loan-metrics,body.loan-empty .meaning,body.loan-empty #chartPanel,body.loan-empty #comparePanel{display:none}
+body.loan-empty #mobileSummary{display:none!important}
 .loan-notes{margin:10px 0 0;padding-left:20px}
 .loan-notes li{margin:4px 0}
 .loan-compare h2{margin-top:0}
@@ -25,4 +26,49 @@ body.loan-empty .loan-metrics,body.loan-empty .meaning,body.loan-empty #chartPan
 .loan-page #tableWrap{overflow-x:auto}
 .loan-page #tableWrap table{font-variant-numeric:tabular-nums}
 @media(max-width:560px){.compare-grid{grid-template-columns:1fr}.loan-metrics{grid-template-columns:1fr 1fr}}
-.loan-page #basic{grid-template-columns:1fr}
+/* Samme felt, hjelp, skyveknapper og resultatlinje som sparekalkulatoren. */
+.loan-page #basic{display:grid;grid-template-columns:1fr}
+.loan-page .field{position:relative;min-width:0}
+.loan-page .field-label{display:block;padding-right:28px;line-height:1.5}
+.loan-page .fieldbox{min-width:0}
+.loan-page .fieldbox input{width:100%;min-width:0}
+.loan-page .help-button{position:absolute;right:0;top:0;min-width:24px;min-height:24px}
+.loan-page .two{grid-template-columns:1fr}
+.loan-page .two .field-label{min-height:0}
+.loan-page #kinds,.loan-page #types{display:flex;flex-wrap:wrap}
+.loan-page #kinds button,.loan-page #types button{flex:1 1 auto;min-width:0;white-space:normal}
+.loan-page .loan-hint{font-weight:400}
+.loan-page .loan-table-period{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:12px 0}
+.loan-page .loan-table-period select{width:auto;min-height:44px}
+.loan-page #tableWrap{max-width:100%;min-width:0}
+.loan-page #tableWrap caption{text-align:left;white-space:normal;margin:8px 0;font-size:13px;color:var(--muted)}
+.loan-page #tableWrap th[scope=row]{font-weight:500;background:none}
+.loan-page .report-assumptions dd{margin:0;text-align:right;overflow-wrap:anywhere}
+.loan-page #reportPreview h1{font-size:28px;line-height:1.3}
+.loan-page #reportPreview h2{margin:18px 0 8px}
+.loan-page #reportPreview .report-chart svg{background:#fff;border-radius:8px}
+.loan-page .report-table caption{white-space:normal;text-align:left}
+.loan-page .report-table{max-width:100%}
+.loan-page #printReportContent .report-chart svg{background:white}
+@media(min-width:561px) and (max-width:760px){
+ .loan-page .two{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .loan-page .two .field-label{min-height:3em}
+}
+@media(max-width:760px){
+ .loan-page #basic{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .loan-page #basic .field:first-child{grid-column:1/-1}
+ .loan-page #basic .field-label{min-height:3em}
+ .loan-page #basic .field:first-child .field-label{min-height:0}
+ .loan-page .loan-hint{grid-column:1/-1;font-size:13px}
+ .loan-page .two .field{margin-top:14px}
+ .loan-page .two .field-label{font-size:13px}
+ .loan-page #loanHelpDialog{max-width:calc(100% - 32px)}
+ .loan-page .hero-top{gap:12px;flex-wrap:wrap}
+}
+@media print{
+ .loan-page #printReportContent{color:#173f36;background:#fff}
+ .loan-page #printReportContent .report-result{background:#edf2e6!important}
+ .loan-page #printReportContent .report-table{overflow:visible}
+ .loan-page #printReportContent table{width:100%;table-layout:fixed}
+ .loan-page #printReportContent td,.loan-page #printReportContent th{overflow-wrap:anywhere}
+}

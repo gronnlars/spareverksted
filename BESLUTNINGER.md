@@ -14,6 +14,14 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 | Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 
+## Lånesiden skal følge kalkulatorstandarden (3. november 2026)
+
+Lars avviste grensesnittet fra #205 som utilstrekkelig. Lånekalkulatoren skal følge sparekalkulatorens etablerte mønster. Gebyretiketter som går over flere linjer skal ikke forskyve feltene sideveis. På smale flater står gebyr- og hendelsesfeltene under hverandre. Graf og tabell er tilgjengelige på alle detaljnivåer, med års- og månedstabell. Valgt tabellvisning beholdes ved bytte av detaljnivå.
+
+Hjelpeknapper, mobilens resultatlinje og nedlastingsdialog følger eksisterende kalkulator. Excel og CSV bruker `export-kit.js`. Rapport/PDF bruker en felles utskriftskontroller, `report-print.js`, for både spare- og lånekalkulatoren. Den lukker modalvinduet mens PDF-en lages, og gjenoppretter vindu, tittel og fokus etterpå. Rapporten har graf med tekstalternativ, årsplan, gebyrer og alle regneforutsetninger. Eksport stoppes ved ugyldige felt.
+
+Ingen nye lagringsnøkler eller nettforespørsler. Ingen referanserente, skatteberegning eller effektiv rente innføres her. Sparemotoren og lånemotorens regneregler endres ikke. Låneberegningen har fortsatt egne felter, mens stiler, filformater og utskriftsflyt deles. Beregningstester alene var ikke tilstrekkelig godkjenning av den tidligere brukeropplevelsen. Nettlesertestene utvides med faktiske nedlastinger, feltplassering, PDF-struktur og lånesiden i de eksisterende tilgjengelighetsmålingene. Faktisk iPhone Safari og skjermleser må fortsatt prøves manuelt.
+
 ## Lånekalkulator v1 (3. november 2026)
 
 **Beslutning (Lars):** Lånekalkulatoren bygges nå, før fase 3 og 4 er ferdige, i avgrensede PR-er. PR 1 er regnemotoren (`dist/laan-motor.js`) med tester. Den avhenger ikke av rentekildene. Siden, referanserentene og effektiv rente kommer i egne PR-er. Regnereglene står i [docs/laanemodell.md](docs/laanemodell.md).
