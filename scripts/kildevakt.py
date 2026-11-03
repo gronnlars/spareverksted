@@ -248,7 +248,7 @@ def check_ssb(source, state, get, reg, today):
     pending = {}
     for name, values in series.items():
         fact = reg['fakta'][name]
-        repo = dict(fakta.series(fact))
+        repo = dict(fakta.series(fact, ROOT))
         latest = max(repo) if repo else ''
         new = {p: v for p, v in values.items() if p > latest}
         revised = {p: (repo[p], v) for p, v in values.items() if p in repo and abs(repo[p] - v) > 1e-9}
@@ -338,7 +338,7 @@ def check_page(source, state, get, reg, today):
         found[label] = value
         if spec.get('fakta'):
             fact = reg['fakta'][spec['fakta']]
-            ours = fakta.current(fact, date)
+            ours = fakta.current(fact, date, ROOT)
             if ours != value:
                 if mismatches.get(label) != value:
                     events.append(event(source, 'høy', f'{spec["fakta"]}: kilden sier {value}, nettsiden bruker {ours}',

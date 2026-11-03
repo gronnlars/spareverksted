@@ -1,0 +1,46 @@
+{
+  "_om": "Renter fra SSB tabell 11018. Oppdateres av Kildevakt via PR.",
+  "fakta": {
+    "bsuRate": {
+      "type": "statistikk",
+      "enhet": "prosent",
+      "kilde": "ssb-11018",
+      "desimaler": 2,
+      "beskrivelse": "Gjennomsnittlig rente på BSU, husholdninger. SSB tabell 11018, innskuddstype 20, sektor 04b.",
+      "serie": {
+        "fil": "research/bsu-rentehistorikk.csv",
+        "kolonne": "BSU prosent"
+      },
+      "hentet": "2026-10-28",
+      "ssb_oppdatert": null
+    },
+    "boundRate": {
+      "type": "statistikk",
+      "enhet": "prosent",
+      "kilde": "ssb-11018",
+      "desimaler": 2,
+      "beskrivelse": "Gjennomsnittlig rente på bundne innskudd, husholdninger. SSB tabell 11018, innskuddstype 16, sektor 04b.",
+      "serie": {
+        "fil": "research/bsu-rentehistorikk.csv",
+        "kolonne": "bundne innskudd prosent"
+      },
+      "hentet": "2026-10-28",
+      "ssb_oppdatert": null
+    },
+    "savingsRate": {
+      "type": "statistikk",
+      "enhet": "prosent",
+      "kilde": "ssb-11018",
+      "desimaler": 2,
+      "beskrivelse": "Gjennomsnittlig rente på ikke-bundne innskudd, husholdninger. SSB tabell 11018, innskuddstype 15, sektor 04b. Standardrente for sparekonto i kalkulatoren.",
+      "perioder": [
+        {
+          "periode": "2026M08",
+          "verdi": 2.87
+        }
+      ],
+      "hentet": null,
+      "ssb_oppdatert": "2026-09-25"
+    }
+  }
+}

@@ -1,6 +1,7 @@
 // BSU: actual rendering, keyboard, profiles and screenshots in all CI browsers.
 const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('node:http'),path=require('node:path');
 const engine=process.env.SPARE_ENGINE||'chromium',browserType=require('playwright')[engine];
+const RATES=require('../dist/bsu-rates.js'),pct=new Intl.NumberFormat('nb-NO',{minimumFractionDigits:2,maximumFractionDigits:2}),LAST=[RATES.rows.at(-1)[0],...RATES.rows.at(-1).slice(1).map(x=>pct.format(x))].join('\t');
 (async()=>{
  const root=path.resolve(__dirname,'../dist'),server=http.createServer((req,res)=>{
   const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
@@ -34,8 +35,9 @@ const engine=process.env.SPARE_ENGINE||'chromium',browserType=require('playwrigh
    const table=page.locator('#answer table');assert.equal(await table.count(),1);
    assert.equal(await table.locator('caption').count(),1);
    assert.equal(await table.locator('thead th[scope="col"]').count(),3);
-   assert.equal(await table.locator('tbody th[scope="row"]').count(),9);
-   assert.equal(await table.locator('tbody tr').last().innerText(),'2026 (jan. til aug.)\t5,49\t4,48');
+   // Radene kommer fra dist/bsu-rates.js, som Kildevakt oppdaterer når SSB har en ny måned.
+   assert.equal(await table.locator('tbody th[scope="row"]').count(),RATES.rows.length);
+   assert.equal(await table.locator('tbody tr').last().innerText(),LAST);
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
    assert.ok(await table.evaluate(t=>t.scrollWidth<=t.clientWidth+1));
    await page.locator('#answerPanel').screenshot({path:dir+'/bsu-table-'+engine+'-'+width+'.png'});

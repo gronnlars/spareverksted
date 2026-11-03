@@ -1,0 +1,70 @@
+{
+  "_om": "IPS: regler fra Skatteetaten.",
+  "fakta": {
+    "ipsAnnual": {
+      "type": "regel",
+      "enhet": "kr",
+      "kilde": "tax-ips",
+      "bekreftet_til": "2026-12-31",
+      "verdier": [
+        {
+          "verdi": 25000,
+          "fra": "2026-01-01",
+          "status": "i kraft"
+        }
+      ]
+    },
+    "ipsStartAge": {
+      "type": "regel",
+      "enhet": "år",
+      "kilde": "tax-ips",
+      "bekreftet_til": "2026-12-31",
+      "verdier": [
+        {
+          "verdi": 62,
+          "fra": "2026-01-01",
+          "status": "i kraft"
+        }
+      ]
+    },
+    "ipsEndAge": {
+      "type": "regel",
+      "enhet": "år",
+      "kilde": "tax-ips",
+      "bekreftet_til": "2026-12-31",
+      "verdier": [
+        {
+          "verdi": 80,
+          "fra": "2026-01-01",
+          "status": "i kraft"
+        }
+      ]
+    },
+    "ipsMinYears": {
+      "type": "regel",
+      "enhet": "år",
+      "kilde": "tax-ips",
+      "bekreftet_til": "2026-12-31",
+      "verdier": [
+        {
+          "verdi": 10,
+          "fra": "2026-01-01",
+          "status": "i kraft"
+        }
+      ]
+    },
+    "ipsIntroduced": {
+      "type": "regel",
+      "enhet": "årstall",
+      "kilde": "tax-ips",
+      "format": "årstall",
+      "verdier": [
+        {
+          "verdi": 2017,
+          "fra": "2017-01-01",
+          "status": "i kraft"
+        }
+      ]
+    }
+  }
+}

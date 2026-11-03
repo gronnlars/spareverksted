@@ -21,7 +21,13 @@ import kildevakt as kv  # noqa: E402
 
 TODAY = dt.date(2026, 11, 3)
 SOURCES = kv.load_sources()
-REG = fakta.load()
+LIVE = fakta.load()
+# Kildevakt-testene kjører mot et fast øyeblikksbilde av registeret (før september-tallene for 2026),
+# så nye månedstall i repoet ikke bryter testene. Se tests/fixtures/kildevakt/README.md.
+FROZEN = Path(tempfile.mkdtemp(prefix='kildevakt-data-'))
+shutil.copytree(FIX / 'data', FROZEN, dirs_exist_ok=True)
+kv.ROOT = FROZEN
+REG = fakta.load(FROZEN)
 SRC = {s['id']: s for s in SOURCES['kilder']}
 passed = []
 
@@ -91,9 +97,9 @@ def levels(events):
 
 @test
 def registeret_er_gyldig_og_generert():
-    assert fakta.validate(REG) == []
-    assert (ROOT / 'dist/veileder-facts.js').read_text(encoding='utf-8') == fakta.build(REG)
-    assert fakta.duplicates(REG) == [], fakta.duplicates(REG)
+    assert fakta.validate(LIVE) == [] and fakta.validate(REG, FROZEN) == []
+    assert (ROOT / 'dist/veileder-facts.js').read_text(encoding='utf-8') == fakta.build(LIVE)
+    assert fakta.duplicates(LIVE) == [], fakta.duplicates(LIVE)
 
 
 @test
@@ -107,8 +113,8 @@ def datert_regel_byttes_paa_riktig_dag_og_forslag_brukes_aldri():
     assert fakta.current(fact, '2027-08-01') == 30000
     reg = copy.deepcopy(REG)
     reg['fakta']['bsuAnnual'] = {**reg['fakta']['bsuAnnual'], 'verdier': fact['verdier']}
-    assert fakta.validate(reg) == []
-    js = fakta.build(reg)
+    assert fakta.validate(reg, FROZEN) == []
+    js = fakta.build(reg, FROZEN)
     assert '99999' not in js, 'foreslåtte verdier skal aldri nå nettsiden'
     tmp = Path(tempfile.mkdtemp()) / 'f.js'
     tmp.write_text(js, encoding='utf-8')
@@ -129,7 +135,7 @@ def registeret_avviser_feil():
     reg['fakta']['bsuAnnual']['verdier'].append({'verdi': 1, 'fra': '2027-01-01', 'status': 'vedtatt'})
     reg['fakta']['bsuTotal']['verdier'][0]['status'] = 'kanskje'
     reg['fakta']['ipsAnnual']['verdier'].insert(0, {'verdi': 1, 'fra': '2027-01-01', 'status': 'i kraft'})
-    errors = '\n'.join(fakta.validate(reg))
+    errors = '\n'.join(fakta.validate(reg, FROZEN))
     assert 'trenger egen "kilde"' in errors and 'status må være' in errors and 'datorekkefølge' in errors, errors
 
 
@@ -233,12 +239,14 @@ def data_date(s):
 @test
 def ssb_oppdatering_skriver_alle_steder_og_er_idempotent():
     root = Path(tempfile.mkdtemp())
-    for rel in ('research', 'scripts', 'dist'):
+    shutil.copytree(FIX / 'data', root, dirs_exist_ok=True)
+    for rel in ('scripts', 'dist'):
         (root / rel).mkdir()
-    shutil.copytree(ROOT / 'kilder', root / 'kilder')
-    for rel in ('research/bsu-rentehistorikk.csv', 'research/bsu-rente-arssnitt-2018-2026.csv',
+    for rel in (
                 'scripts/fakta.py', 'scripts/generate-bsu-rates.py', 'dist/veileder-facts.js', 'dist/begreper.js', 'dist/bsu-rates.js', 'dist/index.html', 'dist/spor.html'):
         shutil.copy(ROOT / rel, root / rel)
+    fakta.write_generated(fakta.load(root), root)   # startfilene slik de var i øyeblikksbildet
+    subprocess.run([sys.executable, str(root / 'scripts/generate-bsu-rates.py')], check=True, cwd=root, stdout=subprocess.DEVNULL)
     s = state()
     s.save('ssb-11018', kv.check_ssb(SRC['ssb-11018'], s, Net({SSB: ok(ssb_body())}), REG, TODAY)[1], {})
     summary = kv.apply_ssb(s, root)
@@ -472,10 +480,10 @@ def hel_kjoring_og_saker_i_toerrkjoring():
 @test
 def prisvekst_ny_maaned_oppdaterer_bare_registeret():
     root = Path(tempfile.mkdtemp())
-    for rel in ('research', 'scripts', 'dist'):
+    shutil.copytree(FIX / 'data', root, dirs_exist_ok=True)
+    for rel in ('scripts', 'dist'):
         (root / rel).mkdir()
-    shutil.copytree(ROOT / 'kilder', root / 'kilder')
-    for rel in ('research/bsu-rentehistorikk.csv', 'research/bsu-rente-arssnitt-2018-2026.csv', 'scripts/fakta.py', 'scripts/generate-bsu-rates.py',
+    for rel in ( 'scripts/fakta.py', 'scripts/generate-bsu-rates.py',
                 'dist/veileder-facts.js', 'dist/begreper.js', 'dist/bsu-rates.js', 'dist/index.html', 'dist/spor.html'):
         shutil.copy(ROOT / rel, root / rel)
     s, src = state(), SRC['ssb-14700']
