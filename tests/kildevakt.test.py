@@ -64,6 +64,25 @@ def ssb_body(change=None):
 SSB = 'https://data.ssb.no/api/pxwebapi/v2/tables/11018/data'
 
 
+KPI = 'https://data.ssb.no/api/pxwebapi/v2/tables/14700/data'
+
+
+def kpi_body(values=(3.0, 3.3, 3.4), periods=('2026M07', '2026M08', '2026M09'), label='12-måneders endring (prosent)'):
+    """Syntetisk json-stat2 med samme oppbygning som SSB 14700 (kontrollert mot SSBs metadata 3.11.2026)."""
+    return json.dumps({'version': '2.0', 'class': 'dataset', 'label': '14700: Konsumprisindeks (SYNTETISK)', 'updated': '2026-10-09T06:00:00Z',
+                       'role': {'time': ['Tid']}, 'id': ['VareTjenesteGrp', 'ContentsCode', 'Tid'], 'size': [1, 1, len(periods)],
+                       'dimension': {'VareTjenesteGrp': {'category': {'index': {'00': 0}, 'label': {'00': 'I alt'}}},
+                                     'ContentsCode': {'category': {'index': {'Tolvmanedersendring': 0}, 'label': {'Tolvmanedersendring': label}}},
+                                     'Tid': {'category': {'index': {p: i for i, p in enumerate(periods)}}}},
+                       'value': list(values)}).encode()
+
+
+def ppr_page(report='3/2026'):
+    return f"""<!doctype html><html><body><main><h1>Pengepolitisk rapport</h1>
+<p>Pengepolitisk rapport {report} 24. sep. 2026. Rapporten gir Norges Banks vurdering av renteutsikter og anslag for økonomien.</p>
+<p>Pengepolitisk rapport 2/2026 18. juni 2026. Eldre rapport med anslag for renter, prisvekst og produksjon.</p></main></body></html>"""
+
+
 def levels(events):
     return [(e['nivå'], e['tittel']) for e in events]
 
@@ -423,7 +442,8 @@ def hel_kjoring_og_saker_i_toerrkjoring():
     s = state()
     pack = tar({'lt/b.xml': gazette('LTI/lov/x', 'Lov om endringer i skatteloven (BSU)', '2027-01-01', '1999-03-26-14')})
     xml = (FIX / 'skatteloven-utdrag.xml').read_bytes()
-    net = Net({SSB: ok(ssb_body()), 'https://www.skatteetaten.no/satser/': kv.Response(404, 'x', b''),
+    net = Net({SSB: ok(ssb_body()), KPI: ok(kpi_body()), 'https://www.norges-bank.no/aktuelt/publikasjoner/Pengepolitisk-rapport/': ok(ppr_page()),
+               'https://www.skatteetaten.no/satser/': kv.Response(404, 'x', b''),
                'https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/bank-og-lan/': ok(bsu_page()),
                'https://www.skatteetaten.no/nn/': ok(bsu_page()),
                'https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid': ok((FIX / 'skatteetaten-ips-2026-10-30.html').read_bytes()),
@@ -447,6 +467,52 @@ def hel_kjoring_og_saker_i_toerrkjoring():
     assert '| Lovdata: skatteloven (gjeldende) | ok |' in md
     events2, _ = kv.run(SOURCES, s, net, REG, TODAY)
     assert [e for e in events2 if e['nivå'] in kv.LEVELS] == [], levels(events2)
+
+
+@test
+def prisvekst_ny_maaned_oppdaterer_bare_registeret():
+    root = Path(tempfile.mkdtemp())
+    for rel in ('research', 'scripts', 'dist'):
+        (root / rel).mkdir()
+    shutil.copytree(ROOT / 'kilder', root / 'kilder')
+    for rel in ('research/bsu-rentehistorikk.csv', 'research/bsu-rente-arssnitt-2018-2026.csv', 'scripts/fakta.py', 'scripts/generate-bsu-rates.py',
+                'dist/veileder-facts.js', 'dist/begreper.js', 'dist/bsu-rates.js', 'dist/index.html', 'dist/spor.html'):
+        shutil.copy(ROOT / rel, root / rel)
+    s, src = state(), SRC['ssb-14700']
+    body = kpi_body((3.3, 3.4, 3.1), ('2026M08', '2026M09', '2026M10'))
+    events, data, info = kv.check_ssb(src, s, Net({KPI: ok(body)}), REG, TODAY)
+    assert info['perioder'] == {'kpi12m': '2026M10'} and [e['periode'] for e in events if e.get('ssb_ventende')] == ['2026M10'], (info, levels(events))
+    s.save(src['id'], data, {})
+    before_csv = (root / 'research/bsu-rentehistorikk.csv').read_text(encoding='utf-8')
+    summary = kv.apply_ssb(s, root)
+    assert 'kpi12m: 2026M10 = 3.1' in summary and 'BSU' not in summary.split('Endret:')[0], summary
+    assert (root / 'research/bsu-rentehistorikk.csv').read_text(encoding='utf-8') == before_csv
+    facts = json.loads((root / 'kilder/fakta/prisvekst.json').read_text(encoding='utf-8'))['fakta']['kpi12m']
+    assert facts['perioder'][-1] == {'periode': '2026M10', 'verdi': 3.1} and facts['hentet'] == data['hentet'][:10]
+    out = subprocess.run(['node', '-e', "global.window=globalThis;const F=require(process.argv[1]);console.log(F.expand('{{kpi12m}} % til {{kpi12m.periode}}'))",
+                          str(root / 'dist/veileder-facts.js')], capture_output=True, text=True, check=True).stdout.strip()
+    assert out == '3,1 % til oktober 2026', out
+    html = (root / 'dist/spor.html').read_text(encoding='utf-8')
+    assert re.search(r'bsu-rates\.js\?v=(\d+)', html).group(1) == re.search(r'bsu-rates\.js\?v=(\d+)', (ROOT / 'dist/spor.html').read_text(encoding='utf-8')).group(1), 'BSU-tabellen er urørt'
+    assert kv.apply_ssb(s, root) is None
+
+
+@test
+def prisvekst_endret_tabell_stopper_tallet():
+    events, _, info = kv.check_ssb(SRC['ssb-14700'], state(), Net({KPI: ok(kpi_body(label='Månedsendring (prosent)'))}), REG, TODAY)
+    assert info['status'] == 'strukturendring', info
+
+
+@test
+def ny_pengepolitisk_rapport_gir_sak():
+    s, src = state(), SRC['norges-bank-ppr']
+    events, data, info = kv.check_page(src, s, Net({src['url']: ok(ppr_page())}), REG, TODAY)
+    assert events == [] and info['nøkkeltall'] == {'Siste rapport': '3/2026'}, (levels(events), info)
+    s.save(src['id'], data, {})
+    events, _, _ = kv.check_page(src, s, Net({src['url']: ok(ppr_page('4/2026'))}), REG, TODAY)
+    hit = [e for e in events if e['nivå'] == 'middels']
+    assert len(hit) == 1 and hit[0]['tittel'] == 'Siste rapport: endret fra 3/2026 til 4/2026' and hit[0]['fakta'] == ['kpiPrognose'], levels(events)
+    assert 'kilder/fakta/prisvekst.json' in hit[0]['tekst']
 
 
 @test

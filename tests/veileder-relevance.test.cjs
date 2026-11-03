@@ -25,7 +25,7 @@ for(const t of V.topics)for(const debt of ['yes','no',''])for(const buffer of ['
  if(debt==='yes'&&buffer==='no'){assert.ok(!answer.parts.some(x=>x.title==='Uro teller også'));assert.equal(answer.options[0].title,'Bygge en tilgjengelig buffer');}
  count++;
 }
-for(const [id,fact]of Object.entries(F.data)){assert.equal(fact.year,2026,id);assert.equal(fact.checked,'2026-10-22',id);assert.ok(fact.source.startsWith('https://'),id);assert.ok(Number.isFinite(fact.value),id);}
+for(const [id,fact]of Object.entries(F.data)){assert.equal(fact.year,2026,id);assert.equal(fact.checked,'2026-10-22',id);assert.ok(fact.source.startsWith('https://'),id);if(fact.kind==='forecast')assert.ok(Object.keys(fact.forecast).length&&Object.values(fact.forecast).every(Number.isFinite),id);else assert.ok(Number.isFinite(fact.value),id);}
 assert.equal(F.text('year'),'2026');assert.equal(F.text('bsuAnnual'),'27 500');assert.equal(F.text('ipsIntroduced'),'2017');assert.throws(()=>F.text('unknown'));
 for(const name of fs.readdirSync(path.join(__dirname,'../dist')).filter(x=>/\.(html|js|css)$/.test(x)))assert.doesNotMatch(fs.readFileSync(path.join(__dirname,'../dist',name),'utf8'),/[\u2013\u2014]/,name);
 console.log('Relevance: '+count+' profiles, card balance, priorities, adaptive questions and dated facts passed.');

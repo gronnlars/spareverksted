@@ -31,9 +31,13 @@ Kjør `python3 scripts/fakta.py` og lag PR. Nettsiden viser 27 500 til og med 31
 - `bekreftet_til` sier hvor lenge tallet er kontrollert. 75 dager før 1. januar og 1. juli åpner Kildevakt saken «Klar for 1. januar …?» med alle regler som ikke er bekreftet over fristen.
 - Tester som sjekker selve tallet (for eksempel `assert.match(…, /27 500/)`) må oppdateres i samme PR. `python3 scripts/fakta.py steder bsuAnnual` viser hvor. Ellers feiler testene den dagen den nye verdien gjelder.
 
+### Ny Pengepolitisk rapport
+
+Kildevakt åpner en sak når Norges Bank publiserer en ny rapport. Oppdater `kpiPrognose` i `kilder/fakta/prisvekst.json` for hånd (rapport, publisert og anslag per år) og kjør `python3 scripts/fakta.py`. Prognoser har typen `prognose` og kodene `.rapport`, `.publisert` og `.liste`.
+
 ### Ny SSB-måned
 
-Gjør ingenting. Kildevakt lager en PR med nye tall i `research/bsu-rentehistorikk.csv`, årssnittene, `kilder/fakta/ssb-renter.json`, `dist/veileder-facts.js`, `dist/bsu-rates.js` og `?v=` i HTML. Godkjenn eller avvis.
+Gjør ingenting. Kildevakt lager en PR for alle SSB-kilder (innskuddsrenter i 11018 og tolvmånedersvekst i KPI i 14700). For BSU oppdateres `research/bsu-rentehistorikk.csv`, årssnittene, `kilder/fakta/ssb-renter.json`, `dist/veileder-facts.js`, `dist/bsu-rates.js` og `?v=` i HTML. Godkjenn eller avvis.
 
 PR-er laget av GitHub Actions starter ikke CI av seg selv. Lukk og åpne PR-en igjen for å kjøre hele testpakken. Kildevakt kjører de viktigste testene før den lager PR-en.
 
@@ -47,6 +51,9 @@ Skriv aldri tallet eller forklaringen direkte. Bruk plassholdere:
 | `{{bsuRate}}` | 5,61 |
 | `{{bsuRate.periode}}` | august 2026 |
 | `{{bsuRate.hentet}}` | 28. oktober 2026 |
+| `{{kpi12m}} % til {{kpi12m.periode}}` | 3,4 % til september 2026 |
+| `{{kpiPrognose.rapport}}` | PPR 3/2026 |
+| `{{kpiPrognose.liste}}` | 3,3 % i 2026, 2,6 % i 2027, 2,3 % i 2028 og 2,1 % i 2029 |
 | `{{begrep:kjopekraft}}` | Kjøpekraft er hvor mye du kan kjøpe for pengene. |
 | `{{begrep:kjopekraft.utdyping}}` | Når prisene stiger, rekker det samme kronebeløpet til mindre. |
 | `{{begrep:kjopekraft.ord}}` | Kjøpekraft |

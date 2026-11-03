@@ -11,6 +11,7 @@
 
 Plassholdere i tekst:
   {{bsuAnnual}}  {{bsuRate.periode}}  {{bsuRate.hentet}}  {{begrep:kjopekraft}}  {{begrep:kjopekraft.utdyping}}
+  {{kpiPrognose.rapport}}  {{kpiPrognose.publisert}}  {{kpiPrognose.liste}}  (prognoser: «3,3 % i 2026, 2,6 % i 2027 …»)
 
 Bare standardbiblioteket. Se docs/kildevakt.md.
 """
@@ -24,7 +25,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 TARGET = 'dist/veileder-facts.js'
 BEGREP_TARGET = 'dist/begreper.js'
-TYPES = {'regel': 'rule', 'kildeanbefaling': 'source-recommendation', 'statistikk': 'statistic'}
+TYPES = {'regel': 'rule', 'kildeanbefaling': 'source-recommendation', 'statistikk': 'statistic', 'prognose': 'forecast'}
 STATUSES = ('i kraft', 'vedtatt', 'foreslått')
 PUBLISHED = ('i kraft', 'vedtatt')
 MONTHS = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember']
@@ -35,6 +36,7 @@ WARN_DAYS = 75
 FACT_ID = r'[a-zA-Z][a-zA-Z0-9]*'
 BEGREP_ID = r'[a-z0-9]+(?:-[a-z0-9]+)*'
 FACT_KEYS = ('periode', 'hentet')
+FORECAST_KEYS = ('rapport', 'publisert', 'liste')
 BEGREP_KEYS = ('utdyping', 'ord')
 PLACEHOLDER = re.compile(r'\{\{(?:(begrep):)?([^{}.]+)(?:\.([^{}]+))?\}\}')
 # Setninger kortere enn dette i en utdyping regnes ikke som dubletter (for vanlige formuleringer).
@@ -117,7 +119,9 @@ def date_text(iso):
 
 
 def current(fact, date, root=ROOT):
-    """Verdien som gjelder på datoen, eller None."""
+    """Verdien som gjelder på datoen, eller None. Prognoser har ingen enkeltverdi og sjekkes ikke for dubletter."""
+    if fact['type'] == 'prognose':
+        return None
     if fact['type'] == 'statistikk':
         return series(fact, root)[-1][1]
     valid = [v for v in fact['verdier'] if v['status'] in PUBLISHED and v['fra'] <= date]
@@ -144,6 +148,15 @@ def validate(reg, root=ROOT):
         for allowed in fact.get('tillatt', []):
             if not allowed.get('fil') or not allowed.get('tekst') or not allowed.get('grunn'):
                 errors.append(f'{where}: hvert unntak i "tillatt" trenger "fil", "tekst" (et unikt stykke av linjen) og "grunn"')
+        if fact['type'] == 'prognose':
+            anslag = fact.get('anslag') or {}
+            if not fact.get('rapport') or not anslag or not all(re.fullmatch(r'\d{4}', y) and isinstance(v, (int, float)) for y, v in anslag.items()):
+                errors.append(f'{where}: prognose trenger "rapport" og "anslag" som {{"2027": 2.6}}')
+            try:
+                dt.date.fromisoformat(fact.get('publisert', ''))
+            except ValueError:
+                errors.append(f'{where}: "publisert" må være en dato')
+            continue
         if fact['type'] == 'statistikk':
             if ('serie' in fact) == ('perioder' in fact):
                 errors.append(f'{where}: statistikk trenger enten "serie" eller "perioder"')
@@ -201,7 +214,13 @@ def build(reg, root=ROOT):
             out['decimals'] = fact['desimaler']
         if fact.get('format') == 'årstall':
             out['plain'] = True
-        if fact['type'] == 'statistikk':
+        if fact['type'] == 'prognose':
+            years = sorted(fact['anslag'])
+            parts = [f"{number_text(fact['anslag'][y], fact)} % i {y}" for y in years]
+            out.update(value=None, report=fact['rapport'], published=fact['publisert'], publishedText=date_text(fact['publisert']),
+                       forecast={y: fact['anslag'][y] for y in years},
+                       listText=parts[0] if len(parts) == 1 else ', '.join(parts[:-1]) + ' og ' + parts[-1])
+        elif fact['type'] == 'statistikk':
             period, value = series(fact, root)[-1]
             out.update(value=value, period=period, periodText=period_text(period))
             if fact.get('hentet'):
@@ -232,18 +251,19 @@ function today(){
  const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 }
 function make(date){
- const pick=f=>f.values?(f.values.filter(v=>v.from<=date).pop()||null):{value:f.value};
+ const pick=f=>f.values?(f.values.filter(v=>v.from<=date).pop()||null):{value:f.value===undefined?null:f.value};
  const checked=REG.checked,data={};
  for(const [id,f] of Object.entries(REG.facts)){const v=pick(f);data[id]={value:v?v.value:null,unit:f.unit,checked,source:f.source,kind:f.kind};
-  if(f.period)Object.assign(data[id],{period:f.period,periodText:f.periodText,fetched:f.fetched||null,fetchedText:f.fetchedText||''});}
+  if(f.period)Object.assign(data[id],{period:f.period,periodText:f.periodText,fetched:f.fetched||null,fetchedText:f.fetchedText||''});
+  if(f.forecast)Object.assign(data[id],{report:f.report,published:f.published,publishedText:f.publishedText,forecast:f.forecast,listText:f.listText});}
  const year=data.year.value;for(const id in data)data[id].year=year;
  function value(id){if(!Object.hasOwn(data,id))throw Error('Ukjent faktanøkkel: '+id);return data[id].value;}
  function text(id){const n=value(id);if(n===null)return '';const f=REG.facts[id];
   return new Intl.NumberFormat('nb-NO',{useGrouping:!f.plain,minimumFractionDigits:f.decimals||0,maximumFractionDigits:f.decimals||0}).format(n).replace(/\\u00a0/g,' ').replace(/\\u2212/g,'-');}
  // Faste forklaringer: {{begrep:ID}} er ordbok-setningen, {{begrep:ID.utdyping}} utdypingen.
  function term(id,key){const t=REG.terms[id];if(!t)throw Error('Ukjent begrep: '+id);return t[key||'definisjon']||'';}
- function part(kind,id,key){if(kind)return term(id,key);value(id);if(!key)return text(id);if(key==='periode')return data[id].periodText||'';if(key==='hentet')return data[id].fetchedText||'';return '';}
- function expand(s){return String(s).replace(/\\{\\{(?:(begrep):)?([a-zA-Z0-9-]+)(?:\\.(periode|hentet|utdyping|ord))?\\}\\}/g,(_,kind,id,key)=>part(kind,id,key)).replace(/[\\u2013\\u2014]/g,' til ');}
+ function part(kind,id,key){if(kind)return term(id,key);value(id);if(!key)return text(id);if(key==='periode')return data[id].periodText||'';if(key==='hentet')return data[id].fetchedText||'';if(key==='rapport')return data[id].report||'';if(key==='publisert')return data[id].publishedText||'';if(key==='liste')return data[id].listText||'';return '';}
+ function expand(s){return String(s).replace(/\\{\\{(?:(begrep):)?([a-zA-Z0-9-]+)(?:\\.(periode|hentet|rapport|publisert|liste|utdyping|ord))?\\}\\}/g,(_,kind,id,key)=>part(kind,id,key)).replace(/[\\u2013\\u2014]/g,' til ');}
  function resolve(x){if(typeof x==='string')return expand(x);if(Array.isArray(x))return x.map(resolve);if(x&&typeof x==='object')return Object.fromEntries(Object.entries(x).map(([k,v])=>[k,resolve(v)]));return x;}
  // Neste vedtatte verdi etter datoen, til varsler som «Fra 1. januar 2027».
  function upcoming(id){value(id);const f=REG.facts[id];const v=f.values&&f.values.find(x=>x.from>date);return v?{value:v.value,from:v.from}:null;}
@@ -396,7 +416,8 @@ def placeholder_problems(reg, root=ROOT, files=None):
                     ok = pid in terms and (key is None or (key in BEGREP_KEYS and (key != 'utdyping' or terms[pid].get('utdyping'))))
                 else:
                     fact = reg['fakta'].get(pid)
-                    ok = fact is not None and (key is None or (key in FACT_KEYS and fact['type'] == 'statistikk'))
+                    ok = fact is not None and ((key is None and fact['type'] != 'prognose') or (key in FACT_KEYS and fact['type'] == 'statistikk')
+                                               or (key in FORECAST_KEYS and fact['type'] == 'prognose'))
                 if not ok:
                     problems.append(f'{rel}:{number}: {match.group(0)} finnes ikke i registeret')
     return problems

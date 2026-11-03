@@ -117,6 +117,19 @@ def plassholdere_som_ikke_finnes_blir_funnet():
 
 
 @test
+def prognose_har_egne_koder():
+    root = sandbox({'dist/side.js': "a='{{kpiPrognose.rapport}} {{kpiPrognose.publisert}} {{kpiPrognose.liste}}';\nb='{{kpiPrognose}} {{kpi12m.liste}} {{kpiPrognose.periode}}';\n"})
+    problems = fakta.placeholder_problems(fakta.load(root), root)
+    assert sorted(p.split(': ', 1)[1] for p in problems) == sorted(f'{x} finnes ikke i registeret' for x in ('{{kpiPrognose}}', '{{kpi12m.liste}}', '{{kpiPrognose.periode}}')), problems
+    reg = copy.deepcopy(REG)
+    reg['fakta']['kpiPrognose']['anslag'] = {'neste år': 2.5}
+    assert any('prognose trenger' in e for e in fakta.validate(reg))
+    out = subprocess.run(['node', '-e', "global.window=globalThis;const F=require(process.argv[1]);console.log(F.expand('{{kpiPrognose.rapport}}|{{kpiPrognose.publisert}}|{{kpiPrognose.liste}}'))",
+                          str(ROOT / 'dist/veileder-facts.js')], capture_output=True, text=True, check=True).stdout.strip()
+    assert out == 'PPR 3/2026|24. september 2026|3,3 % i 2026, 2,6 % i 2027, 2,3 % i 2028 og 2,1 % i 2029', out
+
+
+@test
 def begrep_hentes_i_nettleserkoden():
     script = ("global.window=globalThis;const F=require(process.argv[1]);"
               "console.log(JSON.stringify([F.expand('{{begrep:renters-rente}} {{begrep:renters-rente.utdyping}}'),F.term('prisvekst','ord'),"
