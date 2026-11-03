@@ -27,6 +27,8 @@
   // Åpen: knappen blir selve pillen. Valgt tema står først, der knappen var, og de to andre folder seg ut ved siden av.
   const setOpen=(open,focusToggle)=>{
    if(open){const chosen=group.querySelector('[data-color-theme="'+current+'"]');if(chosen)group.prepend(chosen);}
+   const fold=!open&&!group.hidden;clearTimeout(group.foldTimer);group.classList.remove('is-closing');group.removeAttribute('aria-hidden');
+   if(fold){group.classList.add('is-closing');group.setAttribute('aria-hidden','true');group.foldTimer=setTimeout(()=>{group.classList.remove('is-closing');group.removeAttribute('aria-hidden');},300);}
    group.hidden=!open;picker.classList.toggle('is-open',open);toggle.setAttribute('aria-expanded',String(open));
    if(open)(group.querySelector('[aria-pressed=true]')||group.firstElementChild).focus();else if(focusToggle)toggle.focus();};
   toggle.addEventListener('click',()=>setOpen(group.hidden,false));

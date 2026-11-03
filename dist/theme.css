@@ -63,13 +63,16 @@ svg [stroke="#93a18c"]{stroke:#6f8068}
 .theme-picker .theme-toggle:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
 .theme-picker .theme-toggle svg{width:20px;height:20px;pointer-events:none}
 .theme-picker.is-open .theme-toggle{background:var(--soft)}
-.theme-options{display:flex;align-items:center;gap:0;padding:0;border:1px solid var(--line);border-radius:22px;background:var(--surface,#fff);overflow:hidden;animation:theme-slide .18s ease-out}
+.theme-options{display:flex;align-items:center;gap:0;padding:0;border:1px solid var(--line);border-radius:22px;background:var(--surface,#fff);overflow:hidden;animation:theme-slide .32s cubic-bezier(.22,1,.36,1)}
 .theme-options[hidden]{display:none}
 .theme-picker.is-open .theme-toggle{display:none}
 .theme-picker .theme-options button{width:44px;height:44px;border-radius:22px}
 .theme-picker .theme-options button[aria-pressed=true]{background:var(--soft);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--green)}
 @keyframes theme-slide{from{max-width:44px}to{max-width:140px}}
-@media(prefers-reduced-motion:reduce){.theme-options{animation:none}}
+/* Lukking: pillen ligger over knappen og folder seg sammen, mens knappen allerede kan ta imot fokus under (3.11.2026). */
+.theme-options.is-closing{display:flex!important;position:absolute;left:0;top:0;z-index:1;pointer-events:none;animation:theme-fold .26s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes theme-fold{from{max-width:140px}to{max-width:44px;opacity:.6}}
+@media(prefers-reduced-motion:reduce){.theme-options{animation:none}.theme-options.is-closing{display:none!important}}
 /* Lenker til andre nettsteder: synlig ↗ og tekst for skjermlesere (tekst etter / er alternativtekst). */
 a[href^="http"]:not([href^="https://spareverksted.no"])::after{content:"\00a0↗";content:"\00a0↗"/" (annen nettside)";font-size:.85em;text-decoration:none;display:inline-block}
 a[href^="http"][target="_blank"]:not([href^="https://spareverksted.no"])::after{content:"\00a0↗";content:"\00a0↗"/" (annen nettside, åpnes i ny fane)"}
