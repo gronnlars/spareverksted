@@ -1,7 +1,7 @@
 /* Shared navigation and compact, optional layers of detail. */
 .site-header,.guidance-page .site-header{height:68px;min-height:68px;flex-wrap:nowrap;padding:0 max(24px,calc((100vw - 1280px)/2));gap:12px;background:var(--surface,#fff)}
 .brand{font-size:22px;letter-spacing:-.8px;white-space:nowrap}
-.mark{width:32px;height:32px;font-size:24px;border-radius:9px}
+
 .site-menu{position:relative;flex:0 0 auto;border:0;margin:0;padding:0}
 .site-header details.site-menu,.workbench-toolbar details.display-options{border:0;margin:0;padding:0}
 .site-menu[open]>summary,.display-options[open]>summary{margin-bottom:0}
@@ -56,7 +56,7 @@
 footer{align-items:center;gap:12px}
 @media(max-width:760px){
  .site-header,.guidance-page .site-header{height:64px;min-height:64px;padding:0 16px;gap:8px}
- .brand{font-size:20px;gap:8px}.mark{width:30px;height:30px;font-size:22px}
+ .brand{font-size:20px;gap:8px}
  main,.guidance-page main{padding:20px 16px 0}
  .intro{display:block;margin-bottom:12px}
  .intro h1{font-size:27px;letter-spacing:-.8px;margin:0 0 6px}
