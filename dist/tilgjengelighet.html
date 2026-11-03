@@ -14,8 +14,8 @@
 <script defer src="layout.js?v=a7caeab047"></script>
 <link rel="stylesheet" href="navigation.css?v=5d98fe1adc">
 <link rel="stylesheet" href="om.css?v=3516e4f4f5">
-<link rel="stylesheet" href="infosider.css?v=36208bae92">
-<script defer src="infosider.js?v=f89dde9fe5"></script>
+<link rel="stylesheet" href="infosider.css?v=31358fa5ca">
+<script defer src="infosider.js?v=68fcf0410b"></script>
 <script defer src="kontakt.js?v=2e0459b7f3"></script>
 <link rel="canonical" href="https://spareverksted.no/tilgjengelighet.html">
 <meta property="og:type" content="website">
@@ -37,25 +37,28 @@
 </head>
 <body class="about-page info-page">
 <a class="skip" href="#main">Hopp til innholdet</a>
-<header class="site-header" id="toppen"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">↗</span>spareverksted</a><nav class="site-nav" aria-label="Hovedmeny"><a href="index.html">Kalkulator</a><a href="spor.html">Spør om sparing</a><a href="om.html">Om</a></nav></header>
+<header class="site-header" id="toppen"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">↗</span>spareverksted</a><nav class="site-nav" aria-label="Hovedmeny"><a href="index.html">Kalkulator</a><a href="spor.html">Spør om sparing</a><a href="om.html" aria-current="true">Om</a></nav>
+<nav class="site-nav info-nav" aria-label="Om Spareverksted">
+<a href="om.html">Om</a>
+<a href="personvern.html">Personvern</a>
+<a href="tilgjengelighet.html" aria-current="page">Tilgjengelighet</a>
+<a href="ressursbruk.html">Ressursbruk</a>
+</nav>
+</header>
 <main id="main">
 <section class="about-intro" aria-labelledby="a11yTitle">
 <p class="eyebrow">TILGJENGELIGHET</p>
 <h1 id="a11yTitle">Spareverksted skal kunne brukes av alle.</h1>
+<div class="info-tools">
+<a href="#kontakt">Kontakt <span aria-hidden="true">↓</span></a>
+<button type="button" id="infoToggleAll" hidden><span class="info-toggle-icon" aria-hidden="true">+</span> <span class="info-toggle-label">Åpne alle kapitler</span></button>
+</div>
 <!-- w3c-status:start -->
 <p class="hint w3c-status">Siste W3C-kontroll: fylles inn når siden publiseres.</p>
 <!-- w3c-status:end -->
 <p class="hint wave-status">Siste WAVE-kontroll av forsiden: 3. november 2026. AIM-score: 10 av 10. 0 feil, 0 kontrastfeil og 2 varsler, som er vurdert og beholdt.</p>
 <p>Her finner du tiltak, utførte kontroller og kjente begrensninger. Målet er WCAG 2.2 nivå AA. Hele kalkulatoren og veilederen er ennå ikke gjennomgått med VoiceOver og NVDA. Testresultatene dokumenterer ikke full tilgjengelighet.</p>
 </section>
-<nav class="info-nav" aria-label="Om Spareverksted">
-<a href="om.html">Om</a>
-<a href="personvern.html">Personvern</a>
-<span aria-current="page">Tilgjengelighet</span>
-<a href="ressursbruk.html">Ressursbruk</a>
-<a href="#kontakt">Kontakt</a>
-</nav>
-<div class="info-tools" hidden><button type="button" id="infoToggleAll">Åpne alle kapitler</button></div>
 
 <section class="info-section" aria-labelledby="a11yGoal" id="kapittel-a11yGoal">
 <details class="info-chapter">
@@ -77,6 +80,7 @@
 <li>Automatiske tester kontrollerer at innholdet tilpasser seg smale skjermer. Manuell zoomprøve er beskrevet under kontrollene.</li>
 <li>Feilmeldinger i startskjemaet og kalkulatoren står ved feltet som må rettes, og er koblet til feltet for skjermlesere. Når verdien blir gyldig, fjernes feilteksten og markeringen.</li>
 <li>Grafene har en tekstbeskrivelse og en tabell med de samme tallene.</li>
+<li>Resultatlinjen nederst kan skjules med × og hentes fram med «Vis resultat». Når den ville tatt mer enn en tredjedel av skjermhøyden, for eksempel ved sterk zoom, starter den skjult.</li>
 <li>Farge er ikke eneste måte ting skilles fra hverandre på.</li>
 <li>Siden tar hensyn til at du har valgt redusert bevegelse på enheten din.</li>
 </ul>

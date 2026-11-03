@@ -53,9 +53,17 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
   }
   const context=await browser.newContext({viewport:{width:390,height:844}});
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+  let navTop=null;
   for(const file of files){
    await page.goto(origin+'/'+file);
-   await page.locator('.info-nav').getByRole('link',{name:'Kontakt',exact:true}).click();
+   const top=await page.locator('.info-nav').evaluate(e=>e.getBoundingClientRect().top);
+   if(navTop===null)navTop=top;
+   assert.equal(top,navTop,'submenu stays in the same place across pages');
+   assert(await page.locator('h1 + .info-tools').count(),'tools immediately follow heading');
+   assert.equal(await page.locator('.info-tools a').evaluate(e=>Boolean(e.closest('details'))),false);
+   if(file==='personvern.html')assert(await page.locator('#kontakt').getByRole('link',{name:'Datatilsynet',exact:true}).count());
+   if(file==='tilgjengelighet.html')assert(await page.locator('#kontakt a[href*=uutilsynet]').count());
+   await page.locator('.info-tools').getByRole('link',{name:'Kontakt',exact:true}).click();
    assert.equal(new URL(page.url()).hash,'#kontakt');
    const contact=page.locator('.kontakt-vis');
    assert(await contact.isVisible(),'contact stays outside folded chapters');

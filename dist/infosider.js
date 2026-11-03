@@ -5,9 +5,14 @@
  const chapters=[...document.querySelectorAll('details.info-chapter')];
  if(!chapters.length)return;
  const button=document.getElementById('infoToggleAll');
- const update=()=>{button.textContent=chapters.every(d=>d.open)?'Lukk alle kapitler':'Åpne alle kapitler';};
+ const update=()=>{
+  const allOpen=chapters.every(d=>d.open);
+  button.querySelector('.info-toggle-icon').textContent=allOpen?'−':'+';
+  button.querySelector('.info-toggle-label').textContent=allOpen?'Lukk alle kapitler':'Åpne alle kapitler';
+ };
  if(button){
-  button.parentElement.hidden=false;
+  button.hidden=false;
+  update();
   button.addEventListener('click',()=>{
    const open=!chapters.every(d=>d.open);
    chapters.forEach(d=>{d.open=open;});
