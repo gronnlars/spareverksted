@@ -61,3 +61,6 @@
  /* Also expose closed details when printing without JavaScript in supporting browsers. */
  .info-page details::details-content{display:block!important;content-visibility:visible!important}
 }
+/* Toppraden står på samme sted som på kalkulatoren og «Spør om sparing». Her er toppfeltet høyere (egen rad for
+   undersidene), så den ble ikke midtstilt og hoppet 4 px opp når man gikk til Om (funnet 3.11.2026). */
+@media(min-width:761px){:root .info-page .site-header{padding-top:12px}}

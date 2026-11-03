@@ -36,6 +36,20 @@ Versjonen i `?v=` lages fra innholdet i fila. Ikke rediger den for hånd. Etter 
 
 Bakgrunn: 2.11.2026 blandet nettleseren ny HTML med en gammel fil fordi versjonen ikke ble økt. 3.11.2026 ga #173 og #174 `app.js` samme versjon (ux52) med ulikt innhold. Begge deler er umulige når versjonen følger innholdet.
 
+## Gammel kode
+
+Hent fersk main før hver endring (`git fetch origin main` og bygg grenen på `origin/main`). Gjør endringen med små, avgrensede redigeringer i fila slik den ligger på main nå. Lim aldri inn en hel fil fra en samtale, et tidligere svar eller en eldre gren: den er nesten alltid gammel.
+
+`scripts/foreldet.py` stopper i CI, før publisering, endringer som legger tilbake en eldre versjon av en fil under `dist/`, `scripts/`, `tests/`, `kilder/` eller `.github/`. Den slår ut når fila er lik en tidligere versjon, når endringen både legger tilbake linjer main har fjernet og fjerner linjer main har lagt til, og når en test slettes. Får du den feilen: ikke prøv å lure den. Hent main og gjør bare den endringen oppdraget gjelder. En bevisst tilbakestilling som Lars har godkjent, merkes med `[bevisst tilbakestilling]` (eller `[sletter test]`) i commit-meldingen.
+
+Bakgrunn: 3.11.2026 ba Lars om en sperre etter flere runder der en modell lastet opp gammel motor over nyere arbeid.
+
+## Ny side eller endring i utseende
+
+Bruk det som finnes. En ny side kopierer hodet og toppfeltet fra `dist/spor.html`: CSP først, `theme.js` før stilene, deretter `layout.css`, `theme.css` og `navigation.css`, samme `<header class="site-header" id="toppen">` med `.brand` og `.site-nav`, og samme bunntekst. Da får siden fargetemaene, menyen, de myke sideovergangene og bunnteksten uten egen kode. Kjør `python3 scripts/versjoner.py` og testene for de sidene du rører.
+
+Overganger: sideskifte og temabytte tones over med View Transitions (`theme.css`, `theme.js`), bare når nettleseren støtter det og brukeren ikke har valgt redusert bevegelse. Logo og hovedmeny står stille mellom sidene. Ikke legg til egne animasjoner, forsinkelser eller nye overgangsnavn; endre varighet ett sted i `theme.css`. Toppraden skal stå på samme sted på alle sider (sjekket i `tests/theme-browser.cjs` og målt 3.11.2026).
+
 ## Tall fra kilder
 
 Tall som står i svar eller kalkulator (satser, grenser, aldre, SSB-renter) ligger i temafiler under `kilder/fakta/` med kilde, status og gjelder-fra-dato. Faste forklaringer av fagord ligger i `kilder/begreper/`. Skriv `{{ID}}` eller `{{begrep:ID}}` i teksten, ikke tallet eller setningen. Kjør `python3 scripts/fakta.py` etter endring. `python3 scripts/fakta.py --check` feiler ved hardkodede dubletter og plassholdere som ikke finnes. Kildevakt følger kildene og åpner saker; den retter aldri tall selv. Se [docs/kildevakt.md](docs/kildevakt.md).
