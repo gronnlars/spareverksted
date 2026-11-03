@@ -31,7 +31,7 @@ const R=(min,max,unit,label,opt={})=>({min,max,unit,label,...opt});
 const FIELDS={
  amount:R(0,1e9,' kr','Lånebeløp',{open:true}),
  rate:R(0,100,' %','Nominell årsrente'),
- years:R(1/24,50,' år','Nedbetalingstid',{minText:'én måned'}),
+ years:R(1/12,50,' år','Nedbetalingstid',{minText:'én måned'}),
  establishmentFee:R(0,1e7,' kr','Etableringsgebyr'),
  termFee:R(0,1e5,' kr','Termingebyr')
 };
@@ -63,11 +63,13 @@ function validate(s,labelOf){
  for(const e of s.extraPayments||[])event(e,'extraAmount','amount');
 }
 
-function annuityPayment(balance,i,n){return i===0?balance/n:balance*i/(1-Math.pow(1+i,-n))}
+// Numerisk stabil form: 1 − (1 + i)^−n regnes som −expm1(−n · log1p(i)). Den naive formelen mister presisjon ved
+// svært lav rente (1 + i rundes av), og ga feil terminbeløp ved for eksempel 0,0000000001 % (funnet av GPT 3.11.2026).
+function annuityPayment(balance,i,n){if(i===0)return balance/n;const d=-Math.expm1(-n*Math.log1p(i));return d>0?balance*i/d:balance/n}
 // Antall terminer som trengs for å betale ned restgjelden med et fast beløp (siste termin kan være delvis).
 function termsLeft(balance,i,payment){
  if(i===0)return balance/payment;
- const x=1-balance*i/payment;return x<=0?Infinity:-Math.log(x)/Math.log1p(i);
+ const x=balance*i/payment;return x>=1?Infinity:-Math.log1p(-x)/Math.log1p(i);
 }
 const ceilTerms=x=>Math.max(1,Math.ceil(x-1e-9));
 

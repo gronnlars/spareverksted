@@ -61,8 +61,36 @@ for(const type of L.TYPES){
  assert.equal(z.totals.interest,0);invariants(z,type+' 0 %');
  const one=plan({type,years:1/12,amount:100000,rate:12});
  assert.equal(one.payoffTerm,1);near(one.firstPayment,101000,`${type} én termin`,1e-12);invariants(one,type+' én termin');
- const tiny=plan({type,years:1/24,amount:5000});assert.equal(tiny.payoffTerm,1,`${type}: halv måned rundes til én termin`);
 }
+
+// 3b. Svært lav rente (GPT 3.11.2026). Betalingene skal ligge tett på nullrentetilfellet, termin for termin.
+// Den naive annuitetsformelen ga hele lånet i første termin ved 1e-15 % og skjeve terminer ved 1e-10 %.
+for(const rate of [1e-15,1e-12,1e-10,1e-8,1e-6,1e-4]){
+ const i=rate/1200,n=300,flat=3e6/n,approx=flat*(1+i*(n+1)/2);
+ for(const type of L.TYPES){
+  const p=plan({type,rate});assert.equal(p.payoffTerm,300,`${type} ${rate} %: antall terminer`);
+  for(const r of p.rows){
+   const expected=type==='annuitet'?approx:flat+(3e6-flat*(r.term-1))*i;
+   near(r.payment,expected,`${type} ${rate} %: termin ${r.term}`,1e-9);
+  }
+  // Tilnærmingen er av første orden, så samlet rente sjekkes med en grense på 1 øre. Den eksakte kontrollen er i Python.
+  assert.ok(Math.abs(p.totals.interest-(type==='annuitet'?approx*n-3e6:i*3e6*(n+1)/2))<0.01,`${type} ${rate} %: samlet rente ${p.totals.interest}`);
+  assert.ok(p.totals.interest>=0&&p.totals.interest<=3e6*i*n,`${type} ${rate} %: rente innenfor grensene`);
+  invariants(p,`${type} ${rate} %`);
+ }
+ // Ekstra innbetaling og renteendring ved svært lav rente: samme forkorting som ved 0 %.
+ const e=plan({rate,extraPayments:[{term:60,amount:500000}]}),z=plan({rate:0,extraPayments:[{term:60,amount:500000}]});
+ assert.equal(e.payoffTerm,z.payoffTerm,`${rate} %: forkortet løpetid som ved 0 %`);
+ for(const r of e.rows.slice(0,-1))near(r.payment,z.rows[r.term-1].payment,`${rate} %: ekstra, termin ${r.term}`,Math.max(1e-9,2*i*n));
+ // Siste termin er resten. Ved positiv rente er terminbeløpet litt høyere enn ved 0 %, så resten blir litt lavere.
+ near(e.lastPayment,e.rows.at(-2).balance*(1+i),`${rate} %: siste termin er restgjeld pluss rente`,1e-12);
+ if(rate<=1e-6)assert.ok(Math.abs(e.lastPayment-z.lastPayment)<1,`${rate} %: siste termin ${e.lastPayment} mot ${z.lastPayment}`);
+ invariants(e,`${rate} % ekstra`);
+ const c=plan({rate:5,rateChanges:[{term:100,rate}]});
+ for(const r of c.rows.slice(99,-1))near(r.payment,c.rows[99].payment,`renteendring til ${rate} %, termin ${r.term}`,1e-9);
+ invariants(c,`renteendring til ${rate} %`);
+}
+near(L.annuityPayment(3e6,1e-17,300),1e4*(1+1e-17*301/2),'rente nær tallpresisjonen',1e-14);
 
 // 4. Renteendring. Annuitet: nytt terminbeløp over gjenværende løpetid, samme sluttermin. Serie: avdraget beholdes.
 {
@@ -151,13 +179,13 @@ for(let c=0;c<400;c++){
 
 // 11. Grenser og feilmeldinger med feltnavn.
 for(const [patch,field] of [[{amount:0},'amount'],[{amount:-1},'amount'],[{amount:2e9},'amount'],[{amount:NaN},'amount'],[{rate:-0.1},'rate'],[{rate:100.1},'rate'],[{rate:NaN},'rate'],
- [{years:0},'years'],[{years:51},'years'],[{years:1/30},'years'],[{establishmentFee:-1},'establishmentFee'],[{termFee:-1},'termFee'],[{termFee:1e6},'termFee'],
+ [{years:0},'years'],[{years:51},'years'],[{years:1/30},'years'],[{years:1/24},'years'],[{years:0.0833},'years'],[{establishmentFee:-1},'establishmentFee'],[{termFee:-1},'termFee'],[{termFee:1e6},'termFee'],
  [{amount:1000,establishmentFee:1000},'establishmentFee'],[{kind:'kreditt'},'kind'],[{type:'rammelån'},'type'],
  [{rateChanges:[{term:0,rate:5}]},'changeRateTerm'],[{rateChanges:[{term:301,rate:5}]},'changeRateTerm'],[{rateChanges:[{term:1.5,rate:5}]},'changeRateTerm'],[{rateChanges:[{term:10,rate:-1}]},'changeRate'],
  [{extraPayments:[{term:10,amount:0}]},'extraAmount'],[{extraPayments:[{term:10,amount:NaN}]},'extraAmount'],[{extraPayments:[{term:400,amount:5}]},'extraAmountTerm']]){
  try{L.validate({...base,...patch});assert.fail('godtatt: '+JSON.stringify(patch));}catch(e){assert.equal(e.field,field,JSON.stringify(patch)+': '+e.message);}
 }
-for(const patch of [{rate:0},{rate:100},{years:1/12},{years:1/24},{years:50},{amount:1},{amount:1e9},{establishmentFee:0},{termFee:0},{rateChanges:[{term:300,rate:0}]},{extraPayments:[{term:1,amount:1e10}]}])
+for(const patch of [{rate:0},{rate:100},{years:1/12},{years:50},{years:1.04},{amount:1},{amount:1e9},{establishmentFee:0},{termFee:0},{rateChanges:[{term:300,rate:0}]},{extraPayments:[{term:1,amount:1e10}]}])
  assert.doesNotThrow(()=>L.validate({...base,...patch}),JSON.stringify(patch));
 assert.equal(L.fieldError('rate',101),'«Nominell årsrente» må være fra 0 % til 100 %.');
 assert.equal(L.fieldError('amount',0).replace(/\s/g,' '),'«Lånebeløp» må være over 0 kr og opptil 1 000 000 000 kr.');

@@ -1,7 +1,8 @@
 """Uavhengig kontroll av lånemotoren (dist/laan-motor.js).
 
 Regnereglene i docs/laanemodell.md er skrevet på nytt her i Python med Decimal (40 sifre), uten å lese
-JavaScript-koden. Begge regner de samme planene, og terminene, restgjelden og summene sammenlignes.
+JavaScript-koden. Begge regner de samme planene, og terminene, restgjelden og summene sammenlignes, også ved
+svært lave renter der flyttall mister presisjon.
 Kontrollen går på gjeldsbalansen og betalingene, ikke på grafen.
 
   python3 tests/laan-kontroll.test.py
@@ -84,6 +85,12 @@ def scenarier():
         {'kind': 'forbruk', 'type': 'annuitet', 'amount': 100000, 'rate': 12, 'years': 5, 'establishmentFee': 950, 'termFee': 45, 'extraPayments': [{'term': 30, 'amount': 1e9}]},
         {'type': 'serie', 'amount': 450000, 'rate': 7.5, 'years': 7, 'termFee': 50, 'extraPayments': [{'term': 24, 'amount': 1e9}]},
     ]
+    # Svært lave renter (GPT 3.11.2026): den naive annuitetsformelen mistet presisjon her.
+    for rente in (1e-15, 1e-12, 1e-10, 1e-8, 1e-6, 1e-4):
+        for type_ in ('annuitet', 'serie'):
+            faste.append({'type': type_, 'amount': 3000000, 'rate': rente, 'years': 25})
+            faste.append({'type': type_, 'amount': 3000000, 'rate': rente, 'years': 25, 'extraPayments': [{'term': 60, 'amount': 500000}]})
+            faste.append({'type': type_, 'amount': 3000000, 'rate': 5, 'years': 25, 'rateChanges': [{'term': 100, 'rate': rente}]})
     tilfeldig = random.Random(2026)
     for c in range(60):
         n = max(1, tilfeldig.randint(1, 480))
@@ -121,6 +128,11 @@ def main():
     a = annuitet(D(3000000), i, 300)
     assert round(a) == 17538 and round(a * 300 - 3000000) == 2261310
     assert round(D(3000000) * i * 301 / 2) == 1881250
+    # Ved svært lav rente skal betalingsforløpet ligge tett på nullrentetilfellet: 10 000 kr per termin.
+    for nr, (s, svar) in enumerate(zip(alle, js)):
+        if s['rate'] <= 1e-6 and not s['rateChanges'] and not s['extraPayments'] and s['amount'] == 3000000:
+            for r in svar['rows']:
+                assert abs(r['payment'] - 10000) < 0.01, f'scenario {nr}, rente {s["rate"]} %, termin {r["term"]}: {r["payment"]}'
     print(f'Uavhengig kontroll av lånemotoren: {len(alle)} planer stemmer termin for termin.')
 
 
