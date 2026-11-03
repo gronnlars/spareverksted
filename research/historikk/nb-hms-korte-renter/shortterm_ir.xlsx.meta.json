@@ -1,0 +1,19 @@
+{
+ "id": "nb-hms-korte-renter",
+ "navn": "Norges Bank HMS: korte renter fra 1818",
+ "kilde": "Kilde: Norges Bank.",
+ "url": "https://www.norges-bank.no/globalassets/upload/hms/data/shortterm_ir.xlsx?v=17082017181356",
+ "endelig_url": "https://www.norges-bank.no/globalassets/upload/hms/data/shortterm_ir.xlsx?v=17082017181356",
+ "versjon": "17082017181356",
+ "hentet": "2026-11-03T09:43:41+00:00",
+ "vilkår": [
+  "Norges Bank oppgis som kilde.",
+  "De opprinnelige dataseriene gjengis uendret.",
+  "Egne beregninger og visualiseringer merkes tydelig som Spareverksteds egne.",
+  "Ikke kommersielle formål, ikke frames (side «Opphavsrett og ansvar», lest av Lars 2.11.2026)."
+ ],
+ "bruk": "Bankrente før SSB 11018 (2013).",
+ "fil": "nb-hms-korte-renter/shortterm_ir.xlsx",
+ "sha256": "990782db378fc1a31924ed8d2e5d842430bd087a8a3ad6126a0b93f2663c8c2f",
+ "bytes": 337829
+}

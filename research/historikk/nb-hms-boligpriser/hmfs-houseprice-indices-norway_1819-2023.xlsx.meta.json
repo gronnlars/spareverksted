@@ -1,0 +1,19 @@
+{
+ "id": "nb-hms-boligpriser",
+ "navn": "Norges Bank HMS: boligprisindekser 1819 til 2023",
+ "kilde": "Kilde: Norges Bank.",
+ "url": "https://www.norges-bank.no/globalassets/upload/hms/data/hmfs-houseprice-indices-norway_1819-2023.xlsx?v=16092024104201",
+ "endelig_url": "https://www.norges-bank.no/globalassets/upload/hms/data/hmfs-houseprice-indices-norway_1819-2023.xlsx?v=16092024104201",
+ "versjon": "16092024104201",
+ "hentet": "2026-11-03T09:43:42+00:00",
+ "vilkår": [
+  "Norges Bank oppgis som kilde.",
+  "De opprinnelige dataseriene gjengis uendret.",
+  "Egne beregninger og visualiseringer merkes tydelig som Spareverksteds egne.",
+  "Ikke kommersielle formål, ikke frames (side «Opphavsrett og ansvar», lest av Lars 2.11.2026)."
+ ],
+ "bruk": "Mulig boligsammenligning senere. Ikke vurdert.",
+ "fil": "nb-hms-boligpriser/hmfs-houseprice-indices-norway_1819-2023.xlsx",
+ "sha256": "1af3160b4a23fdfcab9ef456c96256b25ad822af81e4b23f7eda3d51377aaaac",
+ "bytes": 118749
+}
