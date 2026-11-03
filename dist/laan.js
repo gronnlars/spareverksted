@@ -4,7 +4,7 @@
 // som sparekalkulatoren allerede bruker.
 (function(){
 'use strict';
-const $=id=>document.getElementById(id),L=LaanMotor,T=LaanTekst;
+const $=id=>document.getElementById(id),L=LaanMotor,T=LaanTekst,E=LaanEksport;
 const nf=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0}),dec=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:2});
 const grouped=v=>new Intl.NumberFormat('nb-NO',{maximumFractionDigits:15}).format(v).replace(/[  ]/g,' ');
 // Samme tolkning som sparekalkulatoren: mellomrom som tusenskille, komma som desimaltegn. Tomt felt er ikke 0.
@@ -61,7 +61,7 @@ function render(){
  const missingRate=errors.some(e=>e.empty)||($('rate').value.trim()===''&&pending('rate'));
  document.body.classList.toggle('loan-empty',missingRate&&!lastPlan);
  if(missingRate){showEmpty();return;}
- if(real.length||waiting){document.body.classList.toggle('stale',!!lastPlan);return;}
+ if(real.length||waiting){document.body.classList.toggle('stale',!!lastPlan);$('mobileTotal').textContent='Rett feltene';return;}
  document.body.classList.remove('stale');
  let p;try{p=L.plan(input);}catch(err){$('error').hidden=false;$('error').textContent=err.message;return;}
  lastPlan=p;show(p,input);
@@ -71,6 +71,7 @@ function showEmpty(){
  lastPlan=null;document.body.classList.remove('stale');document.body.classList.add('loan-empty');
  $('resultLabel').textContent='Hver måned';$('payment').textContent='Fyll inn renten';
  $('resultText').textContent='Skriv inn den nominelle årsrenten fra tilbudet eller avtalen din, så ser du hva lånet koster.';
+ $('mobileTotal').textContent='Fyll inn renten';$('mobileValueCurve').setAttribute('d','M0 0');
  for(const id of ['mAmount','mInterest','mFees','mPaid'])$(id).textContent='';
  $('meaningMain').textContent='';$('extraEffect').hidden=true;$('loanNotes').hidden=true;
  $('chart').replaceChildren();$('chartLegend').replaceChildren();$('chartSummary').hidden=true;$('tableWrap').replaceChildren();
@@ -90,6 +91,9 @@ function show(p,input){
  $('cAFirst').textContent=c.annuitet.first;$('cALast').textContent=c.annuitet.last;$('cAInterest').textContent=c.annuitet.interest;
  $('cSFirst').textContent=c.serie.first;$('cSLast').textContent=c.serie.last;$('cSInterest').textContent=c.serie.interest;$('compareText').textContent=c.text;
  drawChart(p,base,input);drawTable(p);
+ $('mobileTotal').textContent=r.amount;
+ $('mobileResultLabel').textContent=r.eyebrow+' · før rentefradrag'+(input.termFee?' · + gebyr':'');
+ $('mobileValueCurve').setAttribute('d',[{term:0,balance:input.amount},...p.rows].map((r,i)=>(i?'L':'M')+(r.term/p.payoffTerm*80).toFixed(2)+','+(3+(1-r.balance/input.amount)*32).toFixed(2)).join(' '));
 }
 
 // Restgjeld per måned som punkter i år.
@@ -120,8 +124,9 @@ function drawChart(p,base,input){
 }
 
 function drawTable(p){
- const years=L.byYear(p);
- $('tableWrap').innerHTML='<table><caption class="hint">Per år, før rentefradrag. Hele kroner.</caption><thead><tr><th scope="col">År</th><th scope="col">Renter</th><th scope="col">Avdrag</th><th scope="col">Gebyrer</th><th scope="col">Betalt</th><th scope="col">Restgjeld</th></tr></thead><tbody>'+years.map(y=>`<tr><td>${y.year}</td><td>${T.money(y.interest)}</td><td>${T.money(y.principal)}</td><td>${T.money(y.fees)}</td><td>${T.money(y.paid)}</td><td>${T.money(y.balance)}</td></tr>`).join('')+'</tbody></table>';
+ const month=$('tablePeriod').value==='month';
+ if(month){const rows=E.monthly(p);$('tableWrap').innerHTML='<table><caption>Per måned, før rentefradrag. Termin 0 er utbetaling og etableringsgebyr. Hele kroner.</caption><thead><tr>'+rows[0].map(h=>'<th scope="col">'+escapeHTML(h)+'</th>').join('')+'</tr></thead><tbody>'+rows.slice(1).map(row=>'<tr>'+row.map((v,i)=>(i?'<td>':'<th scope="row">')+escapeHTML(i===0?v:i===1?T.pct(v):T.money(v))+(i?'</td>':'</th>')).join('')+'</tr>').join('')+'</tbody></table>';}
+ else $('tableWrap').innerHTML=E.table(E.yearly(p),'Per år, før rentefradrag. Avdrag inkluderer ekstra innbetaling. Hele kroner.');
 }
 
 // Detaljnivå. Gebyrer for forbrukslån vises på alle nivåer. Valg som er skjult, regnes fortsatt med og listes.
@@ -144,10 +149,9 @@ function setLevel(value){
  try{if(level!=='simple')sessionStorage.setItem('sv-level',level);else sessionStorage.removeItem('sv-level');}catch{}
  document.body.dataset.level=level;for(const b of $('levels').children)b.setAttribute('aria-pressed',b.dataset.level===level);
  $('levelDescription').textContent={simple:'Det viktigste, forklart enkelt.',explore:'Flere valg og forklaringer underveis.',advanced:'Alle forutsetninger og metodedetaljer.'}[level];
- if(level!=='advanced')setView('graph');
  render();
 }
-function setView(v){view=v;$('graphTab').setAttribute('aria-pressed',v==='graph');$('tableTab').setAttribute('aria-pressed',v==='table');$('chart').hidden=v!=='graph';$('chartLegend').hidden=v!=='graph';$('tableWrap').hidden=v!=='table';}
+function setView(v){view=v;$('graphTab').setAttribute('aria-pressed',v==='graph');$('tableTab').setAttribute('aria-pressed',v==='table');$('chart').hidden=v!=='graph';$('chartLegend').hidden=v!=='graph';$('tableWrap').hidden=v!=='table';$('tablePeriodField').hidden=v!=='table';}
 
 // Skyveknapper er snarveier. Skrivefeltet er alltid den gjeldende verdien.
 const SLIDERS={amount:{bolig:[100000,10000000,50000],bil:[10000,1000000,5000],forbruk:[5000,600000,5000]},rate:[0,15,0.05],years:[1,30,1]};
@@ -163,6 +167,7 @@ function syncSliders(){for(const range of document.querySelectorAll('#basic inpu
  const id=range.dataset.field,[min,max,step]=sliderRange(id),v=parse($(id).value);range.min=min;range.max=max;range.step=step;
  const outside=Number.isFinite(v)&&(v<min||v>max);if(Number.isFinite(v))range.value=Math.min(max,Math.max(min,v));else if(id==='rate')range.value=min;
  range.disabled=outside;const note=$(id+'SliderNote');note.hidden=!outside;
+ range.setAttribute('aria-valuetext',Number.isFinite(v)?id==='amount'?T.money(v):id==='rate'?T.pct(v):dec.format(v)+' år':'Velg en rente');
  const ids=(range.getAttribute('aria-describedby')||'').split(' ').filter(x=>x&&x!==note.id);if(outside)ids.push(note.id);ids.length?range.setAttribute('aria-describedby',ids.join(' ')):range.removeAttribute('aria-describedby');
 }}
 
@@ -181,8 +186,41 @@ $('kinds').addEventListener('click',e=>{const b=e.target.closest('[data-kind]');
 $('types').addEventListener('click',e=>{const b=e.target.closest('[data-type]');if(b)setType(b.dataset.type);});
 $('levels').addEventListener('click',e=>{const b=e.target.closest('[data-level]');if(b)setLevel(b.dataset.level);});
 $('graphTab').onclick=()=>setView('graph');$('tableTab').onclick=()=>setView('table');
+$('tablePeriod').onchange=()=>{if(lastPlan)drawTable(lastPlan);};
 $('reset').onclick=()=>{reset();$('amount').focus();};
 $('showResult').onclick=()=>{const t=$('loanResult');t.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});t.focus({preventScroll:true});};
+$('mobileResultButton').onclick=$('showResult').onclick;
+$('editFields').onclick=()=>{$('loanInputs').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});$('amount').focus({preventScroll:true});};
+$('loanForm').addEventListener('submit',e=>{e.preventDefault();render();if(exportPlan())$('showResult').click();});
+
+// Samme hjelpeknapp ved feltet som sparekalkulatoren. Ingen nye beregningsregler.
+const HELP={amount:['Lånebeløp','Beløpet du låner, før renter og gebyrer. Skyveknappen er en snarvei. Du kan skrive et annet beløp i feltet.'],rate:['Nominell årsrente','Bruk nominell årsrente fra tilbudet eller avtalen. Den deles på 12 i beregningen. Gebyrer legges til separat. Renten er uendret gjennom perioden med mindre du legger inn en renteendring under Utforsk.'],years:['Nedbetalingstid','Tiden lånet opprinnelig skal betales ned over. År regnes om til nærmeste hele måned. Du kan skrive inn inntil 50 år. Ekstra innbetaling kan forkorte tiden.']};
+for(const [id,[title,text]] of Object.entries(HELP)){
+ const b=document.createElement('button');b.type='button';b.className='help-button';b.textContent='?';b.setAttribute('aria-label','Forklaring på '+title.toLowerCase());
+ b.onclick=()=>{$('loanHelpTitle').textContent=title;$('loanHelpText').textContent=text;$('loanHelpDialog').showModal();};
+ $(id).closest('.field').querySelector('.field-label').after(b);
+}
+$('closeLoanHelp').onclick=()=>$('loanHelpDialog').close();
+
+// Eksport sperres ved ugyldige eller uferdige felt, også når et tidligere resultat er synlig.
+function exportPlan(){
+ const {input,errors}=readInputs();
+ if(errors.length){$('exportDialog').close();render();const e=errors[0],text=e.text||'Fyll inn nominell årsrente før du laster ned beregningen.';fieldError(e.key,text);$('error').textContent=text;$('error').hidden=false;
+  const target=$(e.key);for(let el=target.parentElement;el;el=el.parentElement)if(el.tagName==='DETAILS')el.open=true;
+  target.focus();return null;}
+ return L.plan(input);
+}
+const download=(data,mime,name)=>{const url=URL.createObjectURL(new Blob([data],{type:mime})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+const guarded=fn=>{try{const p=exportPlan();if(p)fn(p);}catch(e){$('exportError').textContent='Kunne ikke lage filen. '+e.message;$('exportError').hidden=false;}};
+const openExport=()=>{if(!exportPlan())return;$('exportError').hidden=true;$('exportDialog').showModal();};
+$('heroDownload').onclick=openExport;$('reportButton').onclick=openExport;
+$('closeExport').onclick=()=>$('exportDialog').close();
+$('exportXlsx').onclick=()=>guarded(p=>download(ExportKit.workbook(E.sheets(p)),'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','spareverksted-laan.xlsx'));
+$('exportCsv').onclick=()=>guarded(p=>download(ExportKit.csv(E.monthly(p)),'text/csv;charset=utf-8','spareverksted-laan.csv'));
+$('exportJson').onclick=()=>guarded(p=>download(JSON.stringify({schemaVersion:1,calculator:'loan',...p,yearly:L.byYear(p)},null,2),'application/json','spareverksted-laan.json'));
+$('exportPdf').onclick=()=>guarded(p=>{$('exportDialog').close();$('reportPreview').innerHTML=E.report(p,'loanPreview');$('printReportContent').innerHTML=E.report(p,'loanPrint');$('reportDialog').showModal();});
+const printController=ReportPrint.attach();
+addEventListener('beforeprint',()=>{if($('reportDialog').open||printController.active())return;const {input,errors}=readInputs();$('printReportContent').innerHTML=errors.length?'<h1>Låneberegning</h1><p>Rett feltene før du skriver ut beregningen.</p>':E.report(L.plan(input),'loanPrint');});
 for(const k of FIELDS){const el=$(k);
  el.addEventListener('input',()=>{touched.add(k);syncExampleNote();render();});
  el.addEventListener('blur',()=>{const v=parse(el.value);if(Number.isFinite(v)&&el.value.trim()!=='')el.value=grouped(v);render();});

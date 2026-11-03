@@ -14,6 +14,14 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 | Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 
+## Lånesiden skal følge kalkulatorstandarden (3. november 2026)
+
+Lars avviste grensesnittet fra #205 som utilstrekkelig. Lånekalkulatoren skal følge sparekalkulatorens etablerte mønster. Gebyretiketter som går over flere linjer skal ikke forskyve feltene sideveis. På smale flater står gebyr- og hendelsesfeltene under hverandre. Graf og tabell er tilgjengelige på alle detaljnivåer, med års- og månedstabell. Valgt tabellvisning beholdes ved bytte av detaljnivå.
+
+Hjelpeknapper, mobilens resultatlinje og nedlastingsdialog følger eksisterende kalkulator. Excel og CSV bruker `export-kit.js`. Rapport/PDF bruker en felles utskriftskontroller, `report-print.js`, for både spare- og lånekalkulatoren. Den lukker modalvinduet mens PDF-en lages, og gjenoppretter vindu, tittel og fokus etterpå. Rapporten har graf med tekstalternativ, årsplan, gebyrer og alle regneforutsetninger. Eksport stoppes ved ugyldige felt.
+
+Ingen nye lagringsnøkler eller nettforespørsler. Ingen referanserente, skatteberegning eller effektiv rente innføres her. Sparemotoren og lånemotorens regneregler endres ikke. Låneberegningen har fortsatt egne felter, mens stiler, filformater og utskriftsflyt deles. Beregningstester alene var ikke tilstrekkelig godkjenning av den tidligere brukeropplevelsen. Nettlesertestene utvides med faktiske nedlastinger, feltplassering, PDF-struktur og lånesiden i de eksisterende tilgjengelighetsmålingene. Faktisk iPhone Safari og skjermleser må fortsatt prøves manuelt.
+
 ## Lånekalkulator v1 (3. november 2026)
 
 **Beslutning (Lars):** Lånekalkulatoren bygges nå, før fase 3 og 4 er ferdige, i avgrensede PR-er. PR 1 er regnemotoren (`dist/laan-motor.js`) med tester. Den avhenger ikke av rentekildene. Siden, referanserentene og effektiv rente kommer i egne PR-er. Regnereglene står i [docs/laanemodell.md](docs/laanemodell.md).
@@ -1276,3 +1284,10 @@ Nettlesertesten avdekket en reell klikkfeil: fokus utløste setCollapsed(false),
 Lars sitt mobilbilde fra WAVE viser siden uten vanlig utforming og hvit tekst på #0088FF (3,52:1). Manglende utforming ble gjenskapt i WAVE på PC, hvor knappen fikk nettleserens grå/svarte standardfarger. WAVE-kopien ligger på wave.webaim.org, beholder sidens CSP med style-src self og peker på stilark fra spareverksted.no. Dette forklarer at den ikke bruker sidens utforming. Den direkte publiserte knappen er kontrollert i Chromium: hvit på #183F36 (11,65:1) i Nøytral/Lys og #13291D på #ACDCB9 (10,05:1) i Natt. Ingen design- eller CSP-endring er gjort for WAVE-kopien. WAVE-utvidelsen anbefales for kontroll av siden i opprinnelig nettleserkontekst, jf. https://wave.webaim.org/help (lest 3.11.2026).
 
 Direkte Safari på iPhone og bevegelig Safari-meny er ikke testet i denne økten. Skrivebords-WebKit og smal viewport erstatter ikke den prøven. ChatGPT/Codex, egenkontroll.
+
+
+## Resultatlinjen bare nedenfor resultatfeltet (4. november 2026)
+
+Lars presiserte at linjen aldri skal vises over eller på det grønne resultatfeltet. Den skal bare leve nedenfor feltet. Den tidligere IntersectionObserver-regelen viste linjen når feltet ikke var synlig, uansett retning, og fokus på inndata kunne overstyre skjuling. Begge er erstattet av felles styring i layout.js for spare- og lånesiden: et resultatfelt med høyde større enn null må ha hele underkanten over vindustoppen. Rulling måles maksimalt én gang per tegneramme, og vindus- og resultatstørrelse kontrolleres også. Fokus kan ikke tvinge fram en skjult linje. Valgt åpen/lukket tilstand beholdes ved rulling.
+
+Den tidligere rettingen som bevarer klikkmålet ved fokus, er beholdt. Nettlesertesten bruker nå også et faktisk trykk i berøringskontekst og prøver gjentatt rulling før, på og etter grønt felt på begge sider ved mobil og smale vinduer tilsvarende PC-zoom. Farger og utforming er uendret. Faktisk iPhone/Safari må fortsatt prøves manuelt. ChatGPT/Codex.

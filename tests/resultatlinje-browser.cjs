@@ -12,6 +12,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
  let browser;
  const state=q=>q.evaluate(()=>{const a=document.activeElement,s=document.getElementById('mobileSummary'),ar=a.getBoundingClientRect(),sr=s.getBoundingClientRect(),shown=getComputedStyle(s).display!=='none';
   return {id:a.id,own:s.contains(a),shown,collapsed:s.classList.contains('is-collapsed'),covered:shown&&!s.contains(a)&&ar.bottom>sr.top+1&&ar.top<sr.bottom&&ar.right>sr.left&&ar.left<sr.right};});
+ const pastResult=async q=>{await q.evaluate(()=>{const r=document.querySelector('.hero-result');window.scrollBy(0,r.getBoundingClientRect().bottom+20);});await q.waitForTimeout(120);};
  try{
   browser=await pw[engine].launch({headless:true,...(engine==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu'],...(process.env.SPARE_BROWSER?{executablePath:process.env.SPARE_BROWSER}:{})}:{})});
   // Vanlig mobil (390 px) og omtrent 200 % og 500 % zoom på en PC med 1280 x 900.
@@ -19,19 +20,15 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    const c=await browser.newContext({viewport:{width:w,height:h}});const q=await c.newPage();const errors=[];q.on('pageerror',e=>errors.push(e.message));q.setDefaultTimeout(10000);
    await q.goto(origin+'#activePage=calculator');await q.waitForTimeout(400);
    await q.evaluate(()=>document.querySelector('#basic input').focus());await q.waitForTimeout(100);
-   let st=await state(q);assert(st.shown,w+': linjen vises når et felt har fokus');assert.equal(st.collapsed,autoCollapsed,w+': skjult ved start bare ved sterk zoom');
+   assert(!(await state(q)).shown,'ingen linje ved feltene over resultatet');
+   await pastResult(q);
+   let st=await state(q);assert(st.shown,w+': linjen vises nedenfor resultatet');assert.equal(st.collapsed,autoCollapsed,w+': skjult ved start bare ved sterk zoom');
    if(autoCollapsed){
     // 500 %: sammenlagt linje er en smal stripe nederst (minst 24 px, WCAG 2.5.8), og spareformknappene overlapper ikke.
     const z=await q.evaluate(()=>({h:document.getElementById('mobileSummaryToggle').getBoundingClientRect().height,over:[...document.querySelectorAll('#savingsTypes button')].map(b=>b.scrollWidth-b.clientWidth)}));
     assert(z.h>=24&&z.h<=32,'smal stripe ved 500 %: '+z.h);assert.deepEqual(z.over,[0,0,0],'spareformknappene går ikke oppå hverandre');
    }
-   let toggle=null;
-   for(let i=0;i<20;i++){
-    st=await state(q);assert(!st.covered,`${w}: ${st.id} er dekket av resultatlinjen`);
-    if(st.id==='mobileSummaryToggle'){toggle=st;break;}
-    await q.keyboard.press('Tab');await q.waitForTimeout(60);
-   }
-   assert(toggle,w+': knappen nås med tastaturet etter feltene');
+   await q.locator('#mobileSummaryToggle').focus();
    const label=()=>q.locator('#mobileSummaryToggle').getAttribute('aria-label');
    await q.keyboard.press('Enter');await q.waitForTimeout(80);
    st=await state(q);assert.equal(st.collapsed,!autoCollapsed);assert.equal(st.id,'mobileSummaryToggle','fokus blir på knappen');
@@ -39,7 +36,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await q.keyboard.press('Enter');await q.waitForTimeout(80);
    st=await state(q);assert.equal(st.collapsed,autoCollapsed,'kan hentes fram igjen');
    // Brukerens valg gjelder videre i besøket.
-   if(!autoCollapsed){await q.keyboard.press('Enter');await q.evaluate(()=>document.querySelector('#basic input').focus());await q.waitForTimeout(80);assert((await state(q)).collapsed,'valget huskes');}
+   if(!autoCollapsed){await q.keyboard.press('Enter');await q.evaluate(()=>document.querySelector('#basic input').focus());await q.waitForTimeout(80);assert(!(await state(q)).shown,'skjult igjen over resultatet');await pastResult(q);assert((await state(q)).collapsed,'valget huskes');}
    assert.deepEqual(errors,[]);await c.close();
   }
   // Safari-sikkerhetsfeltet hører til selve knappen, så innhold ikke synes under den.
@@ -49,7 +46,8 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await q.route('**/layout.css*',route=>route.fulfill({contentType:'text/css',body:fs.readFileSync(path.join(root,'layout.css'),'utf8').replaceAll('env(safe-area-inset-bottom)',inset+'px')}));
    await q.goto(origin+'#activePage=calculator');await q.waitForTimeout(400);
    await q.evaluate(()=>document.querySelector('#basic input').focus());
-   if(!(await state(q)).collapsed)await q.locator('#mobileSummaryToggle').click();
+   await pastResult(q);
+   if(!(await state(q)).collapsed)await q.locator('#mobileSummaryToggle').tap();
    assert((await state(q)).collapsed,'sikkerhetsfeltet prøves med lukket linje');
    for(const height of [664,760,664]){
     await q.setViewportSize({width:390,height});
@@ -69,6 +67,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    const c=await browser.newContext({viewport:{width:320,height:320},hasTouch});const q=await c.newPage();
    await q.goto(origin+'#activePage=calculator');await q.waitForTimeout(400);
    await q.evaluate(()=>document.querySelector('#basic input').focus());
+   await pastResult(q);
    if(!(await state(q)).collapsed)await q.locator('#mobileSummaryToggle').click();
    const h=await q.locator('#mobileSummaryToggle').evaluate(e=>e.getBoundingClientRect().height);
    assert(hasTouch?h>=44:h>=24&&h<=30,'høyde ved zoom, touch='+hasTouch+': '+h);
@@ -76,6 +75,18 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    assert(!(await state(q)).collapsed,'åpner med mellomrom');
    await q.keyboard.press('Enter');assert((await state(q)).collapsed,'lukker med Enter');
    await c.close();
+  }
+  // Begge kalkulatorer: aldri før/på grønt felt, bare etterpå. Gjenta opp/ned etter at linjen har vært vist.
+  for(const file of ['index.html#activePage=calculator','laan.html'])for(const [w,h] of [[390,664],[640,450],[256,180]]){
+   const q=await browser.newPage({viewport:{width:w,height:h}});await q.goto(origin.replace('index.html',file));await q.waitForTimeout(400);
+   if(file==='laan.html'){await q.locator('#rate').fill('5');await q.locator('#rate').press('Tab');}
+   const visible=()=>q.locator('#mobileSummary').evaluate(e=>getComputedStyle(e).display!=='none');
+   for(let i=0;i<2;i++){
+    await q.evaluate(()=>window.scrollTo(0,0));await q.waitForTimeout(120);assert(!await visible(),'skjult øverst: '+file);
+    await q.evaluate(()=>document.querySelector('.hero-result').scrollIntoView({block:'start'}));await q.waitForTimeout(120);assert(!await visible(),'skjult på grønt felt: '+file);
+    await pastResult(q);assert(await visible(),'synlig etter grønt felt: '+file);
+   }
+   await q.close();
   }
   // Velkomstsiden: resultatlinjen vises aldri, heller ikke sammenlagt eller ved sterk zoom.
   for(const [w,h] of [[390,664],[256,180]]){const c=await browser.newContext({viewport:{width:w,height:h}});const q=await c.newPage();

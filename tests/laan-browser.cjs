@@ -100,7 +100,10 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
   await p.click('#levels [data-level=advanced]');await p.click('#tableTab');
   assert.equal(await p.locator('#tableWrap tbody tr').count(),25);
   assert.equal(sp(await p.locator('#tableWrap tbody tr').last().locator('td').last().textContent()),'0 kr');
-  await p.click('#levels [data-level=simple]');assert.equal(await p.locator('#chart').isVisible(),true,'tilbake til graf på Enkel');
+  await p.click('#levels [data-level=simple]');assert.equal(await p.locator('#tableWrap').isVisible(),true,'tabellvalget beholdes på Enkel');
+  await p.selectOption('#tablePeriod','month');
+  assert.equal(await p.locator('#tableWrap tbody tr').count(),301,'termin 0 og alle 300 betalinger');
+  await p.selectOption('#tablePeriod','year');await p.click('#graphTab');
 
   // 8. Grafen med tastatur.
   await p.focus('#chart');await p.keyboard.press('End');assert.match(sp(await text('chartTip')),/^År 25 · Restgjeld: 0 kr/);
@@ -108,9 +111,36 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
   assert.match(await text('chartSummaryText'),/Gjelden går fra 3 000 000 kr til 0 kr over 25 år/);
 
   // 9. Smale skjermer: ingen vannrett rulling, heller ikke med tabell og sammenligning.
-  for(const w of [320,390]){await p.setViewportSize({width:w,height:800});await p.click('#levels [data-level=advanced]');await p.waitForTimeout(100);
+  for(const w of [320,390,457,640]){await p.setViewportSize({width:w,height:800});await p.click('#levels [data-level=advanced]');await p.waitForTimeout(100);
+   await p.evaluate(()=>{document.getElementById('feesDetails').open=true;});
+   const pair=await p.locator('#feesDetails .fieldbox').all();
+   const a=await pair[0].boundingBox(),b=await pair[1].boundingBox();
+   assert.ok(a.width>100&&b.width>100,'gebyrfeltene får plass');
+   assert.ok(Math.abs(a.y-b.y)<1||b.y>=a.y+a.height,'feltene er på linje eller under hverandre');
    assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'ingen vannrett rulling ved '+w+' px');}
   await p.setViewportSize({width:1280,height:900});
+
+  // Hjelp og nedlasting bruker samme mønster som sparekalkulatoren. Fokus tilbake, ingen gammel beregning eksporteres.
+  await p.click('button[aria-label="Forklaring på nominell årsrente"]');
+  assert.equal(await p.locator('#loanHelpDialog').isVisible(),true);
+  await p.keyboard.press('Escape');
+  assert.equal(await p.evaluate(()=>document.activeElement.getAttribute('aria-label')),'Forklaring på nominell årsrente');
+  await p.click('#heroDownload');assert.equal(await p.locator('#exportDialog').isVisible(),true);
+  for(const [id,name] of [['exportXlsx','spareverksted-laan.xlsx'],['exportCsv','spareverksted-laan.csv'],['exportJson','spareverksted-laan.json']]){
+   const [download]=await Promise.all([p.waitForEvent('download'),p.click('#'+id)]);
+   assert.equal(download.suggestedFilename(),name);
+   const data=fs.readFileSync(await download.path());assert.ok(data.length>100);
+   if(id==='exportXlsx')assert.equal(data.subarray(0,2).toString(),'PK');
+   if(id==='exportJson'){const j=JSON.parse(data);assert.equal(j.rows.length,300);assert.equal(j.totals.amount,3000000);assert.equal(j.yearly.length,25);}
+   if(id==='exportCsv')assert.equal(data.toString().split('\r\n').length,302);
+  }
+  await p.click('#exportPdf');assert.equal(await p.locator('#reportDialog').isVisible(),true);
+  assert.equal(await p.locator('#reportPreview h1').count(),1);assert.equal(await p.locator('#reportPreview svg').count(),1);
+  assert.equal(await p.locator('#reportPreview table tbody tr').count(),25);
+  await p.keyboard.press('Escape');assert.equal(await p.evaluate(()=>document.activeElement.id),'heroDownload');
+  await type('years','0');await p.click('#heroDownload');
+  assert.equal(await p.locator('#exportDialog').isVisible(),false);assert.equal(await p.evaluate(()=>document.activeElement.id),'years');
+  await type('years','25');
 
   // 10. Veien inn og tilbake. Lån ligger blant kalkulatorfanene og på startsiden.
   await p.goto(origin+'/index.html');

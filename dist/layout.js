@@ -19,9 +19,16 @@ if(liveSummary){
  document.addEventListener('focusin',event=>{
   const editing=Boolean(event.target.closest('#basic,#mobileSummary'));
   liveSummary.classList.toggle('is-editing',editing);
-  fit();unhide(event.target);
+  updateVisibility();unhide(event.target);
  });
  addEventListener('resize',fit);
+ const result=document.getElementById('savingsResult')||document.getElementById('loanResult');
+ const updateVisibility=()=>{if(!result)return;const r=result.getBoundingClientRect();liveSummary.classList.toggle('is-visible',r.height>0&&r.bottom<=0);fit();};
+ let scrollFrame=0;
+ addEventListener('scroll',()=>{if(!scrollFrame)scrollFrame=requestAnimationFrame(()=>{scrollFrame=0;updateVisibility();});},{passive:true});
+ addEventListener('resize',updateVisibility);
+ if(result)new ResizeObserver(updateVisibility).observe(result);
+ requestAnimationFrame(updateVisibility);
  document.addEventListener('focusout',event=>{if(!event.relatedTarget?.closest('#basic,#mobileSummary'))liveSummary.classList.remove('is-editing');});
  document.addEventListener('pointerdown',event=>{liveSummary.classList.toggle('is-editing',Boolean(event.target.closest('#basic,#mobileSummary')));});
 }

@@ -74,19 +74,14 @@ window.forPrint=forPrint;
 // «Lagre som PDF» bruker nettleserens utskrift. Chrome og Edge merker PDF-en (overskrifter, avsnitt, tabeller, bokmerker) ut fra det skjermlesere ser.
 // Et åpent modalt <dialog> gjør resten av siden inert, og da kom utskriftskopien ikke med i merkingen. Derfor lukkes dialogen mens utskriften lages og åpnes igjen etterpå.
 // Sidetittelen blir PDF-ens tittel og forslag til filnavn.
-let printRestore=null;
-function restoreAfterPrint(){if(!printRestore)return;const r=printRestore;printRestore=null;document.title=r.title;if(!$('reportDialog').open)$('reportDialog').showModal();$('printReport').focus();}
-function printReportNow(){const h=$('printReportContent').querySelector('h1');const name=h?h.textContent.trim():'Rapport';const date=new Date().toLocaleDateString('nb-NO',{year:'numeric',month:'long',day:'numeric'});printRestore={title:document.title};document.title=name+', Spareverksted, '+date;$('reportDialog').close();window.print();if(!matchMedia('(hover: none)').matches)setTimeout(restoreAfterPrint,0);}
-window.addEventListener('afterprint',()=>setTimeout(restoreAfterPrint,0));
-$('closeReport').onclick=()=>$('reportDialog').close();$('printReport').onclick=printReportNow;
+const printController=ReportPrint.attach();
 // A normal browser print also gets the complete report, rather than a half-hidden interface.
-window.addEventListener('beforeprint',()=>{if($('reportDialog').open||printRestore)return;try{$('printReportContent').innerHTML=forPrint(buildReport());}catch{$('printReportContent').textContent='Rapporten kunne ikke beregnes. Rett ugyldige felt og prøv igjen.';}});
+window.addEventListener('beforeprint',()=>{if($('reportDialog').open||printController.active())return;try{$('printReportContent').innerHTML=forPrint(buildReport());}catch{$('printReportContent').textContent='Rapporten kunne ikke beregnes. Rett ugyldige felt og prøv igjen.';}});
 fill();render();
 
 $('copyLink').onclick=async()=>{try{await navigator.clipboard.writeText($('shareUrl').value);notice('Lenken er kopiert.');$('copyLink').textContent='Kopiert';}catch{$('shareUrl').select();notice('Trykk Ctrl+C eller hold på teksten for å kopiere lenken.');}};
 
 $('mobileResultButton').onclick=()=>{const target=$('savingsResult');target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});target.focus({preventScroll:true});};
-new IntersectionObserver(entries=>$('mobileSummary').classList.toggle('is-visible',!entries[0].isIntersecting),{threshold:.2}).observe(document.querySelector('.hero-result'));
 
 $('share').addEventListener('click',()=>{$('copyLink').textContent='Kopier lenke';});
 
