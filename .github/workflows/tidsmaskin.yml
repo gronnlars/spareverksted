@@ -1,0 +1,68 @@
+name: Tidsmaskin
+# Henter historiske dataserier (Norges Bank HMS og Datatorg, SSB 14709 og 11018) og lagrer dem uendret
+# i research/historikk/. Nye eller endrede filer kommer som PR. Se docs/tidsmaskin.md.
+on:
+  schedule:
+    - cron: '41 4 3 * *'   # den 3. hver måned kl. 04.41 UTC
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/tidsmaskin.py'
+      - 'kilder/historikk.json'
+      - 'tests/tidsmaskin.test.py'
+      - 'research/historikk/**'
+      - '.github/workflows/tidsmaskin.yml'
+permissions:
+  contents: read
+concurrency:
+  group: tidsmaskin-${{ github.event_name }}
+  cancel-in-progress: false
+jobs:
+  # På PR: tester, kontroll av lagrede filer og en prøvehenting til en midlertidig mappe.
+  provehenting:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tester og kontroll av lagrede filer
+        run: |
+          python3 tests/tidsmaskin.test.py
+          python3 scripts/tidsmaskin.py sjekk
+      - name: Tilgang
+        run: python3 scripts/tidsmaskin.py tilgang | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Prøvehenting (lagres ikke)
+        run: |
+          python3 scripts/tidsmaskin.py hent --mål /tmp/historikk --sammendrag /tmp/sammendrag.md
+          cat /tmp/sammendrag.md >> "$GITHUB_STEP_SUMMARY"
+          cat /tmp/historikk/OVERSIKT.md | tee -a "$GITHUB_STEP_SUMMARY"
+
+  hent:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Hent
+        run: |
+          python3 scripts/tidsmaskin.py hent --sammendrag /tmp/pr.md
+          cat /tmp/pr.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Nye eller endrede filer som PR
+        run: |
+          if [ -z "$(git status --porcelain research/historikk)" ]; then echo 'Ingen endring'; exit 0; fi
+          branch="tidsmaskin/$(date -u +%F)"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null; then echo "Grenen $branch finnes"; exit 0; fi
+          git config user.name 'Tidsmaskin'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "$branch"
+          git add research/historikk
+          git commit -qm "Tidsmaskin: historiske data hentet $(date -u +%F)"
+          git push -q origin "$branch"
+          { echo; echo 'Rådata er lagret uendret med kilde og SHA256 (tidsmaskin.py sjekk). Se research/historikk/OVERSIKT.md.';
+            echo 'PR fra GitHub Actions starter ikke CI av seg selv. Lukk og åpne PR-en igjen for å kjøre testene.'; } >> /tmp/pr.md
+          python3 scripts/tidsmaskin.py lag-pr --gren "$branch" --tittel "Tidsmaskin: historiske data $(date -u +%F)" --tekst /tmp/pr.md
