@@ -16,7 +16,7 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 
 ## Faktaregister og Kildevakt (3. november 2026, foreslått)
 
-**Beslutning:** Tall fra kilder står ett sted, `kilder/fakta.json`, med kilde, status (i kraft, vedtatt, foreslått) og gjelder-fra-dato. Tekstene bruker plassholdere. Kildevakt kjører hver hverdag i GitHub Actions, følger SSB, Skatteetaten, Lovdata, Lovtidend, Stortinget og Norges Bank, og åpner saker. Nye SSB-måneder blir PR. Ingenting rettes automatisk. Status er foreslått til Lars har godkjent PR-en.
+**Beslutning:** Tall fra kilder står ett sted, i temafiler under `kilder/fakta/`, med kilde, status (i kraft, vedtatt, foreslått) og gjelder-fra-dato. Tekstene bruker plassholdere. Kildevakt kjører hver hverdag i GitHub Actions, følger SSB, Skatteetaten, Lovdata, Lovtidend, Stortinget og Norges Bank, og åpner saker. Nye SSB-måneder blir PR. Ingenting rettes automatisk. Faste forklaringer av fagord (ordbok-setninger) ligger i `kilder/begreper/` og hentes med `{{begrep:ID}}`. Unntak fra dublettkontrollen gjelder én bestemt linje, ikke en hel fil. Status er foreslått til Lars har godkjent PR-en.
 
 **Begrunnelse:** Samme tall sto flere steder, og tallene i BSU-svaret var skrevet rett inn selv om faktafila fantes. Med datoer kan en vedtatt regel legges inn før den trer i kraft, og siden bytter selv på riktig dag. Lovstigen (forslag, vedtak, kunngjøring, i kraft, etaten) gir varsel før reglene gjelder.
 
@@ -1059,6 +1059,8 @@ B. Hente første setning fra svaret mens siden lastes. Ikke valgt: kalkulatoren 
 C. Egne tekster i registeret uten kobling til svarene. Ikke valgt: to forklaringer av samme ord kan gli fra hverandre.
 
 **Akseptert ulempe:** Setningen står to steder i koden. Testen gjør at de ikke kan bli ulike.
+
+**Endret 3.11.2026 (Lars):** Setningen står nå bare ett sted, i `kilder/begreper/`. Svaret henter den med `{{begrep:ID}}`, og utdypingen med `{{begrep:ID.utdyping}}`. Den aksepterte ulempen er borte, og `scripts/fakta.py --check` stopper nye kopier. Se «Faktaregister og Kildevakt».
 
 **Vurder på nytt når:** svarbasen blir så stor at det lønner seg å bygge registeret automatisk fra svarene.
 

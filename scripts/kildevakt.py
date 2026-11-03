@@ -7,7 +7,7 @@
   python3 scripts/kildevakt.py lag-pr --gren GREN --tittel T --tekst FIL
 
 Kildevakt retter aldri tall på nettsiden. Den lagrer hva kildene sa, sammenligner med forrige
-henting og med kilder/fakta.json, og åpner saker. Nye SSB-måneder kan bli en PR som Lars godkjenner.
+henting og med kilder/fakta/, og åpner saker. Nye SSB-måneder kan bli en PR som Lars godkjenner.
 Bare standardbiblioteket. Se docs/kildevakt.md.
 """
 import argparse
@@ -311,7 +311,7 @@ def check_page(source, state, get, reg, today):
             data['tekst'] = text
             events.append(event(source, 'middels', f'Skatteetaten har trolig publisert BSU-satser for {target_year}',
                                 f'Siden {url} svarer og nevner {target_year}. Sjekk satsene og legg inn nye verdier med fra={target_year}-01-01 '
-                                f'og status vedtatt i kilder/fakta.json, eller sett bekreftet_til.\n\nUtdrag:\n' + text[:1200], source.get('fakta', []), key=f"{source['id']}-{target_year}"))
+                                f'og status vedtatt i kilder/fakta/, eller sett bekreftet_til.\n\nUtdrag:\n' + text[:1200], source.get('fakta', []), key=f"{source['id']}-{target_year}"))
         return events, data, {'status': 'publisert' if published else f'ikke publisert (HTTP {response.status})'}
     if response.status != 200:
         raise FetchError(f'HTTP {response.status}', response.status)
@@ -342,7 +342,7 @@ def check_page(source, state, get, reg, today):
             if ours != value:
                 if mismatches.get(label) != value:
                     events.append(event(source, 'høy', f'{spec["fakta"]}: kilden sier {value}, nettsiden bruker {ours}',
-                                        f'Treff: «{match.group(0)}». Kontroller mot primærkilden og oppdater kilder/fakta.json med riktig dato og status.', [spec['fakta']]))
+                                        f'Treff: «{match.group(0)}». Kontroller mot primærkilden og oppdater kilder/fakta/ med riktig dato og status.', [spec['fakta']]))
                 mismatches[label] = value
             else:
                 mismatches.pop(label, None)
@@ -477,7 +477,7 @@ def check_lovtidend(source, state, get, reg, today, listing=None):
             events.append(event(source, 'info', f'Grunnlinje: {len(found)} endringer kunngjort i år berører fulgte regelverk', lines))
         else:
             events.append(event(source, 'høy', 'Ny endring kunngjort i Norsk Lovtidend',
-                                lines + '\n\nLes kunngjøringen. Gjelder den BSU, IPS eller ASK, legg inn ny verdi med fra=ikrafttredelsesdatoen og status vedtatt i kilder/fakta.json.'))
+                                lines + '\n\nLes kunngjøringen. Gjelder den BSU, IPS eller ASK, legg inn ny verdi med fra=ikrafttredelsesdatoen og status vedtatt i kilder/fakta/.'))
     data = {'hentet': now(), 'pakke_endret': stamps, 'sett': seen, 'funn': (previous.get('funn') or []) + found}
     return events, data, {'status': 'ok', 'nye_treff': len(found)}
 
@@ -580,7 +580,7 @@ def deadline_events(reg, state, today):
         lines = '\n'.join(f"- {r['id']}: bekreftet til {r['bekreftet_til']}" + (f" (ny verdi {r['ny_verdi']['verdi']} fra {r['ny_verdi']['fra']}, status {r['ny_verdi']['status']})" if r['ny_verdi'] else '') for r in rows)
         events.append({'kilde': 'frister', 'navn': 'Faktaregisteret', 'trinn': None, 'nivå': 'middels', 'tittel': f'Klar for {fakta.date_text(deadline)}?',
                        'tekst': f'Disse reglene er ikke bekreftet til etter {fakta.date_text(deadline)}:\n{lines}\n\nFor hver: les primærkilden, og enten sett «bekreftet_til» '
-                                f'eller legg inn ny verdi med «fra»: «{deadline}», status «vedtatt» og kilde i kilder/fakta.json.',
+                                f'eller legg inn ny verdi med «fra»: «{deadline}», status «vedtatt» og kilde i kilder/fakta/.',
                        'fakta': [r['id'] for r in rows], 'sak': f'frister-{deadline}'})
     if events:
         state.save('frister', previous, {'hentet': now(), 'frister': list(groups)})
@@ -647,7 +647,7 @@ def issue_body(e, reg):
                           (f'; {notes} notater (historikk, endres ikke)' if notes else ''))
     if places:
         lines += ['Berørte fakta (`python3 scripts/fakta.py steder ID` viser linjene):', *places, '']
-    lines += ['Kildevakt retter aldri tall selv. Endringer i kilder/fakta.json går som vanlig PR til godkjenning.']
+    lines += ['Kildevakt retter aldri tall selv. Endringer i kilder/fakta/ går som vanlig PR til godkjenning.']
     return '\n'.join(lines)
 
 
@@ -768,14 +768,14 @@ def apply_ssb(state, root=ROOT):
     for fid in ('bsuRate', 'boundRate', 'savingsRate'):
         reg['fakta'][fid]['hentet'] = fetched
         reg['fakta'][fid]['ssb_oppdatert'] = (snap.get('ssb_oppdatert') or '')[:10] or None
-    (root / 'kilder/fakta.json').write_text(json.dumps(reg, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    (root / 'dist/veileder-facts.js').write_text(fakta.build(reg, root), encoding='utf-8')
+    fakta.save(reg, root)
+    fakta.write_generated(reg, root)
     import subprocess
     subprocess.run([sys.executable, str(root / 'scripts/generate-bsu-rates.py')], check=True, cwd=root, stdout=subprocess.DEVNULL)
     fakta.bump_versions(['veileder-facts.js', 'bsu-rates.js'], root)
     latest = max(rows)
     summary = [f'SSB tabell 11018, hentet {fetched} (SSB oppdatert {snap.get("ssb_oppdatert")}). Siste måned: {latest}.', '', *[f'- {c}' for c in changes], '',
-               'Endret: research/bsu-rentehistorikk.csv, research/bsu-rente-arssnitt-2018-2026.csv, kilder/fakta.json, dist/veileder-facts.js, dist/bsu-rates.js og ?v= i HTML.',
+               'Endret: research/bsu-rentehistorikk.csv, research/bsu-rente-arssnitt-2018-2026.csv, kilder/fakta/ssb-renter.json, dist/veileder-facts.js, dist/bsu-rates.js og ?v= i HTML.',
                '', 'Dette er en automatisk PR fra Kildevakt. Den slås ikke sammen automatisk. Kontroller tallene mot SSB før godkjenning.']
     return '\n'.join(summary)
 

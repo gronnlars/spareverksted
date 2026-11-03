@@ -29,7 +29,7 @@ Når en CSS- eller JS-fil i `dist/` endres, øk `?v=` for den filen i alle HTML-
 
 ## Tall fra kilder
 
-Tall som står i svar eller kalkulator (satser, grenser, aldre, SSB-renter) ligger i `kilder/fakta.json` med kilde, status og gjelder-fra-dato. Skriv `{{ID}}` i teksten, ikke tallet. `python3 scripts/fakta.py --check` feiler ved hardkodede dubletter. Kildevakt følger kildene og åpner saker; den retter aldri tall selv. Se [docs/kildevakt.md](docs/kildevakt.md).
+Tall som står i svar eller kalkulator (satser, grenser, aldre, SSB-renter) ligger i temafiler under `kilder/fakta/` med kilde, status og gjelder-fra-dato. Faste forklaringer av fagord ligger i `kilder/begreper/`. Skriv `{{ID}}` eller `{{begrep:ID}}` i teksten, ikke tallet eller setningen. Kjør `python3 scripts/fakta.py` etter endring. `python3 scripts/fakta.py --check` feiler ved hardkodede dubletter og plassholdere som ikke finnes. Kildevakt følger kildene og åpner saker; den retter aldri tall selv. Se [docs/kildevakt.md](docs/kildevakt.md).
 
 ## Sikkerhet ved endringer
 

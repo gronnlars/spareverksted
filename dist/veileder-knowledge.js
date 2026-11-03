@@ -37,7 +37,7 @@ const entries=[
   "Hva betyr rente på rente?",
   "Får jeg renter på rentene?"
  ],
- "intro": "Renters rente betyr at du får renter også på renter du har fått tidligere. Når rentene blir stående, kan også de gi nye renter.",
+ "intro": "{{begrep:renters-rente}} {{begrep:renters-rente.utdyping}}",
  "terms": [],
  "example": {
   "title": "Eksempel: 10 000 kr i to år",
@@ -545,7 +545,7 @@ const entries=[
 /dagens kroner/,
 /mindre verdt/,
 /mister verdi/],
-"intro":"Kjøpekraft er hvor mye du kan kjøpe for pengene. Når prisene stiger, rekker det samme kronebeløpet til mindre. Prisveksten kalles også inflasjon.",
+"intro":"{{begrep:kjopekraft}} {{begrep:kjopekraft.utdyping}} Prisveksten kalles også inflasjon.",
 "terms":[],
 "example":{"title":"Eksempel: ti år med 2,5 % prisvekst",
 "text":"Med 2,5 % årlig prisvekst koster varer til 100 000 kr omtrent 128 000 kr om ti år. Omvendt kjøper 100 000 kr uten rente da det som 78 000 kr kjøper ved starten. Valgte tall, ingen prognose."},

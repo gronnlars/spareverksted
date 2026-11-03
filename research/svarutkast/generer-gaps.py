@@ -6,13 +6,21 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT.parent.parent / 'scripts'))
+import fakta  # noqa: E402
+TERMS = {b['id']: b for b in fakta.load(ROOT.parent.parent)['begreper']}
+
+
+def plain(text):
+    """Utkastene i Markdown viser begrepssetningene i klartekst; produktet henter dem med {{begrep:ID}}."""
+    return fakta.PLACEHOLDER.sub(lambda m: TERMS[m.group(2)][m.group(3) or 'definisjon'] if m.group(1) else m.group(0), text)
 
 def render(e):
     lines = [f"# {e['queue'][0]}: {e['title']}", '',
              '<!-- Generert fra gaps-2026-10-25.json. Rediger JSON og kjør generer-gaps.py. -->', '',
              e['status'], '',
              f"Svar-ID: `{e['id']}`. Kø-ID-er: {', '.join(e['queue'])}. Svarmal: `{e.get('layout', 'overview')}`.", '',
-             '## Kort svar', '', e['intro'], '']
+             '## Kort svar', '', plain(e['intro']), '']
     if e.get('tradeoffs'):
         lines += ['## Fordeler og ulemper', '']
         for name, label in [('pros', 'Fordeler'), ('cons', 'Ulemper')]:

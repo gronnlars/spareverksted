@@ -5,6 +5,7 @@ import datetime as dt
 import io
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -213,10 +214,11 @@ def data_date(s):
 @test
 def ssb_oppdatering_skriver_alle_steder_og_er_idempotent():
     root = Path(tempfile.mkdtemp())
-    for rel in ('kilder', 'research', 'scripts', 'dist'):
+    for rel in ('research', 'scripts', 'dist'):
         (root / rel).mkdir()
-    for rel in ('kilder/fakta.json', 'kilder/kildeliste.json', 'research/bsu-rentehistorikk.csv', 'research/bsu-rente-arssnitt-2018-2026.csv',
-                'scripts/fakta.py', 'scripts/generate-bsu-rates.py', 'dist/veileder-facts.js', 'dist/bsu-rates.js', 'dist/index.html', 'dist/spor.html'):
+    shutil.copytree(ROOT / 'kilder', root / 'kilder')
+    for rel in ('research/bsu-rentehistorikk.csv', 'research/bsu-rente-arssnitt-2018-2026.csv',
+                'scripts/fakta.py', 'scripts/generate-bsu-rates.py', 'dist/veileder-facts.js', 'dist/begreper.js', 'dist/bsu-rates.js', 'dist/index.html', 'dist/spor.html'):
         shutil.copy(ROOT / rel, root / rel)
     s = state()
     s.save('ssb-11018', kv.check_ssb(SRC['ssb-11018'], s, Net({SSB: ok(ssb_body())}), REG, TODAY)[1], {})
@@ -236,7 +238,10 @@ def ssb_oppdatering_skriver_alle_steder_og_er_idempotent():
     assert out == ['5,60', 'september 2026', '2,88'], out
     assert '"2026 (jan. til sep.)",5.5,4.49' in (root / 'dist/bsu-rates.js').read_text(encoding='utf-8')
     html = (root / 'dist/spor.html').read_text(encoding='utf-8')
-    assert 'veileder-facts.js?v=3' in html and 'bsu-rates.js?v=2' in html, 'versjon økt for endrede filer'
+    before = (ROOT / 'dist/spor.html').read_text(encoding='utf-8')
+    for name in ('veileder-facts.js', 'bsu-rates.js'):
+        old_v, new_v = (int(re.search(re.escape(name) + r'\?v=(\d+)', h).group(1)) for h in (before, html))
+        assert new_v == old_v + 1, (name, old_v, new_v)
     assert kv.apply_ssb(s, root) is None, 'andre gang er alt à jour'
 
 

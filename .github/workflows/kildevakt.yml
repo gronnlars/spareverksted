@@ -11,6 +11,7 @@ on:
       - 'scripts/fakta.py'
       - 'kilder/**'
       - 'tests/kildevakt.test.py'
+      - 'tests/fakta.test.py'
       - 'tests/fixtures/kildevakt/**'
       - '.github/workflows/kildevakt.yml'
 permissions:
@@ -31,6 +32,7 @@ jobs:
           node-version: '22'
       - name: Tester
         run: |
+          python3 tests/fakta.test.py
           python3 tests/kildevakt.test.py
           python3 scripts/fakta.py --check
       - name: Tilgang fra GitHub Actions

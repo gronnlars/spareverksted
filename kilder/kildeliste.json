@@ -1,5 +1,5 @@
 {
-  "_om": "Kilder som Kildevakt følger. Hver kilde kobles til fakta i kilder/fakta.json. Kildevakt varsler og foreslår, men retter aldri tall selv. Se docs/kildevakt.md.",
+  "_om": "Kilder som Kildevakt følger. Hver kilde kobles til fakta i kilder/fakta/. Kildevakt varsler og foreslår, men retter aldri tall selv. Se docs/kildevakt.md.",
   "_trinn": {
     "1": "Forslag (Stortinget)",
     "2": "Vedtatt (Stortinget)",
