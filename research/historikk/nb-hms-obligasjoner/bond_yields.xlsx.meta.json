@@ -1,0 +1,19 @@
+{
+ "id": "nb-hms-obligasjoner",
+ "navn": "Norges Bank HMS: obligasjonsrenter",
+ "kilde": "Kilde: Norges Bank.",
+ "url": "https://www.norges-bank.no/globalassets/upload/hms/data/bond_yields.xlsx?v=17082017181355",
+ "endelig_url": "https://www.norges-bank.no/globalassets/upload/hms/data/bond_yields.xlsx?v=17082017181355",
+ "versjon": "17082017181355",
+ "hentet": "2026-11-03T09:43:42+00:00",
+ "vilkår": [
+  "Norges Bank oppgis som kilde.",
+  "De opprinnelige dataseriene gjengis uendret.",
+  "Egne beregninger og visualiseringer merkes tydelig som Spareverksteds egne.",
+  "Ikke kommersielle formål, ikke frames (side «Opphavsrett og ansvar», lest av Lars 2.11.2026)."
+ ],
+ "bruk": "Mulig rentefond eller trygg alternativrente. Ikke vurdert.",
+ "fil": "nb-hms-obligasjoner/bond_yields.xlsx",
+ "sha256": "66fdc9e9984f16a465611e1511a222cd4c8de5d94deb56fcfae36393793c5321",
+ "bytes": 225450
+}

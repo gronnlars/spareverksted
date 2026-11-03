@@ -1,0 +1,18 @@
+{
+ "id": "ssb-11018",
+ "navn": "SSB tabell 11018: renter på innskudd, husholdninger, hele perioden",
+ "kilde": "Kilde: Statistisk sentralbyrå.",
+ "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11018/data?lang=no&outputFormat=json-stat2&valueCodes[Innskuddstype]=20,16,15&valueCodes[Sektor]=04b&valueCodes[ContentsCode]=Innskudd&valueCodes[Tid]=*",
+ "endelig_url": "https://data.ssb.no/api/pxwebapi/v2/tables/11018/data?lang=no&outputFormat=json-stat2&valueCodes[Innskuddstype]=20,16,15&valueCodes[Sektor]=04b&valueCodes[ContentsCode]=Innskudd&valueCodes[Tid]=*",
+ "versjon": null,
+ "hentet": "2026-11-03T09:43:46+00:00",
+ "vilkår": [
+  "CC BY 4.0: SSB oppgis som kilde."
+ ],
+ "bruk": "Bankrente og BSU-rente fra desember 2013.",
+ "ssb_oppdatert": "2026-10-29T07:00:00Z",
+ "tabell": "11018",
+ "fil": "ssb-11018/ssb-11018.json",
+ "sha256": "3a535ac2324a677a6d20eb94684cea89779f9a0796ebdfa682f7491ccdab6fde",
+ "bytes": 10727
+}

@@ -1,0 +1,19 @@
+{
+ "id": "nb-hms-kpi",
+ "navn": "Norges Bank HMS: konsumprisindekser",
+ "kilde": "Kilde: Norges Bank.",
+ "url": "https://www.norges-bank.no/globalassets/upload/hms/data/cpi.xlsx?v=20032018130738",
+ "endelig_url": "https://www.norges-bank.no/globalassets/upload/hms/data/cpi.xlsx?v=20032018130738",
+ "versjon": "20032018130738",
+ "hentet": "2026-11-03T09:43:40+00:00",
+ "vilkår": [
+  "Norges Bank oppgis som kilde.",
+  "De opprinnelige dataseriene gjengis uendret.",
+  "Egne beregninger og visualiseringer merkes tydelig som Spareverksteds egne.",
+  "Ikke kommersielle formål, ikke frames (side «Opphavsrett og ansvar», lest av Lars 2.11.2026)."
+ ],
+ "bruk": "Prisvekst før 1920 og kontroll mot SSB 14709.",
+ "fil": "nb-hms-kpi/cpi.xlsx",
+ "sha256": "8d04fcc9cc2bc8ed69ec98474552b1b97ab827cb773e568a2f896ded8b13df3a",
+ "bytes": 249941
+}

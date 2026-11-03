@@ -1,0 +1,19 @@
+{
+ "id": "nb-styringsrente",
+ "navn": "Norges Bank: styringsrenten (Datatorg)",
+ "kilde": "Kilde: Norges Bank.",
+ "url": "https://data.norges-bank.no/api/data/IR/B.KPRA.SD.R?format=sdmx-json&startPeriod=1991-01-01&locale=no",
+ "endelig_url": "https://data.norges-bank.no/api/data/IR/B.KPRA.SD.R?format=sdmx-json&startPeriod=1991-01-01&locale=no",
+ "versjon": null,
+ "hentet": "2026-11-03T09:43:44+00:00",
+ "vilkår": [
+  "Norges Bank oppgis som kilde.",
+  "De opprinnelige dataseriene gjengis uendret.",
+  "Egne beregninger og visualiseringer merkes tydelig som Spareverksteds egne.",
+  "Ikke kommersielle formål, ikke frames (side «Opphavsrett og ansvar», lest av Lars 2.11.2026)."
+ ],
+ "bruk": "Rentenivå over tid, til forklaringer.",
+ "fil": "nb-styringsrente/nb-styringsrente.json",
+ "sha256": "1088e1da254012e8dcc8cf71762caa406b551f893453cd3ea3f0989d6f56305d",
+ "bytes": 1023105
+}
