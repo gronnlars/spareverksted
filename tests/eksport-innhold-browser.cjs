@@ -14,7 +14,7 @@ const RAW=/^(freedom|home|buffer|dream|ask|share|simple|explore|advanced|remaini
  try{
   browser=await pw[engine].launch({headless:true,...(engine==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu'],...(process.env.SPARE_BROWSER?{executablePath:process.env.SPARE_BROWSER}:{})}:{})});
   const c=await browser.newContext({viewport:{width:390,height:800}});const q=await c.newPage();const errors=[];q.on('pageerror',e=>errors.push(e.message));q.setDefaultTimeout(10000);
-  const go=async h=>{await q.goto(origin+h);await q.reload();await q.waitForTimeout(400);};
+  const go=async h=>{await q.goto('about:blank');await q.goto(origin+h);await q.waitForTimeout(400);};
   const sheets=()=>q.evaluate(()=>exportSheets());
   const digits=t=>Number(String(t).replace(/[^\d]/g,''));
   const clean=all=>{for(const sh of all){if(sh.name!=='Forutsetninger')continue;for(const [k,v] of sh.rows.slice(1)){assert.doesNotMatch(String(k),/^[a-z]+[A-Z]|^[a-z]+$/,'rå nøkkel: '+k);assert.doesNotMatch(String(v),RAW,`rå verdi: ${k}=${v}`);}}};
