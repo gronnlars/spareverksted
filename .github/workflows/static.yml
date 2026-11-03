@@ -150,6 +150,8 @@ jobs:
           SPARE_ENGINE=firefox node tests/planer-browser.cjs
           SPARE_ENGINE=webkit node tests/planer-browser.cjs
           node tests/plannavn-browser.cjs
+          node tests/plan-kalkulator-browser.cjs
+          SPARE_ENGINE=webkit node tests/plan-kalkulator-browser.cjs
           node tests/angre-sletting-browser.cjs
           node tests/last-ned-browser.cjs
           SPARE_ENGINE=webkit node tests/last-ned-browser.cjs
