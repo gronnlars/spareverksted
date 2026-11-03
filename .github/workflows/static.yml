@@ -25,6 +25,8 @@ jobs:
           node tests/veileder-grunnbegreper.test.cjs
           python3 research/svarutkast/generer-gaps.py --check --product
           node tests/veileder-knowledge.test.cjs
+          python3 scripts/versjoner.py --check
+          python3 tests/versjoner.test.py
           python3 scripts/fakta.py --check
           python3 tests/fakta.test.py
           python3 tests/kildevakt.test.py

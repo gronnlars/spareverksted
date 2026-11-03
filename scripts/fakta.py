@@ -454,18 +454,11 @@ def deadlines(reg, today):
     return out
 
 
-def bump_versions(names, root=ROOT):
-    """Øk ?v= for endrede filer i alle HTML-filer (AGENTS.md, Mellomlagring)."""
-    changed = []
-    for html in sorted((root / 'dist').glob('*.html')):
-        text = html.read_text(encoding='utf-8')
-        new = text
-        for name in names:
-            new = re.sub(r'((?:src|href)="' + re.escape(name) + r'\?v=)(\d+)"', lambda m: f'{m.group(1)}{int(m.group(2)) + 1}"', new)
-        if new != text:
-            html.write_text(new, encoding='utf-8')
-            changed.append(html.name)
-    return changed
+def bump_versions(names=None, root=ROOT):
+    """Sett ?v= fra innholdet i filene (scripts/versjoner.py). «names» brukes ikke lenger; alle filer sjekkes."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import versjoner
+    return versjoner.run(root)
 
 
 def write_generated(reg, root=ROOT):

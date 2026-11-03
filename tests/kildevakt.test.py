@@ -1,6 +1,7 @@
 """Tester for Kildevakt og faktaregisteret. Ingen nett. Kjør: python3 tests/kildevakt.test.py"""
 import bz2
 import copy
+import hashlib
 import datetime as dt
 import io
 import json
@@ -240,8 +241,8 @@ def data_date(s):
 def ssb_oppdatering_skriver_alle_steder_og_er_idempotent():
     root = Path(tempfile.mkdtemp())
     shutil.copytree(FIX / 'data', root, dirs_exist_ok=True)
-    for rel in ('scripts', 'dist'):
-        (root / rel).mkdir()
+    (root / 'scripts').mkdir()
+    shutil.copytree(ROOT / 'dist', root / 'dist')
     for rel in (
                 'scripts/fakta.py', 'scripts/generate-bsu-rates.py', 'dist/veileder-facts.js', 'dist/begreper.js', 'dist/bsu-rates.js', 'dist/index.html', 'dist/spor.html'):
         shutil.copy(ROOT / rel, root / rel)
@@ -265,10 +266,9 @@ def ssb_oppdatering_skriver_alle_steder_og_er_idempotent():
     assert out == ['5,60', 'september 2026', '2,88'], out
     assert '"2026 (jan. til sep.)",5.5,4.49' in (root / 'dist/bsu-rates.js').read_text(encoding='utf-8')
     html = (root / 'dist/spor.html').read_text(encoding='utf-8')
-    before = (ROOT / 'dist/spor.html').read_text(encoding='utf-8')
     for name in ('veileder-facts.js', 'bsu-rates.js'):
-        old_v, new_v = (int(re.search(re.escape(name) + r'\?v=(\d+)', h).group(1)) for h in (before, html))
-        assert new_v == old_v + 1, (name, old_v, new_v)
+        expected = hashlib.sha256((root / 'dist' / name).read_bytes()).hexdigest()[:10]
+        assert f'{name}?v={expected}"' in html, (name, 'versjonen skal følge innholdet')
     assert kv.apply_ssb(s, root) is None, 'andre gang er alt à jour'
 
 
@@ -481,17 +481,20 @@ def hel_kjoring_og_saker_i_toerrkjoring():
 def prisvekst_ny_maaned_oppdaterer_bare_registeret():
     root = Path(tempfile.mkdtemp())
     shutil.copytree(FIX / 'data', root, dirs_exist_ok=True)
-    for rel in ('scripts', 'dist'):
-        (root / rel).mkdir()
+    (root / 'scripts').mkdir()
+    shutil.copytree(ROOT / 'dist', root / 'dist')
     for rel in ( 'scripts/fakta.py', 'scripts/generate-bsu-rates.py',
                 'dist/veileder-facts.js', 'dist/begreper.js', 'dist/bsu-rates.js', 'dist/index.html', 'dist/spor.html'):
         shutil.copy(ROOT / rel, root / rel)
+    fakta.write_generated(fakta.load(root), root)
+    subprocess.run([sys.executable, str(root / 'scripts/generate-bsu-rates.py')], check=True, cwd=root, stdout=subprocess.DEVNULL)
     s, src = state(), SRC['ssb-14700']
     body = kpi_body((3.3, 3.4, 3.1), ('2026M08', '2026M09', '2026M10'))
     events, data, info = kv.check_ssb(src, s, Net({KPI: ok(body)}), REG, TODAY)
     assert info['perioder'] == {'kpi12m': '2026M10'} and [e['periode'] for e in events if e.get('ssb_ventende')] == ['2026M10'], (info, levels(events))
     s.save(src['id'], data, {})
     before_csv = (root / 'research/bsu-rentehistorikk.csv').read_text(encoding='utf-8')
+    bsu_before = (root / 'dist/bsu-rates.js').read_bytes()
     summary = kv.apply_ssb(s, root)
     assert 'kpi12m: 2026M10 = 3.1' in summary and 'BSU' not in summary.split('Endret:')[0], summary
     assert (root / 'research/bsu-rentehistorikk.csv').read_text(encoding='utf-8') == before_csv
@@ -501,7 +504,8 @@ def prisvekst_ny_maaned_oppdaterer_bare_registeret():
                           str(root / 'dist/veileder-facts.js')], capture_output=True, text=True, check=True).stdout.strip()
     assert out == '3,1 % til oktober 2026', out
     html = (root / 'dist/spor.html').read_text(encoding='utf-8')
-    assert re.search(r'bsu-rates\.js\?v=(\d+)', html).group(1) == re.search(r'bsu-rates\.js\?v=(\d+)', (ROOT / 'dist/spor.html').read_text(encoding='utf-8')).group(1), 'BSU-tabellen er urørt'
+    assert (root / 'dist/bsu-rates.js').read_bytes() == bsu_before, 'BSU-tabellen er urørt'
+    assert f'bsu-rates.js?v={hashlib.sha256(bsu_before).hexdigest()[:10]}"' in html
     assert kv.apply_ssb(s, root) is None
 
 
