@@ -1,0 +1,118 @@
+name: Kildevakt
+# Følger kildene bak tallene (SSB, Skatteetaten, Lovdata, Lovtidend, Stortinget, Norges Bank).
+# Åpner saker ved endring og lager PR for nye SSB-måneder. Retter aldri tall direkte. Se docs/kildevakt.md.
+on:
+  schedule:
+    - cron: '23 5 * * 1-5'   # hverdager 05.23 UTC, etter at Lovdata oppdaterer pakkene (ca. 02.30 UTC)
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/kildevakt.py'
+      - 'scripts/fakta.py'
+      - 'kilder/**'
+      - 'tests/kildevakt.test.py'
+      - 'tests/fixtures/kildevakt/**'
+      - '.github/workflows/kildevakt.yml'
+permissions:
+  contents: read
+concurrency:
+  group: kildevakt-${{ github.event_name }}
+  cancel-in-progress: false
+jobs:
+  # På PR: tester, tilgangstest og en full prøvekjøring uten saker og uten lagring.
+  # Rådata fra prøvekjøringen lastes opp som artefakt, så første ekte SSB-svar kan kontrolleres.
+  provekjoring:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Tester
+        run: |
+          python3 tests/kildevakt.test.py
+          python3 scripts/fakta.py --check
+      - name: Tilgang fra GitHub Actions
+        run: |
+          echo '## Tilgang fra GitHub Actions' >> "$GITHUB_STEP_SUMMARY"
+          python3 scripts/kildevakt.py tilgang | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Prøvekjøring (ingen saker)
+        run: |
+          python3 scripts/kildevakt.py kjør --tilstand /tmp/kildedata --rapport /tmp/kildedata/rapport.json
+          python3 scripts/kildevakt.py varsle --rapport /tmp/kildedata/rapport.json --tørrkjør
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kildevakt-provekjoring
+          path: /tmp/kildedata
+          retention-days: 30
+
+  vakt:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Hent tidligere tilstand fra grenen kildedata
+        run: |
+          git config user.name 'Kildevakt'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git fetch --depth 1 origin kildedata:kildedata; then
+            git worktree add .kildedata kildedata
+          else
+            git worktree add --detach .kildedata
+            git -C .kildedata checkout --orphan kildedata
+            git -C .kildedata rm -rfq . || true
+            printf '# Kildedata\n\nRådata og tilstand fra Kildevakt. Rådata er lagret uendret, med kilde og sjekksum i .meta.json. Ikke rediger for hånd.\n' > .kildedata/README.md
+          fi
+      - name: Hent og sammenlign
+        run: python3 scripts/kildevakt.py kjør --tilstand .kildedata --rapport /tmp/rapport.json
+      - name: Lagre tilstand og rådata
+        run: |
+          cd .kildedata
+          git add -A
+          git commit -qm "Kildevakt: henting $(date -u +%F)" || echo 'Ingen endring i tilstanden'
+          git push -q origin kildedata
+      - name: Forslag til nye SSB-tall som PR
+        run: |
+          period=$(python3 -c "import json;e=[x for x in json.load(open('/tmp/rapport.json'))['hendelser'] if x.get('ssb_ventende')];print(e[0].get('periode') or 'revisjon' if e else '')")
+          if [ -z "$period" ]; then echo 'Ingen nye SSB-tall'; exit 0; fi
+          branch="kildevakt/ssb-$period"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null; then echo "Grenen $branch finnes allerede"; exit 0; fi
+          git switch -c "$branch"
+          python3 scripts/kildevakt.py oppdater-ssb --tilstand .kildedata --sammendrag /tmp/pr.md || { echo 'Ingenting å oppdatere'; exit 0; }
+          python3 scripts/fakta.py --check
+          python3 scripts/generate-bsu-rates.py --check
+          node tests/bsu-rates.test.cjs
+          node tests/svartekst.test.cjs
+          node tests/band.test.cjs
+          node tests/veileder-knowledge.test.cjs
+          { echo; echo 'Kontroller kjørt i Kildevakt før PR: fakta.py --check, generate-bsu-rates.py --check, bsu-rates, svartekst, band, veileder-knowledge.';
+            echo 'Hele testpakken starter når PR-en lukkes og åpnes igjen, eller ved en ny commit (PR fra GitHub Actions starter ikke CI av seg selv).'; } >> /tmp/pr.md
+          git add -A -- kilder research dist
+          git commit -qm "Kildevakt: SSB-tall til og med $period"
+          git push -q origin "$branch"
+          python3 scripts/kildevakt.py lag-pr --gren "$branch" --tittel "Kildevakt: SSB-tall til og med $period" --tekst /tmp/pr.md --rapport /tmp/rapport.json
+      - name: Saker
+        if: always()
+        run: python3 scripts/kildevakt.py varsle --rapport /tmp/rapport.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kildevakt-${{ github.run_id }}
+          path: |
+            /tmp/rapport.json
+            .kildedata
+          retention-days: 90

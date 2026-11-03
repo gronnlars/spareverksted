@@ -10,7 +10,7 @@ const sigma=A.index.sigma;
 // 1. Kildetallene: 4,5 % realavkastning og 16 % svingning for aksjer. Nominell vekst = realavkastning pluss prisvekst.
 assert.equal(A.index.realRate,4.5);assert.equal(sigma,16);
 assert.equal(A.indexRate(2.5),7.11);assert.equal(A.indexRate(2),6.59);assert.equal(A.indexRate(0),4.5);
-assert.equal(A.savings.rate,2.87);assert.equal(A.checking.rate,0);
+assert.equal(A.savings.rate,require('../dist/veileder-facts.js').value('savingsRate'));assert.equal(A.checking.rate,0);
 
 // 2. Engangsbeløp: lukket formel startbeløp · (1 + r + Z·σ/√T)^T · (1 − k)^T.
 for(const T of [1,3,10,25,40])for(const Z of [-1.96,0,1.96]){const s={...base,start:100000,monthly:0,rate:7.11,fee:0.2,years:T};

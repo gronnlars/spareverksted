@@ -389,12 +389,12 @@ const entries=[
   "Hva betyr BSU?",
   "Hvordan fungerer boligsparing for ungdom?"
  ],
- "intro": "BSU betyr boligsparing for ungdom. Du kan spare til og med året du fyller 33 og sette inn opptil 27 500 kroner i året og 300 000 kroner totalt. Rentene kommer i tillegg og teller ikke med i innskuddsgrensene.",
+ "intro": "BSU betyr boligsparing for ungdom. Du kan spare til og med året du fyller {{bsuMaxAge}} og sette inn opptil {{bsuAnnual}} kroner i året og {{bsuTotal}} kroner totalt. Rentene kommer i tillegg og teller ikke med i innskuddsgrensene.",
  "tradeoffs": {
   "pros": [
    {
     "title": "Lavere skatt",
-    "text": "Du kan få 10 prosent av årets innskudd i skattefradrag, maksimalt 2 750 kroner. Du må betale nok skatt for å få fullt fradrag. Eier du bolig 31. desember, alene eller sammen med andre, får du ikke fradrag det året. Pengene må være satt inn før årets slutt, og banken må rapportere innskuddet til Skatteetaten."
+    "text": "Du kan få {{bsuPercent}} prosent av årets innskudd i skattefradrag, maksimalt {{bsuMaxDeduction}} kroner. Du må betale nok skatt for å få fullt fradrag. Eier du bolig 31. desember, alene eller sammen med andre, får du ikke fradrag det året. Pengene må være satt inn før årets slutt, og banken må rapportere innskuddet til Skatteetaten."
    },
    {
     "title": "Høyere rente",
@@ -415,12 +415,12 @@ const entries=[
   },
   {
    "title": "Hva kan pengene brukes til?",
-   "text": "Blant annet kjøp av egen fast bolig, kjøpskostnader, renter og avdrag på boliglånet og oppussing og oppgradering av boligen. Det trenger ikke være ditt første boligkjøp. Når du har begynt å bruke bundne BSU-midler, det vil si tidligere års innskudd og renter opptjent til og med året du fyller 33, eller har brutt vilkårene, kan du ikke sette inn mer."
+   "text": "Blant annet kjøp av egen fast bolig, kjøpskostnader, renter og avdrag på boliglånet og oppussing og oppgradering av boligen. Det trenger ikke være ditt første boligkjøp. Når du har begynt å bruke bundne BSU-midler, det vil si tidligere års innskudd og renter opptjent til og med året du fyller {{bsuMaxAge}}, eller har brutt vilkårene, kan du ikke sette inn mer."
   },
   {
    "title": "Mer om renter og konto",
    table:bsuRates,
-   "text": "Årets innskudd kan tas ut før årets slutt uten å bryte vilkårene. Rentene er bundet til bolig. Renter som påløper fra og med året du fyller 34, kan likevel tas ut. Du kan bare opprette BSU-konto én gang, men kan flytte den ved direkte overføring mellom bankene."
+   "text": "Gjennomsnittlig rente på BSU var {{bsuRate}} % i {{bsuRate.periode}} (SSB, hentet {{bsuRate.hentet}}). Årets innskudd kan tas ut før årets slutt uten å bryte vilkårene. Rentene er bundet til bolig. Renter som påløper fra og med året du fyller 34, kan likevel tas ut. Du kan bare opprette BSU-konto én gang, men kan flytte den ved direkte overføring mellom bankene."
   }
  ],
  "sources": [{"id":"tax-bsu-uttak","title":"Skatteetaten: Skatte-ABC 2025/2026, uttak fra BSU","url":"https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/b-19-boligsparing-for-ungdom-bsu/B-19.034/B-19.035/"},
@@ -433,11 +433,11 @@ const entries=[
   },
   {
    "id": "ssb-bsu-historikk",
-   "title": "SSB: Renter på innskudd, tabell 11018. Husholdninger, januar 2018 til august 2026. Uttrekk 28. oktober 2026.",
+   "title": "SSB: Renter på innskudd, tabell 11018. Husholdninger, januar 2018 til {{bsuRate.periode}}. Uttrekk {{bsuRate.hentet}}.",
    "url": "https://www.ssb.no/statbank/table/11018?sq=30128709"
   }
  ],
- "review": {"text": "Regelår 2026. Skatte-ABC 2025/2026. Forskuddsutskrivingen er datert 15.12.2025, øvrige skattesider er udaterte. SSB-tabellen gjelder januar 2018 til august 2026. Lest 29.10.2026 av ChatGPT/Codex, egenkontroll."}
+ "review": {"text": "Regelår 2026. Skatte-ABC 2025/2026. Forskuddsutskrivingen er datert 15.12.2025, øvrige skattesider er udaterte. SSB-tabellen gjelder januar 2018 til {{bsuRate.periode}}. Lest 29.10.2026 av ChatGPT/Codex, egenkontroll."}
 ,
  words:[/\bbsu\b/,/boligsparing for ungdom/]},
 {"id":"q-ips-ask",

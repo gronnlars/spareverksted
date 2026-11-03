@@ -14,6 +14,8 @@ for(const e of [...entries,...drafts]){
  // ASK is deliberately expanded with sourced gift, inheritance and transfer rules.
  if(e.id==='q-aksjesparekonto')assert.ok(content<600,'ASK length regression; deviation remains editorially unapproved');
  else if(e.id==='q-fondskonto')assert.ok(content<=300&&all<=450,'Godkjent fondskontorevisjon: innhold innenfor 300 ord, dokumentasjon telles separat');
+ // BSU: setningen om siste SSB-rente (godkjent av Lars 3.11.2026) kommer i tillegg. Resten skal fortsatt være kortere.
+ else if(e.id==='q-bsu-basics')assert.ok(all<before.answers[e.id].all+15,'BSU length regression beyond the approved SSB sentence');
  else assert.ok(all<before.answers[e.id].all,e.id+' must actually be shorter than the reviewed PR version');
  if(all>300)console.warn(e.id+': '+all+' ord totalt ('+content+' i svaret). Redaksjonelt varsel: over målet på 300, ikke automatisk tekstkutt.');
  total+=all;oldTotal+=before.answers[e.id].all;
