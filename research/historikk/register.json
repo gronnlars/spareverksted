@@ -1,0 +1,171 @@
+{
+ "nb-hms-aksjer": {
+  "id": "nb-hms-aksjer",
+  "navn": "Norges Bank HMS: aksjeindekser",
+  "kilde": "Kilde: Norges Bank.",
+  "url": "https://www.norges-bank.no/globalassets/upload/hms/data/stockprices.xlsx?v=17082017181356",
+  "endelig_url": "https://www.norges-bank.no/globalassets/upload/hms/data/stockprices.xlsx?v=17082017181356",
+  "versjon": "17082017181356",
+  "hentet": "2026-11-03T09:43:41+00:00",
+  "vilkår": [
+   "Norges Bank oppgis som kilde.",
+   "De opprinnelige dataseriene gjengis uendret.",
+   "Egne beregninger og visualiseringer merkes tydelig som Spareverksteds egne.",
+   "Ikke kommersielle formål, ikke frames (side «Opphavsrett og ansvar», lest av Lars 2.11.2026)."
+  ],
+  "bruk": "Fond som «norske aksjer, illustrasjon». Tredjepartsvilkår for aksjeseriene er ikke avklart.",
+  "fil": "nb-hms-aksjer/stockprices.xlsx",
+  "sha256": "29120cc995d43b19f4d55d8fbe4cd681fefe9b98c4a10a1d8099f406d416d0e6",
+  "bytes": 117056
+ },
+ "nb-hms-boligpriser": {
+  "id": "nb-hms-boligpriser",
+  "navn": "Norges Bank HMS: boligprisindekser 1819 til 2023",
+  "kilde": "Kilde: Norges Bank.",
+  "url": "https://www.norges-bank.no/globalassets/upload/hms/data/hmfs-houseprice-indices-norway_1819-2023.xlsx?v=16092024104201",
+  "endelig_url": "https://www.norges-bank.no/globalassets/upload/hms/data/hmfs-houseprice-indices-norway_1819-2023.xlsx?v=16092024104201",
+  "versjon": "16092024104201",
+  "hentet": "2026-11-03T09:43:42+00:00",
+  "vilkår": [
+   "Norges Bank oppgis som kilde.",
+   "De opprinnelige dataseriene gjengis uendret.",
+   "Egne beregninger og visualiseringer merkes tydelig som Spareverksteds egne.",
+   "Ikke kommersielle formål, ikke frames (side «Opphavsrett og ansvar», lest av Lars 2.11.2026)."
+  ],
+  "bruk": "Mulig boligsammenligning senere. Ikke vurdert.",
+  "fil": "nb-hms-boligpriser/hmfs-houseprice-indices-norway_1819-2023.xlsx",
+  "sha256": "1af3160b4a23fdfcab9ef456c96256b25ad822af81e4b23f7eda3d51377aaaac",
+  "bytes": 118749
+ },
+ "nb-hms-korte-renter": {
+  "id": "nb-hms-korte-renter",
+  "navn": "Norges Bank HMS: korte renter fra 1818",
+  "kilde": "Kilde: Norges Bank.",
+  "url": "https://www.norges-bank.no/globalassets/upload/hms/data/shortterm_ir.xlsx?v=17082017181356",
+  "endelig_url": "https://www.norges-bank.no/globalassets/upload/hms/data/shortterm_ir.xlsx?v=17082017181356",
+  "versjon": "17082017181356",
+  "hentet": "2026-11-03T09:43:41+00:00",
+  "vilkår": [
+   "Norges Bank oppgis som kilde.",
+   "De opprinnelige dataseriene gjengis uendret.",
+   "Egne beregninger og visualiseringer merkes tydelig som Spareverksteds egne.",
+   "Ikke kommersielle formål, ikke frames (side «Opphavsrett og ansvar», lest av Lars 2.11.2026)."
+  ],
+  "bruk": "Bankrente før SSB 11018 (2013).",
+  "fil": "nb-hms-korte-renter/shortterm_ir.xlsx",
+  "sha256": "990782db378fc1a31924ed8d2e5d842430bd087a8a3ad6126a0b93f2663c8c2f",
+  "bytes": 337829
+ },
+ "nb-hms-kpi": {
+  "id": "nb-hms-kpi",
+  "navn": "Norges Bank HMS: konsumprisindekser",
+  "kilde": "Kilde: Norges Bank.",
+  "url": "https://www.norges-bank.no/globalassets/upload/hms/data/cpi.xlsx?v=20032018130738",
+  "endelig_url": "https://www.norges-bank.no/globalassets/upload/hms/data/cpi.xlsx?v=20032018130738",
+  "versjon": "20032018130738",
+  "hentet": "2026-11-03T09:43:40+00:00",
+  "vilkår": [
+   "Norges Bank oppgis som kilde.",
+   "De opprinnelige dataseriene gjengis uendret.",
+   "Egne beregninger og visualiseringer merkes tydelig som Spareverksteds egne.",
+   "Ikke kommersielle formål, ikke frames (side «Opphavsrett og ansvar», lest av Lars 2.11.2026)."
+  ],
+  "bruk": "Prisvekst før 1920 og kontroll mot SSB 14709.",
+  "fil": "nb-hms-kpi/cpi.xlsx",
+  "sha256": "8d04fcc9cc2bc8ed69ec98474552b1b97ab827cb773e568a2f896ded8b13df3a",
+  "bytes": 249941
+ },
+ "nb-hms-obligasjoner": {
+  "id": "nb-hms-obligasjoner",
+  "navn": "Norges Bank HMS: obligasjonsrenter",
+  "kilde": "Kilde: Norges Bank.",
+  "url": "https://www.norges-bank.no/globalassets/upload/hms/data/bond_yields.xlsx?v=17082017181355",
+  "endelig_url": "https://www.norges-bank.no/globalassets/upload/hms/data/bond_yields.xlsx?v=17082017181355",
+  "versjon": "17082017181355",
+  "hentet": "2026-11-03T09:43:42+00:00",
+  "vilkår": [
+   "Norges Bank oppgis som kilde.",
+   "De opprinnelige dataseriene gjengis uendret.",
+   "Egne beregninger og visualiseringer merkes tydelig som Spareverksteds egne.",
+   "Ikke kommersielle formål, ikke frames (side «Opphavsrett og ansvar», lest av Lars 2.11.2026)."
+  ],
+  "bruk": "Mulig rentefond eller trygg alternativrente. Ikke vurdert.",
+  "fil": "nb-hms-obligasjoner/bond_yields.xlsx",
+  "sha256": "66fdc9e9984f16a465611e1511a222cd4c8de5d94deb56fcfae36393793c5321",
+  "bytes": 225450
+ },
+ "nb-hms-valuta": {
+  "id": "nb-hms-valuta",
+  "navn": "Norges Bank HMS: historiske valutakurser",
+  "kilde": "Kilde: Norges Bank.",
+  "url": "https://www.norges-bank.no/globalassets/upload/hms/data/fx.xlsx?v=17082017181355",
+  "endelig_url": "https://www.norges-bank.no/globalassets/upload/hms/data/fx.xlsx?v=17082017181355",
+  "versjon": "17082017181355",
+  "hentet": "2026-11-03T09:43:42+00:00",
+  "vilkår": [
+   "Norges Bank oppgis som kilde.",
+   "De opprinnelige dataseriene gjengis uendret.",
+   "Egne beregninger og visualiseringer merkes tydelig som Spareverksteds egne.",
+   "Ikke kommersielle formål, ikke frames (side «Opphavsrett og ansvar», lest av Lars 2.11.2026)."
+  ],
+  "bruk": "Ikke i bruk. Lagres for senere.",
+  "fil": "nb-hms-valuta/fx.xlsx",
+  "sha256": "4fad81d82b89b563d455e04645a87fe1d92360e00eaba2c2aae94097cc2d5b09",
+  "bytes": 1544081
+ },
+ "nb-styringsrente": {
+  "id": "nb-styringsrente",
+  "navn": "Norges Bank: styringsrenten (Datatorg)",
+  "kilde": "Kilde: Norges Bank.",
+  "url": "https://data.norges-bank.no/api/data/IR/B.KPRA.SD.R?format=sdmx-json&startPeriod=1991-01-01&locale=no",
+  "endelig_url": "https://data.norges-bank.no/api/data/IR/B.KPRA.SD.R?format=sdmx-json&startPeriod=1991-01-01&locale=no",
+  "versjon": null,
+  "hentet": "2026-11-03T09:43:44+00:00",
+  "vilkår": [
+   "Norges Bank oppgis som kilde.",
+   "De opprinnelige dataseriene gjengis uendret.",
+   "Egne beregninger og visualiseringer merkes tydelig som Spareverksteds egne.",
+   "Ikke kommersielle formål, ikke frames (side «Opphavsrett og ansvar», lest av Lars 2.11.2026)."
+  ],
+  "bruk": "Rentenivå over tid, til forklaringer.",
+  "fil": "nb-styringsrente/nb-styringsrente.json",
+  "sha256": "1088e1da254012e8dcc8cf71762caa406b551f893453cd3ea3f0989d6f56305d",
+  "bytes": 1023105
+ },
+ "ssb-11018": {
+  "id": "ssb-11018",
+  "navn": "SSB tabell 11018: renter på innskudd, husholdninger, hele perioden",
+  "kilde": "Kilde: Statistisk sentralbyrå.",
+  "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11018/data?lang=no&outputFormat=json-stat2&valueCodes[Innskuddstype]=20,16,15&valueCodes[Sektor]=04b&valueCodes[ContentsCode]=Innskudd&valueCodes[Tid]=*",
+  "endelig_url": "https://data.ssb.no/api/pxwebapi/v2/tables/11018/data?lang=no&outputFormat=json-stat2&valueCodes[Innskuddstype]=20,16,15&valueCodes[Sektor]=04b&valueCodes[ContentsCode]=Innskudd&valueCodes[Tid]=*",
+  "versjon": null,
+  "hentet": "2026-11-03T09:43:46+00:00",
+  "vilkår": [
+   "CC BY 4.0: SSB oppgis som kilde."
+  ],
+  "bruk": "Bankrente og BSU-rente fra desember 2013.",
+  "ssb_oppdatert": "2026-10-29T07:00:00Z",
+  "tabell": "11018",
+  "fil": "ssb-11018/ssb-11018.json",
+  "sha256": "3a535ac2324a677a6d20eb94684cea89779f9a0796ebdfa682f7491ccdab6fde",
+  "bytes": 10727
+ },
+ "ssb-14709": {
+  "id": "ssb-14709",
+  "navn": "SSB tabell 14709: konsumprisindeks, historisk serie, etter måned (2025=100)",
+  "kilde": "Kilde: Statistisk sentralbyrå.",
+  "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14709/data?lang=no&outputFormat=json-stat2&valueCodes[Maaned]=*&valueCodes[ContentsCode]=KpiIndMnd&valueCodes[Tid]=*",
+  "endelig_url": "https://data.ssb.no/api/pxwebapi/v2/tables/14709/data?lang=no&outputFormat=json-stat2&valueCodes[Maaned]=*&valueCodes[ContentsCode]=KpiIndMnd&valueCodes[Tid]=*",
+  "versjon": null,
+  "hentet": "2026-11-03T09:43:45+00:00",
+  "vilkår": [
+   "CC BY 4.0: SSB oppgis som kilde."
+  ],
+  "bruk": "Prisvekst og kjøpekraft fra 1920.",
+  "ssb_oppdatert": "2026-10-09T06:00:00Z",
+  "tabell": "14709",
+  "fil": "ssb-14709/ssb-14709.json",
+  "sha256": "37c05995b2fcbc0515cdf52816a297bc907944e9499d8f99d675b20bd79078d1",
+  "bytes": 11310
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "ssb-14709",
+ "navn": "SSB tabell 14709: konsumprisindeks, historisk serie, etter måned (2025=100)",
+ "kilde": "Kilde: Statistisk sentralbyrå.",
+ "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14709/data?lang=no&outputFormat=json-stat2&valueCodes[Maaned]=*&valueCodes[ContentsCode]=KpiIndMnd&valueCodes[Tid]=*",
+ "endelig_url": "https://data.ssb.no/api/pxwebapi/v2/tables/14709/data?lang=no&outputFormat=json-stat2&valueCodes[Maaned]=*&valueCodes[ContentsCode]=KpiIndMnd&valueCodes[Tid]=*",
+ "versjon": null,
+ "hentet": "2026-11-03T09:43:45+00:00",
+ "vilkår": [
+  "CC BY 4.0: SSB oppgis som kilde."
+ ],
+ "bruk": "Prisvekst og kjøpekraft fra 1920.",
+ "ssb_oppdatert": "2026-10-09T06:00:00Z",
+ "tabell": "14709",
+ "fil": "ssb-14709/ssb-14709.json",
+ "sha256": "37c05995b2fcbc0515cdf52816a297bc907944e9499d8f99d675b20bd79078d1",
+ "bytes": 11310
+}

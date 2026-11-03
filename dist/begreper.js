@@ -1,27 +1,18 @@
+// Generert av scripts/fakta.py fra kilder/begreper/*.json. Rediger registeret, ikke denne filen.
 /* Begrepsregister: én kilde for korte forklaringer av fagord.
-   Prøveversjon på grenen claude/begrepsforklaring-prove. Definisjonene for kjøpekraft og renters rente
-   er første setning i de eksisterende svarene. Prisvekst og dagens kroner er nye og må godkjennes.
-
    Felt per begrep:
-   - id:        fast nøkkel, brukes i markeringen <span data-begrep="id">
+   - id:        fast nøkkel. Brukes i markeringen <span data-begrep="id"> og i tekst som {{begrep:id}}
    - ord:       oppslagsordet slik det vises i overskriften
    - definisjon: ordbok-setningen. Én setning som starter med ordet og sier hva det er eller betyr.
                 Reglene står i SPRAKREGLER.md, «Ordbok-setningen».
-   - utdyping:  (valgfritt) én kort setning om hvorfor ordet betyr noe.
-   - svar:      (valgfritt) id til et svar i «Spør om sparing». Svaret må inneholde definisjonen ordrett
+   - utdyping:  (valgfritt) én kort setning om hvorfor ordet betyr noe. I tekst: {{begrep:id.utdyping}}
+   - svar:      (valgfritt) id til et svar i «Spør om sparing». Svaret henter definisjonen med {{begrep:id}}
                 (testes). «Les mer» vises bare når svaret er publisert.
    - kilder:    primærkilder for forklaringen
-   - kontrollert: dato teksten sist ble kontrollert mot kildene
-   Plass til senere: «lang» (fordypning) og «sok» (søkeord). Ikke lagt inn før de trengs. */
+   - kontrollert: dato teksten sist ble kontrollert mot kildene */
 (function(root){
 'use strict';
-const ssb={title:'SSB: Hva er inflasjon?',url:'https://www.ssb.no/priser-og-prisindekser/konsumpriser/artikler/hva-er-inflasjon'};
-const liste=[
- {id:'kjopekraft',ord:'Kjøpekraft',definisjon:'Kjøpekraft er hvor mye du kan kjøpe for pengene.',utdyping:'Når prisene stiger, rekker det samme kronebeløpet til mindre.',svar:'q-kjopekraft',kilder:[ssb],kontrollert:'2026-10-24'},
- {id:'prisvekst',ord:'Prisvekst (inflasjon)',definisjon:'Prisvekst er at prisene på varer og tjenester stiger over tid.',utdyping:'Det kalles også inflasjon. Da kan de samme pengene kjøpe mindre enn før.',kilder:[ssb],kontrollert:'2026-11-02'},
- {id:'dagens-kroner',ord:'Dagens kroner',definisjon:'Dagens kroner er et framtidig beløp regnet om til hva det kan kjøpe med prisene i dag.',utdyping:'Det gjør det lettere å sammenligne beløp fra ulike år.',kilder:[ssb],kontrollert:'2026-11-02'},
- {id:'renters-rente',ord:'Renters rente',definisjon:'Renters rente betyr at du får renter også på renter du har fått tidligere.',utdyping:'Når rentene blir stående, kan også de gi nye renter.',svar:'q-renters-rente',kilder:[{title:'Skatteetaten: Skatte-ABC, renteinntekter',url:'https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/r-10-renteinntekter/R-10.001/R-10.002/'},{title:'OpenStax: Exponential functions',url:'https://openstax.org/books/algebra-and-trigonometry-2e/pages/6-1-exponential-functions'}],kontrollert:'2026-10-25'}
-];
+const liste=[{"id":"kjopekraft","ord":"Kjøpekraft","definisjon":"Kjøpekraft er hvor mye du kan kjøpe for pengene.","utdyping":"Når prisene stiger, rekker det samme kronebeløpet til mindre.","svar":"q-kjopekraft","kilder":[{"title":"SSB: Hva er inflasjon?","url":"https://www.ssb.no/priser-og-prisindekser/konsumpriser/artikler/hva-er-inflasjon"}],"kontrollert":"2026-10-24"},{"id":"prisvekst","ord":"Prisvekst (inflasjon)","definisjon":"Prisvekst er at prisene på varer og tjenester stiger over tid.","utdyping":"Det kalles også inflasjon. Da kan de samme pengene kjøpe mindre enn før.","kilder":[{"title":"SSB: Hva er inflasjon?","url":"https://www.ssb.no/priser-og-prisindekser/konsumpriser/artikler/hva-er-inflasjon"}],"kontrollert":"2026-11-02"},{"id":"dagens-kroner","ord":"Dagens kroner","definisjon":"Dagens kroner er et framtidig beløp regnet om til hva det kan kjøpe med prisene i dag.","utdyping":"Det gjør det lettere å sammenligne beløp fra ulike år.","kilder":[{"title":"SSB: Hva er inflasjon?","url":"https://www.ssb.no/priser-og-prisindekser/konsumpriser/artikler/hva-er-inflasjon"}],"kontrollert":"2026-11-02"},{"id":"renters-rente","ord":"Renters rente","definisjon":"Renters rente betyr at du får renter også på renter du har fått tidligere.","utdyping":"Når rentene blir stående, kan også de gi nye renter.","svar":"q-renters-rente","kilder":[{"title":"Skatteetaten: Skatte-ABC, renteinntekter","url":"https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/r-10-renteinntekter/R-10.001/R-10.002/"},{"title":"OpenStax: Exponential functions","url":"https://openstax.org/books/algebra-and-trigonometry-2e/pages/6-1-exponential-functions"}],"kontrollert":"2026-10-25"}];
 const byId=new Map(liste.map(b=>[b.id,b]));
 function ord(t){return t.trim().split(/\s+/).length;}
 // Ordbokreglene står i SPRAKREGLER.md, «Ordbok-setningen». Det som kan sjekkes maskinelt, sjekkes her.

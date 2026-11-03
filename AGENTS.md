@@ -27,6 +27,10 @@ Oppgi utførte kontroller, begrensninger og faktisk status. Grønne tester bevis
 
 Når en CSS- eller JS-fil i `dist/` endres, øk `?v=` for den filen i alle HTML-filer som laster den. Ellers kan nettleseren og Bunny blande ny HTML med gamle filer. Det skjedde 2.11.2026: ny navigasjon med gammel temaknapp la seg oppå hverandre på iPhone.
 
+## Tall fra kilder
+
+Tall som står i svar eller kalkulator (satser, grenser, aldre, SSB-renter) ligger i temafiler under `kilder/fakta/` med kilde, status og gjelder-fra-dato. Faste forklaringer av fagord ligger i `kilder/begreper/`. Skriv `{{ID}}` eller `{{begrep:ID}}` i teksten, ikke tallet eller setningen. Kjør `python3 scripts/fakta.py` etter endring. `python3 scripts/fakta.py --check` feiler ved hardkodede dubletter og plassholdere som ikke finnes. Kildevakt følger kildene og åpner saker; den retter aldri tall selv. Se [docs/kildevakt.md](docs/kildevakt.md).
+
 ## Sikkerhet ved endringer
 
 Alle publiserte HTML-sider skal ha CSP før første script. Ingen HTTP-lenker, usikre ressursadresser, inline JavaScript eller skjemainnsending til server. Skjemaer behandles lokalt. Kjør `python3 scripts/security-check.py` og relevante nettlesertester ved endring. XML-navnerom i XLSX er identifikatorer, ikke HTTP-forespørsler, og skal bevares. Ikke svekk CSP for å få en test grønn. Nye behov må vurderes og dokumenteres. Se docs/sikkerhet.md.

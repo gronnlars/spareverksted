@@ -14,6 +14,16 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 | Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 
+## Faktaregister og Kildevakt (3. november 2026, foreslått)
+
+**Beslutning:** Tall fra kilder står ett sted, i temafiler under `kilder/fakta/`, med kilde, status (i kraft, vedtatt, foreslått) og gjelder-fra-dato. Tekstene bruker plassholdere. Kildevakt kjører hver hverdag i GitHub Actions, følger SSB, Skatteetaten, Lovdata, Lovtidend, Stortinget og Norges Bank, og åpner saker. Nye SSB-måneder blir PR. Ingenting rettes automatisk. Faste forklaringer av fagord (ordbok-setninger) ligger i `kilder/begreper/` og hentes med `{{begrep:ID}}`. Unntak fra dublettkontrollen gjelder én bestemt linje, ikke en hel fil. Status er foreslått til Lars har godkjent PR-en.
+
+**Begrunnelse:** Samme tall sto flere steder, og tallene i BSU-svaret var skrevet rett inn selv om faktafila fantes. Med datoer kan en vedtatt regel legges inn før den trer i kraft, og siden bytter selv på riktig dag. Lovstigen (forslag, vedtak, kunngjøring, i kraft, etaten) gir varsel før reglene gjelder.
+
+**Alternativ som ble forkastet:** Manuell kontrollkalender alene (avhenger av at noen husker den). Automatisk retting av tall (bryter K4 og kravet om godkjent PR). Lagring av rådata på main (starter publisering ved hver henting).
+
+**Revurderes hvis:** Kildene stenger for GitHub Actions, eller sakene gir mer støy enn nytte.
+
 ## Pausen avsluttes (2. november 2026)
 
 **Beslutning:** Lars avsluttet prosjektpausen 2.11.2026 og orienterte Finanstilsynet samme dag. Hele siden kan utvikles igjen etter faseplanen: kvalitetssikring, brukergrensesnitt, kontekstuell veiledning, kunnskapsbase og til slutt lånekalkulator.
@@ -1049,6 +1059,8 @@ B. Hente første setning fra svaret mens siden lastes. Ikke valgt: kalkulatoren 
 C. Egne tekster i registeret uten kobling til svarene. Ikke valgt: to forklaringer av samme ord kan gli fra hverandre.
 
 **Akseptert ulempe:** Setningen står to steder i koden. Testen gjør at de ikke kan bli ulike.
+
+**Endret 3.11.2026 (Lars):** Setningen står nå bare ett sted, i `kilder/begreper/`. Svaret henter den med `{{begrep:ID}}`, og utdypingen med `{{begrep:ID.utdyping}}`. Den aksepterte ulempen er borte, og `scripts/fakta.py --check` stopper nye kopier. Se «Faktaregister og Kildevakt».
 
 **Vurder på nytt når:** svarbasen blir så stor at det lønner seg å bygge registeret automatisk fra svarene.
 

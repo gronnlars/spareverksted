@@ -1,21 +1,31 @@
-/* Dated factual values for the guidance. User inputs and technical limits are separate. */
+// Generert av scripts/fakta.py fra kilder/. Rediger registeret, ikke denne filen.
+/* Dated factual values and shared explanations for the guidance. User inputs and technical limits are separate. */
 (function(root){
 'use strict';
-const checked='2026-10-22',year=2026;
-const bsu='https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/';
-const ips='https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid-trygd-og-pensjon/pensjon-og-uforetrygd/ny-ordning-for-skattefavorisert-individuell-sparing-til-pensjon/';
-const record=(value,unit,source,kind='rule')=>({value,unit,year,checked,source,kind});
-const data={
- year:record(year,'inntektsår',bsu),
- bsuMaxAge:record(33,'år',bsu),bsuAnnual:record(27500,'kr',bsu),bsuTotal:record(300000,'kr',bsu),bsuPercent:record(10,'prosent',bsu),bsuMaxDeduction:record(2750,'kr',bsu),
- ipsAnnual:record(25000,'kr',ips),ipsStartAge:record(62,'år',ips),ipsEndAge:record(80,'år',ips),ipsMinYears:record(10,'år',ips),ipsIntroduced:record(2017,'årstall',ips),
- adultAge:record(18,'år','https://www.statsforvalteren.no/contentassets/d753fae5ad9842839799794e6f903cd2/svar-pa-sporsmal-om-inntektsberekning-av-barns-stipend-i-saka-til-foreldra.pdf'),
- grantSingleAssets:record(534225,'kr','https://lanekassen.no/nb-NO/stipend-og-lan/omgjoring-av-basislan/'),
- fundMinYears:record(5,'år','https://www.forbrukerradet.no/sparing-i-fond-og-spareprofiler/','source-recommendation')
-};
-function value(id){if(!Object.hasOwn(data,id))throw Error('Ukjent faktanøkkel: '+id);return data[id].value;}
-function text(id){const n=value(id);if(n===null)return '';return new Intl.NumberFormat('nb-NO',{useGrouping:!['ipsIntroduced','year'].includes(id)}).format(n).replace(/\u00a0/g,' ');}
-function expand(s){return String(s).replace(/\{\{([a-zA-Z]+)\}\}/g,(_,id)=>text(id)).replace(/[\u2013\u2014]/g,' til ');}
-function resolve(x){if(typeof x==='string')return expand(x);if(Array.isArray(x))return x.map(resolve);if(x&&typeof x==='object')return Object.fromEntries(Object.entries(x).map(([k,v])=>[k,resolve(v)]));return x;}
-const api={checked,year,data,value,text,expand,resolve};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareFacts=api;
+const REG={"checked":"2026-10-22","facts":{"bsuMaxAge":{"kind":"rule","unit":"år","source":"https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/","values":[{"value":33,"from":"2026-01-01"}]},"bsuAnnual":{"kind":"rule","unit":"kr","source":"https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/","values":[{"value":27500,"from":"2026-01-01"}]},"bsuTotal":{"kind":"rule","unit":"kr","source":"https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/","values":[{"value":300000,"from":"2026-01-01"}]},"bsuPercent":{"kind":"rule","unit":"prosent","source":"https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/","values":[{"value":10,"from":"2026-01-01"}]},"bsuMaxDeduction":{"kind":"rule","unit":"kr","source":"https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/","values":[{"value":2750,"from":"2026-01-01"}]},"year":{"kind":"rule","unit":"inntektsår","source":"https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/","plain":true,"values":[{"value":2026,"from":"2026-01-01"}]},"adultAge":{"kind":"rule","unit":"år","source":"https://www.statsforvalteren.no/contentassets/d753fae5ad9842839799794e6f903cd2/svar-pa-sporsmal-om-inntektsberekning-av-barns-stipend-i-saka-til-foreldra.pdf","values":[{"value":18,"from":"2000-01-01"}]},"grantSingleAssets":{"kind":"rule","unit":"kr","source":"https://lanekassen.no/nb-NO/stipend-og-lan/omgjoring-av-basislan/","values":[{"value":534225,"from":"2026-01-01"}]},"fundMinYears":{"kind":"source-recommendation","unit":"år","source":"https://www.forbrukerradet.no/sparing-i-fond-og-spareprofiler/","values":[{"value":5,"from":"2000-01-01"}]},"ipsAnnual":{"kind":"rule","unit":"kr","source":"https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid-trygd-og-pensjon/pensjon-og-uforetrygd/ny-ordning-for-skattefavorisert-individuell-sparing-til-pensjon/","values":[{"value":25000,"from":"2026-01-01"}]},"ipsStartAge":{"kind":"rule","unit":"år","source":"https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid-trygd-og-pensjon/pensjon-og-uforetrygd/ny-ordning-for-skattefavorisert-individuell-sparing-til-pensjon/","values":[{"value":62,"from":"2026-01-01"}]},"ipsEndAge":{"kind":"rule","unit":"år","source":"https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid-trygd-og-pensjon/pensjon-og-uforetrygd/ny-ordning-for-skattefavorisert-individuell-sparing-til-pensjon/","values":[{"value":80,"from":"2026-01-01"}]},"ipsMinYears":{"kind":"rule","unit":"år","source":"https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid-trygd-og-pensjon/pensjon-og-uforetrygd/ny-ordning-for-skattefavorisert-individuell-sparing-til-pensjon/","values":[{"value":10,"from":"2026-01-01"}]},"ipsIntroduced":{"kind":"rule","unit":"årstall","source":"https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid-trygd-og-pensjon/pensjon-og-uforetrygd/ny-ordning-for-skattefavorisert-individuell-sparing-til-pensjon/","plain":true,"values":[{"value":2017,"from":"2017-01-01"}]},"bsuRate":{"kind":"statistic","unit":"prosent","source":"https://www.ssb.no/statbank/table/11018/","decimals":2,"value":5.61,"period":"2026M08","periodText":"august 2026","fetched":"2026-10-28","fetchedText":"28. oktober 2026"},"boundRate":{"kind":"statistic","unit":"prosent","source":"https://www.ssb.no/statbank/table/11018/","decimals":2,"value":4.59,"period":"2026M08","periodText":"august 2026","fetched":"2026-10-28","fetchedText":"28. oktober 2026"},"savingsRate":{"kind":"statistic","unit":"prosent","source":"https://www.ssb.no/statbank/table/11018/","decimals":2,"value":2.87,"period":"2026M08","periodText":"august 2026"}},"terms":{"kjopekraft":{"ord":"Kjøpekraft","definisjon":"Kjøpekraft er hvor mye du kan kjøpe for pengene.","utdyping":"Når prisene stiger, rekker det samme kronebeløpet til mindre."},"prisvekst":{"ord":"Prisvekst (inflasjon)","definisjon":"Prisvekst er at prisene på varer og tjenester stiger over tid.","utdyping":"Det kalles også inflasjon. Da kan de samme pengene kjøpe mindre enn før."},"dagens-kroner":{"ord":"Dagens kroner","definisjon":"Dagens kroner er et framtidig beløp regnet om til hva det kan kjøpe med prisene i dag.","utdyping":"Det gjør det lettere å sammenligne beløp fra ulike år."},"renters-rente":{"ord":"Renters rente","definisjon":"Renters rente betyr at du får renter også på renter du har fått tidligere.","utdyping":"Når rentene blir stående, kan også de gi nye renter."}}};
+const pad=n=>String(n).padStart(2,'0');
+function today(){
+ const env=typeof process!=='undefined'&&process.env&&process.env.SPARE_FAKTA_DATO;
+ if(env)return env;
+ const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+}
+function make(date){
+ const pick=f=>f.values?(f.values.filter(v=>v.from<=date).pop()||null):{value:f.value};
+ const checked=REG.checked,data={};
+ for(const [id,f] of Object.entries(REG.facts)){const v=pick(f);data[id]={value:v?v.value:null,unit:f.unit,checked,source:f.source,kind:f.kind};
+  if(f.period)Object.assign(data[id],{period:f.period,periodText:f.periodText,fetched:f.fetched||null,fetchedText:f.fetchedText||''});}
+ const year=data.year.value;for(const id in data)data[id].year=year;
+ function value(id){if(!Object.hasOwn(data,id))throw Error('Ukjent faktanøkkel: '+id);return data[id].value;}
+ function text(id){const n=value(id);if(n===null)return '';const f=REG.facts[id];
+  return new Intl.NumberFormat('nb-NO',{useGrouping:!f.plain,minimumFractionDigits:f.decimals||0,maximumFractionDigits:f.decimals||0}).format(n).replace(/\u00a0/g,' ').replace(/\u2212/g,'-');}
+ // Faste forklaringer: {{begrep:ID}} er ordbok-setningen, {{begrep:ID.utdyping}} utdypingen.
+ function term(id,key){const t=REG.terms[id];if(!t)throw Error('Ukjent begrep: '+id);return t[key||'definisjon']||'';}
+ function part(kind,id,key){if(kind)return term(id,key);value(id);if(!key)return text(id);if(key==='periode')return data[id].periodText||'';if(key==='hentet')return data[id].fetchedText||'';return '';}
+ function expand(s){return String(s).replace(/\{\{(?:(begrep):)?([a-zA-Z0-9-]+)(?:\.(periode|hentet|utdyping|ord))?\}\}/g,(_,kind,id,key)=>part(kind,id,key)).replace(/[\u2013\u2014]/g,' til ');}
+ function resolve(x){if(typeof x==='string')return expand(x);if(Array.isArray(x))return x.map(resolve);if(x&&typeof x==='object')return Object.fromEntries(Object.entries(x).map(([k,v])=>[k,resolve(v)]));return x;}
+ // Neste vedtatte verdi etter datoen, til varsler som «Fra 1. januar 2027».
+ function upcoming(id){value(id);const f=REG.facts[id];const v=f.values&&f.values.find(x=>x.from>date);return v?{value:v.value,from:v.from}:null;}
+ return {date,checked,year,data,value,text,term,expand,resolve,upcoming,at:make};
+}
+const api=make(today());if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SpareFacts=api;
 })(typeof window!=='undefined'?window:globalThis);

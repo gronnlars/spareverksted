@@ -16,7 +16,7 @@
       "Hva betyr rente på rente?",
       "Får jeg renter på rentene?"
     ],
-    "intro": "Renters rente betyr at du får renter også på renter du har fått tidligere. Når rentene blir stående, kan også de gi nye renter.",
+    "intro": "{{begrep:renters-rente}} {{begrep:renters-rente.utdyping}}",
     "terms": [],
     "example": {
       "title": "Eksempel: 10 000 kr i to år",

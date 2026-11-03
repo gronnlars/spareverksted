@@ -1,0 +1,56 @@
+{
+  "_om": "Inntektsår, myndighetsalder, stipend og kildeanbefalinger.",
+  "fakta": {
+    "year": {
+      "type": "regel",
+      "enhet": "inntektsår",
+      "kilde": "tax-bsu",
+      "format": "årstall",
+      "bekreftet_til": "2026-12-31",
+      "verdier": [
+        {
+          "verdi": 2026,
+          "fra": "2026-01-01",
+          "status": "i kraft"
+        }
+      ]
+    },
+    "adultAge": {
+      "type": "regel",
+      "enhet": "år",
+      "kilde": "statsforvalter-barn",
+      "verdier": [
+        {
+          "verdi": 18,
+          "fra": "2000-01-01",
+          "status": "i kraft"
+        }
+      ]
+    },
+    "grantSingleAssets": {
+      "type": "regel",
+      "enhet": "kr",
+      "kilde": "lanekassen-formue",
+      "bekreftet_til": "2027-06-30",
+      "verdier": [
+        {
+          "verdi": 534225,
+          "fra": "2026-01-01",
+          "status": "i kraft"
+        }
+      ]
+    },
+    "fundMinYears": {
+      "type": "kildeanbefaling",
+      "enhet": "år",
+      "kilde": "forbrukerradet-fond",
+      "verdier": [
+        {
+          "verdi": 5,
+          "fra": "2000-01-01",
+          "status": "i kraft"
+        }
+      ]
+    }
+  }
+}
