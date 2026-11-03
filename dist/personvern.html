@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="theme.css?v=c768920a88">
 <script defer src="layout.js?v=45a333f532"></script>
 <link rel="stylesheet" href="navigation.css?v=5d98fe1adc">
-<link rel="stylesheet" href="om.css?v=79e2ea4f56">
+<link rel="stylesheet" href="om.css?v=3516e4f4f5">
 <link rel="stylesheet" href="infosider.css?v=36208bae92">
 <script defer src="infosider.js?v=f89dde9fe5"></script>
 <script defer src="personvern.js?v=a90bd0553a"></script>
@@ -42,7 +42,6 @@
 <p class="hint">Automatisk personvernkontroll: resultat fylles inn ved publisering.</p>
 <!-- privacy-status:end -->
 <p>Beregningene gjøres i nettleseren din. Spareverksted har ingen innlogging, ingen reklame, ingen statistikkverktøy og ingen sporingspiksler. Koden sender ikke det du skriver inn i kalkulatoren eller veilederen, til meg eller til andre.</p>
-<p>Kildekoden er tilgjengelig. Alle kan etterprøve det som står her, i <a href="https://github.com/gronnlars/spareverksted">kildekoden på GitHub</a>.</p>
 <p>To ting skjer likevel utenfor nettleseren din: Bunny leverer sidene, og e-post går via Domene.no hvis du skriver til meg. Begge står lenger ned.</p>
 </section>
 <nav class="info-nav" aria-label="Om Spareverksted">
@@ -50,6 +49,7 @@
 <span aria-current="page">Personvern</span>
 <a href="tilgjengelighet.html">Tilgjengelighet</a>
 <a href="ressursbruk.html">Ressursbruk</a>
+<a href="#kontakt">Kontakt</a>
 </nav>
 <div class="info-tools" hidden><button type="button" id="infoToggleAll">Åpne alle kapitler</button></div>
 
@@ -68,15 +68,7 @@
 <section class="info-section" aria-labelledby="whoTitle" id="who">
 <h2 id="whoTitle">Hvem er ansvarlig?</h2>
 <p>Jeg, Lars Kjelkenes Giæver, som privatperson. Spørsmål om personvern, innsyn eller sletting sender du til personvernadressen.</p>
-<div class="kontakt" data-kontakt="personvern">
-<button type="button" class="kontakt-vis" aria-expanded="false" aria-controls="kontaktPersonvern" hidden>Vis e-postadresse for personvern</button>
-<div class="kontakt-resultat" id="kontaktPersonvern" hidden>
-<p><a class="kontakt-lenke"></a></p>
-<button type="button" class="kontakt-kopier" aria-label="Kopier e-postadresse for personvern">Kopier e-postadresse</button>
-</div>
-<p class="kontakt-status hint" role="status"></p>
-<noscript><p>Uten JavaScript kan du sette adressen sammen selv: skriv ordet «personvern», deretter tegnet krøllalfa (@), deretter «spareverksted.no». Ingen mellomrom.</p></noscript>
-</div>
+<p><a href="#kontakt">Kontakt om personvern, innsyn eller sletting</a>.</p>
 </section>
 
 <section class="info-section" aria-labelledby="storedTitle" id="stored">
@@ -192,9 +184,24 @@
 
 <section class="info-section" aria-labelledby="rightsTitle" id="rights">
 <h2 id="rightsTitle">Rettigheter og klage</h2>
-<p>Du kan be om innsyn i, retting av og sletting av opplysninger jeg har om deg. I praksis gjelder det e-post. Tallene fra kalkulatoren har jeg ikke. Bruk personvernadressen over. Du kan klage til <a href="https://www.datatilsynet.no/">Datatilsynet</a>.</p>
+<p>Du kan be om innsyn i, retting av og sletting av opplysninger jeg har om deg. I praksis gjelder det e-post. Tallene fra kalkulatoren har jeg ikke. Bruk <a href="#kontakt">personvernadressen i kontaktfeltet</a>. Du kan klage til <a href="https://www.datatilsynet.no/">Datatilsynet</a>.</p>
 </section>
 
+<section class="info-section" id="kontakt" aria-labelledby="contactTitle">
+<h2 id="contactTitle">Kontakt om personvern</h2>
+<p>Har du spørsmål om personvern, innsyn eller sletting? Bruk personvernadressen nedenfor.</p>
+<div class="kontakt" data-kontakt="personvern">
+<button type="button" class="kontakt-vis" aria-expanded="false" aria-controls="kontaktPersonvern" hidden>Vis e-postadresse for personvern</button>
+<div class="kontakt-resultat" id="kontaktPersonvern" hidden>
+<p><a class="kontakt-lenke"></a></p>
+<button type="button" class="kontakt-kopier" aria-label="Kopier e-postadresse for personvern">Kopier e-postadresse</button>
+</div>
+<p class="kontakt-status hint" role="status"></p>
+<noscript><p>Uten JavaScript kan du sette adressen sammen selv: skriv ordet «personvern», deretter tegnet krøllalfa (@), deretter «spareverksted.no». Ingen mellomrom.</p></noscript>
+</div>
+<p>Du kan også melde fra på <a href="https://github.com/gronnlars/spareverksted/issues/new">GitHub</a>. Det du skriver der, er offentlig. Hva som skjer med e-post du sender, står på siden om <a href="personvern.html#mail">personvern</a>.</p>
+<p>Kildekoden er tilgjengelig. Alle kan etterprøve det som står her, i <a href="https://github.com/gronnlars/spareverksted">kildekoden på GitHub</a>.</p>
+</section>
 <p class="hint">Sist oppdatert 3. november 2026.</p>
 <footer><a class="to-top" href="#toppen">Til toppen <span aria-hidden="true">↑</span></a><nav class="footer-links" aria-label="Sider på Spareverksted"><a href="index.html">Kalkulator</a><a href="spor.html">Spør om sparing</a><a href="om.html">Om</a><span class="footer-current" aria-current="page">Personvern</span><a href="tilgjengelighet.html">Tilgjengelighet</a><a href="ressursbruk.html">Ressursbruk</a></nav></footer>
 </main>
