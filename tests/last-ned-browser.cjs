@@ -24,7 +24,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    assert.match(await q.locator('[data-datastatus="metode"]').textContent(),new RegExp(periode));
    // Sparemål og uttak: «Last ned» står synlig ved resultatet og åpner samme valg som panelet.
    for(const [hash,id,save,name] of [['#activePage=dreams&dreamType=other&dreamYears=3','dreamDownload','saveDream','Sparemål'],['#activePage=withdrawals&start=500000&years=10','withdrawDownload','saveWithdraw','Uttaksplan']]){
-    await q.goto(origin+hash);await q.reload();await q.waitForTimeout(400);
+    await q.goto('about:blank');await q.goto(origin+hash);await q.waitForTimeout(400);
     const btn=q.locator('#'+id);assert(await btn.isVisible(),id+' synlig');
     const box=await btn.boundingBox();assert(box.height>=24&&box.width>=24,id+' trykkflate');
     assert.equal(await btn.evaluate(b=>!!b.closest('details')),false,id+' ligger ikke i et lukket panel');
@@ -33,7 +33,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
     await q.click('#'+save);assert.equal(await q.locator('#scenarioName').inputValue(),name);await q.click('#cancelSave');
    }
    // Kort tid i sparemål: Forbrukerrådets anbefaling gjengis som deres, og ingenting «frarådes».
-   await q.goto(origin+'#activePage=dreams&dreamType=car&dreamYears=3&dreamFlexible=0');await q.reload();await q.waitForTimeout(400);
+   await q.goto('about:blank');await q.goto(origin+'#activePage=dreams&dreamType=car&dreamYears=3&dreamFlexible=0');await q.waitForTimeout(400);
    const min=await q.evaluate(()=>SpareFacts.value('fundMinYears'));
    const cards=await q.locator('#dreamCards').textContent();
    assert.match(cards,new RegExp('Forbrukerrådet anbefaler minst '+min+' års sparehorisont'));
@@ -41,7 +41,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    assert.doesNotMatch(cards+report,/frarå/i);
    assert.match(report,/kan gi underskudd her/);assert.match(report,new RegExp('Nyeste tall: '+periode));
    // Lang tid, fast dato: beskrivelse uten kilde-påstand.
-   await q.goto(origin+'#activePage=dreams&dreamType=car&dreamYears=8&dreamFlexible=0');await q.reload();await q.waitForTimeout(400);
+   await q.goto('about:blank');await q.goto(origin+'#activePage=dreams&dreamType=car&dreamYears=8&dreamFlexible=0');await q.waitForTimeout(400);
    const long=await q.locator('#dreamCards').textContent();
    assert.match(long,/Med fast kjøpsdato kan et fall rett før kjøpet gi et underskudd/);
    assert.doesNotMatch(long,/Forbrukerrådet anbefaler/);
