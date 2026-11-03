@@ -47,6 +47,6 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.equal(await d.evaluate(()=>document.getElementById('reportDialog').open),true,'PC: rapportvinduet skal åpnes igjen');
   assert.match(await d.title(),/^Spareverksted · /,'PC: sidetittelen skal settes tilbake');
   assert.deepEqual(errors,[]);
-  console.log('PDF-merking: ok (Chromium). Merket struktur, bokmerker, språk, tittel og figur finnes.');
+  console.log('PDF-merking: ok (Chromium). Merket struktur, språk, tittel og figur finnes (bokmerker bare fordi testen ber om dem).');
  }finally{if(browser)await browser.close();server.close();}
 })().catch(e=>{console.error(e);process.exit(1);});
