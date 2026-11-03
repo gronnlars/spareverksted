@@ -1,0 +1,148 @@
+{
+  "text_fields": 154,
+  "number_hit_lines": 137,
+  "tests": [
+    {
+      "test": "deposit covers annual and total",
+      "result": "pass"
+    },
+    {
+      "test": "missing total fact detected",
+      "result": "pass"
+    },
+    {
+      "test": "total as related only does not satisfy view",
+      "result": "pass"
+    },
+    {
+      "test": "benefit view without housing rejected",
+      "result": "pass"
+    },
+    {
+      "test": "housing condition stays under rate",
+      "result": "pass"
+    },
+    {
+      "test": "housing does not infect annual limit",
+      "result": "pass"
+    },
+    {
+      "test": "age does not infect interest taxation",
+      "result": "pass"
+    },
+    {
+      "test": "unknown value rejected in display",
+      "result": "pass"
+    },
+    {
+      "test": "documented none allowed",
+      "result": "pass"
+    },
+    {
+      "test": "none requires evidence",
+      "result": "pass"
+    },
+    {
+      "test": "reviewed proposal still blocked",
+      "result": "pass"
+    },
+    {
+      "test": "unreviewed current rule blocked",
+      "result": "pass"
+    },
+    {
+      "test": "2027 explanation gets warning",
+      "result": "pass"
+    },
+    {
+      "test": "2027 calculation blocked",
+      "result": "pass"
+    },
+    {
+      "test": "unknown effective date allowed",
+      "result": "pass"
+    },
+    {
+      "test": "precise source location required",
+      "result": "pass"
+    },
+    {
+      "test": "unknown field rejected",
+      "result": "pass"
+    },
+    {
+      "test": "withdrawal coverage required",
+      "result": "pass"
+    },
+    {
+      "test": "missing condition ID rejected",
+      "result": "pass"
+    },
+    {
+      "test": "condition cycle rejected",
+      "result": "pass"
+    },
+    {
+      "test": "repealed fact rejected for current display",
+      "result": "pass"
+    },
+    {
+      "test": "2028 rule blocked in 2026 display",
+      "result": "pass"
+    },
+    {
+      "test": "2019 calculation blocked without historical evidence",
+      "result": "pass"
+    },
+    {
+      "test": "not applicable blocked in display",
+      "result": "pass"
+    },
+    {
+      "test": "not applicable blocked in calculation",
+      "result": "pass"
+    },
+    {
+      "test": "documented none blocked in calculation",
+      "result": "pass"
+    },
+    {
+      "test": "empty string blocked in calculation",
+      "result": "pass"
+    },
+    {
+      "test": "numeric zero allowed in calculation",
+      "result": "pass"
+    },
+    {
+      "test": "confirmation time basis enforced",
+      "result": "pass"
+    },
+    {
+      "test": "midyear effective date rejected for full year",
+      "result": "pass"
+    },
+    {
+      "test": "historical display blocked without evidence",
+      "result": "pass"
+    },
+    {
+      "test": "withdrawal scope cannot label annual deposit fact",
+      "result": "pass"
+    },
+    {
+      "test": "unknown scope rejected",
+      "result": "pass"
+    },
+    {
+      "test": "withdrawal fact cannot be added to deposit card",
+      "result": "pass"
+    },
+    {
+      "test": "benefit card accepts its required mixed scopes",
+      "result": "pass"
+    }
+  ],
+  "passed": 35,
+  "total": 35
+}
