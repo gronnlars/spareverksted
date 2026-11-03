@@ -86,6 +86,13 @@ def unntak_gjelder_en_linje_ikke_hele_fila():
 
 
 @test
+def tall_inne_i_storre_tall_er_ikke_treff():
+    root = sandbox({'dist/side.js': "a='1 300 000 kr og 27 500 000 kr og 127 500 kr og 300 000,50';\nb='300 000 kroner totalt';\n"})
+    found = fakta.duplicates(fakta.load(root), root, DATE)
+    assert len(found) == 1 and 'dist/side.js:2' in found[0] and '«300 000»' in found[0], found
+
+
+@test
 def unntak_uten_tekst_eller_grunn_avvises():
     reg = copy.deepcopy(REG)
     reg['fakta']['bsuAnnual']['tillatt'] = [{'fil': 'dist/side.js'}]
@@ -151,7 +158,7 @@ def stort_register_kontrolleres_raskt():
     used = time.perf_counter() - start
     assert len(dup) == 1 and 'dist/side7.js:201' in dup[0] and '{{test5}}' in dup[0], dup
     assert ph == [], ph[:3]
-    assert used < 20, f'{used:.1f} s'
+    assert used < 10, f'{used:.1f} s'
     print(f'  Stort register: 1 517 fakta, 204 begreper, 300 filer kontrollert på {used:.1f} s')
 
 

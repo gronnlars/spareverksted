@@ -317,21 +317,46 @@ def needles(reg, date, root=ROOT):
     return out
 
 
-def matcher(texts):
-    """Ett samlet regulært uttrykk for alle tekstbiter, lengste først. Tall får sifferavgrensning."""
-    parts = [r'(?<![\d,.])' + re.escape(t) + r'(?!\d)' if t[:1].isdigit() else re.escape(t) for t in sorted(texts, key=len, reverse=True)]
-    return re.compile('|'.join(parts)) if parts else None
+NUMBER = re.compile(r'(?<![\d,.])\d{1,3}(?: \d{3})+(?:,\d+)?(?![\d])|(?<![\d,.])\d+(?:,\d+)?(?![\d])')
+WORD = re.compile(r'\w+')
+
+
+class Matcher:
+    """Finner kjente tekstbiter i en linje uten ett stort søkeuttrykk.
+
+    Rene tall slås opp blant tallene i linjen («1 300 000» er ett tall, ikke treff på «300 000»).
+    Andre tekstbiter sjekkes bare når linjen inneholder første ord i tekstbiten."""
+
+    def __init__(self, texts):
+        self.numbers, self.by_word = set(), {}
+        for text in texts:
+            if NUMBER.fullmatch(text):
+                self.numbers.add(text)
+            else:
+                first = WORD.search(text)
+                self.by_word.setdefault(first.group(0).lower() if first else '', []).append(text)
+        for items in self.by_word.values():
+            items.sort(key=len, reverse=True)
+
+    def find(self, line):
+        found = [m.group(0) for m in NUMBER.finditer(line) if m.group(0) in self.numbers] if self.numbers else []
+        if self.by_word:
+            words = {w.lower() for w in WORD.findall(line)} | {''}
+            for word in words & self.by_word.keys():
+                found += [t for t in self.by_word[word] if t in line]
+        return found
 
 
 def scan(paths, texts, root=ROOT):
     """(fil, linje, treff, linjetekst) for hver forekomst. Hver fil leses én gang."""
-    pattern, hits = matcher(texts), []
-    if pattern is None:
+    hits = []
+    if not texts:
         return hits
+    finder = Matcher(texts)
     for path in paths:
         for number, line in enumerate(path.read_text(encoding='utf-8', errors='replace').splitlines(), 1):
-            for match in pattern.finditer(line):
-                hits.append((path.relative_to(root).as_posix(), number, match.group(0), line.strip()))
+            for text in finder.find(line):
+                hits.append((path.relative_to(root).as_posix(), number, text, line.strip()))
     return hits
 
 

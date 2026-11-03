@@ -75,7 +75,7 @@ I JavaScript: `SpareFacts.value('savingsRate')`, `SpareFacts.text('bsuAnnual')`,
 
 - Ny fil under `kilder/fakta/` eller `kilder/begreper/` blir lest automatisk. Samme ID i to filer stoppes.
 - Kildevakt skriver SSB-tall tilbake til fila tallet står i.
-- Kontrollen leser hver fil én gang med ett samlet søk. Testen `stort_register_kontrolleres_raskt` sjekker 1 500 tall, 200 begreper og 300 filer (målt til rundt 4 sekunder).
+- Kontrollen leser hver fil én gang med ett samlet søk. Testen `stort_register_kontrolleres_raskt` sjekker 1 500 tall, 200 begreper og 300 filer på under ett sekund. Tall slås opp som hele tall, så «300 000» inne i «1 300 000» er ikke et treff.
 - Alle fakta og begreper ligger i `dist/veileder-facts.js`. Blir fila stor (over 100 kB), bør den deles per side. Det er ikke gjort ennå.
 
 ## Hva Kildevakt følger
