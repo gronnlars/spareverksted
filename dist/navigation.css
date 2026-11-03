@@ -58,3 +58,12 @@ footer .to-top{gap:6px;flex:1 0 100%;grid-column:1/-1;display:inline-flex;align-
 /* Første rad i toppfeltet er like høy før og etter at temaknappen settes inn. Ellers hopper meny og innhold ned når siden lastes (3.11.2026). */
 :root .site-header .brand{display:inline-flex;align-items:center;min-height:44px}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+
+/* Bunnteksten står etter <main>, ikke inni (3.11.2026, funn i Frontkit-sjekk). Da blir den et eget landemerke («contentinfo»)
+   som skjermlesere kan hoppe til, og hovedinnholdet slutter der det faktisk slutter. Bredden følger main på hver side, som før. */
+body>footer{box-sizing:border-box;width:min(1280px,calc(100% - 48px));margin-inline:auto}
+.guidance-page>footer{width:min(1032px,calc(100% - 48px))}
+.info-page>footer{width:min(952px,calc(100% - 48px))}
+@media(max-width:760px){body>footer,.guidance-page>footer,.info-page>footer{width:calc(100% - 32px)}body[data-stage=workbench][data-page=calculator]>main{padding-bottom:0}body[data-stage=workbench][data-page=calculator]>footer{margin-bottom:calc(86px + env(safe-area-inset-bottom))}}
+@media(max-height:300px){body[data-stage=workbench][data-page=calculator]>main{padding-bottom:0}body[data-stage=workbench][data-page=calculator]>footer{margin-bottom:calc(40px + env(safe-area-inset-bottom))}}
+@media(max-width:600px){.info-page>footer{width:calc(100% - 40px)}}

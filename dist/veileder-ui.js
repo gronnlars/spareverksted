@@ -159,10 +159,10 @@ function search(){
   status.textContent=negNote(r)+(sharedTypo?'Mente du «'+r.suggestions[0].via+'»? Velg et svar nedenfor.':'Dette er forslag til temaer. Velg det du mener:');
   showMatches(r.suggestions,3,sharedTypo);return;
  }
- if(r.mode==='uncovered'){$('topicPicker').open=true;status.textContent='Vi har ikke et eget svar på «'+r.uncovered.label+'» ennå. Eventuelle forslag under svarer ikke på spørsmålet ditt:';showMatches(r.hits);return;}
- if(r.mode==='negated'){$('topicPicker').open=true;status.textContent='Du skriver «'+r.negated.join(' ')+'» med nekting. Vi har ikke et eget svar på det ennå. Temaene under ligger nærmest, men er ikke svar på spørsmålet ditt:';showMatches(r.hits);return;}
+ if(r.mode==='uncovered'){$('topicPicker').open=true;status.textContent='Det finnes ikke et eget svar på «'+r.uncovered.label+'» ennå. Eventuelle forslag under svarer ikke på spørsmålet ditt:';showMatches(r.hits);return;}
+ if(r.mode==='negated'){$('topicPicker').open=true;status.textContent='Du skriver «'+r.negated.join(' ')+'» med nekting. Det finnes ikke et eget svar på det ennå. Temaene under ligger nærmest, men er ikke svar på spørsmålet ditt:';showMatches(r.hits);return;}
  $('topicPicker').open=true;
- status.textContent=r.mode==='broad'?'Spørsmålet er bredt. Velg et tema, eller skriv litt mer, for eksempel «sparing til barn».':'Vi har ikke et ferdig svar på dette ennå. Velg et tema, eller prøv andre ord.';
+ status.textContent=r.mode==='broad'?'Spørsmålet er bredt. Velg et tema, eller skriv litt mer, for eksempel «sparing til barn».':'Det finnes ikke et ferdig svar på dette ennå. Velg et tema, eller prøv andre ord.';
 }
 for(const t of V.topics.filter(t=>V.publishedOnly||!t.category)){const b=button(t.title,()=>{$('matches').replaceChildren();choose(t.id);});b.dataset.topic=t.id;b.setAttribute('aria-pressed','false');$('topics').append(b);}
 $('questionForm').addEventListener('submit',e=>{e.preventDefault();search();});

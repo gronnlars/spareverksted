@@ -51,7 +51,7 @@
 }
 @media print{
  body.info-page>main{display:block!important}
- .info-page main>footer,.info-page .kontakt button,.info-page #deleteAll{display:none!important}
+ .info-page>footer,.info-page .kontakt button,.info-page #deleteAll{display:none!important}
  .info-page .info-nav,.info-page .info-tools{display:none!important}
  .info-page main{max-width:none;padding:0}
  .info-page details.info-chapter{border:0;background:none}
