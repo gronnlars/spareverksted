@@ -164,6 +164,36 @@ def oversikten_viser_ark_og_perioder():
 
 
 @test
+def kommandolinjen_virker_for_alle_kommandoer():
+    """lag-pr krasjet i første ekte kjøring 3.11.2026 fordi den leste --mål. Alle kommandoer kjøres her."""
+    import os
+    import urllib.error
+    calls = []
+    real = tm.github
+
+    def fake(method, path, body=None):
+        calls.append((method, path, body['head']))
+        return {'html_url': 'https://github.com/x/y/pull/1'}
+    tm.github = fake
+    os.environ.update(GITHUB_REPOSITORY='x/y', GITHUB_TOKEN='t')
+    try:
+        text = Path(tempfile.mkdtemp()) / 'pr.md'
+        text.write_text('Tekst', encoding='utf-8')
+        assert tm.main(['lag-pr', '--gren', 'tidsmaskin/2026-11-03', '--tittel', 'T', '--tekst', str(text)]) == 0
+        assert calls == [('POST', '/repos/x/y/pulls', 'tidsmaskin/2026-11-03')], calls
+
+        def refuse(method, path, body=None):
+            raise urllib.error.HTTPError(path, 403, 'nei', {}, None)
+        tm.github = refuse
+        assert tm.main(['lag-pr', '--gren', 'g', '--tittel', 'T', '--tekst', str(text)]) == 0, 'avvist PR gir melding, ikke krasj'
+    finally:
+        tm.github = real
+    target = tempfile.mkdtemp()
+    assert tm.main(['sjekk', '--mål', target]) == 0
+    assert tm.main(['oversikt', '--mål', target]) == 0
+
+
+@test
 def lagret_historikk_i_repoet_er_uendret():
     """Når research/historikk/ har filer, skal de stemme med registeret (kjøres også i CI)."""
     s = tm.Store(tm.TARGET)
