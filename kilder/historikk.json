@@ -1,0 +1,57 @@
+{
+  "_om": "Historiske dataserier for tidsmaskinen (historisk pengereise). scripts/tidsmaskin.py henter dem og lagrer dem uendret i research/historikk/. Se docs/tidsmaskin.md.",
+  "vilkår": {
+    "norges-bank": {
+      "kilde": "Kilde: Norges Bank.",
+      "regler": [
+        "Norges Bank oppgis som kilde.",
+        "De opprinnelige dataseriene gjengis uendret.",
+        "Egne beregninger og visualiseringer merkes tydelig som Spareverksteds egne.",
+        "Ikke kommersielle formål, ikke frames (side «Opphavsrett og ansvar», lest av Lars 2.11.2026)."
+      ],
+      "bekreftet": "E-post fra Norges Bank, DM IKT, til Lars 3.11.2026: bruken er i tråd med publiserte vilkår på disse betingelsene. Seriene på nettsidene er de mest oppdaterte versjonene.",
+      "varsler": "https://www.norges-bank.no/Abonnement/ShowSubscriptions"
+    },
+    "ssb": {
+      "kilde": "Kilde: Statistisk sentralbyrå.",
+      "regler": ["CC BY 4.0: SSB oppgis som kilde."]
+    }
+  },
+  "kilder": [
+    {"id": "nb-hms-oversikt", "type": "side", "utgiver": "norges-bank",
+     "navn": "Norges Bank: Historical Monetary Statistics, oversiktsside",
+     "url": "https://www.norges-bank.no/en/topics/Statistics/Historical-monetary-statistics/",
+     "lenker": "/globalassets/upload/hms/data/[A-Za-z0-9_.-]+\\.xlsx(?:\\?v=\\d+)?",
+     "bruk": "Finner gjeldende adresse og versjon for hver fil, og oppdager nye eller fjernede filer."},
+    {"id": "nb-hms-kpi", "type": "nb-hms", "utgiver": "norges-bank", "fil": "cpi.xlsx",
+     "navn": "Norges Bank HMS: konsumprisindekser",
+     "bruk": "Prisvekst før 1920 og kontroll mot SSB 14709."},
+    {"id": "nb-hms-korte-renter", "type": "nb-hms", "utgiver": "norges-bank", "fil": "shortterm_ir.xlsx",
+     "navn": "Norges Bank HMS: korte renter fra 1818",
+     "bruk": "Bankrente før SSB 11018 (2013)."},
+    {"id": "nb-hms-aksjer", "type": "nb-hms", "utgiver": "norges-bank", "fil": "stockprices.xlsx",
+     "navn": "Norges Bank HMS: aksjeindekser",
+     "bruk": "Fond som «norske aksjer, illustrasjon». Tredjepartsvilkår for aksjeseriene er ikke avklart."},
+    {"id": "nb-hms-obligasjoner", "type": "nb-hms", "utgiver": "norges-bank", "fil": "bond_yields.xlsx",
+     "navn": "Norges Bank HMS: obligasjonsrenter",
+     "bruk": "Mulig rentefond eller trygg alternativrente. Ikke vurdert."},
+    {"id": "nb-hms-valuta", "type": "nb-hms", "utgiver": "norges-bank", "fil": "fx.xlsx",
+     "navn": "Norges Bank HMS: historiske valutakurser",
+     "bruk": "Ikke i bruk. Lagres for senere."},
+    {"id": "nb-hms-boligpriser", "type": "nb-hms", "utgiver": "norges-bank", "fil": "hmfs-houseprice-indices-norway_1819-2023.xlsx",
+     "navn": "Norges Bank HMS: boligprisindekser 1819 til 2023",
+     "bruk": "Mulig boligsammenligning senere. Ikke vurdert."},
+    {"id": "nb-styringsrente", "type": "nb-api", "utgiver": "norges-bank",
+     "navn": "Norges Bank: styringsrenten (Datatorg)",
+     "url": "https://data.norges-bank.no/api/data/IR/B.KPRA.SD.R?format=sdmx-json&startPeriod=1991-01-01&locale=no",
+     "bruk": "Rentenivå over tid, til forklaringer."},
+    {"id": "ssb-14709", "type": "ssb", "utgiver": "ssb",
+     "navn": "SSB tabell 14709: konsumprisindeks, historisk serie, etter måned (2025=100)",
+     "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14709/data?lang=no&outputFormat=json-stat2&valueCodes[Maaned]=*&valueCodes[ContentsCode]=KpiIndMnd&valueCodes[Tid]=*",
+     "bruk": "Prisvekst og kjøpekraft fra 1920."},
+    {"id": "ssb-11018", "type": "ssb", "utgiver": "ssb",
+     "navn": "SSB tabell 11018: renter på innskudd, husholdninger, hele perioden",
+     "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11018/data?lang=no&outputFormat=json-stat2&valueCodes[Innskuddstype]=20,16,15&valueCodes[Sektor]=04b&valueCodes[ContentsCode]=Innskudd&valueCodes[Tid]=*",
+     "bruk": "Bankrente og BSU-rente fra desember 2013."}
+  ]
+}
