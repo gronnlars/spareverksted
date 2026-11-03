@@ -97,7 +97,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await q.locator('input[aria-label="Velg Lars (2)"]').check();await q.locator('input[aria-label="Velg Lars (3)"]').check();
    await q.locator('#deleteSelected').click();assert.equal((await stored()).length,5);
    assert(await q.locator('#planBar').isHidden(),'slettet plan er ikke lenger åpen');
-   await q.locator('#undo').click();assert.equal((await stored()).length,7);
+   await q.locator('#planUndoButton').click();assert.equal((await stored()).length,7);
 
    // Plan-navn får neste ledige nummer, ikke «Plan 1 (2)».
    await q.locator('button[aria-label="Åpne Plan 1"]').click();await q.evaluate(()=>document.getElementById('save').click());assert.equal(await q.locator('#scenarioName').inputValue(),'Plan 2');await q.locator('#cancelSave').click();
