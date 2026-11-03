@@ -121,3 +121,5 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 .table-scroll{background:linear-gradient(to right,var(--surface,#fff) 30%,transparent) left/40px 100% no-repeat local,linear-gradient(to left,var(--surface,#fff) 30%,transparent) right/40px 100% no-repeat local,radial-gradient(farthest-side at 100% 50%,rgba(0,0,0,.16),transparent) right/12px 100% no-repeat scroll}
 @media(max-width:560px){#comparison th[scope=row],#comparison thead th:first-child{padding-left:4px}#comparison tr>:last-child{padding-right:4px}}
 @media(max-width:560px){#comparison th[scope=row]{min-width:48px}}
+/* Rapporttabellen: tettere celler på smal skjerm, så tabellen får plass uten mindre skrift. Rull sidelengs bare som siste utvei (3.11.2026). */
+.report-table{overflow-x:auto}@media(max-width:560px){#reportDialog{padding:16px 12px}#reportPreview th,#reportPreview td{padding:8px 4px}#reportPreview td:first-child{white-space:normal}}
