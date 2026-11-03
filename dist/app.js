@@ -234,9 +234,11 @@ function drawWithdrawal(capital){if(capital===0){$('withdrawChart').replaceChild
 function planKey(state){const o={...state};delete o.activePage;return JSON.stringify(o);}
 function nameKey(n){return String(n).trim().replace(/\s+/g,' ').toLocaleLowerCase('nb');}
 function uniqueName(base){const names=new Set(saved.map(x=>nameKey(x.name)));if(!names.has(nameKey(base)))return base;if(/^plan(\s+\d+)?$/i.test(base.trim()))return firstFreePlanName();const root=base.replace(/\s*\(\d+\)$/,'');for(let k=2;;k++){const c=`${root} (${k})`;if(!names.has(nameKey(c)))return c;}}
-// Navneforslag ut fra det brukeren har valgt: sparemål, uttak eller formål i sparekalkulatoren (bare når formålet er valgt).
-function planBase(st){const d={car:'Bil',home:'Bolig',holiday:'Ferie',renovation:'Oppussing',freedom:'Friår',buffer:'Buffer'},p={freedom:'Pensjon',home:'Bolig',buffer:'Buffer'};return (st.activePage==='dreams'?d[st.dreamType]:st.activePage==='withdrawals'?'Uttak':st.purposeChosen?p[st.purpose]:'')||'';}
-function suggestedPlanName(){const base=planBase(s);return base?uniqueName(base):firstFreePlanName();}
+// Navneforslag ut fra det brukeren har valgt: målet i sparemål eller formålet i sparekalkulatoren (bare når formålet er valgt). Ellers kalkulatorens navn.
+function planBase(st){const d={car:'Bil',home:'Bolig',holiday:'Ferie',renovation:'Oppussing',freedom:'Friår',buffer:'Buffer'},p={freedom:'Pensjon',home:'Bolig',buffer:'Buffer'};return (st.activePage==='dreams'?d[st.dreamType]:st.activePage==='withdrawals'?'':st.purposeChosen?p[st.purpose]:'')||kindName(st);}
+// Uten valgt formål: navnet følger kalkulatoren (Lars 3.11.2026). Gamle «Plan N» virker som før.
+function kindName(st){return st.activePage==='dreams'?'Sparemål':st.activePage==='withdrawals'?'Uttaksplan':'Spareplan';}
+function suggestedPlanName(){return uniqueName(planBase(s));}
 function firstFreePlanName(){const names=new Set(saved.map(x=>nameKey(x.name)));for(let k=1;;k++)if(!names.has('plan '+k))return 'Plan '+k;}
 function planDirty(){return !!activePlan&&saved.includes(activePlan)&&planKey(s)!==activeBase;}
 function syncPlanBar(){if(activePlan&&!saved.includes(activePlan))activePlan=null;const bar=$('planBar');if(!activePlan){bar.hidden=true;return;}bar.hidden=false;$('planName').textContent=activePlan.name;const dirty=planDirty();$('planDirty').hidden=!dirty;$('planSave').hidden=!dirty;$('planSave').setAttribute('aria-label','Lagre endringene i '+activePlan.name);}

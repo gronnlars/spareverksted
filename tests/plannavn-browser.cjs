@@ -29,7 +29,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
   await q.selectOption('#dreamType','holiday');await q.waitForTimeout(200);
   assert.equal(await name(),'Ferie');
   await q.selectOption('#dreamType','other');await q.waitForTimeout(200);
-  assert.match(await name(),/^Plan \d+$/);
+  assert.equal(await name(),'Sparemål','uten valgt mål følger navnet kalkulatoren');
   // Lars 3.11.2026: lagre «Bil», bytt til Bolig. Forslaget skal følge det som er valgt nå, ikke bli «Bil (2)».
   await q.selectOption('#dreamType','car');await q.waitForTimeout(200);
   await q.evaluate(()=>openSave());assert.equal(await q.locator('#scenarioName').inputValue(),'Bil (2)');await q.click('#saveNew');await q.waitForTimeout(300);
@@ -42,7 +42,13 @@ const engine=process.env.SPARE_ENGINE||'chromium';
   // Sparekalkulatoren: formålet brukes bare når brukeren har valgt det.
   await q.goto(origin+'#activePage=calculator&level=explore');await q.reload();await q.waitForTimeout(400);
   assert.equal(await q.evaluate(()=>s.activePage),'calculator');
-  assert.match(await name(),/^Plan \d+$/,'standardformålet alene gir ikke «Pensjon»');
+  assert.equal(await name(),'Spareplan','standardformålet alene gir ikke «Pensjon»');
+  // Uttak: «Uttaksplan», deretter «Uttaksplan (2)».
+  await q.evaluate(()=>setPage('withdrawals'));await q.waitForTimeout(200);
+  assert.equal(await name(),'Uttaksplan');
+  await q.evaluate(()=>openSave());await q.click('#saveNew');await q.waitForTimeout(300);
+  await q.evaluate(()=>{activePlan=null;});assert.equal(await name(),'Uttaksplan (2)');
+  await q.evaluate(()=>setPage('calculator'));await q.waitForTimeout(200);
   const purpose=async v=>{await q.evaluate(v=>{const e=document.getElementById('purpose');e.value=v;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));},v);await q.waitForTimeout(200);};
   await purpose('freedom');
   assert.equal(await name(),'Pensjon (2)','«Pensjon» finnes fra før');

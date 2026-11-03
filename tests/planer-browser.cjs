@@ -105,9 +105,9 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await q.evaluate(()=>{document.getElementById('savedDetails').open=true;});await q.locator('input[aria-label="Velg Plan 1"]').check();await q.locator('#compareSelected').click();assert.match(await q.locator('#pickHint').innerText(),/står i kalkulatoren nå/);assert.equal(await q.evaluate(()=>selectedPlans.size),0);await q.locator('#pickAll').click();
    // Store og små bokstaver: «plan 2» finnes, så neste forslag er ikke «Plan 2».
    assert.equal(await q.evaluate(()=>{saved.push({name:'plan 2',state:{...s},mode:'explore',view:{}});activePlan=null;return firstFreePlanName();}),'Plan 3');await q.evaluate(()=>{saved.pop();savedRender();});
-   // Uten åpen plan foreslås første ledige Plan-navn.
+   // Uten åpen plan og uten formål følger forslaget kalkulatoren (Lars 3.11.2026).
    await q.evaluate(()=>{activePlan=null;savedRender();document.getElementById('save').click();});
-   assert.equal(await q.locator('#scenarioName').inputValue(),'Plan 2');assert(await q.locator('#saveUpdate').isHidden());
+   assert.equal(await q.locator('#scenarioName').inputValue(),'Spareplan');assert(await q.locator('#saveUpdate').isHidden());
    await q.locator('#cancelSave').click();
    assert.deepEqual(q.errors,[]);
    assert.equal(await q.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'ingen sideveis rulling');
