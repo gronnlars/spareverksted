@@ -42,6 +42,40 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    if(!autoCollapsed){await q.keyboard.press('Enter');await q.evaluate(()=>document.querySelector('#basic input').focus());await q.waitForTimeout(80);assert((await state(q)).collapsed,'valget huskes');}
    assert.deepEqual(errors,[]);await c.close();
   }
+  // Safari-sikkerhetsfeltet hører til selve knappen, så innhold ikke synes under den.
+  // Playwright har ikke Safaris bevegelige verktøylinje. Prøv derfor CSS-en med både 0 og 34 px simulert inset.
+  for(const inset of [0,34]){
+   const c=await browser.newContext({viewport:{width:390,height:664},hasTouch:true});const q=await c.newPage();
+   await q.route('**/layout.css*',route=>route.fulfill({contentType:'text/css',body:fs.readFileSync(path.join(root,'layout.css'),'utf8').replaceAll('env(safe-area-inset-bottom)',inset+'px')}));
+   await q.goto(origin+'#activePage=calculator');
+   await q.evaluate(()=>document.querySelector('#basic input').focus());
+   await q.locator('#mobileSummaryToggle').click();
+   for(const height of [664,760,664]){
+    await q.setViewportSize({width:390,height});
+    const b=await q.evaluate(()=>{const s=document.getElementById('mobileSummary'),t=document.getElementById('mobileSummaryToggle'),a=s.getBoundingClientRect(),b=t.getBoundingClientRect();return {bottom:a.bottom,buttonBottom:b.bottom,height:a.height,buttonHeight:b.height,padding:getComputedStyle(s).paddingBottom,background:getComputedStyle(t).backgroundColor,hit:document.elementFromPoint(innerWidth/2,innerHeight-2)?.id,overflow:document.documentElement.scrollWidth-innerWidth};});
+    assert.equal(b.bottom,height,'linjen følger vindusbunnen');
+    assert.equal(b.buttonBottom,height,'knappen fyller også sikkerhetsfeltet');
+    assert.equal(b.height,b.buttonHeight,'ingen tom stripe under knappen');
+    assert(b.buttonHeight>=44+inset,'mobiltrykkflaten beholdes');
+    assert.notEqual(b.background,'rgba(0, 0, 0, 0)','ugjennomsiktig knapp');
+    assert.equal(b.hit,'mobileSummaryToggle','nederste del av flaten tilhører knappen');
+    assert.equal(b.overflow,0,'ingen sidelengs rulling');
+   }
+   await c.close();
+  }
+  // Lavt PC-vindu tilsvarer lite plass ved zoom. Mus får lavere knapp, berøring beholder 44 px.
+  for(const hasTouch of [false,true]){
+   const c=await browser.newContext({viewport:{width:320,height:320},hasTouch});const q=await c.newPage();
+   await q.goto(origin+'#activePage=calculator');
+   await q.evaluate(()=>document.querySelector('#basic input').focus());
+   if(!(await state(q)).collapsed)await q.locator('#mobileSummaryToggle').click();
+   const h=await q.locator('#mobileSummaryToggle').evaluate(e=>e.getBoundingClientRect().height);
+   assert(hasTouch?h>=44:h>=24&&h<=30,'høyde ved zoom, touch='+hasTouch+': '+h);
+   await q.locator('#mobileSummaryToggle').focus();await q.keyboard.press('Space');
+   assert(!(await state(q)).collapsed,'åpner med mellomrom');
+   await q.keyboard.press('Enter');assert((await state(q)).collapsed,'lukker med Enter');
+   await c.close();
+  }
   // Velkomstsiden: resultatlinjen vises aldri, heller ikke sammenlagt eller ved sterk zoom.
   for(const [w,h] of [[390,664],[256,180]]){const c=await browser.newContext({viewport:{width:w,height:h}});const q=await c.newPage();
    await q.goto(origin);await q.waitForTimeout(400);

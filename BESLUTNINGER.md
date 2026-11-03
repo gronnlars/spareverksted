@@ -1253,3 +1253,13 @@ Ikke endret, vurdert som feilvisning i verktøyet:
 - Avkuttede setninger og symboler i opplesningen: verktøyets lesing. Chromium gir hele navn uten pilsymbolene.
 
 Ikke testet: Safari, Firefox, VoiceOver og NVDA.
+
+## Resultatlinjen ved Safari-rulling og PC-zoom (3. november 2026)
+
+Lars viser at den lukkede resultatlinjen ser ut til å sveve når Safaris verktøylinje trekkes sammen. CSS-en la `safe-area-inset-bottom` som gjennomsiktig luft under knappen. Sikkerhetsfeltet flyttes inn i knappen med samme bakgrunn og trykkflate helt ned til bunnen. Ingen nettlesergjenkjenning eller nye rullelyttere.
+
+Ved maksimalt 760 px bredde og 420 px høyde får mus med hover en lukket knapp på minst 28 px. Berøring beholder 44 px, med eksisterende 30 px-unntak på skjermer under 300 px høyde. Sikkerhetsfeltet kommer i tillegg i alle tilfellene. Tekst, pil og tastaturfunksjon beholdes. Alternativet å fjerne sikkerhetsfeltet forkastes fordi hjemindikatoren fortsatt trenger plass.
+
+Eksisterende resultatlinjetest utvides med simulert sikkerhetsfelt på 0 og 34 px, endring av vindushøyde, trefflate nederst, sidebredde og mus mot berøring ved liten høyde. Smal viewport er ikke faktisk nettleserzoom, og skrivebords-WebKit er ikke Safari på iPhone. Lars må fortsatt prøve sammenfoldet og utvidet Safari-meny på iPhone. Lokale sikkerhets-, versjons- og gammel-kodekontroller består. Nettlesernedlasting feilet lokalt, så nettlesertestene kjøres i PR-ens eksisterende Chromium- og WebKit-jobb. ChatGPT/Codex. Ingen sammenslåing eller publisering i dette oppdraget.
+
+Revurder hvis faktisk Safari-prøving fortsatt viser et mellomrom eller knappen blir vanskelig å treffe ved zoom.
