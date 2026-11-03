@@ -14,6 +14,9 @@ on:
       - 'tests/fakta.test.py'
       - 'tests/fixtures/kildevakt/**'
       - '.github/workflows/kildevakt.yml'
+defaults:
+  run:
+    shell: bash
 permissions:
   contents: read
 concurrency:
