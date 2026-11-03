@@ -168,8 +168,9 @@ button,summary,a,input,select{scroll-margin-block:100px}
  .mobile-summary button{min-height:44px;padding:9px 12px;font-size:12px}
  .mobile-summary .mobile-summary-toggle{min-width:44px;padding:9px;line-height:1;white-space:nowrap}.mobile-summary-toggle>span{font-size:24px;font-weight:400}.mobile-summary.is-collapsed .mobile-summary-toggle{font-size:13px;padding:9px 14px}
  .mobile-summary-body{display:contents}.mobile-summary.is-collapsed .mobile-summary-body{display:none}
- .mobile-summary.is-collapsed{min-height:0;left:auto;padding:0 12px calc(12px + env(safe-area-inset-bottom));background:transparent;border:0;box-shadow:none}
- .mobile-summary.is-collapsed .mobile-summary-toggle{background:var(--surface-soft,#fffefb);border:1px solid var(--control-border,#67816a);box-shadow:0 2px 10px #20392b26}
+ .mobile-summary.is-collapsed{min-height:0;padding:0 0 env(safe-area-inset-bottom);border-top:0;box-shadow:none;background:transparent;justify-content:center}
+ .mobile-summary.is-collapsed .mobile-summary-toggle{width:100%;min-height:44px;border-radius:14px 14px 0 0;border:1px solid var(--control-border,#67816a);border-bottom:0;background:var(--surface-soft,#fffefb);box-shadow:0 -2px 10px #20392b1f;display:flex;align-items:center;justify-content:center;gap:6px}
+ .mobile-summary.is-collapsed .mobile-summary-toggle::before{content:"";width:9px;height:9px;border:solid currentColor;border-width:2px 0 0 2px;transform:translateY(2px) rotate(45deg)}
  body[data-stage=workbench][data-page=calculator] .mobile-summary.is-editing{display:flex}
  body[data-stage=workbench][data-page=calculator] main{padding-bottom:calc(86px + env(safe-area-inset-bottom))}
  body[data-stage=workbench][data-page=calculator] footer{padding-bottom:24px}
@@ -229,3 +230,7 @@ input[aria-invalid=true]{border-color:var(--control-border,#b3452c);outline-colo
 @media(max-width:760px){.display-options{width:100%;margin-left:0}.display-options #levels{flex:1}.display-options #levels button{flex:1;padding-inline:6px}}
 /* Lav skjerm eller sterk zoom: tynnere resultatlinje uten minigraf (3.11.2026). */
 @media(max-width:760px) and (max-height:420px){.mobile-summary{min-height:0;padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom))}#mobileCurve{display:none}}
+/* Sterk zoom (400–500 %) og lave skjermer: smal resultatlinje, minst 24 px høy (WCAG 2.5.8), og knappene for spareform
+   bryter linjen i stedet for å gå oppå hverandre. Står sist så de vinner over reglene ovenfor (3.11.2026). */
+@media(max-height:300px){.mobile-summary.is-collapsed .mobile-summary-toggle{min-height:30px;padding:4px 12px;font-size:12px}body[data-stage=workbench][data-page=calculator] main{padding-bottom:calc(40px + env(safe-area-inset-bottom))}}
+@media(max-width:300px){.savings-type .segmented button{white-space:normal;overflow-wrap:anywhere;hyphens:auto;line-height:1.15;padding:6px 2px}}
