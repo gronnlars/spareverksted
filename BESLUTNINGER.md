@@ -14,6 +14,39 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 | Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 
+## Lånekalkulator v1 (3. november 2026)
+
+**Beslutning (Lars):** Lånekalkulatoren bygges nå, før fase 3 og 4 er ferdige, i avgrensede PR-er. PR 1 er regnemotoren (`dist/laan-motor.js`) med tester. Den avhenger ikke av rentekildene. Siden, referanserentene og effektiv rente kommer i egne PR-er. Regnereglene står i [docs/laanemodell.md](docs/laanemodell.md).
+
+**Begrunnelse:** Lån er ren regning med kjente formler, uten regelverk eller historiske serier, og kan kontrolleres uavhengig. Kalkulatoren forklarer betalinger og kostnader og anbefaler ingen lånetype eller långiver.
+
+**Vedtatt av Lars 3.11.2026:**
+
+1. **Egen motor.** Sparekalkulatoren røres ikke. Lån regnes ikke som negative sparebeløp.
+2. **Detaljnivåer som i sparekalkulatoren.** Enkel, Utforsk og Avansert. Valg gjort på et høyere nivå, for eksempel gebyrer, regnes fortsatt med på et enklere nivå og vises der som en kort oppsummering med mulighet til å endre.
+3. **Lånetyper:** boliglån, billån og forbrukslån. Typen endrer ikke regnemåten, bare referanserenten og hvilke felt som vises.
+4. **Gebyrer er med i v1.** Lånebeløp, rente, gebyrer og samlet tilbakebetalt vises hver for seg. Forbrukslån viser gebyrene på alle nivåer.
+5. **Effektiv rente i v1, i egen PR etter kildekontroll.** Motoren leverer betalingsstrømmen, men låser ikke metoden før regelverket er lest i primærkilden.
+6. **Terminbeløp i dagens kroner venter til v1.1.** Kjøpekraften til framtidige betalinger sier ikke i seg selv noe om betalingsevne, fordi inntekten kan utvikle seg annerledes.
+7. **Renteendring og ekstra innbetaling skilles.** Renteendring i annuitetslån gir nytt terminbeløp over gjenværende løpetid. Ekstra innbetaling beholder terminbeløpet (serie: avdraget), og løpetiden blir kortere. Samme termin: ny rente, så terminen, så den ekstra innbetalingen.
+8. **Siste termin og innfrielse.** Siste termin tar med påløpt rente og termingebyr. Ekstra innbetaling begrenses til restgjelden. Ingen rente eller gebyrer etter innfrielse.
+
+**Foreslått, avgjøres med PR 2:** Egen side `laan.html` med samme mal som de andre sidene. Menyen «Sparing» og «Lån». Rentetall fra statistikk heter «referanserente», med måned, lånegruppe og kilde, og overskriver aldri en rente brukeren har skrevet inn. Finnes ingen god kilde for en lånetype, står rentefeltet tomt. Kildevakt kontrollerer månedlig, lager PR ved nye data og beholder siste gyldige verdi med synlig måned ved kildefeil.
+
+**Ord:** Ikke «billigere». Serielån gir lavere samlet rente fordi gjelden nedbetales raskere, og de første terminene er høyere.
+
+**Alternativer:**
+
+- Plassering: A. egen side (valgt for motoren, foreslått for siden). B. fjerde fane i kalkulatoren (forkastet: rører app.js, blander lån og spareplaner, størst regresjonsrisiko). C. innbakt i et svar i Spør om sparing (forkastet: blander svar og verktøy).
+- Rente ved manglende kilde: A. tomt felt (foreslått). B. merket eksempeltall (forkastet: kan leses som dagens rente). C. Finansportalen (vurderes etter kontroll av datagrunnlag og vilkår).
+- Forbrukslån: A. med gebyrer i v1 (valgt). B. uten gebyrer, med forbehold (forkastet: et forbehold retter ikke en beregning som utelater vesentlige kostnader). C. vente med forbrukslån.
+- Ekstra innbetaling: A. kortere løpetid (valgt). B. lavere terminbeløp. C. brukeren velger (kan komme senere).
+- Avrunding: A. ingen i beregningen, skjermen avrunder (valgt: lettest å etterprøve). B. avrunde terminbeløpet som en bank og justere siste termin (forkastet: krever en bestemt avrundingspraksis som ikke er kildekontrollert).
+
+**Kontroll:** Lukkede formler, egenskapstester på 400 tilfeldige planer og en uavhengig Python-implementasjon som sammenlignes termin for termin.
+
+**Revurderes hvis:** Brukere eller fagfolk peker på at en regel avviker fra vanlig bankpraksis på en måte som gir misvisende resultat, eller kildekontrollen av effektiv rente krever en annen tidsregning enn månedlige terminer.
+
 ## Utviklingsfrys opphevet og PR godkjent for opplasting (3. november 2026)
 
 Lars presiserte 3.11.2026 at kalkulatoren og hele nettstedet er åpnet for videre utvikling. Den tidligere kalkulatorfrysen og generelle utviklingspausen gjelder ikke. Strenge kildekriterier, ingen personlige råd eller produktanbefalinger, universell utforming og personvern gjelder alle endringer. Ambisjonen om å være best i klassen er et utviklingsmål, ikke en dokumentert rangering.
