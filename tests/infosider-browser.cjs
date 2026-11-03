@@ -67,7 +67,10 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
    }
    const chapters=page.locator('.info-chapter'),first=chapters.first(),summary=first.locator(':scope > summary');
    assert.equal(await first.getAttribute('open'),null);
-   await summary.focus();await page.keyboard.press('Enter');
+   // Etter museklikk på kontaktlenken må fokusprøven faktisk bruke tastatur.
+   await summary.focus();await page.keyboard.press('Tab');await page.keyboard.press('Shift+Tab');
+   assert(await summary.evaluate(e=>e===document.activeElement),'Tab returns to chapter');
+   await page.keyboard.press('Enter');
    assert.notEqual(await first.getAttribute('open'),null,'Enter opens');
    assert(await summary.evaluate(e=>e===document.activeElement),'focus stays on chapter');
    assert(await summary.evaluate(e=>{const s=getComputedStyle(e);return s.outlineStyle!=='none'&&parseFloat(s.outlineWidth)>=2;}),'visible focus');
