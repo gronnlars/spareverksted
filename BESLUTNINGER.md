@@ -1103,3 +1103,20 @@ C. Beholde farge etter plass i grafen. Ikke valgt: det var feilen.
 **Akseptert ulempe:** Flytter du planene i lista, kan fargene bytte plass.
 
 **Vurder på nytt når:** det blir lov å sammenligne flere enn tre planer.
+
+## Sparemål: «kan gi underskudd» i stedet for «frarådes» (3. november 2026)
+
+**Status:** Lars ba Claude velge 3.11.2026 («gjør det du mener er best»). Venter på godkjenning i PR.
+
+**Beslutning:** Når Moderat eller Høyere risiko kan gi underskudd ved et fall, står det «kan gi underskudd», ikke «frarådes». Grunnen vises med én setning. Ved kortere tid enn `{{fundMinYears}}` år gjengis Forbrukerrådets anbefaling som deres («Forbrukerrådet anbefaler minst 5 års sparehorisont for aksjefond»). Ved fast kjøpsdato, buffer eller ønske om lite uro beskrives risikoen uten kilde-påstand og uten råd. Tallet 5 hentes fra registeret.
+
+**Bakgrunn:** «Frarådes» er et råd. Kilden (Forbrukerrådet, «Sparing i fond og spareprofiler», sist endret 16.10.2026, lest av Claude 3.11.2026) dekker bare sparehorisonten. De tre andre grunnene var egne regler uten kilde.
+
+**Alternativer:**
+A. Beskrive risikoen og gjengi kilden der den finnes. **Valgt.** I tråd med KILDEREGLER og `docs/regulatorisk.md`.
+B. Beholde «frarådes» med kilde. Ikke valgt: kilden dekker ikke fast dato, buffer eller lite uro.
+C. Fjerne markeringen. Ikke valgt: stresstesten viser en reell risiko som brukeren bør se.
+
+**Akseptert ulempe:** Teksten er litt lengre enn ett ord.
+
+**Vurder på nytt når:** Finanstilsynet svarer, eller Forbrukerrådet endrer anbefalingen.
