@@ -329,24 +329,32 @@ def main(argv):
     sources = load_sources()
     if args.cmd == 'tilgang':
         print('| Kilde | HTTP |\n| --- | --- |')
+        failed = False
         for s in sources['kilder']:
             url = s.get('url') or NB_DATA + s['fil']
             try:
                 status = http_get(url).status
             except Exception as error:  # noqa: BLE001  rapporteres, ikke skjules
                 status = f'feil: {error}'
+            failed = failed or not isinstance(status, int) or not 200 <= status < 300
             print(f"| {s['id']} | {status} |")
-        return 0
+        return int(failed)
     if args.cmd == 'lag-pr':
         return make_pr(args)
     store = Store(args.mål)
     if args.cmd == 'hent':
-        text = report_markdown(fetch(sources, store, http_get, args.kilde))
+        report = fetch(sources, store, http_get, args.kilde)
+        text = report_markdown(report)
         (store.root / 'OVERSIKT.md').write_text(describe(store), encoding='utf-8')
         print(text)
         if args.sammendrag:
             Path(args.sammendrag).write_text(text, encoding='utf-8')
         problems = verify(store)
+        selected = {s['id'] for s in sources['kilder'] if s['type'] != 'side' and (not args.kilde or s['id'] in args.kilde)}
+        if args.kilde:
+            problems += [f'Ukjent kilde: {sid}' for sid in set(args.kilde) - selected]
+        problems += [f'{sid}: henting feilet' for sid, status, _ in report if status == 'hentefeil']
+        problems += [f'{sid}: forventet kilde mangler' for sid in selected - set(store.register)]
         if problems:
             print('\n'.join(problems), file=sys.stderr)
             return 1

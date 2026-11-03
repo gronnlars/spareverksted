@@ -12,6 +12,9 @@ on:
       - 'tests/tidsmaskin.test.py'
       - 'research/historikk/**'
       - '.github/workflows/tidsmaskin.yml'
+defaults:
+  run:
+    shell: bash
 permissions:
   contents: read
 concurrency:
