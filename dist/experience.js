@@ -69,7 +69,7 @@ function buildReport(){
 $('reportButton').onclick=()=>{try{const html=buildReport();$('reportPreview').innerHTML=html;$('printReportContent').innerHTML=html.replaceAll('reportArea','printArea').replaceAll('reportClip','printClip').replaceAll('reportGuide','printGuide');$('reportDialog').showModal();}catch(e){notice(e.message);}};
 $('closeReport').onclick=()=>$('reportDialog').close();$('printReport').onclick=()=>window.print();
 // A normal browser print also gets the complete report, rather than a half-hidden interface.
-window.addEventListener('beforeprint',()=>{try{$('printReportContent').innerHTML=buildReport().replaceAll('reportArea','printArea').replaceAll('reportClip','printClip').replaceAll('reportGuide','printGuide');}catch{$('printReportContent').textContent='Rapporten kunne ikke beregnes. Rett ugyldige felt og prøv igjen.';}});
+window.addEventListener('beforeprint',()=>{if($('reportDialog').open)return;try{$('printReportContent').innerHTML=buildReport().replaceAll('reportArea','printArea').replaceAll('reportClip','printClip').replaceAll('reportGuide','printGuide');}catch{$('printReportContent').textContent='Rapporten kunne ikke beregnes. Rett ugyldige felt og prøv igjen.';}});
 fill();render();
 
 $('copyLink').onclick=async()=>{try{await navigator.clipboard.writeText($('shareUrl').value);notice('Lenken er kopiert.');$('copyLink').textContent='Kopiert';}catch{$('shareUrl').select();notice('Trykk Ctrl+C eller hold på teksten for å kopiere lenken.');}};
