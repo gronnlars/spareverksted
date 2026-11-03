@@ -27,6 +27,8 @@ jobs:
       - name: Check calculations and guidance
         run: |
           node tests/engine.test.cjs
+          node tests/laan-motor.test.cjs
+          python3 tests/laan-kontroll.test.py
           node tests/tax-export.test.cjs
           node tests/veileder.test.cjs
           node tests/veileder-context.test.cjs
@@ -70,6 +72,7 @@ jobs:
           node --check dist/app.js
           node --check dist/layout.js
           node --check dist/engine.js
+          node --check dist/laan-motor.js
           node --check dist/guidance.js
           node --check dist/journey.js
           node --check dist/meaning.js
