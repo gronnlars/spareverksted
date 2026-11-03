@@ -34,7 +34,9 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    assert.deepEqual(await q.evaluate(()=>[...selectedPlans].sort((a,b)=>a-b).map(i=>saved[i].name)),['Lars','Plan 1','Pensjon']);
    // Velg alle seks, også sparemålet i den andre gruppen, og last ned.
    await q.evaluate(()=>{pickedPlans=new Set(saved.map((_,i)=>i));savedRender();});
-   assert.match(await q.locator('#pickHint').innerText(),/«Last ned valgte» tar med alle/);
+   assert.match(await q.locator('#pickHint').innerText(),/Nedlastingen under lista tar med alle/);
+   assert.equal(await q.locator('#downloadSelected').innerText(),'Last ned valgte (6)');
+   assert.equal(await q.evaluate(()=>{const b=document.getElementById('downloadSelected'),l=document.getElementById('saved');return !!(l.compareDocumentPosition(b)&Node.DOCUMENT_POSITION_FOLLOWING);}),true,'knappen står under lista');
    await q.click('#downloadSelected');assert(await q.locator('#selectedExportDialog').evaluate(d=>d.open));
    assert.match(await q.locator('#selectedExportCount').innerText(),/6 planer/);
    const sheets=await q.evaluate(()=>selectedSheets());
@@ -51,10 +53,23 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    const report=await q.locator('#reportPreview').innerText();
    assert.match(report,/Valgte planer/);assert.match(report,/Sparing: de tre øverste sammenlignet/);
    for(const n of ['Lars','Plan 1','Bil','Pensjon','Hus','Hytte: [plan]/2'])assert(report.includes(n),n+' i rapporten');
-   assert.match(report,/Igjen etter \d+ år: .* i dagens kjøpekraft/);assert.doesNotMatch(report,/frarå|undefined|NaN/);
+   assert.match(report,/Igjen etter \d+ år: .* i dagens kjøpekraft/);
+   assert.equal(await q.locator('#reportPreview .report-cmp-chart svg[role=img]').count(),1,'graf for sammenligningen av spareplaner');assert.doesNotMatch(report,/frarå|undefined|NaN/);
    // Tabellene får plass på mobil, eller ruller i sitt eget område.
    assert.equal(await q.locator('#reportDialog').evaluate(d=>d.scrollWidth-d.clientWidth),0);
    await q.locator('#reportDialog').evaluate(d=>d.close());
+   // Uten avkrysning gjelder knappen alle planene.
+   await q.evaluate(()=>{pickedPlans=new Set();savedRender();});
+   assert.equal(await q.locator('#downloadSelected').innerText(),'Last ned alle planene');
+   await q.click('#downloadSelected');assert.match(await q.locator('#selectedExportCount').innerText(),/Alle de 6/);
+   assert.equal((await q.evaluate(()=>selectedSheets())).length,8);await q.click('#closeSelectedExport');
+   // Tre valgte spareplaner sammenlignes uansett plass i lista, med graf. Sparemål og uttak får hver sin.
+   await q.evaluate(()=>{pickedPlans=new Set([2,3,4,5,0,1]);savedRender();});
+   const r2=await q.evaluate(()=>buildSelectedReport());
+   assert.match(r2,/Sparing: de tre øverste sammenlignet/);assert.doesNotMatch(r2,/Infinity|NaN|undefined/);
+   const top=await q.evaluate(()=>{const d=document.createElement('div');d.innerHTML=buildSelectedReport();const svg=d.querySelector('.report-cmp-chart svg');return [...svg.querySelectorAll('polyline')].every(l=>l.getAttribute('points').split(' ').every(p=>+p.split(',')[1]>=0));});assert(top,'linjene holder seg inne i grafen');assert.doesNotMatch(r2,/Sparemål: .*sammenlignet|Uttak: .*sammenlignet/,'én plan av en type gir ingen sammenligning');
+   await q.evaluate(()=>{pickedPlans=new Set([4,5,1]);savedRender();});
+   assert.match(await q.evaluate(()=>buildSelectedReport()),/Sparing: planene sammenlignet<\/h3><p>Plan 1, Hus, Hytte/);
    assert.deepEqual(errors,[]);await c.close();
   }
   console.log('last ned valgte (PDF og Excel) og sammenligning av de tre øverste: OK');

@@ -1113,7 +1113,7 @@ C. Fjerne markeringen. Ikke valgt: stresstesten viser en reell risiko som bruker
 
 **Status:** Bestilt av Lars 3.11.2026. Venter på godkjenning i PR.
 
-**Beslutning:** Planene som er krysset av i lista kan lastes ned samlet, som PDF eller Excel. Fila har først én sammenligning per kalkulator (Sparing, Sparemål, Uttak) med de tre øverste valgte i lista, og så en del for hver plan. Excel har i tillegg et oversiktsark. «Sammenlign» sperres ikke lenger når flere enn tre er valgt: da sammenlignes de tre øverste av typen som hører til kalkulatoren man står i.
+**Beslutning:** Under lista står «Last ned alle planene», eller «Last ned valgte (N)» når noe er krysset av. Fila (PDF eller Excel) har først én sammenligning per kalkulator (Sparing, Sparemål, Uttak) med graf og tabell for de tre øverste valgte i lista, og så en del for hver plan på tvers av kalkulatorene. Sammenligningen på skjermen har fortsatt sin egen «Last ned sammenligningen». Excel har i tillegg et oversiktsark. «Sammenlign» sperres ikke lenger når flere enn tre er valgt: da sammenlignes de tre øverste av typen som hører til kalkulatoren man står i.
 
 **Alternativer:**
 A. Rekkefølgen i lista avgjør hvilke tre som sammenlignes. **Valgt.** Brukeren styrer den selv ved å flytte planene.
