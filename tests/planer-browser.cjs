@@ -41,8 +41,9 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    assert.equal(await q.locator('#saved .saved-other .saved-row').count(),1,'sparemålet ligger for seg');
    assert(await q.locator('input[aria-label="Velg Bil"]').isHidden(),'sparemålet er lukket inntil man åpner det');
    await q.locator('#pickAll').click();assert.equal(await q.evaluate(()=>pickedPlans.size),4);
-   assert(await q.locator('#compareSelected').isDisabled(),'fire planer: for mange å sammenligne');
-   assert.match(await q.locator('#pickHint').innerText(),/tre planer om gangen/);
+   // Lars 3.11.2026: med flere enn tre valgte sammenlignes de tre øverste i lista.
+   assert(await q.locator('#compareSelected').isEnabled(),'fire planer: Sammenlign tar de tre øverste');
+   assert.match(await q.locator('#pickHint').innerText(),/de tre øverste/);
    await q.locator('input[aria-label="Velg Pensjon"]').uncheck();
    assert(await q.locator('#compareSelected').isEnabled(),'tre spareplaner kan sammenlignes');
    await q.locator('#compareSelected').click();

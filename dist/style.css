@@ -123,3 +123,5 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 @media(max-width:560px){#comparison th[scope=row]{min-width:48px}}
 /* Rapporttabellen: tettere celler på smal skjerm, så tabellen får plass uten mindre skrift. Rull sidelengs bare som siste utvei (3.11.2026). */
 .report-table{overflow-x:auto}@media(max-width:560px){#reportDialog{padding:16px 12px}#reportPreview th,#reportPreview td{padding:8px 4px}#reportPreview td:first-child{white-space:normal}}
+/* «Last ned valgte»: hver sammenligning og hver plan starter på ny side ved utskrift (3.11.2026). */
+@media print{.report-page{break-before:page}}

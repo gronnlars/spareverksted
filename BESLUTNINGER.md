@@ -1108,3 +1108,18 @@ C. Fjerne markeringen. Ikke valgt: stresstesten viser en reell risiko som bruker
 **Akseptert ulempe:** Teksten er litt lengre enn ett ord.
 
 **Vurder på nytt når:** Finanstilsynet svarer, eller Forbrukerrådet endrer anbefalingen.
+
+## Last ned valgte planer og sammenligning av de tre øverste (3. november 2026)
+
+**Status:** Bestilt av Lars 3.11.2026. Venter på godkjenning i PR.
+
+**Beslutning:** Planene som er krysset av i lista kan lastes ned samlet, som PDF eller Excel. Fila har først én sammenligning per kalkulator (Sparing, Sparemål, Uttak) med de tre øverste valgte i lista, og så en del for hver plan. Excel har i tillegg et oversiktsark. «Sammenlign» sperres ikke lenger når flere enn tre er valgt: da sammenlignes de tre øverste av typen som hører til kalkulatoren man står i.
+
+**Alternativer:**
+A. Rekkefølgen i lista avgjør hvilke tre som sammenlignes. **Valgt.** Brukeren styrer den selv ved å flytte planene.
+B. Sperre sammenligning ved flere enn tre (som før). Ikke valgt: Lars vil at «velg alle» skal gi en sammenligning.
+C. Velge de tre med høyest sluttbeløp. Ikke valgt: det rangerer planene etter et tall og kan leses som en anbefaling.
+
+**Akseptert ulempe:** Uttaksplaner står fortsatt blant spareplanene i lista, og sammenligningen på skjermen viser sparefasen for dem. I nedlastingen er uttak egen gruppe.
+
+**Vurder på nytt når:** uttak får egen gruppe i lista eller egen sammenligning på skjermen.
