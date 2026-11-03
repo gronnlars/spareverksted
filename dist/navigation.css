@@ -30,7 +30,7 @@
 :root .site-header{flex-wrap:wrap;height:auto}
 :root .site-header>.site-nav{display:flex;align-items:center;gap:4px;margin-left:auto;font-size:14px}
 :root .site-header>.site-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;border-radius:9px;text-decoration:none;color:var(--ink);font-weight:600;text-align:center;line-height:1.25}
-:root .site-header>.site-nav a[aria-current=page]{background:var(--soft,#e9f0e0);color:var(--green)}
+:root .site-header>.site-nav a[aria-current=page],.site-nav a[aria-current=true]{background:var(--soft,#e9f0e0);color:var(--green)}
 @media(max-width:760px){
  :root .site-header>.site-nav{order:3;flex:1 0 100%;margin:4px 0 0;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:stretch;gap:4px;border-top:1px solid var(--line);padding-top:6px}
  :root .site-header>.site-nav a{padding:6px 8px;font-size:14px;white-space:nowrap;min-width:0}
