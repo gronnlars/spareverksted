@@ -20,6 +20,11 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await q.goto(origin+'#activePage=calculator');await q.waitForTimeout(400);
    await q.evaluate(()=>document.querySelector('#basic input').focus());await q.waitForTimeout(100);
    let st=await state(q);assert(st.shown,w+': linjen vises når et felt har fokus');assert.equal(st.collapsed,autoCollapsed,w+': skjult ved start bare ved sterk zoom');
+   if(autoCollapsed){
+    // 500 %: sammenlagt linje er en smal stripe nederst (minst 24 px, WCAG 2.5.8), og spareformknappene overlapper ikke.
+    const z=await q.evaluate(()=>({h:document.getElementById('mobileSummaryToggle').getBoundingClientRect().height,over:[...document.querySelectorAll('#savingsTypes button')].map(b=>b.scrollWidth-b.clientWidth)}));
+    assert(z.h>=24&&z.h<=32,'smal stripe ved 500 %: '+z.h);assert.deepEqual(z.over,[0,0,0],'spareformknappene går ikke oppå hverandre');
+   }
    let toggle=null;
    for(let i=0;i<20;i++){
     st=await state(q);assert(!st.covered,`${w}: ${st.id} er dekket av resultatlinjen`);
@@ -37,6 +42,14 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    if(!autoCollapsed){await q.keyboard.press('Enter');await q.evaluate(()=>document.querySelector('#basic input').focus());await q.waitForTimeout(80);assert((await state(q)).collapsed,'valget huskes');}
    assert.deepEqual(errors,[]);await c.close();
   }
+  // Velkomstsiden: resultatlinjen vises aldri, heller ikke sammenlagt eller ved sterk zoom.
+  for(const [w,h] of [[390,664],[256,180]]){const c=await browser.newContext({viewport:{width:w,height:h}});const q=await c.newPage();
+   await q.goto(origin);await q.waitForTimeout(400);
+   assert.equal(await q.evaluate(()=>document.body.dataset.stage),'welcome');
+   await q.evaluate(()=>{const s=document.getElementById('mobileSummary');s.classList.add('is-visible','is-editing');});
+   for(const cls of [false,true]){await q.evaluate(c=>document.getElementById('mobileSummary').classList.toggle('is-collapsed',c),cls);
+    assert.equal(await q.evaluate(()=>getComputedStyle(document.getElementById('mobileSummary')).display),'none',w+': ikke på velkomstsiden');}
+   await c.close();}
   // Rapporttabellen for sparemål på 390 px.
   const c=await browser.newContext({viewport:{width:390,height:800}});const q=await c.newPage();
   await q.goto(origin+'#activePage=dreams&dreamType=car&dreamYears=3');await q.waitForTimeout(400);
