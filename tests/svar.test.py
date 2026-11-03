@@ -139,4 +139,18 @@ class IngestionTests(unittest.TestCase):
         for name in ['kildevakt','tidsmaskin']:
             self.assertIn('defaults:\n  run:\n    shell: bash',(ROOT/f'.github/workflows/{name}.yml').read_text())
 
+class ReferenceAnswerTests(unittest.TestCase):
+    def test_sv022_math_links_and_mapping(self):
+        subprocess.run([sys.executable, str(ROOT/'scripts/kontroller-sv022.py')], cwd=ROOT, check=True, capture_output=True, text=True)
+
+    def test_sv022_rejects_wrong_number_in_public_text(self):
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('reference_sv022',ROOT/'scripts/kontroller-sv022.py')
+        reference=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(reference)
+        a=svar.read(ROOT/'kilder/svar/SV-022.md')
+        a['sections'][6]=a['sections'][6].replace('525 kr','526 kr')
+        with patch.object(svar,'read',return_value=a),self.assertRaisesRegex(ValueError,'Offentlig tekst har andre tall'):
+            reference.check()
+
 if __name__=='__main__':unittest.main()

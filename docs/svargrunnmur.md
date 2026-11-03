@@ -2,6 +2,10 @@
 
 Implementert etter Lars sitt oppdrag 3.11.2026. Opphav: Claudes SVARSKJEMA og plan, videreført i kode av ChatGPT/Codex. Prosjektets lisens gjelder. Dette dokumentet beskriver hva koden faktisk gjør.
 
+## Referansesvar, 3. november 2026
+
+SV-022 er videreført fra mekanisk utkast til et kildekontrollert referansesvar med egenkontroll og status `til kontroll`. [Utfyllingsveiledning, feltkobling og separat kontrolloppdrag](referansesvar.md). BSU-skjemaet er fortsatt mekanisk utkast. Ingen svar er migrert til offentlig levering. Eldre beskrivelser av pilotarbeidet nedenfor gjelder implementeringsøkten.
+
 ## Bruk
 
 ```sh

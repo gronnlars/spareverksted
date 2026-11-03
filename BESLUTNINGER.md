@@ -1200,3 +1200,27 @@ Vurderte alternativer:
 PDF/UA-merket er en påstand om full samsvar med standarden. Det skal bare settes etter kontroll med et anerkjent verktøy (veraPDF eller PAC), ikke for å få grønt i en sjekk som bare ser etter merket.
 
 Ta opp igjen hvis: brukere eller tilsyn trenger PDF/UA, rapporten må fungere i Safari eller Firefox som merket PDF, eller vi uansett bygger egen PDF-produksjon.
+
+## Funn fra Frontkit-sjekkene av spareverksted.no (3. november 2026)
+
+Lars kjørte Frontkits gratis WCAG-sjekk, fokusrekkefølge og opplesning. Verktøyene leser rå HTML uten CSS og JavaScript. Hvert funn ble derfor kontrollert mot tilgjengelighetstreet i Chromium før endring.
+
+Rettet (PR #199): bunnteksten lå inni `<main>` på alle sider og ble ikke et eget landemerke, startvalgene fikk tittel og forklaring i samme navn, delelenken manglet synlig etikett, skjemaet etter startvalget manglet h1, to påkrevde felt sa ikke synlig at de må fylles ut, hoppelenken på forsiden het «Hopp til kalkulatoren» selv der den ikke leder dit, og fire tekster sa «vi».
+
+Ikke endret, vurdert som feilvisning i verktøyet:
+
+- «Ingen hoppelenke»: den finnes og er første element.
+- «7 skjulte elementer kan få fokus»: elementer med `hidden`, som nettleseren ikke gir fokus.
+- «2 h1» (2.4.6): den rå HTML-en har to h1, men bare én er synlig og lest opp i hvert steg. WCAG krever ikke én h1, men hvert steg har nå én.
+- «Bare én navigasjonsmåte» (2.4.5): hovedmenyen og bunntekstens liste med lenker til alle sider oppfyller 2.4.5 sammen (W3C-teknikk G126 for små nettsteder). Søk eller nettstedskart legges ikke til bare for å få grønt i verktøyet. Ta opp igjen hvis nettstedet får mange flere sider.
+- Avkuttede setninger og symboler i opplesningen: verktøyets lesing. Chromium gir hele navn uten pilsymbolene.
+
+Ikke testet: Safari, Firefox, VoiceOver og NVDA.
+
+## Ett referansesvar før videre overføring (3. november 2026)
+
+Lars bestilte gjennomgang etter #198 og prioriterte ett grundig svar fremfor fem raske. ChatGPT/Codex har kartlagt de tre publiserte svarene og de to nye pilotskjemaene på main `298ffaf`. Renters rente, SV-022, er valgt som referanse: det prøver begrepsregister, matematiske kilder, egne beregninger, kjøpekraftskontrast og kalkulatorlenker uten produktvalg. Det nye skjemaet har status `til kontroll`.
+
+Alternativer: A. Overføre alle tre publiserte svar og flere utkast samtidig. B. Fullføre ett kildekontrollert referansesvar og en konkret utfyllingsveiledning. C. Bare skrive mer generelle regler. B er valgt innenfor Lars sitt oppdrag. Det gir en lesbar modell og en kjørbar egenkontroll. Ulempen er at BSU, ASK og fondskonto fortsatt må migreres hver for seg. Vurder videre tempo etter separat kontroll av referansen.
+
+Svarform, kilderegler, publiseringsutvalg og godkjenningskrav beholdes. Referansen er ingen publiseringsgodkjenning. Kildevakt-oppfølging av de fire kilde-ID-ene, separat kildekontroll og kandidatens søk og tilgjengelighet gjenstår før integrasjon. Eksisterende Kildevakt og Tidsmaskin videreføres uten en tredje innhenter. Ingen personlig tilpasning, produktomtale eller kalkulatorfunksjon innføres.
