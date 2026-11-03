@@ -92,7 +92,7 @@ footer{align-items:center;gap:12px}
  .journey-fields{grid-template-columns:1fr 1fr;gap:0 12px}
  .journey-fields label{margin-top:12px;font-size:12px}.journey-fields .optional{display:inline;font-size:10px}
  .journey-form{padding:18px}.journey-form>.hint{font-size:12px}
- .journey-form .panel-title h2{font-size:17px}.journey-form .button-row{gap:10px}
+ .journey-form .panel-title h2,.journey-form .panel-title h1{font-size:17px}.journey-form .button-row{gap:10px}
  .journey-risk{margin-top:14px}.journey-risk summary .optional{display:inline}
  .guidance-page .ask-intro h1{font-size:30px}.guidance-page .ask-intro>p:last-child{font-size:14px}
  .guidance-page .ask-intro{margin-bottom:16px}.guidance-page .question-panel{padding:18px}
