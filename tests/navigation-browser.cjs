@@ -79,7 +79,11 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    await page.setViewportSize({width,height:900});await page.goto(origin+'/'+file);
    if(file==='index.html'){await page.evaluate(()=>sessionStorage.clear());await page.reload();}
    // Hovedmenyen er alltid synlig: tre lenker, nåelige med tastatur, ingen nedtrekk.
-   const links=page.locator('.site-header>.site-nav a');assert.equal(await links.count(),3,file+' '+width+': tre lenker');
+   const links=page.locator('.site-header>nav[aria-label=Hovedmeny] a');assert.equal(await links.count(),3,file+' '+width+': tre lenker');
+   const sub=page.locator('.info-nav');
+   const info=!['index.html','spor.html'].includes(file);
+   assert.equal(await sub.count(),info?1:0,file+': undermeny bare på infosider');
+   if(info){assert.equal(await sub.locator('a').count(),4);assert(await sub.isVisible());}
    for(const link of await links.all())assert(await link.isVisible(),file+' '+width+': lenken synes');
    await links.first().focus();assert(await page.evaluate(()=>document.activeElement.closest('.site-nav')!==null),file+': Tab når menylenke');
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),file+' '+width+': no horizontal overflow');
