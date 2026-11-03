@@ -1,0 +1,16 @@
+{
+ "kilde": "Lovdata: Finansdepartementets skatteforskrift (gjeldende)",
+ "url": "https://api.lovdata.no/v1/publicData/get/gjeldende-sentrale-forskrifter.tar.bz2",
+ "hentet": "2026-11-03T09:41:15+00:00",
+ "lisens": "NLOD 2.0. Kilde: Lovdata.",
+ "pakke": {
+  "filename": "gjeldende-sentrale-forskrifter.tar.bz2",
+  "description": "Gjeldende sentrale forskrifter, ajourført med endringer",
+  "sizeBytes": "21516248",
+  "lastModified": "2026-11-03T02:32:00Z"
+ },
+ "dokument": "sf/sf-19991119-1158.xml",
+ "fil": "2026-11-03T094115-sf-19991119-1158.xml",
+ "sha256": "63fdf03bb8300b566bb3d49cec6eca994fed09d3084bbfd62e40ec7503c5fa50",
+ "bytes": 1246761
+}

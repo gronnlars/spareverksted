@@ -1,0 +1,16 @@
+{
+ "kilde": "Lovdata: skatteloven (gjeldende)",
+ "url": "https://api.lovdata.no/v1/publicData/get/gjeldende-lover.tar.bz2",
+ "hentet": "2026-11-03T09:41:10+00:00",
+ "lisens": "NLOD 2.0. Kilde: Lovdata.",
+ "pakke": {
+  "filename": "gjeldende-lover.tar.bz2",
+  "description": "Gjeldende lover, ajourført med endringer",
+  "sizeBytes": "5810283",
+  "lastModified": "2026-11-03T02:31:00Z"
+ },
+ "dokument": "nl/nl-19990326-014.xml",
+ "fil": "2026-11-03T094110-nl-19990326-014.xml",
+ "sha256": "25e5627b53a9dc9d7aa1977c73ecf841bbb5a2fcbfd852544e65836bc393aa97",
+ "bytes": 1201995
+}

@@ -1,0 +1,9 @@
+{
+ "kilde": "Norges Bank",
+ "url": "https://data.norges-bank.no/api/data/IR/B.KPRA.SD.R?format=sdmx-json&lastNObservations=1&locale=no",
+ "hentet": "2026-11-03T09:41:26+00:00",
+ "lisens": "Kilde: Norges Bank. Rådata lagres uendret.",
+ "fil": "2026-11-03T094126-sdmx.json",
+ "sha256": "49b983ed0fb336a85131517f99731bce7aba268794158fd5dff97ed9f7f53d8c",
+ "bytes": 2882
+}
