@@ -59,7 +59,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
    const top=await page.locator('.info-nav').evaluate(e=>e.getBoundingClientRect().top);
    if(navTop===null)navTop=top;
    assert.equal(top,navTop,'submenu stays in the same place across pages');
-   assert(await page.locator('h1 + .info-tools').count(),'tools immediately follow heading');
+   assert(await page.locator('main > .info-tools:first-child').count(),'tools precede heading and introduction');
    assert.equal(await page.locator('.info-tools a').evaluate(e=>Boolean(e.closest('details'))),false);
    if(file==='personvern.html')assert(await page.locator('#kontakt a[href="https://www.datatilsynet.no/"]').isVisible());
    if(file==='tilgjengelighet.html')assert(await page.locator('#kapittel-a11yReport a[href*="uutilsynet.no"]').isVisible());
