@@ -54,7 +54,9 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    assert.match(report,/Valgte planer/);assert.match(report,/Sparing: de tre øverste sammenlignet/);
    for(const n of ['Lars','Plan 1','Bil','Pensjon','Hus','Hytte: [plan]/2'])assert(report.includes(n),n+' i rapporten');
    assert.match(report,/Igjen etter \d+ år: .* i dagens kjøpekraft/);
-   assert.equal(await q.locator('#reportPreview .report-cmp-chart svg[role=img]').count(),1,'graf for sammenligningen av spareplaner');assert.doesNotMatch(report,/frarå|undefined|NaN/);
+   assert.equal(await q.locator('#reportPreview .report-cmp-chart svg[role=img]').count(),2,'søyler og linjer for sammenligningen av spareplaner');
+   assert(await q.locator('#reportPreview .report-cmp-chart').first().locator('rect').count()>=2,'søylegraf først, som på skjermen');
+   assert.equal(await q.locator('#reportPreview section').first().evaluate(e=>e.classList.contains('report-page')),false,'første sammenligning på samme side som overskriften');assert.doesNotMatch(report,/frarå|undefined|NaN/);
    // Tabellene får plass på mobil, eller ruller i sitt eget område.
    assert.equal(await q.locator('#reportDialog').evaluate(d=>d.scrollWidth-d.clientWidth),0);
    await q.locator('#reportDialog').evaluate(d=>d.close());

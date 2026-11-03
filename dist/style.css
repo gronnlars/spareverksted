@@ -127,4 +127,6 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 @media print{.report-page{break-before:page}}
 .selected-download{margin:14px 0 6px}.cmpl-1{stroke:var(--cmp-1)}.cmpl-2{stroke:var(--cmp-2)}.cmpl-3{stroke:var(--cmp-3)}
 .report-cmp-chart{max-width:560px}.report-cmp-chart svg{width:100%;height:auto;font-size:12px;fill:currentColor}.report-cmp-legend{font-size:14px}.report-cmp-chart .rc-grid{stroke:var(--line,#d9e0d3);stroke-width:1}
-.report-cmp-legend{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;padding:0;margin:8px 0 14px}.report-cmp-legend li{display:flex;align-items:center;gap:8px}.report-cmp-legend svg{width:34px;height:12px;flex:none}
+.report-cmp-legend{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;padding:0;margin:8px 0 14px}.report-cmp-legend li{display:flex;flex:none;align-items:center;gap:8px;white-space:nowrap}.report-cmp-legend svg{width:34px;height:12px;flex:none}
+@media print{#printReportContent section.report-block{break-inside:auto}#printReportContent .report-cmp-chart,#printReportContent .report-table{break-inside:avoid}#printReportContent .report-cmp-chart{max-width:150mm}#printReportContent .report-table table{font-size:11px}#printReportContent .report-cmp-legend{font-size:11px}}
+.report-cmp-legend svg,#printReportContent .report-cmp-legend svg{width:34px;height:12px;flex:none}.report-cmp-legend svg.sq,#printReportContent .report-cmp-legend svg.sq{width:12px}
