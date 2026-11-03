@@ -95,6 +95,6 @@
  document.getElementById('closeSelectedExport').onclick=()=>dlg.close();
  const guard=fn=>{try{show('selectedExportError',false);fn();}catch(e){const el=document.getElementById('selectedExportError');el.textContent=e.message;el.hidden=false;}};
  document.getElementById('selectedExportXlsx').onclick=()=>guard(()=>downloadData(ExportKit.workbook(selectedSheets()),'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','spareverksted-planer.xlsx'));
- document.getElementById('selectedExportPdf').onclick=()=>guard(()=>{const html=buildSelectedReport();dlg.close();$('reportPreview').innerHTML=html;$('printReportContent').innerHTML=html;$('reportDialog').showModal();});
+ document.getElementById('selectedExportPdf').onclick=()=>guard(()=>{const html=buildSelectedReport();dlg.close();$('reportPreview').innerHTML=html;$('printReportContent').innerHTML=window.forPrint?window.forPrint(html):html;$('reportDialog').showModal();});
  window.buildSelectedReport=buildSelectedReport;window.selectedSheets=selectedSheets;
 })();
