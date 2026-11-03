@@ -5,14 +5,22 @@ document.addEventListener('click',event=>{
 });
 const liveSummary=document.getElementById('mobileSummary');
 if(liveSummary){
+ // Resultatlinjen kan skjules og hentes fram igjen. Ved sterk zoom tar den mye plass, så den starter skjult når den ville
+ // dekket mer enn en tredjedel av skjermen. Brukerens eget valg gjelder resten av besøket (WCAG 1.4.10, 2.4.11; 3.11.2026).
+ const toggle=document.getElementById('mobileSummaryToggle');let chosen=null;
+ const shown=()=>getComputedStyle(liveSummary).display!=='none';
+ const setCollapsed=c=>{liveSummary.classList.toggle('is-collapsed',c);toggle.innerHTML=c?'Vis resultat':'<span aria-hidden="true">×</span>';toggle.setAttribute('aria-label',c?'Vis resultatlinjen':'Skjul resultatlinjen');};
+ setCollapsed(false);
+ toggle.addEventListener('click',()=>{chosen=!liveSummary.classList.contains('is-collapsed');setCollapsed(chosen);});
+ const fit=()=>{if(chosen===null&&shown()){setCollapsed(false);if(liveSummary.offsetHeight>innerHeight/3)setCollapsed(true);}};
+ // Det som har fokus, skal ikke ligge under linjen (WCAG 2.4.11).
+ const unhide=el=>{if(!shown()||liveSummary.contains(el))return;const b=el.getBoundingClientRect(),top=liveSummary.getBoundingClientRect().top;if(b.bottom>top&&b.top<innerHeight)window.scrollBy({top:Math.min(b.bottom-top+8,b.top-8),behavior:'instant'});};
  document.addEventListener('focusin',event=>{
   const editing=Boolean(event.target.closest('#basic,#mobileSummary'));
   liveSummary.classList.toggle('is-editing',editing);
-  if(event.target.closest('#basic')&&matchMedia('(max-width:760px)').matches){
-   const bounds=event.target.getBoundingClientRect(),summary=liveSummary.getBoundingClientRect();
-   if(bounds.bottom>summary.top&&bounds.top<summary.bottom)event.target.scrollIntoView({block:'center',behavior:'instant'});
-  }
+  fit();unhide(event.target);
  });
+ addEventListener('resize',fit);
  document.addEventListener('focusout',event=>{if(!event.relatedTarget?.closest('#basic,#mobileSummary'))liveSummary.classList.remove('is-editing');});
  document.addEventListener('pointerdown',event=>{liveSummary.classList.toggle('is-editing',Boolean(event.target.closest('#basic,#mobileSummary')));});
 }
