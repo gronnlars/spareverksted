@@ -97,6 +97,7 @@ jobs:
           python3 scripts/kildevakt.py oppdater-ssb --tilstand .kildedata --sammendrag /tmp/pr.md || { echo 'Ingenting å oppdatere'; exit 0; }
           python3 scripts/fakta.py --check
           python3 scripts/generate-bsu-rates.py --check
+          python3 scripts/versjoner.py --check
           node tests/bsu-rates.test.cjs
           node tests/svartekst.test.cjs
           node tests/band.test.cjs

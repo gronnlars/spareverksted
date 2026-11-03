@@ -1,6 +1,7 @@
 """Tester for Kildevakt og faktaregisteret. Ingen nett. Kjør: python3 tests/kildevakt.test.py"""
 import bz2
 import copy
+import hashlib
 import datetime as dt
 import io
 import json
@@ -21,7 +22,13 @@ import kildevakt as kv  # noqa: E402
 
 TODAY = dt.date(2026, 11, 3)
 SOURCES = kv.load_sources()
-REG = fakta.load()
+LIVE = fakta.load()
+# Kildevakt-testene kjører mot et fast øyeblikksbilde av registeret (før september-tallene for 2026),
+# så nye månedstall i repoet ikke bryter testene. Se tests/fixtures/kildevakt/README.md.
+FROZEN = Path(tempfile.mkdtemp(prefix='kildevakt-data-'))
+shutil.copytree(FIX / 'data', FROZEN, dirs_exist_ok=True)
+kv.ROOT = FROZEN
+REG = fakta.load(FROZEN)
 SRC = {s['id']: s for s in SOURCES['kilder']}
 passed = []
 
@@ -64,6 +71,25 @@ def ssb_body(change=None):
 SSB = 'https://data.ssb.no/api/pxwebapi/v2/tables/11018/data'
 
 
+KPI = 'https://data.ssb.no/api/pxwebapi/v2/tables/14700/data'
+
+
+def kpi_body(values=(3.0, 3.3, 3.4), periods=('2026M07', '2026M08', '2026M09'), label='12-måneders endring (prosent)'):
+    """Syntetisk json-stat2 med samme oppbygning som SSB 14700 (kontrollert mot SSBs metadata 3.11.2026)."""
+    return json.dumps({'version': '2.0', 'class': 'dataset', 'label': '14700: Konsumprisindeks (SYNTETISK)', 'updated': '2026-10-09T06:00:00Z',
+                       'role': {'time': ['Tid']}, 'id': ['VareTjenesteGrp', 'ContentsCode', 'Tid'], 'size': [1, 1, len(periods)],
+                       'dimension': {'VareTjenesteGrp': {'category': {'index': {'00': 0}, 'label': {'00': 'I alt'}}},
+                                     'ContentsCode': {'category': {'index': {'Tolvmanedersendring': 0}, 'label': {'Tolvmanedersendring': label}}},
+                                     'Tid': {'category': {'index': {p: i for i, p in enumerate(periods)}}}},
+                       'value': list(values)}).encode()
+
+
+def ppr_page(report='3/2026'):
+    return f"""<!doctype html><html><body><main><h1>Pengepolitisk rapport</h1>
+<p>Pengepolitisk rapport {report} 24. sep. 2026. Rapporten gir Norges Banks vurdering av renteutsikter og anslag for økonomien.</p>
+<p>Pengepolitisk rapport 2/2026 18. juni 2026. Eldre rapport med anslag for renter, prisvekst og produksjon.</p></main></body></html>"""
+
+
 def levels(events):
     return [(e['nivå'], e['tittel']) for e in events]
 
@@ -72,9 +98,9 @@ def levels(events):
 
 @test
 def registeret_er_gyldig_og_generert():
-    assert fakta.validate(REG) == []
-    assert (ROOT / 'dist/veileder-facts.js').read_text(encoding='utf-8') == fakta.build(REG)
-    assert fakta.duplicates(REG) == [], fakta.duplicates(REG)
+    assert fakta.validate(LIVE) == [] and fakta.validate(REG, FROZEN) == []
+    assert (ROOT / 'dist/veileder-facts.js').read_text(encoding='utf-8') == fakta.build(LIVE)
+    assert fakta.duplicates(LIVE) == [], fakta.duplicates(LIVE)
 
 
 @test
@@ -88,8 +114,8 @@ def datert_regel_byttes_paa_riktig_dag_og_forslag_brukes_aldri():
     assert fakta.current(fact, '2027-08-01') == 30000
     reg = copy.deepcopy(REG)
     reg['fakta']['bsuAnnual'] = {**reg['fakta']['bsuAnnual'], 'verdier': fact['verdier']}
-    assert fakta.validate(reg) == []
-    js = fakta.build(reg)
+    assert fakta.validate(reg, FROZEN) == []
+    js = fakta.build(reg, FROZEN)
     assert '99999' not in js, 'foreslåtte verdier skal aldri nå nettsiden'
     tmp = Path(tempfile.mkdtemp()) / 'f.js'
     tmp.write_text(js, encoding='utf-8')
@@ -110,7 +136,7 @@ def registeret_avviser_feil():
     reg['fakta']['bsuAnnual']['verdier'].append({'verdi': 1, 'fra': '2027-01-01', 'status': 'vedtatt'})
     reg['fakta']['bsuTotal']['verdier'][0]['status'] = 'kanskje'
     reg['fakta']['ipsAnnual']['verdier'].insert(0, {'verdi': 1, 'fra': '2027-01-01', 'status': 'i kraft'})
-    errors = '\n'.join(fakta.validate(reg))
+    errors = '\n'.join(fakta.validate(reg, FROZEN))
     assert 'trenger egen "kilde"' in errors and 'status må være' in errors and 'datorekkefølge' in errors, errors
 
 
@@ -214,12 +240,14 @@ def data_date(s):
 @test
 def ssb_oppdatering_skriver_alle_steder_og_er_idempotent():
     root = Path(tempfile.mkdtemp())
-    for rel in ('research', 'scripts', 'dist'):
-        (root / rel).mkdir()
-    shutil.copytree(ROOT / 'kilder', root / 'kilder')
-    for rel in ('research/bsu-rentehistorikk.csv', 'research/bsu-rente-arssnitt-2018-2026.csv',
+    shutil.copytree(FIX / 'data', root, dirs_exist_ok=True)
+    (root / 'scripts').mkdir()
+    shutil.copytree(ROOT / 'dist', root / 'dist')
+    for rel in (
                 'scripts/fakta.py', 'scripts/generate-bsu-rates.py', 'dist/veileder-facts.js', 'dist/begreper.js', 'dist/bsu-rates.js', 'dist/index.html', 'dist/spor.html'):
         shutil.copy(ROOT / rel, root / rel)
+    fakta.write_generated(fakta.load(root), root)   # startfilene slik de var i øyeblikksbildet
+    subprocess.run([sys.executable, str(root / 'scripts/generate-bsu-rates.py')], check=True, cwd=root, stdout=subprocess.DEVNULL)
     s = state()
     s.save('ssb-11018', kv.check_ssb(SRC['ssb-11018'], s, Net({SSB: ok(ssb_body())}), REG, TODAY)[1], {})
     summary = kv.apply_ssb(s, root)
@@ -238,10 +266,9 @@ def ssb_oppdatering_skriver_alle_steder_og_er_idempotent():
     assert out == ['5,60', 'september 2026', '2,88'], out
     assert '"2026 (jan. til sep.)",5.5,4.49' in (root / 'dist/bsu-rates.js').read_text(encoding='utf-8')
     html = (root / 'dist/spor.html').read_text(encoding='utf-8')
-    before = (ROOT / 'dist/spor.html').read_text(encoding='utf-8')
     for name in ('veileder-facts.js', 'bsu-rates.js'):
-        old_v, new_v = (int(re.search(re.escape(name) + r'\?v=(\d+)', h).group(1)) for h in (before, html))
-        assert new_v == old_v + 1, (name, old_v, new_v)
+        expected = hashlib.sha256((root / 'dist' / name).read_bytes()).hexdigest()[:10]
+        assert f'{name}?v={expected}"' in html, (name, 'versjonen skal følge innholdet')
     assert kv.apply_ssb(s, root) is None, 'andre gang er alt à jour'
 
 
@@ -423,7 +450,8 @@ def hel_kjoring_og_saker_i_toerrkjoring():
     s = state()
     pack = tar({'lt/b.xml': gazette('LTI/lov/x', 'Lov om endringer i skatteloven (BSU)', '2027-01-01', '1999-03-26-14')})
     xml = (FIX / 'skatteloven-utdrag.xml').read_bytes()
-    net = Net({SSB: ok(ssb_body()), 'https://www.skatteetaten.no/satser/': kv.Response(404, 'x', b''),
+    net = Net({SSB: ok(ssb_body()), KPI: ok(kpi_body()), 'https://www.norges-bank.no/aktuelt/publikasjoner/Pengepolitisk-rapport/': ok(ppr_page()),
+               'https://www.skatteetaten.no/satser/': kv.Response(404, 'x', b''),
                'https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/bank-og-lan/': ok(bsu_page()),
                'https://www.skatteetaten.no/nn/': ok(bsu_page()),
                'https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/arbeid': ok((FIX / 'skatteetaten-ips-2026-10-30.html').read_bytes()),
@@ -447,6 +475,56 @@ def hel_kjoring_og_saker_i_toerrkjoring():
     assert '| Lovdata: skatteloven (gjeldende) | ok |' in md
     events2, _ = kv.run(SOURCES, s, net, REG, TODAY)
     assert [e for e in events2 if e['nivå'] in kv.LEVELS] == [], levels(events2)
+
+
+@test
+def prisvekst_ny_maaned_oppdaterer_bare_registeret():
+    root = Path(tempfile.mkdtemp())
+    shutil.copytree(FIX / 'data', root, dirs_exist_ok=True)
+    (root / 'scripts').mkdir()
+    shutil.copytree(ROOT / 'dist', root / 'dist')
+    for rel in ( 'scripts/fakta.py', 'scripts/generate-bsu-rates.py',
+                'dist/veileder-facts.js', 'dist/begreper.js', 'dist/bsu-rates.js', 'dist/index.html', 'dist/spor.html'):
+        shutil.copy(ROOT / rel, root / rel)
+    fakta.write_generated(fakta.load(root), root)
+    subprocess.run([sys.executable, str(root / 'scripts/generate-bsu-rates.py')], check=True, cwd=root, stdout=subprocess.DEVNULL)
+    s, src = state(), SRC['ssb-14700']
+    body = kpi_body((3.3, 3.4, 3.1), ('2026M08', '2026M09', '2026M10'))
+    events, data, info = kv.check_ssb(src, s, Net({KPI: ok(body)}), REG, TODAY)
+    assert info['perioder'] == {'kpi12m': '2026M10'} and [e['periode'] for e in events if e.get('ssb_ventende')] == ['2026M10'], (info, levels(events))
+    s.save(src['id'], data, {})
+    before_csv = (root / 'research/bsu-rentehistorikk.csv').read_text(encoding='utf-8')
+    bsu_before = (root / 'dist/bsu-rates.js').read_bytes()
+    summary = kv.apply_ssb(s, root)
+    assert 'kpi12m: 2026M10 = 3.1' in summary and 'BSU' not in summary.split('Endret:')[0], summary
+    assert (root / 'research/bsu-rentehistorikk.csv').read_text(encoding='utf-8') == before_csv
+    facts = json.loads((root / 'kilder/fakta/prisvekst.json').read_text(encoding='utf-8'))['fakta']['kpi12m']
+    assert facts['perioder'][-1] == {'periode': '2026M10', 'verdi': 3.1} and facts['hentet'] == data['hentet'][:10]
+    out = subprocess.run(['node', '-e', "global.window=globalThis;const F=require(process.argv[1]);console.log(F.expand('{{kpi12m}} % til {{kpi12m.periode}}'))",
+                          str(root / 'dist/veileder-facts.js')], capture_output=True, text=True, check=True).stdout.strip()
+    assert out == '3,1 % til oktober 2026', out
+    html = (root / 'dist/spor.html').read_text(encoding='utf-8')
+    assert (root / 'dist/bsu-rates.js').read_bytes() == bsu_before, 'BSU-tabellen er urørt'
+    assert f'bsu-rates.js?v={hashlib.sha256(bsu_before).hexdigest()[:10]}"' in html
+    assert kv.apply_ssb(s, root) is None
+
+
+@test
+def prisvekst_endret_tabell_stopper_tallet():
+    events, _, info = kv.check_ssb(SRC['ssb-14700'], state(), Net({KPI: ok(kpi_body(label='Månedsendring (prosent)'))}), REG, TODAY)
+    assert info['status'] == 'strukturendring', info
+
+
+@test
+def ny_pengepolitisk_rapport_gir_sak():
+    s, src = state(), SRC['norges-bank-ppr']
+    events, data, info = kv.check_page(src, s, Net({src['url']: ok(ppr_page())}), REG, TODAY)
+    assert events == [] and info['nøkkeltall'] == {'Siste rapport': '3/2026'}, (levels(events), info)
+    s.save(src['id'], data, {})
+    events, _, _ = kv.check_page(src, s, Net({src['url']: ok(ppr_page('4/2026'))}), REG, TODAY)
+    hit = [e for e in events if e['nivå'] == 'middels']
+    assert len(hit) == 1 and hit[0]['tittel'] == 'Siste rapport: endret fra 3/2026 til 4/2026' and hit[0]['fakta'] == ['kpiPrognose'], levels(events)
+    assert 'kilder/fakta/prisvekst.json' in hit[0]['tekst']
 
 
 @test

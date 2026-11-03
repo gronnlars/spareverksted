@@ -11,8 +11,8 @@
         "fil": "research/bsu-rentehistorikk.csv",
         "kolonne": "BSU prosent"
       },
-      "hentet": "2026-10-28",
-      "ssb_oppdatert": null
+      "hentet": "2026-11-03",
+      "ssb_oppdatert": "2026-10-29"
     },
     "boundRate": {
       "type": "statistikk",
@@ -24,8 +24,8 @@
         "fil": "research/bsu-rentehistorikk.csv",
         "kolonne": "bundne innskudd prosent"
       },
-      "hentet": "2026-10-28",
-      "ssb_oppdatert": null
+      "hentet": "2026-11-03",
+      "ssb_oppdatert": "2026-10-29"
     },
     "savingsRate": {
       "type": "statistikk",
@@ -35,12 +35,60 @@
       "beskrivelse": "Gjennomsnittlig rente på ikke-bundne innskudd, husholdninger. SSB tabell 11018, innskuddstype 15, sektor 04b. Standardrente for sparekonto i kalkulatoren.",
       "perioder": [
         {
+          "periode": "2025M09",
+          "verdi": 2.81
+        },
+        {
+          "periode": "2025M10",
+          "verdi": 2.87
+        },
+        {
+          "periode": "2025M11",
+          "verdi": 2.68
+        },
+        {
+          "periode": "2025M12",
+          "verdi": 2.71
+        },
+        {
+          "periode": "2026M01",
+          "verdi": 2.71
+        },
+        {
+          "periode": "2026M02",
+          "verdi": 2.7
+        },
+        {
+          "periode": "2026M03",
+          "verdi": 2.72
+        },
+        {
+          "periode": "2026M04",
+          "verdi": 2.73
+        },
+        {
+          "periode": "2026M05",
+          "verdi": 2.71
+        },
+        {
+          "periode": "2026M06",
+          "verdi": 2.68
+        },
+        {
+          "periode": "2026M07",
+          "verdi": 2.85
+        },
+        {
           "periode": "2026M08",
           "verdi": 2.87
+        },
+        {
+          "periode": "2026M09",
+          "verdi": 2.88
         }
       ],
-      "hentet": null,
-      "ssb_oppdatert": "2026-09-25"
+      "hentet": "2026-11-03",
+      "ssb_oppdatert": "2026-10-29"
     }
   }
 }

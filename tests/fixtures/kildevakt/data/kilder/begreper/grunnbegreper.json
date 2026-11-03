@@ -1,0 +1,63 @@
+{
+  "_om": "Ordbok-setninger (SPRAKREGLER.md, «Ordbok-setningen»). Hentes i tekst med {{begrep:ID}} og {{begrep:ID.utdyping}}, og vises der ordet er merket med <span data-begrep=\"ID\">.",
+  "begreper": [
+    {
+      "id": "kjopekraft",
+      "ord": "Kjøpekraft",
+      "definisjon": "Kjøpekraft er hvor mye du kan kjøpe for pengene.",
+      "utdyping": "Når prisene stiger, rekker det samme kronebeløpet til mindre.",
+      "svar": "q-kjopekraft",
+      "kilder": [
+        {
+          "title": "SSB: Hva er inflasjon?",
+          "url": "https://www.ssb.no/priser-og-prisindekser/konsumpriser/artikler/hva-er-inflasjon"
+        }
+      ],
+      "kontrollert": "2026-10-24"
+    },
+    {
+      "id": "prisvekst",
+      "ord": "Prisvekst (inflasjon)",
+      "definisjon": "Prisvekst er at prisene på varer og tjenester stiger over tid.",
+      "utdyping": "Det kalles også inflasjon. Da kan de samme pengene kjøpe mindre enn før.",
+      "kilder": [
+        {
+          "title": "SSB: Hva er inflasjon?",
+          "url": "https://www.ssb.no/priser-og-prisindekser/konsumpriser/artikler/hva-er-inflasjon"
+        }
+      ],
+      "kontrollert": "2026-11-02"
+    },
+    {
+      "id": "dagens-kroner",
+      "ord": "Dagens kroner",
+      "definisjon": "Dagens kroner er et framtidig beløp regnet om til hva det kan kjøpe med prisene i dag.",
+      "utdyping": "Det gjør det lettere å sammenligne beløp fra ulike år.",
+      "kilder": [
+        {
+          "title": "SSB: Hva er inflasjon?",
+          "url": "https://www.ssb.no/priser-og-prisindekser/konsumpriser/artikler/hva-er-inflasjon"
+        }
+      ],
+      "kontrollert": "2026-11-02"
+    },
+    {
+      "id": "renters-rente",
+      "ord": "Renters rente",
+      "definisjon": "Renters rente betyr at du får renter også på renter du har fått tidligere.",
+      "utdyping": "Når rentene blir stående, kan også de gi nye renter.",
+      "svar": "q-renters-rente",
+      "kilder": [
+        {
+          "title": "Skatteetaten: Skatte-ABC, renteinntekter",
+          "url": "https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/r-10-renteinntekter/R-10.001/R-10.002/"
+        },
+        {
+          "title": "OpenStax: Exponential functions",
+          "url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/6-1-exponential-functions"
+        }
+      ],
+      "kontrollert": "2026-10-25"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "_om": "Prisvekst: siste målte tolvmånedersvekst (SSB) og Norges Banks anslag. Kalkulatoren bruker fortsatt 2,5 % som egen regneforutsetning (Lars 3.11.2026); disse tallene står i forklaringen.",
+  "fakta": {
+    "kpi12m": {
+      "type": "statistikk",
+      "enhet": "prosent",
+      "kilde": "ssb-kpi",
+      "desimaler": 1,
+      "beskrivelse": "Endring i konsumprisindeksen siste 12 måneder, totalindeks. SSB tabell 14700, VareTjenesteGrp 00, Tolvmanedersendring. Kildevakt foreslår nye måneder via PR.",
+      "perioder": [
+        {
+          "periode": "2026M07",
+          "verdi": 3.0
+        },
+        {
+          "periode": "2026M08",
+          "verdi": 3.3
+        },
+        {
+          "periode": "2026M09",
+          "verdi": 3.4
+        }
+      ],
+      "hentet": null,
+      "ssb_oppdatert": "2026-10-09",
+      "merknad": "Verdiene ble kontrollert mot SSBs API via WebFetch 3.11.2026, ikke lagret som rådata. Første henting fra Kildevakt erstatter dem."
+    },
+    "kpiPrognose": {
+      "type": "prognose",
+      "enhet": "prosent",
+      "kilde": "nb-ppr",
+      "desimaler": 1,
+      "beskrivelse": "Norges Banks anslag for årlig vekst i KPI. Oppdateres for hånd når ny Pengepolitisk rapport kommer (Kildevakt varsler).",
+      "rapport": "PPR 3/2026",
+      "publisert": "2026-09-24",
+      "anslag": {
+        "2026": 3.3,
+        "2027": 2.6,
+        "2028": 2.3,
+        "2029": 2.1
+      }
+    }
+  }
+}

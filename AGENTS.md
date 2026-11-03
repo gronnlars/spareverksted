@@ -25,7 +25,9 @@ Oppgi utførte kontroller, begrensninger og faktisk status. Grønne tester bevis
 
 ## Mellomlagring
 
-Når en CSS- eller JS-fil i `dist/` endres, øk `?v=` for den filen i alle HTML-filer som laster den. Ellers kan nettleseren og Bunny blande ny HTML med gamle filer. Det skjedde 2.11.2026: ny navigasjon med gammel temaknapp la seg oppå hverandre på iPhone.
+Versjonen i `?v=` lages fra innholdet i fila. Ikke rediger den for hånd. Etter endring i en CSS- eller JS-fil i `dist/`: kjør `python3 scripts/versjoner.py`. CI (`versjoner.py --check`) feiler hvis en versjon ikke stemmer med fila. Ved konflikt i en HTML-fil: velg en av sidene og kjør skriptet. Hvert skript og stilark står på egen linje.
+
+Bakgrunn: 2.11.2026 blandet nettleseren ny HTML med en gammel fil fordi versjonen ikke ble økt. 3.11.2026 ga #173 og #174 `app.js` samme versjon (ux52) med ulikt innhold. Begge deler er umulige når versjonen følger innholdet.
 
 ## Tall fra kilder
 

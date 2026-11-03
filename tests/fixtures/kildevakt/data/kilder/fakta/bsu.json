@@ -1,0 +1,76 @@
+{
+  "_om": "BSU: regler fra Skatteetaten.",
+  "fakta": {
+    "bsuMaxAge": {
+      "type": "regel",
+      "enhet": "år",
+      "kilde": "tax-bsu",
+      "bekreftet_til": "2026-12-31",
+      "mønstre": [
+        "fyller {}"
+      ],
+      "verdier": [
+        {
+          "verdi": 33,
+          "fra": "2026-01-01",
+          "status": "i kraft"
+        }
+      ]
+    },
+    "bsuAnnual": {
+      "type": "regel",
+      "enhet": "kr",
+      "kilde": "tax-bsu",
+      "bekreftet_til": "2026-12-31",
+      "verdier": [
+        {
+          "verdi": 27500,
+          "fra": "2026-01-01",
+          "status": "i kraft"
+        }
+      ]
+    },
+    "bsuTotal": {
+      "type": "regel",
+      "enhet": "kr",
+      "kilde": "tax-bsu",
+      "bekreftet_til": "2026-12-31",
+      "verdier": [
+        {
+          "verdi": 300000,
+          "fra": "2026-01-01",
+          "status": "i kraft"
+        }
+      ]
+    },
+    "bsuPercent": {
+      "type": "regel",
+      "enhet": "prosent",
+      "kilde": "tax-bsu",
+      "bekreftet_til": "2026-12-31",
+      "mønstre": [
+        "{} prosent av årets"
+      ],
+      "verdier": [
+        {
+          "verdi": 10,
+          "fra": "2026-01-01",
+          "status": "i kraft"
+        }
+      ]
+    },
+    "bsuMaxDeduction": {
+      "type": "regel",
+      "enhet": "kr",
+      "kilde": "tax-bsu",
+      "bekreftet_til": "2026-12-31",
+      "verdier": [
+        {
+          "verdi": 2750,
+          "fra": "2026-01-01",
+          "status": "i kraft"
+        }
+      ]
+    }
+  }
+}

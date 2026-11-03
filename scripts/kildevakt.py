@@ -248,7 +248,7 @@ def check_ssb(source, state, get, reg, today):
     pending = {}
     for name, values in series.items():
         fact = reg['fakta'][name]
-        repo = dict(fakta.series(fact))
+        repo = dict(fakta.series(fact, ROOT))
         latest = max(repo) if repo else ''
         new = {p: v for p, v in values.items() if p > latest}
         revised = {p: (repo[p], v) for p, v in values.items() if p in repo and abs(repo[p] - v) > 1e-9}
@@ -334,11 +334,11 @@ def check_page(source, state, get, reg, today):
             if (previous.get('nøkkeltall') or {}).get(label) is not None or not previous:
                 events.append(event(source, 'middels', f'Fant ikke «{label}» på siden', f'Mønsteret «{spec["mønster"]}» traff ikke. Siden kan være skrevet om.', [spec.get('fakta')] if spec.get('fakta') else []))
             continue
-        value = number(match.group(1)) + spec.get('justering', 0)
+        value = match.group(1) if spec.get('tekst') else number(match.group(1)) + spec.get('justering', 0)
         found[label] = value
         if spec.get('fakta'):
             fact = reg['fakta'][spec['fakta']]
-            ours = fakta.current(fact, date)
+            ours = fakta.current(fact, date, ROOT)
             if ours != value:
                 if mismatches.get(label) != value:
                     events.append(event(source, 'høy', f'{spec["fakta"]}: kilden sier {value}, nettsiden bruker {ours}',
@@ -347,7 +347,7 @@ def check_page(source, state, get, reg, today):
             else:
                 mismatches.pop(label, None)
         elif (previous.get('nøkkeltall') or {}).get(label) not in (None, value):
-            events.append(event(source, 'middels', f'{label}: endret fra {previous["nøkkeltall"][label]} til {value}', f'Treff: «{match.group(0)}».'))
+            events.append(event(source, 'middels', f'{label}: endret fra {previous["nøkkeltall"][label]} til {value}', f'Treff: «{match.group(0)}». ' + spec.get('gjør', ''), spec.get('berører', [])))
     data = {'hentet': fetched, 'url': url, 'endelig_url': response.url, 'html_sha256': meta['html_sha256'], 'tekst_sha256': text_sha, 'tekst': text,
             'nøkkeltall': found, 'avvik': mismatches}
     return events, data, {'status': 'ok', 'nøkkeltall': found}
@@ -697,18 +697,13 @@ def mean(values):
     return (sum(Decimal(str(v)) for v in values) / len(values)).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
 
 
-def apply_ssb(state, root=ROOT):
-    """Skriv nye og reviderte SSB-tall inn i repoet. Returnerer sammendrag, eller None om alt er à jour."""
-    snap = state.last('ssb-11018')
-    if not snap or not snap.get('serier'):
-        raise SystemExit('Ingen SSB-henting i tilstanden')
-    reg = fakta.load(root)
-    series, changes = snap['serier'], []
+def apply_bsu_csv(series, reg, root, changes):
+    """BSU og bundne innskudd ligger i en egen månedsfil og har årssnitt. Returnerer år som er endret, og radene."""
     monthly_path = root / reg['fakta']['bsuRate']['serie']['fil']
     with monthly_path.open(encoding='utf-8') as stream:
         reader = csv.DictReader(stream)
         fields, rows = reader.fieldnames, {r['måned']: r for r in reader}
-    bsu, bound = series['bsuRate'], series['boundRate']
+    bsu, bound = series.get('bsuRate', {}), series.get('boundRate', {})
     touched = set()
     for period in sorted(set(bsu) & set(bound)):
         new = {'måned': period, 'BSU prosent': repr(bsu[period]), 'bundne innskudd prosent': repr(bound[period])}
@@ -721,20 +716,16 @@ def apply_ssb(state, root=ROOT):
             continue
         rows[period] = new
         touched.add(period[:4])
-    savings = reg['fakta']['savingsRate']
-    known = {p['periode']: p['verdi'] for p in savings['perioder']}
-    for period, value in sorted(series['savingsRate'].items()):
-        if known.get(period) != value:
-            changes.append(f'Sparekonto (ikke-bundne): {period} = {value}' + (f' (var {known[period]})' if period in known else ''))
-            known[period] = value
-            touched.add(period[:4])
-    if not changes:
-        return None
-    with monthly_path.open('w', encoding='utf-8', newline='') as stream:
-        writer = csv.DictWriter(stream, fieldnames=fields, lineterminator='\n')
-        writer.writeheader()
-        for period in sorted(rows):
-            writer.writerow(rows[period])
+    if touched:
+        with monthly_path.open('w', encoding='utf-8', newline='') as stream:
+            writer = csv.DictWriter(stream, fieldnames=fields, lineterminator='\n')
+            writer.writeheader()
+            for period in sorted(rows):
+                writer.writerow(rows[period])
+    return touched, rows
+
+
+def apply_bsu_annual(rows, touched, savings_known, root, changes):
     annual_path = root / 'research/bsu-rente-arssnitt-2018-2026.csv'
     with annual_path.open(encoding='utf-8') as stream:
         reader = csv.DictReader(stream)
@@ -742,8 +733,7 @@ def apply_ssb(state, root=ROOT):
     by_year = {}
     for period in sorted(rows):
         by_year.setdefault(period[:4], []).append(rows[period])
-    touched = {y for y in touched if y in by_year}
-    for year in sorted(touched):
+    for year in sorted(y for y in touched if y in by_year):
         months = by_year[year]
         row = next((r for r in annual if r['år'] == year), None)
         if row is None:
@@ -753,7 +743,7 @@ def apply_ssb(state, root=ROOT):
         row['periode'] = 'jan.–' + SHORT[len(months) - 1]
         row['BSU prosent'] = str(mean([m['BSU prosent'] for m in months]))
         row['bundne innskudd prosent'] = str(mean([m['bundne innskudd prosent'] for m in months]))
-        year_savings = [v for p, v in known.items() if p.startswith(year)]
+        year_savings = [v for p, v in savings_known.items() if p.startswith(year)]
         if len(year_savings) == len(months):
             row['ikke-bundne innskudd prosent'] = str(mean(year_savings))
         else:
@@ -762,20 +752,55 @@ def apply_ssb(state, root=ROOT):
         writer = csv.DictWriter(stream, fieldnames=afields, lineterminator='\n')
         writer.writeheader()
         writer.writerows(sorted(annual, key=lambda r: r['år']))
-    keep = sorted(known.items())[-13:]
-    savings['perioder'] = [{'periode': p, 'verdi': v} for p, v in keep]
-    fetched = snap['hentet'][:10]
-    for fid in ('bsuRate', 'boundRate', 'savingsRate'):
-        reg['fakta'][fid]['hentet'] = fetched
-        reg['fakta'][fid]['ssb_oppdatert'] = (snap.get('ssb_oppdatert') or '')[:10] or None
+
+
+def apply_ssb(state, root=ROOT):
+    """Skriv nye og reviderte SSB-tall inn i repoet, for alle SSB-kilder i kildelisten.
+    Tall med "serie" (BSU-fila) og tall med "perioder" i registeret håndteres. Returnerer sammendrag, eller None."""
+    reg = fakta.load(root)
+    snaps = {s['id']: (s, state.last(s['id'])) for s in load_sources()['kilder'] if s['type'] == 'ssb'}
+    snaps = {k: v for k, v in snaps.items() if v[1] and v[1].get('serier')}
+    if not snaps:
+        raise SystemExit('Ingen SSB-henting i tilstanden')
+    changes, touched, bsu_touched, rows, headers, changed_files = [], set(), set(), None, [], set()
+    for sid, (source, snap) in snaps.items():
+        series, before = snap['serier'], len(changes)
+        if 'bsuRate' in series and 'serie' in reg['fakta']['bsuRate']:
+            bsu_touched, rows = apply_bsu_csv(series, reg, root, changes)
+            touched |= bsu_touched
+            if bsu_touched:
+                changed_files |= {'research/bsu-rentehistorikk.csv', 'research/bsu-rente-arssnitt-2018-2026.csv'}
+        for name, values in series.items():
+            fact = reg['fakta'].get(name)
+            if not fact or 'perioder' not in fact:
+                continue
+            known = {p['periode']: p['verdi'] for p in fact['perioder']}
+            for period, value in sorted(values.items()):
+                if known.get(period) != value:
+                    changes.append(f'{name}: {period} = {value}' + (f' (var {known[period]})' if period in known else ''))
+                    known[period] = value
+                    touched.add(period[:4])
+            fact['perioder'] = [{'periode': p, 'verdi': v} for p, v in sorted(known.items())[-13:]]
+        if len(changes) > before:
+            for name in series:
+                if name in reg['fakta']:
+                    reg['fakta'][name]['hentet'] = snap['hentet'][:10]
+                    reg['fakta'][name]['ssb_oppdatert'] = (snap.get('ssb_oppdatert') or '')[:10] or None
+                    changed_files.add(reg['_fil'][name])
+            latest = max(max(v) for v in series.values() if v)
+            headers.append(f'{source["navn"]}, hentet {snap["hentet"][:10]} (SSB oppdatert {snap.get("ssb_oppdatert")}). Siste måned: {latest}.')
+    if not changes:
+        return None
+    if rows is not None and touched:
+        savings = reg['fakta'].get('savingsRate', {})
+        apply_bsu_annual(rows, touched, {p['periode']: p['verdi'] for p in savings.get('perioder', [])}, root, changes)
     fakta.save(reg, root)
-    fakta.write_generated(reg, root)
+    generated = fakta.write_generated(reg, root)
     import subprocess
     subprocess.run([sys.executable, str(root / 'scripts/generate-bsu-rates.py')], check=True, cwd=root, stdout=subprocess.DEVNULL)
-    fakta.bump_versions(['veileder-facts.js', 'bsu-rates.js'], root)
-    latest = max(rows)
-    summary = [f'SSB tabell 11018, hentet {fetched} (SSB oppdatert {snap.get("ssb_oppdatert")}). Siste måned: {latest}.', '', *[f'- {c}' for c in changes], '',
-               'Endret: research/bsu-rentehistorikk.csv, research/bsu-rente-arssnitt-2018-2026.csv, kilder/fakta/ssb-renter.json, dist/veileder-facts.js, dist/bsu-rates.js og ?v= i HTML.',
+    fakta.bump_versions(generated + (['bsu-rates.js'] if bsu_touched else []), root)
+    summary = [*headers, '', *[f'- {c}' for c in changes], '',
+               'Endret: ' + ', '.join(sorted(changed_files) + [f'dist/{g}' for g in generated] + (['dist/bsu-rates.js'] if bsu_touched else [])) + ' og ?v= i HTML.',
                '', 'Dette er en automatisk PR fra Kildevakt. Den slås ikke sammen automatisk. Kontroller tallene mot SSB før godkjenning.']
     return '\n'.join(summary)
 

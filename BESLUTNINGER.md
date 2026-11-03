@@ -14,6 +14,16 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 | Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 
+## Prisvekst: egen forutsetning i kalkulatoren, ferske tall i forklaringen (3. november 2026)
+
+**Beslutning (Lars):** Kalkulatoren bruker fortsatt 2,5 % prisvekst som egen regneforutsetning. Forklaringen viser siste tolvmånedersvekst fra SSB og Norges Banks anslag fra siste Pengepolitiske rapport, hentet fra `kilder/fakta/prisvekst.json`. Ved kort sparetid foreslås ikke dagens prisvekst som tall. Vi holder oss til det Norges Bank selv anslår.
+
+**Begrunnelse:** Norges Banks anslag for de nærmeste årene og 2,5 % etterpå gir nesten samme snitt som 2,5 % (2,6 % for 1 år, 2,3 % for 3 år, 2,4 % for 10 år, 2,5 % for 30 år). En endring i beregningen gir lite. Tallene i forklaringen ble derimot utdatert uten varsel. Nå kommer ny SSB-måned som PR, og ny rapport gir sak.
+
+**Alternativer:** Norges Banks mål på 2 % etter anslagene (forkastet: kan få tapet i kjøpekraft til å se mindre ut, og målet er nådd sjelden de siste årene). Historisk snitt på ca. 3,2 % (forkastet: historie er ikke en prognose).
+
+**Samme dag:** Lars vil at sparekontorenten i kalkulatoren følger SSB hver måned, så siden alltid føles oppdatert. Det samme skal gjelde renter i en framtidig lånekalkulator.
+
 ## Faktaregister og Kildevakt (3. november 2026, foreslått)
 
 **Beslutning:** Tall fra kilder står ett sted, i temafiler under `kilder/fakta/`, med kilde, status (i kraft, vedtatt, foreslått) og gjelder-fra-dato. Tekstene bruker plassholdere. Kildevakt kjører hver hverdag i GitHub Actions, følger SSB, Skatteetaten, Lovdata, Lovtidend, Stortinget og Norges Bank, og åpner saker. Nye SSB-måneder blir PR. Ingenting rettes automatisk. Faste forklaringer av fagord (ordbok-setninger) ligger i `kilder/begreper/` og hentes med `{{begrep:ID}}`. Unntak fra dublettkontrollen gjelder én bestemt linje, ikke en hel fil. Status er foreslått til Lars har godkjent PR-en.
