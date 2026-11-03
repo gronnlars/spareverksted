@@ -12,7 +12,7 @@ const AT=String.fromCharCode(64);
  const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!file.startsWith(root+path.sep)){res.writeHead(403);return res.end();}try{res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':file.endsWith('.png')?'image/png':'text/html');res.end(fs.readFileSync(file));}catch{res.writeHead(404);res.end();}});
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
  let browser;const errors=[];
- const cases=[['/personvern.html','personvern','Vis e-postadresse for personvern','Kopier e-postadresse for personvern'],['/om.html','generell','Vis e-postadresse for generell kontakt','Kopier e-postadresse for generell kontakt']];
+ const cases=[['/personvern.html','personvern','Vis e-postadresse for personvern','Kopier e-postadresse for personvern'],['/om.html','generell','Vis e-postadresse for generell kontakt','Kopier e-postadresse for generell kontakt'],['/ressursbruk.html','generell','Vis e-postadresse for generell kontakt','Kopier e-postadresse for generell kontakt'],['/tilgjengelighet.html','generell','Vis e-postadresse','Kopier e-postadressen']];
  try{
   browser=await browserType.launch({headless:true,...(engine==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu'],...(process.env.SPARE_BROWSER?{executablePath:process.env.SPARE_BROWSER}:{})}:{})});
   for(const [url,kind,showName,copyName] of cases){

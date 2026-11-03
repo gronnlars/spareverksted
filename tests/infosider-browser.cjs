@@ -55,6 +55,16 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
   for(const file of files){
    await page.goto(origin+'/'+file);
+   await page.locator('.info-nav').getByRole('link',{name:'Kontakt',exact:true}).click();
+   assert.equal(new URL(page.url()).hash,'#kontakt');
+   const contact=page.locator('.kontakt-vis');
+   assert(await contact.isVisible(),'contact stays outside folded chapters');
+   assert(await contact.evaluate(e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight;}),'contact is in viewport after navigation');
+   if(file==='om.html'){
+    await page.goto(origin+'/'+file+'#bruk');
+    await page.getByRole('link',{name:'ta kontakt om viderebruk',exact:true}).click();
+    assert.equal(new URL(page.url()).hash,'#kontakt');
+   }
    const chapters=page.locator('.info-chapter'),first=chapters.first(),summary=first.locator(':scope > summary');
    assert.equal(await first.getAttribute('open'),null);
    await summary.focus();await page.keyboard.press('Enter');
