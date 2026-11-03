@@ -1181,3 +1181,19 @@ Oppdateringen er samordnet med main `e9eb4c0` etter #182, #183, #186, #187, #188
 ## Knapper før overskriften (3. november 2026)
 
 Etter mobil- og PC-prøving bestiller Lars Kontakt og Åpne alle kapitler rett under undermenyen, før overskrift og innledning på alle fire informasjonssider. Dette erstatter plasseringen under h1 fra #191. Lange overskrifter skal ikke flytte knappene mellom sider. Eksisterende funksjon, radbryting og overskrifter beholdes. Ingen sticky-posisjonering eller kalkulatorendring. Testen kontrollerer plassering før innledningen. ChatGPT/Codex.
+
+## Funn fra Frontkit-sjekkene av spareverksted.no (3. november 2026)
+
+Lars kjørte Frontkits gratis WCAG-sjekk, fokusrekkefølge og opplesning. Verktøyene leser rå HTML uten CSS og JavaScript. Hvert funn ble derfor kontrollert mot tilgjengelighetstreet i Chromium før endring.
+
+Rettet (PR #199): bunnteksten lå inni `<main>` på alle sider og ble ikke et eget landemerke, startvalgene fikk tittel og forklaring i samme navn, delelenken manglet synlig etikett, skjemaet etter startvalget manglet h1, to påkrevde felt sa ikke synlig at de må fylles ut, hoppelenken på forsiden het «Hopp til kalkulatoren» selv der den ikke leder dit, og fire tekster sa «vi».
+
+Ikke endret, vurdert som feilvisning i verktøyet:
+
+- «Ingen hoppelenke»: den finnes og er første element.
+- «7 skjulte elementer kan få fokus»: elementer med `hidden`, som nettleseren ikke gir fokus.
+- «2 h1» (2.4.6): den rå HTML-en har to h1, men bare én er synlig og lest opp i hvert steg. WCAG krever ikke én h1, men hvert steg har nå én.
+- «Bare én navigasjonsmåte» (2.4.5): hovedmenyen og bunntekstens liste med lenker til alle sider oppfyller 2.4.5 sammen (W3C-teknikk G126 for små nettsteder). Søk eller nettstedskart legges ikke til bare for å få grønt i verktøyet. Ta opp igjen hvis nettstedet får mange flere sider.
+- Avkuttede setninger og symboler i opplesningen: verktøyets lesing. Chromium gir hele navn uten pilsymbolene.
+
+Ikke testet: Safari, Firefox, VoiceOver og NVDA.
