@@ -13,6 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      # Stopper PR-er og push som legger tilbake en eldre versjon av motor, sider eller tester (scripts/foreldet.py).
+      # Publisering venter på denne jobben, så gammel kode når aldri spareverksted.no.
+      - name: Stop old code
+        run: |
+          python3 tests/foreldet.test.py
+          python3 scripts/foreldet.py --base "${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}"
       - uses: actions/setup-node@v4
         with:
           node-version: '22'

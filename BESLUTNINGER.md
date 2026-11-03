@@ -1186,9 +1186,13 @@ Etter mobil- og PC-prøving bestiller Lars Kontakt og Åpne alle kapitler rett u
 
 Frontkits PDF-sjekk av en rapport lagret fra Chrome på Windows viste umerket PDF uten tittel og bokmerker. Årsaken var vår egen: rapportvinduet er et modalt `<dialog>`, som gjør resten av siden inert, og utskriftskopien hadde `aria-hidden`. Chrome bygger PDF-merkene fra tilgjengelighetstreet, så kopien kom ikke med.
 
-Rettet (PR #198): vinduet lukkes mens utskriften lages og åpnes igjen etterpå, utskriftskopien har én h1 og h2 under, begrepsknapper blir tekst, og sidetittelen blir PDF-ens tittel. Målt i Chromium: merket struktur, lesrekkefølge (ParentTree), språk, tittel, bokmerker og grafen som figur med tekstalternativ.
+Rettet (PR #198): vinduet lukkes mens utskriften lages og åpnes igjen etterpå, utskriftskopien har én h1 og h2 under, begrepsknapper blir tekst, og sidetittelen blir PDF-ens tittel. Målt i Chromium: merket struktur, lesrekkefølge (ParentTree), språk, tittel og grafen som figur med tekstalternativ. Lars kontrollerte en PDF lagret med «Lagre som PDF» i Chrome på Windows samme kveld: 82 av 100 i Frontkit, med struktur, lesrekkefølge og tittel i orden.
 
-Utsatt: PDF/UA-merke, XMP-metadata og «fast web view». Ingen av dem kan settes av en nettside som bruker nettleserens utskrift. De krever at vi lager PDF-en selv.
+Rettelse samme kveld: bokmerker kommer ikke med fra vanlig Chrome. Den automatiske testen lager PDF-en med et eget valg for bokmerker som brukerens Chrome ikke bruker, så testen viste mer enn brukerne får. Bokmerker hører derfor til det som er utsatt.
+
+Merk: Velger brukeren skriveren «Microsoft Print to PDF» i stedet for «Lagre som PDF», blir PDF-en umerket. Det kan ikke styres fra nettsiden. Rapportvinduet ber allerede om «Lagre som PDF».
+
+Utsatt: bokmerker, PDF/UA-merke, XMP-metadata og «fast web view». Ingen av dem kan settes av en nettside som bruker nettleserens utskrift. De krever at vi lager PDF-en selv.
 
 Vurderte alternativer:
 

@@ -75,3 +75,14 @@ svg [stroke="#93a18c"]{stroke:#6f8068}
 /* Lenker til andre nettsteder: synlig ↗ og tekst for skjermlesere (tekst etter / er alternativtekst). */
 a[href^="http"]:not([href^="https://spareverksted.no"])::after{content:"\00a0↗";content:"\00a0↗"/" (annen nettside)";font-size:.85em;text-decoration:none;display:inline-block}
 a[href^="http"][target="_blank"]:not([href^="https://spareverksted.no"])::after{content:"\00a0↗";content:"\00a0↗"/" (annen nettside, åpnes i ny fane)"}
+/* Myke overganger (3.11.2026). Bare der nettleseren støtter det og brukeren ikke har bedt om mindre bevegelse.
+   Sideskifte: logo og hovedmeny står stille, innholdet tones over. Temabytte: fargene tones over (theme.js).
+   Uten støtte skifter sidene og fargene som før, uten forsinkelse. */
+@media(prefers-reduced-motion:no-preference){
+ @view-transition{navigation:auto}
+ .site-header .brand{view-transition-name:sv-merke}
+ .site-header>.site-nav:not(.info-nav){view-transition-name:sv-meny}
+ ::view-transition-group(*){animation-duration:.24s;animation-timing-function:cubic-bezier(.4,0,.2,1)}
+ :root.tema-bytter::view-transition-group(*){animation-duration:.42s}
+}
+@media print{.site-header .brand,.site-header>.site-nav{view-transition-name:none}}

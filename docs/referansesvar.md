@@ -1,8 +1,20 @@
 # Referansesvar for «Spør om sparing»
 
-Arbeidsgrunnlag: main `298ffaf8f202efcf6368b10d87743befffe8dcd9`, etter #198. Oppdrag fra Lars 3.11.2026: prioriter ett grundig referansesvar som mindre modeller kan følge. Utarbeidet med ChatGPT/Codex. Prosjektets lisens gjelder. Denne veiledningen viser hvordan eksisterende regler brukes. Den innfører ingen ny svarform eller godkjenningsregel.
+Arbeidsgrunnlag etter retting: main `3590e1403654ed4088b8c621dacb226fda349904`. Første versjon ble skrevet etter #198. Oppdrag fra Lars 3.11.2026: prioriter ett grundig referansesvar som mindre modeller kan følge. Utarbeidet med ChatGPT/Codex. Prosjektets lisens gjelder. Denne veiledningen viser hvordan eksisterende regler brukes. Den innfører ingen ny svarform eller godkjenningsregel.
 
-**Start her:** [SV-022](../kilder/svar/SV-022.md) er et ferdig utfylt eksempel med status `til kontroll`. Det er egenkontrollert, ikke separat kontrollert eller publisert. [SVARSKJEMA](../SVARSKJEMA.md) er fortsatt kontrakten. [Svargrunnmur](svargrunnmur.md) beskriver hva generatoren faktisk gjør.
+**Start her:** [SV-022](../kilder/svar/SV-022.md) er et ferdig utfylt eksempel med status `til kontroll`. Egenkontroll og en videresendt delkontroll foreligger. Fullstendig separat kontroll og godkjenning gjenstår. [SVARSKJEMA](../SVARSKJEMA.md) er fortsatt kontrakten. [Svargrunnmur](svargrunnmur.md) beskriver hva generatoren faktisk gjør.
+
+## Kort sjekkliste
+
+1. Hent og les fersk main. Før den faktisk leste SHA-en i `Lest main`.
+2. Behold riktig SV-ID og svar-ID. Velg svarform før du skriver.
+3. Les kildene. Før hver påstand med kilde, dato, presist avsnitt og nødvendige vilkår.
+4. Svar forståelig først. Bruk «Eksemplet forutsetter» om regneforutsetninger og registerreferanser for fakta og begreper.
+5. Regn eksemplene med kode. Før kommando, resultat, forutsetninger og avrunding under `Kontrollregning`.
+6. Kontroller felt, påstandsmerker, lenker og avgrensninger. Kjør `python3 scripts/svar.py --check`.
+7. Før egenkontroll og det som gjenstår. Lever som `til kontroll`. Separat kontroll og Lars sin godkjenning følger før publisering.
+
+Bruk deretter detaljene nedenfor ved behov. Referansen er et kontrollgrunnlag. Den omtales ikke som ferdig gullstandard før separat kontroll og faktisk godkjenning er dokumentert.
 
 ## Hva gjennomgangen av svarbasen viser
 
@@ -50,7 +62,7 @@ Relevans og «Se også» er interne koblinger i dagens grunnmur. Ikke lov at de 
 
 ## Utførte kontroller og forventede tall
 
-Fire kilder er åpnet og lest 3.11.2026. Presise avsnitt og avgrensninger står i skjemaet. Formlene brukes selvstendig, uten kopierte lærebokeksempler, figurer eller oppgaver. Referansen har 250 ord i kortsvar, eksempel og fordypning når registerdefinisjonen er løst ut. Kontrolltekst, titler og kildeliste kommer i tillegg. Den passerer også validatorens samlede lengdekontroll.
+Tre myndighetskilder på nivå 1 og én metodekilde på nivå R er åpnet og lest 3.11.2026. Presise avsnitt og avgrensninger står i skjemaet. Formlene brukes selvstendig, uten kopierte lærebokeksempler, figurer eller oppgaver. Referansen har 252 ord i kortsvar, eksempel og fordypning når registerdefinisjonen er løst ut. Kontrolltekst, titler og kildeliste kommer i tillegg. Den passerer også validatorens samlede lengdekontroll.
 
 | Tilfelle | Forutsetning | Forventet resultat |
 | --- | --- | --- |
@@ -72,7 +84,9 @@ node tests/svar-generated.test.cjs
 node tests/published-answers.test.cjs
 ```
 
-Det nye kontrollskriptet skriver ingenting og bruker ikke nettverk. Det sammenligner egen desimalberegning med kalkulatormotoren og kontrollerer lenkenes faktiske inndata. Det validerer skjemaet og at kandidatens interne felt ikke blir offentlig tekst. Det beviser ikke kildekvalitet eller brukerforståelse.
+Kontrollskriptet for SV-022 er et særskilt eksempel som prøver sammenhengen mellom tekst, eksempellenker og kalkulatormotor. Det er ikke en mal som skal kopieres til hvert svar. For vanlige svar føres kontrollregningen i skjemaet med kommando, resultat og avrunding, og en kontrollør regner selv. Nye skript krever et konkret behov for å kontrollere kode eller en feil som kan gjenta seg. Et skript med de samme formlene og tallene som skribenten brukte, gir ikke alene separat kontroll. Vurder en felles regnekontroll ved flere slike behov fremfor en samling skript per svar.
+
+Skriptet skriver ingenting og bruker ikke nettverk. Det sammenligner egen desimalberegning med kalkulatormotoren og kontrollerer lenkenes faktiske inndata. Det validerer skjemaet og at kandidatens interne felt ikke blir offentlig tekst. Det beviser ikke kildekvalitet eller brukerforståelse.
 
 ## Oppdrag til en kontrollør i ny økt
 
@@ -96,3 +110,11 @@ De fire kilde-ID-ene i referansen er ikke registrert som egne kilder i Kildevakt
 Kjørt 3.11.2026: referansekontrollen, svarskjemaenes bygging og konsistenskontroll, faktaregister, sikkerhetskontroll, innholdsbaserte cacheversjoner og de fire Node-testfilene `svar-generated`, `published-answers`, `svarmal` og `engine`. Python-testfilen `svar.test.py` omfatter også referansekontrollen og et moteksempel: 525 kr endres til 526 kr i offentlig tekst og skal avvises. Kontrollene består. De to eksisterende lengdevarslene i BSU-utkastet er ikke behandlet her. Nettverksfeilene i moteksempeltestenes utskrift er simulerte, ikke resultat av en live tilgangstest.
 
 Samordnet med main `1b91b2c5540c85a51be1a2aea2c3d3416d066fd3` før levering. Nye endringer på main er bevart. Referansekontrollen, alle 35 Python-kontroller i `tests/svar.test.py`, skjemaenes konsistenskontroll og Node-kontrollene av generering og publiseringsutvalg er kjørt på nytt etter samordningen.
+
+## Retting etter videresendt delkontroll, 3. november 2026
+
+Kortsvaret er skjerpet med vilkåret fast, positiv rente, og P2 er oppdatert til samme ordlyd. Formelen hos OpenStax er lest på nytt for denne endringen. «Vi regner med» er erstattet med «Eksemplet forutsetter». Formelforklaringen og to formuleringer i eksemplene er forkortet uten å fjerne vilkår eller endre tall. Kontrolloggen skiller tre myndighetskilder på nivå 1 fra metodekilden på nivå R. `Lest main` viser faktisk lest og innflettet main `3590e1403654ed4088b8c621dacb226fda349904`, inkludert sperren mot foreldet kode. Den historiske lesingen av øvrige kilder er ikke ført som en ny full kildekontroll.
+
+Sju korte sjekkpunkter er lagt foran detaljene. Kontrollskriptet er presisert som en særskilt prøve for SV-022, uten krav om eget skript for hvert svar. Kjørbar kontrollregning i skjemaet er normal arbeidsform. En felles regnekontroll er et mulig senere tiltak, ikke implementert her.
+
+Referansekontrollen, `svar.py --check`, alle 35 tester i `svar.test.py`, faktaregisteret, Node-kontrollene av generert svarbase og publiseringsutvalg og de åtte tilfellene i testen av foreldet kode består etter rettingen. De eksisterende BSU-lengdevarslene gjenstår. Videresendt delkontroll er ikke registrert som fullført separat 4C-kontroll. Status er fortsatt `til kontroll`.
