@@ -307,6 +307,16 @@ def github(method, path, body=None):
         return json.loads(response.read() or b'null')
 
 
+def make_pr(args):
+    repo = os.environ['GITHUB_REPOSITORY']
+    try:
+        pr = github('POST', f'/repos/{repo}/pulls', {'title': args.tittel, 'head': args.gren, 'base': 'main', 'body': Path(args.tekst).read_text(encoding='utf-8')})
+        print(pr['html_url'])
+    except urllib.error.HTTPError as error:
+        print(f'Kunne ikke lage PR (HTTP {error.code}). Grenen {args.gren} er klar. Slå på «Allow GitHub Actions to create and approve pull requests».', file=sys.stderr)
+    return 0
+
+
 def main(argv):
     parser = argparse.ArgumentParser(prog='tidsmaskin')
     sub = parser.add_subparsers(dest='cmd', required=True)
@@ -327,6 +337,8 @@ def main(argv):
                 status = f'feil: {error}'
             print(f"| {s['id']} | {status} |")
         return 0
+    if args.cmd == 'lag-pr':
+        return make_pr(args)
     store = Store(args.mål)
     if args.cmd == 'hent':
         text = report_markdown(fetch(sources, store, http_get, args.kilde))
@@ -349,14 +361,6 @@ def main(argv):
     if args.cmd == 'oversikt':
         (store.root / 'OVERSIKT.md').write_text(describe(store), encoding='utf-8')
         print(f'Skrev {store.root / "OVERSIKT.md"}')
-        return 0
-    if args.cmd == 'lag-pr':
-        repo = os.environ['GITHUB_REPOSITORY']
-        try:
-            pr = github('POST', f'/repos/{repo}/pulls', {'title': args.tittel, 'head': args.gren, 'base': 'main', 'body': Path(args.tekst).read_text(encoding='utf-8')})
-            print(pr['html_url'])
-        except urllib.error.HTTPError as error:
-            print(f'Kunne ikke lage PR (HTTP {error.code}). Grenen {args.gren} er klar. Slå på «Allow GitHub Actions to create and approve pull requests».', file=sys.stderr)
         return 0
     return 1
 
