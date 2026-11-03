@@ -2,7 +2,7 @@
 
 Teknisk beskrivelse av lånekalkulatorens regnemotor, `dist/laan-motor.js`. Opprettet 3. november 2026. Beslutningen og alternativene står i [BESLUTNINGER.md](../BESLUTNINGER.md), «Lånekalkulator v1».
 
-Status: motoren brukes av `laan.html` (siden), `laan.js` (skjema og graf) og `laan-tekst.js` (resultat og grafbeskrivelse i ord). Referanserentene og effektiv rente kommer i egne PR-er. Rentefeltet står tomt til brukeren fyller inn sin egen rente.
+Status: motoren brukes av `laan.html` (siden), `laan.js` (skjema og graf) og `laan-tekst.js` (resultat og grafbeskrivelse i ord). Graf og nedbetalingsplan kan vises på alle detaljnivåer. Planen kan lastes ned som Excel, CSV og JSON, eller som rapport/PDF via nettleserens utskrift. Filene bruker de samme betalingsradene som resultatet, og tar med gebyrer og hendelser. Eksport sperres ved ugyldige felt. Referanserentene og effektiv rente kommer i egne PR-er. Rentefeltet står tomt til brukeren fyller inn sin egen rente.
 
 ## Regnereglene
 
