@@ -29,6 +29,7 @@ jobs:
           node tests/engine.test.cjs
           node tests/laan-motor.test.cjs
           python3 tests/laan-kontroll.test.py
+          node tests/laan-tekst.test.cjs
           node tests/tax-export.test.cjs
           node tests/veileder.test.cjs
           node tests/veileder-context.test.cjs
@@ -73,6 +74,8 @@ jobs:
           node --check dist/layout.js
           node --check dist/engine.js
           node --check dist/laan-motor.js
+          node --check dist/laan-tekst.js
+          node --check dist/laan.js
           node --check dist/guidance.js
           node --check dist/journey.js
           node --check dist/meaning.js
@@ -177,6 +180,9 @@ jobs:
           SPARE_ENGINE=webkit node tests/last-ned-valgte-browser.cjs
           node tests/pdf-merking-browser.cjs
           node tests/bunntekst-browser.cjs
+          node tests/laan-browser.cjs
+          SPARE_ENGINE=firefox node tests/laan-browser.cjs
+          SPARE_ENGINE=webkit node tests/laan-browser.cjs
           node tests/personvern-browser.cjs
           SPARE_ENGINE=firefox node tests/personvern-browser.cjs
           SPARE_ENGINE=webkit node tests/personvern-browser.cjs

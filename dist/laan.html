@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; worker-src 'none'"><script src="theme.js?v=124f4136e0"></script><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Se hva et lån koster hver måned og til sammen, med annuitet eller serie, renteendring og ekstra innbetaling.">
+<meta name="theme-color" content="#173f36"><title>Lån · Spareverksted</title>
+<link rel="stylesheet" href="style.css?v=c16cde3d18">
+<link rel="stylesheet" href="layout.css?v=857c9da8d1">
+<script defer src="layout.js?v=a7caeab047"></script>
+<link rel="stylesheet" href="theme.css?v=60e6f18fa2">
+<link rel="stylesheet" href="navigation.css?v=b1ac0c9099">
+<link rel="stylesheet" href="laan.css?v=91f55f4d0a">
+<link rel="canonical" href="https://spareverksted.no/laan.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nb_NO">
+<meta property="og:site_name" content="Spareverksted">
+<meta property="og:title" content="Lån · Spareverksted">
+<meta property="og:description" content="Se hva et lån koster hver måned og til sammen, med annuitet eller serie, renteendring og ekstra innbetaling.">
+<meta property="og:url" content="https://spareverksted.no/laan.html">
+<meta property="og:image" content="https://spareverksted.no/deling-v2.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="spareverksted i hvitt på grønn bakgrunn">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lån · Spareverksted">
+<meta name="twitter:description" content="Se hva et lån koster hver måned og til sammen, med annuitet eller serie, renteendring og ekstra innbetaling.">
+<meta name="twitter:image" content="https://spareverksted.no/deling-v2.png">
+<meta name="twitter:image:alt" content="spareverksted i hvitt på grønn bakgrunn">
+</head>
+<body data-level="simple" class="loan-page">
+<a class="skip" href="#main">Hopp til innholdet</a>
+<header class="site-header" id="toppen"><a class="brand" href="index.html">spareverksted</a><nav class="site-nav" aria-label="Hovedmeny"><a href="index.html" aria-current="true">Kalkulator</a><a href="spor.html">Spør om sparing</a><a href="om.html">Om</a></nav></header>
+<main id="main">
+<section class="intro" aria-labelledby="pageTitle"><div><h1 id="pageTitle">Hva koster <em>lånet?</em></h1><p>Fyll inn lånet. Se hva du betaler hver måned, og hva lånet koster til sammen.</p></div></section>
+<div class="workbench-toolbar"><nav class="page-nav" aria-label="Kalkulatorer"><a href="index.html">Sparing</a><a href="index.html#activePage=dreams">Sparemål</a><a href="index.html#activePage=withdrawals">Uttak</a><a href="laan.html" aria-current="page">Lån</a></nav><div class="display-options" role="group" aria-labelledby="levelLabel" aria-describedby="levelDescription"><span id="levelLabel">Detaljnivå</span><div id="levels" class="segmented"><button type="button" data-level="simple" aria-pressed="true">Enkel</button><button type="button" data-level="explore" aria-pressed="false">Utforsk</button><button type="button" data-level="advanced" aria-pressed="false">Avansert</button></div><p id="levelDescription">Det viktigste, forklart enkelt.</p></div></div>
+<div id="error" class="error" role="alert" hidden></div>
+<div class="workspace" id="loanWorkspace">
+<aside class="plan-inputs panel" id="loanInputs" tabindex="-1" aria-labelledby="inputsHeading"><div class="panel-title"><h2 id="inputsHeading">Lånet ditt</h2><button type="button" id="reset" class="text">Nullstill</button></div>
+<div class="savings-type" role="group" aria-labelledby="kindLabel"><p id="kindLabel" class="savings-type-label">Hva slags lån?</p><div class="segmented" id="kinds"><button type="button" data-kind="bolig" aria-pressed="true">Boliglån</button><button type="button" data-kind="bil" aria-pressed="false">Billån</button><button type="button" data-kind="forbruk" aria-pressed="false">Forbrukslån</button></div></div>
+<div class="savings-type" role="group" aria-labelledby="typeLabel" aria-describedby="typeHint"><p id="typeLabel" class="savings-type-label">Nedbetaling</p><div class="segmented" id="types"><button type="button" data-type="annuitet" aria-pressed="true">Annuitetslån</button><button type="button" data-type="serie" aria-pressed="false">Serielån</button></div><p id="typeHint" class="hint">Annuitetslån: likt beløp hver måned. Serielån: likt avdrag, så beløpet synker over tid.</p></div>
+<p id="exampleNote" class="start-note">Lånebeløp og nedbetalingstid er eksempeltall. Endre dem til ditt lån.</p>
+<div id="basic">
+<div class="field"><label for="amount" class="field-label">Lånebeløp</label><span class="fieldbox"><input id="amount" type="text" inputmode="decimal" autocomplete="off"><span class="unit">kr</span></span></div>
+<div class="field"><label for="rate" class="field-label">Nominell årsrente</label><span class="fieldbox"><input id="rate" type="text" inputmode="decimal" autocomplete="off" aria-describedby="rateHint" placeholder="Fra tilbudet"><span class="unit">%</span></span><p id="rateHint" class="loan-hint">Står det to renter i tilbudet, bruk den nominelle. Den effektive renten inneholder gebyrer og gir feil resultat her.</p></div>
+<div class="field"><label for="years" class="field-label">Nedbetalingstid</label><span class="fieldbox"><input id="years" type="text" inputmode="decimal" autocomplete="off"><span class="unit">år</span></span></div>
+</div>
+<button type="button" class="input-result" id="showResult" aria-controls="loanResult">Se resultat ↓</button>
+<details id="feesDetails"><summary>Gebyrer <span class="summary-value" id="feesValue"></span></summary><div class="two"><div class="field"><label for="establishmentFee" class="field-label">Etableringsgebyr</label><span class="fieldbox"><input id="establishmentFee" type="text" inputmode="decimal" autocomplete="off"><span class="unit">kr</span></span></div><div class="field"><label for="termFee" class="field-label">Termingebyr per måned</label><span class="fieldbox"><input id="termFee" type="text" inputmode="decimal" autocomplete="off"><span class="unit">kr</span></span></div></div><p class="hint">Gebyrene står i tilbudet eller avtalen. Etableringsgebyret betales når lånet utbetales. Termingebyret kommer i tillegg til hvert terminbeløp.</p></details>
+<details id="changeDetails" data-depth="explore"><summary>Hva om renten endres?</summary><div class="two"><div class="field"><label for="changeRate" class="field-label">Ny rente</label><span class="fieldbox"><input id="changeRate" type="text" inputmode="decimal" autocomplete="off" placeholder="Ingen endring"><span class="unit">%</span></span></div><div class="field"><label for="changeYear" class="field-label">Etter</label><span class="fieldbox"><input id="changeYear" type="text" inputmode="decimal" autocomplete="off"><span class="unit">år</span></span></div></div><p class="hint">Ved annuitetslån regnes et nytt månedsbeløp, så lånet blir ferdig til samme tid. Ved serielån er avdraget det samme, bare renten endres.</p></details>
+<details id="extraDetails" data-depth="explore"><summary>Ekstra innbetaling</summary><div class="two"><div class="field"><label for="extraAmount" class="field-label">Beløp</label><span class="fieldbox"><input id="extraAmount" type="text" inputmode="decimal" autocomplete="off" placeholder="Ingen"><span class="unit">kr</span></span></div><div class="field"><label for="extraYear" class="field-label">Betales etter</label><span class="fieldbox"><input id="extraYear" type="text" inputmode="decimal" autocomplete="off"><span class="unit">år</span></span></div></div><p class="hint">Betales i tillegg til vanlig termin. Månedsbeløpet er det samme etterpå, så lånet blir nedbetalt tidligere.</p></details>
+<div id="hiddenChoices" class="active-note" hidden></div>
+<p class="privacy-note">Beregnes i nettleseren. Tallene lagres ikke. <a href="personvern.html">Personvern</a></p>
+</aside>
+<div class="results">
+<article class="result-article" aria-labelledby="resultLabel">
+<div class="hero-result" id="loanResult" tabindex="-1"><div class="hero-top"><span class="before-tax-badge">Før rentefradrag</span></div><h2 class="eyebrow" id="resultLabel">Hver måned</h2><div id="payment" class="big"></div><p id="resultText"></p>
+<dl class="metrics loan-metrics"><div><dt>Du låner</dt><dd><strong id="mAmount"></strong></dd></div><div><dt>Renter</dt><dd><strong id="mInterest"></strong></dd></div><div id="mFeesBox"><dt>Gebyrer</dt><dd><strong id="mFees"></strong></dd></div><div><dt>Du betaler tilbake</dt><dd><strong id="mPaid"></strong></dd></div></dl></div>
+<section class="meaning" aria-labelledby="meaningTitle"><h2 id="meaningTitle">Dette betyr tallene</h2><p id="meaningMain"></p><p id="extraEffect" hidden></p><ul id="loanNotes" class="loan-notes" hidden></ul></section>
+</article>
+<section class="panel loan-compare" id="comparePanel" data-depth="explore" aria-labelledby="compareTitle"><h2 id="compareTitle">Annuitet eller serie?</h2><p class="hint">Samme lån, rente og tid. Endringer og ekstra innbetaling er ikke med her.</p><div class="compare-grid"><div class="compare-card"><h3>Annuitetslån</h3><dl><div><dt>Første måned</dt><dd id="cAFirst"></dd></div><div><dt>Siste måned</dt><dd id="cALast"></dd></div><div><dt>Renter</dt><dd id="cAInterest"></dd></div></dl></div><div class="compare-card"><h3>Serielån</h3><dl><div><dt>Første måned</dt><dd id="cSFirst"></dd></div><div><dt>Siste måned</dt><dd id="cSLast"></dd></div><div><dt>Renter</dt><dd id="cSInterest"></dd></div></dl></div></div><p id="compareText"></p></section>
+<section class="panel chartpanel" id="chartPanel" tabindex="-1" aria-labelledby="chartHeading"><div class="panel-title"><div><h2 id="chartHeading">Slik går gjelden ned</h2><p class="hint" id="chartSubtitle">Restgjeld år for år.</p></div><div class="segmented" role="group" aria-label="Vis resultat som" data-depth="advanced"><button type="button" id="graphTab" aria-pressed="true">Graf</button><button type="button" id="tableTab" aria-pressed="false">Tabell</button></div></div>
+<div id="chart" role="group" tabindex="0" aria-label="Restgjeld over tid. Bruk piltastene for å lese år for år." aria-describedby="chartSummaryText"></div><div id="tableWrap" hidden></div><ul id="chartLegend" class="legend"></ul>
+<div id="chartSummary" class="chart-summary" hidden><h3>Slik leser du grafen</h3><p id="chartSummaryText"></p></div>
+<p class="hint">Regneeksempel med de tallene du har fylt inn. Banken kan regne litt annerledes, for eksempel med avrunding og dager i måneden.</p></section>
+<details class="method panel"><summary>Metode og forutsetninger</summary>
+<p>Kalkulatoren regner med ett terminbeløp i slutten av hver måned. Første termin er én måned etter at lånet er utbetalt. Renten per måned er den nominelle årsrenten delt på 12.</p>
+<p>Annuitetslån har likt terminbeløp (rente og avdrag). Serielån har likt avdrag, og renten regnes av gjelden som er igjen. Siste termin er det som gjenstår, og kan være mindre enn de andre.</p>
+<p>Ekstra innbetaling betales etter terminen den måneden. Annuitetslån beholder månedsbeløpet, serielån beholder avdraget, så lånet blir nedbetalt tidligere. Ved renteendring får annuitetslånet nytt månedsbeløp, så lånet blir ferdig til samme tid som før endringen.</p>
+<p>Etableringsgebyret betales når lånet utbetales. Termingebyret betales hver måned til lånet er nedbetalt. Det regnes ikke rente av gebyrene.</p>
+<p>Alt er før rentefradrag på skatten. Effektiv rente vises ikke ennå. Beregningen tar ikke hensyn til regler for hvor mye du kan låne. Beløpene er avrundet til hele kroner på skjermen. Regnereglene står i <a href="https://github.com/gronnlars/spareverksted/blob/main/docs/laanemodell.md">beskrivelsen av lånemodellen</a>.</p>
+</details>
+</div></div>
+</main>
+<footer><a class="to-top" href="#toppen">Til toppen <span aria-hidden="true">↑</span></a><nav class="footer-links" aria-label="Sider på Spareverksted"><a href="index.html">Kalkulator</a><span class="footer-current" aria-current="page">Lån</span><a href="spor.html">Spør om sparing</a><a href="om.html">Om</a><a href="personvern.html">Personvern</a><a href="tilgjengelighet.html">Tilgjengelighet</a><a href="ressursbruk.html">Ressursbruk</a></nav><span class="footer-note">Ingen konto nødvendig. Ingen lån eller investeringsprodukter til salgs.</span></footer>
+<noscript><p>Slå på JavaScript for å bruke lånekalkulatoren.</p></noscript>
+<script src="laan-motor.js?v=635b0d2d16"></script>
+<script src="laan-tekst.js?v=11baebd747"></script>
+<script src="laan.js?v=0148c84c94"></script>
+</body></html>

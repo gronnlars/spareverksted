@@ -2,7 +2,7 @@
 
 Teknisk beskrivelse av lånekalkulatorens regnemotor, `dist/laan-motor.js`. Opprettet 3. november 2026. Beslutningen og alternativene står i [BESLUTNINGER.md](../BESLUTNINGER.md), «Lånekalkulator v1».
 
-Status: motoren finnes, men ingen side bruker den ennå. Siden (`laan.html`), referanserentene og effektiv rente kommer i egne PR-er.
+Status: motoren brukes av `laan.html` (siden), `laan.js` (skjema og graf) og `laan-tekst.js` (resultat og grafbeskrivelse i ord). Referanserentene og effektiv rente kommer i egne PR-er. Rentefeltet står tomt til brukeren fyller inn sin egen rente.
 
 ## Regnereglene
 

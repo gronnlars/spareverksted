@@ -31,7 +31,9 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 7. **Renteendring og ekstra innbetaling skilles.** Renteendring i annuitetslån gir nytt terminbeløp over gjenværende løpetid. Ekstra innbetaling beholder terminbeløpet (serie: avdraget), og løpetiden blir kortere. Samme termin: ny rente, så terminen, så den ekstra innbetalingen.
 8. **Siste termin og innfrielse.** Siste termin tar med påløpt rente og termingebyr. Ekstra innbetaling begrenses til restgjelden. Ingen rente eller gebyrer etter innfrielse.
 
-**Foreslått, avgjøres med PR 2:** Egen side `laan.html` med samme mal som de andre sidene. Menyen «Sparing» og «Lån». Rentetall fra statistikk heter «referanserente», med måned, lånegruppe og kilde, og overskriver aldri en rente brukeren har skrevet inn. Finnes ingen god kilde for en lånetype, står rentefeltet tomt. Kildevakt kontrollerer månedlig, lager PR ved nye data og beholder siste gyldige verdi med synlig måned ved kildefeil.
+**Lars 3.11.2026, kveld:** Kalkulatoren skal ut, så den kan testes skikkelig, som et supplement i «kalkulatorverdenen». Gjennomført i PR 2: egen side `laan.html` med samme mal, fanen «Lån» etter Sparing, Sparemål og Uttak, et kort på startsiden og en lenke i bunnteksten. Hovedmenyen beholder «Kalkulator», som markeres på lånesiden. «Sparing» og «Lån» i hovedmenyen er ikke innført. Rentefeltet står tomt til referanserentene er kildekontrollert. Kjent begrensning: en spareplan som ikke er tatt med til «Spør om sparing», blir ikke husket på en tur til Lån, som ved andre sider. Å huske den krever lagring i fanen og vurderes for seg (personvern).
+
+**Foreslått, ikke avgjort:** Rentetall fra statistikk heter «referanserente», med måned, lånegruppe og kilde, og overskriver aldri en rente brukeren har skrevet inn. Finnes ingen god kilde for en lånetype, står rentefeltet tomt. Kildevakt kontrollerer månedlig, lager PR ved nye data og beholder siste gyldige verdi med synlig måned ved kildefeil.
 
 **Ord:** Ikke «billigere». Serielån gir lavere samlet rente fordi gjelden nedbetales raskere, og de første terminene er høyere.
 

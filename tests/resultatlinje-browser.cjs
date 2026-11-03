@@ -47,12 +47,14 @@ const engine=process.env.SPARE_ENGINE||'chromium';
   for(const inset of [0,34]){
    const c=await browser.newContext({viewport:{width:390,height:664},hasTouch:true});const q=await c.newPage();
    await q.route('**/layout.css*',route=>route.fulfill({contentType:'text/css',body:fs.readFileSync(path.join(root,'layout.css'),'utf8').replaceAll('env(safe-area-inset-bottom)',inset+'px')}));
-   await q.goto(origin+'#activePage=calculator');
+   await q.goto(origin+'#activePage=calculator');await q.waitForTimeout(400);
    await q.evaluate(()=>document.querySelector('#basic input').focus());
-   await q.locator('#mobileSummaryToggle').click();
+   if(!(await state(q)).collapsed)await q.locator('#mobileSummaryToggle').click();
+   assert((await state(q)).collapsed,'sikkerhetsfeltet prøves med lukket linje');
    for(const height of [664,760,664]){
     await q.setViewportSize({width:390,height});
     const b=await q.evaluate(()=>{const s=document.getElementById('mobileSummary'),t=document.getElementById('mobileSummaryToggle'),a=s.getBoundingClientRect(),b=t.getBoundingClientRect();return {bottom:a.bottom,buttonBottom:b.bottom,height:a.height,buttonHeight:b.height,padding:getComputedStyle(s).paddingBottom,background:getComputedStyle(t).backgroundColor,hit:document.elementFromPoint(innerWidth/2,innerHeight-2)?.id,overflow:document.documentElement.scrollWidth-innerWidth};});
+    console.log('sikkerhetsfelt',engine,inset,height,await state(q),b);
     assert.equal(b.bottom,height,'linjen følger vindusbunnen');
     assert.equal(b.buttonBottom,height,'knappen fyller også sikkerhetsfeltet');
     assert.equal(b.height,b.buttonHeight,'ingen tom stripe under knappen');
@@ -66,7 +68,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
   // Lavt PC-vindu tilsvarer lite plass ved zoom. Mus får lavere knapp, berøring beholder 44 px.
   for(const hasTouch of [false,true]){
    const c=await browser.newContext({viewport:{width:320,height:320},hasTouch});const q=await c.newPage();
-   await q.goto(origin+'#activePage=calculator');
+   await q.goto(origin+'#activePage=calculator');await q.waitForTimeout(400);
    await q.evaluate(()=>document.querySelector('#basic input').focus());
    if(!(await state(q)).collapsed)await q.locator('#mobileSummaryToggle').click();
    const h=await q.locator('#mobileSummaryToggle').evaluate(e=>e.getBoundingClientRect().height);
