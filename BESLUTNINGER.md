@@ -1182,6 +1182,25 @@ Oppdateringen er samordnet med main `e9eb4c0` etter #182, #183, #186, #187, #188
 
 Etter mobil- og PC-prøving bestiller Lars Kontakt og Åpne alle kapitler rett under undermenyen, før overskrift og innledning på alle fire informasjonssider. Dette erstatter plasseringen under h1 fra #191. Lange overskrifter skal ikke flytte knappene mellom sider. Eksisterende funksjon, radbryting og overskrifter beholdes. Ingen sticky-posisjonering eller kalkulatorendring. Testen kontrollerer plassering før innledningen. ChatGPT/Codex.
 
+## PDF-rapporten: merket i Chrome og Edge, PDF/UA utsatt (3. november 2026)
+
+Frontkits PDF-sjekk av en rapport lagret fra Chrome på Windows viste umerket PDF uten tittel og bokmerker. Årsaken var vår egen: rapportvinduet er et modalt `<dialog>`, som gjør resten av siden inert, og utskriftskopien hadde `aria-hidden`. Chrome bygger PDF-merkene fra tilgjengelighetstreet, så kopien kom ikke med.
+
+Rettet (PR #198): vinduet lukkes mens utskriften lages og åpnes igjen etterpå, utskriftskopien har én h1 og h2 under, begrepsknapper blir tekst, og sidetittelen blir PDF-ens tittel. Målt i Chromium: merket struktur, lesrekkefølge (ParentTree), språk, tittel, bokmerker og grafen som figur med tekstalternativ.
+
+Utsatt: PDF/UA-merke, XMP-metadata og «fast web view». Ingen av dem kan settes av en nettside som bruker nettleserens utskrift. De krever at vi lager PDF-en selv.
+
+Vurderte alternativer:
+
+- A. Nettleserens utskrift som nå. Valgt. Ingen ekstra nedlasting, samme innhold som på skjermen, merket i Chrome og Edge. Safari og Firefox er ikke kontrollert.
+- B. PDFKit i nettleseren. Har PDF/UA-støtte, men rapporten og grafene må tegnes på nytt i kode, og vi må legge ved bibliotek og skrift (anslagsvis et par MB). Ikke prøvd.
+- C. Typst kompilert til WebAssembly. Merket PDF som standard fra versjon 0.14, men flere MB å laste og et eget rapportformat. Ikke prøvd.
+- Forkastet: html2pdf.js og lignende. Lager PDF av et bilde av siden, uten tekst, og er dårligere for skjermlesere enn i dag.
+
+PDF/UA-merket er en påstand om full samsvar med standarden. Det skal bare settes etter kontroll med et anerkjent verktøy (veraPDF eller PAC), ikke for å få grønt i en sjekk som bare ser etter merket.
+
+Ta opp igjen hvis: brukere eller tilsyn trenger PDF/UA, rapporten må fungere i Safari eller Firefox som merket PDF, eller vi uansett bygger egen PDF-produksjon.
+
 ## Funn fra Frontkit-sjekkene av spareverksted.no (3. november 2026)
 
 Lars kjørte Frontkits gratis WCAG-sjekk, fokusrekkefølge og opplesning. Verktøyene leser rå HTML uten CSS og JavaScript. Hvert funn ble derfor kontrollert mot tilgjengelighetstreet i Chromium før endring.
