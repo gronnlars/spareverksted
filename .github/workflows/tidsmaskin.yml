@@ -21,9 +21,9 @@ jobs:
   # På PR: tester, kontroll av lagrede filer og en prøvehenting til en midlertidig mappe.
   provehenting:
     if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Tester og kontroll av lagrede filer
         run: |
           python3 tests/tidsmaskin.test.py
@@ -38,14 +38,14 @@ jobs:
 
   hent:
     if: github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
       pull-requests: write
     env:
       GITHUB_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: main
       - name: Hent

@@ -24,10 +24,10 @@ jobs:
   # Rådata fra prøvekjøringen lastes opp som artefakt, så første ekte SSB-svar kan kontrolleres.
   provekjoring:
     if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
       - name: Tester
@@ -43,7 +43,7 @@ jobs:
         run: |
           python3 scripts/kildevakt.py kjør --tilstand /tmp/kildedata --rapport /tmp/kildedata/rapport.json
           python3 scripts/kildevakt.py varsle --rapport /tmp/kildedata/rapport.json --tørrkjør
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: always()
         with:
           name: kildevakt-provekjoring
@@ -52,7 +52,7 @@ jobs:
 
   vakt:
     if: github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
       issues: write
@@ -61,10 +61,10 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GITHUB_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: main
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
       - name: Hent tidligere tilstand fra grenen kildedata
@@ -111,7 +111,7 @@ jobs:
       - name: Saker
         if: always()
         run: python3 scripts/kildevakt.py varsle --rapport /tmp/rapport.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: always()
         with:
           name: kildevakt-${{ github.run_id }}

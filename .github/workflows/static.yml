@@ -10,10 +10,10 @@ concurrency:
   cancel-in-progress: false
 jobs:
   checks:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
       - name: Check calculations and guidance
@@ -70,7 +70,7 @@ jobs:
           python3 tests/personvern-status.test.py
       - name: Offline resource inventory
         run: python3 scripts/ressurskontroll.py
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
@@ -82,7 +82,7 @@ jobs:
           java -jar "$JAR" --format json --stdout --exit-zero-always dist/*.html > /tmp/w3c.json
           python3 scripts/w3c-status.py /tmp/w3c.json "$(java -jar "$JAR" --version)" >> "$GITHUB_STEP_SUMMARY"
   browser:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       SPARE_PRIVACY_REPORT: /tmp/spareverksted-privacy
     # Playwrights eget testbilde har Chromium og systempakkene ferdig installert.
@@ -90,7 +90,7 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.56.0-noble
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install Playwright
         run: npm install --no-save --no-package-lock playwright@1.56.0
       # Actions mounts /github/home with the host runner's uid; the container runs as root.
@@ -179,20 +179,20 @@ jobs:
         run: python3 scripts/personvern-status.py /tmp/spareverksted-privacy
       - name: Privacy evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: privacy-evidence
           path: /tmp/spareverksted-privacy
           if-no-files-found: error
           retention-days: 30
       - name: Verified privacy page
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: privacy-page
           path: dist/personvern.html
       - name: UI review screenshots
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ui-review
           path: /tmp/spareverksted-ui-review
@@ -201,16 +201,16 @@ jobs:
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: [checks, browser]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v7
         with:
           name: privacy-page
           path: dist
       - name: Build source download
         run: python3 scripts/package-source.py
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
@@ -223,7 +223,7 @@ jobs:
           java -jar "$JAR" --format json --stdout --exit-zero-always dist/*.html > /tmp/w3c.json
           python3 scripts/w3c-status.py /tmp/w3c.json "$VERSION" --write
           java -jar "$JAR" --errors-only dist/tilgjengelighet.html
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - name: Install pinned Bunny S3 client
