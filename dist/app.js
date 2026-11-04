@@ -213,7 +213,8 @@ function chart(){
 function fitSavingsTable(wrap=$('tableWrap')){
  wrap.classList.remove('savings-stacked');
  const tab=wrap.querySelector('table');
- if(tab&&wrap.clientWidth>0&&tab.scrollWidth>wrap.clientWidth)wrap.classList.add('savings-stacked');
+ // Mål også området rundt tabellen: WebKit kan rapportere mindre scrollWidth på selve tabellen.
+ if(tab&&wrap.clientWidth>0&&Math.max(wrap.scrollWidth,tab.scrollWidth,tab.getBoundingClientRect().width)>wrap.clientWidth)wrap.classList.add('savings-stacked');
 }
 // Oppsettendringen utsettes én skjermoppdatering for å unngå ResizeObserver-løkker i WebKit.
 let savingsTableWidth=-1;
