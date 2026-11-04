@@ -102,3 +102,10 @@ Scenariovalgets av/på-tilstand, bytte mellom graf/tabell og tilbake til Kroner/
 Lars presiserte under gjennomgangen at synlig hjelpetekst kan forstyrre oppsettet. Forklaringen ved scenariovalget beholdes derfor skjult i selve kalkulatoren, og tas fram via den eksisterende hjelpeknappen. Skjermlesere har fortsatt `aria-describedby` når feltet er deaktivert. Deaktiveringen legger ikke til en tekstlinje over grafen.
 
 En regresjonstest sammenligner avstanden fra scenarioraden til grafen før/etter «Begge». Den stoppet med den synlige forklaringen og består med denne rettingen. Testen kontrollerer også at hjelpeknappen gir instruksen og at tidligere avkrysning bevares. Lokalt bestått i Chromium. Tidligere grønn CI gjelder forrige commit; ny CI må bestå etter endringen.
+
+
+### Tabelltesten måler etter skjermoppdateringene
+
+CI på `e33b5b2` (Actions 41926717693) stoppet i WebKit: kjøpekraft, vanlige beløp, 640 px, 570 px tilgjengelig og 638 px innhold. Scenariotesten besto i alle tre motorer. Stoppet er gjenskapt lokalt også i andre kronevisninger. Midlertidig instrumentering viste at testens 80 ms kunne gå før ResizeObserver hadde behandlet breddeendringen. Den lagrede observerbredden var fortsatt 884 px mens området allerede var 320 px. Ved senere måling hadde den eksisterende tilpasningen kjørt og området var uten overløp.
+
+Testen venter derfor på tre faktiske skjermoppdateringer før måling, slik at ResizeObserver og den eksisterende køede requestAnimationFrame-tilpasningen får kjørt. Ingen kalkulatorkode endres. Grensen på ett piksel, alle bredder, celleverdier, overskrifter og feilkontroller beholdes. Tabellens rektangelbredde tas med i feilmeldingen. Testen består lokalt i Chromium og WebKit. En separat negativ kontroll med tilpasningen satt ut av spill stopper fortsatt ved 640 px, med 570 px tilgjengelig og 668 px innhold. Dette viser at ventingen ikke skjuler en vedvarende feil. Full CI på siste commit må bestå før publisering.
