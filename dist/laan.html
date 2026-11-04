@@ -46,7 +46,7 @@
 <div class="field" id="propertyField"><label for="propertyValue" class="field-label">Boligverdi <span class="hint">(valgfritt)</span></label><span class="fieldbox"><input id="propertyValue" type="text" inputmode="decimal" autocomplete="off" aria-describedby="propertyHint"><span class="unit">kr</span></span><p class="loan-hint" id="propertyHint">Verdien brukes bare til å regne lånebeløpet som andel av boligverdien. Andre lån og tilleggssikkerhet er ikke med.</p></div>
 <div id="vehicleFields" hidden><div class="field"><label for="vehiclePrice" class="field-label">Kjøpesum for bilen</label><span class="fieldbox"><input id="vehiclePrice" type="text" inputmode="decimal" autocomplete="off"><span class="unit">kr</span></span></div><div class="field"><label for="equity" class="field-label">Egenkapital til bilkjøpet</label><span class="fieldbox"><input id="equity" type="text" inputmode="decimal" autocomplete="off" aria-describedby="vehicleHint"><span class="unit">kr</span></span><p id="vehicleHint" class="loan-hint">Lånebeløpet er kjøpesum minus egenkapital. Gebyrer kommer i tillegg og finansieres ikke av lånet.</p></div></div>
 <div class="field" id="amountField"><label for="amount" class="field-label">Lånebeløp</label><span class="fieldbox"><input id="amount" type="text" inputmode="decimal" autocomplete="off"><span class="unit">kr</span></span></div>
-<div class="field"><label for="rate" class="field-label">Nominell årsrente</label><span class="fieldbox"><input id="rate" type="text" inputmode="decimal" autocomplete="off" aria-describedby="rateHint" placeholder="Fra tilbudet"><span class="unit">%</span></span><p id="rateHint" class="loan-hint">Bruk nominell årsrente fra tilbudet. Gebyrer fylles inn separat. <a href="#renteForklaring">Hva er forskjellen på nominell og effektiv rente?</a></p></div>
+<div class="field"><label for="rate" class="field-label">Nominell årsrente</label><span class="fieldbox"><input id="rate" type="text" inputmode="decimal" autocomplete="off" aria-describedby="rateHint" placeholder="Fra tilbudet"><span class="unit">%</span></span><p id="rateHint" class="loan-hint">Bruk nominell årsrente fra tilbudet. Gebyrer fylles inn separat. <a id="rateExplanationLink" href="#renteForklaring">Hva er forskjellen på nominell og effektiv rente?</a></p></div>
 <div class="field"><label for="years" class="field-label">Nedbetalingstid</label><span class="fieldbox"><input id="years" type="text" inputmode="decimal" autocomplete="off"><span class="unit">år</span></span></div>
 </div>
 <p id="securityRatio" class="loan-hint" hidden></p>
@@ -59,7 +59,7 @@
 <details id="inflationDetails" data-depth="explore"><summary>Prisvekst og dagens kroner <span id="inflationValue" class="summary-value"></span></summary><div class="field"><label for="inflation" class="field-label">Prisvekst per år</label><span class="fieldbox"><input id="inflation" type="text" inputmode="decimal" autocomplete="off"><span class="unit">%</span></span></div><label class="loan-check"><input id="real" type="checkbox"> Vis betalinger og restgjeld i dagens kroner</label><p class="loan-hint">Standardverdien er samme justerbare forutsetning som i sparekalkulatoren, ingen prognose. Hver betaling omregnes fra betalingstidspunktet. Etableringsgebyret betales ved utbetaling og omregnes ikke. Dagens kroner betyr prisnivået når lånet utbetales.</p><p class="loan-hint">Lavere realverdi av gjelden betyr ikke at inntekten din øker eller at lånet blir lettere å betale.</p></details>
 <div id="hiddenChoices" class="active-note" hidden></div>
 </form>
-<p class="privacy-note">Beregnes i nettleseren. Tallene lagres ikke. <a href="personvern.html">Personvern</a></p>
+<p class="privacy-note">Beregnes i nettleseren. Du kan velge å lagre en låneplan på denne enheten. <a href="personvern.html">Personvern</a></p>
 </aside>
 <div class="results">
 <article class="result-article" aria-labelledby="resultLabel">
@@ -76,7 +76,13 @@
 <div id="chartSummary" class="chart-summary" hidden><h3>Slik leser du grafen</h3><p id="chartSummaryText"></p></div>
 <div class="button-row"><button type="button" class="text-link" id="editFields">Endre tall ↑</button><button type="button" class="text-link" id="reportButton">Last ned eller skriv ut ↓</button></div>
 <p class="hint">Regneeksempel med de tallene du har fylt inn. Banken kan regne litt annerledes, for eksempel med avrunding og dager i måneden.</p></section>
-<section class="panel" aria-labelledby="renteForklaring"><h2 id="renteForklaring" tabindex="-1">Nominell og effektiv rente</h2><p>Nominell rente er rentesatsen som brukes til å beregne rentene av gjelden. Gebyrene kommer i tillegg.</p><p>Effektiv rente uttrykker de samlede lånekostnadene som en årlig prosentsats. Både kostnadene og tidspunktene for utbetaling og betalinger har betydning. Derfor kan effektiv rente avvike fra nominell rente også når gebyrene er null.</p><p>To lån med samme nominelle rente kan koste ulikt hvis gebyrene er forskjellige. Her fyller du inn nominell rente og gebyrer hver for seg. Kalkulatoren viser samlet kostnad i kroner, men beregner foreløpig ikke effektiv rente.</p><p class="hint">Kilder: <a href="https://www.finanstilsynet.no/forbrukerinformasjon/bank-og-finans">Finanstilsynet om lånekostnader</a> og <a href="https://www.husbanken.no/bransje/veileder-laan/rente-og-avdragsvilkar/beregning-av-renter/">Husbanken om nominell og effektiv rente</a>. Kontrollert 4. november 2026.</p></section>
+<section class="panel" aria-labelledby="renteForklaring"><h2 id="renteForklaring" tabindex="-1">Nominell og effektiv rente</h2><p>Nominell rente er rentesatsen som brukes til å beregne rentene av gjelden. Gebyrene kommer i tillegg.</p><p>Effektiv rente uttrykker de samlede lånekostnadene som en årlig prosentsats. Både kostnadene og tidspunktene for utbetaling og betalinger har betydning. Derfor kan effektiv rente avvike fra nominell rente også når gebyrene er null.</p><p>To lån med samme nominelle rente kan koste ulikt hvis gebyrene er forskjellige. Her fyller du inn nominell rente og gebyrer hver for seg. Kalkulatoren viser samlet kostnad i kroner, men beregner foreløpig ikke effektiv rente.</p><p class="hint">Kilder: <a href="https://www.finanstilsynet.no/forbrukerinformasjon/bank-og-finans">Finanstilsynet om lånekostnader</a> og <a href="https://www.husbanken.no/bransje/veileder-laan/rente-og-avdragsvilkar/beregning-av-renter/">Husbanken om nominell og effektiv rente</a>. Kontrollert 4. november 2026.</p><p><a href="#rateExplanationLink" id="backToRate">Tilbake til rentefeltet</a></p></section>
+<section class="panel" aria-labelledby="savedLoanTitle"><h2 id="savedLoanTitle">Lagrede låneplaner</h2>
+<p>Lagre beregningen i denne nettleseren. Velg planer for å se dem sammen eller laste ned en samlet rapport.</p>
+<label for="loanName">Navn på planen</label><input id="loanName" maxlength="80" type="text"><button type="button" id="saveLoan">Lagre låneplan</button>
+<div id="loanList"></div><p id="loanStatus" role="status"></p>
+<button type="button" id="compareLoans" disabled>Vis rapport for valgte planer</button>
+<button type="button" id="excelLoans" disabled>Last ned valgte i Excel</button></section>
 <details class="method panel"><summary>Metode og forutsetninger</summary>
 <p>Kalkulatoren regner med ett terminbeløp i slutten av hver måned. Første termin er én måned etter at lånet er utbetalt. Renten per måned er den nominelle årsrenten delt på 12.</p>
 <p>Annuitetslån har likt terminbeløp (rente og avdrag). Serielån har likt avdrag, og renten regnes av gjelden som er igjen. Siste termin er det som gjenstår, og kan være mindre enn de andre.</p>
@@ -99,5 +105,6 @@
 <script src="laan-visning.js?v=fbc1d45a01"></script>
 <script src="laan-eksport.js?v=3e8c20c0f7"></script>
 <script src="report-print.js?v=b9ca98c08a"></script>
-<script src="laan.js?v=705e64d62c"></script>
+<script src="laan-rapporter.js?v=e33e0de636"></script>
+<script src="laan.js?v=ae6ca38698"></script>
 </body></html>

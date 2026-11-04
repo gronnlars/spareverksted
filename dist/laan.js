@@ -173,20 +173,22 @@ function setLevel(value){
 function setView(v){view=v;$('graphTab').setAttribute('aria-pressed',v==='graph');$('tableTab').setAttribute('aria-pressed',v==='table');$('chart').hidden=v!=='graph';$('chartLegend').hidden=v!=='graph';$('tableWrap').hidden=v!=='table';$('tablePeriodField').hidden=v!=='table';}
 
 // Skyveknapper er snarveier. Skrivefeltet er alltid den gjeldende verdien.
-const SLIDERS={amount:{bolig:[100000,10000000,50000],bil:[10000,1000000,5000],forbruk:[5000,600000,5000]},rate:[0,15,0.05],years:[1,30,1]};
-function sliderRange(id){const r=SLIDERS[id];return Array.isArray(r)?r:r[kind];}
+const SLIDERS={equity:[0,300000,1],amount:{bolig:[100000,10000000,50000],bil:[10000,1000000,5000],forbruk:[5000,600000,5000]},rate:[0,15,0.05],years:[1,30,1]};
+function sliderRange(id){
+ if(id==='equity')return [0,Math.max(0,Math.ceil(parse($('vehiclePrice').value)||0)-1),1];
+ const r=SLIDERS[id];return Array.isArray(r)?r:r[kind];}
 for(const id of Object.keys(SLIDERS)){
  const field=$(id),wrap=document.createElement('div'),range=document.createElement('input'),note=document.createElement('p');
  wrap.className='range-control';range.type='range';range.id=id+'Slider';range.dataset.field=id;range.setAttribute('aria-label','Juster '+fieldLabel(id).toLowerCase());
  note.className='range-note';note.id=id+'SliderNote';note.hidden=true;note.textContent='Verdien er utenfor skyveknappens område. Skriv inn tallet i feltet.';
  wrap.append(range,note);field.closest('.fieldbox').after(wrap);
- range.addEventListener('input',()=>{field.value=grouped(Number(range.value));touched.add(id);render();});
+ range.addEventListener('input',()=>{field.value=grouped(Number(range.value));touched.add(id);if(id==='equity')touched.add('amount');syncExampleNote();render();});
 }
 function syncSliders(){for(const range of document.querySelectorAll('#basic input[type=range]')){
  const id=range.dataset.field,[min,max,step]=sliderRange(id),v=parse($(id).value);range.min=min;range.max=max;range.step=step;
  const outside=Number.isFinite(v)&&(v<min||v>max);if(Number.isFinite(v))range.value=Math.min(max,Math.max(min,v));else if(id==='rate')range.value=min;
- range.disabled=outside;range.closest('.range-control').hidden=kind==='bil'&&id==='amount';const note=$(id+'SliderNote');note.hidden=!outside;
- range.setAttribute('aria-valuetext',Number.isFinite(v)?id==='amount'?T.money(v):id==='rate'?T.pct(v):dec.format(v)+' år':'Velg en rente');
+ range.disabled=outside||(id==='equity'&&max===0);range.closest('.range-control').hidden=kind==='bil'&&id==='amount';const note=$(id+'SliderNote');note.hidden=!outside;
+ range.setAttribute('aria-valuetext',Number.isFinite(v)?['amount','equity'].includes(id)?T.money(v):id==='rate'?T.pct(v):dec.format(v)+' år':'Velg en rente');
  const ids=(range.getAttribute('aria-describedby')||'').split(' ').filter(x=>x&&x!==note.id);if(outside)ids.push(note.id);ids.length?range.setAttribute('aria-describedby',ids.join(' ')):range.removeAttribute('aria-describedby');
 }}
 
@@ -247,7 +249,21 @@ for(const k of FIELDS){const el=$(k);
  el.addEventListener('blur',()=>{const v=parse(el.value);if(Number.isFinite(v)&&el.value.trim()!=='')el.value=grouped(v);render();});
 }
 $('real').onchange=()=>render();
-addEventListener('resize',()=>{if(lastPlan)render();});
+// Safari endrer høyden når verktøylinjen flyttes. Bare grafbredden trenger ny tegning.
+let loanWidth=document.documentElement.clientWidth;
+addEventListener('resize',()=>{
+ const width=document.documentElement.clientWidth;
+ if(width!==loanWidth){loanWidth=width;if(lastPlan)render();}
+});
+for(const [link,target] of [['rateExplanationLink','renteForklaring'],['backToRate','rateExplanationLink']]){
+ $(link).onclick=event=>{
+  if(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+  event.preventDefault();
+  $(target).focus({preventScroll:true});
+  $(target).scrollIntoView({block:'center',behavior:'instant'});
+ };
+}
+LoanReports.attach({exportPlan,download});
 
 // Start.
 for(const k of FIELDS)$(k).value=DEFAULT_TEXT[k];

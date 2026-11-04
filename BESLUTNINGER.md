@@ -1323,3 +1323,7 @@ Kontroll før opplasting: de 81 gamle og nye nettleserkommandoene er sammenligne
 ### Fokus på store resultat- og grafpaneler (4. november 2026)
 
 Full CI-kjøring b8cf1c0 besto alle kontroller unntatt navigation-browser.cjs, som fanget et reelt ekstra rullehopp ved fokus på grafpanelet. Når den flytende linjen ble synlig nedenfor resultatet, behandlet unhide hele det høye grafpanelet som et lite kontrollfelt og flyttet panelets topp. Fokusjusteringen gjelder nå elementer som får plass over linjen, eller elementer som faktisk begynner under linjen. Et stort panel med synlig topp flyttes ikke bare fordi bunnen ligger utenfor vinduet. Den eksisterende navigasjonstesten og kontrollene av fokus som ikke skal dekkes, er beholdt uendret for denne rettingen. Ingen endring i beregning eller design. Lokal kjøring er fortsatt utilgjengelig; verifisering skjer i CI.
+
+## Lagrede lånerapporter og retur fra renteforklaringen, 4. november 2026
+
+Etter Lars sin iPhone-prøve får renteforklaringen en retur til lenken ved rentefeltet. Navigeringen flytter fokus uten å sette et varig adresseanker. Høydeendring alene utløser ingen ny resultatvisning. Egenkapital for bil får tallfelt og skyveknapp. Låneplaner lagres ved uttrykkelig trykk og kan slettes. Egen lagringsnøkkel beskytter eksisterende spareplaner mot feiltolking. Felles utskriftsflyt og Excel-verktøy gjenbrukes. Inntil tre valgte planer sammenlignes i listerekkefølge og løpende kroner. Alle valgte får full rapport i sin kronevisning. Revurder navigeringen etter fysisk iPhone-prøve.

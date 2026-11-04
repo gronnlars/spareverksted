@@ -71,6 +71,7 @@ function bridge(session,{started=true}={}){
  const local=new Store({'sv-scenarios':JSON.stringify([{name:'A',state:{}},{name:'B',state:{}}]),'sv-level':'advanced','sv-color-theme':'night','sv-started':'1','annen-tjeneste':'x'});
  const session=new Store({'sv-working-plan-v1':'{}','sv-guidance-tab-v2':'{}','sv-started':'1','annen':'y'});
  assert.equal(P.planCount(local),2);assert.equal(P.stored(local,session).length,6);
+ local.setItem('sv-loan-plans-v1',JSON.stringify([{name:'Lån'}]));assert.equal(P.planCount(local),3);
  assert.equal(P.clearAll(local,session),true);
  assert.deepEqual(local.keys(),['annen-tjeneste']);assert.deepEqual(session.keys(),['annen']);
  assert.equal(P.stored(local,session).length,0);
