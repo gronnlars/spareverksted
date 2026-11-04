@@ -174,3 +174,14 @@ Valgomaten er parkert etter Lars sin beslutning 24. oktober 2026. Den vurderes s
 | **WAVE: 10 varsler om visuelt skjult innhold.** | Lars opplyser at alle ti viser meldingen om visuelt skjult element. Skjermbildene viser 1 redundant lenke, 2 PDF-lenker, 1 noscript-element og 6 små tekster. Ikke ti bekreftede feil i synlig innhold. Identifiser hvert element og prøv det i relevant visning, også eventuell skjermlesertilgang. Ingen blind fjerning av innhold eller justering bare for å få null varsler. |
 | **Grafens linjeforklaring oppleves som navn uten verdier ved opplesning.** | Punktavlesningen gir tall, mens chartLegend er navn på linjene. Lesemåte/skjermleser er ikke oppgitt. Gjenskap med konkret verktøy og undersøk leserekkefølge, punktverdier, beskrivelse og tabell før endring. Ikke skjul linjeforklaringen uten å bekrefte brukerproblemet. |
 | **Faktisk zoom etter menyrettingen.** | Lars' første prøve fant meny- og temaproblemer. #127 er publisert og automatiske tester består. Gjenta manuell prøve av kalkulator, Spør om sparing og infosider ved 400/500 %, med tilgjengelig meny og eksisterende «Ny beregning». Ikke regn tidligere prøve før rettingen som etterkontroll. |
+
+
+### 10a. Separat kontroll av klarspråkgrunnmålingen
+
+Oppfølging av PR #215, 4. november 2026. [Selvstendig kontrolloppdrag](../docs/klarsprak/kontrolloppdrag.md) er klargjort, ikke gjennomført. Gjenta fryst rapport mot utpakket commit i en annen økt og kontroller et lite tekstutvalg manuelt. Identisk gjentakelse er ikke alene bevis for riktig utvalg eller brukerforståelse. Oppgi faktisk kontrollør og om kontrollen er KI-basert. Ingen sammenslåing eller innholdsendring inngår.
+
+### 10b. Dekning av dynamiske lånetekster i klarspråkkontrollen
+
+Registrert etter Lars sine innspill 4. november 2026. Før videre oppskalering av språkgrunnlaget bør et eget avgrenset oppdrag dekke lånesidens dynamiske forklaringer og feilmeldinger. Gjenbruk eksisterende lokale nettlesertester og oppdiktede tall. Kartlegg tekstkildene og tilstandene først: lånetyper, detaljnivåer, gyldig og ugyldig inndata, renteendring, ekstra innbetaling og visning i dagens kroner. Knapper, tabeller og eksport/PDF må få hver sin eksplisitte dekning og skal fortsatt ikke blandes inn som løpende forklaring.
+
+Ferdigkriterier: etterprøvbare tekstutdrag med kilde og tilstand, egne kategorier, fravær av dobbeltelling og kode/attributter i brødtekst, tester for negative tilfeller og dokumentert restdekning. Ikke hent besøkstall eller faktiske brukerdata. Ikke endre brukerrettet tekst i adapteroppdraget. Definisjoner skal fortsatt komme fra det eksisterende begrepsregisteret. Ingen konkurrerende ordliste eller ny innhenter. Kontrollen forblir rådgivende uten ny flettesperre. Krav om blokkering vurderes særskilt etter driftserfaring og dokumentert dekningskontroll.

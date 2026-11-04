@@ -20,6 +20,24 @@ Les `rapport.md` og `rapport.json` i utmappen. JSON inneholder alle funn, tekstu
 
 For å gjenta den historiske målingen: pakk ut commit-en oppgitt i sluttrapporten med `git archive`, behold måleverktøyet og analyseordlisten fra denne PR-en, og kjør med `--root /sti/til/utpakket/kilde --verify-baseline`. Rapporten er deterministisk og inneholder ikke klokkeslett eller maskinavhengige mapper.
 
+## Avklaring etter gjennomgangen av grunnmålingen
+
+Kontrollen leser HTML-filer i `dist`, ikke Markdown-kildetekst. Det er ferdige HTML-filer, men de er ikke det samme som DOM-en etter at nettleseren har kjørt JavaScript. Publiserte svar leses gjennom en egen, avgrenset Node-adapter som løser de samme faktaplassholderne som nettstedet. Den skanner ikke hele JS-filer som brødtekst. Alle sju sidene har `<main>`. Dagens parser bruker elementtyper og kategorier i hele dokumentet, ikke en nettlesers synlighet eller et absolutt krav om at all tekst ligger under `<main>`.
+
+NFC-normalisering utføres med Python `unicodedata.normalize('NFC', ...)`. JavaScripts `String.prototype.normalize` trengs ikke for at Python-parseren skal normalisere de samme tegnene. Norske forkortelser, desimaltall og datoer håndteres allerede og har egne tester.
+
+For etterprøvbar telling av ett ord i dagens kildekopi:
+
+```sh
+python3 scripts/klarsprak.py --word tilgjengelighet --output /tmp/klarsprak-ord
+```
+
+`ordtelling.json` viser ordet per kategori og alle tekstplasseringene. Den teller ikke treff i filnavn, HTML-attributter eller de gjentatte utdragene i funnlisten. Grunnmålingens historiske ordtelling er dokumentert i sluttrapporten og beskyttet av en test. Denne rapportutvidelsen endrer ingen av grunnmålingens tall eller metodeversjon.
+
+Kontrollen skal foreløpig være rådgivende: egen grønn/rød status uten ny flettesperre og uten kobling til deploy. Rødt betyr at verktøyet eller datagrunnlaget har en konkret feil, ikke at språkscoren er for høy. Ingen grenregler endres. Eventuell obligatorisk status skal vurderes særskilt etter bedre dekning og dokumentert driftserfaring, ikke innføres automatisk når en adapter er utvidet.
+
+JSON, lesbar grunnmåling, metode og kode er allerede varig i git. Bare rapportene fra løpende Actions-kjøringer utløper etter 30 dager. [Et separat kontrolloppdrag](klarsprak/kontrolloppdrag.md) er klargjort. Det skal ikke merkes som utført eller som menneskelig kontroll før det faktisk er gjort.
+
 ## Forholdet til Språkrådet og ISO 24495-1
 
 Metoden er kontrollert mot Språkrådets offentlige veiledning om skriveråd, testing og de fire styringsprinsippene i ISO 24495-1. Språkrådet beskriver prinsippene som relevans, å finne, å forstå og å bruke. ISO-katalogen beskriver virkeområdet og at standarden ikke erstatter tekniske tilgjengelighetskrav. Hele standardteksten er ikke gjennomgått. Vi dokumenterer derfor samsvar med de offentlig beskrevne prinsippene, ikke full kontroll av alle retningslinjene i standarden.

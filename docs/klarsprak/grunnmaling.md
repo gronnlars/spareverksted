@@ -4,7 +4,7 @@ Egne tekstindikatorer. Ingen godkjenning av klarspråk, ISO eller brukerforståe
 
 Metode: `sv-klarsprak-1`. Bare forklaringer inngår i LIX. Korte utvalg får ingen LIX.
 
-| Side / publisert svar | Ord | Setninger | Lange ord % | LIX | Δ LIX mot grunnmåling |
+| Side / publisert svar | Ord i forklaringer | Setninger | Lange ord % | LIX | Δ LIX mot grunnmåling |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | dist/index.html | 317 | 40 | 29.02 | 36.95 | 0.0 |
 | dist/laan.html | 648 | 83 | 31.64 | 39.44 | 0.0 |
@@ -17,11 +17,16 @@ Metode: `sv-klarsprak-1`. Bare forklaringer inngår i LIX. Korte utvalg får ing
 | dist/spor.html#q-fondskonto | 265 | 24 | 32.45 | 43.49 | 0.0 |
 | dist/tilgjengelighet.html | 1822 | 171 | 25.96 | 36.62 | 0.0 |
 
+Utvalget inneholder 6667 ordforekomster totalt i forklaringer. Dette er ikke antall ulike ord eller forekomster av ett bestemt ord.
+LIX kan vises for 21 av 73 målegrupper. De andre får bare råtellinger.
+Statisk tekstutvalg, ikke all tekst brukerne kan møte. Knapper og tabeller er kategorisert, men språkvurderes ikke her. Dynamiske tekster og PDF er ikke fullstendig dekket.
+
+
 ## Funn til vurdering
 
 fagord: 55, lang-setning: 5, lange-ord: 122, langt-avsnitt: 3
 
-Alle språkfunn er forslag. De stopper ingen PR. Full tekst, kategorier og kapitler ligger i JSON-rapporten.
+Alle språkfunn er forslag. De stopper ingen PR. Lange-ord teller tekstblokker med minst ett langt ord, ikke forekomster av et bestemt ord. Full tekst, kategorier og kapitler ligger i JSON-rapporten.
 
 Mot grunnmåling: 0 nye og 0 bortfalte funn. Bortfall kan skyldes fjernet tekst, ikke forbedring.
 

@@ -442,6 +442,6 @@ for(const ev of ['input','change'])document.addEventListener(ev,()=>setTimeout((
 
 if($('saveDream'))$('saveDream').onclick=openSave;
 $('reportButton').addEventListener('click',()=>{window.reportComparisonOnly=!!window.cmpExportRequest;window.cmpExportRequest=false;},true);
-// «Last ned» ved resultatet i alle tre kalkulatorene: samme valg som «Last ned eller skriv ut» (Lars 3.11.2026).
+// «Last ned» ved resultatet i alle tre kalkulatorene: samme valg som «Last ned plan» (Lars 3.11.2026).
 for(const id of ['heroDownload','dreamDownload','withdrawDownload'])if($(id))$(id).onclick=()=>$('reportButton').click();
 if($('saveWithdraw'))$('saveWithdraw').onclick=openSave;

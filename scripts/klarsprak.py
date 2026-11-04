@@ -334,6 +334,24 @@ def measure(root=ROOT, config=None):
             'findings':findings(blocks,terms),'blocks':blocks}
 
 
+def word_occurrences(report, word):
+    """Count a complete word in extracted TEXT, never in paths, attrs or findings."""
+    word = normalize(word).strip()
+    if not word or len(tokens(word)) != 1:
+        raise ValueError('Oppgi ett helt ord for ordtellingen')
+    pattern = re.compile(r'(?<!\w)' + re.escape(word) + r'(?!\w)', re.I)
+    counts, locations = Counter(), []
+    for block in report['blocks']:
+        count = len(pattern.findall(block['text']))
+        if not count:
+            continue
+        counts[block['kind']] += count
+        locations.append({**{k:block[k] for k in ('file','line','chapter','kind')},
+                          'count':count, 'text':block['text']})
+    return {'word':word,'scope':'Uttrekt tekst. Filnavn, HTML-attributter og funnlisten telles ikke.',
+            'occurrences_by_kind':dict(sorted(counts.items())), 'locations':locations}
+
+
 def esc(value):
     return str(value).replace('&','&amp;').replace('<','&lt;').replace('>','&gt;').replace('|','&#124;').replace('\n',' ')
 
@@ -341,7 +359,7 @@ def esc(value):
 def markdown(report, previous=None, label='grunnmåling'):
     lines = ['# Klarspråkkontroll', '', 'Egne tekstindikatorer. Ingen godkjenning av klarspråk, ISO eller brukerforståelse.', '',
              f'Metode: `{report["method"]}`. Bare forklaringer inngår i LIX. Korte utvalg får ingen LIX.', '',
-             '| Side / publisert svar | Ord | Setninger | Lange ord % | LIX | Δ LIX mot '+esc(label)+' |',
+             '| Side / publisert svar | Ord i forklaringer | Setninger | Lange ord % | LIX | Δ LIX mot '+esc(label)+' |',
              '| --- | ---: | ---: | ---: | ---: | ---: |']
     comparable = previous and previous.get('method') == report['method'] and previous.get('limits') == report['limits'] and previous.get('vocabulary_sha256') == report['vocabulary_sha256']
     if previous and not comparable:
@@ -352,9 +370,15 @@ def markdown(report, previous=None, label='grunnmåling'):
         delta = round(m['lix']-old['lix'],2) if m['lix'] is not None and old.get('lix') is not None else 'ikke sammenlignbart'
         lines.append('| '+ ' | '.join(esc(v) for v in [page,m['words'],m['sentences'],m['long_word_percent'],
                                                        m['lix'] if m['lix'] is not None else 'kort utvalg',delta])+' |')
+    groups = report['chapters']
+    eligible = sum(c['lix'] is not None for c in groups)
+    word_total = sum(p['metrics']['words'] for p in report['pages'].values())
+    lines += ['', f'Utvalget inneholder {word_total} ordforekomster totalt i forklaringer. Dette er ikke antall ulike ord eller forekomster av ett bestemt ord.',
+              f'LIX kan vises for {eligible} av {len(groups)} målegrupper. De andre får bare råtellinger.',
+              'Statisk tekstutvalg, ikke all tekst brukerne kan møte. Knapper og tabeller er kategorisert, men språkvurderes ikke her. Dynamiske tekster og PDF er ikke fullstendig dekket.', '']
     counts = Counter(f['rule'] for f in report['findings'])
     lines += ['', '## Funn til vurdering', '', ', '.join(f'{esc(k)}: {v}' for k,v in sorted(counts.items())), '',
-              'Alle språkfunn er forslag. De stopper ingen PR. Full tekst, kategorier og kapitler ligger i JSON-rapporten.', '']
+              'Alle språkfunn er forslag. De stopper ingen PR. Lange-ord teller tekstblokker med minst ett langt ord, ikke forekomster av et bestemt ord. Full tekst, kategorier og kapitler ligger i JSON-rapporten.', '']
     if comparable:
         old_ids = {f['id'] for f in previous['findings']}
         new_ids = {f['id'] for f in report['findings']}
@@ -378,6 +402,7 @@ def main():
     parser.add_argument('--previous',type=Path)
     parser.add_argument('--label',default='grunnmåling')
     parser.add_argument('--verify-baseline',action='store_true')
+    parser.add_argument('--word', help='Tell ett helt ord i uttrekt tekst, adskilt per kategori')
     args = parser.parse_args()
     try:
         report = measure(args.root)
@@ -391,6 +416,10 @@ def main():
         args.output.mkdir(parents=True,exist_ok=True)
         (args.output/'rapport.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
         (args.output/'rapport.md').write_text(markdown(report,previous,args.label),encoding='utf-8')
+        if args.word:
+            audit = word_occurrences(report,args.word)
+            (args.output/'ordtelling.json').write_text(json.dumps(audit,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+            print(json.dumps(audit['occurrences_by_kind'],ensure_ascii=False))
         print(f'{len(report["pages"])} sider/svar, {len(report["chapters"])} kapitler, {len(report["findings"])} forslag. {args.output}/rapport.md')
     except (ValueError, KeyError, TypeError, OSError, subprocess.SubprocessError) as error:
         print('Klarspråkkontroll: faktisk kontrollfeil: '+str(error),file=sys.stderr)

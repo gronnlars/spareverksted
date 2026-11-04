@@ -35,7 +35,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    // Velg alle seks, også sparemålet i den andre gruppen, og last ned.
    await q.evaluate(()=>{pickedPlans=new Set(saved.map((_,i)=>i));savedRender();});
    assert.match(await q.locator('#pickHint').innerText(),/Nedlastingen under lista tar med alle/);
-   assert.equal(await q.locator('#downloadSelected').innerText(),'Last ned valgte (6)');
+   assert.equal(await q.locator('#downloadSelected').innerText(),'Last ned planene (6)');
    assert.equal(await q.evaluate(()=>{const b=document.getElementById('downloadSelected'),l=document.getElementById('saved');return !!(l.compareDocumentPosition(b)&Node.DOCUMENT_POSITION_FOLLOWING);}),true,'knappen står under lista');
    await q.click('#downloadSelected');assert(await q.locator('#selectedExportDialog').evaluate(d=>d.open));
    assert.match(await q.locator('#selectedExportCount').innerText(),/6 planer/);
@@ -51,7 +51,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await q.click('#selectedExportPdf');
    assert(await q.locator('#reportDialog').evaluate(d=>d.open),'rapporten åpnes');
    const report=await q.locator('#reportPreview').innerText();
-   assert.match(report,/Valgte planer/);assert.match(report,/Sparing: de tre øverste sammenlignet/);
+   assert.match(report,/Lagrede planer/);assert.match(report,/Sparing: de tre øverste sammenlignet/);
    for(const n of ['Lars','Plan 1','Bil','Pensjon','Hus','Hytte: [plan]/2'])assert(report.includes(n),n+' i rapporten');
    assert.match(report,/Igjen etter \d+ år: .* i dagens kjøpekraft/);
    assert.equal(await q.locator('#reportPreview .report-cmp-chart svg[role=img]').count(),2,'søyler og linjer for sammenligningen av spareplaner');
@@ -64,7 +64,8 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await q.locator('#reportDialog').evaluate(d=>d.close());
    // Uten avkrysning gjelder knappen alle planene.
    await q.evaluate(()=>{pickedPlans=new Set();savedRender();});
-   assert.equal(await q.locator('#downloadSelected').innerText(),'Last ned alle planene');
+   assert.equal(await q.locator('#downloadSelected').innerText(),'Last ned planene');
+   assert.equal(await q.locator('#selectedExportTitle').innerText(),'Ta med deg planene');
    await q.click('#downloadSelected');assert.match(await q.locator('#selectedExportCount').innerText(),/Alle de 6/);
    assert.equal((await q.evaluate(()=>selectedSheets())).length,8);await q.click('#closeSelectedExport');
    // Tre valgte spareplaner sammenlignes uansett plass i lista, med graf. Sparemål og uttak får hver sin.

@@ -1,3 +1,5 @@
+# Rådgivende kontroll. Skal foreløpig ikke kreves i grenregler eller inngå i deploy-needs.
+# Språkfunn er forslag. Reelle feil i verktøy/datagrunnlag skal fortsatt synes som rødt.
 name: Klarspråkkontroll
 on:
   workflow_dispatch:

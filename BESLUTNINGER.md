@@ -24,6 +24,12 @@ En egen analyseordliste refererer til eksisterende definisjoner. Nye forklaringe
 
 Forkastet: én LIX-score som godkjenner klarspråk, vilkårlig sperregrense, å telle knappetekster som løpende forklaring, blind omskriving av fagord og automatisk oppdatering av grunnmålingen i hver PR. Valgene revurderes ved feilsegmentering, nye innholdstyper, mange ubrukelige treff eller dokumenterte misforståelser i brukertesting. Første måleresultater og prioriterte tekster står i [sluttrapporten](docs/klarsprak/sluttrapport.md).
 
+### Oppfølging etter innspill til #215
+
+Lars stilte spørsmål ved ordtellingen og ba om vurdering av dekningsgap, varig historikk, rådgivende status og separat kontroll. Grunnmålingen inneholder 6 667 ordforekomster totalt, ikke gjentakelser av «tilgjengelighet». Det ordet forekommer åtte ganger i målte forklaringer. Telling av enkeltord er gjort etterprøvbar og testet, uten endring av historisk JSON-grunnmåling. Metode, JSON og kode ligger allerede i git.
+
+Kontrollen skal foreløpig være rådgivende uten ny flettesperre eller avhengighet i publiseringsjobben. Reelle tekniske kontrollfeil vises fortsatt rødt. Planpunkt 10b beskriver utvidet dekning av dynamiske lånetekster, og 10a lenker et separat kontrolloppdrag som ennå ikke er utført. BSU-setningen foreslås som første senere språk-PR, uten omskriving i denne runden. Nyere brukerrettede rettelser på main er bevart ved innfletting.
+
 ## Låneskjema, rentescenarioer og dagens kroner (4. november 2026)
 
 Lars bestiller ferdig lånekalkulator med sparekalkulatoren som modell, og gir fullmakt til sammenslåing og publisering etter gjennomgang og grønne relevante kontroller. Dette erstatter utsettelsen av dagens kroner i v1-beslutningen. Resultatlinjen håndteres i annen tråd og endres ikke her. Grunnlag main `aa56156`, #204 og #207 merget, #208 og #206 åpne ved oppstart. #208 videreføres med rapportretting, renteforklaring og fjerning av innganger fra forsidekort og bunntekst.

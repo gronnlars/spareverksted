@@ -4,9 +4,9 @@ Status 4. november 2026. Gjennomført av ChatGPT/Codex med egenkontroll. Arbeide
 
 Kildefiler fra main `5fd6650517bf605444350f24b0c1fb3ca4ba4d81`. Målemetode `sv-klarsprak-1`, implementasjon og analyseordliste følger denne PR-en. SHA256 for alle målte inngangsfiler og ordlisten står i [grunnmålingen](grunnmaling.json). Den kan gjentas mot en utpakket kopi av denne commit-en med verktøyet fra PR-en, som beskrevet i [metoden](../klarsprak.md). Dette er kildekopien av nettsidene, ingen produksjonsmåling.
 
-## Dagens måling
+## Grunnmåling ved oppstart
 
-Målt 6 667 ord i forklaringer på sju HTML-sider og tre publiserte svar. 73 kapitler/målegrupper er registrert. 52 grupper er for korte til å få LIX etter vår rapporteringsregel. Alle får råtellinger. Side- og svarverdiene under er beregnet fra tellingene, ikke som snitt av kapittelscorer.
+Målt 6 667 ordforekomster totalt i forklaringer på sju HTML-sider og tre publiserte svar. 73 kapitler/målegrupper er registrert. 52 grupper er for korte til å få LIX etter vår rapporteringsregel. Bare 21 av 73 grupper får LIX. Alle får råtellinger. Side- og svarverdiene under er beregnet fra tellingene, ikke som snitt av kapittelscorer.
 
 | Side / tekst | Ord | Setningsenheter | Lange ord % | LIX |
 | --- | ---: | ---: | ---: | ---: |
@@ -23,7 +23,32 @@ Målt 6 667 ord i forklaringer på sju HTML-sider og tre publiserte svar. 73 kap
 
 Dette er ikke en rangering av klarspråk. Siden om ressursbruk og svaret om fondskonto har høyest LIX i dette utvalget. Det gir grunn til å undersøke ordvalget, ingen konklusjon om at de er vanskeligst å forstå. Sparekalkulatorens 317 ord dekker for eksempel ikke alle tekster som blir synlige under bruk.
 
-Kontrollen gir 185 forslag: fem lange setninger, tre lange avsnitt, 55 fagordtreff ved første forekomst per målegruppe og 122 blokker med ett eller flere ord på minst 14 bokstaver. De 122 treffene er blokker, ikke 121 ulike vanskelige ord. Mange er kjente og nødvendige ord som «forutsetningene» og «tilgjengelighet». Ingen funn dokumenterer alene en feil. Fullstendig tekstutvalg, tall per kategori og alle funn finnes i JSON. [Lesbar grunnrapport](grunnmaling.md) viser de første 80.
+Kontrollen gir 185 forslag: fem lange setninger, tre lange avsnitt, 55 fagordtreff ved første forekomst per målegruppe og 122 blokker med ett eller flere ord på minst 14 bokstaver. De 122 treffene er blokker, ikke 122 ulike vanskelige ord. Mange er kjente og nødvendige ord som «forutsetningene» og «tilgjengelighet». Ingen funn dokumenterer alene en feil. Fullstendig tekstutvalg, tall per kategori og alle funn finnes i JSON. [Lesbar grunnrapport](grunnmaling.md) viser de første 80.
+
+## Kontroll av hva tallene betyr
+
+6 667 er totalt antall ordforekomster i forklaringstekst. Det er ikke antall forekomster av «tilgjengelighet», ikke antall unike fagord og ikke kodeord. Tallet 1 822 i sideraden «Tilgjengelighet» er alle ord i forklaringene på den siden, ikke antall ganger ordet står der.
+
+En ny kontroll av hele ordet «tilgjengelighet» i grunnmålingens uttrekte tekst gir:
+
+| Kategori | Forekomster | Inngår i LIX? |
+| --- | ---: | --- |
+| Forklaringer | 8 | Ja |
+| Navigasjon, inkludert bunntekst | 11 | Nei |
+| Overskrift | 1 | Nei |
+| Dokumenthode/kode/metadata | 1 | Nei |
+
+De åtte i forklaringer fordeler seg på Om (1), Ressursbruk (3) og Tilgjengelighet (4). Antall treff i rå HTML kan være høyere fordi ordet også forekommer i adresser og attributter. Slike treff er ikke med i denne ordtellingen. Funnlisten kan gjenta tekstutdrag, men telles aldri som nettstedstekst.
+
+Grunnmålingen er et dokumentert referansepunkt, ikke en fasit for klarspråk.
+
+**Dekningsgapet er vesentlig og ikke tallfestet.** Det finnes ingen nevner for alle ord som brukere kan møte i alle tilstander. Vi kan derfor hverken hevde en bestemt dekningsprosent eller at rapporten dekker en bestemt brøkdel av tjenesten. Særlig dynamiske låneforklaringer og feilmeldinger gjenstår. Knapper og tabeller er kategorisert, men ikke språkvurdert. De 21 LIX-gruppene er ikke en måling av 21 hele brukerreiser.
+
+JSON-grunnmålingen, den lesbare grunnrapporten, metoden og implementasjonen ligger allerede i git i denne PR-en. De forsvinner ikke etter 30 dager. Det er de nye kjøringenes Actions-artefakter som har 30 dagers levetid. Grunnmålingen bevares historisk når main endres og overskrives ikke for å følge nyere innhold.
+
+Kontrollen skal foreløpig være rådgivende. Den skal ikke gjøres obligatorisk i grenreglene eller kobles til publiseringsjobben i denne runden. En teknisk feil får fortsatt rødt resultat slik at et ødelagt måleverktøy ikke ser friskt ut, men språkfunn påvirker ikke statusen.
+
+[Separat kontrolloppdrag](kontrolloppdrag.md) er klart, men ikke utført. Tidligere gjentakelse var forfatterens egenkontroll og skal fortsatt kalles det. Utvidelse til dynamiske lånetekster er registrert i research/plan.md, punkt 10b. Første eventuelle tekstendring foreslås avgrenset til BSU-setningen, med fagkontroll og før/etter, i en egen PR.
 
 ## Prioritert gjennomgang senere
 
@@ -62,9 +87,9 @@ Prioriteringen bygger på mulige konsekvenser av misforståelse og manuell lesin
 
 ## Verifikasjon og videre oppfølging
 
-20 automatiske tester består. De dekker håndregnet LIX, æ/ø/å, Unicode-normalisering, myk orddeling, forkortelser, desimaltall, datoer, bindestreker, apostrofer, tom tekst, korte utvalg, terskler, kategorier, innfoldet tekst, publiseringsutvalg, feltstier, ugyldige ordlister, kontrollfeil, høy tekstbelastning uten feilstatus, stabile funn og deterministisk rapport. Eksisterende begrepstester, faktakontroll, versjonskontroll og sikkerhetskontroll består. Historisk grunnmåling er gjentatt mot en utpakket kopi av kildecommit-en.
+Opprinnelig 20 automatiske tester besto. Etter oppfølgingen består 22 tester, med egne moteksempler for ordtelling uten filnavn, attributter eller dupliserte rapportfunn. De dekker håndregnet LIX, æ/ø/å, Unicode-normalisering, myk orddeling, forkortelser, desimaltall, datoer, bindestreker, apostrofer, tom tekst, korte utvalg, terskler, kategorier, innfoldet tekst, publiseringsutvalg, feltstier, ugyldige ordlister, kontrollfeil, høy tekstbelastning uten feilstatus, stabile funn og deterministisk rapport. Eksisterende begrepstester, faktakontroll, versjonskontroll og sikkerhetskontroll består. Historisk grunnmåling er gjentatt mot en utpakket kopi av kildecommit-en.
 
-Ingen nettlesertest eller brukertest er utført for denne endringen, ettersom brukerrettet kode ikke endres. Den nye Actions-arbeidsflyten må også få et faktisk kjøresultat på GitHub. Om kontrollen skal være obligatorisk for sammenslåing, må det settes i grenreglene. Eksisterende publiseringsflyt er bevart.
+Ingen nettlesertest eller brukertest er utført for denne endringen, ettersom brukerrettet kode ikke endres. Den første Actions-kjøringen besto. Oppfølgingscommit-en må få sitt eget kjøresultat. Om kontrollen skal være obligatorisk for sammenslåing, må det settes i grenreglene. Eksisterende publiseringsflyt er bevart.
 
 Neste språk-PR bør ta én av de prioriterte brukerreisene. Dokumenter oppgaven, mulig misforståelse, tekst før/etter, kilder og hvem som kontrollerte. Følg planen for manuell kontroll og åpne brukeroppgaver i metodedokumentet. Ingen har ennå dokumentert at disse tekstene er vanskelige for målgruppen.
 

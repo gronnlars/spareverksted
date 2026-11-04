@@ -165,6 +165,23 @@ class LanguageTests(unittest.TestCase):
             page.unlink()
             with self.assertRaises(ValueError):K.measure(root)
 
+    def test_word_audit_uses_text_not_paths_or_findings(self):
+        report={'blocks':[dict(block('Tilgjengelighet og tilgjengelighet.'),file='tilgjengelighet.html'),
+                           dict(block('Tilgjengeligheten er bedre.'),kind='navigasjon'),
+                           dict(block('tilgjengelighet'),kind='skjult')],
+                'findings':[{'detail':'tilgjengelighet '*1000}]}
+        audit=K.word_occurrences(report,'tilgjengelighet')
+        self.assertEqual(audit['occurrences_by_kind'],{'forklaring':2,'skjult':1})
+        self.assertEqual(sum(x['count'] for x in audit['locations']),3)
+        with self.assertRaises(ValueError):K.word_occurrences(report,'to ord')
+
+    def test_frozen_baseline_word_audit(self):
+        report=json.loads((ROOT/'docs/klarsprak/grunnmaling.json').read_text())
+        self.assertEqual(K.word_occurrences(report,'tilgjengelighet')['occurrences_by_kind'],
+                         {'forklaring':8,'kode/metadata':1,'navigasjon':11,'overskrift':1})
+        self.assertIn('21 av 73',K.markdown(report))
+        self.assertIn('6667 ordforekomster',K.markdown(report))
+
     def test_deterministic_inventory(self):
         a=K.measure();b=K.measure()
         self.assertEqual(a,b)
