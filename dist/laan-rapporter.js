@@ -62,10 +62,25 @@ window.LoanReports={
    for(const {name,plan} of plans.slice(0,3))rows.push([name,plan.input.amount,plan.rows[0].total,plan.totals.interest+plan.totals.fees,plan.totals.paid,plan.payoffTerm]);
    return rows;
   }
+  function balanceChart(plans,prefix){
+   const shown=plans.slice(0,3);
+   const months=Math.max(...shown.map(r=>r.plan.payoffTerm));
+   const amount=Math.max(...shown.map(r=>r.plan.input.amount));
+   const patterns=['','9 4','2 4'];
+   const lines=shown.map(({plan},index)=>{
+    const balances=[plan.input.amount,...plan.rows.map(row=>row.balance)];
+    const points=balances.map((balance,month)=>(24+month/months*552).toFixed(2)+','+(20+(1-balance/amount)*140).toFixed(2)).join(' ');
+    return '<polyline points="'+points+'" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="'+(patterns[index]||'none')+'"/>';
+   }).join('');
+   const styles=['Heltrukket','Lang stipling','Kort stipling'];
+   const legend=shown.map(({name,plan},i)=>styles[i]+': '+name+', fra '+LaanTekst.money(plan.input.amount)+' til null etter '+plan.payoffTerm+' måneder.').join(' ');
+   return '<h2>Restgjeld over tid</h2><svg viewBox="0 0 600 188" width="100%" role="img" aria-labelledby="'+prefix+'BalanceTitle"><title id="'+prefix+'BalanceTitle">Restgjeld i løpende kroner</title>'+lines+'</svg><p>Fra utbetaling til '+months+' måneder, på samme skala fra null til '+LaanTekst.money(amount)+'. '+escape(legend)+'</p>';
+  }
   get('compareLoans').onclick=()=>withPlans(plans=>{
    const [titles,...rows]=comparison(plans);
    for(const [id,prefix] of [['reportPreview','savedPreview'],['printReportContent','savedPrint']]){
     let html='<h1>Valgte låneplaner</h1><p>De tre første valgte planene sammenlignes i løpende kroner før rentefradrag. Hver plan følger med sine egne forutsetninger.</p>';
+    html+=balanceChart(plans,prefix);
     for(const row of rows){
      html+='<h2>'+escape(row[0])+'</h2><dl class="report-assumptions">';
      for(let i=1;i<row.length;i++)html+='<div><dt>'+titles[i]+'</dt><dd>'+escape(i===row.length-1?row[i]:LaanTekst.money(row[i]))+'</dd></div>';
