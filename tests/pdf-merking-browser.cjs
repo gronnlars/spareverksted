@@ -63,7 +63,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    await loan.fill('#rate',rate);await loan.click('#saveLoan');await loan.click('#confirmLoan');
   }
   await loan.click('#downloadLoans');await loan.click('#compareLoans');await loan.click('#printReport');
-  assert.match(await loan.title(),/^Valgte låneplaner, Spareverksted/);
+  assert.match(await loan.title(),/^Lagrede låneplaner, Spareverksted/);
   // Ingen tom figur rundt grafen (samme feil som i «Valgte planer», #203), og hver plan har bare én h2.
   assert.equal(await loan.locator('#printReportContent figure:not([role=group])').count(),0,'figure i samlet lånerapport har role=group');
   const h2=await loan.locator('#printReportContent h2').allInnerTexts();

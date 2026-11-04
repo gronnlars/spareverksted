@@ -266,4 +266,4 @@ Lokal kontroll av endringen: rapportgeneratorens negative tester, eksisterende p
 
 ## Låneplaner, 4. november 2026
 
-Ved «Lagre låneplan» skrives navn, lokal ID og regneforutsetninger til `sv-loan-plans-v1` i localStorage. Resultater beregnes på nytt. Vanlig inntasting skriver ingen låneplan. Brukeren kan slette én plan fra lånesiden eller alle med sletteknappen på personvernsiden. Dataene blir på enheten til de slettes. Eksporterte filer administreres av brukeren.
+Ved «Lagre plan» på lånesiden skrives navn, lokal ID og regneforutsetninger til `sv-loan-plans-v1` i localStorage. Resultater beregnes på nytt. Vanlig inntasting skriver ingen låneplan. Brukeren kan slette én plan fra lånesiden eller alle med sletteknappen på personvernsiden. Dataene blir på enheten til de slettes. Eksporterte filer administreres av brukeren.
