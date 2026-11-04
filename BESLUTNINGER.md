@@ -1360,3 +1360,5 @@ Vurdert:
 - C. «Lagre denne planen». Forkastet: lengre enn A uten å si mer.
 
 «Last ned sammenligning» erstatter «Last ned valgte planer», «Last ned alle planene» og «Last ned valgte i Excel». Overskriftene i dialogene beholdes. Ta opp igjen hvis brukere ikke skjønner hva som lastes ned.
+
+Status: foreløpig. GPT vurderer ordene mot kravene til klart språk (Lars 4.11.2026). Knappene endres ikke før vurderingen er ferdig og Lars har bekreftet.
