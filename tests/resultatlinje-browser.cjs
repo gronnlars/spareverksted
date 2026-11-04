@@ -36,7 +36,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await q.keyboard.press('Enter');await q.waitForTimeout(80);
    st=await state(q);assert.equal(st.collapsed,autoCollapsed,'kan hentes fram igjen');
    // Brukerens valg gjelder videre i besøket.
-   if(!autoCollapsed){await q.keyboard.press('Enter');await q.evaluate(()=>document.querySelector('#basic input').focus());await q.waitForTimeout(80);assert(!(await state(q)).shown,'skjult igjen over resultatet');await pastResult(q);assert((await state(q)).collapsed,'valget huskes');}
+   if(!autoCollapsed){await q.keyboard.press('Enter');await q.evaluate(()=>{document.querySelector('#basic input').focus();window.scrollTo(0,0);});await q.waitForFunction(()=>getComputedStyle(document.getElementById('mobileSummary')).display==='none');assert(!(await state(q)).shown,'skjult igjen over resultatet');await pastResult(q);assert((await state(q)).collapsed,'valget huskes');}
    assert.deepEqual(errors,[]);await c.close();
   }
   // Safari-sikkerhetsfeltet hører til selve knappen, så innhold ikke synes under den.
