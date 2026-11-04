@@ -1291,3 +1291,14 @@ Direkte Safari på iPhone og bevegelig Safari-meny er ikke testet i denne økten
 Lars presiserte at linjen aldri skal vises over eller på det grønne resultatfeltet. Den skal bare leve nedenfor feltet. Den tidligere IntersectionObserver-regelen viste linjen når feltet ikke var synlig, uansett retning, og fokus på inndata kunne overstyre skjuling. Begge er erstattet av felles styring i layout.js for spare- og lånesiden: et resultatfelt med høyde større enn null må ha hele underkanten over vindustoppen. Rulling måles maksimalt én gang per tegneramme, og vindus- og resultatstørrelse kontrolleres også. Fokus kan ikke tvinge fram en skjult linje. Valgt åpen/lukket tilstand beholdes ved rulling.
 
 Den tidligere rettingen som bevarer klikkmålet ved fokus, er beholdt. Nettlesertesten bruker nå også et faktisk trykk i berøringskontekst og prøver gjentatt rulling før, på og etter grønt felt på begge sider ved mobil og smale vinduer tilsvarende PC-zoom. Farger og utforming er uendret. Faktisk iPhone/Safari må fortsatt prøves manuelt. ChatGPT/Codex.
+
+
+## CI: navngitte nettleserkontroller uten følgefeil (4. november 2026)
+
+Lars ba om å rydde i årsaken til gjentatte røde kjøringer. Kjøring 41741226413 stoppet i veileder-browser.cjs: testen krevde resultatlinjen ved et inndatafelt, i strid med Lars sin nye regel om at linjen bare vises nedenfor grønt resultatfelt. Testen kontrollerer nå både skjuling ved feltet og visning nedenfor resultatet, og beholder kontrollene av tall, kurve og resultatlenke.
+
+De 81 nettleserkommandoene i static.yml er bevart i samme rekkefølge og med samme motorer, men hver kommando har et eget navngitt trinn. Etter vellykket installasjon fortsetter uavhengige tester selv om en annen test feiler. Ingen continue-on-error, automatisk omkjøring eller reduserte krav. En feilet kontroll gir fortsatt rød nettleserjobb og sperrer publisering. Installasjonsfeil stopper nettleserkontrollene.
+
+Personvernkontrollene har egne trinn og kan kjøre selv om en UI-test feiler. Rapporten skrives først når alle tre personvernmotorer består. Rapport og verifisert personvernside lastes bare opp når rapportgenereringen også består. Dermed forsøkes ikke opplasting av en rapport som aldri ble laget. UI-skjermbilder beholdes med eksisterende always-regel.
+
+Kontroll før opplasting: de 81 gamle og nye nettleserkommandoene er sammenlignet maskinelt og er identiske i innhold og rekkefølge. Ingen lokal kjøring var mulig i denne økten fordi kjøremiljøet var utilgjengelig. Endringen må verifiseres i GitHub Actions. ChatGPT/Codex, egenkontroll.
