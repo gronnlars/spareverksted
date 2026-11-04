@@ -64,6 +64,10 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   }
   await loan.click('#downloadLoans');await loan.click('#compareLoans');await loan.click('#printReport');
   assert.match(await loan.title(),/^Valgte låneplaner, Spareverksted/);
+  // Ingen tom figur rundt grafen (samme feil som i «Valgte planer», #203), og hver plan har bare én h2.
+  assert.equal(await loan.locator('#printReportContent figure:not([role=group])').count(),0,'figure i samlet lånerapport har role=group');
+  const h2=await loan.locator('#printReportContent h2').allInnerTexts();
+  assert.equal(new Set(h2).size,h2.length,'like h2-overskrifter i samlet lånerapport: '+h2.join(' | '));
   await loan.emulateMedia({media:'print'});
   const combined=(await loan.pdf({format:'A4',tagged:true})).toString('latin1');
   for(const tag of ['H1','H2','Figure','Table'])assert.ok(new RegExp('/S\\s*/'+tag+'\\b').test(combined),'samlet PDF mangler '+tag);

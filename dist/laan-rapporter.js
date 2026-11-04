@@ -117,14 +117,15 @@ window.LoanReports={
    });
    const styles=['Heltrukket','Lang stipling','Kort stipling'];
    const legend=shown.map(({name,plan},i)=>styles[i]+': '+name+', fra '+LaanTekst.money(plan.input.amount)+' til null etter '+plan.payoffTerm+' måneder.').join(' ');
-   const figure=element('figure');
+   // role=group: <figure> blir ellers et eget figurmerke uten tekstalternativ i PDF-en. Grafen inni har eget navn.
+   const figure=element('figure');figure.setAttribute('role','group');
    figure.append(svg,element('figcaption','Fra utbetaling til '+months+' måneder. Samme skala fra null til '+LaanTekst.money(amount)+'. '+legend));
    return figure;
   }
   get('compareLoans').onclick=()=>withPlans(plans=>{
    const [titles,...rows]=comparison(plans);
    for(const [id,prefix] of [['reportPreview','savedPreview'],['printReportContent','savedPrint']]){
-    const root=get(id);root.replaceChildren(element('h1','Valgte låneplaner'),element('p','De tre første valgte planene sammenlignes i løpende kroner før rentefradrag. Hver plan følger med sine egne forutsetninger.'),element('h2','Restgjeld over tid'),balanceChart(plans,prefix));
+    const root=get(id);root.replaceChildren(element('h1','Valgte låneplaner'),element('p','De tre første planene i rapporten sammenlignes i løpende kroner før rentefradrag. Hver plan følger etterpå med sine egne forutsetninger.'),element('h2','Planene sammenlignet'),element('h3','Restgjeld over tid'),balanceChart(plans,prefix));
     for(const row of rows){
      const list=element('dl');list.className='report-assumptions';
      for(let i=1;i<row.length;i++){
@@ -132,7 +133,7 @@ window.LoanReports={
       pair.append(element('dt',titles[i]),element('dd',i===row.length-1?row[i]:LaanTekst.money(row[i])));
       list.append(pair);
      }
-     root.append(element('h2',row[0]),list);
+     root.append(element('h3',row[0]),list);
     }
     plans.forEach(({name,plan},i)=>{
      const detail=element('div');
