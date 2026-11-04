@@ -74,7 +74,7 @@ body.loan-empty #mobileSummary{display:none!important}
 }
 
 /* Rapporttabellen blir en vertikal årsoversikt ved smal visning, også ved 400 % zoom. Utskrift beholder tabelloppsettet. */
-@media screen and (max-width:560px){
+@media screen and (max-width:760px){
  .loan-page #reportPreview .report-table{overflow:visible}
  .loan-page #reportPreview table{white-space:normal;width:100%;table-layout:fixed}
  .loan-page #reportPreview thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
@@ -134,3 +134,5 @@ body.loan-empty #costPanel,body.loan-empty #scenarioPanel{display:none}
 .loan-page .compare-card dt{font-size:14px}
 .loan-page .compare-card p{font-size:14px}
 .loan-page.stale #costPanel,.loan-page.stale #scenarioPanel,.loan-page.stale #comparePanel,.loan-page.stale #tableWrap{opacity:.45;filter:grayscale(.6)}
+
+.loan-page #reportPreview .report-assumptions div{font-size:14px}

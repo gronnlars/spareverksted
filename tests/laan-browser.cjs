@@ -166,6 +166,22 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
   await p.click('#heroDownload');await p.click('#exportPdf');
   const report=await text('reportPreview');for(const phrase of ['Kjøpesum for bilen','Egenkapital til bilkjøpet','Prisvekst per år','Dagens kroner','Endring i scenarioene','Høyere rente'])assert.ok(report.includes(phrase),phrase);
   for(const width of [320,390,640]){await p.setViewportSize({width,height:800});assert.equal(await p.locator('#reportDialog').evaluate(e=>e.scrollWidth<=e.clientWidth),true,'hele rapporten uten sidelengs rulling ved '+width);}
+  // Rapportens graf og kostnadsfordeling kontrolleres i alle temaer, ikke bare siden bak dialogen.
+  for(const theme of ['neutral','light','night']){
+   await p.evaluate(t=>{document.documentElement.dataset.theme=t;},theme);
+   const contrast=await p.locator('#reportPreview').evaluate(el=>{
+    const rgb=s=>s.match(/[\d.]+/g).slice(0,3).map(Number),lum=c=>c.map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((s,v,i)=>s+v*[.2126,.7152,.0722][i],0);
+    const ratio=(a,b)=>{a=lum(rgb(a));b=lum(rgb(b));return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);};
+    const svg=el.querySelector('.report-chart svg'),bg=getComputedStyle(svg).backgroundColor,surface=getComputedStyle(document.getElementById('reportDialog')).backgroundColor;
+    return {text:[...svg.querySelectorAll('text')].map(e=>ratio(getComputedStyle(e).fill,bg)),ring:[...el.querySelectorAll('.loan-cost circle')].map(e=>ratio(getComputedStyle(e).stroke,surface))};
+   });
+   assert.ok(contrast.text.every(x=>x>=4.5),'rapportens graftekst i '+theme+': '+contrast.text);
+   assert.ok(contrast.ring.every(x=>x>=3),'ringdiagram i '+theme+': '+contrast.ring);
+   await p.setViewportSize({width:320,height:800});
+   assert.equal(await p.locator('#reportDialog').evaluate(e=>e.scrollWidth<=e.clientWidth),true,'rapport i '+theme);
+   fs.mkdirSync('/tmp/spareverksted-ui-review',{recursive:true});await p.screenshot({path:'/tmp/spareverksted-ui-review/laan-rapport-'+engine+'-'+theme+'.png'});
+  }
+  await p.evaluate(()=>{document.documentElement.dataset.theme='neutral';});
   await p.keyboard.press('Escape');await p.setViewportSize({width:320,height:800});await p.click('#tableTab');await p.selectOption('#tablePeriod','month');
   assert.equal(await p.locator('#tableWrap').evaluate(e=>e.scrollWidth<=e.clientWidth),true,'månedstabell uten sidelengs rulling');
   await p.click('[data-kind=forbruk]');assert.equal(await p.locator('#vehicleFields').isHidden(),true);assert.equal(await p.locator('#feesDetails').isVisible(),true);
