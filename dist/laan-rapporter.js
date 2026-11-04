@@ -16,18 +16,22 @@ window.LoanReports={
    if(records.some(entry=>!entry||typeof entry.name!=='string'||typeof entry.id!=='string'||!entry.input))throw Error('Uleselig plan');
    return records;
   }
+  let planCount=0;
   function updateButtons(){
-   get('compareLoans').disabled=get('excelLoans').disabled=!selected.size;
+   get('loanDownloadRow').hidden=planCount===0;
+   get('downloadLoans').textContent=selected.size?'Last ned valgte ('+selected.size+')':'Last ned alle planene';
   }
   function list(){
    const container=get('loanList');
    container.replaceChildren();
    try{
     const records=read();
+    planCount=records.length;
     for(const id of selected)if(!records.some(r=>r.id===id))selected.delete(id);
     for(const entry of records){
      const row=document.createElement('div'),label=document.createElement('label');
      const check=document.createElement('input'),remove=document.createElement('button');
+     row.className='saved-row';label.className='check';
      check.type='checkbox';check.checked=selected.has(entry.id);
      check.onchange=()=>{if(check.checked)selected.add(entry.id);else selected.delete(entry.id);updateButtons();};
      label.append(check,' '+entry.name);
@@ -37,27 +41,51 @@ window.LoanReports={
       try{
        const remaining=read().filter(r=>r.id!==entry.id);
        if(remaining.length)localStorage.setItem(key,JSON.stringify(remaining));else localStorage.removeItem(key);
-       list();get('loanName').focus();status('Planen er slettet.');
+       list();get('saveLoan').focus();status('Planen er slettet.');
       }catch{status('Kunne ikke slette planen.');}
      };
      row.append(label,remove);container.append(row);
     }
-   }catch{selected.clear();status('Kunne ikke lese lagrede låneplaner.');}
+   }catch{planCount=0;selected.clear();status('Kunne ikke lese lagrede låneplaner.');}
    updateButtons();
   }
+  function freeName(base,records){
+   const names=new Set(records.map(r=>r.name.trim().toLocaleLowerCase('nb-NO')));
+   let name=base;
+   for(let n=1;names.has(name.toLocaleLowerCase('nb-NO'));n++)name=base.replace(/\s*\(\d+\)$/,'')+' ('+n+')';
+   return name;
+  }
+  let pending=null;
   get('saveLoan').onclick=()=>{
-   const p=exportPlan();if(!p)return;
+   pending=exportPlan();if(!pending)return;
    try{
-    const records=read(),id=crypto.randomUUID();
-    const name=get('loanName').value.trim()||'Låneplan '+(records.length+1);
-    records.push({id,name,input:p.input});
-    localStorage.setItem(key,JSON.stringify(records));selected.add(id);
-    get('loanName').value='';list();status('Lagret «'+name+'».');
-   }catch{status('Kunne ikke lagre planen. Du kan laste ned beregningen i stedet.');}
+    const base={bolig:'Hus',bil:'Bil',forbruk:'Forbrukslån'}[pending.input.kind];
+    get('loanName').value=freeName(base,read());
+    get('loanSaveError').hidden=true;
+    get('loanSaveDialog').showModal();get('loanName').select();
+   }catch{status('Kunne ikke lese lagrede planer.');}
   };
+  get('cancelLoan').onclick=()=>get('loanSaveDialog').close();
+  get('loanSaveDialog').addEventListener('close',()=>{pending=null;});
+  get('loanSaveForm').onsubmit=event=>{
+   event.preventDefault();
+   const wanted=get('loanName').value.trim();
+   if(!wanted){get('loanName').value='';get('loanName').reportValidity();return;}
+   try{
+    const records=read(),name=freeName(wanted,records);
+    records.push({id:crypto.randomUUID(),name,input:pending.input});
+    localStorage.setItem(key,JSON.stringify(records));
+    get('loanSaveDialog').close();list();status('Lagret «'+name+'».');
+   }catch{get('loanSaveError').textContent='Kunne ikke lagre planen i nettleseren.';get('loanSaveError').hidden=false;}
+  };
+  get('downloadLoans').onclick=()=>{
+   get('bundleCount').textContent='Antall planer i rapporten: '+(selected.size||planCount)+'.';
+   get('loanBundleDialog').showModal();
+  };
+  get('closeBundle').onclick=()=>get('loanBundleDialog').close();
   function withPlans(action){
    try{
-    const plans=read().filter(r=>selected.has(r.id)).map(r=>({name:r.name,plan:LaanMotor.plan(r.input)}));
+    const plans=read().filter(r=>!selected.size||selected.has(r.id)).map(r=>({name:r.name,plan:LaanMotor.plan(r.input)}));
     if(!plans.length){list();return;}
     action(plans);
    }catch{status('Kunne ikke lage rapporten fra de valgte planene.');}
@@ -89,14 +117,15 @@ window.LoanReports={
    });
    const styles=['Heltrukket','Lang stipling','Kort stipling'];
    const legend=shown.map(({name,plan},i)=>styles[i]+': '+name+', fra '+LaanTekst.money(plan.input.amount)+' til null etter '+plan.payoffTerm+' måneder.').join(' ');
-   const figure=element('figure');
+   // role=group: <figure> blir ellers et eget figurmerke uten tekstalternativ i PDF-en. Grafen inni har eget navn.
+   const figure=element('figure');figure.setAttribute('role','group');
    figure.append(svg,element('figcaption','Fra utbetaling til '+months+' måneder. Samme skala fra null til '+LaanTekst.money(amount)+'. '+legend));
    return figure;
   }
   get('compareLoans').onclick=()=>withPlans(plans=>{
    const [titles,...rows]=comparison(plans);
    for(const [id,prefix] of [['reportPreview','savedPreview'],['printReportContent','savedPrint']]){
-    const root=get(id);root.replaceChildren(element('h1','Valgte låneplaner'),element('p','De tre første valgte planene sammenlignes i løpende kroner før rentefradrag. Hver plan følger med sine egne forutsetninger.'),element('h2','Restgjeld over tid'),balanceChart(plans,prefix));
+    const root=get(id);root.replaceChildren(element('h1','Valgte låneplaner'),element('p','De tre første planene i rapporten sammenlignes i løpende kroner før rentefradrag. Hver plan følger etterpå med sine egne forutsetninger.'),element('h2','Planene sammenlignet'),element('h3','Restgjeld over tid'),balanceChart(plans,prefix));
     for(const row of rows){
      const list=element('dl');list.className='report-assumptions';
      for(let i=1;i<row.length;i++){
@@ -104,7 +133,7 @@ window.LoanReports={
       pair.append(element('dt',titles[i]),element('dd',i===row.length-1?row[i]:LaanTekst.money(row[i])));
       list.append(pair);
      }
-     root.append(element('h2',row[0]),list);
+     root.append(element('h3',row[0]),list);
     }
     plans.forEach(({name,plan},i)=>{
      const detail=element('div');
@@ -115,7 +144,7 @@ window.LoanReports={
      root.append(detail);
     });
    }
-   get('reportDialog').showModal();
+   get('loanBundleDialog').close();get('downloadLoans').focus();get('reportDialog').showModal();
   });
   get('excelLoans').onclick=()=>withPlans(plans=>{
    const sheets=[{name:'Sammenligning',rows:comparison(plans)}];

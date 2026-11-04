@@ -77,7 +77,7 @@ Når innhold og søk endres, vurderes forventet resultat på nytt.
 
 ## Felles arbeidsgrunnlag
 
-Les [AGENTS.md](AGENTS.md), [språkreglene](SPRAKREGLER.md), [beslutningene](BESLUTNINGER.md), [faseplanen](research/plan.md) og [kravene til universell utforming](research/universell-utforming.md) før arbeid. Dokumenter viktige nye valg og begrunnelser i beslutningsloggen samme dag. Bevar tidligere beslutninger med status når de erstattes.
+Les [AGENTS.md](AGENTS.md), [språkreglene](SPRAKREGLER.md), [klarspråkstandarden](KLARSPRAK.md), [beslutningene](BESLUTNINGER.md), [faseplanen](research/plan.md) og [kravene til universell utforming](research/universell-utforming.md) før arbeid. Dokumenter viktige nye valg og begrunnelser i beslutningsloggen samme dag. Bevar tidligere beslutninger med status når de erstattes.
 
 [Spørsmålkøen](SPORSMALSKO.md) er eneste prioriterte kø. [Daglig oppgave](research/DAGLIG-OPPGAVE.md) gjelder upublisert research; [arbeidsloggen](research/ARBEIDSLOGG.md) brukes til reservasjoner og overlevering. Kontrollert innholdspåfyll følger faseplanens punkt 6. Valgomaten venter. Kalkulatoren er åpnet for videre utvikling 3.11.2026. Kvalitetskravene og kontroll før publisering består.
 

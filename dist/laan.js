@@ -213,7 +213,9 @@ $('tablePeriod').onchange=()=>{if(lastPlan)drawTable(lastPlan);};
 $('reset').onclick=()=>{reset();$('amount').focus();};
 $('showResult').onclick=()=>{const t=$('loanResult');t.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});t.focus({preventScroll:true});};
 $('mobileResultButton').onclick=$('showResult').onclick;
-$('editFields').onclick=()=>{$('loanInputs').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});$('amount').focus({preventScroll:true});};
+// «Endre tall» og «Ny beregning» (Lars 4.11.2026) går begge ned til tallene, med fokus på lånebeløpet.
+function toFields(){$('loanInputs').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});$('amount').focus({preventScroll:true});}
+$('editFields').onclick=toFields;$('newLoan').onclick=toFields;
 $('loanForm').addEventListener('submit',e=>{e.preventDefault();render();if(exportPlan())$('showResult').click();});
 
 // Samme hjelpeknapp ved feltet som sparekalkulatoren. Ingen nye beregningsregler.

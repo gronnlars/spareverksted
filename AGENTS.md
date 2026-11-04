@@ -15,13 +15,14 @@ Les før arbeid:
 1. [CONTRIBUTING.md](CONTRIBUTING.md): bidrag, lisens og selvstendige overleveringer.
 2. [BESLUTNINGER.md](BESLUTNINGER.md): valgene, alternativene og begrunnelsene.
 3. [SPRAKREGLER.md](SPRAKREGLER.md): språk og faglig presisjon.
-4. [SVARMAL.md](SVARMAL.md): valg av svarform, presentasjon og kontroll før publisering.
-5. [KILDEREGLER.md](KILDEREGLER.md): kilder, datoer, foreslått mot vedtatt og når en regel må brytes.
-6. [KALKULATORDESIGN.md](KALKULATORDESIGN.md) ved arbeid med en kalkulator: sideoppbygging, ord, lagring, rapport/PDF, mobil og navn på filer (æ blir a, ø blir o, å blir a, som Språkrådet tilrår). Malen er sparekalkulatoren.
-6. [research/plan.md](research/plan.md): faser, videreutvikling av kalkulatoren og kontrollert innholdspåfyll.
-7. [research/universell-utforming.md](research/universell-utforming.md): krav og åpne kontroller.
-8. [SPORSMALSKO.md](SPORSMALSKO.md), [daglig oppgave](research/DAGLIG-OPPGAVE.md) og [arbeidslogg](research/ARBEIDSLOGG.md) ved innholdsarbeid.
-9. [SVARSKJEMA.md](SVARSKJEMA.md) ved arbeid med spørsmål og svar: skjema, statuser, roller og oppdragstekster. Implementert etter Lars sitt oppdrag 3.11.2026. Kjør `python3 scripts/svar.py --check`. Se `docs/svargrunnmur.md` for bygging og kontrollbevis.
+4. [KLARSPRAK.md](KLARSPRAK.md): klarspråkkrav for brukerreiser, knapper, skjema og rapporter.
+5. [SVARMAL.md](SVARMAL.md): valg av svarform, presentasjon og kontroll før publisering.
+6. [KILDEREGLER.md](KILDEREGLER.md): kilder, datoer, foreslått mot vedtatt og når en regel må brytes.
+7. [KALKULATORDESIGN.md](KALKULATORDESIGN.md) ved arbeid med en kalkulator: sideoppbygging, ord, lagring, rapport/PDF, mobil og navn på filer (æ blir a, ø blir o, å blir a, som Språkrådet tilrår). Malen er sparekalkulatoren.
+8. [research/plan.md](research/plan.md): faser, videreutvikling av kalkulatoren og kontrollert innholdspåfyll.
+9. [research/universell-utforming.md](research/universell-utforming.md): krav og åpne kontroller.
+10. [SPORSMALSKO.md](SPORSMALSKO.md), [daglig oppgave](research/DAGLIG-OPPGAVE.md) og [arbeidslogg](research/ARBEIDSLOGG.md) ved innholdsarbeid.
+11. [SVARSKJEMA.md](SVARSKJEMA.md) ved arbeid med spørsmål og svar: skjema, statuser, roller og oppdragstekster. Implementert etter Lars sitt oppdrag 3.11.2026. Kjør `python3 scripts/svar.py --check`. Se `docs/svargrunnmur.md` for bygging og kontrollbevis.
 
 Main er autoritativt arbeidsgrunnlag. Hent fersk status og les åpne PR-er før endring. Ikke anta at en samtale eller usammenslått gren er kjent for neste bidragsyter. Ikke overskriv andres arbeid eller opprett konkurrerende køer. Dokumenter viktige beslutninger og hva som kan få oss til å revurdere dem.
 
