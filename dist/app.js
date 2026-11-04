@@ -215,8 +215,9 @@ function fitSavingsTable(wrap=$('tableWrap')){
  const tab=wrap.querySelector('table');
  if(tab&&wrap.clientWidth>0&&tab.scrollWidth>wrap.clientWidth)wrap.classList.add('savings-stacked');
 }
+// Oppsettendringen utsettes én skjermoppdatering for å unngå ResizeObserver-løkker i WebKit.
 let savingsTableWidth=-1;
-new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width!==savingsTableWidth){savingsTableWidth=width;fitSavingsTable();}}).observe($('tableWrap'));
+new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width!==savingsTableWidth){savingsTableWidth=width;requestAnimationFrame(()=>fitSavingsTable());}}).observe($('tableWrap'));
 function table(){
  const selected=rows.filter((r,i)=>i===0||i===rows.length-1||Math.floor(r.t)!==Math.floor(rows[i-1].t));
  const both=view.both&&!s.real,keys=both?['v','vReal','paid']:['v','paid',...(view.showBank?['bank']:[]),...(view.showRange?['low','high']:[])];
@@ -300,7 +301,7 @@ function prepareCompareTable(){
  fitSavingsTable(wrap);
 }
 let comparisonTableWidth=-1;
-new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width!==comparisonTableWidth){comparisonTableWidth=width;const wrap=$('comparison').querySelector('.table-scroll');if(wrap)fitSavingsTable(wrap);}}).observe($('comparison'));
+new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width!==comparisonTableWidth){comparisonTableWidth=width;const wrap=$('comparison').querySelector('.table-scroll');if(wrap)requestAnimationFrame(()=>fitSavingsTable(wrap));}}).observe($('comparison'));
 const bare=x=>money(x).replace(/\s*kr$/,'');
 const ALT_NAMES={safe:'Trygt',moderate:'Moderat',risk:'Mer risiko'};
 function selectedKind(){const k=[...selectedPlans].map(i=>saved[i]?.state?.activePage==='dreams'?'dreams':'savings');return k.includes('dreams')?'dreams':'savings';}
