@@ -389,8 +389,7 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
   deploy:
-    # Midlertidig publiseringspause etter Lars sitt pålegg 4.11.2026: grafikkarbeidet må ferdigstilles og kontrolleres først.
-    if: false
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: [checks, browser]
     runs-on: ubuntu-latest
     steps:
