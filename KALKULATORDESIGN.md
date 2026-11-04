@@ -10,7 +10,7 @@ Dokumentet gjelder sammen med disse, som går foran ved konflikt:
 
 - [docs/regulatorisk.md](docs/regulatorisk.md): ingen produktråd, ingen «best for deg».
 - [research/universell-utforming.md](research/universell-utforming.md): kravene til tastatur, skjermleser, kontrast, trykkflater og forstørring. De gjentas ikke her.
-- [SPRAKREGLER.md](SPRAKREGLER.md) og [KILDEREGLER.md](KILDEREGLER.md).
+- [SPRAKREGLER.md](SPRAKREGLER.md), [KLARSPRAK.md](KLARSPRAK.md) og [KILDEREGLER.md](KILDEREGLER.md). Ordene i del 3 skal også oppfylle klarspråkstandarden.
 
 Bra nok er mer enn nok. Malen er ikke en invitasjon til å bygge alt på nytt. Bruk komponentene som finnes.
 

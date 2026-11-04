@@ -1362,3 +1362,11 @@ Vurdert:
 «Last ned sammenligning» erstatter «Last ned valgte planer», «Last ned alle planene» og «Last ned valgte i Excel». Overskriftene i dialogene beholdes. Ta opp igjen hvis brukere ikke skjønner hva som lastes ned.
 
 Status: foreløpig. GPT vurderer ordene mot kravene til klart språk (Lars 4.11.2026). Knappene endres ikke før vurderingen er ferdig og Lars har bekreftet.
+
+Vurdering mot KLARSPRAK.md (#213), Claude 4.11.2026. Regelen der: knappen skal beskrive neste faktiske handling, og ikke hete etter ett sluttresultat når den åpner en dialog med flere valg.
+
+- «Lagre plan» og «Del plan»: oppfyller regelen. Begge åpner en dialog for akkurat den handlingen.
+- «Last ned plan»: oppfyller regelen slik jeg leser den. Knappen åpner «Ta med deg beregningen», og alle valgene der (Excel, CSV, Rapport / PDF, Data) laster ned den samme planen. «Plan» er innholdet, ikke ett av formatene. Utskrift skjer fra PDF-valget.
+- «Last ned sammenligning»: oppfyller ikke regelen helt. Fila har sammenligningen først og deretter en egen del for hver plan, og knappen brukes både for valgte planer og for alle. Forslag: «Last ned planene». Like kort, og riktig både for valgte og alle.
+
+Lars avgjør.
