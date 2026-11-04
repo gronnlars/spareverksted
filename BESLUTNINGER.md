@@ -1406,6 +1406,16 @@ Forkastet i dette steget: to knapper med ulike løfter som begge bare kaller `wi
 
 Revurder hvis fysisk iPhone/Safari fortsatt sperrer begge utskriftsveier, mister rapporten eller gir feil innhold. Dette er ikke kontrollert på fysisk telefon i denne økten. Kode og tester: ChatGPT/Codex, egenkontroll. Ingen ny PDF-poengsum er målt.
 
+## HTML og PDF fra samme rapportvisning (4. november 2026)
+
+Lars ba om ett valg «Rapport (HTML / PDF)» i formatoversikten. Den samme forhåndsvisningen tilbyr «Last ned HTML» og eksisterende PDF/utskrift. Valget gjelder også sammenligninger og valgte planer. HTML-filen bruker rapportkopien som allerede er laget, ikke nye beregninger eller et nytt planutvalg.
+
+HTML skal være selvstendig: stiler og SVG-grafer følger fila, ingen skript eller nettressurser trengs. Dokumentet har norsk språk, rapporttittel og eksisterende overskrifter. Tabeller beholder verdier og får ekte rad-/kolonneoverskrifter og etiketter i smal visning. Fila har egen restriktiv CSP som sperrer skript og nettressurser. Nettsidens CSP og PDF-flyten endres ikke.
+
+Begrunnelse: Uu-tilsynet anbefaler HTML som hovedregel for publisert nettinnhold. OMB M-23-22 gjelder amerikanske føderale etater og er en relevant designreferanse, ikke et norsk krav til Spareverksted. HTML-alternativet retter ikke PDF-filene og dokumenterer ingen automatisk WCAG-godkjenning. Se [gjennomføring og kontroller](docs/rapport-html.md).
+
+Forkastet: et femte formatkort i hoveddialogen, en ny rapportbygger, nye beregninger og endringer i den fungerende PDF-motoren. Revurder hvis praktisk åpning av fila på iPhone eller hjelpemiddelprøver avdekker problemer. Fysisk Filer/VoiceOver er ikke kontrollert av Codex.
+
 ## Sparetabellen tilpasser seg innholdet (4. november 2026)
 
 Første del av steg 2 i Lars sin godkjente plan: tabellen i fanen Sparing får ekte kolonne- og radoverskrifter. Den samme tabellen vises loddrett med etiketter ved verdiene når den faktisk er bredere enn plassen. ResizeObserver følger tilgjengelig bredde, også når Tabell åpnes og når vinduet endres. Ingen kopi av tallene, endret beregning eller skjulte datakolonner. Store hele beløp kan bryte ved tusenskiller, aldri inne i siffergruppene. Beløpene er avrundet til hele kroner, så teksten «eksakte beløp» er presisert.
