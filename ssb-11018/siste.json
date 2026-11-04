@@ -1,6 +1,6 @@
 {
  "feil_på_rad": 0,
- "hentet": "2026-11-03T09:41:05+00:00",
+ "hentet": "2026-11-04T06:15:24+00:00",
  "manuell_kontroll": {
   "bsuRate:2026M09": {
    "avlest": 5.6,
@@ -60,25 +60,6 @@
  "sha256": "777875010132949656cda6685f51fbe6526a4558ba8d0e3e0a01f130e801254d",
  "ssb_oppdatert": "2026-10-29T07:00:00Z",
  "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11018/data?lang=no&outputFormat=json-stat2&valueCodes[Innskuddstype]=20,16,15&valueCodes[Sektor]=04b&valueCodes[ContentsCode]=Innskudd&valueCodes[Tid]=top(13)",
- "ventende": {
-  "boundRate": {
-   "nye": {
-    "2026M09": 4.6
-   },
-   "revidert": {}
-  },
-  "bsuRate": {
-   "nye": {
-    "2026M09": 5.6
-   },
-   "revidert": {}
-  },
-  "savingsRate": {
-   "nye": {
-    "2026M09": 2.88
-   },
-   "revidert": {}
-  }
- },
- "ventende_sha": "56727bc43bc51c8102827adbfa425a654c14c5ba46c7e4d4408ed45ed69ccbfe"
+ "ventende": {},
+ "ventende_sha": null
 }

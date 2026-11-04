@@ -1,0 +1,28 @@
+{
+ "feil_på_rad": 0,
+ "hentet": "2026-11-04T06:15:25+00:00",
+ "manuell_kontroll": {},
+ "rådata": "ssb-14700/rå/2026-11-04T061525-ssb.json",
+ "serier": {
+  "kpi12m": {
+   "2025M09": 3.6,
+   "2025M10": 3.1,
+   "2025M11": 3.0,
+   "2025M12": 3.2,
+   "2026M01": 3.6,
+   "2026M02": 2.7,
+   "2026M03": 3.6,
+   "2026M04": 3.4,
+   "2026M05": 3.1,
+   "2026M06": 2.7,
+   "2026M07": 3.0,
+   "2026M08": 3.3,
+   "2026M09": 3.4
+  }
+ },
+ "sha256": "bcbadd567f59800b593d9bd26ce99a77a633e0d1776a69dfa80de66ce622493b",
+ "ssb_oppdatert": "2026-10-09T06:00:00Z",
+ "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14700/data?lang=no&outputFormat=json-stat2&valueCodes[VareTjenesteGrp]=00&valueCodes[ContentsCode]=Tolvmanedersendring&valueCodes[Tid]=top(13)",
+ "ventende": {},
+ "ventende_sha": null
+}

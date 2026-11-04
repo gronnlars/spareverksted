@@ -44,9 +44,9 @@
    "tittel": "Forskrift om endring i forskrift til utfylling og gjennomføring mv. av skatteloven av 26. mars 1999 nr. 14"
   }
  ],
- "hentet": "2026-11-03T09:41:22+00:00",
+ "hentet": "2026-11-04T06:15:39+00:00",
  "pakke_endret": {
-  "lovtidend-avd1-2026.tar.bz2": "2026-11-03T02:31:00Z"
+  "lovtidend-avd1-2026.tar.bz2": "2026-11-04T02:31:00Z"
  },
  "sett": {
   "lti/2026/nl-20260123-001.xml": false,
@@ -1120,6 +1120,7 @@
   "lti/2026/sf-20260930-2074.xml": false,
   "lti/2026/sf-20260930-2095.xml": false,
   "lti/2026/sf-20260930-2096.xml": false,
+  "lti/2026/sf-20260930-2228.xml": false,
   "lti/2026/sf-20261001-1962.xml": false,
   "lti/2026/sf-20261001-1963.xml": false,
   "lti/2026/sf-20261001-1976.xml": false,
@@ -1188,6 +1189,15 @@
   "lti/2026/sf-20261022-2114.xml": false,
   "lti/2026/sf-20261022-2126.xml": false,
   "lti/2026/sf-20261022-2217.xml": false,
+  "lti/2026/sf-20261022-2229.xml": false,
+  "lti/2026/sf-20261022-2230.xml": false,
+  "lti/2026/sf-20261022-2231.xml": false,
+  "lti/2026/sf-20261022-2232.xml": false,
+  "lti/2026/sf-20261022-2233.xml": false,
+  "lti/2026/sf-20261022-2234.xml": false,
+  "lti/2026/sf-20261022-2235.xml": false,
+  "lti/2026/sf-20261022-2236.xml": false,
+  "lti/2026/sf-20261022-2237.xml": false,
   "lti/2026/sf-20261023-2115.xml": false,
   "lti/2026/sf-20261023-2116.xml": false,
   "lti/2026/sf-20261023-2117.xml": false,
@@ -1213,6 +1223,7 @@
   "lti/2026/sf-20261026-2162.xml": false,
   "lti/2026/sf-20261026-2176.xml": false,
   "lti/2026/sf-20261026-2218.xml": false,
+  "lti/2026/sf-20261026-2238.xml": false,
   "lti/2026/sf-20261027-2152.xml": false,
   "lti/2026/sf-20261027-2153.xml": false,
   "lti/2026/sf-20261027-2154.xml": false,
@@ -1223,6 +1234,7 @@
   "lti/2026/sf-20261028-2178.xml": false,
   "lti/2026/sf-20261028-2179.xml": false,
   "lti/2026/sf-20261028-2219.xml": false,
+  "lti/2026/sf-20261028-2239.xml": false,
   "lti/2026/sf-20261029-2202.xml": false,
   "lti/2026/sf-20261029-2203.xml": false,
   "lti/2026/sf-20261029-2204.xml": false,
@@ -1230,7 +1242,9 @@
   "lti/2026/sf-20261030-2189.xml": false,
   "lti/2026/sf-20261030-2205.xml": false,
   "lti/2026/sf-20261030-2220.xml": false,
+  "lti/2026/sf-20261030-2240.xml": false,
   "lti/2026/sf-20261031-2221.xml": false,
-  "lti/2026/sf-20261102-2222.xml": false
+  "lti/2026/sf-20261102-2222.xml": false,
+  "lti/2026/sf-20261102-2241.xml": false
  }
 }

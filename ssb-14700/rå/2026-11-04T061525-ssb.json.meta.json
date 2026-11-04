@@ -1,0 +1,11 @@
+{
+ "kilde": "SSB tabell 14700: konsumprisindeks, 12-måneders endring",
+ "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14700/data?lang=no&outputFormat=json-stat2&valueCodes[VareTjenesteGrp]=00&valueCodes[ContentsCode]=Tolvmanedersendring&valueCodes[Tid]=top(13)",
+ "endelig_url": "https://data.ssb.no/api/pxwebapi/v2/tables/14700/data?lang=no&outputFormat=json-stat2&valueCodes[VareTjenesteGrp]=00&valueCodes[ContentsCode]=Tolvmanedersendring&valueCodes[Tid]=top(13)",
+ "hentet": "2026-11-04T06:15:25+00:00",
+ "lisens": "CC BY 4.0. Kilde: Statistisk sentralbyrå.",
+ "ssb_oppdatert": "2026-10-09T06:00:00Z",
+ "fil": "2026-11-04T061525-ssb.json",
+ "sha256": "bcbadd567f59800b593d9bd26ce99a77a633e0d1776a69dfa80de66ce622493b",
+ "bytes": 3654
+}
