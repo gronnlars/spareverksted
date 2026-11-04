@@ -74,10 +74,10 @@ Denne standarden gir ikke i seg selv mandat til å skrive om eksisterende sider,
 ## Offentlige kilder
 
 - [Lovdata: lov om språk (språklova), særlig §§ 9 og 10](https://lovdata.no/lov/2021-05-21-42)
-- [Språkrådet: klarspråk](https://sprakradet.no/klarsprak/)
+- [Språkrådet: kort om klarspråk](https://sprakradet.no/klarsprak/kunnskap-om-klarsprak/kort-om-klarsprak/)
 - [Språkrådet: generelle skriveråd på bokmål](https://sprakradet.no/klarsprak/om-skriving/generelle-skriverad-bokmal/)
-- [Språkrådet: språkloven](https://sprakradet.no/spraklova/)
-- [Digitaliseringsdirektoratet: universell utforming](https://www.uutilsynet.no/)
-- [IMDi: veiledning om forståelig informasjon](https://www.imdi.no/)
+- [Språkrådet: klarspråk og språkloven § 9](https://sprakradet.no/spraklova/klart-sprak/melding-om-uklart-sprak/)
+- [Tilsynet for universell utforming av ikt: redaktørens ansvar](https://www.uutilsynet.no/veiledning/redaktorens-ansvar-universell-utforming/200)
+- [IMDi: bruk et språk som alle kan forstå](https://www.imdi.no/tall-og-fakta/veiledere/veileder-hvordan-na-ut-med-informasjon-til-personer-med-innvandrerbakgrunn/5.-bruk-et-sprak-som-alle-kan-forsta)
 
 Kildene er normgrunnlag og videre lesning, ikke dokumentasjon på at Spareverksted er testet eller godkjent.
