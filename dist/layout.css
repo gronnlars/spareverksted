@@ -23,8 +23,7 @@
 .display-options .level-control{position:absolute;right:0;top:calc(100% + 8px);z-index:25;min-width:280px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--surface,#fff);box-shadow:var(--shadow);margin:0}
 .workbench-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:18px}
 .workbench-toolbar .page-nav{flex:1;min-width:0;margin-bottom:0}
-.page-nav{gap:8px;margin-bottom:18px}
-.page-nav button{padding:10px 18px;font-size:14px;min-height:44px}
+.page-nav{gap:8px;margin-bottom:18px}.page-nav button,.page-nav a{padding:10px 18px;font-size:14px;min-height:44px}
 .welcome-wizard{margin:8px auto 32px}
 .welcome-intro{margin-bottom:22px}
 .welcome-intro h1{font-size:clamp(32px,4vw,46px);margin:8px 0 12px}
@@ -63,8 +62,7 @@ footer{align-items:center;gap:12px}
  .intro #introText{font-size:13px;line-height:1.5}
  .display-options>summary{font-size:12px;padding:8px}
  .plan-context{font-size:12px;margin-top:8px!important}
- .page-nav{margin-bottom:14px;gap:0}
- .page-nav button{display:block;padding:8px 6px;font-size:14px;min-height:44px}
+ .page-nav{margin-bottom:14px;gap:0}.page-nav button,.page-nav a{display:block;padding:8px 6px;font-size:14px;min-height:44px}
  .workbench-toolbar{gap:8px;margin-bottom:14px}
  .panel{padding:18px;border-radius:14px;margin-bottom:14px}
  .plan-inputs .panel-title{margin-bottom:0}.plan-inputs h2{font-size:16px}
@@ -179,7 +177,7 @@ button,summary,a,input,select{scroll-margin-block:100px}
  .display-options .level-control{width:min(300px,calc(100vw - 32px));min-width:0}
  .next-steps{padding:15px 17px}.site-menu .site-nav a{min-height:44px}
 }
-@media(max-width:350px){#mobileCurve{width:42px}.mobile-summary{gap:8px;padding-left:12px;padding-right:12px}.mobile-summary strong{font-size:18px}.mobile-summary button{padding:9px}.question-row{flex-direction:column}.question-row button{align-self:flex-start}.page-nav button{font-size:13px;padding-inline:5px}}
+@media(max-width:350px){#mobileCurve{width:42px}.mobile-summary{gap:8px;padding-left:12px;padding-right:12px}.mobile-summary strong{font-size:18px}.mobile-summary button{padding:9px}.question-row{flex-direction:column}.question-row button{align-self:flex-start}.page-nav button,.page-nav a{font-size:13px;padding-inline:5px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 @media print{.suggested-panel,.more-sections>summary{display:none!important}.more-sections{display:block!important}.answer-dates{display:block!important}}
 
