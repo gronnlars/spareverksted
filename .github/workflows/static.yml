@@ -307,6 +307,15 @@ jobs:
       - name: "tests/pdf-merking-browser.cjs (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tests/pdf-merking-browser.cjs
+      - name: "tests/rapport-utskrift-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/rapport-utskrift-browser.cjs
+      - name: "tests/rapport-utskrift-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/rapport-utskrift-browser.cjs
+      - name: "tests/rapport-utskrift-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/rapport-utskrift-browser.cjs
       - name: "tests/bunntekst-browser.cjs (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tests/bunntekst-browser.cjs

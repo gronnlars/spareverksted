@@ -79,11 +79,13 @@ Delene kommer i denne rekkefølgen. Det som er felles for nettstedet (toppfelt, 
 ## 5. Rapport og PDF
 
 - Rapporten lages med `dist/report-print.js`. Den lukker rapportvinduet mens PDF-en lages, slik at Chrome og Edge merker PDF-en, og åpner det igjen etterpå. Se BESLUTNINGER.md, «PDF-rapporten».
+- Det samme gjelder når brukeren velger utskrift i nettleserens meny mens rapporten er åpen. Rapportens planutvalg beholdes. Et ignorert eller feilet utskriftskall skal gi rapporten, tittelen og fokus tilbake, med hjelp om nettleserens meny. Bruk utskriftshendelser, ikke mus eller berøring, til å avgjøre om utskrift pågår.
 - Utskriftskopien har én h1 og nivåer uten hopp. Den h1-en blir PDF-ens tittel og forslag til filnavn.
 - Ingen `aria-hidden` på utskriftskopien. Ingen knapper i utskriften.
 - `<figure>` rundt en graf får `role="group"`. Grafen selv har `role="img"` og et tekstalternativ. Ellers blir det en tom figur i PDF-en.
 - Hver plan har én overskrift på sitt nivå. En samlet rapport har sammenligningen under egen overskrift.
 - `tests/pdf-merking-browser.cjs` kontrollerer dette. En ny kalkulator med rapport legges inn i testen.
+- `tests/rapport-utskrift-browser.cjs` kontrollerer feil og retur for åpen plan, sammenligning og valgte planer. Fysisk iPhone/Safari må fortsatt prøves. PDF-arbeidet bygger på [PDF-teknikkene til WCAG 2.2](https://www.w3.org/WAI/WCAG22/Techniques/#pdf), sammen med prosjektets UU-krav. En teknikk eller en poengsum er ikke en full godkjenning.
 
 ## 6. Mobil og PC
 
