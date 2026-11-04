@@ -7,7 +7,7 @@ permissions:
   contents: read
 concurrency:
   group: spareverksted-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -389,7 +389,8 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
   deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # Midlertidig publiseringspause etter Lars sitt pålegg 4.11.2026: grafikkarbeidet må ferdigstilles og kontrolleres først.
+    if: false
     needs: [checks, browser]
     runs-on: ubuntu-latest
     steps:
