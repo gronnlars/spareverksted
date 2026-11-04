@@ -136,3 +136,5 @@ body.loan-empty #costPanel,body.loan-empty #scenarioPanel{display:none}
 .loan-page.stale #costPanel,.loan-page.stale #scenarioPanel,.loan-page.stale #comparePanel,.loan-page.stale #tableWrap{opacity:.45;filter:grayscale(.6)}
 
 .loan-page #reportPreview .report-assumptions div{font-size:14px}
+
+.loan-page #reportPreview .report-chart svg>path:first-of-type{stroke:var(--muted)}

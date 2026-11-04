@@ -173,9 +173,10 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
     const rgb=s=>s.match(/[\d.]+/g).slice(0,3).map(Number),lum=c=>c.map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((s,v,i)=>s+v*[.2126,.7152,.0722][i],0);
     const ratio=(a,b)=>{a=lum(rgb(a));b=lum(rgb(b));return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);};
     const svg=el.querySelector('.report-chart svg'),bg=getComputedStyle(svg).backgroundColor,surface=getComputedStyle(document.getElementById('reportDialog')).backgroundColor;
-    return {text:[...svg.querySelectorAll('text')].map(e=>ratio(getComputedStyle(e).fill,bg)),ring:[...el.querySelectorAll('.loan-cost circle')].map(e=>ratio(getComputedStyle(e).stroke,surface))};
+    return {axes:[...svg.querySelectorAll('path')].map(e=>ratio(getComputedStyle(e).stroke,bg)),text:[...svg.querySelectorAll('text')].map(e=>ratio(getComputedStyle(e).fill,bg)),ring:[...el.querySelectorAll('.loan-cost circle')].map(e=>ratio(getComputedStyle(e).stroke,surface))};
    });
    assert.ok(contrast.text.every(x=>x>=4.5),'rapportens graftekst i '+theme+': '+contrast.text);
+   assert.ok(contrast.axes.every(x=>x>=3),'rapportens akser og kurve i '+theme+': '+contrast.axes);
    assert.ok(contrast.ring.every(x=>x>=3),'ringdiagram i '+theme+': '+contrast.ring);
    await p.setViewportSize({width:320,height:800});
    assert.equal(await p.locator('#reportDialog').evaluate(e=>e.scrollWidth<=e.clientWidth),true,'rapport i '+theme);

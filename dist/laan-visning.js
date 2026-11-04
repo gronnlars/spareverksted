@@ -12,7 +12,7 @@ function present(p){
  const rows=p.rows.map(r=>{const f=factor(inflation,r.term),out={...r};for(const k of ['interest','principal','fee','extra','payment','total','balance'])out[k]/=f;return out;});
  const totals={amount:p.input.amount,principal:0,interest:0,fees:p.input.establishmentFee,establishmentFee:p.input.establishmentFee,termFees:0,extra:0,paid:p.input.establishmentFee};
  for(const r of rows){totals.principal+=r.principal+r.extra;totals.interest+=r.interest;totals.termFees+=r.fee;totals.fees+=r.fee;totals.extra+=r.extra;totals.paid+=r.total;}
- return {...p,rows,totals,firstPayment:rows[0].payment,lastPayment:rows.at(-1).payment};
+ return {...p,rows,totals,flows:[{...p.flows[0]},...rows.map(r=>({term:r.term,amount:-r.total}))],firstPayment:rows[0].payment,lastPayment:rows.at(-1).payment};
 }
 function result(p,base){
  const r=T.result(p,base);if(!p.input.real)return r;

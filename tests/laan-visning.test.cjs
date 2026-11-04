@@ -6,7 +6,8 @@ for(const type of L.TYPES)for(const inflation of [0,2.5,10,100]){
  const copy=JSON.stringify(p),d=V.present(p);
  const sum=p.rows.reduce((x,r)=>x+r.total/(1+inflation/100)**(r.term/12),1000);
  near(d.totals.paid,sum);near(d.totals.principal+d.totals.interest+d.totals.fees,sum);assert.equal(d.totals.establishmentFee,1000);
- for(const r of d.rows)near(r.total,r.principal+r.extra+r.interest+r.fee);
+ for(const r of d.rows){near(r.total,r.principal+r.extra+r.interest+r.fee);near(d.flows[r.term].amount,-r.total);}
+ assert.equal(d.flows[0].amount,p.flows[0].amount);
  assert.equal(JSON.stringify(p),copy,'nominell motorplan er urørt');
  const monthly=E.monthly(p),yearly=E.yearly(p);near(monthly.slice(1).reduce((x,r)=>x+r[6],0),sum);near(yearly.slice(1).reduce((x,r)=>x+r[4],0),sum);
  const c=V.scenarios(p);assert.deepEqual(c.map(x=>x.rate),[4,6,8]);
