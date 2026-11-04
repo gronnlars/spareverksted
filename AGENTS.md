@@ -16,7 +16,7 @@ Les før arbeid:
 2. [BESLUTNINGER.md](BESLUTNINGER.md): valgene, alternativene og begrunnelsene.
 3. [SPRAKREGLER.md](SPRAKREGLER.md): språk og faglig presisjon.
 4. [KLARSPRAK.md](KLARSPRAK.md): klarspråkkrav for brukerreiser, knapper, skjema og rapporter.
-6. [SVARMAL.md](SVARMAL.md): valg av svarform, presentasjon og kontroll før publisering.
+5. [SVARMAL.md](SVARMAL.md): valg av svarform, presentasjon og kontroll før publisering.
 6. [KILDEREGLER.md](KILDEREGLER.md): kilder, datoer, foreslått mot vedtatt og når en regel må brytes.
 7. [research/plan.md](research/plan.md): faser, videreutvikling av kalkulatoren og kontrollert innholdspåfyll.
 8. [research/universell-utforming.md](research/universell-utforming.md): krav og åpne kontroller.
