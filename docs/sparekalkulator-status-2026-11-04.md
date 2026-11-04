@@ -6,8 +6,8 @@ Lars godkjente rettingsplanen 4. november 2026. Arbeidsgrunnlag: main `b0ab8cbbf
 
 | Steg | Leveranse | Status i denne PR-en |
 | --- | --- | --- |
-| 1 | Rapportens utskriftsflyt på mobil, feil og retur, med bevart PDF-struktur | Rettet i kode. Kontrollstatus nedenfor. Fysisk iPhone-prøve gjenstår |
-| 2 | Tabeller og store beløp uten sideveis rulling, også inne i rapporten | Ikke startet |
+| 1 | Rapportens utskriftsflyt på mobil, feil og retur, med bevart PDF-struktur | Lars har bekreftet funksjon på PC og iPhone etter publisering. PDF-scorearbeid er parkert |
+| 2 | Tabeller og store beløp uten sideveis rulling, også inne i rapporten | Første del: sparetabellen har loddrett visning ved plassmangel. Sammenligning, rapporttabeller og store hovedtall gjenstår |
 | 3 | Navigering, synlig lagring og sikre hoppmål | Ikke startet |
 | 4 | Samordnet formatdialog og tydelig utvalg ved nedlasting | Ikke startet |
 | 5 | Lesbar månedsperiode, språk, nivåer og kildevedlikehold | Ikke startet |
@@ -58,3 +58,11 @@ Lest 4. november 2026:
 - [PDF1: tekstalternativer](https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF1), [PDF3: leserekkefølge](https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF3), [PDF6: tabellstruktur](https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF6), [PDF9: overskrifter](https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF9), [PDF16: språk](https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF16) og [PDF18: tittel](https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF18). Brukes til å bevare eksisterende egenskaper. Automatisk tilstedeværelseskontroll dokumenterer ikke full leserekkefølge, grafenes faglige tekstalternativ eller alle visningsvalg for tittel.
 
 Oppdrag, kode, tester og dokumentasjon: ChatGPT/Codex. Egenkontroll. Ingen fysisk brukertest i denne økten.
+
+## Steg 2, første del: selve sparetabellen
+
+Implementert på fersk main etter #217: én tabell med ekte kolonneoverskrifter og radoverskrifter. Når tabellen er for bred for sitt område, blir én rad vist loddrett med tydelig etikett ved hvert beløp. Den går tilbake til vanlig tabell når det er plass. Store beløp kan bryte ved tusenskiller uten å redusere skriften eller fjerne sifre. Ingen beregningsverdi eller eksport er endret.
+
+Lokalt består `sparetabell-browser.cjs` i Chromium med tre kronevisninger, vanlige/store beløp og bredder 256, 320, 390, 640, 1280 og 1920 px, også tilbake til bred visning. Testen sammenligner alle verdier før og etter endret bredde. Eksisterende inndatatest, PDF-merking, UU-nettlesertest, beregningskontroll, sikkerhet, versjoner og syntaks består. Sparetabellen er ikke lenger unntatt fra UU-testens kontroll av intern sideveis rulling. Tekstforventningen «eksakte beløp» er presisert til «avrundet til hele kroner», i samsvar med den uendrede avrundingen.
+
+Dette er første avgrensede del, ikke hele steg 2. Sammenligningstabeller, rapporttabeller og kompakt visning i hovedresultatet gjenstår. Faktisk PC-zoom og fysisk iPhone/VoiceOver er ikke kontrollert i denne delen. Den nye testen er lagt i CI for Chromium og WebKit. Alle undersider får ny stilarkversjon fra det eksisterende versjonsskriptet, uten nye innholdsendringer.

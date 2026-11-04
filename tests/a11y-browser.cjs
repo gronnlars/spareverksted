@@ -78,7 +78,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    for(const e of targets)if(!nameOf(e).trim())out.push('uten navn '+sel(e));
    if(document.documentElement.scrollWidth>innerWidth+1)out.push('horisontal scrolling');
    // Bokser inni siden som må rulles sidelengs. Talltabeller er unntatt (WCAG 1.4.10 tillater todimensjonal rulling for datatabeller).
-   for(const e of document.querySelectorAll('body *')){if(!vis(e)||e.closest('#tableWrap,.withdraw-table,#comparison,.report-comparison'))continue;const ox=getComputedStyle(e).overflowX;if((ox==='auto'||ox==='scroll')&&e.scrollWidth>e.clientWidth+1)out.push('sidelengs rulling inni '+sel(e));}
+   for(const e of document.querySelectorAll('body *')){if(!vis(e)||e.closest('.withdraw-table,#comparison,.report-comparison'))continue;const ox=getComputedStyle(e).overflowX;if((ox==='auto'||ox==='scroll')&&e.scrollWidth>e.clientWidth+1)out.push('sidelengs rulling inni '+sel(e));}
    return out;});
   const focusCheck=async p=>{const out=[];await p.evaluate(()=>document.activeElement&&document.activeElement.blur());
    for(let i=0;i<40;i++){await p.keyboard.press('Tab');const f=await p.evaluate(()=>{const e=document.activeElement;if(!e||e===document.body)return null;const st=getComputedStyle(e);return {el:e.id||e.tagName.toLowerCase(),ok:(st.outlineStyle!=='none'&&parseFloat(st.outlineWidth)>0)||st.boxShadow!=='none'};});if(f&&!f.ok)out.push('fokus ikke synlig '+f.el);}
