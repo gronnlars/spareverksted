@@ -147,3 +147,10 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
  .savings-stacked .savings-cell-value{font-weight:600;white-space:normal;word-break:normal}
  .savings-stacked .savings-year-label{display:inline}
 }
+
+@media screen{
+ #comparison .table-scroll.savings-stacked{overflow:visible}
+ #comparison .savings-stacked th[scope=row]{position:static;width:auto;min-width:0;background:transparent;white-space:normal}
+ #comparison .savings-stacked td{white-space:normal}
+ #comparison .savings-stacked .savings-cell-label{white-space:normal;overflow-wrap:anywhere}
+}
