@@ -23,6 +23,9 @@ Brukeren skal kunne **finne**, **forstå** og **bruke** informasjonen. Klarsprå
 11. **Skriv korrekt norsk.** Følg offisiell bokmålsrettskriving, norsk tallformat og prosjektets stilvalg i `SPRAKREGLER.md`. Ingen mekanisk ord- eller setningsgrense som fjerner mening.
 12. **Test forståelse.** Automatiske sjekker kan varsle om mulige problemer, men dokumenterer ikke at mennesker forstår teksten.
 
+13. **Velg korte, kjente ord når de er like presise.** Det kan gjøre teksten lettere å lese for blant andre personer med dysleksi, dem som leser på liten skjerm, og dem som bruker lese- og skrivestøtte. Velg «bruk» framfor «implementer» når betydningen er den samme. Unngå lange sammensetninger og forkortelser når enklere ord dekker meningen. Ikke bytt ut presise fagord med misvisende kortord. Korte ord er et hjelpemiddel, ikke en garanti for tilgjengelighet.
+14. **Gjør teksten lett å lese med hjelpemidler.** Bruk tydelige etiketter, logisk leserekkefølge, riktig overskriftsstruktur og forståelige lenkenavn. Ikke del ord kunstig for å få dem kortere. Kontroller ved behov med opplesning, skjermleser og forstørring.
+
 ## Tekst i grensesnittet
 
 - **Knapper og lenker:** Beskriv neste faktiske handling eller mål. Vurder ordlyden sammen med plassering, tilgjengelig navn, kontekst og hva som skjer etter trykk. Ikke bruk «Klikk her». Ikke gi en knapp navn etter sluttresultatet dersom den først åpner en dialog med flere valg.
