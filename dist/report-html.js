@@ -1,16 +1,47 @@
 // Selvstendig HTML fra rapporten som allerede vises. Ingen nye beregninger eller nettressurser.
 (function(){
 'use strict';
-function reportStyles(){
- function copy(rule){
-  // Utskriftsreglene på kalkulatorsiden skjuler alt utenom PDF-kopien.
-  if(rule.type===3||rule.type===5||rule.type===6)return '';
-  if(rule.media&&/\bprint\b/.test(rule.media.mediaText))return '';
-  if(rule.type!==1&&rule.cssRules)return rule.cssText.slice(0,rule.cssText.indexOf('{')+1)+Array.from(rule.cssRules,copy).join('\n')+'}';
-  if(/url\s*\(|@import/i.test(rule.cssText))throw Error('Rapportens utforming krever en ekstern ressurs.');
-  return rule.cssText;
+function reportStyles(doc){
+ function declarations(style){
+  // Behold shorthands med var(...). Enkelte nettlesere gir tom verdi for hver langform.
+  const parts=[];let part='',quote='',depth=0,escaped=false;
+  for(const ch of style.cssText+';'){
+   part+=ch;
+   if(quote){if(escaped)escaped=false;else if(ch==='\\')escaped=true;else if(ch===quote)quote='';}
+   else if(ch==='"'||ch==="'")quote=ch;
+   else if('([{'.includes(ch))depth++;
+   else if(')]}'.includes(ch))depth--;
+   if(ch!==';'||quote||depth)continue;
+   const declaration=part.slice(0,-1).trim();part='';
+   const colon=declaration.indexOf(':');if(colon<0)continue;
+   const name=declaration.slice(0,colon).trim(),value=declaration.slice(colon+1).trim();
+   if(!value||/^(?:transition|animation|view-transition|scroll-timeline|view-timeline)(?:-|$)/.test(name))continue;
+   if(/url\s*\(|@import/i.test(value))throw Error('Rapportens utforming krever en ekstern ressurs.');
+   parts.push(declaration+';');
+  }
+  return parts.join(' ');
  }
- return Array.from(document.styleSheets,sheet=>Array.from(sheet.cssRules,copy).join('\n')).join('\n');
+ function relevant(selector){
+  // Behold også fokus-/hover-regler og markører for elementer som finnes i rapporten.
+  const base=selector.replace(/::(?:before|after|marker|first-line|first-letter)\b/g,'').replace(/:(?:focus-visible|focus-within|focus|hover|active|visited)\b/g,'');
+  try{return !!doc.querySelector(base);}catch{return false;}
+ }
+ function copy(rule){
+  // Rapporten har egne utskriftsregler og trenger ikke nettstedets fonter eller overganger.
+  if(rule.type===3||rule.type===5||rule.type===6||rule.type===7)return '';
+  if(rule.media&&/\bprint\b/.test(rule.media.mediaText))return '';
+  if(rule.type!==1){
+   if(!rule.cssRules)return '';
+   const children=Array.from(rule.cssRules,copy).filter(Boolean).join('\n');
+   return children?rule.cssText.slice(0,rule.cssText.indexOf('{')+1)+children+'}':'';
+  }
+  if(!relevant(rule.selectorText))return '';
+  // CSSOMs cssText kan utvide kant-/reset-regler til tomme eller nettleserspesifikke verdier.
+  // Skriv bare egenskapene som faktisk har en verdi, og behold eventuell !important.
+  const content=declarations(rule.style);
+  return content?rule.selectorText+' { '+content+' }':'';
+ }
+ return Array.from(document.styleSheets,sheet=>Array.from(sheet.cssRules,copy).filter(Boolean).join('\n')).join('\n');
 }
 function build(){
  const source=document.getElementById('printReportContent');
@@ -23,7 +54,7 @@ function build(){
  csp.content="default-src 'none'; script-src 'none'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'";
  charset.after(csp);
  const viewport=doc.createElement('meta');viewport.name='viewport';viewport.content='width=device-width, initial-scale=1';doc.head.append(viewport);
- const style=doc.createElement('style');style.textContent=reportStyles()+`
+ const extraStyles=`
  body{background:var(--surface,#fff)}
  main#reportPreview{max-width:950px;margin:0 auto;border:0;padding:24px;overflow-wrap:anywhere}
  #reportPreview .report-assumptions{grid-template-columns:1fr}
@@ -54,7 +85,7 @@ function build(){
   .report-page{break-before:page}
   h1,h2,h3{break-after:avoid}
  }
- `;doc.head.append(style);
+ `;
  const main=doc.createElement('main');main.id='reportPreview';
  for(const child of source.childNodes)main.append(doc.importNode(child,true));
  doc.body.append(main);
@@ -69,22 +100,21 @@ function build(){
  }
  for(const table of main.querySelectorAll('table')){
   table.classList.remove('savings-table');table.setAttribute('role','table');
+  for(const el of table.querySelectorAll('thead,tbody,tr,th,td'))el.removeAttribute('role');
   const headers=[...table.querySelectorAll('thead th')];
-  headers.forEach(h=>{h.scope='col';h.setAttribute('role','columnheader');});
-  for(const group of table.querySelectorAll('thead,tbody'))group.setAttribute('role','rowgroup');
-  for(const row of table.querySelectorAll('tr'))row.setAttribute('role','row');
+  headers.forEach(h=>{h.scope='col';});
   for(const row of table.querySelectorAll('tbody tr')){
    const first=row.cells[0];if(!first)continue;
    let heading=first;
    if(first.tagName!=='TH'){heading=doc.createElement('th');heading.append(...first.childNodes);first.replaceWith(heading);}
-   heading.scope='row';heading.setAttribute('role','rowheader');
+   heading.scope='row';
    [...row.cells].slice(1).forEach((cell,i)=>{
-    cell.setAttribute('role','cell');
     const label=doc.createElement('span');label.className='html-cell-label';label.setAttribute('aria-hidden','true');label.textContent=headers[i+1]?.textContent||'';
     const value=doc.createElement('span');value.className='html-cell-value';value.append(...cell.childNodes);cell.append(label,value);
    });
   }
  }
+ const style=doc.createElement('style');style.textContent=reportStyles(doc)+extraStyles;doc.head.append(style);
  return '<!doctype html>\n'+doc.documentElement.outerHTML;
 }
 document.getElementById('downloadReportHtml').onclick=()=>{

@@ -113,19 +113,33 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Playwright
         id: install
-        run: npm install --no-save --no-package-lock playwright@1.56.0
+        run: npm install --no-save --no-package-lock playwright@1.56.0 vnu-jar
       # Actions mounts /github/home with the host runner's uid; the container runs as root.
       # Firefox requires the home directory to belong to the browser's current user.
       - name: Match CI home ownership for Firefox
         run: chown "$(id -u):$(id -g)" /github/home
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          java-package: jre
       - name: "tests/rapport-html-browser.cjs (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        env:
+          SPARE_HTML_VALIDATOR: node_modules/vnu-jar/build/dist/vnu.jar
+          SPARE_HTML_OUTPUT_DIR: /tmp/spareverksted-ui-review/html
         run: node tests/rapport-html-browser.cjs
       - name: "tests/rapport-html-browser.cjs (firefox)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        env:
+          SPARE_HTML_VALIDATOR: node_modules/vnu-jar/build/dist/vnu.jar
+          SPARE_HTML_OUTPUT_DIR: /tmp/spareverksted-ui-review/html
         run: SPARE_ENGINE=firefox node tests/rapport-html-browser.cjs
       - name: "tests/rapport-html-browser.cjs (webkit)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        env:
+          SPARE_HTML_VALIDATOR: node_modules/vnu-jar/build/dist/vnu.jar
+          SPARE_HTML_OUTPUT_DIR: /tmp/spareverksted-ui-review/html
         run: SPARE_ENGINE=webkit node tests/rapport-html-browser.cjs
       - name: "tests/security-browser.cjs (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
