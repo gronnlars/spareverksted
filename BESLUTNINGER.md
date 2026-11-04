@@ -1279,3 +1279,47 @@ Ikke endret, vurdert som feilvisning i verktøyet:
 - Avkuttede setninger og symboler i opplesningen: verktøyets lesing. Chromium gir hele navn uten pilsymbolene.
 
 Ikke testet: Safari, Firefox, VoiceOver og NVDA.
+
+## Resultatlinjen ved Safari-rulling og PC-zoom (3. november 2026)
+
+Lars viser at den lukkede resultatlinjen ser ut til å sveve når Safaris verktøylinje trekkes sammen. CSS-en la `safe-area-inset-bottom` som gjennomsiktig luft under knappen. Sikkerhetsfeltet flyttes inn i knappen med samme bakgrunn og trykkflate helt ned til bunnen. Ingen nettlesergjenkjenning eller nye rullelyttere.
+
+Ved maksimalt 760 px bredde og 420 px høyde får mus med hover en lukket knapp på minst 28 px. Berøring beholder 44 px, med eksisterende 30 px-unntak på skjermer under 300 px høyde. Sikkerhetsfeltet kommer i tillegg i alle tilfellene. Tekst, pil og tastaturfunksjon beholdes. Alternativet å fjerne sikkerhetsfeltet forkastes fordi hjemindikatoren fortsatt trenger plass.
+
+Eksisterende resultatlinjetest utvides med simulert sikkerhetsfelt på 0 og 34 px, endring av vindushøyde, trefflate nederst, sidebredde og mus mot berøring ved liten høyde. Smal viewport er ikke faktisk nettleserzoom, og skrivebords-WebKit er ikke Safari på iPhone. Lars må fortsatt prøve sammenfoldet og utvidet Safari-meny på iPhone. Lokale sikkerhets-, versjons- og gammel-kodekontroller består. Nettlesernedlasting feilet lokalt, så nettlesertestene kjøres i PR-ens eksisterende Chromium- og WebKit-jobb. ChatGPT/Codex. Ingen sammenslåing eller publisering i dette oppdraget.
+
+Revurder hvis faktisk Safari-prøving fortsatt viser et mellomrom eller knappen blir vanskelig å treffe ved zoom.
+
+
+## Etterkontroll av resultatlinjen og mobil-WAVE (4. november 2026)
+
+PR #206, opprinnelig Actions-kjøring #654, er gjennomgått på Lars sitt oppdrag. Designendringen er begrenset til sikkerhetsfeltet i den lukkede knappen og lavere høyde med mus på korte vinduer. Farger, tekst og den åpne linjen er bevart. Samordnet med main 525160e.
+
+Nettlesertesten avdekket en reell klikkfeil: fokus utløste setCollapsed(false), som erstattet knappens kryss selv når tilstanden allerede var åpen. Klikkmålet kunne forsvinne under trykket. setCollapsed returnerer nå når tilstanden er uendret. Den eksisterende testen kontrollerer eksplisitt lukket tilstand før geometrien måles. Samme test feiler lokalt med gammel JavaScript og består med rettingen i Chromium. Testen måler sikkerhetsfelt på 0 og 34 px, endret vindushøyde, trykkflate, mus/berøring og tastatur. Ingen geometri- eller tilgjengelighetskrav er fjernet. Manglende personvernrapport i CI var en følge av at denne testen stoppet før personverntestene.
+
+Lars sitt mobilbilde fra WAVE viser siden uten vanlig utforming og hvit tekst på #0088FF (3,52:1). Manglende utforming ble gjenskapt i WAVE på PC, hvor knappen fikk nettleserens grå/svarte standardfarger. WAVE-kopien ligger på wave.webaim.org, beholder sidens CSP med style-src self og peker på stilark fra spareverksted.no. Dette forklarer at den ikke bruker sidens utforming. Den direkte publiserte knappen er kontrollert i Chromium: hvit på #183F36 (11,65:1) i Nøytral/Lys og #13291D på #ACDCB9 (10,05:1) i Natt. Ingen design- eller CSP-endring er gjort for WAVE-kopien. WAVE-utvidelsen anbefales for kontroll av siden i opprinnelig nettleserkontekst, jf. https://wave.webaim.org/help (lest 3.11.2026).
+
+Direkte Safari på iPhone og bevegelig Safari-meny er ikke testet i denne økten. Skrivebords-WebKit og smal viewport erstatter ikke den prøven. ChatGPT/Codex, egenkontroll.
+
+
+## Resultatlinjen bare nedenfor resultatfeltet (4. november 2026)
+
+Lars presiserte at linjen aldri skal vises over eller på det grønne resultatfeltet. Den skal bare leve nedenfor feltet. Den tidligere IntersectionObserver-regelen viste linjen når feltet ikke var synlig, uansett retning, og fokus på inndata kunne overstyre skjuling. Begge er erstattet av felles styring i layout.js for spare- og lånesiden: et resultatfelt med høyde større enn null må ha hele underkanten over vindustoppen. Rulling måles maksimalt én gang per tegneramme, og vindus- og resultatstørrelse kontrolleres også. Fokus kan ikke tvinge fram en skjult linje. Valgt åpen/lukket tilstand beholdes ved rulling.
+
+Den tidligere rettingen som bevarer klikkmålet ved fokus, er beholdt. Nettlesertesten bruker nå også et faktisk trykk i berøringskontekst og prøver gjentatt rulling før, på og etter grønt felt på begge sider ved mobil og smale vinduer tilsvarende PC-zoom. Farger og utforming er uendret. Faktisk iPhone/Safari må fortsatt prøves manuelt. ChatGPT/Codex.
+
+
+## CI: navngitte nettleserkontroller uten følgefeil (4. november 2026)
+
+Lars ba om å rydde i årsaken til gjentatte røde kjøringer. Kjøring 41741226413 stoppet i veileder-browser.cjs: testen krevde resultatlinjen ved et inndatafelt, i strid med Lars sin nye regel om at linjen bare vises nedenfor grønt resultatfelt. Testen kontrollerer nå både skjuling ved feltet og visning nedenfor resultatet, og beholder kontrollene av tall, kurve og resultatlenke.
+
+De 81 nettleserkommandoene i static.yml er bevart i samme rekkefølge og med samme motorer, men hver kommando har et eget navngitt trinn. Etter vellykket installasjon fortsetter uavhengige tester selv om en annen test feiler. Ingen continue-on-error, automatisk omkjøring eller reduserte krav. En feilet kontroll gir fortsatt rød nettleserjobb og sperrer publisering. Installasjonsfeil stopper nettleserkontrollene.
+
+Personvernkontrollene har egne trinn og kan kjøre selv om en UI-test feiler. Rapporten skrives først når alle tre personvernmotorer består. Rapport og verifisert personvernside lastes bare opp når rapportgenereringen også består. Dermed forsøkes ikke opplasting av en rapport som aldri ble laget. UI-skjermbilder beholdes med eksisterende always-regel.
+
+Kontroll før opplasting: de 81 gamle og nye nettleserkommandoene er sammenlignet maskinelt og er identiske i innhold og rekkefølge. Ingen lokal kjøring var mulig i denne økten fordi kjøremiljøet var utilgjengelig. Endringen må verifiseres i GitHub Actions. ChatGPT/Codex, egenkontroll.
+
+
+### Fokus på store resultat- og grafpaneler (4. november 2026)
+
+Full CI-kjøring b8cf1c0 besto alle kontroller unntatt navigation-browser.cjs, som fanget et reelt ekstra rullehopp ved fokus på grafpanelet. Når den flytende linjen ble synlig nedenfor resultatet, behandlet unhide hele det høye grafpanelet som et lite kontrollfelt og flyttet panelets topp. Fokusjusteringen gjelder nå elementer som får plass over linjen, eller elementer som faktisk begynner under linjen. Et stort panel med synlig topp flyttes ikke bare fordi bunnen ligger utenfor vinduet. Den eksisterende navigasjonstesten og kontrollene av fokus som ikke skal dekkes, er beholdt uendret for denne rettingen. Ingen endring i beregning eller design. Lokal kjøring er fortsatt utilgjengelig; verifisering skjer i CI.
