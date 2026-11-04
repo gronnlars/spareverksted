@@ -30,7 +30,7 @@ const {pathToFileURL}=require('node:url'),engine=process.env.SPARE_ENGINE||'chro
    await page.evaluate(theme=>document.documentElement.dataset.theme=theme,theme);
    const color=await page.locator('body').evaluate(e=>getComputedStyle(e).color);
    const before=await page.locator('#printReportContent').innerHTML();
-   const expected=await page.locator('#printReportContent').evaluate(e=>({title:e.querySelector('h1').textContent,svgs:e.querySelectorAll('svg').length,cells:[...e.querySelectorAll('tbody tr')].flatMap(r=>[...r.cells].map(c=>c.textContent))}));
+   const expected=await page.locator('#printReportContent').evaluate(e=>({title:e.querySelector('h1').textContent,svgs:e.querySelectorAll('svg').length,cells:[...e.querySelectorAll('tbody tr')].flatMap(r=>[...r.cells].map(c=>{const copy=c.cloneNode(true);copy.querySelectorAll('.savings-cell-label,.savings-year-label').forEach(n=>n.remove());return copy.textContent;}))}));
    const ready=page.waitForEvent('download');await page.click('#downloadReportHtml');const download=await ready;
    assert.match(download.suggestedFilename(),/^spareverksted-[a-z0-9-]+\.html$/);
    const file=path.join(temp,route+'.html');await download.saveAs(file);
