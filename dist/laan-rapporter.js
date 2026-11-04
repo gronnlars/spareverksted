@@ -19,7 +19,9 @@ window.LoanReports={
   let planCount=0;
   function updateButtons(){
    get('loanDownloadRow').hidden=planCount===0;
-   get('downloadLoans').textContent=selected.size?'Last ned valgte ('+selected.size+')':'Last ned alle planene';
+   // «Last ned planene» med antall når noen er valgt, «Last ned planen» når bare én er med (Lars 4.11.2026, korte ord).
+   const count=selected.size||planCount;
+   get('downloadLoans').textContent=(count===1?'Last ned planen':'Last ned planene')+(selected.size>1?' ('+selected.size+')':'');
   }
   function list(){
    const container=get('loanList');
@@ -125,7 +127,7 @@ window.LoanReports={
   get('compareLoans').onclick=()=>withPlans(plans=>{
    const [titles,...rows]=comparison(plans);
    for(const [id,prefix] of [['reportPreview','savedPreview'],['printReportContent','savedPrint']]){
-    const root=get(id);root.replaceChildren(element('h1','Valgte låneplaner'),element('p','De tre første planene i rapporten sammenlignes i løpende kroner før rentefradrag. Hver plan følger etterpå med sine egne forutsetninger.'),element('h2','Planene sammenlignet'),element('h3','Restgjeld over tid'),balanceChart(plans,prefix));
+    const root=get(id);root.replaceChildren(element('h1','Lagrede låneplaner'),element('p','De tre første planene i rapporten sammenlignes i løpende kroner før rentefradrag. Hver plan følger etterpå med sine egne forutsetninger.'),element('h2','Planene sammenlignet'),element('h3','Restgjeld over tid'),balanceChart(plans,prefix));
     for(const row of rows){
      const list=element('dl');list.className='report-assumptions';
      for(let i=1;i<row.length;i++){
@@ -151,7 +153,7 @@ window.LoanReports={
    plans.forEach(({name,plan},i)=>{
     for(const sheet of LaanEksport.sheets(plan))sheets.push({name:(i+1)+' '+sheet.name,rows:[['Plan',name],...sheet.rows]});
    });
-   download(ExportKit.workbook(sheets),'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','valgte-laaneplaner.xlsx');
+   download(ExportKit.workbook(sheets),'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','spareverksted-laneplaner.xlsx');
   });
   addEventListener('storage',event=>{if(!event.key||event.key===key)list();});
   list();

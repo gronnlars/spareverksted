@@ -240,9 +240,9 @@ const guarded=fn=>{try{const p=exportPlan();if(p)fn(p);}catch(e){$('exportError'
 const openExport=()=>{if(!exportPlan())return;$('exportError').hidden=true;$('exportDialog').showModal();};
 $('heroDownload').onclick=openExport;$('reportButton').onclick=openExport;
 $('closeExport').onclick=()=>$('exportDialog').close();
-$('exportXlsx').onclick=()=>guarded(p=>download(ExportKit.workbook(E.sheets(p)),'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','spareverksted-laan.xlsx'));
-$('exportCsv').onclick=()=>guarded(p=>download(ExportKit.csv(E.csvRows(p)),'text/csv;charset=utf-8','spareverksted-laan.csv'));
-$('exportJson').onclick=()=>guarded(p=>download(JSON.stringify({schemaVersion:2,calculator:'loan',...p,display:V.present(p),scenarios:V.scenarios(p),yearly:L.byYear(p)},null,2),'application/json','spareverksted-laan.json'));
+$('exportXlsx').onclick=()=>guarded(p=>download(ExportKit.workbook(E.sheets(p)),'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','spareverksted-lan.xlsx'));
+$('exportCsv').onclick=()=>guarded(p=>download(ExportKit.csv(E.csvRows(p)),'text/csv;charset=utf-8','spareverksted-lan.csv'));
+$('exportJson').onclick=()=>guarded(p=>download(JSON.stringify({schemaVersion:2,calculator:'loan',...p,display:V.present(p),scenarios:V.scenarios(p),yearly:L.byYear(p)},null,2),'application/json','spareverksted-lan.json'));
 $('exportPdf').onclick=()=>guarded(p=>{$('exportDialog').close();$('reportPreview').innerHTML=E.report(p,'loanPreview');$('printReportContent').innerHTML=E.report(p,'loanPrint');$('reportDialog').showModal();});
 const printController=ReportPrint.attach();
 addEventListener('beforeprint',()=>{if($('reportDialog').open||printController.active())return;const {input,errors}=readInputs();$('printReportContent').innerHTML=errors.length?'<h1>Låneberegning</h1><p>Rett feltene før du skriver ut beregningen.</p>':E.report(L.plan(input),'loanPrint');});

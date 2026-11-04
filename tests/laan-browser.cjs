@@ -126,7 +126,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
   await p.keyboard.press('Escape');
   assert.equal(await p.evaluate(()=>document.activeElement.getAttribute('aria-label')),'Forklaring på nominell årsrente');
   await p.click('#heroDownload');assert.equal(await p.locator('#exportDialog').isVisible(),true);
-  for(const [id,name] of [['exportXlsx','spareverksted-laan.xlsx'],['exportCsv','spareverksted-laan.csv'],['exportJson','spareverksted-laan.json']]){
+  for(const [id,name] of [['exportXlsx','spareverksted-lan.xlsx'],['exportCsv','spareverksted-lan.csv'],['exportJson','spareverksted-lan.json']]){
    const [download]=await Promise.all([p.waitForEvent('download'),p.click('#'+id)]);
    assert.equal(download.suggestedFilename(),name);
    const data=fs.readFileSync(await download.path());assert.ok(data.length>100);
@@ -203,9 +203,9 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
   assert.equal(await p.locator('#reportPreview h1').count(),1);assert.match(await text('reportPreview'),/Bil \(1\)/);
   assert.match(await text('printReportContent'),/Forutsetninger og metode/);
   await p.keyboard.press('Escape');assert.equal(await p.evaluate(()=>document.activeElement.id),'downloadLoans');
-  await choices.nth(0).check();assert.match(await text('downloadLoans'),/valgte \(1\)/);
+  await choices.nth(0).check();assert.equal(await text('downloadLoans'),'Last ned planen');
   await p.click('#downloadLoans');
-  const [bundle]=await Promise.all([p.waitForEvent('download'),p.click('#excelLoans')]);assert.equal(bundle.suggestedFilename(),'valgte-laaneplaner.xlsx');
+  const [bundle]=await Promise.all([p.waitForEvent('download'),p.click('#excelLoans')]);assert.equal(bundle.suggestedFilename(),'spareverksted-laneplaner.xlsx');
   // 10. Veien inn og tilbake. Lån ligger blant kalkulatorfanene og på startsiden.
   await p.goto(origin+'/index.html');
   assert.equal(await p.locator('.welcome-question[href="laan.html"]').count(),0,'ikke noe lånekort på startsiden');

@@ -1,5 +1,5 @@
 'use strict';
-// «Last ned valgte» (Lars 3.11.2026): de planene som er krysset av i lista, samlet i én PDF eller én Excel-fil.
+// «Last ned planene» (Lars 3.11.2026, nytt navn 4.11.2026): de planene som er krysset av i lista, samlet i én PDF eller én Excel-fil.
 // Først én sammenligning per kalkulator (Sparing, Sparemål, Uttak) med de tre øverste valgte i lista, så én del per plan.
 // Bygger på tabellene i journey.js og rapporten i experience.js. Ingen nye beregninger: alt hentes fra engine.js.
 (function(){
@@ -64,7 +64,7 @@
   if(p.kind==='withdrawals')h+=`<p>Første uttak: <b>${money(f.r.first.actual)}</b>. Samlet tatt ut: ${money(f.r.last.total)}. Igjen etter ${f.r.n} år: <b>${money(f.left)}</b>, omtrent ${money(f.leftReal)} i dagens kjøpekraft.${emptyYear(p,f.r)?' Pengene er brukt opp ved uttaket i år '+emptyYear(p,f.r)+'.':''}</p>`;
   return h;}
  function buildSelectedReport(){const list=chosen();if(!list.length)throw Error('Velg minst én plan.');
-  let html=`<div class="report-heading"><p class="eyebrow">SPAREVERKSTED</p><h2>Valgte planer</h2><p>${list.map(p=>esc(p.name)).join(', ')}</p><p>Beregnet ${today()} · Regneeksempel før skatt</p></div>`;
+  let html=`<div class="report-heading"><p class="eyebrow">SPAREVERKSTED</p><h2>Lagrede planer</h2><p>${list.map(p=>esc(p.name)).join(', ')}</p><p>Beregnet ${today()} · Regneeksempel før skatt</p></div>`;
   // Første del står på samme side som overskriften. Resten starter på ny side ved utskrift.
   let first=0;
   for(const g of groups(list))if(g.all.length>1){const top=g.all.slice(0,3);
@@ -89,7 +89,8 @@
  const btn=document.getElementById('downloadSelected'),dlg=document.getElementById('selectedExportDialog');
  if(!btn||!dlg)return;
  // Knappen står under lista. Uten avkrysning gjelder den alle planene (Lars 3.11.2026).
- const syncButton=()=>{const n=pickedPlans.size;btn.textContent=n?'Last ned valgte ('+n+')':'Last ned alle planene';document.getElementById('selectedDownloadRow').hidden=!saved.length;};
+// «Last ned planene» med antall når noen er valgt, «Last ned planen» når bare én er med (Lars 4.11.2026, korte ord).
+ const syncButton=()=>{const n=pickedPlans.size,count=n||saved.length;btn.textContent=(count===1?'Last ned planen':'Last ned planene')+(n>1?' ('+n+')':'');document.getElementById('selectedDownloadRow').hidden=!saved.length;};
  const sync=window.syncPickTools;window.syncPickTools=syncPickTools=function(){sync.apply(this,arguments);syncButton();};syncButton();
  btn.onclick=()=>{show('selectedExportError',false);const n=picks().length;document.getElementById('selectedExportCount').textContent=(pickedPlans.size?(n===1?'1 plan er valgt.':n+' planer er valgt.'):'Alle de '+n+' lagrede planene er med.');dlg.showModal();};
  document.getElementById('closeSelectedExport').onclick=()=>dlg.close();

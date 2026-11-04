@@ -25,11 +25,19 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
     await p.close();}
    assert.deepEqual(got['lån'],got.sparing,`${w}x${h}: sparesiden og lånesiden skal ha like faner, ingress og «Ny beregning»`);
   }
+  // Knappetekster etter KALKULATORDESIGN.md og BESLUTNINGER.md «Knappetekster: plan» (Lars 4.11.2026): korte ord, samme i alle kalkulatorer.
+  // Synlig tekst og tilgjengelig navn skal stemme overens.
+  {const q=await browser.newPage({viewport:{width:1280,height:900}});q.on('pageerror',e=>errors.push(e.message));
+   for(const [url,ids] of [['/index.html#start=1000&monthly=1000&years=10',['save','reportButton']],['/index.html#activePage=dreams&dreamCost=200000&dreamYears=3',['saveDream']],['/index.html#start=1000&monthly=1000&years=10&activePage=withdrawals',['saveWithdraw']],['/laan.html',['saveLoan','reportButton']]]){
+    await q.goto(origin+url);await q.reload();await q.waitForTimeout(200);
+    for(const id of ids){const want=id==='reportButton'?/^Last ned plan( ↓)?$/:/^Lagre plan$/;const t=(await q.locator('#'+id).textContent()).trim();assert.match(t,want,url+' #'+id+': «'+t+'»');
+     const name=await q.locator('#'+id).evaluate(e=>e.getAttribute('aria-label'));assert.ok(!name||name.startsWith(t.replace(/ ↓$/,'')),url+' #'+id+': tilgjengelig navn «'+name+'» stemmer ikke med teksten');}}
+   await q.close();}
   const p=await browser.newPage({viewport:{width:390,height:844}});p.on('pageerror',e=>errors.push(e.message));
   await p.goto(origin+'/laan.html');await p.click('#newLoan');await p.waitForTimeout(400);
   assert.equal(await p.evaluate(()=>document.activeElement.id),'amount','«Ny beregning» gir fokus på lånebeløpet');
   assert.ok(await p.evaluate(()=>{const r=document.getElementById('loanInputs').getBoundingClientRect();return r.top<innerHeight&&r.bottom>0;}),'tallene er synlige etter «Ny beregning»');
   assert.deepEqual(errors,[]);
-  console.log('linjeføring sparing og lån (faner, ingress, Ny beregning): OK');
+  console.log('linjeføring sparing og lån (faner, ingress, Ny beregning, knappetekster): OK');
  }finally{if(browser)await browser.close();server.close();}
 })().catch(e=>{console.error(e);process.exit(1);});
