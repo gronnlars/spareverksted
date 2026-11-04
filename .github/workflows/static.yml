@@ -31,6 +31,8 @@ jobs:
           python3 tests/laan-kontroll.test.py
           node tests/laan-tekst.test.cjs
           node tests/laan-eksport.test.cjs
+          node tests/laan-visning.test.cjs
+          python3 tests/laan-verdi-kontroll.test.py
           node tests/tax-export.test.cjs
           node tests/veileder.test.cjs
           node tests/veileder-context.test.cjs
