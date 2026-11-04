@@ -402,6 +402,11 @@ jobs:
           path: dist
       - name: Build source download
         run: python3 scripts/package-source.py
+      - name: Remove unpublished loan page from site artifact
+        run: |
+          rm -f dist/laan.html dist/lan.html
+          test ! -e dist/laan.html
+          test ! -e dist/lan.html
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

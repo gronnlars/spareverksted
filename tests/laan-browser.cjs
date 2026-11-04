@@ -209,7 +209,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
   // 10. Veien inn og tilbake. Lån ligger blant kalkulatorfanene og på startsiden.
   await p.goto(origin+'/index.html');
   assert.equal(await p.locator('.welcome-question[href="laan.html"]').count(),0,'ikke noe lånekort på startsiden');
-  assert.equal(await p.locator('.page-nav a[href="laan.html"]').count(),1,'fane i kalkulatoren');
+  assert.equal(await p.locator('.page-nav a[href="laan.html"]').count(),0,'lånesiden er tatt ut av navigasjonen');
   assert.equal(await p.locator('footer a[href="laan.html"]').count(),0,'ingen lånelenke i bunnteksten');
   await p.goto(origin+'/laan.html');await p.click('.page-nav a[href="index.html#activePage=dreams"]');await p.waitForTimeout(200);
   assert.equal(await p.getAttribute('#dreamPage','aria-pressed'),'true','Sparemål åpnes fra lånesiden');
