@@ -21,6 +21,7 @@
  document.addEventListener('pointerdown',event=>{
   if(event.target.closest('[data-show-result],#mobileResultButton')&&pendingKey())event.preventDefault();
  });
+ get('saveResult').onclick=openSave;
  get('seeGraph').onclick=()=>{get('graphTab').click();go(get('chartPanel'));};
  // A completed mobile start guide leads to the result, rather than asking users to pass their inputs again.
  function showCompletedPlan(){
@@ -37,6 +38,7 @@
   const link=event.target.closest('.site-header a[href="index.html"]');
   if(link&&link.id!=='brandHome'&&!wizardActive){event.preventDefault();setPage('calculator');go(fields());}
  });
+ get('compareJump').onclick=()=>{get('savedDetails').open=true;go(get('savedHeading'));};
  if(get('plansMenu'))get('plansMenu').onclick=()=>{get('savedDetails').open=true;go(get('savedHeading'));};
  let scheduled=false;
  function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;syncJump();});}

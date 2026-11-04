@@ -67,3 +67,8 @@ body>footer{box-sizing:border-box;width:min(1280px,calc(100% - 48px));margin-inl
 @media(max-width:760px){body>footer,.guidance-page>footer,.info-page>footer{width:calc(100% - 32px)}body[data-stage=workbench][data-page=calculator]>main{padding-bottom:0}body[data-stage=workbench][data-page=calculator]>footer{margin-bottom:calc(86px + env(safe-area-inset-bottom))}}
 @media(max-height:300px){body[data-stage=workbench][data-page=calculator]>main{padding-bottom:0}body[data-stage=workbench][data-page=calculator]>footer{margin-bottom:calc(40px + env(safe-area-inset-bottom))}}
 @media(max-width:600px){.info-page>footer{width:calc(100% - 40px)}}
+
+/* «Endre tall» trengs når feltene og resultatet ligger etter hverandre. */
+@media(min-width:761px){#calculatorPanel [data-edit-fields]{display:none}}
+#savingsResult{scroll-margin-block-start:20px}
+@media(max-width:760px){#savingsResult{scroll-margin-block-start:-8px}}

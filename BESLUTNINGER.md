@@ -1429,3 +1429,10 @@ Lars bekreftet etter PR #217 at nedlasting fungerer på PC og iPhone. Han oppga 
 Andre avgrensede del av steg 2: samme tabell og samme verdier, med plannavn ved hvert beløp når kolonnene ikke får plass. Felles sammenligningskomponent omfatter spareplaner og sparemål. Ekte overskrifter og eksisterende merknader beholdes. Lange plannavn kan brytes. Tabelloppsettet vender tilbake når plassen tillater det. Rapportbygger og eksportdata endres ikke.
 
 Kontroll: egen nettlesertest ved 256–1920 px for begge sammenligningstyper, uendrede verdier og ingen intern sideveis rulling. Lagrede planer, eksportinnhold og PDF-merking er regresjonskontrollert i Chromium. Fysisk iPhone, VoiceOver og faktisk PC-zoom gjenstår. Revurder hvis hjelpemidler mister overskriftskoblinger eller praktiske brukertester viser uklare plannavn. ChatGPT/Codex, egenkontroll.
+
+
+## Samle kalkulatorfinpuss før publisering (5. november 2026)
+
+Lars ba om én kontrollert retting om gangen av de resterende punktene i Sparing, samlet på arbeidsgren før sammenslåing og publisering. Målrettede lokale tester brukes underveis. Ingen venting på eller løpende oppfølging av full GitHub Actions-kjøring. Opprydding av testarbeidsflyten er en separat oppgave.
+
+Lagre plan ved resultatet bruker eksisterende lagredialog og navneforslag. Endre tall skjules i sparekalkulatorens tokolonneoppsett. Perioder vises som år og måneder fra motorens eksisterende månedsavrunding, uten å endre lagrede inndata eller beregning. Forhåndsvisningens tabeller kan tilpasses radvis, men skal ikke endre PDF-kopien. Sammenligning bruker samme formatdialog, med bare formater som passer innholdet. Se [overlevering og avgrensninger](docs/sparekalkulator-finpuss-2026-11-05.md) og [testlisten](docs/sparekalkulator-testplan-2026-11-05.md).
