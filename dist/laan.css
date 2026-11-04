@@ -72,3 +72,18 @@ body.loan-empty #mobileSummary{display:none!important}
  .loan-page #printReportContent table{width:100%;table-layout:fixed}
  .loan-page #printReportContent td,.loan-page #printReportContent th{overflow-wrap:anywhere}
 }
+
+/* Rapporttabellen blir en vertikal årsoversikt ved smal visning, også ved 400 % zoom. Utskrift beholder tabelloppsettet. */
+@media screen and (max-width:560px){
+ .loan-page #reportPreview .report-table{overflow:visible}
+ .loan-page #reportPreview table{white-space:normal;width:100%;table-layout:fixed}
+ .loan-page #reportPreview thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+ .loan-page #reportPreview tbody,.loan-page #reportPreview tr{display:block}
+ .loan-page #reportPreview tr{border-bottom:1px solid var(--line);padding:10px 0}
+ .loan-page #reportPreview th[scope=row]{display:block;text-align:left;font-weight:700}
+ .loan-page #reportPreview th[scope=row]::before{content:"År "}
+ .loan-page #reportPreview td{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;white-space:normal;padding:5px 0;overflow-wrap:anywhere}
+ .loan-page #reportPreview td::before{content:attr(data-label);text-align:left;color:var(--muted)}
+ .loan-page #reportPreview .report-assumptions{grid-template-columns:1fr}
+ .loan-page #reportPreview .report-assumptions div{flex-wrap:wrap}
+}

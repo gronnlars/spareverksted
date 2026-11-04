@@ -21,7 +21,7 @@ function sheets(p){
  {name:'Forutsetninger',rows:[['Forutsetning','Verdi'],...assumptions(p)]},{name:'Per år',rows:yearly(p)},{name:'Per måned',rows:monthly(p)},
  {name:'Annuitet og serie',rows:[['Samme lån uten renteendring eller ekstra innbetaling','Annuitet','Serie'],['Første termin uten gebyr (kr)',a.firstPayment,b.firstPayment],['Samlet rente (kr)',a.totals.interest,b.totals.interest],['Gebyrer (kr)',a.totals.fees,b.totals.fees],['Tilbakebetalt (kr)',a.totals.paid,b.totals.paid]]}];
 }
-function table(rows,caption){return '<table><caption>'+esc(caption)+'</caption><thead><tr>'+rows[0].map(x=>'<th scope="col">'+esc(x)+'</th>').join('')+'</tr></thead><tbody>'+rows.slice(1).map(row=>'<tr>'+row.map((x,i)=>(i?'<td>':'<th scope="row">')+esc(typeof x==='number'?(i?T.money(x):x):x)+(i?'</td>':'</th>')).join('')+'</tr>').join('')+'</tbody></table>';}
+function table(rows,caption){return '<table><caption>'+esc(caption)+'</caption><thead><tr>'+rows[0].map(x=>'<th scope="col">'+esc(x)+'</th>').join('')+'</tr></thead><tbody>'+rows.slice(1).map(row=>'<tr>'+row.map((x,i)=>(i?'<td data-label="'+esc(rows[0][i])+'">':'<th scope="row">')+esc(typeof x==='number'?(i?T.money(x):x):x)+(i?'</td>':'</th>')).join('')+'</tr>').join('')+'</tbody></table>';}
 function chart(p,prefix){
  const x=t=>52+ t/p.payoffTerm*552,y=b=>22+(1-b/p.input.amount)*174;
  const d=[{term:0,balance:p.input.amount},...p.rows].map((r,i)=>(i?'L':'M')+x(r.term).toFixed(2)+','+y(r.balance).toFixed(2)).join(' ');

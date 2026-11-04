@@ -137,6 +137,12 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
   await p.click('#exportPdf');assert.equal(await p.locator('#reportDialog').isVisible(),true);
   assert.equal(await p.locator('#reportPreview h1').count(),1);assert.equal(await p.locator('#reportPreview svg').count(),1);
   assert.equal(await p.locator('#reportPreview table tbody tr').count(),25);
+  for(const width of [320,390]){
+   await p.setViewportSize({width,height:800});
+   assert.equal(await p.locator('#reportDialog').evaluate(e=>e.scrollWidth<=e.clientWidth),true,'rapportvindu uten sidelengs rulling');
+   assert.equal(await p.locator('#reportPreview .report-table').evaluate(e=>e.scrollWidth<=e.clientWidth),true,'årsoversikt uten sidelengs rulling ved '+width);
+  }
+  await p.setViewportSize({width:1280,height:900});
   await p.keyboard.press('Escape');assert.equal(await p.evaluate(()=>document.activeElement.id),'heroDownload');
   await type('years','0');await p.click('#heroDownload');
   assert.equal(await p.locator('#exportDialog').isVisible(),false);assert.equal(await p.evaluate(()=>document.activeElement.id),'years');
@@ -144,9 +150,9 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
 
   // 10. Veien inn og tilbake. Lån ligger blant kalkulatorfanene og på startsiden.
   await p.goto(origin+'/index.html');
-  assert.equal(await p.locator('.welcome-question[href="laan.html"]').count(),1,'kort på startsiden');
+  assert.equal(await p.locator('.welcome-question[href="laan.html"]').count(),0,'ikke noe lånekort på startsiden');
   assert.equal(await p.locator('.page-nav a[href="laan.html"]').count(),1,'fane i kalkulatoren');
-  assert.equal(await p.locator('footer a[href="laan.html"]').count(),1,'lenke i bunnteksten');
+  assert.equal(await p.locator('footer a[href="laan.html"]').count(),0,'ingen lånelenke i bunnteksten');
   await p.goto(origin+'/laan.html');await p.click('.page-nav a[href="index.html#activePage=dreams"]');await p.waitForTimeout(200);
   assert.equal(await p.getAttribute('#dreamPage','aria-pressed'),'true','Sparemål åpnes fra lånesiden');
   assert.deepEqual(errors,[]);
