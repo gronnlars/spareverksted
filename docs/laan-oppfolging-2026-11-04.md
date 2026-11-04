@@ -1,6 +1,10 @@
 # Lånekalkulator: kildekontroll og videre avgrensning
 
-Lars 4.11.2026: Lånekalkulatoren er et supplement. Startkort og bunntekstlenker fjernes. Fanen og egen URL beholdes, uten pil for ekstern lenke. Rapportens årsplan skal kunne leses ved 320 px uten vannrett rulling. Regnemotorene endres ikke.
+**Ny beslutning 4.11.2026: Lånesiden er avpublisert etter Lars sitt hasteoppdrag. Tidligere beslutning om å beholde fanen og egen URL er erstattet. Kritiske feil i sparekalkulatoren prioriteres før videre arbeid på lån. Språket må gjennomgås etter SPRAKREGLER.md og KLARSPRAK.md før ny publisering.**
+
+Regnemotor, tester, kildearbeid og ideer beholdes uendret i GitHub. Hele utgangspunktet er bevart på grenen `arkiv/lan-for-avpublisering-2026-11-04`, commit `c4e8299cfc2b69e046656613851968f22f036731`. `dist/laan.html` er foreløpig utviklings- og testgrunnlag i repoet, men fjernes fra publiseringsartefakten før opplasting. Bunny-speilingen sletter den gamle serverfila og CDN-cachen tømmes. Ingen publiserte sider skal lenke dit. Avpubliseringen er ikke en godkjenning av modellene.
+
+Historisk beslutning, erstattet: Lars 4.11.2026: Lånekalkulatoren er et supplement. Startkort og bunntekstlenker fjernes. Fanen og egen URL beholdes, uten pil for ekstern lenke. Rapportens årsplan skal kunne leses ved 320 px uten vannrett rulling. Regnemotorene endres ikke.
 
 ## Kilder lest 4.11.2026
 

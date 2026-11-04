@@ -1386,3 +1386,12 @@ Vurdering mot KLARSPRAK.md (#213), Claude 4.11.2026. Regelen der: knappen skal b
 - «Last ned sammenligning»: oppfyller ikke regelen helt. Fila har sammenligningen først og deretter en egen del for hver plan, og knappen brukes både for valgte planer og for alle. Forslag: «Last ned planene». Like kort, og riktig både for valgte og alle.
 
 Lars valgte de korteste ordene som fortsatt stemmer med handlingen.
+
+
+## 4. november 2026: Lånesiden avpubliseres
+
+Lars har bedt om at lånesiden og lenkene fjernes fra nettstedet på grunn av mange feil og manglende samsvar med språkreglene. Regnemodeller, tester, kildearbeid og ideer skal bevares i GitHub. Kritiske feil i sparekalkulatoren prioriteres før lånedelen finpusses.
+
+Hele utgangspunktet er bevart på `arkiv/lan-for-avpublisering-2026-11-04` ved `c4e8299cfc2b69e046656613851968f22f036731`. Utviklingsfila beholdes for eksisterende tester, men publiseringsløpet fjerner `laan.html` og `lan.html` før opplasting. Bunny-speilingen fjerner gamle serverfiler og tømmer CDN-cachen. Lån-fanen fjernes. Å bare skjule lenken er forkastet fordi direkteadressen da fortsatt ville virke. Regnemotorene endres ikke.
+
+Ny publisering krever at feilene er rettet, språk og brukerreiser er gjennomgått, relevante beregnings-, rapport- og tilgjengelighetskontroller er utført, og Lars har godkjent publisering. Se `docs/laan-oppfolging-2026-11-04.md`.
