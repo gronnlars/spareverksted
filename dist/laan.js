@@ -192,7 +192,6 @@ $('showResult').onclick=()=>{const t=$('loanResult');t.scrollIntoView({block:'st
 $('mobileResultButton').onclick=$('showResult').onclick;
 $('editFields').onclick=()=>{$('loanInputs').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});$('amount').focus({preventScroll:true});};
 $('loanForm').addEventListener('submit',e=>{e.preventDefault();render();if(exportPlan())$('showResult').click();});
-new IntersectionObserver(entries=>$('mobileSummary').classList.toggle('is-visible',!entries[0].isIntersecting),{threshold:.2}).observe($('loanResult'));
 
 // Samme hjelpeknapp ved feltet som sparekalkulatoren. Ingen nye beregningsregler.
 const HELP={amount:['Lånebeløp','Beløpet du låner, før renter og gebyrer. Skyveknappen er en snarvei. Du kan skrive et annet beløp i feltet.'],rate:['Nominell årsrente','Bruk nominell årsrente fra tilbudet eller avtalen. Den deles på 12 i beregningen. Gebyrer legges til separat. Renten er uendret gjennom perioden med mindre du legger inn en renteendring under Utforsk.'],years:['Nedbetalingstid','Tiden lånet opprinnelig skal betales ned over. År regnes om til nærmeste hele måned. Du kan skrive inn inntil 50 år. Ekstra innbetaling kan forkorte tiden.']};

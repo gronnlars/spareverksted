@@ -25,7 +25,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    }
    await page.setViewportSize({width:375,height:812});await page.locator('#monthly').scrollIntoViewIfNeeded();
    await page.waitForFunction(()=>document.getElementById('mobileResultButton').textContent==='Se resultat ↓');
-   await page.locator('#mobileResultButton').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'savingsResult');
+   await page.locator('.input-result[data-show-result]').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'savingsResult');
    assert(await page.locator('#meaningMain').isVisible());assert.match(await page.locator('#meaningMain').innerText(),/Et indeksfond kan falle mye/);
    assert.doesNotMatch(await page.locator('#meaningMain').innerText(),/nedre delen av utfallsrommet/);
    assert.equal(await page.locator('#meaningActions button[aria-pressed]').count(),0,'No hidden graph toggle before graph');
@@ -47,7 +47,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await page.locator('#levels [data-level=advanced]').click();assert.equal(await page.locator('#levels [data-level=advanced]').getAttribute('aria-pressed'),'true');
   // Phone anchor leaves room for a browser toolbar even with the extra cost row.
   // Fokus i feltet, slik en bruker som redigerer har. Knappen skjules med vilje når resultatet allerede er synlig.
-  await page.locator('#monthly').focus();await page.waitForFunction(()=>document.getElementById('mobileResultButton').textContent==='Se resultat ↓');await page.locator('#mobileResultButton').click();
+  await page.locator('#monthly').focus();await page.waitForFunction(()=>document.getElementById('mobileResultButton').textContent==='Se resultat ↓');await page.locator('.input-result[data-show-result]').click();
   const mobileTop=(await page.locator('#savingsResult').boundingBox()).y;assert(mobileTop>=-9&&mobileTop<=0);
   assert((await page.locator('.before-tax-badge').boundingBox()).y>=0,'Badge is not scrolled away');
   assert((await page.locator('#resultLabel').boundingBox()).y>=0,'Heading is not scrolled away');
