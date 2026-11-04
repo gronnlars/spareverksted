@@ -193,13 +193,18 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
   assert.equal(await p.inputValue('#equity'),'1');
   await p.click('#rateExplanationLink');assert.equal(await p.evaluate(()=>document.activeElement.id),'renteForklaring');
   await p.click('#backToRate');assert.equal(await p.evaluate(()=>document.activeElement.id),'rateExplanationLink');
-  await p.fill('#loanName','Bil A');await p.click('#saveLoan');await type('rate','7');
-  await p.fill('#loanName','Bil B');await p.click('#saveLoan');await p.reload();
+  await p.click('#saveLoan');assert.equal(await p.inputValue('#loanName'),'Bil');
+  await p.keyboard.press('Escape');assert.equal(await p.evaluate(()=>document.activeElement.id),'saveLoan');
+  await p.click('#saveLoan');await p.click('#confirmLoan');await type('rate','7');
+  await p.click('#saveLoan');assert.equal(await p.inputValue('#loanName'),'Bil (1)');
+  await p.click('#confirmLoan');await p.reload();
   const choices=p.locator('#loanList input[type=checkbox]');assert.equal(await choices.count(),2);
-  await choices.nth(0).check();await choices.nth(1).check();await p.click('#compareLoans');
-  assert.equal(await p.locator('#reportPreview h1').count(),1);assert.match(await text('reportPreview'),/Bil A/);
-  assert.match(await text('reportPreview'),/Bil B/);assert.match(await text('printReportContent'),/Forutsetninger og metode/);
-  await p.keyboard.press('Escape');assert.equal(await p.evaluate(()=>document.activeElement.id),'compareLoans');
+  await p.click('#downloadLoans');await p.click('#compareLoans');
+  assert.equal(await p.locator('#reportPreview h1').count(),1);assert.match(await text('reportPreview'),/Bil \(1\)/);
+  assert.match(await text('printReportContent'),/Forutsetninger og metode/);
+  await p.keyboard.press('Escape');assert.equal(await p.evaluate(()=>document.activeElement.id),'downloadLoans');
+  await choices.nth(0).check();assert.match(await text('downloadLoans'),/valgte \(1\)/);
+  await p.click('#downloadLoans');
   const [bundle]=await Promise.all([p.waitForEvent('download'),p.click('#excelLoans')]);assert.equal(bundle.suggestedFilename(),'valgte-laaneplaner.xlsx');
   // 10. Veien inn og tilbake. Lån ligger blant kalkulatorfanene og på startsiden.
   await p.goto(origin+'/index.html');
