@@ -6,10 +6,11 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
  const root=path.resolve(__dirname,'../dist');
  const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!file.startsWith(root+path.sep)){res.writeHead(403);return res.end();}try{res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(file));}catch{res.writeHead(404);res.end();}});
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
- let browser;
+ let browser,context,page,passed=false;
  try{
   browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu'],...(process.env.SPARE_BROWSER?{executablePath:process.env.SPARE_BROWSER}:{})});
-  const context=await browser.newContext({viewport:{width:375,height:812},reducedMotion:'reduce'}),page=await context.newPage(),errors=[];
+  context=await browser.newContext({viewport:{width:375,height:812},reducedMotion:'reduce'});page=await context.newPage();const errors=[];
+  await context.tracing.start({screenshots:true,snapshots:true});
   page.on('pageerror',e=>errors.push(e.message));
   await page.goto(origin+'/index.html');await page.locator('#chooseGrowth').click();
   await page.locator('#onboardAge').fill('43');await page.locator('#onboardStart').fill('12000');await page.locator('#onboardMonthly').fill('4000');await page.locator('#onboardYears').fill('22');await page.locator('#beginJourney').click();
@@ -93,6 +94,16 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    }
   }
   assert.deepEqual(errors,[]);
+  passed=true;
   console.log('Passed: result → graph → fields, direction labels, three themes, 320–1280 px, keyboard focus, menus, levels, edit versus new plan, undo and all modules.');
- }finally{if(browser)await browser.close();server.close();}
+ }finally{
+  if(context){
+   if(!passed){
+    const dir='/tmp/spareverksted-ui-review/navigation';fs.mkdirSync(dir,{recursive:true});
+    await page?.screenshot({path:path.join(dir,'failed.png'),fullPage:true,timeout:5000}).catch(()=>{});
+    await context.tracing.stop({path:path.join(dir,'trace.zip')}).catch(()=>{});
+   }else await context.tracing.stop();
+  }
+  if(browser)await browser.close();server.close();
+ }
 })().catch(e=>{console.error(e);process.exitCode=1;});

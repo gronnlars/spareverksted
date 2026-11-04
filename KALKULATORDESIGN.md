@@ -73,10 +73,15 @@ Delene kommer i denne rekkefølgen. Det som er felles for nettstedet (toppfelt, 
 
 - Alt lagres lokalt i nettleseren. Ingen konto, ingen sending til server.
 - Lagre åpner dialogen «Ta vare på denne planen» med forslag til navn. Like navn får første ledige nummer i parentes.
-- Eksport har de samme formatene i samme rekkefølge der de passer: Excel (.xlsx), CSV, Rapport / PDF, Data (.json). Eksporten gir de samme tallene og forutsetningene som siden.
+- Eksport har de samme formatene i samme rekkefølge der de passer: Excel (.xlsx), CSV, Rapport (HTML / PDF), Data (.json). Eksporten gir de samme tallene og forutsetningene som siden.
 - Delte lenker inneholder bare tallene for kalkulatoren du ser på.
 
-## 5. Rapport og PDF
+## 5. Rapport, HTML og PDF
+
+- Ett rapportvalg «Rapport (HTML / PDF)» åpner forhåndsvisningen. Der velges «Last ned HTML» eller «Skriv ut / lagre som PDF». Samme rapport og planutvalg brukes i begge formatene, også ved sammenligning og valgte planer.
+- HTML-filen er et selvstendig øyeblikksbilde med stiler og SVG-grafer. Ingen nødvendige skript, nettressurser eller beregninger ved åpning. Den bevarer språk, overskrifter, tekstalternativer og tabelltall. Smale tabeller vises radvis med etiketter. `dist/report-html.js` lager filen fra den eksisterende rapportkopien, og `tests/rapport-html-browser.cjs` åpner den nedlastede filen uten nett og JavaScript. Fysisk åpning fra Filer og VoiceOver på iPhone må prøves separat.
+
+- Nedlastet HTML valideres som en egen fil med Nu Html Checker, med CSS-kontroll. Bare stiler som brukes i rapporten eksporteres. Rapporten følger nettsidens valgte tema, og testen sammenligner farger i forhåndsvisning og fil.
 
 - Rapporten lages med `dist/report-print.js`. Den lukker rapportvinduet mens PDF-en lages, slik at Chrome og Edge merker PDF-en, og åpner det igjen etterpå. Se BESLUTNINGER.md, «PDF-rapporten».
 - Det samme gjelder når brukeren velger utskrift i nettleserens meny mens rapporten er åpen. Rapportens planutvalg beholdes. Et ignorert eller feilet utskriftskall skal gi rapporten, tittelen og fokus tilbake, med hjelp om nettleserens meny. Bruk utskriftshendelser, ikke mus eller berøring, til å avgjøre om utskrift pågår.

@@ -88,3 +88,11 @@ Testmatrisen utvides med flere bredder rundt 1280 px etter at tabellen har vært
 Lars påpekte at «Vis lavere og høyere scenario/vekst» kan krysses av selv om «Begge» ikke viser scenarioene. Avkryssingen er nå native `disabled` i denne visningen, med lesbar dempet etikett og synlig forklaring om å velge «Kroner» eller «Kjøpekraft». Forklaringen er også koblet med `aria-describedby` mens valget er deaktivert. Hjelpeknappen er fortsatt tilgjengelig. Justering av forskjellen mellom utfallene skjules også når scenarioene ikke vises.
 
 Tidligere avkrysset eller ikke avkrysset tilstand beholdes ved bytte tilbake. Ingen beregning, planlagring eller eksport endres. Regelen gjelder i både graf- og tabellvisning. Eksisterende `forklaring-oppdateres-browser.cjs` er utvidet med begge avkrysningstilstander og begge visninger. Den består lokalt i Chromium og kjøres allerede i Chromium, Firefox og WebKit i CI. CI på siste commit må kontrolleres. Fysisk iPhone/VoiceOver er ikke prøvd.
+
+### Samordning av #222 etter HTML-rettingene
+
+Grenen er oppdatert mot main etter #223. HTML-konflikten gjaldt skriptlisten: scenariovalgets nye `journey.js` og `report-html.js` fra main er begge beholdt, og innholdsversjoner er generert på nytt.
+
+Den tidligere CI-feilen i navigasjonstesten var en timeout ved klikk på «Se resultat» under grafen. Loggen viste venting på synlig/aktiv/stabil knapp, men dokumenterte ikke årsaken. Stoppet er ikke gjenskapt lokalt: tre kjøringer består, inkludert én med fire ganger CPU-nedbremsing i Chromium. Navigasjonskoden og testkravene endres derfor ikke på grunnlag av denne ene loggen. Ved ny testfeil lagres skjermbilde og Playwright-sporing i eksisterende UI-testartefakt, slik at posisjon, fokus og hendelser kan undersøkes. Ingen tvungne klikk, økt ventetid eller svekkede krav er lagt inn.
+
+Scenariovalgets av/på-tilstand, bytte mellom graf/tabell og tilbake til Kroner/Kjøpekraft består lokalt. HTML-rapporten består etter samordningen, inkludert Nu-validering av alle fem rapportveier. Full CI på siste commit må kontrolleres før sammenslåing. Tidligere navigasjonsstopp regnes ikke som en dokumentert, rettet produktfeil.
