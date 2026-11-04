@@ -1,6 +1,9 @@
 /* Lånekalkulatoren. Bygger på style.css og layout.css; her står bare det som er nytt for lånesiden. */
-/* Kalkulatorfanene kan være lenker til en annen side (Lån). De ser ut som knappene i sparekalkulatoren. */
-.page-nav a{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;min-height:44px;line-height:1.25}
+/* Kalkulatorfanene kan være lenker til en annen side (Lån). De ser ut som knappene i sparekalkulatoren.
+   Størrelse, luft og mobilvisning står i style.css, layout.css og navigation.css for både knapper og lenker (4.11.2026, linjeføring). */
+.page-nav a{text-decoration:none;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+/* Knapper sentrerer innholdet loddrett av seg selv. Lenken gjør det samme her, også i mobilvisningen. */
+@media(max-width:760px){.page-nav a{display:flex;justify-content:center}}
 .page-nav a:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
 .loan-page .start-note{margin:0 0 14px}
 .loan-hint{font-size:13px;color:var(--muted);margin:6px 0 12px;line-height:1.5}

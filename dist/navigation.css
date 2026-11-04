@@ -21,7 +21,7 @@
  body[data-stage=workbench] .site-menu .site-nav{display:none!important}
  .site-header .menu-panel .actions{border-top:0;margin-top:0;padding-top:0}
 }
-@media(max-width:420px){.display-options>summary{font-size:11px;padding-inline:5px}.workbench-toolbar{gap:5px}.page-nav button{font-size:13px;padding-inline:4px}}
+@media(max-width:420px){.display-options>summary{font-size:11px;padding-inline:5px}.workbench-toolbar{gap:5px}.page-nav button,.page-nav a{font-size:13px;padding-inline:4px}}
 @media print{.desktop-nav,.result-navigation,.return-fields{display:none!important}}
 
 /* Ved zoom får merke og temavalg bryte over to linjer uten å skjule menyen. */
