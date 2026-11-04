@@ -74,3 +74,11 @@ Sammenligning av spareplaner og den delte tabellvisningen for sparemål bruker s
 Lokalt består den nye `sammenligningstabell-browser.cjs` i Chromium ved 256, 320, 390, 640, 1280 og 1920 px, også tilbake til bred visning. Den kontrollerer begge sammenligningstyper, tydelige etiketter, tabelloverskrifter, ingen intern sideveis rulling og uendrede celleverdier etter breddeendring. De eksisterende testene for lagrede planer, eksportinnhold og PDF-merking består. CI kjører den nye testen i Chromium og WebKit. Fysisk iPhone, VoiceOver og faktisk PC-zoom er fortsatt ikke kontrollert. Rapporttabeller og store hovedtall gjenstår i steg 2.
 
 PR #218 krevde også tilpasning av kolonnevalget i `prov-renters-browser.cjs`: årstallet er nå en radoverskrift, og testen leser derfor beløpsfeltene direkte. De samme tallkravene, 10 404 og 9 903 kroner, beholdes. Testen består lokalt i Chromium etter tilpasningen.
+
+## Oppfølging etter sammenslåing av #219: breddekontroll
+
+PR-kontrollene på #219 besto, men kjøringen på main (`c5e1715`, Actions 41903220499) stoppet i `sparetabell-browser.cjs` i WebKit. Feilmeldingen viser store beløp i kjøpekraftvisning, bredde 1280 px, tilgjengelig 836 px og faktisk innholdsbredde 842 px, uten radvis visning. Sammenligningstestene i Chromium og WebKit besto i samme kjøring.
+
+Breddeavgjørelsen brukte bare tabellens `scrollWidth`. Den kontrollerer nå også områdets `scrollWidth` og tabellens ytre rektangel. Dermed brukes samme mål på faktisk overløp som i testen, også hvis tabellens eget mål avviker. Loggen inneholder ikke tabellens separate måleverdier, så den dokumenterer ikke alene hvilken WebKit-måling eller oppdatering som ga avviket. CI på rettingen må bekrefte utfallet. Ingen feil ignoreres, toleransen er uendret, og ventetiden i testen er ikke økt.
+
+Testmatrisen utvides med flere bredder rundt 1280 px etter at tabellen har vært smal. Lokal sparetabell- og sammenligningstest består i Chromium. Fysisk Safari/iPhone er ikke prøvd. Regnemotor, PDF og HTML-rapporten endres ikke.

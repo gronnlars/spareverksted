@@ -14,7 +14,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await page.evaluate(({huge,mode})=>{Object.assign(s,{start:huge?9999999999:50000,monthly:huge?9999999:2000,years:huge?100:10,rate:huge?15:5,fee:0.2,inflation:2.5,real:mode==='real'});Object.assign(view,{both:mode==='both',showRange:true,showBank:true});fill();render();document.getElementById('tableTab').click();},{huge,mode});
    const values=await page.locator('.savings-cell-value').allTextContents();
    assert(values.length>0);assert.doesNotMatch(values.join(' '),/NaN|undefined|Infinity/);
-   for(const width of [1920,1280,640,390,320,256,1280,1920]){
+   for(const width of [1920,1280,640,390,320,256,1296,1288,1280,1272,1264,1280,1920]){
     await page.setViewportSize({width,height:900});
     await page.waitForTimeout(80);
     const size=await page.locator('#tableWrap').evaluate(e=>({outer:e.clientWidth,inner:e.scrollWidth,stacked:e.classList.contains('savings-stacked')}));
