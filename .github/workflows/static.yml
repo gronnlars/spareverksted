@@ -307,6 +307,12 @@ jobs:
       - name: "tests/pdf-merking-browser.cjs (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tests/pdf-merking-browser.cjs
+      - name: "tests/sparetabell-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/sparetabell-browser.cjs
+      - name: "tests/sparetabell-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/sparetabell-browser.cjs
       - name: "tests/rapport-utskrift-browser.cjs (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tests/rapport-utskrift-browser.cjs

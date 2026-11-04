@@ -130,3 +130,20 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
 .report-cmp-legend{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;padding:0;margin:8px 0 14px}.report-cmp-legend li{display:flex;flex:none;align-items:center;gap:8px;white-space:nowrap}.report-cmp-legend svg{width:34px;height:12px;flex:none}
 @media print{#printReportContent section.report-block{break-inside:auto}#printReportContent .report-cmp-chart,#printReportContent .report-table{break-inside:avoid}#printReportContent .report-cmp-chart{max-width:150mm}#printReportContent .report-table table{font-size:11px}#printReportContent .report-cmp-legend{font-size:11px}}
 .report-cmp-legend svg,#printReportContent .report-cmp-legend svg{width:34px;height:12px;flex:none}.report-cmp-legend svg.sq,#printReportContent .report-cmp-legend svg.sq{width:12px}
+
+/* Talltabellen beholder tabellstruktur. Radene stables bare når innholdet ikke får plass. */
+.savings-cell-label,.savings-year-label{display:none}
+@media screen{
+ #tableWrap.savings-stacked{max-height:none;overflow:visible}
+ .savings-stacked .savings-table{display:block;white-space:normal}
+ .savings-stacked .savings-table caption{display:block;text-align:left}
+ .savings-stacked .savings-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+ .savings-stacked .savings-table tbody,.savings-stacked .savings-table tr{display:block}
+ .savings-stacked .savings-table tr{border-top:1px solid var(--line);padding-block:12px}
+ .savings-stacked .savings-table th[scope=row]{display:block;text-align:left;font-size:15px;padding:4px 0;border:0}
+ .savings-stacked .savings-table td{display:block;text-align:left;padding:6px 0;border:0}
+ .savings-stacked .savings-cell-label,.savings-stacked .savings-cell-value{display:block}
+ .savings-stacked .savings-cell-label{color:var(--muted);overflow-wrap:break-word}
+ .savings-stacked .savings-cell-value{font-weight:600;white-space:normal;word-break:normal}
+ .savings-stacked .savings-year-label{display:inline}
+}

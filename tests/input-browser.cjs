@@ -45,7 +45,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // Eksakte beløp finnes i tabellvisningen.
   await p.evaluate(()=>{const b=document.getElementById('showTable')||document.querySelector('[data-view=table]');if(b)b.click();table();});
   const tableText=await p.evaluate(()=>document.getElementById('tableWrap').textContent);
-  assert.match(tableText,/eksakte beløp/);assert(/\d{1,3}(?:[ \u00a0\u202f]\d{3}){3,} kr/.test(tableText),'Tabellen viser eksakte store beløp');
+  assert.match(tableText,/avrundet til hele kroner/);assert(/\d{1,3}(?:[ \u00a0\u202f]\d{3}){3,} kr/.test(tableText),'Tabellen viser eksakte store beløp');
   await p.locator('#rate').fill('100');
   // Fortegn beholdes i både kort (akser) og lang form, også over 1 000 trillioner.
   assert.deepEqual(await p.evaluate(()=>[big(2e21,true),big(-2e21,true),big(-2e21),big(-5e18,true),axisCompact(-3e21),money(-2e21)]),

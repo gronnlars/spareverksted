@@ -1405,3 +1405,11 @@ Valgt: behold eksisterende rapportbygger og PDF-merking. Bruk utskriftshendelser
 Forkastet i dette steget: to knapper med ulike løfter som begge bare kaller `window.print`, en ny PDF-motor og ny utredning av de allerede dokumenterte PDF-begrensningene. Lars presiserer at 82/100 kom fra ThefrontKit. Claudes kontroll fra 3. november legges til grunn. Uu-tilsynets PDF-veiledning og W3Cs PDF-teknikker for WCAG 2.2 er lest, men gir ikke i seg selv en ny teknisk løsning eller en full godkjenning.
 
 Revurder hvis fysisk iPhone/Safari fortsatt sperrer begge utskriftsveier, mister rapporten eller gir feil innhold. Dette er ikke kontrollert på fysisk telefon i denne økten. Kode og tester: ChatGPT/Codex, egenkontroll. Ingen ny PDF-poengsum er målt.
+
+## Sparetabellen tilpasser seg innholdet (4. november 2026)
+
+Første del av steg 2 i Lars sin godkjente plan: tabellen i fanen Sparing får ekte kolonne- og radoverskrifter. Den samme tabellen vises loddrett med etiketter ved verdiene når den faktisk er bredere enn plassen. ResizeObserver følger tilgjengelig bredde, også når Tabell åpnes og når vinduet endres. Ingen kopi av tallene, endret beregning eller skjulte datakolonner. Store hele beløp kan bryte ved tusenskiller, aldri inne i siffergruppene. Beløpene er avrundet til hele kroner, så teksten «eksakte beløp» er presisert.
+
+Forkastet: skjule overløp, redusere skriften eller alltid erstatte PC-tabellen med kort. Den nye testen prøver 256 til 1920 CSS-piksler, tre kronevisninger og vanlige/store beløp. Sparetabellen er også fjernet fra unntaket i den eksisterende UU-testen for intern sideveis rulling. Sammenligningstabeller, rapporttabeller og komprimering av store hovedtall tas i senere avgrensede deler av steg 2. Dette er ikke en erklæring om at hele steg 2 er ferdig.
+
+Lars bekreftet etter PR #217 at nedlasting fungerer på PC og iPhone. Han oppga 41/100 fra iPhone og beskrev god rapportvisning ved sterk zoom. PDF-scorearbeidet er parkert etter hans ønske. Claudes tidligere PDF-kontroll legges fortsatt til grunn. ChatGPT/Codex, egenkontroll. Fysisk iPhone og faktisk PC-zoom er ikke prøvd i tabellrettingen.
