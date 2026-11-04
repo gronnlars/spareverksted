@@ -1351,7 +1351,7 @@ Ta opp igjen hvis: Lars heller vil ha ae for æ, eller et navn blir misforstått
 
 ## Knappetekster: «plan» (4. november 2026)
 
-Lars: «Jeg tenker plan(en) er korteste, og derfor best når man er i en plan. Last ned plan, last ned sammenligning.» Alle kalkulatorer bruker «Lagre plan», «Del plan», «Last ned plan» og «Last ned sammenligning».
+Lars: «Jeg tenker plan(en) er korteste, og derfor best når man er i en plan. Last ned plan, last ned sammenligning.» Alle kalkulatorer bruker «Lagre plan», «Del plan», «Last ned plan» og «Last ned planene» (se status under).
 
 Vurdert:
 
@@ -1359,9 +1359,9 @@ Vurdert:
 - B. Navnet på kalkulatoren i knappen: «Lagre målet», «Lagre uttaksplanen», «Lagre låneplan». Forkastet: lengre, og ulike ord for samme handling.
 - C. «Lagre denne planen». Forkastet: lengre enn A uten å si mer.
 
-«Last ned sammenligning» erstatter «Last ned valgte planer», «Last ned alle planene» og «Last ned valgte i Excel». Overskriftene i dialogene beholdes. Ta opp igjen hvis brukere ikke skjønner hva som lastes ned.
+«Last ned planene» erstatter «Last ned valgte planer», «Last ned alle planene» og «Last ned valgte i Excel». Overskriftene i dialogene beholdes. Ta opp igjen hvis brukere ikke skjønner hva som lastes ned.
 
-Status: foreløpig. GPT vurderer ordene mot kravene til klart språk (Lars 4.11.2026). Knappene endres ikke før vurderingen er ferdig og Lars har bekreftet.
+Status: vedtatt 4.11.2026. Lars: «Korte ord der det er mulig. Best med tanke på UU.» Knappene blir «Lagre plan», «Del plan», «Last ned plan» og «Last ned planene». «Last ned sammenligning» ble byttet ut med «Last ned planene» etter vurderingen under.
 
 Vurdering mot KLARSPRAK.md (#213), Claude 4.11.2026. Regelen der: knappen skal beskrive neste faktiske handling, og ikke hete etter ett sluttresultat når den åpner en dialog med flere valg.
 
@@ -1369,4 +1369,4 @@ Vurdering mot KLARSPRAK.md (#213), Claude 4.11.2026. Regelen der: knappen skal b
 - «Last ned plan»: oppfyller regelen slik jeg leser den. Knappen åpner «Ta med deg beregningen», og alle valgene der (Excel, CSV, Rapport / PDF, Data) laster ned den samme planen. «Plan» er innholdet, ikke ett av formatene. Utskrift skjer fra PDF-valget.
 - «Last ned sammenligning»: oppfyller ikke regelen helt. Fila har sammenligningen først og deretter en egen del for hver plan, og knappen brukes både for valgte planer og for alle. Forslag: «Last ned planene». Like kort, og riktig både for valgte og alle.
 
-Lars avgjør.
+Lars valgte de korteste ordene som fortsatt stemmer med handlingen.

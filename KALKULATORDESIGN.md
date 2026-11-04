@@ -31,7 +31,7 @@ Delene kommer i denne rekkefølgen. Det som er felles for nettstedet (toppfelt, 
 | 9 | Dette betyr tallene dine | Kort forklaring i vanlige ord, mer bak «Mer om tallene» | Fra tall til forståelse: hva tallet betyr for brukeren |
 | 10 | Graf | Panel med overskrift, Graf og Tabell, tegnforklaring, «Slik leser du grafen» | Tabell med samme tall. Tekstalternativ med hovedresultatet. Linjemønster, ikke bare farge |
 | 11 | Prøv små endringer | Kort med én endring hver og knapp for å bruke den | Valgfri del. Viser sammenhenger, ikke råd |
-| 12 | Lagre, del og sammenlign | Felles `<details>` i full bredde: «Lagre plan», «Del plan», «Last ned plan», liste med avkrysning, «Last ned sammenligning» | Samme sted, samme ord og samme dialoger i alle kalkulatorer |
+| 12 | Lagre, del og sammenlign | Felles `<details>` i full bredde: «Lagre plan», «Del plan», «Last ned plan», liste med avkrysning, «Last ned planene» | Samme sted, samme ord og samme dialoger i alle kalkulatorer |
 | 13 | Bakgrunnstall | For eksempel «Hva er vanlig å ha spart?» | Valgfri del. Kilde og dato synlig |
 | 14 | Metode, forutsetninger og kilder | `<details>` til slutt | Samme overskrift i alle kalkulatorer |
 
@@ -58,14 +58,15 @@ Delene kommer i denne rekkefølgen. Det som er felles for nettstedet (toppfelt, 
 | Lagre | «Lagre plan», dialog «Ta vare på denne planen» |
 | Dele | «Del plan», dialog «Del denne planen» |
 | Laste ned én plan | «Last ned plan», og «Last ned ↓» på resultatet. Dialog «Ta med deg beregningen». Utskrift er et valg i dialogen |
-| Laste ned flere planer | «Last ned sammenligning». Fila har sammenligningen først og så hver plan |
+| Laste ned flere planer | «Last ned planene». Fila har sammenligningen først og så hver plan |
 | Rapport | Dialog «Rapporten din», knapp «Skriv ut / lagre som PDF» |
 | Tilbake til feltene | «Endre tall ↑» |
 | Starte på nytt | «Ny beregning» |
 | Forklaring | «Dette betyr tallene dine», «Mer om tallene» |
 | Metode | «Metode, forutsetninger og kilder» |
 
-- Knapper bruker «plan» uten «denne» og uten navnet på kalkulatoren. Det er kortest, og du står allerede i planen.
+- Korte ord der det er mulig (Lars 4.11.2026). Det er best for universell utforming: lettere å lese med dysleksi, på liten skjerm og med forstørring, og raskere å høre med skjermleser. Ordet må fortsatt si det riktige, se [KLARSPRAK.md](KLARSPRAK.md), regel 13.
+- Knapper bruker «plan» uten «denne» og uten navnet på kalkulatoren. Du står allerede i planen.
 - Teksten skrives i jeg-form der det er en avsender, aldri «vi».
 
 ## 4. Lagring, deling og eksport
@@ -128,8 +129,8 @@ Funnet ved å sammenligne sidene på main. Rettes i egne, små PR-er. Når et pu
 - Lån: «Dette betyr tallene» skal være «Dette betyr tallene dine». «Metode og forutsetninger» skal være «Metode, forutsetninger og kilder».
 - Lån: panelet «Nominell og effektiv rente» står som egen del. Vurder å flytte det til «Mer om tallene» eller en begrepsforklaring.
 - Lån: filnavnene bruker «laan». Skal være «lan» etter del 7.
-- Knappetekster (Lars 4.11.2026: «plan» er kortest og best når du står i en plan). Foreløpig: GPT vurderer ordene mot kravene til klart språk, og ingenting endres før Lars har bekreftet. Forslaget er:
+- Knappetekster, vedtatt av Lars 4.11.2026. Skal endres i alle kalkulatorer:
   - «Lagre denne planen», «Lagre målet» (Sparemål), «Lagre uttaksplanen» (Uttak) og «Lagre låneplan» blir «Lagre plan».
   - «Last ned eller skriv ut» blir «Last ned plan».
-  - «Last ned valgte planer», «Last ned alle planene» og «Last ned valgte i Excel» blir «Last ned sammenligning».
+  - «Last ned valgte planer», «Last ned alle planene» og «Last ned valgte i Excel» blir «Last ned planene».
 - `ressursmaaling` (arbeidsflyt og skript) bruker «aa».
