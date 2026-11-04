@@ -58,6 +58,16 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await loan.evaluate(()=>dispatchEvent(new Event('afterprint')));await loan.waitForTimeout(50);
   assert.equal(await loan.evaluate(()=>document.getElementById('reportDialog').open),true);
   assert.equal(await loan.title(),'Lån · Spareverksted');
+  await loan.emulateMedia({media:'screen'});await loan.click('#closeReport');
+  for(const rate of ['4','6']){
+   await loan.fill('#rate',rate);await loan.click('#saveLoan');await loan.click('#confirmLoan');
+  }
+  await loan.click('#downloadLoans');await loan.click('#compareLoans');await loan.click('#printReport');
+  assert.match(await loan.title(),/^Valgte låneplaner, Spareverksted/);
+  await loan.emulateMedia({media:'print'});
+  const combined=(await loan.pdf({format:'A4',tagged:true})).toString('latin1');
+  for(const tag of ['H1','H2','Figure','Table'])assert.ok(new RegExp('/S\\s*/'+tag+'\\b').test(combined),'samlet PDF mangler '+tag);
+  for(const key of ['/StructTreeRoot','/ParentTree','/Lang','/Title'])assert.ok(combined.includes(key),'samlet PDF mangler '+key);
   assert.deepEqual(errors,[]);
   console.log('PDF-merking: ok (Chromium). Merket struktur, språk, tittel og figur finnes (bokmerker bare fordi testen ber om dem).');
  }finally{if(browser)await browser.close();server.close();}
