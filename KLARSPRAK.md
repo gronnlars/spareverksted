@@ -6,7 +6,9 @@ Status: Prosjektstandard til gjennomgang. Opprettet 4. november 2026. Gjelder al
 
 Spareverksted bygger frivillig sin språkstandard på prinsippet i [språkloven § 9](https://lovdata.no/lov/2021-05-21-42/%C2%A79): offentlig språk skal være klart, korrekt og tilpasset målgruppen. Spareverksted er ikke automatisk omfattet av bestemmelsen som privat tjeneste. Vi skal derfor ikke påstå lovoppfyllelse eller offentlig godkjenning. Rettskrivingsspørsmål kontrolleres mot Språkrådets normering.
 
-Brukeren skal kunne **finne**, **forstå** og **bruke** informasjonen. Klarspråk gjelder både ord, struktur, skjema, interaksjon, grafer, feilmeldinger og rapporter. En kort tekst er ikke nødvendigvis en klar tekst.
+Språkrådet gjengir den internasjonale definisjonen av klarspråk: «Klarspråk er kommunikasjon med så tydelig ordlyd, struktur og utforming at leserne i målgruppen lett finner informasjonen de trenger, forstår den og kan bruke den.» [Kilde: Språkrådet, Kort om klarspråk](https://sprakradet.no/klarsprak/kunnskap-om-klarsprak/kort-om-klarsprak/).
+
+**Dette er prosjektets hovedmål for klarspråk:** Brukeren skal lett kunne **finne**, **forstå** og **bruke** informasjonen. Vi vurderer derfor både ordlyd, struktur og utforming, herunder skjema, interaksjon, grafer, feilmeldinger og rapporter. En kort tekst er ikke nødvendigvis en klar tekst. De tre målene skal kontrolleres i sammenheng, ikke bare som separate skriveøvelser.
 
 ## Grunnregler
 
