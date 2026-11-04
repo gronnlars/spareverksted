@@ -118,6 +118,15 @@ jobs:
       # Firefox requires the home directory to belong to the browser's current user.
       - name: Match CI home ownership for Firefox
         run: chown "$(id -u):$(id -g)" /github/home
+      - name: "tests/rapport-html-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/rapport-html-browser.cjs
+      - name: "tests/rapport-html-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/rapport-html-browser.cjs
+      - name: "tests/rapport-html-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/rapport-html-browser.cjs
       - name: "tests/security-browser.cjs (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tests/security-browser.cjs
