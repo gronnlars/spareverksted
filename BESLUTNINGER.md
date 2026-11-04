@@ -1302,3 +1302,8 @@ De 81 nettleserkommandoene i static.yml er bevart i samme rekkefølge og med sam
 Personvernkontrollene har egne trinn og kan kjøre selv om en UI-test feiler. Rapporten skrives først når alle tre personvernmotorer består. Rapport og verifisert personvernside lastes bare opp når rapportgenereringen også består. Dermed forsøkes ikke opplasting av en rapport som aldri ble laget. UI-skjermbilder beholdes med eksisterende always-regel.
 
 Kontroll før opplasting: de 81 gamle og nye nettleserkommandoene er sammenlignet maskinelt og er identiske i innhold og rekkefølge. Ingen lokal kjøring var mulig i denne økten fordi kjøremiljøet var utilgjengelig. Endringen må verifiseres i GitHub Actions. ChatGPT/Codex, egenkontroll.
+
+
+### Fokus på store resultat- og grafpaneler (4. november 2026)
+
+Full CI-kjøring b8cf1c0 besto alle kontroller unntatt navigation-browser.cjs, som fanget et reelt ekstra rullehopp ved fokus på grafpanelet. Når den flytende linjen ble synlig nedenfor resultatet, behandlet unhide hele det høye grafpanelet som et lite kontrollfelt og flyttet panelets topp. Fokusjusteringen gjelder nå elementer som får plass over linjen, eller elementer som faktisk begynner under linjen. Et stort panel med synlig topp flyttes ikke bare fordi bunnen ligger utenfor vinduet. Den eksisterende navigasjonstesten og kontrollene av fokus som ikke skal dekkes, er beholdt uendret for denne rettingen. Ingen endring i beregning eller design. Lokal kjøring er fortsatt utilgjengelig; verifisering skjer i CI.

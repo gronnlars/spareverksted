@@ -15,7 +15,7 @@ if(liveSummary){
  toggle.addEventListener('click',()=>{chosen=!liveSummary.classList.contains('is-collapsed');setCollapsed(chosen);});
  const fit=()=>{if(chosen===null&&shown()){setCollapsed(false);if(liveSummary.offsetHeight>innerHeight/3)setCollapsed(true);}};
  // Det som har fokus, skal ikke ligge under linjen (WCAG 2.4.11).
- const unhide=el=>{if(!shown()||liveSummary.contains(el))return;const b=el.getBoundingClientRect(),top=liveSummary.getBoundingClientRect().top;if(b.bottom>top&&b.top<innerHeight)window.scrollBy({top:Math.min(b.bottom-top+8,b.top-8),behavior:'instant'});};
+ const unhide=el=>{if(!shown()||liveSummary.contains(el))return;const b=el.getBoundingClientRect(),top=liveSummary.getBoundingClientRect().top;if(b.bottom>top&&b.top<innerHeight&&(b.height<=top-8||b.top>=top))window.scrollBy({top:Math.min(b.bottom-top+8,b.top-8),behavior:'instant'});};
  document.addEventListener('focusin',event=>{
   const editing=Boolean(event.target.closest('#basic,#mobileSummary'));
   liveSummary.classList.toggle('is-editing',editing);
