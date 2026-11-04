@@ -210,8 +210,8 @@ function chart(){
  el.onpointermove=e=>{const box=el.querySelector('svg').getBoundingClientRect();if(e.clientY>box.bottom)return;show(((e.clientX-box.left)/box.width*W-L)/w*maxTime);};
  el.onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();show(e.key==='Home'?0:e.key==='End'?maxTime:time+(e.key==='ArrowRight'?1:-1)/12);}};
 }
-function fitSavingsTable(){
- const wrap=$('tableWrap');wrap.classList.remove('savings-stacked');
+function fitSavingsTable(wrap=$('tableWrap')){
+ wrap.classList.remove('savings-stacked');
  const tab=wrap.querySelector('table');
  if(tab&&wrap.clientWidth>0&&tab.scrollWidth>wrap.clientWidth)wrap.classList.add('savings-stacked');
 }
@@ -279,9 +279,28 @@ function currentLabel(){return here()?' ('+escapeHTML(activePlan.name)+(planDirt
 function currentName(){return here()?activePlan.name+(planDirty()?' (ikke lagret)':''):'Nå i kalkulatoren';}
 function cmpStep(T,maxGroups){for(const st of [1,2,5,10,15,20,25,50])if(Math.ceil(T/st)<=maxGroups)return st;return 100;}
 function compareSeries(){const list=[...selectedComparisons()].sort((a,b)=>a.index-b.index);const cur=[];if(cmpCurrent&&!(here()&&!planDirty()&&list.some(c=>saved[c.index]===activePlan)))cur.push({name:currentName(),n:s,index:-1});return [...cur,...list.map((c,k)=>({...c,color:k+1}))].map(c=>({...c,color:c.color??0}));}
-// Tabellene i sammenligningen: enheten står over tabellen, så kolonnene får plass på mobil (3.11.2026).
+// Sammenligning: enheten står over tabellen. Smal visning har plannavn ved hvert beløp.
 // Myk bindestrek: det lange ordet kan deles i smale kolonner. Skjermlesere leser det som ett ord.
 const thName=n=>escapeHTML(n).replace(/kalkulatoren/g,'kalku&shy;latoren');
+function prepareCompareTable(){
+ const wrap=$('comparison').querySelector('.table-scroll'),tab=wrap?.querySelector('table');if(!tab)return;
+ tab.classList.add('savings-table');tab.setAttribute('role','table');
+ const headings=[...tab.querySelectorAll('thead th')];headings.forEach(h=>{h.scope='col';h.setAttribute('role','columnheader');});
+ for(const group of tab.querySelectorAll('thead,tbody'))group.setAttribute('role','rowgroup');
+ for(const row of tab.querySelectorAll('tr'))row.setAttribute('role','row');
+ for(const row of tab.querySelectorAll('tbody tr')){
+  const heading=row.querySelector('th');if(heading){heading.scope='row';heading.setAttribute('role','rowheader');}
+  [...row.querySelectorAll('td')].forEach((cell,i)=>{
+   cell.setAttribute('role','cell');
+   const value=document.createElement('span');value.className='savings-cell-value';value.append(...cell.childNodes);
+   const label=document.createElement('span');label.className='savings-cell-label';label.setAttribute('aria-hidden','true');label.textContent=headings[i+1].textContent;
+   cell.append(label,value);
+  });
+ }
+ fitSavingsTable(wrap);
+}
+let comparisonTableWidth=-1;
+new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width!==comparisonTableWidth){comparisonTableWidth=width;const wrap=$('comparison').querySelector('.table-scroll');if(wrap)fitSavingsTable(wrap);}}).observe($('comparison'));
 const bare=x=>money(x).replace(/\s*kr$/,'');
 const ALT_NAMES={safe:'Trygt',moderate:'Moderat',risk:'Mer risiko'};
 function selectedKind(){const k=[...selectedPlans].map(i=>saved[i]?.state?.activePage==='dreams'?'dreams':'savings');return k.includes('dreams')?'dreams':'savings';}
@@ -310,7 +329,7 @@ function dreamCompareRender(box){
  if(cmpPick&&items[cmpPick[1]])detail(...cmpPick);
  wireCompareActions();return true;
 }
-function wireCompareActions(){$('cmpCurrent').onchange=e=>{cmpCurrent=e.target.checked;cmpFocus=-1;cmpPick=null;savedRender();$('cmpCurrent')?.focus({preventScroll:true});};$('cmpDownload').onclick=()=>{window.cmpExportRequest=true;$('reportButton').click();if($('exportDialog').open)$('exportTitle').textContent='Ta med deg sammenligningen';};$('cmpBack').onclick=()=>{$('saved').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});($('saved').querySelector('input')||$('savedHeading')).focus({preventScroll:true});};}
+function wireCompareActions(){prepareCompareTable();$('cmpCurrent').onchange=e=>{cmpCurrent=e.target.checked;cmpFocus=-1;cmpPick=null;savedRender();$('cmpCurrent')?.focus({preventScroll:true});};$('cmpDownload').onclick=()=>{window.cmpExportRequest=true;$('reportButton').click();if($('exportDialog').open)$('exportTitle').textContent='Ta med deg sammenligningen';};$('cmpBack').onclick=()=>{$('saved').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});($('saved').querySelector('input')||$('savedHeading')).focus({preventScroll:true});};}
 function compareRender(){
  const box=$('comparison');if(selectedKind()==='dreams')return dreamCompareRender(box);const items=compareSeries();if(!items.length){box.innerHTML=selectedPlans.size?'<h3 id="cmpHeading" class="cmp-heading" tabindex="-1">Sammenligning av spareplaner</h3><label class="check cmp-current"><input type="checkbox" id="cmpCurrent"> Ta med det som står i kalkulatoren</label>':'';const cc=$('cmpCurrent');if(cc)cc.onchange=()=>{cmpCurrent=cc.checked;savedRender();};window.lastCompare=null;return !!selectedPlans.size;}
  const W=Math.max(260,Math.round(box.getBoundingClientRect().width)||640),mobile=W<520,T=Math.max(...items.map(c=>endYear(c.n))),st=cmpStep(T,mobile?6:10);

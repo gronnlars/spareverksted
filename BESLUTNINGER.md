@@ -1413,3 +1413,9 @@ Første del av steg 2 i Lars sin godkjente plan: tabellen i fanen Sparing får e
 Forkastet: skjule overløp, redusere skriften eller alltid erstatte PC-tabellen med kort. Den nye testen prøver 256 til 1920 CSS-piksler, tre kronevisninger og vanlige/store beløp. Sparetabellen er også fjernet fra unntaket i den eksisterende UU-testen for intern sideveis rulling. Sammenligningstabeller, rapporttabeller og komprimering av store hovedtall tas i senere avgrensede deler av steg 2. Dette er ikke en erklæring om at hele steg 2 er ferdig.
 
 Lars bekreftet etter PR #217 at nedlasting fungerer på PC og iPhone. Han oppga 41/100 fra iPhone og beskrev god rapportvisning ved sterk zoom. PDF-scorearbeidet er parkert etter hans ønske. Claudes tidligere PDF-kontroll legges fortsatt til grunn. ChatGPT/Codex, egenkontroll. Fysisk iPhone og faktisk PC-zoom er ikke prøvd i tabellrettingen.
+
+## Sammenligningstabeller følger sparetabellens mønster (4. november 2026)
+
+Andre avgrensede del av steg 2: samme tabell og samme verdier, med plannavn ved hvert beløp når kolonnene ikke får plass. Felles sammenligningskomponent omfatter spareplaner og sparemål. Ekte overskrifter og eksisterende merknader beholdes. Lange plannavn kan brytes. Tabelloppsettet vender tilbake når plassen tillater det. Rapportbygger og eksportdata endres ikke.
+
+Kontroll: egen nettlesertest ved 256–1920 px for begge sammenligningstyper, uendrede verdier og ingen intern sideveis rulling. Lagrede planer, eksportinnhold og PDF-merking er regresjonskontrollert i Chromium. Fysisk iPhone, VoiceOver og faktisk PC-zoom gjenstår. Revurder hvis hjelpemidler mister overskriftskoblinger eller praktiske brukertester viser uklare plannavn. ChatGPT/Codex, egenkontroll.

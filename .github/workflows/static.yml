@@ -313,6 +313,12 @@ jobs:
       - name: "tests/sparetabell-browser.cjs (webkit)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=webkit node tests/sparetabell-browser.cjs
+      - name: "tests/sammenligningstabell-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/sammenligningstabell-browser.cjs
+      - name: "tests/sammenligningstabell-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/sammenligningstabell-browser.cjs
       - name: "tests/rapport-utskrift-browser.cjs (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tests/rapport-utskrift-browser.cjs

@@ -66,3 +66,11 @@ Implementert på fersk main etter #217: én tabell med ekte kolonneoverskrifter 
 Lokalt består `sparetabell-browser.cjs` i Chromium med tre kronevisninger, vanlige/store beløp og bredder 256, 320, 390, 640, 1280 og 1920 px, også tilbake til bred visning. Testen sammenligner alle verdier før og etter endret bredde. Eksisterende inndatatest, PDF-merking, UU-nettlesertest, beregningskontroll, sikkerhet, versjoner og syntaks består. Sparetabellen er ikke lenger unntatt fra UU-testens kontroll av intern sideveis rulling. Tekstforventningen «eksakte beløp» er presisert til «avrundet til hele kroner», i samsvar med den uendrede avrundingen.
 
 Dette er første avgrensede del, ikke hele steg 2. Sammenligningstabeller, rapporttabeller og kompakt visning i hovedresultatet gjenstår. Faktisk PC-zoom og fysisk iPhone/VoiceOver er ikke kontrollert i denne delen. Den nye testen er lagt i CI for Chromium og WebKit. Alle undersider får ny stilarkversjon fra det eksisterende versjonsskriptet, uten nye innholdsendringer.
+
+## Steg 2, andre del: sammenligningstabeller
+
+Sammenligning av spareplaner og den delte tabellvisningen for sparemål bruker samme innholdstilpasning som sparetabellen. Hver verdi har et synlig plannavn ved smal visning. Ekte rad- og kolonneoverskrifter beholdes for hjelpemidler, mens de gjentatte visuelle etikettene er dekorative. Merknader som «forlenget» flyttes med verdien. Hele plannavn beholdes, også når de er lange. Ingen beregning, eksportmatrise eller rapportbygger er endret.
+
+Lokalt består den nye `sammenligningstabell-browser.cjs` i Chromium ved 256, 320, 390, 640, 1280 og 1920 px, også tilbake til bred visning. Den kontrollerer begge sammenligningstyper, tydelige etiketter, tabelloverskrifter, ingen intern sideveis rulling og uendrede celleverdier etter breddeendring. De eksisterende testene for lagrede planer, eksportinnhold og PDF-merking består. CI kjører den nye testen i Chromium og WebKit. Fysisk iPhone, VoiceOver og faktisk PC-zoom er fortsatt ikke kontrollert. Rapporttabeller og store hovedtall gjenstår i steg 2.
+
+PR #218 krevde også tilpasning av kolonnevalget i `prov-renters-browser.cjs`: årstallet er nå en radoverskrift, og testen leser derfor beløpsfeltene direkte. De samme tallkravene, 10 404 og 9 903 kroner, beholdes. Testen består lokalt i Chromium etter tilpasningen.
