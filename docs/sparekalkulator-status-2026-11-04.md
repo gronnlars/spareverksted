@@ -75,6 +75,14 @@ Lokalt består den nye `sammenligningstabell-browser.cjs` i Chromium ved 256, 32
 
 PR #218 krevde også tilpasning av kolonnevalget i `prov-renters-browser.cjs`: årstallet er nå en radoverskrift, og testen leser derfor beløpsfeltene direkte. De samme tallkravene, 10 404 og 9 903 kroner, beholdes. Testen består lokalt i Chromium etter tilpasningen.
 
+## Oppfølging etter sammenslåing av #219: breddekontroll
+
+PR-kontrollene på #219 besto, men kjøringen på main (`c5e1715`, Actions 41903220499) stoppet i `sparetabell-browser.cjs` i WebKit. Feilmeldingen viser store beløp i kjøpekraftvisning, bredde 1280 px, tilgjengelig 836 px og faktisk innholdsbredde 842 px, uten radvis visning. Sammenligningstestene i Chromium og WebKit besto i samme kjøring.
+
+Breddeavgjørelsen brukte bare tabellens `scrollWidth`. Den kontrollerer nå også områdets `scrollWidth` og tabellens ytre rektangel. Dermed brukes samme mål på faktisk overløp som i testen, også hvis tabellens eget mål avviker. Loggen inneholder ikke tabellens separate måleverdier, så den dokumenterer ikke alene hvilken WebKit-måling eller oppdatering som ga avviket. CI på rettingen må bekrefte utfallet. Ingen feil ignoreres, toleransen er uendret, og ventetiden i testen er ikke økt.
+
+Testmatrisen utvides med flere bredder rundt 1280 px etter at tabellen har vært smal. Lokal sparetabell- og sammenligningstest består i Chromium. Fysisk Safari/iPhone er ikke prøvd. Regnemotor, PDF og HTML-rapporten endres ikke.
+
 ## Scenariovalg når «Begge» er valgt
 
 Lars påpekte at «Vis lavere og høyere scenario/vekst» kan krysses av selv om «Begge» ikke viser scenarioene. Avkryssingen er nå native `disabled` i denne visningen, med lesbar dempet etikett og synlig forklaring om å velge «Kroner» eller «Kjøpekraft». Forklaringen er også koblet med `aria-describedby` mens valget er deaktivert. Hjelpeknappen er fortsatt tilgjengelig. Justering av forskjellen mellom utfallene skjules også når scenarioene ikke vises.
