@@ -92,3 +92,7 @@ Denne standarden gir ikke i seg selv mandat til å skrive om eksisterende sider,
 - [IMDi: bruk et språk som alle kan forstå](https://www.imdi.no/tall-og-fakta/veiledere/veileder-hvordan-na-ut-med-informasjon-til-personer-med-innvandrerbakgrunn/5.-bruk-et-sprak-som-alle-kan-forsta)
 
 Kildene er normgrunnlag og videre lesning, ikke dokumentasjon på at Spareverksted er testet eller godkjent.
+
+## Automatisk støtte til gjennomgangen
+
+[Klarspråkkontrollen](docs/klarsprak.md) måler teksttrekk lokalt og rapporterer funn i GitHub Actions. Den skiller forklaringer fra grensesnitt, navigasjon og skjult tekst, og bruker både LIX-komponenter, lengdefunn og en analyseordliste. Ingen språkscore stopper publisering. Manuell kontroll og brukertesting må undersøke relevans, om informasjonen finnes, forstås og kan brukes. [Grunnmåling og oppfølging](docs/klarsprak/sluttrapport.md) dokumenterer dekning og hull. Ingen automatisk rapport er en ISO-godkjenning.

@@ -1,0 +1,322 @@
+{
+  "version": 1,
+  "purpose": "Analyseordliste. Referanser gjenbruker kilder/begreper. Nye definisjoner er upubliserte utkast til senere fagkontroll, ikke nye parallelle runtime-definisjoner.",
+  "terms": [
+    {
+      "id": "kjopekraft",
+      "reference": "kjopekraft",
+      "variants": [
+        "kjøpekraft",
+        "kjøpekraften"
+      ]
+    },
+    {
+      "id": "prisvekst",
+      "reference": "prisvekst",
+      "variants": [
+        "prisvekst",
+        "prisveksten",
+        "inflasjon",
+        "inflasjonen"
+      ]
+    },
+    {
+      "id": "dagens-kroner",
+      "reference": "dagens-kroner",
+      "variants": [
+        "dagens kroner"
+      ]
+    },
+    {
+      "id": "renters-rente",
+      "reference": "renters-rente",
+      "variants": [
+        "renters rente"
+      ]
+    },
+    {
+      "id": "annuitetslan",
+      "variants": [
+        "annuitetslån",
+        "annuitetslånet"
+      ],
+      "definition": "Annuitetslån er lån med like store betalinger av renter og avdrag hver termin så lenge renten er uendret.",
+      "status": "utkast",
+      "sources": [
+        {
+          "url": "https://www.finanstilsynet.no/contentassets/2beca8bc0958478e893c2fa28369911a/finansielt-utsyn-juni-2024.pdf",
+          "source_date": "juni 2024",
+          "read": "2026-11-04",
+          "level": 3,
+          "location": "Husholdningenes gjeldsbetjening, beskrivelse av lånetyper"
+        }
+      ],
+      "further_review": "Forklar termin, gebyrer og hva som skjer ved renteendring."
+    },
+    {
+      "id": "serielan",
+      "variants": [
+        "serielån",
+        "serielånet"
+      ],
+      "definition": "Serielån er lån der du betaler like store avdrag hver termin og renter på gjelden som står igjen.",
+      "status": "utkast",
+      "sources": [
+        {
+          "url": "https://www.finanstilsynet.no/contentassets/2beca8bc0958478e893c2fa28369911a/finansielt-utsyn-juni-2024.pdf",
+          "source_date": "juni 2024",
+          "read": "2026-11-04",
+          "level": 3,
+          "location": "Husholdningenes gjeldsbetjening, beskrivelse av lånetyper"
+        }
+      ],
+      "further_review": "Forklar forskjellen mellom avdrag og samlet betaling, og virkningen av renteendring."
+    },
+    {
+      "id": "informasjonskapsler",
+      "variants": [
+        "informasjonskapsler",
+        "informasjonskapsel",
+        "cookies"
+      ],
+      "definition": "Informasjonskapsler er små tekstfiler som kan lagres på enheten din når du besøker en nettside.",
+      "status": "utkast",
+      "sources": [
+        {
+          "url": "https://nkom.no/informasjonskapsler",
+          "source_date": "22.10.2026",
+          "read": "2026-11-04",
+          "level": 1,
+          "location": "Hva er informasjonskapsler?"
+        }
+      ],
+      "further_review": "Skill fra annen nettleserlagring. Ikke trekk juridiske konklusjoner fra definisjonen."
+    },
+    {
+      "id": "aksjesparekonto",
+      "variants": [
+        "aksjesparekonto",
+        "aksjesparekontoen",
+        "ASK"
+      ],
+      "definition": "Aksjesparekonto er en konto der privatpersoner kan kjøpe og selge bestemte aksjer og aksjefond med utsatt skatt på gevinst.",
+      "status": "utkast",
+      "sources": [
+        {
+          "url": "https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/aksjer-og-verdipapirer/om/aksjesparekonto-ask/",
+          "source_date": "ingen dato oppgitt på siden",
+          "read": "2026-11-04",
+          "level": 1,
+          "location": "Hva er en aksjesparekonto? og skjerming"
+        }
+      ],
+      "further_review": "Bruk det publiserte svaret for vilkår, uttak, skjerming og tap."
+    },
+    {
+      "id": "skjermingsfradrag",
+      "variants": [
+        "skjermingsfradrag",
+        "skjermingsfradraget",
+        "skjerming",
+        "skjermingen"
+      ],
+      "definition": "Skjermingsfradrag er et fradrag som reduserer den delen av aksjeinntekten du betaler skatt av.",
+      "status": "utkast",
+      "sources": [
+        {
+          "url": "https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/aksjer-og-verdipapirer/om/aksjesparekonto-ask/",
+          "source_date": "ingen dato oppgitt på siden",
+          "read": "2026-11-04",
+          "level": 1,
+          "location": "Hva er en aksjesparekonto? og skjerming"
+        }
+      ],
+      "further_review": "Forklar grunnlag og skjermingsrente hver for seg. Ulike kontotyper har ulike regler."
+    },
+    {
+      "id": "effektiv-rente",
+      "variants": [
+        "effektiv rente",
+        "effektive renten"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "nominell-rente",
+      "variants": [
+        "nominell rente",
+        "nominelle renten"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "avkastning",
+      "variants": [
+        "avkastning",
+        "avkastningen"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "prosentpoeng",
+      "variants": [
+        "prosentpoeng"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "avdrag",
+      "variants": [
+        "avdrag",
+        "avdraget",
+        "avdragene"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "restgjeld",
+      "variants": [
+        "restgjeld",
+        "restgjelden"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "termin",
+      "variants": [
+        "termin",
+        "terminen",
+        "terminbeløp",
+        "terminbeløpet"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "utbytte",
+      "variants": [
+        "utbytte",
+        "utbyttet"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "kontinuitet",
+      "variants": [
+        "skattemessig kontinuitet"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "eos",
+      "variants": [
+        "EØS"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "skjermingsrente",
+      "variants": [
+        "skjermingsrente",
+        "skjermingsrenten"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "skjermingsgrunnlag",
+      "variants": [
+        "skjermingsgrunnlag",
+        "skjermingsgrunnlaget"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "localstorage",
+      "variants": [
+        "localStorage"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "sessionstorage",
+      "variants": [
+        "sessionStorage",
+        "øktlagring",
+        "fanelagring"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "csp",
+      "variants": [
+        "CSP"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "api",
+      "variants": [
+        "API",
+        "API-er"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "cdn",
+      "variants": [
+        "CDN"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "wcag",
+      "variants": [
+        "WCAG"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "javascript",
+      "variants": [
+        "JavaScript"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "kryptering",
+      "variants": [
+        "kryptering",
+        "kryptert"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    },
+    {
+      "id": "skjermleser",
+      "variants": [
+        "skjermleser",
+        "skjermlesere"
+      ],
+      "status": "kildekontroll gjenstår",
+      "review_task": "Finn og les primærkilde, skriv ordbok-setning og kontroller betydningen i brukerreisen før publisering."
+    }
+  ]
+}

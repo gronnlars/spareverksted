@@ -1,0 +1,59 @@
+name: Klarspråkkontroll
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: klarsprak-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  tekstkontroll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test måleverktøy og eksisterende begrepsregler
+        run: |
+          python3 tests/klarsprak.test.py
+          node tests/begreper.test.cjs
+      - name: Mål og sammenlign med fast grunnmåling
+        run: python3 scripts/klarsprak.py --output /tmp/klarsprak/grunnlag
+      - name: Mål forrige versjon med samme metode
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -n "$BASE_SHA" ] && [ "$BASE_SHA" != '0000000000000000000000000000000000000000' ]; then
+            mkdir -p /tmp/klarsprak-base
+            git archive "$BASE_SHA" | tar -x -C /tmp/klarsprak-base
+            python3 scripts/klarsprak.py --root /tmp/klarsprak-base --output /tmp/klarsprak/forrige
+            python3 scripts/klarsprak.py --previous /tmp/klarsprak/forrige/rapport.json --label 'forrige versjon' --output /tmp/klarsprak/endring
+          fi
+      - name: Lesbar rapport
+        if: always()
+        run: |
+          if [ -f /tmp/klarsprak/endring/rapport.md ]; then
+            cat /tmp/klarsprak/endring/rapport.md >> "$GITHUB_STEP_SUMMARY"
+          elif [ -f /tmp/klarsprak/grunnlag/rapport.md ]; then
+            cat /tmp/klarsprak/grunnlag/rapport.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Målingen ble ikke fullført. Se feilen i stegene over. Ingen språkvurdering foreligger.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Målebevis og utvikling mot grunnmåling og forrige versjon
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: klarsprak
+          path: /tmp/klarsprak/
+          if-no-files-found: warn
+          retention-days: 30
