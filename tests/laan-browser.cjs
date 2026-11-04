@@ -188,6 +188,19 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
   await p.click('[data-kind=forbruk]');assert.equal(await p.locator('#vehicleFields').isHidden(),true);assert.equal(await p.locator('#feesDetails').isVisible(),true);
   await p.setViewportSize({width:1280,height:900});
 
+  await p.click('#reset');await type('rate','5');await p.click('[data-kind=bil]');
+  await p.focus('#equitySlider');await p.keyboard.press('ArrowRight');
+  assert.equal(await p.inputValue('#equity'),'1');
+  await p.click('#rateExplanationLink');assert.equal(await p.evaluate(()=>document.activeElement.id),'renteForklaring');
+  await p.click('#backToRate');assert.equal(await p.evaluate(()=>document.activeElement.id),'rateExplanationLink');
+  await p.fill('#loanName','Bil A');await p.click('#saveLoan');await type('rate','7');
+  await p.fill('#loanName','Bil B');await p.click('#saveLoan');await p.reload();
+  const choices=p.locator('#loanList input[type=checkbox]');assert.equal(await choices.count(),2);
+  await choices.nth(0).check();await choices.nth(1).check();await p.click('#compareLoans');
+  assert.equal(await p.locator('#reportPreview h1').count(),1);assert.match(await text('reportPreview'),/Bil A/);
+  assert.match(await text('reportPreview'),/Bil B/);assert.match(await text('printReportContent'),/Forutsetninger og metode/);
+  await p.keyboard.press('Escape');assert.equal(await p.evaluate(()=>document.activeElement.id),'compareLoans');
+  const [bundle]=await Promise.all([p.waitForEvent('download'),p.click('#excelLoans')]);assert.equal(bundle.suggestedFilename(),'valgte-laaneplaner.xlsx');
   // 10. Veien inn og tilbake. Lån ligger blant kalkulatorfanene og på startsiden.
   await p.goto(origin+'/index.html');
   assert.equal(await p.locator('.welcome-question[href="laan.html"]').count(),0,'ikke noe lånekort på startsiden');

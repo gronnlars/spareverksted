@@ -263,3 +263,7 @@ Metode: Playwrights offisielle dokumentasjon om nettverk og BrowserContext, lest
 Angrepsflater og reparasjon: (1) lokal kopi kan avvike fra produksjon, merkes eksplisitt, (2) nye brukerflyter kan falle utenfor, testlisten må utvides, (3) utilgjengelige lagrings-API-er kan gi hull, forbehold står i resultatet, (4) grønne egne tester kan tolkes som ekstern revisjon, teksten sier teknisk egenkontroll. Korrektur: ingen nye juridiske påstander, faktiske motorversjoner og dato hentes fra rapportene, ingen endring av tidligere manuelle kontrolldatoer.
 
 Lokal kontroll av endringen: rapportgeneratorens negative tester, eksisterende personvern-lagring, engine og tax-export består. Node-syntaks, YAML-parsing og diff-kontroll består. Lokal nettlesernedlasting feilet (ufullstendig ZIP), så nettlesertestene er ennå ikke kjørt. Ingen PR opprettet eller endring publisert. Automatisk godkjenningskontroll avviste push til offentlig repo, publisering avventer Lars' uttrykkelige godkjenning av denne konkrete endringen.
+
+## Låneplaner, 4. november 2026
+
+Ved «Lagre låneplan» skrives navn, lokal ID og regneforutsetninger til `sv-loan-plans-v1` i localStorage. Resultater beregnes på nytt. Vanlig inntasting skriver ingen låneplan. Brukeren kan slette én plan fra lånesiden eller alle med sletteknappen på personvernsiden. Dataene blir på enheten til de slettes. Eksporterte filer administreres av brukeren.
