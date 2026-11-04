@@ -126,11 +126,8 @@ Kilde: Språkrådet, «Æ, ø og å i internasjonal sammenheng» ([sprakradet.no
 Funnet ved å sammenligne sidene på main. Rettes i egne, små PR-er. Når et punkt er rettet eller godkjent som avvik, flyttes det.
 
 - Lån: lagrede planer står i eget panel i resultatkolonnen, ikke i den felles delen «Lagre, del og sammenlign planer» i full bredde. Lån mangler «Del plan».
-- Lån: «Dette betyr tallene» skal være «Dette betyr tallene dine». «Metode og forutsetninger» skal være «Metode, forutsetninger og kilder».
 - Lån: panelet «Nominell og effektiv rente» står som egen del. Vurder å flytte det til «Mer om tallene» eller en begrepsforklaring.
-- Lån: filnavnene bruker «laan». Skal være «lan» etter del 7.
-- Knappetekster, vedtatt av Lars 4.11.2026. Skal endres i alle kalkulatorer:
-  - «Lagre denne planen», «Lagre målet» (Sparemål), «Lagre uttaksplanen» (Uttak) og «Lagre låneplan» blir «Lagre plan».
-  - «Last ned eller skriv ut» blir «Last ned plan».
-  - «Last ned valgte planer», «Last ned alle planene» og «Last ned valgte i Excel» blir «Last ned planene».
+- Lån: filnavnene bruker «laan». Skal være «lan» etter del 7. Navnene på nedlastede filer er rettet i #214.
+- Knappetekster, vedtatt av Lars 4.11.2026: rettes i #214 («Lagre plan», «Last ned plan», «Last ned planene»/«Last ned planen»).
+- Lån: «Dette betyr tallene dine» og «Metode, forutsetninger og kilder»: rettes i #214.
 - `ressursmaaling` (arbeidsflyt og skript) bruker «aa».
