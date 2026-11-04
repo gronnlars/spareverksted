@@ -14,6 +14,22 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 | Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 
+## Låneskjema, rentescenarioer og dagens kroner (4. november 2026)
+
+Lars bestiller ferdig lånekalkulator med sparekalkulatoren som modell, og gir fullmakt til sammenslåing og publisering etter gjennomgang og grønne relevante kontroller. Dette erstatter utsettelsen av dagens kroner i v1-beslutningen. Resultatlinjen håndteres i annen tråd og endres ikke her. Grunnlag main `aa56156`, #204 og #207 merget, #208 og #206 åpne ved oppstart. #208 videreføres med rapportretting, renteforklaring og fjerning av innganger fra forsidekort og bunntekst.
+
+- Boliglån: lånebeløp og valgfri boligverdi. Forholdet mellom dem vises uten regelgrense eller kredittvurdering. Tom boligverdi stopper ikke en betalingsplan. Alternativet obligatorisk boligverdi ble forkastet fordi betalingene kan regnes uten den.
+- Billån: kjøpesum minus egenkapital gir et skrivebeskyttet lånebeløp. Bare to uavhengige beløpsfelt, ingen gjensidig synkronisering av tre redigerbare felt. Gebyrer betales separat og inngår ikke i bilens finansiering. Egenkapital lik eller over kjøpesum gir beskjed om at det ikke finnes lånebehov, ingen oppdiktet låneplan.
+- Forbrukslån: eksisterende beløp, tid og synlige gebyrer beholdes. Ingen regulatorisk maksimumstid eller lånetilsagn innføres.
+- Ringdiagram: avdrag inklusive ekstra innbetaling, renter og gebyrer som deler av tilbakebetaling. Alle tall og andeler står også som tekst. Rentesatser er ikke deler av kaken.
+- Utforsk: grunnscenario, lavere og høyere rente på samme lån. Justerbar forskjell i prosentpoeng, standard 1 er et eksempeltall. Rentesatsene begrenses til motorens 0 til 100 %, faktisk forskjell oppgis. Hendelser utelates fra alle tre for å vise rentens isolerte virkning. Månedstall inkluderer termingebyr, samlet kostnad inkluderer etableringsgebyr. Alternativet å flytte også planlagte renteendringer ble forkastet fordi det gjør sammenligningen vanskeligere å forstå.
+- Prisjustering: standard 2,5 % og grenser 0 til 100 %, samme modellforutsetning som sparekalkulatoren, kontrollert med en likhetstest mot Engine. Ingen markedsprognose. Hver betaling og restgjeld ved termin m omregnes med (1 + prisvekst/100)^(-m/12). Etableringsgebyret ligger på tidspunkt null. Avdrag i dagens kroner summeres fra hvert faktisk avdrag, de settes ikke lik det nominelle lånebeløpet. Brukerens nominelle betalingsplan er urørt. Dagens kroner på Enkel oppsummeres som skjult aktivt valg med Endre-knapp. Redusert realgjeld sier ingenting om automatisk inntektsvekst.
+- Rapport, Excel, CSV og JSON får alle forutsetninger, uansett skjult detaljnivå. CSV er rektangulær med forutsetningene i ekstra kolonner. JSON v2 beholder nominell plan og har egen visningsplan og rentescenarioer. Års- og månedstabell blir radvise oversikter på smal skjerm, med beholdt tabellstruktur og kolonneoverskrifter.
+
+Ingen nye eksterne avhengigheter, datakilder, lagringsnøkler eller overføring av lånetall. Ingen Finansportal-integrasjon. Effektiv rente avventer verifisert metode. Sammenligning av selvstendige lån og utlånsforskrift er egne senere oppdrag. ChatGPT/Codex, egenkontroll og separat programmatisk Decimal-kontroll, ingen påstand om uavhengig menneskelig fagkontroll. Kontroller og begrensninger loggføres i PR-en.
+
+Revurderes ved observerte misforståelser om kronevisning, etter tester med VoiceOver/NVDA eller hvis finansieringsmåten utvides til å ta gebyrer inn i gjelden.
+
 ## Lånesiden skal følge kalkulatorstandarden (3. november 2026)
 
 Lars avviste grensesnittet fra #205 som utilstrekkelig. Lånekalkulatoren skal følge sparekalkulatorens etablerte mønster. Gebyretiketter som går over flere linjer skal ikke forskyve feltene sideveis. På smale flater står gebyr- og hendelsesfeltene under hverandre. Graf og tabell er tilgjengelige på alle detaljnivåer, med års- og månedstabell. Valgt tabellvisning beholdes ved bytte av detaljnivå.

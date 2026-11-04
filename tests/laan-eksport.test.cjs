@@ -5,7 +5,7 @@ const near=(a,b)=>assert.ok(Math.abs(a-b)<0.00001,`${a} != ${b}`);
 for(const type of L.TYPES){
  const p=L.plan({type,amount:3000000,rate:5,years:25,establishmentFee:950,termFee:45,extraPayments:[{term:60,amount:500000}],rateChanges:[{term:100,rate:7}]});
  const sheets=E.sheets(p),monthly=E.monthly(p),yearly=E.yearly(p);
- assert.deepEqual(sheets.map(s=>s.name),['Oversikt','Forutsetninger','Per år','Per måned','Annuitet og serie']);
+ assert.deepEqual(sheets.map(s=>s.name),['Oversikt','Forutsetninger','Per år','Per måned','Rentescenarioer','Annuitet og serie']);
  assert.equal(monthly.length,p.rows.length+2);assert.equal(monthly[1][0],0);assert.equal(monthly[1][6],950);
  near(monthly.slice(1).reduce((s,r)=>s+r[6],0),p.totals.paid);
  near(monthly.slice(2).reduce((s,r)=>s+r[3]+r[4],0),p.input.amount);

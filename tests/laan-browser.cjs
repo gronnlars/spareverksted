@@ -59,7 +59,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
   await p.click('#reset');await type('rate','5');
   await p.click('[data-kind=bil]');
   assert.equal(sp(await p.inputValue('#amount')),'300 000');assert.equal(await p.inputValue('#years'),'5');assert.equal(await p.inputValue('#rate'),'5');
-  await type('amount','250000');await p.click('[data-kind=bolig]');
+  await type('vehiclePrice','250000');await p.click('[data-kind=bolig]');
   assert.equal(sp(await p.inputValue('#amount')),'250 000','eget lånebeløp beholdes');assert.equal(await p.inputValue('#years'),'25','eksempeltiden byttes');
   assert.match(await text('exampleNote'),/Nedbetalingstiden er et eksempeltall/);
 
@@ -135,7 +135,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
    if(id==='exportCsv')assert.equal(data.toString().split('\r\n').length,302);
   }
   await p.click('#exportPdf');assert.equal(await p.locator('#reportDialog').isVisible(),true);
-  assert.equal(await p.locator('#reportPreview h1').count(),1);assert.equal(await p.locator('#reportPreview svg').count(),1);
+  assert.equal(await p.locator('#reportPreview h1').count(),1);assert.equal(await p.locator('#reportPreview svg').count(),2);
   assert.equal(await p.locator('#reportPreview table tbody tr').count(),25);
   for(const width of [320,390]){
    await p.setViewportSize({width,height:800});
@@ -147,6 +147,29 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
   await type('years','0');await p.click('#heroDownload');
   assert.equal(await p.locator('#exportDialog').isVisible(),false);assert.equal(await p.evaluate(()=>document.activeElement.id),'years');
   await type('years','25');
+
+  // Nye felt, prisjustering og rentescenarioer: kontrollerer faktisk flyt, feil og rapport på Enkel.
+  await p.click('#reset');await type('rate','5');await type('propertyValue','4000000');
+  assert.match(await text('securityRatio'),/75 %/);
+  await p.click('[data-kind=bil]');assert.equal(await p.locator('#propertyField').isHidden(),true);
+  await type('vehiclePrice','400000');await type('equity','100000');
+  assert.equal(await p.inputValue('#amount'),'300 000');assert.equal(await p.locator('#amount').evaluate(e=>e.readOnly),true);
+  assert.equal(await p.locator('#amountSlider').isVisible(),false);
+  await type('equity','400001');assert.equal(await p.getAttribute('#equity','aria-invalid'),'true');
+  await p.click('#heroDownload');assert.equal(await p.evaluate(()=>document.activeElement.id),'equity');
+  await type('equity','100000');await p.click('[data-level=explore]');
+  await type('scenarioShift','2');assert.match(await text('scenarioCards'),/3 % nominell rente/);assert.match(await text('scenarioCards'),/7 % nominell rente/);
+  if(!await p.locator('#inflationDetails').evaluate(e=>e.open))await p.click('#inflationDetails summary');await p.check('#real');await type('inflation','2,5');
+  assert.match(await text('resultLabel'),/dagens kroner/);assert.match(await text('costUnit'),/Dagens kroner/);
+  assert.match(await text('scenarioUnit'),/dagens kroner/);
+  await p.click('[data-level=simple]');assert.match(await text('hiddenChoices'),/dagens kroner med 2,5 %/);
+  await p.click('#heroDownload');await p.click('#exportPdf');
+  const report=await text('reportPreview');for(const phrase of ['Kjøpesum for bilen','Egenkapital til bilkjøpet','Prisvekst per år','Dagens kroner','Endring i scenarioene','Høyere rente'])assert.ok(report.includes(phrase),phrase);
+  for(const width of [320,390,640]){await p.setViewportSize({width,height:800});assert.equal(await p.locator('#reportDialog').evaluate(e=>e.scrollWidth<=e.clientWidth),true,'hele rapporten uten sidelengs rulling ved '+width);}
+  await p.keyboard.press('Escape');await p.setViewportSize({width:320,height:800});await p.click('#tableTab');await p.selectOption('#tablePeriod','month');
+  assert.equal(await p.locator('#tableWrap').evaluate(e=>e.scrollWidth<=e.clientWidth),true,'månedstabell uten sidelengs rulling');
+  await p.click('[data-kind=forbruk]');assert.equal(await p.locator('#vehicleFields').isHidden(),true);assert.equal(await p.locator('#feesDetails').isVisible(),true);
+  await p.setViewportSize({width:1280,height:900});
 
   // 10. Veien inn og tilbake. Lån ligger blant kalkulatorfanene og på startsiden.
   await p.goto(origin+'/index.html');

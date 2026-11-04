@@ -46,7 +46,7 @@ body.loan-empty #mobileSummary{display:none!important}
 .loan-page .report-assumptions dd{margin:0;text-align:right;overflow-wrap:anywhere}
 .loan-page #reportPreview h1{font-size:28px;line-height:1.3}
 .loan-page #reportPreview h2{margin:18px 0 8px}
-.loan-page #reportPreview .report-chart svg{background:#fff;border-radius:8px}
+.loan-page #reportPreview .report-chart svg{background:var(--surface);border-radius:8px}
 .loan-page .report-table caption{white-space:normal;text-align:left}
 .loan-page .report-table{max-width:100%}
 .loan-page #printReportContent .report-chart svg{background:white}
@@ -87,3 +87,50 @@ body.loan-empty #mobileSummary{display:none!important}
  .loan-page #reportPreview .report-assumptions{grid-template-columns:1fr}
  .loan-page #reportPreview .report-assumptions div{flex-wrap:wrap}
 }
+/* Nye lånefelt og forklaringer bruker eksisterende temaer og komponenter. */
+.loan-page #basic{grid-template-columns:1fr}
+.loan-page #basic .field-label{min-height:0}
+.loan-page #vehicleFields[hidden],.loan-page #propertyField[hidden]{display:none}
+.loan-page #basic .field,.loan-page #vehicleFields{grid-column:1/-1}
+.loan-page .loan-hint{font-size:14px}
+.loan-page .scenario-field{max-width:330px}
+.loan-page .scenario-field .unit{font-size:13px}
+.loan-page .scenario-field input{width:45%}
+.loan-page .loan-check{display:flex;align-items:center;gap:10px;min-height:44px;line-height:1.5}
+.loan-page .loan-check input{width:22px;height:22px;flex:none}
+.loan-page #scenarioCards{grid-template-columns:1fr}
+.loan-page #scenarioCards h3{margin-bottom:6px}
+.loan-page #scenarioCards p{font-size:14px;margin:0 0 12px}
+.loan-page #scenarioCards .compare-card:nth-child(2){border-width:2px}
+.loan-page .loan-cost{display:grid;grid-template-columns:minmax(100px,150px) minmax(0,1fr);align-items:center;gap:24px}
+.loan-page .loan-cost svg{width:100%;height:auto}
+.loan-page .loan-cost dl{margin:0;min-width:0}
+.loan-page .loan-cost dl div{padding:8px 0;border-bottom:1px solid var(--line)}
+.loan-page .loan-cost dt{display:flex;align-items:center;gap:8px}
+.loan-page .loan-cost dd{margin:3px 0 0;font-variant-numeric:tabular-nums;font-weight:650}
+.loan-page .loan-cost dd span{font-weight:400;color:var(--muted)}
+.loan-page .cost-key{display:inline-block;width:14px;height:14px;flex:none}
+.loan-page .cost-principal{stroke:var(--green);background:var(--green)}
+.loan-page .cost-interest{stroke:#80552f;background:#80552f}
+.loan-page .cost-fees{stroke:#47618a;background:#47618a}
+:root[data-theme=night] .loan-page .cost-interest{stroke:#efbf86;background:#efbf86}
+:root[data-theme=night] .loan-page .cost-fees{stroke:#aec7f4;background:#aec7f4}
+body.loan-empty #costPanel,body.loan-empty #scenarioPanel{display:none}
+@media(max-width:560px){.loan-page .loan-cost{grid-template-columns:1fr;gap:12px}.loan-page .loan-cost svg{max-width:140px;justify-self:center}}
+/* Samme radvise lesning for års- og månedstabell og for rapporten. Beholder tabellrollene. */
+@media screen and (max-width:760px){
+ .loan-page #tableWrap{overflow:visible}
+ .loan-page #tableWrap table{white-space:normal;width:100%;table-layout:fixed}
+ .loan-page #tableWrap thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+ .loan-page #tableWrap tbody,.loan-page #tableWrap tr{display:block}
+ .loan-page #tableWrap tr{border-bottom:1px solid var(--line);padding:10px 0}
+ .loan-page #tableWrap th[scope=row]{display:block;text-align:left;font-weight:700}
+ .loan-page #tableWrap th[scope=row]::before{content:attr(data-label) " "}
+ .loan-page #tableWrap td{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;white-space:normal;padding:5px 0;overflow-wrap:anywhere}
+ .loan-page #tableWrap td::before{content:attr(data-label);text-align:left;color:var(--muted)}
+}
+@media print{.loan-page .loan-cost{grid-template-columns:100px 1fr}.loan-page .cost-principal{stroke:#23654e!important;background:#23654e!important}.loan-page .cost-interest{stroke:#80552f!important;background:#80552f!important}.loan-page .cost-fees{stroke:#47618a!important;background:#47618a!important}}
+
+.loan-page .compare-card dt{font-size:14px}
+.loan-page .compare-card p{font-size:14px}
+.loan-page.stale #costPanel,.loan-page.stale #scenarioPanel,.loan-page.stale #comparePanel,.loan-page.stale #tableWrap{opacity:.45;filter:grayscale(.6)}
