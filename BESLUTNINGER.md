@@ -1327,3 +1327,24 @@ Full CI-kjøring b8cf1c0 besto alle kontroller unntatt navigation-browser.cjs, s
 ## Lagrede lånerapporter og retur fra renteforklaringen, 4. november 2026
 
 Etter Lars sin iPhone-prøve får renteforklaringen en retur til lenken ved rentefeltet. Navigeringen flytter fokus uten å sette et varig adresseanker. Høydeendring alene utløser ingen ny resultatvisning. Egenkapital for bil får tallfelt og skyveknapp. Låneplaner lagres ved uttrykkelig trykk og kan slettes. Egen lagringsnøkkel beskytter eksisterende spareplaner mot feiltolking. Felles utskriftsflyt og Excel-verktøy gjenbrukes. Inntil tre valgte planer sammenlignes i listerekkefølge og løpende kroner. Alle valgte får full rapport i sin kronevisning. Revurder navigeringen etter fysisk iPhone-prøve.
+
+## Felles kalkulatordesign og navn uten æ, ø og å (4. november 2026)
+
+Lars vedtok at alle kalkulatorer skal følge design og brukerflyt i den opprinnelige sparekalkulatoren, med unntak der det trengs. Spareverksted skal være én sømløs opplevelse. Reglene står i [KALKULATORDESIGN.md](KALKULATORDESIGN.md). Bakgrunn: lånekalkulatoren fikk egne løsninger for lagring, overskrifter og PDF som avvek fra sparekalkulatoren, og fanene sto ikke på linje.
+
+Vurderte alternativer:
+
+- A. Sparekalkulatoren som mal, avvik i en tabell med begrunnelse. Valgt. Bygger på det som er testet mest, også på iPhone.
+- B. Et nytt designsystem som alle kalkulatorer bygges om etter. Forkastet: mye arbeid uten tydelig nytte for brukeren, bryter med «bra nok er mer enn nok».
+- C. Hver kalkulator velger selv. Forkastet: det var dette som ga avvikene.
+
+Navn på filer og adresser: æ blir a, ø blir o, å blir a. Vurdert:
+
+- A. a, o, a (`lan`). Valgt. Tilrådd i NS 4129:1995 ifølge Språkrådet, som også bruker det selv (`sprakradet.no`). Kilde: «Æ, ø og å i internasjonal sammenheng», lest av Lars 4.11.2026.
+- B. ae, o, a. Lars sitt første forslag. Språkrådet nevner det som «en annen løsning». Forkastet fordi målet var å følge Språkrådets tilråding. Ingen navn i repoet kom fra æ, så valget har ingen følger i dag.
+- C. ae, oe, aa (`laan`). Forkastet. Språkrådet påpeker at oe kan forveksles med oe i navn og aa kan leses som lang a. Brukt i lånefilene og `ressursmaaling`, som skal endres.
+- D. æ, ø og å direkte i adresser. Forkastet: kodes om til %C3%A5 og lignende ved kopiering, og fungerer dårlig i enkelte verktøy.
+
+Ulempe ved A: noen ord kan bli flertydige («lan», «sarlig»). «Det finnes ingen lytefri løsning» (Språkrådet). Lagringsnøkler endres ikke, slik at brukernes lagrede planer ikke forsvinner. Gamle adresser skal sende brukeren videre.
+
+Ta opp igjen hvis: Lars heller vil ha ae for æ, eller et navn blir misforstått i praksis.

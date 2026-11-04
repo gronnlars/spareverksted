@@ -7,7 +7,7 @@ faktisk resultat og hvordan feilen kan gjenskapes. Bruk oppdiktede tall.
 2. Kjør lokalt som beskrevet i README.
 3. Gjør en avgrenset endring og forklar hvordan den hjelper brukeren.
 4. Kjør begge testfilene med Node.js.
-5. Kontroller mobilvisning, tastaturbetjening og relevante eksportformater.
+5. Kontroller mobilvisning, tastaturbetjening og relevante eksportformater. Ny eller endret kalkulator følger [KALKULATORDESIGN.md](KALKULATORDESIGN.md).
 6. Åpne en pull request med endringen og kontrollene du har gjort.
 
 Endringer i finansielle modeller må dokumentere forutsetningene og kontrolleres
