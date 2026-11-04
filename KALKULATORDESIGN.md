@@ -58,7 +58,7 @@ Delene kommer i denne rekkefølgen. Det som er felles for nettstedet (toppfelt, 
 | Lagre | «Lagre plan», dialog «Ta vare på denne planen» |
 | Dele | «Del plan», dialog «Del denne planen» |
 | Laste ned én plan | «Last ned plan», og «Last ned ↓» på resultatet. Dialog «Ta med deg beregningen». Utskrift er et valg i dialogen |
-| Laste ned flere planer | «Last ned planene». Fila har sammenligningen først og så hver plan |
+| Laste ned flere planer | «Last ned planene», med antall i parentes når noen er valgt. «Last ned planen» når bare én er med. Dialog «Ta med deg planene». Fila har sammenligningen først og så hver plan |
 | Rapport | Dialog «Rapporten din», knapp «Skriv ut / lagre som PDF» |
 | Tilbake til feltene | «Endre tall ↑» |
 | Starte på nytt | «Ny beregning» |
