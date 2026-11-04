@@ -2,7 +2,7 @@
 
 Felles arbeidsstandard for alle bidragsytere, også KI-verktøy. Vedtatt av prosjekteier gjennom oppdraget 24. oktober 2026.
 
-Les også [BESLUTNINGER.md](BESLUTNINGER.md). Reglene gjelder hele nettstedet: startguide, kalkulator, veileder, hjelpetekster, grafer, tabeller, feilmeldinger, eksport og Om-side.
+Les også [BESLUTNINGER.md](BESLUTNINGER.md) og [KLARSPRAK.md](KLARSPRAK.md), som samler klarspråkkrav og kontroll for hele brukerreisen. Reglene gjelder hele nettstedet: startguide, kalkulator, veileder, hjelpetekster, grafer, tabeller, feilmeldinger, eksport og Om-side.
 
 ## 1. Møt mennesket der det er
 
