@@ -154,3 +154,6 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
  #comparison .savings-stacked td{white-space:normal}
  #comparison .savings-stacked .savings-cell-label{white-space:normal;overflow-wrap:anywhere}
 }
+
+/* Et inaktivt scenariovalg skal fortsatt være lesbart i alle temaer. */
+.range-switch .range-unavailable{color:var(--muted)}

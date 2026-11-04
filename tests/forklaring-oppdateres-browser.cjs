@@ -41,6 +41,23 @@ const engine=process.env.SPARE_ENGINE||'chromium',browserType={chromium,firefox,
   assert(pairs.every(([k,v])=>k&&v),'every label has a value');
   // Resultat og forklaring i samme <article>, grafen utenfor.
   assert.equal(await p.evaluate(()=>{const a=document.querySelector('article.result-article');return !!a&&a.contains(document.getElementById('savingsResult'))&&a.contains(document.getElementById('meaning'))&&!a.contains(document.getElementById('chartPanel'));}),true);
+  // «Begge» viser to kroneverdier, ikke scenarioer. Inaktivt valg skal forklares og huskes.
+  const range=p.locator('#showRange'),hint=p.locator('#rangeUnavailable');
+  for(const checked of [true,false]){
+   await p.locator('[data-value-mode="nominal"]').click();
+   await range.setChecked(checked);
+   await p.locator('[data-value-mode="both"]').click();
+   assert(await range.isDisabled(),'scenariovalget er utilgjengelig i Begge');
+   assert.equal(await range.isChecked(),checked,'tidligere avkrysning huskes');
+   assert(await hint.isVisible());assert.equal(await range.getAttribute('aria-describedby'),'rangeUnavailable');
+   assert(await p.locator('#fanSummary').isHidden());assert(await p.locator('#fanTuning').isHidden());
+   assert(await p.locator('#fanHelp').isEnabled(),'forklaring kan fortsatt åpnes');
+   await p.locator('#tableTab').click();assert(await range.isDisabled(),'samme regel i tabellvisning');
+   await p.locator('[data-value-mode="real"]').click();
+   assert(await range.isEnabled());assert.equal(await range.isChecked(),checked);
+   assert(await hint.isHidden());assert.equal(await range.getAttribute('aria-describedby'),null);
+   await p.locator('#graphTab').click();
+  }
   assert.deepEqual(errors,[]);
   console.log('forklaring-oppdateres-browser ('+engine+'): ok');
  }finally{if(browser)await browser.close();server.close();}

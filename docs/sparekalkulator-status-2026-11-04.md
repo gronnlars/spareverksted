@@ -74,3 +74,9 @@ Sammenligning av spareplaner og den delte tabellvisningen for sparemål bruker s
 Lokalt består den nye `sammenligningstabell-browser.cjs` i Chromium ved 256, 320, 390, 640, 1280 og 1920 px, også tilbake til bred visning. Den kontrollerer begge sammenligningstyper, tydelige etiketter, tabelloverskrifter, ingen intern sideveis rulling og uendrede celleverdier etter breddeendring. De eksisterende testene for lagrede planer, eksportinnhold og PDF-merking består. CI kjører den nye testen i Chromium og WebKit. Fysisk iPhone, VoiceOver og faktisk PC-zoom er fortsatt ikke kontrollert. Rapporttabeller og store hovedtall gjenstår i steg 2.
 
 PR #218 krevde også tilpasning av kolonnevalget i `prov-renters-browser.cjs`: årstallet er nå en radoverskrift, og testen leser derfor beløpsfeltene direkte. De samme tallkravene, 10 404 og 9 903 kroner, beholdes. Testen består lokalt i Chromium etter tilpasningen.
+
+## Scenariovalg når «Begge» er valgt
+
+Lars påpekte at «Vis lavere og høyere scenario/vekst» kan krysses av selv om «Begge» ikke viser scenarioene. Avkryssingen er nå native `disabled` i denne visningen, med lesbar dempet etikett og synlig forklaring om å velge «Kroner» eller «Kjøpekraft». Forklaringen er også koblet med `aria-describedby` mens valget er deaktivert. Hjelpeknappen er fortsatt tilgjengelig. Justering av forskjellen mellom utfallene skjules også når scenarioene ikke vises.
+
+Tidligere avkrysset eller ikke avkrysset tilstand beholdes ved bytte tilbake. Ingen beregning, planlagring eller eksport endres. Regelen gjelder i både graf- og tabellvisning. Eksisterende `forklaring-oppdateres-browser.cjs` er utvidet med begge avkrysningstilstander og begge visninger. Den består lokalt i Chromium og kjøres allerede i Chromium, Firefox og WebKit i CI. CI på siste commit må kontrolleres. Fysisk iPhone/VoiceOver er ikke prøvd.
