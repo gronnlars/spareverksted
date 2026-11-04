@@ -1348,3 +1348,15 @@ Navn på filer og adresser: æ blir a, ø blir o, å blir a. Vurdert:
 Ulempe ved A: noen ord kan bli flertydige («lan», «sarlig»). «Det finnes ingen lytefri løsning» (Språkrådet). Lagringsnøkler endres ikke, slik at brukernes lagrede planer ikke forsvinner. Gamle adresser skal sende brukeren videre.
 
 Ta opp igjen hvis: Lars heller vil ha ae for æ, eller et navn blir misforstått i praksis.
+
+## Knappetekster: «plan» (4. november 2026)
+
+Lars: «Jeg tenker plan(en) er korteste, og derfor best når man er i en plan. Last ned plan, last ned sammenligning.» Alle kalkulatorer bruker «Lagre plan», «Del plan», «Last ned plan» og «Last ned sammenligning».
+
+Vurdert:
+
+- A. Kort og likt overalt: «Lagre plan», «Last ned plan». Valgt. Kortest, og brukeren står allerede i planen. Samme ord i alle kalkulatorer.
+- B. Navnet på kalkulatoren i knappen: «Lagre målet», «Lagre uttaksplanen», «Lagre låneplan». Forkastet: lengre, og ulike ord for samme handling.
+- C. «Lagre denne planen». Forkastet: lengre enn A uten å si mer.
+
+«Last ned sammenligning» erstatter «Last ned valgte planer», «Last ned alle planene» og «Last ned valgte i Excel». Overskriftene i dialogene beholdes. Ta opp igjen hvis brukere ikke skjønner hva som lastes ned.
