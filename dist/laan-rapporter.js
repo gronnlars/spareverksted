@@ -5,10 +5,15 @@ window.LoanReports={
   const key='sv-loan-plans-v1';
   const selected=new Set();
   const status=message=>{get('loanStatus').textContent=message;};
-  const escape=value=>String(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  function element(tag,text){
+   const node=document.createElement(tag);
+   if(text!==undefined)node.textContent=text;
+   return node;
+  }
   function read(){
    const records=JSON.parse(localStorage.getItem(key)||'[]');
    if(!Array.isArray(records))throw Error('Uleselig liste');
+   if(records.some(entry=>!entry||typeof entry.name!=='string'||typeof entry.id!=='string'||!entry.input))throw Error('Uleselig plan');
    return records;
   }
   function updateButtons(){
@@ -67,30 +72,48 @@ window.LoanReports={
    const months=Math.max(...shown.map(r=>r.plan.payoffTerm));
    const amount=Math.max(...shown.map(r=>r.plan.input.amount));
    const patterns=['','9 4','2 4'];
-   const lines=shown.map(({plan},index)=>{
+   const ns='http://www.w3.org/2000/svg';
+   const svg=document.createElementNS(ns,'svg');
+   svg.setAttribute('viewBox','0 0 600 188');svg.setAttribute('role','img');
+   svg.setAttribute('aria-labelledby',prefix+'BalanceTitle');
+   const title=document.createElementNS(ns,'title');title.id=prefix+'BalanceTitle';
+   title.textContent='Restgjeld i løpende kroner';svg.append(title);
+   shown.forEach(({plan},i)=>{
+    const line=document.createElementNS(ns,'polyline');
     const balances=[plan.input.amount,...plan.rows.map(row=>row.balance)];
-    const points=balances.map((balance,month)=>(24+month/months*552).toFixed(2)+','+(20+(1-balance/amount)*140).toFixed(2)).join(' ');
-    return '<polyline points="'+points+'" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="'+(patterns[index]||'none')+'"/>';
-   }).join('');
+    const points=balances.map((balance,month)=>(24+month/months*552).toFixed(2)+','+(20+(1-balance/amount)*140).toFixed(2));
+    line.setAttribute('points',points.join(' '));line.setAttribute('fill','none');
+    line.setAttribute('stroke','currentColor');line.setAttribute('stroke-width','3');
+    if(patterns[i])line.setAttribute('stroke-dasharray',patterns[i]);
+    svg.append(line);
+   });
    const styles=['Heltrukket','Lang stipling','Kort stipling'];
    const legend=shown.map(({name,plan},i)=>styles[i]+': '+name+', fra '+LaanTekst.money(plan.input.amount)+' til null etter '+plan.payoffTerm+' måneder.').join(' ');
-   return '<h2>Restgjeld over tid</h2><svg viewBox="0 0 600 188" width="100%" role="img" aria-labelledby="'+prefix+'BalanceTitle"><title id="'+prefix+'BalanceTitle">Restgjeld i løpende kroner</title>'+lines+'</svg><p>Fra utbetaling til '+months+' måneder, på samme skala fra null til '+LaanTekst.money(amount)+'. '+escape(legend)+'</p>';
+   const figure=element('figure');
+   figure.append(svg,element('figcaption','Fra utbetaling til '+months+' måneder. Samme skala fra null til '+LaanTekst.money(amount)+'. '+legend));
+   return figure;
   }
   get('compareLoans').onclick=()=>withPlans(plans=>{
    const [titles,...rows]=comparison(plans);
    for(const [id,prefix] of [['reportPreview','savedPreview'],['printReportContent','savedPrint']]){
-    let html='<h1>Valgte låneplaner</h1><p>De tre første valgte planene sammenlignes i løpende kroner før rentefradrag. Hver plan følger med sine egne forutsetninger.</p>';
-    html+=balanceChart(plans,prefix);
+    const root=get(id);root.replaceChildren(element('h1','Valgte låneplaner'),element('p','De tre første valgte planene sammenlignes i løpende kroner før rentefradrag. Hver plan følger med sine egne forutsetninger.'),element('h2','Restgjeld over tid'),balanceChart(plans,prefix));
     for(const row of rows){
-     html+='<h2>'+escape(row[0])+'</h2><dl class="report-assumptions">';
-     for(let i=1;i<row.length;i++)html+='<div><dt>'+titles[i]+'</dt><dd>'+escape(i===row.length-1?row[i]:LaanTekst.money(row[i]))+'</dd></div>';
-     html+='</dl>';
+     const list=element('dl');list.className='report-assumptions';
+     for(let i=1;i<row.length;i++){
+      const pair=element('div');
+      pair.append(element('dt',titles[i]),element('dd',i===row.length-1?row[i]:LaanTekst.money(row[i])));
+      list.append(pair);
+     }
+     root.append(element('h2',row[0]),list);
     }
     plans.forEach(({name,plan},i)=>{
-     const detail=LaanEksport.report(plan,prefix+i).replace(/<(\/?)(h[123])>/g,(_,end,h)=>'<'+end+'h'+(Number(h[1])+1)+'>').replace('<h2>Låneberegning</h2>',()=>'<h2>'+escape(name)+'</h2>');
-     html+=detail;
+     const detail=element('div');
+     detail.innerHTML=LaanEksport.report(plan,prefix+i);
+     for(const h of detail.querySelectorAll('h1,h2,h3')){
+      h.replaceWith(element('h'+(Number(h.tagName[1])+1),h.tagName==='H1'?name:h.textContent));
+     }
+     root.append(detail);
     });
-    get(id).innerHTML=html;
    }
    get('reportDialog').showModal();
   });
