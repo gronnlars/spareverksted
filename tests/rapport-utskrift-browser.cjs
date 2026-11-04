@@ -55,6 +55,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
     assert.equal(await page.title(),title);
     assert(await page.locator('#report-print-status').isVisible());
     // Nettleserens egen utskrift må lukke modaliteten og bevare akkurat denne rapporten.
+    await page.locator('#reportDialog').evaluate(d=>{d.scrollTop=d.scrollHeight;});
     await page.evaluate(()=>window.dispatchEvent(new Event('beforeprint')));
     assert.equal(await page.locator('#reportDialog').evaluate(d=>d.open),false,route+': modal lukket ved menyutskrift');
     assert.notEqual(await page.title(),title,route+': rapporttittel under menyutskrift');
@@ -63,6 +64,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
     await page.evaluate(()=>window.dispatchEvent(new Event('afterprint')));
     await page.waitForFunction(()=>document.getElementById('reportDialog').open);
     assert.equal(await page.title(),title);
+    assert(await page.locator('#printReport').evaluate(b=>{const r=b.getBoundingClientRect(),d=b.closest('dialog').getBoundingClientRect();return r.top>=d.top&&r.bottom<=d.bottom;}),route+': fokus på utskriftsknappen er synlig etter retur fra bunnen av rapporten');
     // PDF lages via en ekte nettleserhendelse med rapporten åpen, uten klikk på utskriftsknappen.
     // De øvrige motorene har ikke Playwrights PDF-API. Dette er fortsatt ikke iPhones utskriftsvindu.
     if(engine==='chromium'&&!touch){

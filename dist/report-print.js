@@ -13,7 +13,7 @@ function attach(){
   document.title=title+', Spareverksted, '+new Date().toLocaleDateString('nb-NO',{year:'numeric',month:'long',day:'numeric'});
   dialog.close();return attempt;
  }
- function finish(attempt,text=''){if(restore!==attempt)return;document.title=attempt.title;restore=null;if(!dialog.open)dialog.showModal();message(text);button.focus({preventScroll:true});}
+ function finish(attempt,text=''){if(restore!==attempt)return;document.title=attempt.title;restore=null;if(!dialog.open)dialog.showModal();message(text);button.focus();}
  function completed(){if(!restore)return;const attempt=restore;setTimeout(()=>finish(attempt),0);}
  button.onclick=()=>{
   if(restore)return;
