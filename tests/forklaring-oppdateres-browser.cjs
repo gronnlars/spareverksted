@@ -43,15 +43,21 @@ const engine=process.env.SPARE_ENGINE||'chromium',browserType={chromium,firefox,
   assert.equal(await p.evaluate(()=>{const a=document.querySelector('article.result-article');return !!a&&a.contains(document.getElementById('savingsResult'))&&a.contains(document.getElementById('meaning'))&&!a.contains(document.getElementById('chartPanel'));}),true);
   // «Begge» viser to kroneverdier, ikke scenarioer. Inaktivt valg skal forklares og huskes.
   const range=p.locator('#showRange'),hint=p.locator('#rangeUnavailable');
+  const gap=()=>p.evaluate(()=>document.getElementById('chart').getBoundingClientRect().top-document.querySelector('.range-switch').getBoundingClientRect().bottom);
   for(const checked of [true,false]){
    await p.locator('[data-value-mode="nominal"]').click();
    await range.setChecked(checked);
+   const beforeGap=await gap();
    await p.locator('[data-value-mode="both"]').click();
+   assert(Math.abs(await gap()-beforeGap)<=1,'ingen ekstra tekstlinje som flytter grafen');
    assert(await range.isDisabled(),'scenariovalget er utilgjengelig i Begge');
    assert.equal(await range.isChecked(),checked,'tidligere avkrysning huskes');
-   assert(await hint.isVisible());assert.equal(await range.getAttribute('aria-describedby'),'rangeUnavailable');
+   assert(await hint.evaluate(e=>e.hidden),'forklaringen tar ingen synlig plass');assert.equal(await range.getAttribute('aria-describedby'),'rangeUnavailable');
    assert(await p.locator('#fanSummary').isHidden());assert(await p.locator('#fanTuning').isHidden());
    assert(await p.locator('#fanHelp').isEnabled(),'forklaring kan fortsatt åpnes');
+   await p.locator('#fanHelp').click();
+   assert.match(await p.locator('#helpBody').innerText(),/Velg «Kroner» eller «Kjøpekraft»/);
+   await p.locator('#helpClose').click();
    await p.locator('#tableTab').click();assert(await range.isDisabled(),'samme regel i tabellvisning');
    await p.locator('[data-value-mode="real"]').click();
    assert(await range.isEnabled());assert.equal(await range.isChecked(),checked);
