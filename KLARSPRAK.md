@@ -50,9 +50,18 @@ Språkrådet gjengir den internasjonale definisjonen av klarspråk: «Klarspråk
 
 Eksemplene er språkretning, ikke godkjente faktapåstander eller generelle erstatningsregler.
 
-## Knapper som venter på beslutning
+## Vedtatte knappetekster
 
-Forslagene «Lagre plan», «Last ned plan», «Last ned sammenligning» og «Del plan» skal vurderes opp mot faktisk handling og brukerreise før vedtak. «Lagre plan» og «Del plan» kan fungere godt i tydelig kontekst. «Last ned plan» kan være misvisende dersom resultatet er en rapport. «Last ned sammenligning» passer bare hvis nedlastingen faktisk er en sammenligning; PDF, Excel, alle planer og valgte planer må vurderes hver for seg. Ingen av disse vurderingene gir fullmakt til å endre knappene. Se `KALKULATORDESIGN.md` og `BESLUTNINGER.md`, samt åpen PR #212.
+Vedtatt av Lars 4. november 2026 etter vurdering mot denne standarden: «Korte ord der det er mulig. Best med tanke på UU.»
+
+| Knapp | Brukes når |
+| --- | --- |
+| Lagre plan | Lagrer planen du står i. Åpner dialog for navn |
+| Del plan | Lager en lenke til planen du står i |
+| Last ned plan | Åpner valg av format for den samme planen |
+| Last ned planene | Flere planer er med, med antall når noen er valgt. «Last ned planen» når bare én er med |
+
+Synlig tekst, tilgjengelig navn, dialogtittel og filnavn skal stemme med knappen. Språklig godkjenning erstatter ikke funksjonstest. Se `KALKULATORDESIGN.md`, del 3, og `BESLUTNINGER.md`, «Knappetekster: plan».
 
 ## Kontroll før publisering
 
