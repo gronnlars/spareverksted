@@ -17,9 +17,9 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu'],...(process.env.SPARE_BROWSER?{executablePath:process.env.SPARE_BROWSER}:{})});
   const p=await browser.newPage({viewport:{width:1280,height:900}});const errors=[];p.on('pageerror',e=>errors.push(e.message));
   // window.print fanges, så PDF-en lages i samme tilstand som når nettleserens utskrift starter.
-  // På PC blokkerer window.print til utskriften er ferdig, og tilstanden settes tilbake rett etterpå.
-  // For å kunne lage PDF-en midt i utskriften later testen som at skjermen er en berøringsskjerm (hover: none); da venter siden på afterprint.
-  await p.addInitScript(()=>{const mm=window.matchMedia.bind(window);window.matchMedia=q=>{const m=mm(q);return q==='(hover: none)'?{matches:true,media:q,addEventListener(){},removeEventListener(){},addListener(){},removeListener(){}}:m;};window.print=()=>{window.__printState={dialogOpen:document.getElementById('reportDialog').open,title:document.title,hidden:document.getElementById('printReportContent').getAttribute('aria-hidden'),h1:document.querySelectorAll('#printReportContent h1').length};window.__printed=true;};});
+  // beforeprint markerer at utskrift er startet. Testen kan dermed kontrollere PDF-en før afterprint,
+  // uten å bruke hover som en antakelse om hvordan nettleserens utskriftsvindu virker.
+  await p.addInitScript(()=>{window.print=()=>{window.dispatchEvent(new Event('beforeprint'));window.__printState={dialogOpen:document.getElementById('reportDialog').open,title:document.title,hidden:document.getElementById('printReportContent').getAttribute('aria-hidden'),h1:document.querySelectorAll('#printReportContent h1').length};window.__printed=true;};});
   await p.goto(origin+'/index.html#start=12000&monthly=4000&years=22&savingsType=index&rate=7.11');await p.reload();
   await p.evaluate(()=>reportAction());
   await p.waitForSelector('#reportDialog[open]');
@@ -39,7 +39,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.equal(await p.evaluate(()=>document.getElementById('reportDialog').open),true,'rapportvinduet skal åpnes igjen etter utskrift');
   assert.match(await p.title(),/^Spareverksted · /,'sidetittelen skal settes tilbake');
   assert.ok(pdf.includes('/Title'),'PDF-en mangler /Title');
-  // PC: window.print blokkerer, så vinduet og tittelen settes tilbake straks etterpå uten afterprint.
+  // Et ignorert utskriftskall uten hendelser skal gjenopprette vindu og tittel.
   const d=await browser.newPage();d.on('pageerror',e=>errors.push(e.message));
   await d.addInitScript(()=>{window.print=()=>{};});
   await d.goto(origin+'/index.html#start=12000&monthly=4000&years=22');await d.reload();
@@ -48,7 +48,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   assert.match(await d.title(),/^Spareverksted · /,'PC: sidetittelen skal settes tilbake');
   // Lånekalkulatoren deler utskriftsflyten og skal gi samme tilgjengelige PDF-struktur.
   const loan=await browser.newPage();loan.on('pageerror',e=>errors.push(e.message));
-  await loan.addInitScript(()=>{const mm=matchMedia.bind(window);window.matchMedia=q=>q==='(hover: none)'?{matches:true}:mm(q);window.print=()=>{window.__loanPrint={dialog:document.getElementById('reportDialog').open,title:document.title};};});
+  await loan.addInitScript(()=>{window.print=()=>{window.dispatchEvent(new Event('beforeprint'));window.__loanPrint={dialog:document.getElementById('reportDialog').open,title:document.title};};});
   await loan.goto(origin+'/laan.html');await loan.fill('#rate','5');await loan.locator('#rate').blur();
   await loan.click('#heroDownload');await loan.click('#exportPdf');await loan.click('#printReport');
   const ls=await loan.evaluate(()=>window.__loanPrint);assert.equal(ls.dialog,false);assert.match(ls.title,/^Låneberegning, Spareverksted/);

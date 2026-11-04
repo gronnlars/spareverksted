@@ -1,0 +1,60 @@
+# Sparekalkulatoren: retting i små steg
+
+Lars godkjente rettingsplanen 4. november 2026. Arbeidsgrunnlag: main `b0ab8cbbf77a4cb6e63a06caf65cdf8cbc1d301a`. Oppdraget gjelder fanen Sparing, «Hva kan sparingen bli?», som mal for videre kalkulatorarbeid. Regnemotoren, fungerende navneforslag og rapportenes eksisterende UU-arbeid skal bevares. Lån forblir avpublisert. Hver PR godkjennes av Lars før sammenslåing, som starter publisering.
+
+## Vedtatt rekkefølge
+
+| Steg | Leveranse | Status i denne PR-en |
+| --- | --- | --- |
+| 1 | Rapportens utskriftsflyt på mobil, feil og retur, med bevart PDF-struktur | Rettet i kode. Kontrollstatus nedenfor. Fysisk iPhone-prøve gjenstår |
+| 2 | Tabeller og store beløp uten sideveis rulling, også inne i rapporten | Ikke startet |
+| 3 | Navigering, synlig lagring og sikre hoppmål | Ikke startet |
+| 4 | Samordnet formatdialog og tydelig utvalg ved nedlasting | Ikke startet |
+| 5 | Lesbar månedsperiode, språk, nivåer og kildevedlikehold | Ikke startet |
+| 6 | Samordne mal og endelig overlevering med det som faktisk er kontrollert | Utskriftsregelen er oppdatert. Resten venter |
+
+Presiseringer fra Lars:
+
+- Steg 2 skal ha tydelige overskrifter og etiketter også når tabellradene vises loddrett. Se det eksisterende mønsteret på UU-siden før ny kode skrives. Dette er standard, ikke en valgfri forbedring.
+- Navigeringen skal tåle at det grønne resultatfeltet flyttes senere. På PC ligger Se resultat nedenfor i dagens oppsett. Bevar en eksplisitt kommando og et mål i den levende siden, uten å lage en ny fast linje som del av denne rettingen.
+- PDF-resultatet 82/100 er fra ThefrontKit. Claudes grundige dokumentasjon i BESLUTNINGER.md, «PDF-rapporten», legges til grunn. Ikke start en ny utredning av allerede kjente PDF-begrensninger eller bytt PDF-motor i dette steget.
+- Ingen ny betalt tjeneste, serverbehandling av brukerens tall eller direkte PDF-generator er innført.
+
+## Steg 1: den konkrete feilen
+
+`report-print.js` brukte tidligere `(hover: none)` til å avgjøre om rapporten skulle gjenåpnes når `window.print()` kom tilbake. Et ignorert kall uten `beforeprint` eller `afterprint` lot dermed rapporten være lukket på berøringsskjerm. Sidetittelen ble heller ikke satt tilbake. Et unntak fra utskriftskallet hadde samme problem.
+
+Dette er gjenskapt ved å simulere et ignorert kall i en berøringskontekst. Den nye regresjonstesten stopper med gammel kode. Det er ikke en påstand om at hele Lars sin iPhone-feil er gjenskapt på fysisk telefon.
+
+Rettingen bruker utskriftshendelser og utskriftsmediet:
+
+- Ingen utskrift startet: gjenåpne rapporten, sett tilbake sidetittel og fokus, og vis hjelp om nettleserens meny.
+- Utskrift startet: hold rapportvinduet lukket til avslutningen, slik at utskriftskopien fortsatt er tilgjengelig for PDF-merking.
+- Nettleserens meny mens rapporten er åpen: fjern modaliteten og behold nøyaktig samme utskriftskopi. Dette omfatter åpen plan, sammenligning og valgte planer.
+- Retur fra utskriftsmediet kan gjenopprette rapporten hvis `afterprint` mangler. Forsinkede returkall fra et tidligere forsøk skal ikke overskrive et nytt forsøk.
+
+Det er ikke laget nye rapportmaler eller endret hvilke planer eksportbyggerne tar med. `laan.html` får bare ny innholdsversjon for det felles skriptet. Lånesiden publiseres fortsatt ikke.
+
+## Kontroller
+
+Den nye testen `tests/rapport-utskrift-browser.cjs` dekker mus og berøring for tre rapportveier. Den prøver ignorert kall, unntak, gjentatte forsøk, nettleserens meny, asynkron avslutning, retur fra utskriftsmediet, bevart rapportinnhold og fokus. Chromium lager også PDF-er via nettleserhendelser uten å trykke på sidens utskriftsknapp.
+
+Den eksisterende `tests/pdf-merking-browser.cjs` beholder sine strukturkrav. Den simulerer nå `beforeprint` i stedet for å bruke hover som en omvei for å holde utskriften åpen. At testen ber om bokmerker med Playwright, dokumenterer fortsatt ikke bokmerker fra vanlig Chrome.
+
+Lokalt med Playwright 1.56.0 / Chromium 141 består den nye utskriftstesten og de eksisterende `pdf-merking-browser.cjs`, `last-ned-valgte-browser.cjs`, `eksport-innhold-browser.cjs`, `last-ned-browser.cjs` og `a11y-browser.cjs`. UU-kontrollen omfatter kontrast, trykkflater, navn, reflow ved 320 og 640 px, fokus, korte vinduer og tastatur i tre temaer. `engine.test.cjs`, `tax-export.test.cjs`, sikkerhetskontroll, versjonskontroll, JS-syntaks og diff-kontroll består også. Regresjonstesten stoppet med gammel kode både ved ignorert utskrift i berøringskontekst og ved unntak fra utskriftskallet.
+
+Firefox starter lokalt, men oppretting av testsiden ble hengende og kontrollen ble avbrutt etter 60 sekunder. WebKit kunne ikke starte på grunn av manglende systembiblioteker. Ingen av disse lokale forsøkene regnes som bestått. Den nye testen kjøres i alle tre motorer i GitHub Actions, som har eget nettlesermiljø. CI-resultatet må kontrolleres på PR-ens siste commit.
+
+Fysisk iPhone/Safari, VoiceOver og en ny ThefrontKit-prøve er ikke utført. Ingen ny poengsum eller full WCAG-/PDF/UA-godkjenning påstås.
+
+Før steg 1 lukkes: prøv å åpne rapporten, skrive ut, avbryte, returnere og prøve igjen på iPhone. Kontroller både én plan og valgte planer. Hvis nettleseren sperrer knappen, prøv nettleserens eget utskriftsvalg med rapporten åpen. Originalrapport og riktig planutvalg skal bevares.
+
+## Kilder brukt for denne rettingen
+
+Lest 4. november 2026:
+
+- [Uu-tilsynet: PDF](https://www.uutilsynet.no/veiledning/pdf/218), sist endret 8. januar 2025. Understreker et godt grunndokument og riktig konvertering. Eksemplene gjelder særlig Word og InDesign. Sidens eldre lenke til WCAG 2.1 erstatter ikke prosjektets standard 2.2.
+- [W3C: PDF-teknikker for WCAG 2.2](https://www.w3.org/WAI/WCAG22/Techniques/#pdf). Teknikker er eksempler på å oppfylle kriteriene, ikke en egen sertifisering eller et krav om ett bestemt program.
+- [PDF1: tekstalternativer](https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF1), [PDF3: leserekkefølge](https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF3), [PDF6: tabellstruktur](https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF6), [PDF9: overskrifter](https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF9), [PDF16: språk](https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF16) og [PDF18: tittel](https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF18). Brukes til å bevare eksisterende egenskaper. Automatisk tilstedeværelseskontroll dokumenterer ikke full leserekkefølge, grafenes faglige tekstalternativ eller alle visningsvalg for tittel.
+
+Oppdrag, kode, tester og dokumentasjon: ChatGPT/Codex. Egenkontroll. Ingen fysisk brukertest i denne økten.

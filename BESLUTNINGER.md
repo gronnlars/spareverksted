@@ -1395,3 +1395,13 @@ Lars har bedt om at lånesiden og lenkene fjernes fra nettstedet på grunn av ma
 Hele utgangspunktet er bevart på `arkiv/lan-for-avpublisering-2026-11-04` ved `c4e8299cfc2b69e046656613851968f22f036731`. Utviklingsfila beholdes for eksisterende tester, men publiseringsløpet fjerner `laan.html` og `lan.html` før opplasting. Bunny-speilingen fjerner gamle serverfiler og tømmer CDN-cachen. Lån-fanen fjernes. Å bare skjule lenken er forkastet fordi direkteadressen da fortsatt ville virke. Regnemotorene endres ikke.
 
 Ny publisering krever at feilene er rettet, språk og brukerreiser er gjennomgått, relevante beregnings-, rapport- og tilgjengelighetskontroller er utført, og Lars har godkjent publisering. Se `docs/laan-oppfolging-2026-11-04.md`.
+
+## Sparekalkulatoren: godkjent rettingsplan og utskriftsretur (4. november 2026)
+
+Lars godkjente planen for fanen Sparing og ba om ett grundig steg om gangen. Først rettes rapportens utskriftsflyt. Deretter følger tabeller/store tall, navigering/lagring, eksportdialoger og språk/måneder/vedlikehold. Lån forblir avpublisert. Tydelige overskrifter og etiketter i smal tabellvisning er et krav. Navigeringskommandoer skal tåle at resultatfeltet flyttes senere. Se [status og overlevering](docs/sparekalkulator-status-2026-11-04.md).
+
+Valgt: behold eksisterende rapportbygger og PDF-merking. Bruk utskriftshendelser fremfor hover til å styre retur. Et ignorert eller feilet utskriftskall skal gi rapport, sidetittel og fokus tilbake også ved berøring. Nettleserens egen utskrift skal kunne brukes med åpen rapport og beholde planutvalget. Den modale dialogen lukkes også i denne veien før PDF-en lages. Nye tester dekker feilforløp og de tre rapportutvalgene.
+
+Forkastet i dette steget: to knapper med ulike løfter som begge bare kaller `window.print`, en ny PDF-motor og ny utredning av de allerede dokumenterte PDF-begrensningene. Lars presiserer at 82/100 kom fra ThefrontKit. Claudes kontroll fra 3. november legges til grunn. Uu-tilsynets PDF-veiledning og W3Cs PDF-teknikker for WCAG 2.2 er lest, men gir ikke i seg selv en ny teknisk løsning eller en full godkjenning.
+
+Revurder hvis fysisk iPhone/Safari fortsatt sperrer begge utskriftsveier, mister rapporten eller gir feil innhold. Dette er ikke kontrollert på fysisk telefon i denne økten. Kode og tester: ChatGPT/Codex, egenkontroll. Ingen ny PDF-poengsum er målt.
