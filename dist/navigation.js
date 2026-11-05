@@ -8,19 +8,39 @@
   target.focus({preventScroll:true});
  }
  function fields(){return get(s.activePage==='dreams'?'dreamInputs':s.activePage==='withdrawals'?'withdrawInputs':'planInputs');}
+ function tableRows(){return [...get('tableWrap').querySelectorAll('tbody tr')];}
+ function tableLong(){const wrap=get('tableWrap');return s.activePage==='calculator'&&!wrap.hidden&&wrap.clientWidth>0&&wrap.scrollHeight>innerHeight*.8&&tableRows().length>1;}
+ function tableGo(last){const rows=tableRows(),row=last?rows.at(-1):rows[0];if(!row)return;row.tabIndex=-1;go(row);}
+ function tableJumpTarget(){
+  if(!tableLong())return null;
+  const wrap=get('tableWrap'),box=wrap.getBoundingClientRect(),available=innerHeight-get('mobileSummary').getBoundingClientRect().height-16;
+  if(box.top>=available||box.bottom<=0)return null;
+  const last=tableRows().at(-1).getBoundingClientRect();return last.top>=0&&last.top<available?'first':'last';
+ }
+ get('tableLast').onclick=()=>tableGo(true);get('tableFirst').onclick=()=>tableGo(false);
+ const shortcuts=document.createElement('nav');shortcuts.className='table-shortcuts';shortcuts.setAttribute('aria-label','Snarveier i lang tabell');shortcuts.hidden=true;
+ for(const [label,icon,action] of [['Til resultatet','↑',()=>go(hero)],['Til siste år','↓',()=>tableGo(true)]]){const button=document.createElement('button');button.type='button';button.textContent=icon;button.setAttribute('aria-label',label);button.title=label;button.onclick=action;shortcuts.append(button);}
+ document.body.append(shortcuts);
  function syncJump(){
+  const long=tableLong();get('tableJumpTop').hidden=!long;get('tableJumpBottom').hidden=!long;
+  for(const button of document.querySelectorAll('[data-show-result]')){const label='Se resultat '+(hero.getBoundingClientRect().top<button.getBoundingClientRect().top?'↑':'↓');if(button.textContent!==label)button.textContent=label;}
+  const summary=get('mobileSummary'),summaryShown=getComputedStyle(summary).display!=='none';
+  const tableTarget=tableJumpTarget(),showShortcuts=!!tableTarget&&(!summaryShown||summary.classList.contains('is-collapsed'));
+  shortcuts.hidden=!showShortcuts;document.body.classList.toggle('has-table-shortcuts',showShortcuts);
+  if(tableTarget){const label=tableTarget==='last'?'Til siste år ↓':'Til tabellstart ↑';if(jump.textContent!==label)jump.textContent=label;jump.setAttribute('aria-controls','tableWrap');return;}
   const above=hero.getBoundingClientRect().bottom<=0;
   const text=above?'Endre tall ↑':'Se resultat ↓';
   if(jump.textContent!==text)jump.textContent=text;
   jump.setAttribute('aria-controls',above?'planInputs':'savingsResult');
  }
- jump.onclick=()=>{if(hero.getBoundingClientRect().bottom<=0)go(fields());else if(!blockIfInvalid('Rett feltet før du ser resultatet.'))go(hero);};
+ jump.onclick=()=>{const target=tableJumpTarget();if(target){tableGo(target==='last');return;}if(hero.getBoundingClientRect().bottom<=0)go(fields());else if(!blockIfInvalid('Rett feltet før du ser resultatet.'))go(hero);};
  // Keep an incomplete field focused until click validation. Otherwise its blur error can move
  // the button between pointerdown and pointerup in Firefox. The action still waits for click,
  // so dragging away cancels it and keyboard activation keeps its normal behavior.
  document.addEventListener('pointerdown',event=>{
   if(event.target.closest('[data-show-result],#mobileResultButton')&&pendingKey())event.preventDefault();
  });
+ get('saveResult').onclick=openSave;
  get('seeGraph').onclick=()=>{get('graphTab').click();go(get('chartPanel'));};
  // A completed mobile start guide leads to the result, rather than asking users to pass their inputs again.
  function showCompletedPlan(){
@@ -37,11 +57,13 @@
   const link=event.target.closest('.site-header a[href="index.html"]');
   if(link&&link.id!=='brandHome'&&!wizardActive){event.preventDefault();setPage('calculator');go(fields());}
  });
+ get('compareJump').onclick=()=>{get('savedDetails').open=true;go(get('savedHeading'));};
  if(get('plansMenu'))get('plansMenu').onclick=()=>{get('savedDetails').open=true;go(get('savedHeading'));};
  let scheduled=false;
  function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;syncJump();});}
- addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule);
+ addEventListener('scroll',schedule,{passive:true});get('tableWrap').addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule);
  new ResizeObserver(schedule).observe(document.querySelector('.results'));
+ new MutationObserver(schedule).observe(get('mobileSummary'),{attributes:true,attributeFilter:['class']});
  // A heading receives focus, leaving the current input value and keyboard alone.
  for(const id of ['dreamInputs','withdrawInputs']){
   const panel=get(id),button=document.createElement('button');button.type='button';button.className='text-link return-fields';button.dataset.editFields='';button.textContent='Endre tall ↑';

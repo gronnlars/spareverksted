@@ -43,10 +43,10 @@ const server=http.createServer((req,res)=>{
    assert.equal(await page.locator('[data-value-mode="both"]').getAttribute('aria-pressed'),'true');
    assert.match((await page.locator('#total').innerText()).replace(/\s/g,''),/10404/);
    await page.locator('#tableTab').click();
-   const cells=await page.locator('#tableWrap tbody tr').last().locator('td').allTextContents();
+   const cells=await page.locator('#tableWrap tbody tr').last().locator('.savings-cell-value').allTextContents();
    const parse=x=>Number(x.replace(/[^0-9,.-]/g,'').replace(',','.'));
-   assert.ok(Math.abs(parse(cells[1])-10404)<.01);
-   assert.ok(parse(cells[2])===9903);
+   assert.ok(Math.abs(parse(cells[0])-10404)<.01);
+   assert.ok(parse(cells[1])===9903);
    assert.deepEqual(errors,[]);await page.close();
   }
   console.log(engine+' nettleserprøve: 320/390/1280 px, eksempel før uttak, kildeliste med formelkilde, ingen overflow, kalkulatorlenke 11 025 kr og kontrast med 10 404 kr / 9 902,68 kr bestått.');

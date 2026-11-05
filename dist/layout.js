@@ -9,18 +9,26 @@ if(liveSummary){
  // dekket mer enn en tredjedel av skjermen. Brukerens eget valg gjelder resten av besøket (WCAG 1.4.10, 2.4.11; 3.11.2026).
  const toggle=document.getElementById('mobileSummaryToggle');let chosen=null;
  const shown=()=>getComputedStyle(liveSummary).display!=='none';
- const setCollapsed=c=>{liveSummary.classList.toggle('is-collapsed',c);toggle.innerHTML=c?'Vis resultat':'<span aria-hidden="true">×</span>';toggle.setAttribute('aria-label',c?'Vis resultatlinjen':'Skjul resultatlinjen');};
+ // Behold knappeinnholdet når tilstanden er uendret: fokus under et trykk må ikke fjerne klikkmålet.
+ const setCollapsed=c=>{if(liveSummary.classList.contains('is-collapsed')===c)return;liveSummary.classList.toggle('is-collapsed',c);toggle.innerHTML=c?'Vis resultat':'<span aria-hidden="true">×</span>';toggle.setAttribute('aria-label',c?'Vis resultatlinjen':'Skjul resultatlinjen');};
  setCollapsed(false);
  toggle.addEventListener('click',()=>{chosen=!liveSummary.classList.contains('is-collapsed');setCollapsed(chosen);});
  const fit=()=>{if(chosen===null&&shown()){setCollapsed(false);if(liveSummary.offsetHeight>innerHeight/3)setCollapsed(true);}};
  // Det som har fokus, skal ikke ligge under linjen (WCAG 2.4.11).
- const unhide=el=>{if(!shown()||liveSummary.contains(el))return;const b=el.getBoundingClientRect(),top=liveSummary.getBoundingClientRect().top;if(b.bottom>top&&b.top<innerHeight)window.scrollBy({top:Math.min(b.bottom-top+8,b.top-8),behavior:'instant'});};
+ const unhide=el=>{if(!shown()||liveSummary.contains(el))return;const b=el.getBoundingClientRect(),top=liveSummary.getBoundingClientRect().top;if(b.bottom>top&&b.top<innerHeight&&(b.height<=top-8||b.top>=top))window.scrollBy({top:Math.min(b.bottom-top+8,b.top-8),behavior:'instant'});};
  document.addEventListener('focusin',event=>{
   const editing=Boolean(event.target.closest('#basic,#mobileSummary'));
   liveSummary.classList.toggle('is-editing',editing);
-  fit();unhide(event.target);
+  updateVisibility();unhide(event.target);
  });
  addEventListener('resize',fit);
+ const result=document.getElementById('savingsResult')||document.getElementById('loanResult');
+ const updateVisibility=()=>{if(!result)return;const r=result.getBoundingClientRect();liveSummary.classList.toggle('is-visible',r.height>0&&r.bottom<=0);fit();};
+ let scrollFrame=0;
+ addEventListener('scroll',()=>{if(!scrollFrame)scrollFrame=requestAnimationFrame(()=>{scrollFrame=0;updateVisibility();});},{passive:true});
+ addEventListener('resize',updateVisibility);
+ if(result)new ResizeObserver(updateVisibility).observe(result);
+ requestAnimationFrame(updateVisibility);
  document.addEventListener('focusout',event=>{if(!event.relatedTarget?.closest('#basic,#mobileSummary'))liveSummary.classList.remove('is-editing');});
  document.addEventListener('pointerdown',event=>{liveSummary.classList.toggle('is-editing',Boolean(event.target.closest('#basic,#mobileSummary')));});
 }

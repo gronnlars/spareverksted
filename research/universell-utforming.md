@@ -6,7 +6,7 @@ Standard: WCAG 2.2 nivå AA. Vi omtaler resultatet som «ingen avvik funnet i de
 
 ## 1. Krav til hver ny del
 
-En ny side eller funksjon er ikke ferdig før punktene under er oppfylt og kontrollert. Det som ikke er kontrollert, står som «ikke testet».
+En ny side eller funksjon er ikke ferdig før punktene under er oppfylt og kontrollert. For kalkulatorer gjelder i tillegg [KALKULATORDESIGN.md](../KALKULATORDESIGN.md), som beskriver felles oppbygging, ord og rapport/PDF. Det som ikke er kontrollert, står som «ikke testet».
 
 | Område | Krav | WCAG |
 | --- | --- | --- |

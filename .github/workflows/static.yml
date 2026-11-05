@@ -7,7 +7,7 @@ permissions:
   contents: read
 concurrency:
   group: spareverksted-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -27,6 +27,12 @@ jobs:
       - name: Check calculations and guidance
         run: |
           node tests/engine.test.cjs
+          node tests/laan-motor.test.cjs
+          python3 tests/laan-kontroll.test.py
+          node tests/laan-tekst.test.cjs
+          node tests/laan-eksport.test.cjs
+          node tests/laan-visning.test.cjs
+          python3 tests/laan-verdi-kontroll.test.py
           node tests/tax-export.test.cjs
           node tests/veileder.test.cjs
           node tests/veileder-context.test.cjs
@@ -70,6 +76,9 @@ jobs:
           node --check dist/app.js
           node --check dist/layout.js
           node --check dist/engine.js
+          node --check dist/laan-motor.js
+          node --check dist/laan-tekst.js
+          node --check dist/laan.js
           node --check dist/guidance.js
           node --check dist/journey.js
           node --check dist/meaning.js
@@ -103,95 +112,308 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Playwright
-        run: npm install --no-save --no-package-lock playwright@1.56.0
+        id: install
+        run: npm install --no-save --no-package-lock playwright@1.56.0 vnu-jar
       # Actions mounts /github/home with the host runner's uid; the container runs as root.
       # Firefox requires the home directory to belong to the browser's current user.
       - name: Match CI home ownership for Firefox
         run: chown "$(id -u):$(id -g)" /github/home
-      - name: Browser flows (Chromium)
-        run: |
-          node tests/security-browser.cjs
-          SPARE_ENGINE=firefox node tests/security-browser.cjs
-          SPARE_ENGINE=webkit node tests/security-browser.cjs
-          node tests/published-answers-browser.cjs
-          SPARE_ENGINE=firefox node tests/published-answers-browser.cjs
-          SPARE_ENGINE=webkit node tests/published-answers-browser.cjs
-          node tests/svarmal-browser.cjs
-          SPARE_ENGINE=firefox node tests/svarmal-browser.cjs
-          SPARE_ENGINE=webkit node tests/svarmal-browser.cjs
-          node tests/bsu-browser.cjs
-          SPARE_ENGINE=firefox node tests/bsu-browser.cjs
-          SPARE_ENGINE=webkit node tests/bsu-browser.cjs
-          node tests/ask-browser.cjs
-          SPARE_ENGINE=firefox node tests/ask-browser.cjs
-          SPARE_ENGINE=webkit node tests/ask-browser.cjs
-          node tests/veileder-browser.cjs
-          node tests/input-browser.cjs
-          node research/svarutkast/prov-renters-browser.cjs
-          SPARE_ENGINE=firefox node research/svarutkast/prov-renters-browser.cjs
-          SPARE_ENGINE=webkit node research/svarutkast/prov-renters-browser.cjs
-          node tests/veileder-sok-browser.cjs
-          node tests/veileder-sok-rettinger-browser.cjs
-          SPARE_ENGINE=firefox node tests/veileder-sok-rettinger-browser.cjs
-          SPARE_ENGINE=webkit node tests/veileder-sok-rettinger-browser.cjs
-          node tests/startflyt-browser.cjs
-          node tests/liggende-browser.cjs
-          node tests/ki-info-browser.cjs
-          SPARE_ENGINE=firefox node tests/ki-info-browser.cjs
-          SPARE_ENGINE=webkit node tests/ki-info-browser.cjs
-          node tests/spareform-browser.cjs
-          node tests/theme-browser.cjs
-          node tests/navigation-browser.cjs
-          node tests/roundtrip-browser.cjs
-          node tests/deling-browser.cjs
-          SPARE_ENGINE=firefox node tests/deling-browser.cjs
-          SPARE_ENGINE=webkit node tests/deling-browser.cjs
-          node tests/a11y-browser.cjs
-          node tests/html-struktur-browser.cjs
-          node tests/akse-browser.cjs
-          node tests/uten-stil-browser.cjs
-          node tests/polish-browser.cjs
-          SPARE_ENGINE=firefox node tests/polish-browser.cjs
-          SPARE_ENGINE=webkit node tests/polish-browser.cjs
-          node tests/felt-browser.cjs
-          node tests/forklaring-oppdateres-browser.cjs
-          SPARE_ENGINE=firefox node tests/forklaring-oppdateres-browser.cjs
-          SPARE_ENGINE=webkit node tests/forklaring-oppdateres-browser.cjs
-          node tests/planer-browser.cjs
-          SPARE_ENGINE=firefox node tests/planer-browser.cjs
-          SPARE_ENGINE=webkit node tests/planer-browser.cjs
-          node tests/plannavn-browser.cjs
-          node tests/plan-kalkulator-browser.cjs
-          SPARE_ENGINE=webkit node tests/plan-kalkulator-browser.cjs
-          node tests/angre-sletting-browser.cjs
-          node tests/last-ned-browser.cjs
-          SPARE_ENGINE=webkit node tests/last-ned-browser.cjs
-          node tests/resultatlinje-browser.cjs
-          SPARE_ENGINE=webkit node tests/resultatlinje-browser.cjs
-          node tests/eksport-innhold-browser.cjs
-          SPARE_ENGINE=webkit node tests/eksport-innhold-browser.cjs
-          node tests/last-ned-valgte-browser.cjs
-          SPARE_ENGINE=webkit node tests/last-ned-valgte-browser.cjs
-          node tests/pdf-merking-browser.cjs
-          node tests/bunntekst-browser.cjs
-          node tests/personvern-browser.cjs
-          SPARE_ENGINE=firefox node tests/personvern-browser.cjs
-          SPARE_ENGINE=webkit node tests/personvern-browser.cjs
-          node tests/begrep-browser.cjs
-          SPARE_ENGINE=firefox node tests/begrep-browser.cjs
-          SPARE_ENGINE=webkit node tests/begrep-browser.cjs
-          node tests/infosider-browser.cjs
-          SPARE_ENGINE=firefox node tests/infosider-browser.cjs
-          SPARE_ENGINE=webkit node tests/infosider-browser.cjs
-          node tests/kontakt-browser.cjs
-          SPARE_ENGINE=firefox node tests/kontakt-browser.cjs
-          SPARE_ENGINE=webkit node tests/kontakt-browser.cjs
-          SPARE_ENGINE=firefox node tests/felt-browser.cjs
-          SPARE_ENGINE=webkit node tests/felt-browser.cjs
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          java-package: jre
+      - name: "tests/rapport-html-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        env:
+          SPARE_HTML_VALIDATOR: node_modules/vnu-jar/build/dist/vnu.jar
+          SPARE_HTML_OUTPUT_DIR: /tmp/spareverksted-ui-review/html
+        run: node tests/rapport-html-browser.cjs
+      - name: "tests/rapport-html-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        env:
+          SPARE_HTML_VALIDATOR: node_modules/vnu-jar/build/dist/vnu.jar
+          SPARE_HTML_OUTPUT_DIR: /tmp/spareverksted-ui-review/html
+        run: SPARE_ENGINE=firefox node tests/rapport-html-browser.cjs
+      - name: "tests/rapport-html-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        env:
+          SPARE_HTML_VALIDATOR: node_modules/vnu-jar/build/dist/vnu.jar
+          SPARE_HTML_OUTPUT_DIR: /tmp/spareverksted-ui-review/html
+        run: SPARE_ENGINE=webkit node tests/rapport-html-browser.cjs
+      - name: "tests/security-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/security-browser.cjs
+      - name: "tests/security-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/security-browser.cjs
+      - name: "tests/security-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/security-browser.cjs
+      - name: "tests/published-answers-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/published-answers-browser.cjs
+      - name: "tests/published-answers-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/published-answers-browser.cjs
+      - name: "tests/published-answers-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/published-answers-browser.cjs
+      - name: "tests/svarmal-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/svarmal-browser.cjs
+      - name: "tests/svarmal-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/svarmal-browser.cjs
+      - name: "tests/svarmal-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/svarmal-browser.cjs
+      - name: "tests/bsu-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/bsu-browser.cjs
+      - name: "tests/bsu-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/bsu-browser.cjs
+      - name: "tests/bsu-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/bsu-browser.cjs
+      - name: "tests/ask-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/ask-browser.cjs
+      - name: "tests/ask-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/ask-browser.cjs
+      - name: "tests/ask-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/ask-browser.cjs
+      - name: "tests/veileder-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/veileder-browser.cjs
+      - name: "tests/input-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/input-browser.cjs
+      - name: "research/svarutkast/prov-renters-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node research/svarutkast/prov-renters-browser.cjs
+      - name: "research/svarutkast/prov-renters-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node research/svarutkast/prov-renters-browser.cjs
+      - name: "research/svarutkast/prov-renters-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node research/svarutkast/prov-renters-browser.cjs
+      - name: "tests/veileder-sok-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/veileder-sok-browser.cjs
+      - name: "tests/veileder-sok-rettinger-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/veileder-sok-rettinger-browser.cjs
+      - name: "tests/veileder-sok-rettinger-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/veileder-sok-rettinger-browser.cjs
+      - name: "tests/veileder-sok-rettinger-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/veileder-sok-rettinger-browser.cjs
+      - name: "tests/startflyt-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/startflyt-browser.cjs
+      - name: "tests/liggende-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/liggende-browser.cjs
+      - name: "tests/ki-info-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/ki-info-browser.cjs
+      - name: "tests/ki-info-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/ki-info-browser.cjs
+      - name: "tests/ki-info-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/ki-info-browser.cjs
+      - name: "tests/spareform-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/spareform-browser.cjs
+      - name: "tests/theme-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/theme-browser.cjs
+      - name: "tests/navigation-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/navigation-browser.cjs
+      - name: "tests/roundtrip-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/roundtrip-browser.cjs
+      - name: "tests/deling-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/deling-browser.cjs
+      - name: "tests/deling-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/deling-browser.cjs
+      - name: "tests/deling-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/deling-browser.cjs
+      - name: "tests/a11y-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/a11y-browser.cjs
+      - name: "tests/html-struktur-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/html-struktur-browser.cjs
+      - name: "tests/akse-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/akse-browser.cjs
+      - name: "tests/uten-stil-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/uten-stil-browser.cjs
+      - name: "tests/polish-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/polish-browser.cjs
+      - name: "tests/polish-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/polish-browser.cjs
+      - name: "tests/polish-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/polish-browser.cjs
+      - name: "tests/felt-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/felt-browser.cjs
+      - name: "tests/forklaring-oppdateres-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/forklaring-oppdateres-browser.cjs
+      - name: "tests/forklaring-oppdateres-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/forklaring-oppdateres-browser.cjs
+      - name: "tests/forklaring-oppdateres-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/forklaring-oppdateres-browser.cjs
+      - name: "tests/planer-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/planer-browser.cjs
+      - name: "tests/planer-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/planer-browser.cjs
+      - name: "tests/planer-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/planer-browser.cjs
+      - name: "tests/plannavn-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/plannavn-browser.cjs
+      - name: "tests/plan-kalkulator-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/plan-kalkulator-browser.cjs
+      - name: "tests/plan-kalkulator-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/plan-kalkulator-browser.cjs
+      - name: "tests/angre-sletting-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/angre-sletting-browser.cjs
+      - name: "tests/last-ned-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/last-ned-browser.cjs
+      - name: "tests/last-ned-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/last-ned-browser.cjs
+      - name: "tests/resultatlinje-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/resultatlinje-browser.cjs
+      - name: "tests/resultatlinje-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/resultatlinje-browser.cjs
+      - name: "tests/eksport-innhold-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/eksport-innhold-browser.cjs
+      - name: "tests/eksport-innhold-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/eksport-innhold-browser.cjs
+      - name: "tests/last-ned-valgte-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/last-ned-valgte-browser.cjs
+      - name: "tests/last-ned-valgte-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/last-ned-valgte-browser.cjs
+      - name: "tests/pdf-merking-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/pdf-merking-browser.cjs
+      - name: "tests/sparetabell-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/sparetabell-browser.cjs
+      - name: "tests/sparetabell-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/sparetabell-browser.cjs
+      - name: "tests/sammenligningstabell-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/sammenligningstabell-browser.cjs
+      - name: "tests/sammenligningstabell-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/sammenligningstabell-browser.cjs
+      - name: "tests/rapport-utskrift-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/rapport-utskrift-browser.cjs
+      - name: "tests/rapport-utskrift-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/rapport-utskrift-browser.cjs
+      - name: "tests/rapport-utskrift-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/rapport-utskrift-browser.cjs
+      - name: "tests/bunntekst-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/bunntekst-browser.cjs
+      - name: "tests/laan-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/laan-browser.cjs
+      - name: "tests/laan-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/laan-browser.cjs
+      - name: "tests/laan-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/laan-browser.cjs
+      - name: "tests/personvern-browser.cjs (chromium)"
+        id: privacy_chromium
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/personvern-browser.cjs
+      - name: "tests/personvern-browser.cjs (firefox)"
+        id: privacy_firefox
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/personvern-browser.cjs
+      - name: "tests/personvern-browser.cjs (webkit)"
+        id: privacy_webkit
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/personvern-browser.cjs
+      - name: "tests/begrep-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/begrep-browser.cjs
+      - name: "tests/begrep-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/begrep-browser.cjs
+      - name: "tests/begrep-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/begrep-browser.cjs
+      - name: "tests/infosider-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/infosider-browser.cjs
+      - name: "tests/infosider-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/infosider-browser.cjs
+      - name: "tests/infosider-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/infosider-browser.cjs
+      - name: "tests/kontakt-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/kontakt-browser.cjs
+      - name: "tests/kontakt-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/kontakt-browser.cjs
+      - name: "tests/kontakt-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/kontakt-browser.cjs
+      - name: "tests/felt-browser.cjs (firefox)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=firefox node tests/felt-browser.cjs
+      - name: "tests/felt-browser.cjs (webkit)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: SPARE_ENGINE=webkit node tests/felt-browser.cjs
       - name: Write verified privacy result
+        id: privacy_report
+        if: ${{ !cancelled() && steps.privacy_chromium.outcome == 'success' && steps.privacy_firefox.outcome == 'success' && steps.privacy_webkit.outcome == 'success' }}
         run: python3 scripts/personvern-status.py /tmp/spareverksted-privacy
       - name: Privacy evidence
-        if: always()
+        if: ${{ !cancelled() && steps.privacy_report.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
           name: privacy-evidence
@@ -199,6 +421,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
       - name: Verified privacy page
+        if: ${{ !cancelled() && steps.privacy_report.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
           name: privacy-page
@@ -223,6 +446,11 @@ jobs:
           path: dist
       - name: Build source download
         run: python3 scripts/package-source.py
+      - name: Remove unpublished loan page from site artifact
+        run: |
+          rm -f dist/laan.html dist/lan.html
+          test ! -e dist/laan.html
+          test ! -e dist/lan.html
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

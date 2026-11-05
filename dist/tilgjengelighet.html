@@ -8,11 +8,11 @@
 <meta name="description" content="Hva jeg har gjort for at Spareverksted skal kunne brukes av alle, hva som er kontrollert, hva som ikke er det, og hvilke svar jeg venter på.">
 <meta name="theme-color" content="#183f36">
 <title>Tilgjengelighet · Spareverksted</title>
-<link rel="stylesheet" href="style.css?v=ef64ad6174">
-<link rel="stylesheet" href="layout.css?v=e743010d2f">
+<link rel="stylesheet" href="style.css?v=a9e0a6b58e">
+<link rel="stylesheet" href="layout.css?v=0bfa307409">
 <link rel="stylesheet" href="theme.css?v=60e6f18fa2">
-<script defer src="layout.js?v=a7caeab047"></script>
-<link rel="stylesheet" href="navigation.css?v=0a9b820599">
+<script defer src="layout.js?v=7922c2289a"></script>
+<link rel="stylesheet" href="navigation.css?v=18ff9f0060">
 <link rel="stylesheet" href="om.css?v=3516e4f4f5">
 <link rel="stylesheet" href="infosider.css?v=e03bb9f0ae">
 <script defer src="infosider.js?v=68fcf0410b"></script>
@@ -83,6 +83,8 @@
 <li>Resultatlinjen nederst kan skjules med × og hentes fram med «Vis resultat». Når den ville tatt mer enn en tredjedel av skjermhøyden, for eksempel ved sterk zoom, starter den skjult.</li>
 <li>Farge er ikke eneste måte ting skilles fra hverandre på.</li>
 <li>Siden tar hensyn til at du har valgt redusert bevegelse på enheten din.</li>
+<li>Rapporter du lagrer med «Lagre som PDF» i Chrome eller Edge, er merket for skjermlesere. PDF-en har tittel, språk, overskrifter, avsnitt og tabeller, og grafene har en tekst som forteller hva de viser.</li>
+<li>Bunnteksten er et eget område på siden, så du kan hoppe dit med skjermleser.</li>
 </ul>
 </div>
 </details>
@@ -108,6 +110,7 @@
 <p>Siden testes automatisk hver gang den endres, og jeg har gjort noen tester for hånd. Flere av feilene som er funnet, er rettet. Kjente begrensninger er beskrevet nedenfor. Det er for få tester med brukere til å si at siden fungerer godt for alle, og ingenting her er en godkjenning.</p>
 <details class="check-log"><summary>Tidligere kontroller og rettelser</summary>
 <ul>
+<li><strong>PDF og automatiske sjekker 3. november 2026.</strong> Jeg kjørte Frontkits gratis sjekker av forsiden og av en PDF lagret fra Chrome på en Windows-PC. PDF-en var ikke merket for skjermlesere. Feilen var min: rapportvinduet stengte resten av siden for hjelpemidler mens PDF-en ble laget. Det er rettet. En ny PDF fikk 82 av 100. Den har tittel, språk, merket struktur og lesrekkefølge, og alle grafene har tekst. Den mangler bokmerker, merket for standarden PDF/UA og to tekniske detaljer. De krever at jeg lager PDF-en selv i stedet for å bruke nettleseren, og det har jeg utsatt. PDF-en blir bare merket når du velger «Lagre som PDF», ikke skriveren «Microsoft Print to PDF». På selve siden rettet jeg disse funnene: bunnteksten lå inni hovedinnholdet, valgknappene på startsiden ble lest opp med tittel og forklaring i ett, feltet med delelenken manglet synlig navn, skjemaet etter startvalget manglet hovedoverskrift, og to felt sa ikke at de må fylles ut. Noen funn var feil i verktøyet, fordi det leser siden uten å kjøre den. Det gjelder at hopp-lenken skulle mangle og at skjulte knapper skulle kunne få fokus. Hvordan jeg har vurdert hvert funn, står i <a href="https://github.com/gronnlars/spareverksted/blob/main/BESLUTNINGER.md">beslutningsloggen</a>. Ikke prøvd med skjermleser.</li>
 <li><strong>WAVE-status 3. november 2026.</strong> Forsiden har AIM-score 10 av 10 og to varsler, som er vurdert og beholdt. Tidligere målinger nedenfor beskriver siden slik den var da de ble kjørt.</li>
 <li><strong>Automatiske tester</strong> kjører hver gang siden endres. De sjekker kontrast, trykkflater, tastatur, fokus og forstørring i tre fargetemaer og ved flere skjermbredder, i nettleseren Chromium. Noen brukerflyter testes også i Firefox og WebKit, motoren bak Safari.</li>
 <li><strong>Feltfeil rettet 30. oktober 2026.</strong> I en prøve med Safari på iPhone og Chrome på PC fant jeg at gamle feilbeskjeder og røde felt kunne bli stående etter retting. Startskjemaet kunne også slippe gjennom beløp som først ble avvist i kalkulatoren. Feilene er rettet, og feiltekst vises ved feltene. Nye automatiske tester av ugyldige verdier og retting består i Chromium ved 390 og 1280 pikslers bredde. Den eksisterende nettleserpakken med kontroller i Chromium, Firefox og WebKit består også. Rettelsene er ikke prøvd på nytt med VoiceOver eller NVDA.</li>
@@ -152,6 +155,7 @@ Advarslene har så langt gjeldt overskrifter som fylles inn mens du bruker siden
 <li>Alle sider i Safari på iPhone og i Firefox.</li>
 <li>Tester med flere brukere som selv er avhengige av hjelpemidler. Én test er gjort, og det er ikke nok.</li>
 <li>De delene av WCAG som ikke kan testes automatisk.</li>
+<li>PDF-rapportene lagret fra Safari eller Firefox, og PDF-ene lest med skjermleser.</li>
 </ul>
 <p>Meldingen som vises når du åpner en delt lenke med ugyldige verdier, forsvinner av seg selv etter en stund. Det samme gjør meldingen når lagring eller deling stoppes fordi et felt er feil. Feltfeilene i startskjemaet og kalkulatoren er egne beskjeder som blir stående til verdien rettes. Jeg har fortsatt ikke kontrollert om de kortvarige statusmeldingene gir nok tid med hjelpemidler.</p>
 </div>

@@ -37,10 +37,33 @@ const engine=process.env.SPARE_ENGINE||'chromium',browserType={chromium,firefox,
   // (lesemodus, egne stilark, skjermleser). Samme prinsipp som grafforklaringen 28.10.2026.
   const pairs=await p.evaluate(()=>[...document.querySelectorAll('#savingsResult dl.metrics>div')].map(d=>[d.querySelector('dt')?.textContent.trim(),d.querySelector('dd strong')?.textContent.trim()]));
   assert(pairs.length>=2,'result rows are dt/dd pairs');
-  assert.deepEqual(pairs[0][0],'Du setter inn');assert.match(pairs[0][1],/^1\s200\s000\skr$/);
+  assert.deepEqual(pairs[0][0],'Innskudd totalt');assert.match(pairs[0][1],/^1\s200\s000\skr$/);
   assert(pairs.every(([k,v])=>k&&v),'every label has a value');
   // Resultat og forklaring i samme <article>, grafen utenfor.
   assert.equal(await p.evaluate(()=>{const a=document.querySelector('article.result-article');return !!a&&a.contains(document.getElementById('savingsResult'))&&a.contains(document.getElementById('meaning'))&&!a.contains(document.getElementById('chartPanel'));}),true);
+  // «Begge» viser to kroneverdier, ikke scenarioer. Inaktivt valg skal forklares og huskes.
+  const range=p.locator('#showRange'),hint=p.locator('#rangeUnavailable');
+  const gap=()=>p.evaluate(()=>document.getElementById('chart').getBoundingClientRect().top-document.querySelector('.range-switch').getBoundingClientRect().bottom);
+  for(const checked of [true,false]){
+   await p.locator('[data-value-mode="nominal"]').click();
+   await range.setChecked(checked);
+   const beforeGap=await gap();
+   await p.locator('[data-value-mode="both"]').click();
+   assert(Math.abs(await gap()-beforeGap)<=1,'ingen ekstra tekstlinje som flytter grafen');
+   assert(await range.isDisabled(),'scenariovalget er utilgjengelig i Begge');
+   assert.equal(await range.isChecked(),checked,'tidligere avkrysning huskes');
+   assert(await hint.evaluate(e=>e.hidden),'forklaringen tar ingen synlig plass');assert.equal(await range.getAttribute('aria-describedby'),'rangeUnavailable');
+   assert(await p.locator('#fanSummary').isHidden());assert(await p.locator('#fanTuning').isHidden());
+   assert(await p.locator('#fanHelp').isEnabled(),'forklaring kan fortsatt åpnes');
+   await p.locator('#fanHelp').click();
+   assert.match(await p.locator('#helpBody').innerText(),/Velg «Kroner» eller «Kjøpekraft»/);
+   await p.locator('#helpClose').click();
+   await p.locator('#tableTab').click();assert(await range.isDisabled(),'samme regel i tabellvisning');
+   await p.locator('[data-value-mode="real"]').click();
+   assert(await range.isEnabled());assert.equal(await range.isChecked(),checked);
+   assert(await hint.isHidden());assert.equal(await range.getAttribute('aria-describedby'),null);
+   await p.locator('#graphTab').click();
+  }
   assert.deepEqual(errors,[]);
   console.log('forklaring-oppdateres-browser ('+engine+'): ok');
  }finally{if(browser)await browser.close();server.close();}

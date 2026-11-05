@@ -15,12 +15,14 @@ Les før arbeid:
 1. [CONTRIBUTING.md](CONTRIBUTING.md): bidrag, lisens og selvstendige overleveringer.
 2. [BESLUTNINGER.md](BESLUTNINGER.md): valgene, alternativene og begrunnelsene.
 3. [SPRAKREGLER.md](SPRAKREGLER.md): språk og faglig presisjon.
-4. [SVARMAL.md](SVARMAL.md): valg av svarform, presentasjon og kontroll før publisering.
-5. [KILDEREGLER.md](KILDEREGLER.md): kilder, datoer, foreslått mot vedtatt og når en regel må brytes.
-6. [research/plan.md](research/plan.md): faser, videreutvikling av kalkulatoren og kontrollert innholdspåfyll.
-7. [research/universell-utforming.md](research/universell-utforming.md): krav og åpne kontroller.
-8. [SPORSMALSKO.md](SPORSMALSKO.md), [daglig oppgave](research/DAGLIG-OPPGAVE.md) og [arbeidslogg](research/ARBEIDSLOGG.md) ved innholdsarbeid.
-9. [SVARSKJEMA.md](SVARSKJEMA.md) ved arbeid med spørsmål og svar: skjema, statuser, roller og oppdragstekster. Implementert etter Lars sitt oppdrag 3.11.2026. Kjør `python3 scripts/svar.py --check`. Se `docs/svargrunnmur.md` for bygging og kontrollbevis.
+4. [KLARSPRAK.md](KLARSPRAK.md): klarspråkkrav for brukerreiser, knapper, skjema og rapporter.
+5. [SVARMAL.md](SVARMAL.md): valg av svarform, presentasjon og kontroll før publisering.
+6. [KILDEREGLER.md](KILDEREGLER.md): kilder, datoer, foreslått mot vedtatt og når en regel må brytes.
+7. [KALKULATORDESIGN.md](KALKULATORDESIGN.md) ved arbeid med en kalkulator: sideoppbygging, ord, lagring, rapport/PDF, mobil og navn på filer (æ blir a, ø blir o, å blir a, som Språkrådet tilrår). Malen er sparekalkulatoren.
+8. [research/plan.md](research/plan.md): faser, videreutvikling av kalkulatoren og kontrollert innholdspåfyll.
+9. [research/universell-utforming.md](research/universell-utforming.md): krav og åpne kontroller.
+10. [SPORSMALSKO.md](SPORSMALSKO.md), [daglig oppgave](research/DAGLIG-OPPGAVE.md) og [arbeidslogg](research/ARBEIDSLOGG.md) ved innholdsarbeid.
+11. [SVARSKJEMA.md](SVARSKJEMA.md) ved arbeid med spørsmål og svar: skjema, statuser, roller og oppdragstekster. Implementert etter Lars sitt oppdrag 3.11.2026. Kjør `python3 scripts/svar.py --check`. Se `docs/svargrunnmur.md` for bygging og kontrollbevis.
 
 Main er autoritativt arbeidsgrunnlag. Hent fersk status og les åpne PR-er før endring. Ikke anta at en samtale eller usammenslått gren er kjent for neste bidragsyter. Ikke overskriv andres arbeid eller opprett konkurrerende køer. Dokumenter viktige beslutninger og hva som kan få oss til å revurdere dem.
 
@@ -29,6 +31,10 @@ Prioritet: konkrete feil og utløpte påstander, deretter neste avgrensede spør
 KI brukes i stor grad til å utvikle innhold og kode. Svarene i «Spør om sparing» skrives og kildekontrolleres før publisering. Kildekontrollen kan være utført med KI. Menneskelig eller uavhengig fagkontroll oppgis bare når den er dokumentert. Ingen KI-modell lager svar under brukerens besøk. Ingen innlogging, reklame eller ekstern logging som del av dette arbeidet. Beregninger foregår i størst mulig grad lokalt.
 
 Oppgi utførte kontroller, begrensninger og faktisk status. Grønne tester beviser ikke full tilgjengelighet eller brukerforståelse. Main-push starter automatisk testing og publisering; ikke beskriv sammenslåing som en upublisert handling.
+
+## Navn på filer og adresser
+
+Filnavn, nettadresser, id-er, CSS-klasser, grener og navn på nedlastede filer skrives med små bokstaver a–z, tall og bindestrek. æ blir a, ø blir o, å blir a (`lan.html`, `sparemal`, `kjopekraft`), slik Språkrådet tilrår etter NS 4129. Ikke «ae», «aa» eller «oe». Tekst brukeren ser, har alltid æ, ø og å. Gamle adresser som endres, må fortsatt virke. Lagringsnøkler (`sv-...`) endres ikke. Se KALKULATORDESIGN.md, del 7.
 
 ## Mellomlagring
 
@@ -45,6 +51,8 @@ Hent fersk main før hver endring (`git fetch origin main` og bygg grenen på `o
 Bakgrunn: 3.11.2026 ba Lars om en sperre etter flere runder der en modell lastet opp gammel motor over nyere arbeid.
 
 ## Ny side eller endring i utseende
+
+En kalkulator følger [KALKULATORDESIGN.md](KALKULATORDESIGN.md). Avvik fra malen står i tabellen der, ellers er de feil.
 
 Bruk det som finnes. En ny side kopierer hodet og toppfeltet fra `dist/spor.html`: CSP først, `theme.js` før stilene, deretter `layout.css`, `theme.css` og `navigation.css`, samme `<header class="site-header" id="toppen">` med `.brand` og `.site-nav`, og samme bunntekst. Da får siden fargetemaene, menyen, de myke sideovergangene og bunnteksten uten egen kode. Kjør `python3 scripts/versjoner.py` og testene for de sidene du rører.
 

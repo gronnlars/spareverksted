@@ -1,5 +1,5 @@
 'use strict';
-// «Last ned valgte» (Lars 3.11.2026): de planene som er krysset av i lista, samlet i én PDF eller én Excel-fil.
+// «Last ned planene» (Lars 3.11.2026, nytt navn 4.11.2026): de planene som er krysset av i lista, samlet i én PDF eller én Excel-fil.
 // Først én sammenligning per kalkulator (Sparing, Sparemål, Uttak) med de tre øverste valgte i lista, så én del per plan.
 // Bygger på tabellene i journey.js og rapporten i experience.js. Ingen nye beregninger: alt hentes fra engine.js.
 (function(){
@@ -30,7 +30,7 @@
  // Grafer i sammenligningen (Lars 3.11.2026). Planene skilles med både farge og strektype, ikke bare farge.
  // Tabellen under hver graf er tekstalternativet med de samme tallene.
  const DASH=['','8 5','2 4'];
- const axis=x=>{const a=Math.abs(x);return a>=1e6?dec.format(Math.round(x/1e5)/10)+' mill.':a>=1e3?dec.format(Math.round(x/1e3))+' tusen':dec.format(Math.round(x));};
+ const axis=axisCompact;
  function ticks(max){const step=[1,2,2.5,5,10].map(m=>m*Math.pow(10,Math.floor(Math.log10(Math.max(max,1)/4)))).find(s=>max/s<=5)||max/4;const out=[0];while(out.at(-1)<max-1e-9)out.push(out.at(-1)+step);return out;}
  function lineChart(series,xLabel,label){const W=420,H=260,L=62,R=12,T=12,B=42,xs=series.flatMap(s=>s.pts.map(p=>p[0])),ys=series.flatMap(s=>s.pts.map(p=>p[1]));
   const xMax=Math.max(1,...xs),yt=ticks(Math.max(1,...ys)),yMax=yt.at(-1)||1,X=x=>L+(W-L-R)*x/xMax,Y=y=>T+(H-T-B)*(1-y/yMax);
@@ -60,11 +60,12 @@
  const emptyYear=(p,r)=>Number.isFinite(r.exhausted)&&(r.exhausted<=r.n||p.n.withdrawMode==='duration')?r.exhausted:0;
  function summary(p){const f=figures(p);
   if(p.kind==='dreams')return `<p>Mål ved kjøp: <b>${money(f.plans[0].goal)}</b> om ${dec.format(p.n.dreamYears)} år.${p.n.dreamReal?' Budsjettet er i dagens priser.':''}</p>`;
-  let h=`<p>Etter ${dec.format(f.T)} år med sparing: <b>${money(f.final)}</b>, omtrent ${money(f.real)} i dagens kjøpekraft. Egne innskudd: ${money(f.paid)}.</p>`;
+  let h=`<p>Etter ${periodText(f.T)} med sparing: <b>${money(f.final)}</b>, omtrent ${money(f.real)} i dagens kjøpekraft. Egne innskudd: ${money(f.paid)}.</p>`;
   if(p.kind==='withdrawals')h+=`<p>Første uttak: <b>${money(f.r.first.actual)}</b>. Samlet tatt ut: ${money(f.r.last.total)}. Igjen etter ${f.r.n} år: <b>${money(f.left)}</b>, omtrent ${money(f.leftReal)} i dagens kjøpekraft.${emptyYear(p,f.r)?' Pengene er brukt opp ved uttaket i år '+emptyYear(p,f.r)+'.':''}</p>`;
   return h;}
  function buildSelectedReport(){const list=chosen();if(!list.length)throw Error('Velg minst én plan.');
-  let html=`<div class="report-heading"><p class="eyebrow">SPAREVERKSTED</p><h2>Valgte planer</h2><p>${list.map(p=>esc(p.name)).join(', ')}</p><p>Beregnet ${today()} · Regneeksempel før skatt</p></div>`;
+  if(list.some(p=>p.ok&&p.kind==='calculator'&&overReportLimit(planSheets(p.n).flatMap(sh=>sh.rows.flat()))))return reportLimitMarkup(list.map(p=>p.name));
+  let html=`<div class="report-heading"><p class="eyebrow">SPAREVERKSTED</p><h2>Lagrede planer</h2><p>${list.map(p=>esc(p.name)).join(', ')}</p><p>Beregnet ${today()} · Regneeksempel før skatt</p></div>`;
   // Første del står på samme side som overskriften. Resten starter på ny side ved utskrift.
   let first=0;
   for(const g of groups(list))if(g.all.length>1){const top=g.all.slice(0,3);
@@ -79,7 +80,7 @@
  function sheetName(name,used){let base=String(name).replace(/[\[\]:*?\/\\]/g,' ').replace(/\s+/g,' ').trim().slice(0,28)||'Plan',n=base,k=2;while(used.has(n.toLowerCase()))n=base.slice(0,25)+' ('+(k++)+')';used.add(n.toLowerCase());return n;}
  function selectedSheets(){const list=chosen();if(!list.length)throw Error('Velg minst én plan.');const used=new Set(['oversikt']);
   const over=[['Plan','Kalkulator','Hovedresultat','Beløp, kr','I dagens kroner, kr'],...list.map(p=>{if(!p.ok)return [p.name,NAMES[p.kind],'Kan ikke beregnes','',''];const f=figures(p);
-   return p.kind==='dreams'?[p.name,NAMES[p.kind],'Nødvendig sparing per måned, lavere risiko',Math.ceil(f.plans[0].required),'']:p.kind==='withdrawals'?[p.name,NAMES[p.kind],'Igjen etter '+f.r.n+' års uttak',kr(f.left),kr(f.leftReal)]:[p.name,NAMES[p.kind],'Etter '+dec.format(f.T)+' år',kr(f.final),kr(f.real)];})];
+   return p.kind==='dreams'?[p.name,NAMES[p.kind],'Nødvendig sparing per måned, lavere risiko',Math.ceil(f.plans[0].required),'']:p.kind==='withdrawals'?[p.name,NAMES[p.kind],'Igjen etter '+f.r.n+' års uttak',kr(f.left),kr(f.leftReal)]:[p.name,NAMES[p.kind],'Etter '+periodText(f.T),kr(f.final),kr(f.real)];})];
   const sheets=[{name:'Oversikt',rows:over}];
   for(const g of groups(list))if(g.all.length>1)sheets.push({name:sheetName(NAMES[g.kind]+' sammenlignet',used),rows:compareRows(g.kind,g.all.slice(0,3))});
   for(const p of list){if(!p.ok)continue;const rows=[...settingsMatrix(p.n)];for(const sh of planSheets(p.n))rows.push([],[sh.name],...sh.rows);sheets.push({name:sheetName(p.name,used),rows});}
@@ -89,7 +90,8 @@
  const btn=document.getElementById('downloadSelected'),dlg=document.getElementById('selectedExportDialog');
  if(!btn||!dlg)return;
  // Knappen står under lista. Uten avkrysning gjelder den alle planene (Lars 3.11.2026).
- const syncButton=()=>{const n=pickedPlans.size;btn.textContent=n?'Last ned valgte ('+n+')':'Last ned alle planene';document.getElementById('selectedDownloadRow').hidden=!saved.length;};
+// «Last ned planene» med antall når noen er valgt, «Last ned planen» når bare én er med (Lars 4.11.2026, korte ord).
+ const syncButton=()=>{const n=pickedPlans.size,count=n||saved.length;btn.textContent=(count===1?'Last ned planen':'Last ned planene')+(n?' ('+n+')':'');document.getElementById('selectedDownloadRow').hidden=!saved.length;};
  const sync=window.syncPickTools;window.syncPickTools=syncPickTools=function(){sync.apply(this,arguments);syncButton();};syncButton();
  btn.onclick=()=>{show('selectedExportError',false);const n=picks().length;document.getElementById('selectedExportCount').textContent=(pickedPlans.size?(n===1?'1 plan er valgt.':n+' planer er valgt.'):'Alle de '+n+' lagrede planene er med.');dlg.showModal();};
  document.getElementById('closeSelectedExport').onclick=()=>dlg.close();
