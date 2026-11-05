@@ -174,3 +174,15 @@ body[data-level=simple] #savingsResult .metrics{grid-template-columns:repeat(2,m
 #reportPreview .savings-stacked{overflow:visible;max-height:none}
 #reportPreview .savings-stacked td,#reportPreview .savings-stacked th{position:static;white-space:normal}
 #reportPreview .savings-stacked .savings-cell-label{white-space:normal}
+
+/* I radvis tabell skal ikke årstallet dekke verdiene under seg. */
+#tableWrap.savings-stacked th[scope=row]{position:static;top:auto;z-index:auto}
+#tableWrap .savings-cell-label::after{content:':' }
+#tableWrap tbody tr{scroll-margin-block-start:16px}
+.table-jump button{min-height:44px}
+.report-contact{display:inline-flex;align-items:center;min-height:44px;padding:10px 16px;border:1px solid var(--control-border,#cfdacf);border-radius:9px;font-weight:600;background:var(--surface,#fff);text-decoration:none}
+.report-contact[hidden]{display:none}
+@media(max-width:360px){
+ #planInputs .two{grid-template-columns:minmax(0,1fr)}
+ #modes{flex-wrap:wrap}#modes button{white-space:normal}
+}

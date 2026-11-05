@@ -83,6 +83,8 @@ Delene kommer i denne rekkefølgen. Det som er felles for nettstedet (toppfelt, 
 
 - Nedlastet HTML valideres som en egen fil med Nu Html Checker, med CSS-kontroll. Bare stiler som brukes i rapporten eksporteres. Rapporten følger nettsidens valgte tema, og testen sammenligner farger i forhåndsvisning og fil.
 
+- Rapporten for Sparing inneholder også den viste sparetabellen, med de samme kolonnene og verdiene.
+- Ved rapportens eksisterende størrelsesgrense på 10²¹ kr vises en tydelig begrensning og avtalt testhilsen. HTML/PDF-knappene erstattes i denne ekstremrapporten med «Kontakt Lars» til `om.html#kontakt`. Normal rapport gjenoppretter formatknappene.
 - Rapporten lages med `dist/report-print.js`. Den lukker rapportvinduet mens PDF-en lages, slik at Chrome og Edge merker PDF-en, og åpner det igjen etterpå. Se BESLUTNINGER.md, «PDF-rapporten».
 - Det samme gjelder når brukeren velger utskrift i nettleserens meny mens rapporten er åpen. Rapportens planutvalg beholdes. Et ignorert eller feilet utskriftskall skal gi rapporten, tittelen og fokus tilbake, med hjelp om nettleserens meny. Bruk utskriftshendelser, ikke mus eller berøring, til å avgjøre om utskrift pågår.
 - Utskriftskopien har én h1 og nivåer uten hopp. Den h1-en blir PDF-ens tittel og forslag til filnavn.
@@ -95,11 +97,13 @@ Delene kommer i denne rekkefølgen. Det som er felles for nettstedet (toppfelt, 
 ## 6. Mobil og PC
 
 - Mobil først. Under 761 px bredde ligger alt i én kolonne, med en resultatlinje nederst som kan skjules. Den skal ikke dekke feltet med fokus.
-- På PC står tallene til venstre og resultatet til høyre. «Endre tall» vises i sparekalkulatoren når oppsettet har én kolonne. Kommandoen «Se resultat» og målet i siden beholdes også for senere endringer av oppsettet.
+- På PC står tallene til venstre og resultatet til høyre. «Endre tall» vises i sparekalkulatoren når oppsettet har én kolonne. «Se resultat» finnes etter grunnfeltene og ved bunnen av PC-skjemaet. Kommandoen bruker det levende resultatfeltet som mål.
 - «Lagre plan» finnes ved hovedresultatet og bruker samme lagredialog som plandelen.
 - Spareperioder i forklaring og rapport vises med år og måneder, avrundet til samme antall måneder som motoren. Desimalår i tallfelt og eksportdata beholdes.
 - Resultatkortets delbeløp følger plassen i kolonnen og legges under hverandre ved plassmangel. Siffergrupper skal ikke deles midt i sifrene.
 - Rapportens forhåndsvisning bruker samme radvise tabellmønster ved plassmangel. Tilpasningen endrer ikke den separate PDF-kopien.
+- En lang sparetabell har hopp til siste år og tilbake til tabellstart. På mobil brukes også den eksisterende resultatlinjen mens man leser tabellen. Årstallet følger egen rad i radvis visning.
+- Samlede innskudd merkes «Innskudd totalt», med presisering om dagens kroner når det gjelder.
 - Ingen sideveis rulling ved 320 px. Liggende mobil skal fungere.
 - Ingen plutselige sprang i oppsettet når tall endres.
 - Fanene, ingressen og «Ny beregning» står likt på alle kalkulatorsider. Kontrollert i `tests/linjeforing-browser.cjs`.

@@ -64,6 +64,7 @@
   if(p.kind==='withdrawals')h+=`<p>Første uttak: <b>${money(f.r.first.actual)}</b>. Samlet tatt ut: ${money(f.r.last.total)}. Igjen etter ${f.r.n} år: <b>${money(f.left)}</b>, omtrent ${money(f.leftReal)} i dagens kjøpekraft.${emptyYear(p,f.r)?' Pengene er brukt opp ved uttaket i år '+emptyYear(p,f.r)+'.':''}</p>`;
   return h;}
  function buildSelectedReport(){const list=chosen();if(!list.length)throw Error('Velg minst én plan.');
+  if(list.some(p=>p.ok&&p.kind==='calculator'&&overReportLimit(planSheets(p.n).flatMap(sh=>sh.rows.flat()))))return reportLimitMarkup(list.map(p=>p.name));
   let html=`<div class="report-heading"><p class="eyebrow">SPAREVERKSTED</p><h2>Lagrede planer</h2><p>${list.map(p=>esc(p.name)).join(', ')}</p><p>Beregnet ${today()} · Regneeksempel før skatt</p></div>`;
   // Første del står på samme side som overskriften. Resten starter på ny side ved utskrift.
   let first=0;
