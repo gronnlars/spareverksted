@@ -14,9 +14,9 @@ Datainnhenting bygger på eksisterende Kildevakt og Tidsmaskin. Svargrunnmuren k
 
 ### Stabilisering av sparekalkulatoren, 5. november 2026
 
-Finpussen i Sparing er samlet gjennom #227. Videre arbeid følger [status og vern](../docs/sparekalkulator-status.md): små trinn fra fersk main, relevante kontroller og Lars sin godkjenning før sammenslåing. Ingen generell ny frysing, men større ombygging eller nye funksjoner krever eget oppdrag. Fysiske sluttprøver etter #227 og senere brukertesting må skilles fra lokale automatiske kontroller.
+Finpussen i Sparing er avsluttet etter #230 og loggført i #231. Videre arbeid følger [status og vern](../docs/sparekalkulator-status.md): små trinn fra fersk main, relevante kontroller og Lars sin godkjenning før sammenslåing. Ingen generell ny frysing, men større ombygging eller nye funksjoner krever eget oppdrag. Lars har meldt sin manuelle kontroll på stor skjerm, 13-tommers laptop og mobil. Senere ekstern brukertesting må fortsatt skilles fra disse prøvene og lokale automatiske kontroller.
 
-Lars har kontaktet Inklud om muligheter for brukertesting og er i dialog med Forbrukerrådet om mulig bruk av Finansportalen-data. Ingen gjennomført ekstern brukertest eller ferdig avklart dataintegrasjon påstås. Inklud-loggen ligger som forslag i #225. Se statusnotatet for avgrensninger og dokumentasjon. Kakediagram, generell CI-opprydding og ny låneside inngår ikke i stabiliseringsoppdraget.
+Lars har kontaktet Inklud om muligheter for brukertesting og er i dialog med Forbrukerrådet om mulig bruk av Finansportalen-data. Ingen gjennomført ekstern brukertest eller ferdig avklart dataintegrasjon påstås. Inklud-loggen er dokumentert i #225. Se statusnotatet for avgrensninger og dokumentasjon. Kakediagram, generell CI-opprydding og ny låneside inngår ikke i stabiliseringsoppdraget.
 
 ## 1. Gjeldende rekkefølge og status, 30. oktober 2026
 

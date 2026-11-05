@@ -1,5 +1,7 @@
 # Retting etter Lars sin test av #222
 
+**Finpussrunden er avsluttet av Lars 5. november 2026 etter #230.** Tidligere oppgavelister nedenfor er historikk. Se avslutningsloggen nederst for gjeldende status. Videre visningsfinpuss avventer brukertesting.
+
 Arbeidsgrunnlag: main `ac3043af0148ae8f1cc0af56c632bb03e13a1657`. Gren: `fix/sparekalkulator-testfunn`. Lars ba om å stoppe den brede testrunden og rette funnene samlet, slik at manuell etterprøving blir overkommelig. Ikke slå sammen eller publiser uten nytt klarsignal. Kakediagram, tidslinje og opprydding i GitHub Actions inngår ikke.
 
 ## Rettet
@@ -118,3 +120,55 @@ Nettleserversjon, faktisk vindusstørrelse og målt bredde/høyde i CSS-piksler 
 Ved senere brukertesting registreres enhet/operativsystem, nettleser og versjon, skjermoppløsning, systemskalering, nettleserzoom og vindusstørrelse eller målt CSS-visningsflate, sammen med handling og observasjon. Hvis en opplysning mangler, merkes den som ukjent. Disse observasjonene dokumenterer testoppsettet og er ingen full WCAG-godkjenning.
 
 Avgrensning: Ingen nye visningsrettinger bestilles av denne presiseringen. Videre kartlegging av kombinasjonen 175 % systemskalering og 500 % nettleserzoom avventer brukertesting. Tidligere bekreftede funn og de to avtalte endringene i #227 beholdes.
+
+
+## Retting etter bilder av rapportlinje og lukket PC-resultatlinje
+
+Arbeidsgrunnlag: main daa63ca5a334a023b25d43d31ca5f1e721342be1 etter #227. #228 er et separat åpent forslag om dokumentasjon og automatiske kontroller. Denne rettingen blander ikke inn filkopier fra den grenen.
+
+Lars meldte at bunnlinjen kunne gjøre rapporten uleselig ved zoom, mens × lukket hele rapporten. Linjen så også ut til å flyte inne i rapporten på PC og mobil. Lukket PC-resultatlinje lå over tekst og var for stor ved zoom.
+
+- Rapporten får en egen rulleflate for teksten og en separat bunnlinje i samme dialogoppsett. Linjen er ikke lenger et klebende element inne i rulleinnholdet. Den ligger inntil dialogens bunnkant med egen plass, uten å dekke tekst.
+- Ved høyst 360 CSS-piksler vindushøyde, under 248 CSS-piksler bredde eller hvis linjen ville tatt over en tredjedel av dialogen, skjules bunnvalgene. Hele dialogens innside brukes da til lesing. De opprinnelige toppknappene beholdes og kan nås ved å rulle opp. Dette er plassbasert håndtering, ikke gjetting på systemskalering eller zoomnivå.
+- × betyr fortsatt Lukk rapporten. Ekstremrapporten beholder Kontakt Lars. En kort ekstremrapport trenger ikke en ekstra kontaktlinje når toppvalget fortsatt er synlig.
+- På PC med mus blir lukket resultatlinje en liten knapp til venstre også ved smal visning. Den eksisterende mobilflaten med sikkerhetsfelt er bevart.
+- Den svært smale prøven 220 × 120 avdekket også overløp i rapportens overskrift/Lukk-rad. Denne raden kan nå bryte på smal visning i stedet for å presse innholdet sidelengs.
+
+Regresjonskontrollen er oppdatert til den faktiske rulleflaten. Den kontrollerer linjens kontakt med bunnkanten, ingen overlapp med leseområdet, full lesehøyde når bunnvalgene er skjult og at hele rapporten kan nås uten å lukke vinduet. Korte flater: 1280 × 160, 320 × 180, 256 × 200, 220 × 120 og 390 × 300. Vanlig høyde: 256–1280 px bredde. Testen beholder kontrollene av HTML/PDF-handlinger, riktig rapportutvalg, lukking og fokus. Utskriftstesten ruller nå i den samme flaten som brukeren.
+
+Bestått lokalt i Chromium: rapportvalg, testfunn, resultatlinje, HTML-rapport med Nu-validering og rapportutskrift. Skjermbilder kontrolleres visuelt i vanlig og kort visning. Automatiserte Chromium-prøver er ikke fysisk PC-zoom, iPhone/Safari eller skjermlesertesting. Ingen full CI-overvåking.
+
+Etter publisering trengs bare:
+
+1. Gjenta oppsettet som ga uleselig rapport. Når flaten er svært lav, skal bunnvalgene forsvinne og teksten kunne leses helt ned. Rull opp til de vanlige rapportknappene. Rapporten skal bli stående åpen.
+2. Ved vanlig PC-visning og på iPhone: bunnvalgene skal ligge inntil dialogens bunnkant uten å dekke tekst. × skal lukke rapporten. På PC skal lukket Vis resultat være en liten knapp til venstre, også ved zoom.
+
+
+## Siste tre avtalte småendringer
+
+Etter #229: Rapportens nedlastingspil erstattes med synlig HTML/PDF og skjermlesernavnet «Last ned rapport som HTML eller PDF». Ved den smaleste visningen kan teksten bryte etter skråstreken, slik at linjen fortsatt holder seg lav. Samme formatmeny og handlinger beholdes.
+
+På PC med mus står lukket Vis resultat til venstre ved bred visning og til høyre ved høyst 760 CSS-piksler. Mens tabellsnarveiene vises, skjules den lukkede PC-knappen midlertidig. Den kommer tilbake etter tabellområdet. Berøringsvisningens plassering og sikkerhetsfelt bevares. Automatisk senking mot nettleserens verktøylinje er parkert etter Lars sine bilder fra Brave, Chrome og Safari.
+
+Målrettet kontroll: rapportvalg-browser og testfunn-browser kontrollerer tekst/navn, plass i linjen ved 256–1280 px, plassering ved bred/smal PC-visning og at bare pilene vises i tabellområdet. Den eksisterende overlappskontrollen gjelder fortsatt synlige knapper. Ingen endring i motor, lagring, rapportverdier eller utskriftsflyt. Fysisk iPhone og hjelpemidler er ikke testet i denne runden.
+
+Etter publisering: prøv HTML/PDF-valget på iPhone. På PC: prøv lukket knapp ved vanlig og smal visning, og rull inn i og ut av en lang tabell. Ingen ny full testliste.
+
+
+## Avslutningslogg, 5. november 2026
+
+Lars har kontrollert løsningen på en stor skjerm, en 13-tommers laptop og mobil. Han opplyser at oppsettet flyter svært godt på alle tre. På den store skjermen kan innholdet oppleves litt smått, men han ønsker ingen ny justering nå. Skjermmodeller, nettleserversjoner og målt CSS-visningsflate er ikke oppgitt for denne siste sammenligningen. Tidligere registrert oppløsning/systemskalering skal ikke automatisk tilordnes alle tre skjermene.
+
+Lars sier seg fornøyd og avslutter denne finpussrunden fram til brukertesting er på plass. Dette er hans manuelle samlede vurdering. Det påstås ikke at hvert historisk testpunkt er gjennomført på nytt eller at hjelpeteknologier og alle WCAG-krav er kontrollert. Ekstern brukertesting og testing med hjelpemidler er fortsatt ikke dokumentert gjennomført.
+
+Kontrollert GitHub-status: #230 er slått sammen, og main er 390a4629d221cdb0c2ce8a38566dcdfed6e66a8b. Lars har deretter meldt vurderingen over. Publiseringskjøringen er ikke fulgt på nytt i denne loggføringen.
+
+Videre arbeid:
+
+- Behold nåværende utseende, beregninger, lagring og rapportfunksjoner. Ingen videre kosmetisk finpuss bestilles gjennom denne avslutningen.
+- Konkrete alvorlige feil kan fortsatt håndteres i små, kontrollerte rettinger. Nye funksjoner eller ombygging krever et nytt oppdrag.
+- Brukertesting skal undersøke forståelse og praktisk bruk, inkludert hjelpemidler. Henvendelsen til Inklud står ved lag. Ikke erstatt brukertesting med en ny runde automatiske poengsummer.
+- GitHub-oppryddingen skjer separat. #228 skal oppdateres med endelig status i oppryddingsarbeidet. Bevar vernet mot gammel kode og de relevante regresjonstestene.
+- Den tidligere diskuterte gjennomgangen av felles rapportfunksjoner i Sparing, Sparemål og Uttak er et eget trinn. Ingen ny utrulling til andre kalkulatorer er gjennomført som del av denne loggen.
+
+Denne oppdateringen er bare dokumentasjon, skrevet av ChatGPT/Codex på Lars sin instruks. Ingen produksjonsfiler eller arbeidsflyter er endret. Ingen nye nettlesertester er kjørt for loggføringen.

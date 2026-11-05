@@ -4,6 +4,12 @@ Beslutningsnotat, 24. oktober 2026.
 
 Les dette før du foreslår større endringer. Notatet samler prinsipper og valg fra prosjektarbeidet. Det er ikke dokumentasjon på at alle deler er ferdige eller fullstendig brukertestet.
 
+## Leseplass foran bunnvalg i rapporten (5. november 2026)
+
+Lars fant at bunnvalgene kunne dekke rapporten ved zoom, og at linjen så ut til å flyte inne i rapporten. Den tidligere kontrollen av bunnlinjens egen høyde og bredde var ikke tilstrekkelig til å kontrollere hele leseflaten. Valgt retting: rapportinnholdet får en egen rulleflate, og bunnvalgene får fast plass i dialogens oppsett inntil bunnkanten. Ingen overlapp med tekst. Bunnvalgene skjules ved høyst 360 CSS-piksler i vindushøyde, under 248 CSS-piksler i bredde eller hvis de ville tatt mer enn en tredjedel av dialogen. Dette styres av plassen, ikke av antatt zoomprosent. De opprinnelige toppknappene beholdes. × lukker rapporten og brukes ikke til å skjule en linje.
+
+Lukket resultatlinje på PC med mus flyttes til en liten knapp til venstre, også ved zoom. Mobilens eksisterende berøringsflate beholdes. Ingen endring i motor, lagring, utskriftsbygger eller rapportens tall. Den nye testen kontrollerer kantplassering, adskilt leseflate, skjulte bunnvalg og full nedrulling helt ned til 220 × 120 CSS-piksler. Se siste del av docs/sparekalkulator-testfunn-2026-11-05.md. Ingen ny generell ombygging eller funksjonsutvidelse.
+
 ## Aktive avvik fra reglene
 
 Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](KILDEREGLER.md), «Når en regel må brytes». Kontrollrunden går gjennom tabellen, og den som gjør runden varsler Lars minst to uker før utløp.
@@ -1461,4 +1467,13 @@ Lars bestiller samlet dokumentasjon av finpussen, oppdaterte arbeidsregler og ve
 
 Eksisterende historikkvern, versjonskontroll og avhengighet fra publisering til checks/browser beholdes. De to nye målrettede testene testfunn-browser og rapportvalg-browser kobles til den eksisterende Chromium-kontrollen for navigering. Ingen nye jobber eller nettlesermatriser. Generell CI-opprydding venter. Produksjonskode, motor og lagring endres ikke i dokumentasjonsoppdraget.
 
-Lars har sendt Inklud e-post om muligheter for brukertesting og er i dialog med Forbrukerrådet om mulig databruk fra Finansportalen. Ingen ekstern godkjenning, gjennomført brukertest eller ferdig avklart dataavtale påstås. Detaljert Inklud-logg ligger i åpen PR #225, og skal ikke dupliseres. Dataintegrasjon krever avklaring av innhold, formål og vilkår før implementering. Revurder stabiliseringens prioriteringer ved konkrete feil eller resultater fra brukertesting. Se [status og vern](docs/sparekalkulator-status.md).
+Lars har sendt Inklud e-post om muligheter for brukertesting og er i dialog med Forbrukerrådet om mulig databruk fra Finansportalen. Ingen ekstern godkjenning, gjennomført brukertest eller ferdig avklart dataavtale påstås. Detaljert Inklud-logg ligger i #225, og skal ikke dupliseres. Dataintegrasjon krever avklaring av innhold, formål og vilkår før implementering. Revurder stabiliseringens prioriteringer ved konkrete feil eller resultater fra brukertesting. Se [status og vern](docs/sparekalkulator-status.md).
+
+
+## Kontrollert artifact-revisjon og første opprydding (5. november 2026)
+
+Lars bestiller opprydding etter avsluttet kalkulatorfinpuss, samlet i én PR. Dagens funksjoner, grafikk, rapporter og beregninger skal bevares. Arbeidet bygger på main ae3531d. Valgt: fest download-artifact til verifisert v4.3.0-SHA, som inkluderer rettingen fra v4.1.3, og prøv faktisk opplasting/nedlasting av privacy-page i PR før samme Action brukes i deploy. Riktig varsel-ID er GHSA-cxww-7g56-2vh6. Behold deploy-avhengigheter og alle eksisterende testkommandoer.
+
+Vurderte alternativer: v4.1.3 direkte ble valgt bort fordi dagens v4 peker på en nyere rettet revisjon. Flytende v4 ble valgt bort fordi vi vil vite nøyaktig hvilken kode som kjøres. Stort versjonsbytte og generell parallellisering venter på kontroll av #193 og testavhengigheter. Ulempen ved fast SHA er at oppdateringer må gjøres bevisst. Revurder ved nye sikkerhetsmeldinger eller kompatibilitetskrav.
+
+Korriger misvisende kommentar i historisk renters rente-test og utdatert testinstruks i bidragsveiledningen. Ingen endring i testlogikk, offentlig svarstatus eller dist. Kontrollplan, kildebevis, lokale kontroller og gjenstående PR-/produksjonskontroll står i docs/github-oppfolging-2026-11-05.md. ChatGPT/Codex, egenkontroll.

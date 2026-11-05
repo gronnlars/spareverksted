@@ -221,7 +221,7 @@ body[data-level=simple] #savingsResult .metrics{grid-template-columns:repeat(2,m
  body[data-stage=workbench][data-page=calculator] main{padding-bottom:86px}
 }
 /* Rapportvalg ligger utenfor rapportkopiene og vises etter toppknappene. */
-.report-tools{position:sticky;bottom:-1px;z-index:3;display:flex;justify-content:center;align-items:center;gap:6px;padding:6px 0 calc(6px + env(safe-area-inset-bottom));border-top:1px solid var(--control-border,#cbd8c5);background:var(--surface,#fff)}
+.report-tools{position:static;flex:0 0 auto;z-index:3;display:flex;justify-content:center;align-items:center;gap:6px;padding:6px 0 calc(6px + env(safe-area-inset-bottom));border-top:1px solid var(--control-border,#cbd8c5);background:var(--surface,#fff)}
 .report-tools button,.report-tools summary{min-width:44px;min-height:44px;padding:8px 10px;font-size:13px}
 .report-tools summary{display:flex;align-items:center;justify-content:center;border:1px solid var(--control-border,#cbd8c5);border-radius:9px;cursor:pointer;font-size:20px;list-style:none}
 .report-tools summary::-webkit-details-marker{display:none}
@@ -231,3 +231,25 @@ body[data-level=simple] #savingsResult .metrics{grid-template-columns:repeat(2,m
 .report-tools .report-contact{padding:8px 10px;font-size:13px}
 @media(max-width:560px){.report-tools{gap:4px}.report-tools>.report-format{display:none}.report-tools .report-formats{display:block}.report-tools>button{font-size:18px;padding:6px}}
 @media print{.report-tools{display:none!important}}
+
+/* Rapportinnhold og bunnvalg får hver sin plass. Ingen linje ligger over teksten. */
+#reportDialog.report-with-tools[open]{display:flex;flex-direction:column;overflow:hidden;padding:0;height:min(88dvh,calc(100dvh - 24px));max-height:calc(100dvh - 24px)}
+.report-with-tools .report-scroll{flex:1 1 auto;min-height:0;overflow:auto;padding:28px}
+.report-with-tools>.report-tools{margin:0;padding-inline:12px;align-self:stretch;max-width:none}
+@media(max-width:560px){.report-with-tools .report-scroll{padding:16px 12px}}
+/* På PC er lukket resultatlinje en liten knapp til venstre, også når zoom gir smal visning. */
+@media(hover:hover) and (pointer:fine){
+ body[data-page=calculator] .mobile-summary.is-collapsed{left:8px;right:auto;transform:none;width:max-content;max-width:calc(100% - 16px)}
+}
+
+@media(max-width:360px){.report-scroll>.panel-title{flex-wrap:wrap}.report-scroll #reportTitle{flex:1 1 140px;min-width:0}}
+
+/* Tydelig formatvalg og plassering etter tilgjengelig bredde. Mobilens sikkerhetsfelt beholdes. */
+.report-tools .report-formats>summary{font-size:13px;line-height:1.2;text-align:center;min-width:80px}
+@media(max-width:360px){.report-tools{gap:2px}.report-tools .report-formats>summary{width:56px;min-width:56px;padding-inline:4px;font-size:12px;display:block;align-content:center}}
+@media(hover:hover) and (pointer:fine){
+ body.has-table-shortcuts[data-page=calculator] .mobile-summary.is-collapsed{visibility:hidden;pointer-events:none}
+}
+@media(max-width:760px) and (hover:hover) and (pointer:fine){
+ body[data-page=calculator] .mobile-summary.is-collapsed{left:auto;right:8px}
+}

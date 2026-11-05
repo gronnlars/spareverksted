@@ -1,5 +1,7 @@
 'use strict';
-// Faktisk produktkode for integrert SV-022. Ingen injeksjon av utkast.
+// Historisk svarvisning for SV-022 med publiseringsfilteret erstattet i lokal testserver.
+// Dette beviser ikke at kandidaten i kilder/svar/SV-022.md er integrert eller publisert.
+// Faktisk publiseringsutvalg kontrolleres av tests/published-answers-browser.cjs.
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const playwright=require(require.resolve('playwright',{paths:[process.cwd(),process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||'']}));
 const engine=process.env.SPARE_ENGINE||'chromium';

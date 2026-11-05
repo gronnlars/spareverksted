@@ -200,4 +200,9 @@ Validator, generator, kontrollbevis, avhengighetsindeks, CI og regresjonstester 
 
 ChatGPT/Codex, egenkontroll. Lest main daa63ca5a334a023b25d43d31ca5f1e721342be1 etter #227. Lars bestiller samlet status, nødvendige dokumentoppdateringer og bevaring gjennom små, kontrollerte endringer. Gjeldende status ligger i docs/sparekalkulator-status.md. Vernet mot gammel kode består åtte kontrolltilfeller. Navigering, testfunn og rapportvalg består lokalt i Chromium. De to sistnevnte kobles til eksisterende CI-kontroll uten nye jobber eller matriser. Ingen produksjonskode eller økonomiske forutsetninger endres.
 
-Inklud-henvendelsen er allerede loggført som forslag i åpen PR #225 og kopieres ikke inn på nytt. Lars opplyser også om dialog med Forbrukerrådet om mulig bruk av Finansportalen-data. Ingen gjennomført ekstern brukertest, ferdig avklart datatilgang eller ny integrasjon påstås. Ingen ny melding er sendt. Ingen publisering i denne dokumentasjonsøkten og ingen full CI-overvåking.
+Inklud-henvendelsen er allerede loggført i #225 og kopieres ikke inn på nytt. Lars opplyser også om dialog med Forbrukerrådet om mulig bruk av Finansportalen-data. Ingen gjennomført ekstern brukertest, ferdig avklart datatilgang eller ny integrasjon påstås. Ingen ny melding er sendt. Ingen publisering i denne dokumentasjonsøkten og ingen full CI-overvåking.
+
+
+## Oppdatert stabiliseringsstatus etter avsluttet finpuss, 5. november 2026
+
+PR #228 er oppdatert mot main f65e9fb etter #230, avslutningsloggen #231 og CI-oppryddingen #232. Konfliktene i bidragsreglene og beslutningsloggen er løst ved å bevare nyere main og ta inn dokumentasjonstilleggene. Lars har avsluttet finpussen etter kontroll på stor skjerm, 13-tommers laptop og mobil. Videre visningsfinpuss avventer brukertesting. Produksjonskode og eksisterende tester er identiske med main. Nyere artifact-kontroller og publiseringsavhengigheter er bevart. Lars merger selv.

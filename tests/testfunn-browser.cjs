@@ -39,8 +39,9 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await p.setViewportSize({width,height:width===256?200:600});await p.locator('#tableWrap tbody tr').nth(4).scrollIntoViewIfNeeded();await frames();
    if(await p.locator('#mobileSummaryToggle').isVisible()&&!await p.locator('#mobileSummary').evaluate(e=>e.classList.contains('is-collapsed')))await p.locator('#mobileSummaryToggle').click();await frames();
    assert(await p.locator('.table-shortcuts').isVisible(),'pilene er synlige ved '+width);
+   assert(await p.locator('#mobileSummaryToggle').isHidden(),'bare pilene vises i tabellområdet på PC');
    assert((await p.locator('.table-shortcuts').boundingBox()).height<=48,'snarveiene holder én lav rad');
-   const overlap=await p.evaluate(()=>{const a=document.querySelector('.table-shortcuts').getBoundingClientRect(),e=document.getElementById('mobileSummaryToggle'),b=e.getBoundingClientRect();return b.width>0&&a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;});assert.equal(overlap,false,'pilene dekker ikke åpneknappen');
+   const overlap=await p.evaluate(()=>{const a=document.querySelector('.table-shortcuts').getBoundingClientRect(),e=document.getElementById('mobileSummaryToggle'),b=e.getBoundingClientRect();return getComputedStyle(e).visibility!=='hidden'&&b.width>0&&a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;});assert.equal(overlap,false,'pilene dekker ikke åpneknappen');
    await p.locator('.table-shortcuts button').last().click();assert(await p.locator('#tableWrap tbody tr').last().evaluate(e=>e===document.activeElement));
    await p.locator('.table-shortcuts button').first().click();assert.equal(await p.evaluate(()=>document.activeElement.id),'savingsResult');
   }

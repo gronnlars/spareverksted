@@ -55,7 +55,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
     assert.equal(await page.title(),title);
     assert(await page.locator('#report-print-status').isVisible());
     // Nettleserens egen utskrift må lukke modaliteten og bevare akkurat denne rapporten.
-    await page.locator('#reportDialog').evaluate(d=>{d.scrollTop=d.scrollHeight;});
+    await page.locator('#reportDialog').evaluate(d=>{const scroll=d.querySelector('.report-scroll')||d;scroll.scrollTop=scroll.scrollHeight;});
     await page.evaluate(()=>window.dispatchEvent(new Event('beforeprint')));
     assert.equal(await page.locator('#reportDialog').evaluate(d=>d.open),false,route+': modal lukket ved menyutskrift');
     assert.notEqual(await page.title(),title,route+': rapporttittel under menyutskrift');

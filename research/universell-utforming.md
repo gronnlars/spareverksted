@@ -8,7 +8,7 @@ Standard: WCAG 2.2 nivå AA. Vi omtaler resultatet som «ingen avvik funnet i de
 
 Den siste finpussen, utførte lokale kontroller, Lars sine manuelle observasjoner og gjenstående tester er samlet i [status og vern](../docs/sparekalkulator-status.md) og [testnotatet](../docs/sparekalkulator-testfunn-2026-11-05.md). Skjermoppløsning, systemskalering, nettleserzoom og faktisk visningsflate skal holdes adskilt. En god prøve ved høy zoom er ikke full tilgjengelighetsgodkjenning.
 
-Lars har sendt Inklud en forespørsel om hjelp til å få til brukertesting. Egen logg er foreslått i #225. Ekstern testing eller godkjenning er ikke dokumentert. Endringene skal bevares gjennom små, kontrollerte oppdateringer mens praktisk testing med hjelpemidler avklares.
+Lars har sendt Inklud en forespørsel om hjelp til å få til brukertesting. Henvendelsen er loggført i #225. Lars har avsluttet den manuelle finpussen etter #230, se avslutningsloggen i #231. Ekstern testing eller godkjenning er ikke dokumentert. Endringene skal bevares gjennom små, kontrollerte oppdateringer mens praktisk testing med hjelpemidler avklares.
 
 ## 1. Krav til hver ny del
 

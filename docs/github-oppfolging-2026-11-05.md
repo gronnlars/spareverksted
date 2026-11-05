@@ -1,4 +1,54 @@
-# Notat til senere GitHub-gjennomgang
+# GitHub-gjennomgang og kontrollplan, 5. november 2026
+
+Arbeidsgrunnlag: main `ae3531d860b25773a3a91bce513bfbc48cf7cf45`, etter avsluttet kalkulatorfinpuss i #231. ChatGPT/Codex, egenkontroll. Denne gjennomgangen endrer ingen filer i `dist/`, beregninger, grafikk, rapportbygger eller lagringsnøkler. #228 er en separat statuslogg og er ikke kopiert inn eller slått sammen her.
+
+## Verifisert sikkerhetsvarsel
+
+Riktig ID er **GHSA-cxww-7g56-2vh6**, CVE-2024-42471. Tidligere notat hadde skrivefeil i ID og versjonsnummer. Lars viste 5. november skjermbildet med `v4.1.3` og et forslag merket «Outdated».
+
+GitHubs sikkerhetsmelding oppgir berørte versjoner fra og med 4.0.0 til før 4.1.3. Første rettede versjon er 4.1.3. Meldingen tillater også oppdatert v4-tagg. Ved kontroll i denne økten peker både `v4` og `v4.3.0` på `d3f86a106a0bac45b974a628896c90dbdf5c8093`. Valget er å feste denne nyere revisjonen, uten å gå tilbake til 4.1.3 eller gjøre et større hovedversjonsbytte. Dette dokumenterer rettingen for dette varselet, ingen generell sikkerhetsgodkjenning.
+
+Primærkilder lest 5. november 2026:
+
+- https://github.com/advisories/GHSA-cxww-7g56-2vh6
+- https://github.com/actions/download-artifact/releases/tag/v4.1.3
+- https://github.com/actions/download-artifact/releases/tag/v4.3.0
+- https://api.github.com/repos/actions/download-artifact/git/ref/tags/v4
+- https://api.github.com/repos/actions/download-artifact/git/ref/tags/v4.3.0
+
+## Endringen og kontrollen
+
+Deploy bruker fast SHA med versjon og varsel-ID i kommentar. Navn `privacy-page`, kildekjøring og målmappe `dist` beholdes. Ingen andre Actions oppgraderes i denne runden. Åpne #193 vurderes separat mot fersk main før større oppdatering.
+
+Nettleserjobben laster nå ned den verifiserte personvernsiden til en midlertidig mappe med samme Action og sammenligner den byte for byte med originalen. Dette skjer på PR og main etter at alle tre personvernmotorene har bestått og siden er lastet opp. Feil ved nedlasting eller sammenligning gir rød jobb og stopper deploy gjennom eksisterende `needs: [checks, browser]`. Ingen `continue-on-error`, ekstra rettigheter, eksterne mottakere eller egen publiseringsvei.
+
+Renters rente-testens kommentar er korrigert: lokal testserver erstatter publiseringsfilteret. Den tester den historiske svarvisningen, ikke den nye kandidaten i #200. Den faktiske publiseringslisten testes separat i `published-answers-browser.cjs`, som avviser renters rente så lenge det ikke er godkjent for publisering. Testlogikk og publiseringsutvalg endres ikke.
+
+Bidragsveiledningen viser relevante Node-, Python- og nettlesertester i stedet for den utdaterte instruksen «begge testfilene».
+
+## Hva som undersøkes når
+
+| Steg | Undersøkelse | Ferdigkriterium |
+| --- | --- | --- |
+| Denne PR-en | Sikkerhetsvarsel, fast revisjon, faktisk artifact-nedlasting og tydelig testomfang | Lokale struktursjekker og eksisterende relevante tester består. PR-kjøringen må bevise opplasting, nedlasting og identisk innhold. |
+| Etter godkjent sammenslåing | Samme revisjon i deploy, faktisk nedlasting og fullført publisering | Kontroller main-kjøringen. PR beviser ikke produksjonsdeploy. Aikido-status bekreftes separat, ikke antatt løst av kodeendringen. |
+| Før flere tester kobles inn | `finpuss`, `testfunn`, `rapportvalg` og låneavhengig `linjeforing` er ikke direkte koblet inn på denne main-versjonen. #228 foreslår to av dem. | Sammenhold med endelig #228. Vurder om forventningene fortsatt stemmer, og kjør dem før innkobling. Ingen blind masseinnkobling. |
+| Før videre svarpublisering | Skillet mellom ekte publiseringsfilter og seks lokale testservere som bruker `draft-assets.cjs` | Dokumenter hvert testformål og kontroller kandidaten gjennom ekte generator, kildeoppfølging og publiseringsfilter. Ingen slutning fra utkasttest til publiseringsklar kandidat. |
+| Før endret testutvalg | Avhengigheter mellom felles CSS/JS, genererte svar, rapporter, lagring og tester | Filbasert utvalg må inkludere følgevirkninger. Beregnings-, personvern- og sikkerhetssperrer bevares. |
+| Før kortere kjøretid | Flere kjøringer, oppstartskostnad, dupliserte kontroller og midlertidige filbaner | Bevar testdekning og rapporter. Parallellisering må unngå kollisjon og samle alle nødvendige resultater før deploy. |
+| Før samordning av Actions | #193, offisielle versjonskrav, runner og sikkerhetsvarsel | Avgrenset oppgradering fra fersk main, uten å overskrive nyere trinn eller redusere tester. |
+| Fast faglig vedlikehold | Eksisterende Kildevakt/Tidsmaskin og kontrollkalender i KILDEREGLER K7 | Skill vellykket henting fra faglig kontroll. Varsler om kommende regelår behandles selv om kjøringen er grønn. |
+
+## Målegrunnlag og begrensninger
+
+Kjøring 42061495454 på #200: checks 24 sekunder, browser 751 sekunder, 91 nettlesertrinn, deploy hoppet over. Kildevakt 42061495934 tok 54 sekunder og klarspråk 42061495748 tok 13 sekunder. Dette er historiske målinger fra før siste finpuss, ikke nye målinger av denne PR-en. Nettleserjobben kjører sekvensielt. Fakta- og Kildevakt-tester kjøres både i hovedjobben og i relevant kildearbeidsflyt. Dobbeltkjøring er et vurderingspunkt, ikke i seg selv en feil.
+
+Lokalt i denne økten: YAML lest maskinelt, gamle testkommandoer og deploy-vilkår sammenlignet med main, sikkerhet, innholdsbaserte versjoner, personvernrapportens validering, tre deploy-tester, JavaScript-syntaks og diff-kontroll. Ingen lokal full nettleserkjøring eller ny domeneskanning. Artifact-rundturen krever GitHub Actions. Produksjonsdeploy og ny Aikido-skanning gjenstår etter sammenslåing.
+
+## Opprinnelig notat, bevart som historikk
+
+Følgende avsnitt er den opprinnelige registreringen. Feil ID og versjonsnummer er avklart over.
+
 
 Lars meldte 5. november 2026 et Aikido-varsel med ID **GHSA-cxwv-7g56-2vh6** og foreslo `v4`-tagg eller versjon `4.3.1`. Han ba om at oppfølgingen tas ved den planlagte gjennomgangen av GitHub, uten å utvide kalkulatorrettingene.
 
