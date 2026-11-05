@@ -1448,3 +1448,8 @@ Ved rapportens størrelsesgrense 10²¹ kr brukes en saklig begrensning og Lars 
 ## Siste visningsdetaljer etter brukertest av #224 (5. november 2026)
 
 Lars meldte at lange tabeller fortsatt manglet praktisk vei begge retninger når resultatlinjen var lukket. I tabellområdet brukes to små piler til resultat og siste år når linjen er lukket eller ikke vises på PC. Dette avløser at alle snarveier underveis krever åpen resultatlinje. Kontrollen er avgrenset til tabellområdet og bruker eksisterende fokus- og bevegelsesmønster. Resultatlinjen forkorter millionbeløp og større med etablerte korte enheter, med utvidet tekst for skjermleser. Rapportforhåndsvisning og HTML får roligere tabellbakgrunn. Ingen beregningsendring. Nytt klarsignal kreves før publisering. Se siste del av [testfunn og tre kontroller](docs/sparekalkulator-testfunn-2026-11-05.md).
+
+
+## Resultatlinje på PC og rapportvalg underveis (5. november 2026)
+
+Etter test av #226 ba Lars om samme åpne/lukke-mulighet for resultatlinjen på vanlig PC uten zoom. Den beholder grensen nedenfor grønt resultatfelt. Rapportforhåndsvisningen får bunnvalg først etter at toppknappene er rullet ut av syne. Smal visning samler HTML/PDF under ett nedlastingsvalg, mens opp/ned og lukk er direkte tilgjengelige. Eksisterende utskriftsflyt og rapportkopier bevares. Ekstremrapportens bunnlinje har bare Kontakt Lars. Tabellpilene beholdes som reserve. Lesbart linjeskift foran kr ved 500 % prioriteres ikke videre i denne runden. Full tilgjengelighet er ikke dokumentert av disse zoomtestene. Se [to siste manuelle kontroller](docs/sparekalkulator-testfunn-2026-11-05.md).

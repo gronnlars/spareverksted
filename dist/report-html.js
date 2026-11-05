@@ -159,4 +159,40 @@ document.getElementById('downloadReportHtml').onclick=()=>{
   a.href=url;a.download='spareverksted-'+name+'.html';a.hidden=true;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
  }catch(e){error.textContent='HTML-rapporten kunne ikke lastes ned. Prøv igjen, eller bruk PDF og utskrift.';error.hidden=false;}
 };
+
+// Bunnvalg bruker de eksisterende handlingene. De inngår aldri i rapportkopiene.
+(function(){
+ const dialog=document.getElementById('reportDialog');
+ if(!document.getElementById('savingsResult'))return;
+ const get=id=>document.getElementById(id),tools=document.createElement('nav');
+ tools.className='report-tools';tools.hidden=true;tools.setAttribute('aria-label','Rapportvalg');
+ tools.innerHTML='<button type="button" class="report-format" data-report-action="downloadReportHtml">HTML</button><button type="button" class="report-format" data-report-action="printReport">PDF</button><details class="report-formats"><summary aria-label="Last ned rapport" title="Last ned rapport"><span aria-hidden="true">⇩</span></summary><div class="report-format-menu"><button type="button" data-report-action="downloadReportHtml">HTML</button><button type="button" data-report-action="printReport">PDF</button></div></details><a class="report-contact" href="om.html#kontakt" hidden>Kontakt Lars</a><button type="button" data-report-scroll="top" aria-label="Til toppen av rapporten" title="Til toppen av rapporten">↑</button><button type="button" data-report-scroll="bottom" aria-label="Til bunnen av rapporten" title="Til bunnen av rapporten">↓</button><button type="button" data-report-action="closeReport" aria-label="Lukk rapporten" title="Lukk rapporten">×</button>';
+ dialog.append(tools);
+ const formats=tools.querySelector('details'),title=get('reportTitle');title.tabIndex=-1;
+ function sync(){
+  const limited=!!preview.querySelector('[data-report-limit]'),top=limited?get('reportContact'):get('printReport').parentElement;
+  const show=dialog.open&&top.getBoundingClientRect().bottom<=dialog.getBoundingClientRect().top+8;
+  const atEnd=dialog.scrollHeight-dialog.clientHeight-dialog.scrollTop<2,wasHidden=tools.hidden;
+  if(!show&&tools.contains(document.activeElement))title.focus({preventScroll:true});
+  tools.hidden=!show;
+  for(const element of tools.children)element.hidden=limited?!element.matches('a'):element.matches('a');
+  if(!show||limited)formats.open=false;
+  if(show&&wasHidden&&atEnd)dialog.scrollTop=dialog.scrollHeight;
+ }
+ tools.addEventListener('click',event=>{
+  const button=event.target.closest('button');if(!button)return;
+  const action=button.dataset.reportAction;
+  if(action){formats.open=false;get(action).click();return;}
+  const bottom=button.dataset.reportScroll==='bottom';
+  dialog.scrollTo({top:bottom?dialog.scrollHeight:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  const target=bottom?(preview.lastElementChild||title):title;target.tabIndex=-1;target.focus({preventScroll:true});
+ });
+ dialog.addEventListener('keydown',event=>{if(event.key==='Escape'&&formats.open){event.preventDefault();formats.open=false;formats.querySelector('summary').focus();}});
+ let frame=0;function schedule(){if(!frame)frame=requestAnimationFrame(()=>{frame=0;sync();});}
+ dialog.addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule);
+ new ResizeObserver(schedule).observe(preview);
+ new MutationObserver(schedule).observe(dialog,{attributes:true,attributeFilter:['open']});
+ new MutationObserver(()=>{dialog.scrollTop=0;schedule();}).observe(preview,{childList:true});
+ dialog.addEventListener('close',()=>{formats.open=false;tools.hidden=true;});
+})();
 })();
