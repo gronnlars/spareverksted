@@ -3,9 +3,41 @@
 name: Klarspråkkontroll
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '17 6 * * 1' # ukentlig full måling mandag 06.17 UTC
   push:
     branches: [main]
+    paths:
+      - 'dist/**/*.html'
+      - 'dist/**/*.js'
+      - 'kilder/**'
+      - 'research/svarutkast/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'docs/klarsprak/**'
+      - 'docs/klarsprak.md'
+      - 'SPRAKREGLER.md'
+      - 'KLARSPRAK.md'
+      - 'SVARMAL.md'
+      - 'SVARSKJEMA.md'
+      - 'KILDEREGLER.md'
+      - '.github/workflows/klarsprak.yml'
   pull_request:
+    paths:
+      - 'dist/**/*.html'
+      - 'dist/**/*.js'
+      - 'kilder/**'
+      - 'research/svarutkast/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'docs/klarsprak/**'
+      - 'docs/klarsprak.md'
+      - 'SPRAKREGLER.md'
+      - 'KLARSPRAK.md'
+      - 'SVARMAL.md'
+      - 'SVARSKJEMA.md'
+      - 'KILDEREGLER.md'
+      - '.github/workflows/klarsprak.yml'
 permissions:
   contents: read
 concurrency:
