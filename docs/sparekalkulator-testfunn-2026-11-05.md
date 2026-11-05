@@ -140,3 +140,14 @@ Etter publisering trengs bare:
 
 1. Gjenta oppsettet som ga uleselig rapport. Når flaten er svært lav, skal bunnvalgene forsvinne og teksten kunne leses helt ned. Rull opp til de vanlige rapportknappene. Rapporten skal bli stående åpen.
 2. Ved vanlig PC-visning og på iPhone: bunnvalgene skal ligge inntil dialogens bunnkant uten å dekke tekst. × skal lukke rapporten. På PC skal lukket Vis resultat være en liten knapp til venstre, også ved zoom.
+
+
+## Siste tre avtalte småendringer
+
+Etter #229: Rapportens nedlastingspil erstattes med synlig HTML/PDF og skjermlesernavnet «Last ned rapport som HTML eller PDF». Ved den smaleste visningen kan teksten bryte etter skråstreken, slik at linjen fortsatt holder seg lav. Samme formatmeny og handlinger beholdes.
+
+På PC med mus står lukket Vis resultat til venstre ved bred visning og til høyre ved høyst 760 CSS-piksler. Mens tabellsnarveiene vises, skjules den lukkede PC-knappen midlertidig. Den kommer tilbake etter tabellområdet. Berøringsvisningens plassering og sikkerhetsfelt bevares. Automatisk senking mot nettleserens verktøylinje er parkert etter Lars sine bilder fra Brave, Chrome og Safari.
+
+Målrettet kontroll: rapportvalg-browser og testfunn-browser kontrollerer tekst/navn, plass i linjen ved 256–1280 px, plassering ved bred/smal PC-visning og at bare pilene vises i tabellområdet. Den eksisterende overlappskontrollen gjelder fortsatt synlige knapper. Ingen endring i motor, lagring, rapportverdier eller utskriftsflyt. Fysisk iPhone og hjelpemidler er ikke testet i denne runden.
+
+Etter publisering: prøv HTML/PDF-valget på iPhone. På PC: prøv lukket knapp ved vanlig og smal visning, og rull inn i og ut av en lang tabell. Ingen ny full testliste.

@@ -243,3 +243,13 @@ body[data-level=simple] #savingsResult .metrics{grid-template-columns:repeat(2,m
 }
 
 @media(max-width:360px){.report-scroll>.panel-title{flex-wrap:wrap}.report-scroll #reportTitle{flex:1 1 140px;min-width:0}}
+
+/* Tydelig formatvalg og plassering etter tilgjengelig bredde. Mobilens sikkerhetsfelt beholdes. */
+.report-tools .report-formats>summary{font-size:13px;line-height:1.2;text-align:center;min-width:80px}
+@media(max-width:360px){.report-tools{gap:2px}.report-tools .report-formats>summary{width:56px;min-width:56px;padding-inline:4px;font-size:12px;display:block;align-content:center}}
+@media(hover:hover) and (pointer:fine){
+ body.has-table-shortcuts[data-page=calculator] .mobile-summary.is-collapsed{visibility:hidden;pointer-events:none}
+}
+@media(max-width:760px) and (hover:hover) and (pointer:fine){
+ body[data-page=calculator] .mobile-summary.is-collapsed{left:auto;right:8px}
+}

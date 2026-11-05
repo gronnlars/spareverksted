@@ -22,7 +22,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path'),
   for(const [width,height] of [[1280,800],[640,450],[320,180],[256,180]]){
    await p.setViewportSize({width,height});await p.evaluate(()=>window.scrollBy(0,document.getElementById('savingsResult').getBoundingClientRect().bottom+20));await frames();
    if(!await p.locator('#mobileSummary').evaluate(e=>e.classList.contains('is-collapsed')))await p.locator('#mobileSummaryToggle').click();
-   const box=await p.locator('#mobileSummary').boundingBox();assert(box.x<=16&&box.width<200&&box.height<=height/3,'PC-knappen er liten og til venstre også ved zoom: '+JSON.stringify(box));
+   const box=await p.locator('#mobileSummary').boundingBox();assert((width>760?box.x<=16:Math.abs(box.x+box.width-(width-8))<=1)&&box.width<200&&box.height<=height/3,'PC-knappen følger tilgjengelig bredde: '+JSON.stringify(box));
   }
   await p.setViewportSize({width:1280,height:800});await p.locator('#mobileSummaryToggle').click();
   await p.evaluate(()=>{saved=[{name:'Plan A',state:{...s}},{name:'Plan B',state:{...s,monthly:3000}}];selectedPlans=new Set([0,1]);pickedPlans=new Set([0,1]);document.getElementById('savedDetails').open=true;savedRender();});
@@ -38,7 +38,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path'),
     assert(size.h<=64&&size.left>=0&&size.right<=width+1&&size.scroll<=1,JSON.stringify({route,width,size}));
     const gap=await p.evaluate(()=>{const d=document.getElementById('reportDialog').getBoundingClientRect(),b=document.querySelector('.report-tools').getBoundingClientRect(),s=document.querySelector('.report-scroll').getBoundingClientRect();return {bottom:d.bottom-b.bottom,overlap:s.bottom-b.top};});assert(gap.bottom<=2&&gap.overlap<=1,'bunnlinjen ligger ved kanten, i egen plass: '+JSON.stringify(gap));
     if(process.env.SPARE_RAPPORTVALG_BILDER&&route==='plan'&&[1280,390,256].includes(width)){fs.mkdirSync(process.env.SPARE_RAPPORTVALG_BILDER,{recursive:true});await p.screenshot({path:path.join(process.env.SPARE_RAPPORTVALG_BILDER,'rapport-'+width+'.png')});}
-    if(width<=560){assert.equal(await p.locator('.report-formats summary').evaluate(e=>getComputedStyle(e,'::after').display),'none','ingen ekstra plussmarkør på nedlastingssymbolet');await p.locator('.report-formats summary').click();assert(await p.locator('.report-format-menu').isVisible());await p.keyboard.press('Escape');assert(await p.locator('.report-format-menu').isHidden());assert(await p.locator('#reportDialog').isVisible(),'Escape lukker formatvalget først');}
+    if(width<=560){assert.equal((await p.locator('.report-formats summary').textContent()).trim(),'HTML/PDF');assert.equal(await p.locator('.report-formats summary').getAttribute('aria-label'),'Last ned rapport som HTML eller PDF');assert.equal(await p.locator('.report-formats summary').evaluate(e=>getComputedStyle(e,'::after').display),'none','ingen ekstra plussmarkør på nedlastingssymbolet');await p.locator('.report-formats summary').click();assert(await p.locator('.report-format-menu').isVisible());await p.keyboard.press('Escape');assert(await p.locator('.report-format-menu').isHidden());assert(await p.locator('#reportDialog').isVisible(),'Escape lukker formatvalget først');}
    }
    // Lite høyde ved kombinasjonen systemskalering og zoom: hele flaten brukes til lesing.
    for(const [width,height] of [[1280,160],[320,180],[256,200],[220,120],[390,300]]){
