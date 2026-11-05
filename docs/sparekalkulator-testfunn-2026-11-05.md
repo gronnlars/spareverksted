@@ -118,3 +118,25 @@ Nettleserversjon, faktisk vindusstørrelse og målt bredde/høyde i CSS-piksler 
 Ved senere brukertesting registreres enhet/operativsystem, nettleser og versjon, skjermoppløsning, systemskalering, nettleserzoom og vindusstørrelse eller målt CSS-visningsflate, sammen med handling og observasjon. Hvis en opplysning mangler, merkes den som ukjent. Disse observasjonene dokumenterer testoppsettet og er ingen full WCAG-godkjenning.
 
 Avgrensning: Ingen nye visningsrettinger bestilles av denne presiseringen. Videre kartlegging av kombinasjonen 175 % systemskalering og 500 % nettleserzoom avventer brukertesting. Tidligere bekreftede funn og de to avtalte endringene i #227 beholdes.
+
+
+## Retting etter bilder av rapportlinje og lukket PC-resultatlinje
+
+Arbeidsgrunnlag: main daa63ca5a334a023b25d43d31ca5f1e721342be1 etter #227. #228 er et separat åpent forslag om dokumentasjon og automatiske kontroller. Denne rettingen blander ikke inn filkopier fra den grenen.
+
+Lars meldte at bunnlinjen kunne gjøre rapporten uleselig ved zoom, mens × lukket hele rapporten. Linjen så også ut til å flyte inne i rapporten på PC og mobil. Lukket PC-resultatlinje lå over tekst og var for stor ved zoom.
+
+- Rapporten får en egen rulleflate for teksten og en separat bunnlinje i samme dialogoppsett. Linjen er ikke lenger et klebende element inne i rulleinnholdet. Den ligger inntil dialogens bunnkant med egen plass, uten å dekke tekst.
+- Ved høyst 360 CSS-piksler vindushøyde, under 248 CSS-piksler bredde eller hvis linjen ville tatt over en tredjedel av dialogen, skjules bunnvalgene. Hele dialogens innside brukes da til lesing. De opprinnelige toppknappene beholdes og kan nås ved å rulle opp. Dette er plassbasert håndtering, ikke gjetting på systemskalering eller zoomnivå.
+- × betyr fortsatt Lukk rapporten. Ekstremrapporten beholder Kontakt Lars. En kort ekstremrapport trenger ikke en ekstra kontaktlinje når toppvalget fortsatt er synlig.
+- På PC med mus blir lukket resultatlinje en liten knapp til venstre også ved smal visning. Den eksisterende mobilflaten med sikkerhetsfelt er bevart.
+- Den svært smale prøven 220 × 120 avdekket også overløp i rapportens overskrift/Lukk-rad. Denne raden kan nå bryte på smal visning i stedet for å presse innholdet sidelengs.
+
+Regresjonskontrollen er oppdatert til den faktiske rulleflaten. Den kontrollerer linjens kontakt med bunnkanten, ingen overlapp med leseområdet, full lesehøyde når bunnvalgene er skjult og at hele rapporten kan nås uten å lukke vinduet. Korte flater: 1280 × 160, 320 × 180, 256 × 200, 220 × 120 og 390 × 300. Vanlig høyde: 256–1280 px bredde. Testen beholder kontrollene av HTML/PDF-handlinger, riktig rapportutvalg, lukking og fokus. Utskriftstesten ruller nå i den samme flaten som brukeren.
+
+Bestått lokalt i Chromium: rapportvalg, testfunn, resultatlinje, HTML-rapport med Nu-validering og rapportutskrift. Skjermbilder kontrolleres visuelt i vanlig og kort visning. Automatiserte Chromium-prøver er ikke fysisk PC-zoom, iPhone/Safari eller skjermlesertesting. Ingen full CI-overvåking.
+
+Etter publisering trengs bare:
+
+1. Gjenta oppsettet som ga uleselig rapport. Når flaten er svært lav, skal bunnvalgene forsvinne og teksten kunne leses helt ned. Rull opp til de vanlige rapportknappene. Rapporten skal bli stående åpen.
+2. Ved vanlig PC-visning og på iPhone: bunnvalgene skal ligge inntil dialogens bunnkant uten å dekke tekst. × skal lukke rapporten. På PC skal lukket Vis resultat være en liten knapp til venstre, også ved zoom.
