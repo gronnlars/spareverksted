@@ -34,6 +34,19 @@ const engine=process.env.SPARE_ENGINE||'chromium';
   assert.equal(await p.locator('#mobileResultButton').innerText(),'Til siste år ↓');
   await p.locator('#mobileResultButton').click();assert(await p.locator('#tableWrap tbody tr').last().evaluate(e=>e===document.activeElement));
   assert.deepEqual(await p.locator('#tableWrap .savings-cell-value').allTextContents(),values,'navigering endrer ingen verdier');
+  // Lukk resultatlinjen: begge retninger virker uten å åpne den igjen, også på PC.
+  for(const width of [1280,853,390,256]){
+   await p.setViewportSize({width,height:width===256?200:600});await p.locator('#tableWrap tbody tr').nth(4).scrollIntoViewIfNeeded();await frames();
+   if(await p.locator('#mobileSummaryToggle').isVisible()&&!await p.locator('#mobileSummary').evaluate(e=>e.classList.contains('is-collapsed')))await p.locator('#mobileSummaryToggle').click();await frames();
+   assert(await p.locator('.table-shortcuts').isVisible(),'pilene er synlige ved '+width);
+   assert((await p.locator('.table-shortcuts').boundingBox()).height<=48,'snarveiene holder én lav rad');
+   const overlap=await p.evaluate(()=>{const a=document.querySelector('.table-shortcuts').getBoundingClientRect(),e=document.getElementById('mobileSummaryToggle'),b=e.getBoundingClientRect();return b.width>0&&a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;});assert.equal(overlap,false,'pilene dekker ikke åpneknappen');
+   await p.locator('.table-shortcuts button').last().click();assert(await p.locator('#tableWrap tbody tr').last().evaluate(e=>e===document.activeElement));
+   await p.locator('.table-shortcuts button').first().click();assert.equal(await p.evaluate(()=>document.activeElement.id),'savingsResult');
+  }
+  await p.evaluate(()=>{s.start=9999999999;render();});
+  assert.match(await p.locator('#mobileTotal [aria-hidden]').textContent(),/mrd\./);assert.match(await p.locator('#mobileTotal .sr-only').textContent(),/milliarder/);
+  await p.evaluate(()=>{s.start=50000;render();});await p.setViewportSize({width:390,height:844});await frames();
   await p.locator('#heroDownload').click();await p.locator('#exportPdf').click();await frames();
   assert(await p.locator('#reportPreview .report-table').isVisible(),'sparetabell i rapporten');
   assert.equal(await p.locator('#printReportContent tbody tr').count(),11,'år 0–10 i PDF-kopien');

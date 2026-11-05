@@ -143,9 +143,10 @@ function render(){
  if(mode==='goal')notes.push('Første månedsbeløp. Grafen viser fortsatt sparingen du har lagt inn.');
  else if(!X.noInflation)notes.push(s.real?`Målt i dagens kroner. Kontoen viser da ${money(final)}.`:`Det tilsvarer ${money(X.real)} med dagens priser.`);
  if(mode!=='goal'&&Math.abs(shown)>=1e15)notes.push('Beløpet er så stort at det mister praktisk mening. Sjekk sparetid og vekst.');
- $('mobileTotal').textContent=$('total').textContent;$('paid').textContent=money(paid);$('gain').textContent=money(shown-paid);lastRealGain=s.real?shown-paid:0;
+ const mobileFull=$('total').textContent;
+ if(mode!=='goal'&&Math.abs(shown)>=1e6){const visual=document.createElement('span');visual.setAttribute('aria-hidden','true');visual.textContent=compact(shown)+' kr';const full=document.createElement('span');full.className='sr-only';full.textContent=mobileFull;$('mobileTotal').replaceChildren(visual,full);}else $('mobileTotal').textContent=mobileFull;$('paid').textContent=money(paid);$('gain').textContent=money(shown-paid);lastRealGain=s.real?shown-paid:0;
  $('paidLabel').textContent=s.real?'Innskudd totalt i dagens kroner':'Innskudd totalt';$('paidNote').hidden=!s.real||Math.abs(paid-nominalPaidEnd)<0.5;$('paidNote').textContent=`Du setter inn ${money(nominalPaidEnd)}`;$('cost').textContent=money(display(E.value(s,end,s.rate,0)-final,end));
- for(const id of ['total','mobileTotal','paid','gain','cost'])$(id).textContent=$(id).textContent.replace(/[\u00a0\u202f]/g,' ');
+ for(const id of ['total','paid','gain','cost'])$(id).textContent=$(id).textContent.replace(/[\u00a0\u202f]/g,' ');
  // Et sluttbeløp under innskuddene skal aldri se ut som en gevinst. Tapet vises i resultatet og i sammendraget.
  // Tap i kroner: sluttverdien er lavere enn summen av innskuddene, målt i vanlige kroner i begge visninger.
  // Lavere kjøpekraft: sluttverdien i dagens kroner er lavere enn innskuddene i dagens kroner (paid i den visningen).

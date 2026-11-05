@@ -193,3 +193,13 @@ body[data-level=simple] #savingsResult .metrics{grid-template-columns:repeat(2,m
 .export-choices button{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start}
 #exportDialog:has(#exportJson[hidden]) #exportPdf{grid-column:1/-1}
 @media(max-width:560px){.export-choices{grid-template-columns:minmax(0,1fr)}}
+
+/* Små tabellsnarveier er tilgjengelige også uten den åpne resultatlinjen. */
+.table-shortcuts{position:fixed;right:8px;bottom:env(safe-area-inset-bottom,0px);display:flex;gap:4px;z-index:16;background:var(--surface-soft,#fffefb);border-radius:10px 10px 0 0}
+.table-shortcuts[hidden]{display:none}
+.table-shortcuts button{width:44px;min-width:44px;height:44px;padding:4px;font-size:20px}
+@media(max-width:760px){body.has-table-shortcuts .mobile-summary.is-collapsed{right:104px}}
+.mobile-summary strong>span[aria-hidden]{font:inherit;color:inherit;line-height:inherit}
+#reportPreview tbody tr:nth-child(even){background:transparent}
+#reportPreview .savings-stacked th[scope=row]{background:transparent}
+@media print{.table-shortcuts{display:none!important}}

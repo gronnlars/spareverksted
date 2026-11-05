@@ -67,3 +67,21 @@ Bildene IMG_3292–3295 viser den publiserte versjonen etter #222. #224 sto fort
 Til punkt 4 i den korte testlisten: prøv både ren sammenligning og en vanlig planrapport med tre valgte planer pluss den åpne planen. Kontroller at vanlige beløp står samlet, at radvis visning har riktige plannavn, og at rapporten ikke gir instruksjoner om å trykke på statiske søyler. Formatdialogene skal være lesbare uten trange sideordnede kort på mobil.
 
 Det rapporterte Aikido-varselet er bevart i [notatet til GitHub-gjennomgangen](github-oppfolging-2026-11-05.md). Ingen endring i GitHub Actions inngår.
+
+
+## Siste visningsdetaljer etter #224
+
+Arbeidsgrunnlag: main `61a236e3117f830e576862f2b8d4e6a369cb23e2`, hvor #224 er slått sammen. Gren `fix/siste-visningsdetaljer`. Ingen publisering uten Lars sitt klarsignal.
+
+- Lange tabeller får to kompakte piler når resultatlinjen er lukket eller ikke vises på PC. Opp går til resultatkortet, ned til siste årsrad. Man trenger ikke åpne resultatlinjen for å bruke dem. Pilene vises bare mens tabellen er i synsfeltet. Tastatur og skjermleser får beskrivende navn og fokus på målet. Ved åpen resultatlinje brukes de eksisterende knappene.
+- Resultatlinjen bruker korte enheter fra én million kroner, for eksempel «452,83 mrd. kr». Den har samme beregnede verdi som hovedresultatet. Skjermleser får den utvidede teksten. Hovedresultat, tabelltall, motor og lagring er uendret.
+- Stripete bakgrunn er fjernet fra rapporttabeller i forhåndsvisning og HTML. Skillelinjer og overskrifter beholdes. PDF-kopien og utskriftsreglene er ikke endret.
+- Formatvalg endres ikke. «Last ned planene» tilbyr Rapport og Excel. «Last ned sammenligningen» tilbyr Excel, CSV og Rapport.
+
+Målrettet egenkontroll: `tests/testfunn-browser.cjs` består i Chromium, med begge piler og fokus ved 256, 390, 853 og 1280 px samt kort/utvidet beløpstekst. `tests/rapport-html-browser.cjs` består for fem rapportveier, HTML/CSS-validering, uendret PDF-kopi og fil uten nett eller JavaScript. Syntaks, versjoner, sikkerhetskontroll og vern mot gammel kode er kontrollert. Fysisk iPhone/Safari, faktisk PC-zoom og skjermleser er ikke testet her.
+
+Bare disse tre kontrollene trengs nå:
+
+1. På PC ved 150, 400 og 500 % zoom og på iPhone: åpne en lang tabell, lukk resultatlinjen og bruk pil ned. Bruk deretter pil opp til resultatet. Prøv også pil opp halvveis i tabellen. Pilene skal ligge i én lav rad uten å dekke hverandre eller knappen som åpner resultatlinjen.
+2. Prøv et stort sluttbeløp i milliarder og billioner. Resultatlinjen skal bruke korte enheter, hovedresultat og tabell beholder sine egne tallvisninger. Prøv å åpne og lukke linjen ved sterk zoom.
+3. Åpne både en vanlig planrapport og en sammenligningsrapport. Forhåndsvisning og HTML skal ha rolige tabellrader, tydelige overskrifter og samme beløp som før. Ingen ny full testrunde.
