@@ -1461,6 +1461,15 @@ Lars meldte at lange tabeller fortsatt manglet praktisk vei begge retninger når
 Etter test av #226 ba Lars om samme åpne/lukke-mulighet for resultatlinjen på vanlig PC uten zoom. Den beholder grensen nedenfor grønt resultatfelt. Rapportforhåndsvisningen får bunnvalg først etter at toppknappene er rullet ut av syne. Smal visning samler HTML/PDF under ett nedlastingsvalg, mens opp/ned og lukk er direkte tilgjengelige. Eksisterende utskriftsflyt og rapportkopier bevares. Ekstremrapportens bunnlinje har bare Kontakt Lars. Tabellpilene beholdes som reserve. Lesbart linjeskift foran kr ved 500 % prioriteres ikke videre i denne runden. Full tilgjengelighet er ikke dokumentert av disse zoomtestene. Se [to siste manuelle kontroller](docs/sparekalkulator-testfunn-2026-11-05.md).
 
 
+## Bevar sparekalkulatoren gjennom trinnvis videre arbeid (5. november 2026)
+
+Lars bestiller samlet dokumentasjon av finpussen, oppdaterte arbeidsregler og vern mot gammel kode og andre tilbakefall. Gjeldende status samles i docs/sparekalkulator-status.md. Eldre trinnvise statusnotater beholdes som historikk. Videre kalkulatorarbeid skal bygge på fersk main, ha én konkret feil eller brukernytte, avgrensede endringer, relevante regresjonskontroller og godkjenning før sammenslåing. Dette er en stabiliseringsfase, ikke en generell utviklingsfrys eller påstand om at kalkulatoren er ferdig brukertestet.
+
+Eksisterende historikkvern, versjonskontroll og avhengighet fra publisering til checks/browser beholdes. De to nye målrettede testene testfunn-browser og rapportvalg-browser kobles til den eksisterende Chromium-kontrollen for navigering. Ingen nye jobber eller nettlesermatriser. Generell CI-opprydding venter. Produksjonskode, motor og lagring endres ikke i dokumentasjonsoppdraget.
+
+Lars har sendt Inklud e-post om muligheter for brukertesting og er i dialog med Forbrukerrådet om mulig databruk fra Finansportalen. Ingen ekstern godkjenning, gjennomført brukertest eller ferdig avklart dataavtale påstås. Detaljert Inklud-logg ligger i #225, og skal ikke dupliseres. Dataintegrasjon krever avklaring av innhold, formål og vilkår før implementering. Revurder stabiliseringens prioriteringer ved konkrete feil eller resultater fra brukertesting. Se [status og vern](docs/sparekalkulator-status.md).
+
+
 ## Kontrollert artifact-revisjon og første opprydding (5. november 2026)
 
 Lars bestiller opprydding etter avsluttet kalkulatorfinpuss, samlet i én PR. Dagens funksjoner, grafikk, rapporter og beregninger skal bevares. Arbeidet bygger på main ae3531d. Valgt: fest download-artifact til verifisert v4.3.0-SHA, som inkluderer rettingen fra v4.1.3, og prøv faktisk opplasting/nedlasting av privacy-page i PR før samme Action brukes i deploy. Riktig varsel-ID er GHSA-cxww-7g56-2vh6. Behold deploy-avhengigheter og alle eksisterende testkommandoer.

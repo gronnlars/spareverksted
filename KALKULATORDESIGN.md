@@ -2,6 +2,8 @@
 
 Vedtatt av Lars 4. november 2026. Gjelder alle kalkulatorer på Spareverksted: sparing, sparemål, uttak, lån og alt som kommer senere (for eksempel tidsmaskin, budsjett eller bolig).
 
+Gjeldende gjennomføringsstatus, testbegrensninger og regler for små oppdateringer står i [status og vern for sparekalkulatoren](docs/sparekalkulator-status.md). Eldre datomerkede notater er historikk.
+
 **Malen er sparekalkulatoren**, fanen Sparing på `dist/index.html`. En ny kalkulator skal se ut og oppføre seg som den. Brukeren skal ikke merke at hen bytter kalkulator, bare at spørsmålet er et annet. Spareverksted skal være én sømløs opplevelse.
 
 Avvik er lov når kalkulatoren trenger noe malen ikke har. Hvert avvik skal stå i tabellen «Godkjente avvik» nederst, med begrunnelse og hvem som godkjente det. Et avvik som ikke står der, er en feil som skal rettes.

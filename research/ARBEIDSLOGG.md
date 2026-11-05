@@ -194,3 +194,15 @@ Lars bestiller retting og publisering. Forklaringen av bundne BSU-midler avgrens
 ChatGPT/Codex, lest main `d254229cda4e9157c8d85b0e312314597888ce29`, gren `feat/svargrunnmur`. Lars bestilte implementering av vedlagte SVARSKJEMA og plan. Claudes dokumentpatch er bevart og presisert med maskinell kontrakt. Piloter SV-133 og SV-022 er mekanisk overført som utkast, ikke ny fagkontroll. Publiserte svar og publiseringsutvalg er uendret. Ingen aktiv innholdsreservasjon eller nattkjøring er startet.
 
 Validator, generator, kontrollbevis, avhengighetsindeks, CI og regresjonstester er lagt til. Retter navneoppslag i Kildevakt, HTTP-returkoder, pipefail og Tidsmaskins feilstatus ved hentefeil/manglende kilder. Detaljer, utførte kontroller og gjenstående oppgaver står i PR og docs/svargrunnmur.md. Automatisk test av struktur er egenkontroll, ikke separat kildekontroll.
+
+
+## Stabilisering og dokumentasjon av sparekalkulatoren, 5. november 2026
+
+ChatGPT/Codex, egenkontroll. Lest main daa63ca5a334a023b25d43d31ca5f1e721342be1 etter #227. Lars bestiller samlet status, nødvendige dokumentoppdateringer og bevaring gjennom små, kontrollerte endringer. Gjeldende status ligger i docs/sparekalkulator-status.md. Vernet mot gammel kode består åtte kontrolltilfeller. Navigering, testfunn og rapportvalg består lokalt i Chromium. De to sistnevnte kobles til eksisterende CI-kontroll uten nye jobber eller matriser. Ingen produksjonskode eller økonomiske forutsetninger endres.
+
+Inklud-henvendelsen er allerede loggført i #225 og kopieres ikke inn på nytt. Lars opplyser også om dialog med Forbrukerrådet om mulig bruk av Finansportalen-data. Ingen gjennomført ekstern brukertest, ferdig avklart datatilgang eller ny integrasjon påstås. Ingen ny melding er sendt. Ingen publisering i denne dokumentasjonsøkten og ingen full CI-overvåking.
+
+
+## Oppdatert stabiliseringsstatus etter avsluttet finpuss, 5. november 2026
+
+PR #228 er oppdatert mot main f65e9fb etter #230, avslutningsloggen #231 og CI-oppryddingen #232. Konfliktene i bidragsreglene og beslutningsloggen er løst ved å bevare nyere main og ta inn dokumentasjonstilleggene. Lars har avsluttet finpussen etter kontroll på stor skjerm, 13-tommers laptop og mobil. Videre visningsfinpuss avventer brukertesting. Produksjonskode og eksisterende tester er identiske med main. Nyere artifact-kontroller og publiseringsavhengigheter er bevart. Lars merger selv.

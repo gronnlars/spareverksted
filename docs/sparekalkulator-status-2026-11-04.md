@@ -1,5 +1,7 @@
 # Sparekalkulatoren: retting i små steg
 
+**Historisk arbeidsnotat.** Tabellen under viser et tidligere trinn i rettingsarbeidet. For gjeldende status etter #227, se [sparekalkulatorens status og vern](sparekalkulator-status.md). Eldre «ikke startet»-punkter er ikke en beskrivelse av dagens kode.
+
 Lars godkjente rettingsplanen 4. november 2026. Arbeidsgrunnlag: main `b0ab8cbbf77a4cb6e63a06caf65cdf8cbc1d301a`. Oppdraget gjelder fanen Sparing, «Hva kan sparingen bli?», som mal for videre kalkulatorarbeid. Regnemotoren, fungerende navneforslag og rapportenes eksisterende UU-arbeid skal bevares. Lån forblir avpublisert. Hver PR godkjennes av Lars før sammenslåing, som starter publisering.
 
 ## Vedtatt rekkefølge

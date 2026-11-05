@@ -32,6 +32,12 @@ KI brukes i stor grad til å utvikle innhold og kode. Svarene i «Spør om spari
 
 Oppgi utførte kontroller, begrensninger og faktisk status. Grønne tester beviser ikke full tilgjengelighet eller brukerforståelse. Main-push starter automatisk testing og publisering; ikke beskriv sammenslåing som en upublisert handling.
 
+## Stabilisering av sparekalkulatoren, 5. november 2026
+
+Sparing er malen som skal bevares etter finpussen. Les [gjeldende status og vern](docs/sparekalkulator-status.md) før kalkulatorarbeid. Videre oppdateringer skal være små og trinnvise, med kontroll av berørt brukerreise før Lars godkjenner sammenslåing. Konkrete feil kan rettes, men en ny generell ombygging eller ny funksjon krever eget avgrenset oppdrag. Dette er ikke en ny generell utviklingsfrys.
+
+Bevar motor, lagringsnøkler, rapportkopier og utskriftsflyt når oppdraget ikke uttrykkelig gjelder dem. Gamle hele filer skal ikke kopieres inn, heller ikke ved konflikt. Relevante regresjonstester og vernet mot gammel kode skal ikke svekkes for å få en grønn kjøring. Ved rene dokumentasjonsendringer kjøres ingen ny full nettleserrunde. Ikke bruk tid på å følge hele CI-kjøringen løpende.
+
 ## Navn på filer og adresser
 
 Filnavn, nettadresser, id-er, CSS-klasser, grener og navn på nedlastede filer skrives med små bokstaver a–z, tall og bindestrek. æ blir a, ø blir o, å blir a (`lan.html`, `sparemal`, `kjopekraft`), slik Språkrådet tilrår etter NS 4129. Ikke «ae», «aa» eller «oe». Tekst brukeren ser, har alltid æ, ø og å. Gamle adresser som endres, må fortsatt virke. Lagringsnøkler (`sv-...`) endres ikke. Se KALKULATORDESIGN.md, del 7.
