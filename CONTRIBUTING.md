@@ -6,7 +6,7 @@ faktisk resultat og hvordan feilen kan gjenskapes. Bruk oppdiktede tall.
 1. Fork prosjektet og opprett en egen gren.
 2. Kjør lokalt som beskrevet i README.
 3. Gjør en avgrenset endring og forklar hvordan den hjelper brukeren.
-4. Kjør begge testfilene med Node.js.
+4. Kjør relevante beregnings-, Python- og nettlesertester for endringen. Kommandoene står i `.github/workflows/static.yml`. Oppgi nøyaktig hva du har kjørt og hva som gjenstår.
 5. Kontroller mobilvisning, tastaturbetjening og relevante eksportformater. Ny eller endret kalkulator følger [KALKULATORDESIGN.md](KALKULATORDESIGN.md).
 6. Åpne en pull request med endringen og kontrollene du har gjort.
 
