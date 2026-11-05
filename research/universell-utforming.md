@@ -4,6 +4,12 @@ Felles arbeidsgrunnlag for hele nettstedet. Samlet 24. oktober 2026 fra arbeidet
 
 Standard: WCAG 2.2 nivå AA. Vi omtaler resultatet som «ingen avvik funnet i de gjennomførte kontrollene», aldri som full WCAG-godkjenning. Om forskrift om universell utforming av IKT formelt gjelder for Spareverksted, er ikke avklart. Uu-tilsynet skriver at både private og offentlige virksomheter, lag og organisasjoner må følge regelverket ([uutilsynet.no/regelverk](https://www.uutilsynet.no/regelverk/), lest av Lars via skjermbilde 28.10.2026). Om en privatperson med en gratis hobbyside regnes som virksomhet, sier siden ikke. Vi følger standarden uansett.
 
+## Sparekalkulatorens kontrollstatus, 5. november 2026
+
+Den siste finpussen, utførte lokale kontroller, Lars sine manuelle observasjoner og gjenstående tester er samlet i [status og vern](../docs/sparekalkulator-status.md) og [testnotatet](../docs/sparekalkulator-testfunn-2026-11-05.md). Skjermoppløsning, systemskalering, nettleserzoom og faktisk visningsflate skal holdes adskilt. En god prøve ved høy zoom er ikke full tilgjengelighetsgodkjenning.
+
+Lars har sendt Inklud en forespørsel om hjelp til å få til brukertesting. Egen logg er foreslått i #225. Ekstern testing eller godkjenning er ikke dokumentert. Endringene skal bevares gjennom små, kontrollerte oppdateringer mens praktisk testing med hjelpemidler avklares.
+
 ## 1. Krav til hver ny del
 
 En ny side eller funksjon er ikke ferdig før punktene under er oppfylt og kontrollert. For kalkulatorer gjelder i tillegg [KALKULATORDESIGN.md](../KALKULATORDESIGN.md), som beskriver felles oppbygging, ord og rapport/PDF. Det som ikke er kontrollert, står som «ikke testet».

@@ -12,6 +12,12 @@ Arbeid i avgrensede endringer med dokumentert brukernytte. Kontroller beregninge
 
 Datainnhenting bygger på eksisterende Kildevakt og Tidsmaskin. Svargrunnmuren kontrollerer og genererer innhold fra kilderegisteret, uten et tredje innhentingsløp. Se `docs/kildevakt.md`, `docs/tidsmaskin.md` og `docs/svargrunnmur.md`.
 
+### Stabilisering av sparekalkulatoren, 5. november 2026
+
+Finpussen i Sparing er samlet gjennom #227. Videre arbeid følger [status og vern](../docs/sparekalkulator-status.md): små trinn fra fersk main, relevante kontroller og Lars sin godkjenning før sammenslåing. Ingen generell ny frysing, men større ombygging eller nye funksjoner krever eget oppdrag. Fysiske sluttprøver etter #227 og senere brukertesting må skilles fra lokale automatiske kontroller.
+
+Lars har kontaktet Inklud om muligheter for brukertesting og er i dialog med Forbrukerrådet om mulig bruk av Finansportalen-data. Ingen gjennomført ekstern brukertest eller ferdig avklart dataintegrasjon påstås. Inklud-loggen ligger som forslag i #225. Se statusnotatet for avgrensninger og dokumentasjon. Kakediagram, generell CI-opprydding og ny låneside inngår ikke i stabiliseringsoppdraget.
+
 ## 1. Gjeldende rekkefølge og status, 30. oktober 2026
 
 Prosjektpausen ble avsluttet 2.11.2026, se [docs/regulatorisk.md](../docs/regulatorisk.md). Arbeidet følger fasene i rekkefølge, og sperrene som gjelder etter oppstart, står der. Hver PR krever Lars' godkjenning før sammenslåing. Main-push starter testing og publisering, også for dokumentasjon.

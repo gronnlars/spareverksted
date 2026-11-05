@@ -234,9 +234,12 @@ jobs:
       - name: "tests/theme-browser.cjs (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tests/theme-browser.cjs
-      - name: "tests/navigation-browser.cjs (chromium)"
+      - name: "Sparing: navigation, testfunn og rapportvalg (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: node tests/navigation-browser.cjs
+        run: |
+          node tests/navigation-browser.cjs
+          node tests/testfunn-browser.cjs
+          node tests/rapportvalg-browser.cjs
       - name: "tests/roundtrip-browser.cjs (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tests/roundtrip-browser.cjs
