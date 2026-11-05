@@ -1477,3 +1477,9 @@ Lars bestiller opprydding etter avsluttet kalkulatorfinpuss, samlet i én PR. Da
 Vurderte alternativer: v4.1.3 direkte ble valgt bort fordi dagens v4 peker på en nyere rettet revisjon. Flytende v4 ble valgt bort fordi vi vil vite nøyaktig hvilken kode som kjøres. Stort versjonsbytte og generell parallellisering venter på kontroll av #193 og testavhengigheter. Ulempen ved fast SHA er at oppdateringer må gjøres bevisst. Revurder ved nye sikkerhetsmeldinger eller kompatibilitetskrav.
 
 Korriger misvisende kommentar i historisk renters rente-test og utdatert testinstruks i bidragsveiledningen. Ingen endring i testlogikk, offentlig svarstatus eller dist. Kontrollplan, kildebevis, lokale kontroller og gjenstående PR-/produksjonskontroll står i docs/github-oppfolging-2026-11-05.md. ChatGPT/Codex, egenkontroll.
+
+## Nettlesertester ved rene dokumentasjons-PR-er, 5. november 2026
+
+Lars ber om neste avgrensede steg for å redusere unødvendig CI-arbeid. Forslaget avgrenser browser-jobben bare for PR-er som utelukkende endrer angitte styringsdokumenter eller Markdown under docs/. Alle checks bevares, og main kjører alltid hele nettleserrunden før deploy. Kode, research, kilder, blandede eller ukjente endringer får full kontroll. Omfanget undersøkes mot git-historikken og prøves med et eget midlertidig repo.
+
+Alternativer: beholde full nettleserrunde på all dokumentasjon, velge tester for hver kodefil, eller parallellisere nettleserne. Den smale dokumentasjonsregelen velges først. Filbasert utvalg for kode og parallellisering venter på mer kartlegging. Kostnaden er at browser venter på checks, historisk rundt 26 sekunder ekstra ved full kjøring. En ny egen jobb for omfang er ikke opprettet. Se docs/ci-omfang.md for avgrensning, måling og kontroller som må bekreftes i GitHub. Forslaget krever Lars sin merge. Revurder ved avhengigheter fra dokumentasjon til nettleseradferd, uventet skipping eller uheldig virkning på påkrevde kontroller.
