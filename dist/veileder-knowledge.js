@@ -564,6 +564,10 @@ const entries=[
 "layout":"overview",
 "caveat":""}
 ];
-if(typeof module!=='undefined'&&module.exports)module.exports=entries;
-else {for(const entry of entries)root.SpareVeileder.register(entry);}
+const generated=typeof module!=='undefined'&&module.exports?require('./veileder-svar-generert.js'):root.SpareSvarGenerert;
+if(!Array.isArray(generated))throw Error('Generert svarbase mangler.');
+const all=[...entries,...generated],ids=new Set();
+for(const entry of all){if(ids.has(entry.id))throw Error('Duplisert svar: '+entry.id);ids.add(entry.id);}
+if(typeof module!=='undefined'&&module.exports)module.exports=all;
+else {for(const entry of all)root.SpareVeileder.register(entry);}
 })(typeof window!=='undefined'?window:globalThis);

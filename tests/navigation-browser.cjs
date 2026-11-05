@@ -6,10 +6,11 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
  const root=path.resolve(__dirname,'../dist');
  const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!file.startsWith(root+path.sep)){res.writeHead(403);return res.end();}try{res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(file));}catch{res.writeHead(404);res.end();}});
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
- let browser;
+ let browser,context,page,passed=false;
  try{
   browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu'],...(process.env.SPARE_BROWSER?{executablePath:process.env.SPARE_BROWSER}:{})});
-  const context=await browser.newContext({viewport:{width:375,height:812},reducedMotion:'reduce'}),page=await context.newPage(),errors=[];
+  context=await browser.newContext({viewport:{width:375,height:812},reducedMotion:'reduce'});page=await context.newPage();const errors=[];
+  await context.tracing.start({screenshots:true,snapshots:true});
   page.on('pageerror',e=>errors.push(e.message));
   await page.goto(origin+'/index.html');await page.locator('#chooseGrowth').click();
   await page.locator('#onboardAge').fill('43');await page.locator('#onboardStart').fill('12000');await page.locator('#onboardMonthly').fill('4000');await page.locator('#onboardYears').fill('22');await page.locator('#beginJourney').click();
@@ -25,7 +26,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    }
    await page.setViewportSize({width:375,height:812});await page.locator('#monthly').scrollIntoViewIfNeeded();
    await page.waitForFunction(()=>document.getElementById('mobileResultButton').textContent==='Se resultat ↓');
-   await page.locator('#mobileResultButton').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'savingsResult');
+   await page.locator('.input-result[data-show-result]').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'savingsResult');
    assert(await page.locator('#meaningMain').isVisible());assert.match(await page.locator('#meaningMain').innerText(),/Et indeksfond kan falle mye/);
    assert.doesNotMatch(await page.locator('#meaningMain').innerText(),/nedre delen av utfallsrommet/);
    assert.equal(await page.locator('#meaningActions button[aria-pressed]').count(),0,'No hidden graph toggle before graph');
@@ -47,7 +48,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await page.locator('#levels [data-level=advanced]').click();assert.equal(await page.locator('#levels [data-level=advanced]').getAttribute('aria-pressed'),'true');
   // Phone anchor leaves room for a browser toolbar even with the extra cost row.
   // Fokus i feltet, slik en bruker som redigerer har. Knappen skjules med vilje når resultatet allerede er synlig.
-  await page.locator('#monthly').focus();await page.waitForFunction(()=>document.getElementById('mobileResultButton').textContent==='Se resultat ↓');await page.locator('#mobileResultButton').click();
+  await page.locator('#monthly').focus();await page.waitForFunction(()=>document.getElementById('mobileResultButton').textContent==='Se resultat ↓');await page.locator('.input-result[data-show-result]').click();
   const mobileTop=(await page.locator('#savingsResult').boundingBox()).y;assert(mobileTop>=-9&&mobileTop<=0);
   assert((await page.locator('.before-tax-badge').boundingBox()).y>=0,'Badge is not scrolled away');
   assert((await page.locator('#resultLabel').boundingBox()).y>=0,'Heading is not scrolled away');
@@ -79,7 +80,11 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    await page.setViewportSize({width,height:900});await page.goto(origin+'/'+file);
    if(file==='index.html'){await page.evaluate(()=>sessionStorage.clear());await page.reload();}
    // Hovedmenyen er alltid synlig: tre lenker, nåelige med tastatur, ingen nedtrekk.
-   const links=page.locator('.site-header>.site-nav a');assert.equal(await links.count(),3,file+' '+width+': tre lenker');
+   const links=page.locator('.site-header>nav[aria-label=Hovedmeny] a');assert.equal(await links.count(),3,file+' '+width+': tre lenker');
+   const sub=page.locator('.info-nav');
+   const info=!['index.html','spor.html'].includes(file);
+   assert.equal(await sub.count(),info?1:0,file+': undermeny bare på infosider');
+   if(info){assert.equal(await sub.locator('a').count(),4);assert(await sub.isVisible());}
    for(const link of await links.all())assert(await link.isVisible(),file+' '+width+': lenken synes');
    await links.first().focus();assert(await page.evaluate(()=>document.activeElement.closest('.site-nav')!==null),file+': Tab når menylenke');
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),file+' '+width+': no horizontal overflow');
@@ -89,6 +94,16 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
    }
   }
   assert.deepEqual(errors,[]);
+  passed=true;
   console.log('Passed: result → graph → fields, direction labels, three themes, 320–1280 px, keyboard focus, menus, levels, edit versus new plan, undo and all modules.');
- }finally{if(browser)await browser.close();server.close();}
+ }finally{
+  if(context){
+   if(!passed){
+    const dir='/tmp/spareverksted-ui-review/navigation';fs.mkdirSync(dir,{recursive:true});
+    await page?.screenshot({path:path.join(dir,'failed.png'),fullPage:true,timeout:5000}).catch(()=>{});
+    await context.tracing.stop({path:path.join(dir,'trace.zip')}).catch(()=>{});
+   }else await context.tracing.stop();
+  }
+  if(browser)await browser.close();server.close();
+ }
 })().catch(e=>{console.error(e);process.exitCode=1;});

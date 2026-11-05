@@ -6,8 +6,8 @@ faktisk resultat og hvordan feilen kan gjenskapes. Bruk oppdiktede tall.
 1. Fork prosjektet og opprett en egen gren.
 2. Kjør lokalt som beskrevet i README.
 3. Gjør en avgrenset endring og forklar hvordan den hjelper brukeren.
-4. Kjør begge testfilene med Node.js.
-5. Kontroller mobilvisning, tastaturbetjening og relevante eksportformater.
+4. Kjør relevante beregnings-, Python- og nettlesertester for endringen. Kommandoene står i `.github/workflows/static.yml`. Oppgi nøyaktig hva du har kjørt og hva som gjenstår. For sparekalkulatoren følger du [arbeidsmåten og vernet ved videre endringer](docs/sparekalkulator-status.md).
+5. Kontroller mobilvisning, tastaturbetjening og relevante eksportformater. Ny eller endret kalkulator følger [KALKULATORDESIGN.md](KALKULATORDESIGN.md).
 6. Åpne en pull request med endringen og kontrollene du har gjort.
 
 Endringer i finansielle modeller må dokumentere forutsetningene og kontrolleres
@@ -77,8 +77,8 @@ Når innhold og søk endres, vurderes forventet resultat på nytt.
 
 ## Felles arbeidsgrunnlag
 
-Les [AGENTS.md](AGENTS.md), [språkreglene](SPRAKREGLER.md), [beslutningene](BESLUTNINGER.md), [faseplanen](research/plan.md) og [kravene til universell utforming](research/universell-utforming.md) før arbeid. Dokumenter viktige nye valg og begrunnelser i beslutningsloggen samme dag. Bevar tidligere beslutninger med status når de erstattes.
+Les [AGENTS.md](AGENTS.md), [språkreglene](SPRAKREGLER.md), [klarspråkstandarden](KLARSPRAK.md), [beslutningene](BESLUTNINGER.md), [faseplanen](research/plan.md) og [kravene til universell utforming](research/universell-utforming.md) før arbeid. Dokumenter viktige nye valg og begrunnelser i beslutningsloggen samme dag. Bevar tidligere beslutninger med status når de erstattes.
 
-[Spørsmålkøen](SPORSMALSKO.md) er eneste prioriterte kø. [Daglig oppgave](research/DAGLIG-OPPGAVE.md) gjelder upublisert research; [arbeidsloggen](research/ARBEIDSLOGG.md) brukes til reservasjoner og overlevering. Kontrollert innholdspåfyll følger faseplanens punkt 6. Valgomaten venter. Kalkulatorens frys gjelder fortsatt.
+[Spørsmålkøen](SPORSMALSKO.md) er eneste prioriterte kø. [Daglig oppgave](research/DAGLIG-OPPGAVE.md) gjelder upublisert research; [arbeidsloggen](research/ARBEIDSLOGG.md) brukes til reservasjoner og overlevering. Kontrollert innholdspåfyll følger faseplanens punkt 6. Valgomaten venter. Kalkulatoren er åpnet for videre utvikling 3.11.2026. Kvalitetskravene og kontroll før publisering består.
 
 Ved arbeid med spørsmål og svar: les [SVARMAL.md](SVARMAL.md). Oppgi ønsket svarform og konkret visning i overleveringen. Den som integrerer, skal kontrollere den gjengitte siden og får ikke publiseringsfullmakt av at teksten er godkjent.

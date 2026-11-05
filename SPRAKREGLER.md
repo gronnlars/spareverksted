@@ -2,7 +2,7 @@
 
 Felles arbeidsstandard for alle bidragsytere, også KI-verktøy. Vedtatt av prosjekteier gjennom oppdraget 24. oktober 2026.
 
-Les også [BESLUTNINGER.md](BESLUTNINGER.md). Reglene gjelder hele nettstedet: startguide, kalkulator, veileder, hjelpetekster, grafer, tabeller, feilmeldinger, eksport og Om-side.
+Les også [BESLUTNINGER.md](BESLUTNINGER.md) og [KLARSPRAK.md](KLARSPRAK.md), som samler klarspråkkrav og kontroll for hele brukerreisen. Reglene gjelder hele nettstedet: startguide, kalkulator, veileder, hjelpetekster, grafer, tabeller, feilmeldinger, eksport og Om-side.
 
 ## 1. Møt mennesket der det er
 
@@ -105,7 +105,7 @@ Eksemplene viser språkprinsippet. De erstatter ikke fagkontroll eller godkjenne
 
 Kartlegg teksten før en større gjennomgang: hvor den står, brukerens spørsmål, nivå, mulig misforståelse og foreslått endring. Gå gjennom én hel brukerreise om gangen.
 
-Kalkulatorens frys gjelder fortsatt. Denne standarden åpner ikke for generell omskriving, nye funksjoner eller ny utforming. Endringer i kalkulatoren må begrunnes etter BESLUTNINGER.md og prosjektets gjeldende plan. En konkret misvisende formulering dokumenteres med sted og konsekvens.
+Kalkulatoren og siden er åpnet for videre utvikling 3.11.2026. Språkstandarden er ikke i seg selv et oppdrag om generell omskriving eller nye funksjoner. Endringer i kalkulatoren må begrunnes etter BESLUTNINGER.md og prosjektets gjeldende plan. En konkret misvisende formulering dokumenteres med sted og konsekvens.
 
 Ved en tekstendring skal bidragsyteren kontrollere:
 
@@ -120,7 +120,7 @@ Ved en tekstendring skal bidragsyteren kontrollere:
 
 Eksempel: Et regneeksempel med jevn vekst skal forklare regnemåten uten å antyde at brukeren bør velge spareformen, eller at brukeren kan regne med resultatet.
 
-Standardverdier og forhåndsvalg kan også signalisere hva som anbefales. De vurderes ved senere produktkontroll. Dette åpner ikke kalkulatoren for endringer; frysen i [research/plan.md](research/plan.md), punkt 0, gjelder.
+Standardverdier og forhåndsvalg kan også signalisere hva som anbefales. De vurderes ved senere produktkontroll. Videreutvikling følger [research/plan.md](research/plan.md), punkt 0, og de samme kilde- og kvalitetskravene.
 
 Beskriv konkret uklarhet, endring og kontroll i pull requesten. Noter det som ikke er testet. Kjør relevante eksisterende tester når tekst er koblet til logikk eller forventede svar. Ikke oppdater testforventninger bare for å gjøre dem grønne uten å kontrollere betydningen.
 

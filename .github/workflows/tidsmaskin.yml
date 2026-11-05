@@ -12,6 +12,9 @@ on:
       - 'tests/tidsmaskin.test.py'
       - 'research/historikk/**'
       - '.github/workflows/tidsmaskin.yml'
+defaults:
+  run:
+    shell: bash
 permissions:
   contents: read
 concurrency:
@@ -21,9 +24,9 @@ jobs:
   # På PR: tester, kontroll av lagrede filer og en prøvehenting til en midlertidig mappe.
   provehenting:
     if: github.event_name == 'pull_request'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
       - name: Tester og kontroll av lagrede filer
         run: |
           python3 tests/tidsmaskin.test.py
@@ -38,14 +41,14 @@ jobs:
 
   hent:
     if: github.event_name != 'pull_request'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
     env:
       GITHUB_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
         with:
           ref: main
       - name: Hent

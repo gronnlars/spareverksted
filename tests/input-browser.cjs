@@ -45,7 +45,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   // Eksakte beløp finnes i tabellvisningen.
   await p.evaluate(()=>{const b=document.getElementById('showTable')||document.querySelector('[data-view=table]');if(b)b.click();table();});
   const tableText=await p.evaluate(()=>document.getElementById('tableWrap').textContent);
-  assert.match(tableText,/eksakte beløp/);assert(/\d{1,3}(?:[ \u00a0\u202f]\d{3}){3,} kr/.test(tableText),'Tabellen viser eksakte store beløp');
+  assert.match(tableText,/avrundet til hele kroner/);assert(/\d{1,3}(?:[ \u00a0\u202f]\d{3}){3,} kr/.test(tableText),'Tabellen viser eksakte store beløp');
   await p.locator('#rate').fill('100');
   // Fortegn beholdes i både kort (akser) og lang form, også over 1 000 trillioner.
   assert.deepEqual(await p.evaluate(()=>[big(2e21,true),big(-2e21,true),big(-2e21),big(-5e18,true),axisCompact(-3e21),money(-2e21)]),
@@ -233,7 +233,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await realView(true);
   assert.equal(await metric('#total'),78120);assert.equal(await metric('#paid'),100000,'start capital keeps its value in today-kroner view');
   assert.equal(await metric('#gain'),-21880);assert.match(await p.locator('#gainLabel').innerText(),/^Tapt kjøpekraft$/);
-  assert.match(await p.locator('#paidLabel').innerText(),/Innskudd i dagens kroner/);assert(await p.locator('#paidNote').isHidden(),'no note when the amounts are equal');
+  assert.match(await p.locator('#paidLabel').innerText(),/Innskudd totalt i dagens kroner/);assert(await p.locator('#paidNote').isHidden(),'no note when the amounts are equal');
   assert.equal((await p.evaluate(()=>{renderMeaning();return document.getElementById('meaningMain').textContent})),'Beløpet på kontoen er uendret, men pengene kjøper mindre etter hvert som prisene stiger.');assert.match((await p.evaluate(()=>{renderMeaning();return document.getElementById('meaningDetails').textContent})),/Det er 21\s880 kr mindre kjøpekraft enn innskuddene\./);
   assert.doesNotMatch(await sec(),/økt i verdi|tapt [\d\s]+ kr av pengene|samlede tapet/,'standing still in kroner is not growth and not a loss in kroner');
   assert.equal(await p.evaluate(()=>rows[0].paid),100000);assert.equal(Math.round(await p.evaluate(()=>rows.at(-1).paid)),100000,'chart deposit line stays at 100 000 in today kroner');
@@ -244,9 +244,9 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await p.locator('#start').fill('0');await p.locator('#monthly').fill('2000');await p.locator('#rate').fill('2');await p.locator('#fee').fill('0,2');
   assert.equal(await metric('#paid'),212446);assert.match(await p.locator('#paidNote').innerText(),/^Du setter inn 240\s000 kr$/);
   for(const real of [true,false]){await realView(real);assert(Math.abs(await metric('#paid')+await metric('#gain')-await metric('#total'))<=1,'deposits + growth = total, real='+real);}
-  assert.equal(await metric('#paid'),240000);assert.match(await p.locator('#paidLabel').innerText(),/^Du setter inn$/);assert(await p.locator('#paidNote').isHidden());
-  await realView(true);assert.match(await p.locator('#tableWrap').evaluate(e=>e.textContent),/Innskudd i dagens kr/);
-  assert.match(await p.locator('#chartLegend').evaluate(e=>e.textContent),/Innskudd i dagens kroner/);
+  assert.equal(await metric('#paid'),240000);assert.match(await p.locator('#paidLabel').innerText(),/^Innskudd totalt$/);assert(await p.locator('#paidNote').isHidden());
+  await realView(true);assert.match(await p.locator('#tableWrap').evaluate(e=>e.textContent),/Innskudd totalt i dagens kr/);
+  assert.match(await p.locator('#chartLegend').evaluate(e=>e.textContent),/Innskudd totalt i dagens kroner/);
   await realView(false);await p.locator('#monthly').fill('2000');
   await p.evaluate(()=>setLevel('simple'));
   await p.evaluate(()=>setLevel('simple'));

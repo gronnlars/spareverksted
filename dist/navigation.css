@@ -21,7 +21,7 @@
  body[data-stage=workbench] .site-menu .site-nav{display:none!important}
  .site-header .menu-panel .actions{border-top:0;margin-top:0;padding-top:0}
 }
-@media(max-width:420px){.display-options>summary{font-size:11px;padding-inline:5px}.workbench-toolbar{gap:5px}.page-nav button{font-size:13px;padding-inline:4px}}
+@media(max-width:420px){.display-options>summary{font-size:11px;padding-inline:5px}.workbench-toolbar{gap:5px}.page-nav button,.page-nav a{font-size:13px;padding-inline:4px}}
 @media print{.desktop-nav,.result-navigation,.return-fields{display:none!important}}
 
 /* Ved zoom får merke og temavalg bryte over to linjer uten å skjule menyen. */
@@ -30,7 +30,7 @@
 :root .site-header{flex-wrap:wrap;height:auto}
 :root .site-header>.site-nav{display:flex;align-items:center;gap:4px;margin-left:auto;font-size:14px}
 :root .site-header>.site-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;border-radius:9px;text-decoration:none;color:var(--ink);font-weight:600;text-align:center;line-height:1.25}
-:root .site-header>.site-nav a[aria-current=page]{background:var(--soft,#e9f0e0);color:var(--green)}
+:root .site-header>.site-nav a[aria-current=page],.site-nav a[aria-current=true]{background:var(--soft,#e9f0e0);color:var(--green)}
 @media(max-width:760px){
  :root .site-header>.site-nav{order:3;flex:1 0 100%;margin:4px 0 0;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:stretch;gap:4px;border-top:1px solid var(--line);padding-top:6px}
  :root .site-header>.site-nav a{padding:6px 8px;font-size:14px;white-space:nowrap;min-width:0}
@@ -58,3 +58,22 @@ footer .to-top{gap:6px;flex:1 0 100%;grid-column:1/-1;display:inline-flex;align-
 /* Første rad i toppfeltet er like høy før og etter at temaknappen settes inn. Ellers hopper meny og innhold ned når siden lastes (3.11.2026). */
 :root .site-header .brand{display:inline-flex;align-items:center;min-height:44px}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+
+/* Bunnteksten står etter <main>, ikke inni (3.11.2026, funn i Frontkit-sjekk). Da blir den et eget landemerke («contentinfo»)
+   som skjermlesere kan hoppe til, og hovedinnholdet slutter der det faktisk slutter. Bredden følger main på hver side, som før. */
+body>footer{box-sizing:border-box;width:min(1280px,calc(100% - 48px));margin-inline:auto}
+.guidance-page>footer{width:min(1032px,calc(100% - 48px))}
+.info-page>footer{width:min(952px,calc(100% - 48px))}
+@media(max-width:760px){body>footer,.guidance-page>footer,.info-page>footer{width:calc(100% - 32px)}body[data-stage=workbench][data-page=calculator]>main{padding-bottom:0}body[data-stage=workbench][data-page=calculator]>footer{margin-bottom:calc(86px + env(safe-area-inset-bottom))}}
+@media(max-height:300px){body[data-stage=workbench][data-page=calculator]>main{padding-bottom:0}body[data-stage=workbench][data-page=calculator]>footer{margin-bottom:calc(40px + env(safe-area-inset-bottom))}}
+@media(max-width:600px){.info-page>footer{width:calc(100% - 40px)}}
+
+/* «Endre tall» trengs når feltene og resultatet ligger etter hverandre. */
+@media(min-width:761px){#calculatorPanel [data-edit-fields]{display:none}}
+#savingsResult{scroll-margin-block-start:20px}
+@media(max-width:760px){#savingsResult{scroll-margin-block-start:-8px}}
+
+/* PC-brukere kan gå fra både grunnfeltene og bunnen av skjemaet til resultatet. */
+.input-result{display:block;width:100%;min-height:44px;margin-top:16px}
+.input-bottom-result{display:none}
+@media(min-width:761px){.input-bottom-result{display:block;width:100%;min-height:44px;margin-top:16px}}

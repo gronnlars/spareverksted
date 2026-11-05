@@ -25,15 +25,26 @@
   const group=document.createElement('div');group.id='themeOptions';group.className='theme-options';group.setAttribute('role','group');group.setAttribute('aria-label','Velg fargetema');group.hidden=true;
   const showCurrent=()=>{toggle.innerHTML=svg(current);toggle.setAttribute('aria-label','Fargetema: '+names[current]);toggle.title='Fargetema: '+names[current];};
   // Åpen: knappen blir selve pillen. Valgt tema står først, der knappen var, og de to andre folder seg ut ved siden av.
-  const setOpen=(open,focusToggle)=>{
+  const setOpen=(open,focusToggle,foldAnimation=true)=>{
    if(open){const chosen=group.querySelector('[data-color-theme="'+current+'"]');if(chosen)group.prepend(chosen);}
+   const fold=foldAnimation&&!open&&!group.hidden;clearTimeout(group.foldTimer);group.classList.remove('is-closing');group.removeAttribute('aria-hidden');
+   if(fold){group.classList.add('is-closing');group.setAttribute('aria-hidden','true');group.foldTimer=setTimeout(()=>{group.classList.remove('is-closing');group.removeAttribute('aria-hidden');},300);}
    group.hidden=!open;picker.classList.toggle('is-open',open);toggle.setAttribute('aria-expanded',String(open));
    if(open)(group.querySelector('[aria-pressed=true]')||group.firstElementChild).focus();else if(focusToggle)toggle.focus();};
   toggle.addEventListener('click',()=>setOpen(group.hidden,false));
   for(const theme of themes){
    const button=document.createElement('button');button.type='button';button.dataset.colorTheme=theme;
    button.setAttribute('aria-label',names[theme]);button.title=names[theme];button.innerHTML=svg(theme);
-   button.addEventListener('click',()=>{apply(theme);try{sessionStorage.setItem(key,theme);}catch{}showCurrent();setOpen(false,true);});
+   // Fargene tones over der nettleseren kan det. Pillen lukkes i samme bilde, så den glir over i den lukkede knappen.
+   // Uten støtte, eller med redusert bevegelse: som før, øyeblikkelig farge og pillen som folder seg sammen.
+   button.addEventListener('click',()=>{
+    try{sessionStorage.setItem(key,theme);}catch{}
+    const change=fold=>{apply(theme);showCurrent();setOpen(false,true,fold);};
+    if(theme===current||!document.startViewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches)return change(true);
+    root.classList.add('tema-bytter');
+    try{document.startViewTransition(()=>change(false)).finished.finally(()=>root.classList.remove('tema-bytter'));}
+    catch{root.classList.remove('tema-bytter');change(true);}
+   });
    group.append(button);
   }
   picker.addEventListener('keydown',event=>{if(event.key==='Escape'&&!group.hidden){event.preventDefault();setOpen(false,true);}});

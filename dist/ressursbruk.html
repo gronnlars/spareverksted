@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; worker-src 'none'">
-<script src="theme.js?v=b80b1b0dac"></script>
+<script src="theme.js?v=124f4136e0"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Tiltak, planer og usikkerhet om ressursbruk i Spareverksted.">
 <meta name="theme-color" content="#183f36">
 <title>Ressursbruk og miljø</title>
-<link rel="stylesheet" href="style.css?v=f2378f733f">
-<link rel="stylesheet" href="layout.css?v=e31015ca67">
-<link rel="stylesheet" href="theme.css?v=c768920a88">
-<script defer src="layout.js?v=a7caeab047"></script>
-<link rel="stylesheet" href="navigation.css?v=5d98fe1adc">
+<link rel="stylesheet" href="style.css?v=b1b8527baf">
+<link rel="stylesheet" href="layout.css?v=0bfa307409">
+<link rel="stylesheet" href="theme.css?v=60e6f18fa2">
+<script defer src="layout.js?v=7922c2289a"></script>
+<link rel="stylesheet" href="navigation.css?v=18ff9f0060">
 <link rel="stylesheet" href="om.css?v=3516e4f4f5">
-<link rel="stylesheet" href="infosider.css?v=36208bae92">
-<script defer src="infosider.js?v=f89dde9fe5"></script>
+<link rel="stylesheet" href="infosider.css?v=e03bb9f0ae">
+<script defer src="infosider.js?v=68fcf0410b"></script>
 <script defer src="kontakt.js?v=2e0459b7f3"></script>
 <link rel="canonical" href="https://spareverksted.no/ressursbruk.html">
 <meta property="og:type" content="website">
@@ -37,8 +37,19 @@
 </head>
 <body class="about-page info-page">
 <a class="skip" href="#main">Hopp til innholdet</a>
-<header class="site-header" id="toppen"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">↗</span>spareverksted</a><nav class="site-nav" aria-label="Hovedmeny"><a href="index.html">Kalkulator</a><a href="spor.html">Spør om sparing</a><a href="om.html">Om</a></nav></header>
+<header class="site-header" id="toppen"><a class="brand" href="index.html">spareverksted</a><nav class="site-nav" aria-label="Hovedmeny"><a href="index.html">Kalkulator</a><a href="spor.html">Spør om sparing</a><a href="om.html" aria-current="true">Om</a></nav>
+<nav class="site-nav info-nav" aria-label="Om Spareverksted">
+<a href="om.html">Om</a>
+<a href="personvern.html">Personvern</a>
+<a href="tilgjengelighet.html">Tilgjengelighet</a>
+<a href="ressursbruk.html" aria-current="page">Ressursbruk</a>
+</nav>
+</header>
 <main id="main">
+<div class="info-tools">
+<a href="#kontakt">Kontakt <span aria-hidden="true">↓</span></a>
+<button type="button" id="infoToggleAll" hidden><span class="info-toggle-icon" aria-hidden="true">+</span> <span class="info-toggle-label">Åpne alle kapitler</span></button>
+</div>
 <section class="about-intro" aria-labelledby="resourceTitle">
 <p class="eyebrow">OM SPAREVERKSTED</p>
 <h1 id="resourceTitle">Ressursbruk og miljø</h1>
@@ -46,14 +57,6 @@
 <p>Målet er å begrense unødvendig ressursbruk og samtidig lage et nettsted som er forståelig, tilgjengelig og nyttig. Jeg har ikke beregnet nettstedets samlede energibruk eller utslipp.</p>
 <p class="giving-help">Innhold og målegrunnlag fra <time datetime="2026-10-30">30. oktober 2026</time>. Oppsettet er ryddet 3. november 2026.</p>
 </section>
-<nav class="info-nav" aria-label="Om Spareverksted">
-<a href="om.html">Om</a>
-<a href="personvern.html">Personvern</a>
-<a href="tilgjengelighet.html">Tilgjengelighet</a>
-<span aria-current="page">Ressursbruk</span>
-<a href="#kontakt">Kontakt</a>
-</nav>
-<div class="info-tools" hidden><button type="button" id="infoToggleAll">Åpne alle kapitler</button></div>
 <section class="info-section" id="grep" aria-labelledby="grepTitle">
 <details class="info-chapter">
 <summary><h2 id="grepTitle">Grep i nettstedet</h2></summary>
@@ -130,7 +133,8 @@
 <p>Du kan også melde fra på <a href="https://github.com/gronnlars/spareverksted/issues/new">GitHub</a>. Det du skriver der, er offentlig. Hva som skjer med e-post du sender, står på siden om <a href="personvern.html#mail">personvern</a>.</p>
 <p>Kildekoden er tilgjengelig. Alle kan etterprøve det som står her, i <a href="https://github.com/gronnlars/spareverksted">kildekoden på GitHub</a>.</p>
 </section>
-<footer><a class="to-top" href="#toppen">Til toppen <span aria-hidden="true">↑</span></a><nav class="footer-links" aria-label="Sider på Spareverksted"><a href="index.html">Kalkulator</a><a href="spor.html">Spør om sparing</a><a href="om.html">Om</a><a href="personvern.html">Personvern</a><a href="tilgjengelighet.html">Tilgjengelighet</a><span class="footer-current" aria-current="page">Ressursbruk</span></nav></footer>
+
 </main>
+<footer><a class="to-top" href="#toppen">Til toppen <span aria-hidden="true">↑</span></a><nav class="footer-links" aria-label="Sider på Spareverksted"><a href="index.html">Kalkulator</a><a href="spor.html">Spør om sparing</a><a href="om.html">Om</a><a href="personvern.html">Personvern</a><a href="tilgjengelighet.html">Tilgjengelighet</a><span class="footer-current" aria-current="page">Ressursbruk</span></nav></footer>
 </body>
 </html>

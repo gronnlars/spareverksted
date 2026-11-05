@@ -1,5 +1,7 @@
 'use strict';
-// Faktisk produktkode for integrert SV-022. Ingen injeksjon av utkast.
+// Historisk svarvisning for SV-022 med publiseringsfilteret erstattet i lokal testserver.
+// Dette beviser ikke at kandidaten i kilder/svar/SV-022.md er integrert eller publisert.
+// Faktisk publiseringsutvalg kontrolleres av tests/published-answers-browser.cjs.
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const playwright=require(require.resolve('playwright',{paths:[process.cwd(),process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||'']}));
 const engine=process.env.SPARE_ENGINE||'chromium';
@@ -43,10 +45,10 @@ const server=http.createServer((req,res)=>{
    assert.equal(await page.locator('[data-value-mode="both"]').getAttribute('aria-pressed'),'true');
    assert.match((await page.locator('#total').innerText()).replace(/\s/g,''),/10404/);
    await page.locator('#tableTab').click();
-   const cells=await page.locator('#tableWrap tbody tr').last().locator('td').allTextContents();
+   const cells=await page.locator('#tableWrap tbody tr').last().locator('.savings-cell-value').allTextContents();
    const parse=x=>Number(x.replace(/[^0-9,.-]/g,'').replace(',','.'));
-   assert.ok(Math.abs(parse(cells[1])-10404)<.01);
-   assert.ok(parse(cells[2])===9903);
+   assert.ok(Math.abs(parse(cells[0])-10404)<.01);
+   assert.ok(parse(cells[1])===9903);
    assert.deepEqual(errors,[]);await page.close();
   }
   console.log(engine+' nettleserprøve: 320/390/1280 px, eksempel før uttak, kildeliste med formelkilde, ingen overflow, kalkulatorlenke 11 025 kr og kontrast med 10 404 kr / 9 902,68 kr bestått.');

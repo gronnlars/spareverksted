@@ -25,7 +25,6 @@ svg [stroke="#93a18c"]{stroke:#6f8068}
 .legend [style*="--series:#93a18c"]{--series:#6f8068!important}
 :root[data-theme=night] .hero-result{background:#183f36;color:#f1f6e7}
 :root[data-theme=night] .hero-result .eyebrow,:root[data-theme=night] .hero-result #secondary,:root[data-theme=night] .hero-result .metrics span,:root[data-theme=night] .hero-result .metric-note,:root[data-theme=night] .before-tax-badge{color:#d4e0c8}
-:root[data-theme=night] .mark{background:#183f36;color:#d9e9b3}
 :root[data-theme=night] #toast{background:var(--primary-bg);color:var(--on-primary)}
 @media screen{
 :root[data-theme=night] svg text{fill:var(--muted)}
@@ -44,7 +43,7 @@ svg [stroke="#93a18c"]{stroke:#6f8068}
 :root[data-theme=night] .legend [style*="--series:#8c6d88"],:root[data-theme=night] .legend [style*="--series:#9b6480"]{--series:#edb3d9!important}
 }
 @media(max-width:480px){.brand-tools{gap:0 6px}.site-header,.guidance-page .site-header{min-height:64px;gap:6px;padding-inline:12px}.brand{font-size:18px;letter-spacing:-.7px}.theme-picker button{width:34px}.site-menu>summary{padding-inline:8px;gap:5px}}
-@media(max-width:420px){.brand .mark{display:none}.site-menu>summary>span{display:none}}
+@media(max-width:420px){.site-menu>summary>span{display:none}}
 @media(prefers-reduced-motion:reduce){button{transition:none}}
 @media print{.theme-picker{display:none!important}:root[data-theme]{color-scheme:light;--ink:#183f36;--green:#23654e;--muted:#5f7168;--cream:#fff;--surface:#fff;--soft:#edf2e6;--line:#dce4db;--surface-soft:#edf2e6;--control-border:#ccd8c9;--positive:#23523a;--positive-bg:#edf6ef;--negative:#803d35;--negative-bg:#fcf0ed;--warning:#614818;--warning-bg:#fff1cf;--primary-bg:#183f36;--on-primary:#fff}:root[data-theme=night] svg text{fill:#5f7168}:root[data-theme=night] svg [stroke="#24684f"],:root[data-theme=night] svg [stroke="#28664d"]{stroke:#24684f}:root[data-theme=night] svg [stroke="#7a5a2e"]{stroke:#7a5a2e}}
 
@@ -63,13 +62,27 @@ svg [stroke="#93a18c"]{stroke:#6f8068}
 .theme-picker .theme-toggle:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
 .theme-picker .theme-toggle svg{width:20px;height:20px;pointer-events:none}
 .theme-picker.is-open .theme-toggle{background:var(--soft)}
-.theme-options{display:flex;align-items:center;gap:0;padding:0;border:1px solid var(--line);border-radius:22px;background:var(--surface,#fff);overflow:hidden;animation:theme-slide .18s ease-out}
+.theme-options{display:flex;align-items:center;gap:0;padding:0;border:1px solid var(--line);border-radius:22px;background:var(--surface,#fff);overflow:hidden;animation:theme-slide .32s cubic-bezier(.22,1,.36,1)}
 .theme-options[hidden]{display:none}
 .theme-picker.is-open .theme-toggle{display:none}
 .theme-picker .theme-options button{width:44px;height:44px;border-radius:22px}
 .theme-picker .theme-options button[aria-pressed=true]{background:var(--soft);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--green)}
 @keyframes theme-slide{from{max-width:44px}to{max-width:140px}}
-@media(prefers-reduced-motion:reduce){.theme-options{animation:none}}
+/* Lukking: pillen ligger over knappen og folder seg sammen, mens knappen allerede kan ta imot fokus under (3.11.2026). */
+.theme-options.is-closing{display:flex!important;position:absolute;left:0;top:0;z-index:1;pointer-events:none;animation:theme-fold .26s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes theme-fold{from{max-width:140px}to{max-width:44px;opacity:.6}}
+@media(prefers-reduced-motion:reduce){.theme-options{animation:none}.theme-options.is-closing{display:none!important}}
 /* Lenker til andre nettsteder: synlig ↗ og tekst for skjermlesere (tekst etter / er alternativtekst). */
 a[href^="http"]:not([href^="https://spareverksted.no"])::after{content:"\00a0↗";content:"\00a0↗"/" (annen nettside)";font-size:.85em;text-decoration:none;display:inline-block}
 a[href^="http"][target="_blank"]:not([href^="https://spareverksted.no"])::after{content:"\00a0↗";content:"\00a0↗"/" (annen nettside, åpnes i ny fane)"}
+/* Myke overganger (3.11.2026). Bare der nettleseren støtter det og brukeren ikke har bedt om mindre bevegelse.
+   Sideskifte: logo og hovedmeny står stille, innholdet tones over. Temabytte: fargene tones over (theme.js).
+   Uten støtte skifter sidene og fargene som før, uten forsinkelse. */
+@media(prefers-reduced-motion:no-preference){
+ @view-transition{navigation:auto}
+ .site-header .brand{view-transition-name:sv-merke}
+ .site-header>.site-nav:not(.info-nav){view-transition-name:sv-meny}
+ ::view-transition-group(*){animation-duration:.24s;animation-timing-function:cubic-bezier(.4,0,.2,1)}
+ :root.tema-bytter::view-transition-group(*){animation-duration:.42s}
+}
+@media print{.site-header .brand,.site-header>.site-nav{view-transition-name:none}}

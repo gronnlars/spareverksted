@@ -1,5 +1,5 @@
 'use strict';
-// «Last ned valgte» (Lars 3.11.2026): de planene som er krysset av i lista, samlet i én PDF eller én Excel-fil.
+// «Last ned planene» (Lars 3.11.2026, nytt navn 4.11.2026): de planene som er krysset av i lista, samlet i én PDF eller én Excel-fil.
 // Først én sammenligning per kalkulator (Sparing, Sparemål, Uttak) med de tre øverste valgte i lista, så én del per plan.
 // Bygger på tabellene i journey.js og rapporten i experience.js. Ingen nye beregninger: alt hentes fra engine.js.
 (function(){
@@ -30,19 +30,19 @@
  // Grafer i sammenligningen (Lars 3.11.2026). Planene skilles med både farge og strektype, ikke bare farge.
  // Tabellen under hver graf er tekstalternativet med de samme tallene.
  const DASH=['','8 5','2 4'];
- const axis=x=>{const a=Math.abs(x);return a>=1e6?dec.format(Math.round(x/1e5)/10)+' mill.':a>=1e3?dec.format(Math.round(x/1e3))+' tusen':dec.format(Math.round(x));};
+ const axis=axisCompact;
  function ticks(max){const step=[1,2,2.5,5,10].map(m=>m*Math.pow(10,Math.floor(Math.log10(Math.max(max,1)/4)))).find(s=>max/s<=5)||max/4;const out=[0];while(out.at(-1)<max-1e-9)out.push(out.at(-1)+step);return out;}
  function lineChart(series,xLabel,label){const W=420,H=260,L=62,R=12,T=12,B=42,xs=series.flatMap(s=>s.pts.map(p=>p[0])),ys=series.flatMap(s=>s.pts.map(p=>p[1]));
   const xMax=Math.max(1,...xs),yt=ticks(Math.max(1,...ys)),yMax=yt.at(-1)||1,X=x=>L+(W-L-R)*x/xMax,Y=y=>T+(H-T-B)*(1-y/yMax);
   const xt=ticks(xMax).filter(v=>Number.isInteger(v)||xMax<4);
   let g=yt.map(v=>`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" class="rc-grid"/><text x="${L-8}" y="${Y(v)+4}" text-anchor="end">${esc(axis(v))}</text>`).join('')+xt.map(v=>`<text x="${X(v)}" y="${H-B+18}" text-anchor="middle">${esc(dec.format(v))}</text>`).join('');
   g+=series.map((s,k)=>`<polyline class="cmpl-${k+1}" fill="none" stroke-width="2.5"${DASH[k]?` stroke-dasharray="${DASH[k]}"`:''} points="${s.pts.map(p=>X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1)).join(' ')}"/>`).join('');
-  return `<figure class="report-cmp-chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}">${g}<text x="${(L+W-R)/2}" y="${H-6}" text-anchor="middle">${esc(xLabel)}</text></svg>${legend(series.map(s=>s.name))}</figure>`;}
+  return `<figure class="report-cmp-chart" role="group"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}">${g}<text x="${(L+W-R)/2}" y="${H-6}" text-anchor="middle">${esc(xLabel)}</text></svg>${legend(series.map(s=>s.name))}</figure>`;}
  function legend(names){return `<ul class="report-cmp-legend">${names.map((n,k)=>`<li><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="0" x2="34" y1="5" y2="5" class="cmpl-${k+1}" stroke-width="3"${DASH[k]?` stroke-dasharray="${DASH[k]}"`:''}/></svg>${esc(n)}</li>`).join('')}</ul>`;}
  function barChart(list,label){const W=420,H=260,L=62,R=12,T=12,B=52,vals=list.map(p=>figures(p).plans.map(x=>Math.ceil(x.required))),yt=ticks(Math.max(1,...vals.flat())),yMax=yt.at(-1)||1,Y=y=>T+(H-T-B)*(1-y/yMax),gw=(W-L-R)/list.length,bw=Math.min(28,gw/4);
   let g=yt.map(v=>`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" class="rc-grid"/><text x="${L-8}" y="${Y(v)+4}" text-anchor="end">${esc(axis(v))}</text>`).join('');
   list.forEach((p,i)=>{const x0=L+gw*i+(gw-bw*3-8)/2;vals[i].forEach((v,j)=>{g+=`<rect class="cmp-${j+1}" x="${x0+j*(bw+4)}" y="${Y(v)}" width="${bw}" height="${Y(0)-Y(v)}"/>`;});g+=`<text x="${L+gw*i+gw/2}" y="${H-B+20}" text-anchor="middle">${esc(p.name.length>22?p.name.slice(0,21)+'…':p.name)}</text>`;});
-  return `<figure class="report-cmp-chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}">${g}<text x="${(L+W-R)/2}" y="${H-6}" text-anchor="middle">Nødvendig sparing per måned, kr</text></svg><ul class="report-cmp-legend">${['Lavere risiko','Moderat risiko','Høyere risiko'].map((n,j)=>`<li><svg class="sq" viewBox="0 0 12 12" aria-hidden="true"><rect width="12" height="12" class="cmp-${j+1}"/></svg>${n}</li>`).join('')}</ul></figure>`;}
+  return `<figure class="report-cmp-chart" role="group"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}">${g}<text x="${(L+W-R)/2}" y="${H-6}" text-anchor="middle">Nødvendig sparing per måned, kr</text></svg><ul class="report-cmp-legend">${['Lavere risiko','Moderat risiko','Høyere risiko'].map((n,j)=>`<li><svg class="sq" viewBox="0 0 12 12" aria-hidden="true"><rect width="12" height="12" class="cmp-${j+1}"/></svg>${n}</li>`).join('')}</ul></figure>`;}
  // Søyler som i sammenligningen på skjermen: én gruppe per tidspunkt, én søyle per plan (Lars 3.11.2026).
  // En plan får søyle bare for år innenfor sin egen periode. Linjegrafen under viser hele forløpet.
  function groupBars(at,ends,list,valueAt,xTitle,label){const maxT=Math.max(...ends),step=cmpStep(maxT,6),xs=[];for(let t=step;t<maxT-1e-9;t+=step)xs.push(t);xs.push(maxT);
@@ -50,7 +50,7 @@
   const W=420,H=260,L=62,R=12,T=12,B=42,Y=y=>T+(H-T-B)*(1-y/yMax),gw=(W-L-R)/xs.length,bw=Math.min(22,(gw-6)/list.length);
   let g=yt.map(v=>`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" class="rc-grid"/><text x="${L-8}" y="${Y(v)+4}" text-anchor="end">${esc(axis(v))}</text>`).join('');
   xs.forEach((t,i)=>{const x0=L+gw*i+(gw-bw*list.length)/2;vals.forEach((row,k)=>{const v=row[i];if(v!==null)g+=`<rect class="cmp-${k+1}" x="${(x0+k*bw).toFixed(1)}" y="${Y(v).toFixed(1)}" width="${(bw-2).toFixed(1)}" height="${(Y(0)-Y(v)).toFixed(1)}"/>`;});g+=`<text x="${L+gw*i+gw/2}" y="${H-B+18}" text-anchor="middle">${esc(dec.format(Math.round(t*10)/10))}</text>`;});
-  return `<figure class="report-cmp-chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}">${g}<text x="${(L+W-R)/2}" y="${H-6}" text-anchor="middle">${esc(xTitle)}</text></svg><ul class="report-cmp-legend">${list.map((p,k)=>`<li><svg class="sq" viewBox="0 0 12 12" aria-hidden="true"><rect width="12" height="12" class="cmp-${k+1}"/></svg>${esc(p.name)}</li>`).join('')}</ul></figure>`;}
+  return `<figure class="report-cmp-chart" role="group"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}">${g}<text x="${(L+W-R)/2}" y="${H-6}" text-anchor="middle">${esc(xTitle)}</text></svg><ul class="report-cmp-legend">${list.map((p,k)=>`<li><svg class="sq" viewBox="0 0 12 12" aria-hidden="true"><rect width="12" height="12" class="cmp-${k+1}"/></svg>${esc(p.name)}</li>`).join('')}</ul></figure>`;}
  function compareChart(kind,list){
   if(kind==='dreams')return barChart(list,'Nødvendig sparing per måned for '+list.map(p=>p.name).join(', '));
   const names=list.map(p=>p.name).join(', ');
@@ -60,11 +60,12 @@
  const emptyYear=(p,r)=>Number.isFinite(r.exhausted)&&(r.exhausted<=r.n||p.n.withdrawMode==='duration')?r.exhausted:0;
  function summary(p){const f=figures(p);
   if(p.kind==='dreams')return `<p>Mål ved kjøp: <b>${money(f.plans[0].goal)}</b> om ${dec.format(p.n.dreamYears)} år.${p.n.dreamReal?' Budsjettet er i dagens priser.':''}</p>`;
-  let h=`<p>Etter ${dec.format(f.T)} år med sparing: <b>${money(f.final)}</b>, omtrent ${money(f.real)} i dagens kjøpekraft. Egne innskudd: ${money(f.paid)}.</p>`;
+  let h=`<p>Etter ${periodText(f.T)} med sparing: <b>${money(f.final)}</b>, omtrent ${money(f.real)} i dagens kjøpekraft. Egne innskudd: ${money(f.paid)}.</p>`;
   if(p.kind==='withdrawals')h+=`<p>Første uttak: <b>${money(f.r.first.actual)}</b>. Samlet tatt ut: ${money(f.r.last.total)}. Igjen etter ${f.r.n} år: <b>${money(f.left)}</b>, omtrent ${money(f.leftReal)} i dagens kjøpekraft.${emptyYear(p,f.r)?' Pengene er brukt opp ved uttaket i år '+emptyYear(p,f.r)+'.':''}</p>`;
   return h;}
  function buildSelectedReport(){const list=chosen();if(!list.length)throw Error('Velg minst én plan.');
-  let html=`<div class="report-heading"><p class="eyebrow">SPAREVERKSTED</p><h2>Valgte planer</h2><p>${list.map(p=>esc(p.name)).join(', ')}</p><p>Beregnet ${today()} · Regneeksempel før skatt</p></div>`;
+  if(list.some(p=>p.ok&&p.kind==='calculator'&&overReportLimit(planSheets(p.n).flatMap(sh=>sh.rows.flat()))))return reportLimitMarkup(list.map(p=>p.name));
+  let html=`<div class="report-heading"><p class="eyebrow">SPAREVERKSTED</p><h2>Lagrede planer</h2><p>${list.map(p=>esc(p.name)).join(', ')}</p><p>Beregnet ${today()} · Regneeksempel før skatt</p></div>`;
   // Første del står på samme side som overskriften. Resten starter på ny side ved utskrift.
   let first=0;
   for(const g of groups(list))if(g.all.length>1){const top=g.all.slice(0,3);
@@ -79,7 +80,7 @@
  function sheetName(name,used){let base=String(name).replace(/[\[\]:*?\/\\]/g,' ').replace(/\s+/g,' ').trim().slice(0,28)||'Plan',n=base,k=2;while(used.has(n.toLowerCase()))n=base.slice(0,25)+' ('+(k++)+')';used.add(n.toLowerCase());return n;}
  function selectedSheets(){const list=chosen();if(!list.length)throw Error('Velg minst én plan.');const used=new Set(['oversikt']);
   const over=[['Plan','Kalkulator','Hovedresultat','Beløp, kr','I dagens kroner, kr'],...list.map(p=>{if(!p.ok)return [p.name,NAMES[p.kind],'Kan ikke beregnes','',''];const f=figures(p);
-   return p.kind==='dreams'?[p.name,NAMES[p.kind],'Nødvendig sparing per måned, lavere risiko',Math.ceil(f.plans[0].required),'']:p.kind==='withdrawals'?[p.name,NAMES[p.kind],'Igjen etter '+f.r.n+' års uttak',kr(f.left),kr(f.leftReal)]:[p.name,NAMES[p.kind],'Etter '+dec.format(f.T)+' år',kr(f.final),kr(f.real)];})];
+   return p.kind==='dreams'?[p.name,NAMES[p.kind],'Nødvendig sparing per måned, lavere risiko',Math.ceil(f.plans[0].required),'']:p.kind==='withdrawals'?[p.name,NAMES[p.kind],'Igjen etter '+f.r.n+' års uttak',kr(f.left),kr(f.leftReal)]:[p.name,NAMES[p.kind],'Etter '+periodText(f.T),kr(f.final),kr(f.real)];})];
   const sheets=[{name:'Oversikt',rows:over}];
   for(const g of groups(list))if(g.all.length>1)sheets.push({name:sheetName(NAMES[g.kind]+' sammenlignet',used),rows:compareRows(g.kind,g.all.slice(0,3))});
   for(const p of list){if(!p.ok)continue;const rows=[...settingsMatrix(p.n)];for(const sh of planSheets(p.n))rows.push([],[sh.name],...sh.rows);sheets.push({name:sheetName(p.name,used),rows});}
@@ -89,12 +90,13 @@
  const btn=document.getElementById('downloadSelected'),dlg=document.getElementById('selectedExportDialog');
  if(!btn||!dlg)return;
  // Knappen står under lista. Uten avkrysning gjelder den alle planene (Lars 3.11.2026).
- const syncButton=()=>{const n=pickedPlans.size;btn.textContent=n?'Last ned valgte ('+n+')':'Last ned alle planene';document.getElementById('selectedDownloadRow').hidden=!saved.length;};
+// «Last ned planene» med antall når noen er valgt, «Last ned planen» når bare én er med (Lars 4.11.2026, korte ord).
+ const syncButton=()=>{const n=pickedPlans.size,count=n||saved.length;btn.textContent=(count===1?'Last ned planen':'Last ned planene')+(n?' ('+n+')':'');document.getElementById('selectedDownloadRow').hidden=!saved.length;};
  const sync=window.syncPickTools;window.syncPickTools=syncPickTools=function(){sync.apply(this,arguments);syncButton();};syncButton();
  btn.onclick=()=>{show('selectedExportError',false);const n=picks().length;document.getElementById('selectedExportCount').textContent=(pickedPlans.size?(n===1?'1 plan er valgt.':n+' planer er valgt.'):'Alle de '+n+' lagrede planene er med.');dlg.showModal();};
  document.getElementById('closeSelectedExport').onclick=()=>dlg.close();
  const guard=fn=>{try{show('selectedExportError',false);fn();}catch(e){const el=document.getElementById('selectedExportError');el.textContent=e.message;el.hidden=false;}};
  document.getElementById('selectedExportXlsx').onclick=()=>guard(()=>downloadData(ExportKit.workbook(selectedSheets()),'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','spareverksted-planer.xlsx'));
- document.getElementById('selectedExportPdf').onclick=()=>guard(()=>{const html=buildSelectedReport();dlg.close();$('reportPreview').innerHTML=html;$('printReportContent').innerHTML=html;$('reportDialog').showModal();});
+ document.getElementById('selectedExportPdf').onclick=()=>guard(()=>{const html=buildSelectedReport();dlg.close();$('reportPreview').innerHTML=html;$('printReportContent').innerHTML=window.forPrint?window.forPrint(html):html;$('reportDialog').showModal();});
  window.buildSelectedReport=buildSelectedReport;window.selectedSheets=selectedSheets;
 })();

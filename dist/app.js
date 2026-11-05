@@ -3,9 +3,17 @@ const $=id=>document.getElementById(id), E=Engine;
 let s={...E.defaults},mode='explore',rows=[],saved=[],level='simple',selectedPlans=new Set(),pickedPlans=new Set(),activePlan=null,activeBase='',undoState=null,view={showBank:false,showRange:false,showGoal:false,both:false};
 const nf=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0}),dec=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:2});
 // Én forkortingsregel for alle beløp i tekst og resultatkort: fra 1 milliard forkortes beløpet. Under det vises hele kroner.
-// Tabellvisningen viser eksakte beløp (exactMoney), slik at presise tall finnes ved behov.
+// Tabellvisningen viser hele kronebeløp (exactMoney), slik at tall uten forkorting finnes ved behov.
 const BIG=[[1e18,'trillioner','trill.','trillion'],[1e15,'billiarder','bd.','billiard'],[1e12,'billioner','bill.','billion'],[1e9,'milliarder','mrd.','milliard']];
 const big=(x,short)=>{const a=Math.abs(x),sign=x<0?'−':'';if(a>=1e21){const bound=x<0?'under −':'over ';return bound+(short?'1 000 trill.':'1 000 trillioner kr');}for(const [limit,word,abbr,one] of BIG)if(a>=limit){const n=dec.format(a/limit);return sign+n+(short?' '+abbr:' '+(n==='1'?one:word)+' kr');}return null;};
+const REPORT_LIMIT=1e21;
+const overReportLimit=values=>values.some(v=>typeof v==='number'&&(!Number.isFinite(v)||Math.abs(v)>=REPORT_LIMIT));
+const testThanks='Takk for at du tester hva kalkulatoren tåler! Hvis tallene er reelle, må du gjerne ansette et helt team til å hjelpe meg.';
+const limitExplanation='Resultatene er større enn rapportens visningsgrense. Velg lavere vekst eller kortere periode for å få en vanlig rapport.';
+const savingsOverLimit=()=>{
+ const keys=['v','paid',...(view.showBank?['bank']:[]),...(view.showRange&&!(view.both&&!s.real)?['low','high']:[]),...(view.showGoal||mode==='goal'?['goal']:[])];
+ return rows.some(r=>overReportLimit(keys.map(k=>r[k])))||overReportLimit([E.value(s,endYear(s)),E.value(s,endYear(s))/inflation(endYear(s)),nominalPaid(endYear(s))]);
+};
 const money=x=>!Number.isFinite(x)?'Kan ikke beregnes':big(x)||nf.format(x)+' kr';
 const exactMoney=x=>!Number.isFinite(x)||Math.abs(x)>=1e21?money(x):nf.format(x).replace(/^-/,'−')+' kr';
 const axisFormat=new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0});
@@ -90,7 +98,7 @@ const timeTicks=(maxTime,most)=>{
  if(maxTime-out.at(-1).t>1e-9){if(out.length>1&&maxTime-out.at(-1).t<(months?step/12:step)*.75)out.pop();out.push({t:maxTime,label:(months?nf.format(span):oneDec.format(maxTime))+unit});}
  return out;
 };
-const periodText=t=>{const m=Math.round(t*12);return m<12?m+(m===1?' måned':' måneder'):dec.format(t)+' år';};
+const periodText=t=>{const m=Math.round(t*12),y=Math.floor(m/12),rest=m%12;return y?y+' år'+(rest?' og '+rest+(rest===1?' måned':' måneder'):''):m+(m===1?' måned':' måneder');};
 const inflation=(t,n=s)=>Math.exp(Math.log1p(n.inflation/100)*t);
 const display=(v,t,n=s)=>s.real?v/inflation(t,n):v;
 function nominalPaid(t,n=s){return E.raw({...n,rate:0,fee:0},t,0,0);}
@@ -135,8 +143,10 @@ function render(){
  if(mode==='goal')notes.push('Første månedsbeløp. Grafen viser fortsatt sparingen du har lagt inn.');
  else if(!X.noInflation)notes.push(s.real?`Målt i dagens kroner. Kontoen viser da ${money(final)}.`:`Det tilsvarer ${money(X.real)} med dagens priser.`);
  if(mode!=='goal'&&Math.abs(shown)>=1e15)notes.push('Beløpet er så stort at det mister praktisk mening. Sjekk sparetid og vekst.');
- $('mobileTotal').textContent=$('total').textContent;$('paid').textContent=money(paid);$('gain').textContent=money(shown-paid);lastRealGain=s.real?shown-paid:0;
- $('paidLabel').textContent=s.real?'Innskudd i dagens kroner':'Du setter inn';$('paidNote').hidden=!s.real||Math.abs(paid-nominalPaidEnd)<0.5;$('paidNote').textContent=`Du setter inn ${money(nominalPaidEnd)}`;$('cost').textContent=money(display(E.value(s,end,s.rate,0)-final,end));
+ const mobileFull=$('total').textContent;
+ if(mode!=='goal'&&Math.abs(shown)>=1e6){const visual=document.createElement('span');visual.setAttribute('aria-hidden','true');visual.textContent=compact(shown)+' kr';const full=document.createElement('span');full.className='sr-only';full.textContent=mobileFull;$('mobileTotal').replaceChildren(visual,full);}else $('mobileTotal').textContent=mobileFull;$('paid').textContent=money(paid);$('gain').textContent=money(shown-paid);lastRealGain=s.real?shown-paid:0;
+ $('paidLabel').textContent=s.real?'Innskudd totalt i dagens kroner':'Innskudd totalt';$('paidNote').hidden=!s.real||Math.abs(paid-nominalPaidEnd)<0.5;$('paidNote').textContent=`Du setter inn ${money(nominalPaidEnd)}`;$('cost').textContent=money(display(E.value(s,end,s.rate,0)-final,end));
+ for(const id of ['total','paid','gain','cost'])$(id).textContent=$(id).textContent.replace(/[\u00a0\u202f]/g,' ');
  // Et sluttbeløp under innskuddene skal aldri se ut som en gevinst. Tapet vises i resultatet og i sammendraget.
  // Tap i kroner: sluttverdien er lavere enn summen av innskuddene, målt i vanlige kroner i begge visninger.
  // Lavere kjøpekraft: sluttverdien i dagens kroner er lavere enn innskuddene i dagens kroner (paid i den visningen).
@@ -175,20 +185,27 @@ function render(){
 }
 function selectedComparisons(){return saved.map((item,index)=>({item,index})).filter(x=>selectedPlans.has(x.index)&&x.item.state.activePage!=='dreams'&&!(x.item===here()&&!planDirty())).map(({item,index})=>{try{const n={...E.defaults,...item.state};E.validate(n);const points=planRows(n);if(points.some(p=>!Number.isFinite(p.v)))return null;return {name:item.name,index,n,points};}catch{return null;}}).filter(Boolean);}
 function chart(){
- const el=$('chart'),W=Math.max(220,Math.round(el.getBoundingClientRect().width)||680),H=W<450?260:320,L=W<450?68:82,R=14,T=25,B=38,w=W-L-R,h=H-T-B;
+ const el=$('chart'),W=Math.max(220,Math.round(el.getBoundingClientRect().width)||680),H=W<450?260:320,R=14,T=25,B=38,h=H-T-B;let L=W<450?68:82,w=W-L-R;
  const comparisons=[],colors=['#9b6837','#6879a5','#9b6480'];
- const both=view.both&&!s.real,series=both?[{name:'Beløp i kroner',color:'#24684f',points:rows.map(r=>({t:r.t,v:r.v})),bold:true},{name:'Kjøpekraft i dagens kroner',color:'#7a5a2e',longDash:true,points:rows.map(r=>({t:r.t,v:r.v/inflation(r.t)}))}]:[{name:s.real?'Kjøpekraft i dagens kroner':'Beløp i kroner',color:'#24684f',points:rows.map(r=>({t:r.t,v:r.v})),bold:true},{name:s.real?'Innskudd i dagens kroner':'Du setter inn',color:'#93a18c',dash:true,points:rows.map(r=>({t:r.t,v:r.paid}))}];
+ const both=view.both&&!s.real,series=both?[{name:'Beløp i kroner',color:'#24684f',points:rows.map(r=>({t:r.t,v:r.v})),bold:true},{name:'Kjøpekraft i dagens kroner',color:'#7a5a2e',longDash:true,points:rows.map(r=>({t:r.t,v:r.v/inflation(r.t)}))}]:[{name:s.real?'Kjøpekraft i dagens kroner':'Beløp i kroner',color:'#24684f',points:rows.map(r=>({t:r.t,v:r.v})),bold:true},{name:s.real?'Innskudd totalt i dagens kroner':'Innskudd totalt',color:'#93a18c',dash:true,points:rows.map(r=>({t:r.t,v:r.paid}))}];
  // «Begge» viser bare beløpet i to målestokker. Innskudd, bank og bånd blandes ikke inn, så linjene som sammenlignes har samme grunnlag.
  const range=view.showRange&&!both;
  if(view.showBank&&!both)series.push({name:'Bank',color:'#a57f32',points:rows.map(r=>({t:r.t,v:r.bank}))});
  if((view.showGoal||mode==='goal')&&!both)series.push({name:'Sparemål',color:'#8c6d88',dash:true,points:rows.map(r=>({t:r.t,v:r.goal}))});
  if(!both)comparisons.forEach((c,i)=>series.push({name:c.name,color:colors[i%colors.length],points:c.points}));
  const maxTime=Math.max(endYear(s),...comparisons.map(c=>endYear(c.n))),max=Math.max(1,...series.flatMap(a=>a.points.map(p=>p.v)),...(range?rows.map(r=>r.high):[]));
+ if(overReportLimit(series.flatMap(a=>a.points.map(p=>p.v)))||(range&&overReportLimit(rows.map(r=>r.high)))){
+  el.onpointermove=null;el.onkeydown=null;el.innerHTML='<div class="chart-limit"><p>'+escapeHTML(limitExplanation)+'</p><p>'+escapeHTML(testThanks)+'</p></div>';
+  $('chartLegend').replaceChildren();$('chartSummary').hidden=true;$('chartSummaryText').textContent='';$('chartSummaryFull').textContent='';$('chartNote').textContent='';return;
+ }
  // Uten beløp å vise gir en graf med aksetall bare forvirring.
  if(Math.max(0,...series.flatMap(a=>a.points.map(p=>p.v)))<=0){el.onpointermove=null;el.onkeydown=null;el.innerHTML='<p class="hint chart-empty">Ingen beløp å vise ennå. Legg inn et startbeløp eller et beløp du sparer hver måned.</p>';$('chartLegend').innerHTML='';$('chartSummary').hidden=true;$('chartSummaryText').textContent='';$('chartSummaryFull').textContent='';$('chartNote').textContent='';return;}
  // Lineær akse: runde trinn (1, 2, 2,5 eller 5 ganger en tierpotens), slik at aksetallene blir lesbare og ulike.
  const niceStep=x=>{const p=10**Math.floor(Math.log10(x)),f=x/p;return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p;};
  const transform=v=>s.log?Math.log10(1+Math.max(0,v)):v,top=s.log?(Number.isFinite(transform(max)*1.08)?transform(max)*1.08:transform(max)):(Number.isFinite(max*1.04/4)?niceStep(max*1.04/4)*4:max);
+ const axisValues=Array.from({length:5},(_,i)=>s.log?10**(top*i/4)-1:top*i/4);
+ const context=document.createElement('canvas').getContext('2d');context.font='12px system-ui';
+ L=Math.min(W-120,Math.max(L,...axisValues.map(v=>context.measureText(axisCompact(v)).width+14)));w=W-L-R;
  const x=t=>L+(maxTime?t/maxTime:0)*w,y=v=>T+h-transform(v)/top*h;
  const path=points=>points.map((p,i)=>(i?'L':'M')+x(p.t).toFixed(2)+','+y(p.v).toFixed(2)).join(' ');
  const ends=series.filter(a=>a.points.length).map(a=>`${a.name}: ${money(a.points.at(-1).v)}`).join(', ');
@@ -210,7 +227,24 @@ function chart(){
  el.onpointermove=e=>{const box=el.querySelector('svg').getBoundingClientRect();if(e.clientY>box.bottom)return;show(((e.clientX-box.left)/box.width*W-L)/w*maxTime);};
  el.onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();show(e.key==='Home'?0:e.key==='End'?maxTime:time+(e.key==='ArrowRight'?1:-1)/12);}};
 }
-function table(){const selected=rows.filter((r,i)=>i===0||i===rows.length-1||Math.floor(r.t)!==Math.floor(rows[i-1].t));const both=view.both&&!s.real,keys=both?['v','vReal','paid']:['v','paid',...(view.showBank?['bank']:[]),...(view.showRange?['low','high']:[])],names={v:s.real?'Kjøpekraft i dagens kr':'Beløp i kroner',vReal:'Kjøpekraft i dagens kr',paid:s.real?'Innskudd i dagens kr':'Du setter inn',bank:'Bank',low:'Lavere avkastning',high:'Høyere avkastning'};$('tableWrap').innerHTML='<table><caption class="hint">'+(both?'Kroner og dagens kroner':s.real?'Dagens kroner':'Fremtidige kroner')+', før skatt, eksakte beløp</caption><thead><tr><th>År</th>'+keys.map(k=>'<th>'+names[k]+'</th>').join('')+'</tr></thead><tbody>'+selected.map(r=>`<tr><td>${dec.format(r.t)}</td>${keys.map(k=>`<td>${exactMoney(k==='vReal'?r.v/inflation(r.t):r[k])}</td>`).join('')}</tr>`).join('')+'</tbody></table>';}
+function fitSavingsTable(wrap=$('tableWrap')){
+ wrap.classList.remove('savings-stacked');
+ const tab=wrap.querySelector('table');
+ // Mål også området rundt tabellen: WebKit kan rapportere mindre scrollWidth på selve tabellen.
+ if(tab&&wrap.clientWidth>0&&Math.max(wrap.scrollWidth,tab.scrollWidth,tab.getBoundingClientRect().width)>wrap.clientWidth)wrap.classList.add('savings-stacked');
+}
+// Oppsettendringen utsettes én skjermoppdatering for å unngå ResizeObserver-løkker i WebKit.
+let savingsTableWidth=-1;
+new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width!==savingsTableWidth){savingsTableWidth=width;requestAnimationFrame(()=>fitSavingsTable());}}).observe($('tableWrap'));
+function table(){
+ const selected=rows.filter((r,i)=>i===0||i===rows.length-1||Math.floor(r.t)!==Math.floor(rows[i-1].t));
+ const both=view.both&&!s.real,keys=both?['v','vReal','paid']:['v','paid',...(view.showBank?['bank']:[]),...(view.showRange?['low','high']:[])];
+ const names={v:s.real?'Kjøpekraft i dagens kr':'Beløp i kroner',vReal:'Kjøpekraft i dagens kr',paid:s.real?'Innskudd totalt i dagens kr':'Innskudd totalt',bank:'Bank',low:'Lavere avkastning',high:'Høyere avkastning'};
+ // Samme tabell og verdier på alle bredder. Synlige celleetiketter på smale flater er dekorative,
+ // mens ekte kolonne- og radoverskrifter bevarer sammenhengene for hjelpemidler.
+ $('tableWrap').innerHTML='<table class="savings-table" role="table"><caption class="hint">'+(both?'Kroner og dagens kroner':s.real?'Dagens kroner':'Fremtidige kroner')+', før skatt, avrundet til hele kroner</caption><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">År</th>'+keys.map(k=>'<th scope="col" role="columnheader">'+names[k]+'</th>').join('')+'</tr></thead><tbody role="rowgroup">'+selected.map(r=>`<tr role="row"><th scope="row" role="rowheader"><span class="savings-year-label" aria-hidden="true">År </span>${dec.format(r.t)}</th>${keys.map(k=>`<td role="cell"><span class="savings-cell-label" aria-hidden="true">${names[k]}</span><span class="savings-cell-value">${exactMoney(k==='vReal'?r.v/inflation(r.t):r[k]).replace(/[\u00a0\u202f]/g,' ')}</span></td>`).join('')}</tr>`).join('')+'</tbody></table>';
+ fitSavingsTable();
+}
 function experiments(){const es=[['500 kr mer per måned','monthly',s.monthly+500],['To år mer å spare','years',s.years+2],s.fee>0?['0,2 prosentpoeng lavere kostnad','fee',Math.max(0,s.fee-.2)]:['Ett prosentpoeng lavere vekst','rate',s.rate-1]];const current=display(E.value(s,endYear(s)),endYear(s));$('experiments').replaceChildren();for(const [title,key,value]of es){const n={...s,[key]:value};let result;try{E.validate(n);result=display(E.value(n,endYear(n)),endYear(n),n);}catch{continue;}if(!Number.isFinite(result))continue;const d=document.createElement('div');d.className='experiment';d.innerHTML=`<span>${title}</span><strong>${money(result)}</strong><small>${Math.abs(result-current)<0.5?'Samme beløp':`${money(Math.abs(result-current))} <b>${result>current?'mer':'mindre'}</b>`}${s.real?' i dagens kroner':''}</small>`;const b=document.createElement('button');b.textContent='Prøv';b.setAttribute('aria-label','Prøv '+title.toLowerCase());b.onclick=()=>changePlan({[key]:value},title+'.');d.append(b);$('experiments').append(d);}}
 function plainExplanation(final,end){const paid=nominalPaid(end),growth=final-paid;let html=`<p>Du setter inn <b>${money(paid)}</b> i løpet av ${dec.format(end)} år. Med tallene du har valgt, ${growth>=0?'vokser pengene med':'reduseres beløpet med'} <b>${money(Math.abs(growth))}</b> etter kostnader.</p><p><b>Saldo og <span data-begrep="kjopekraft">kjøpekraft</span> er ulike ting.</b> Sluttbeløpet er ${money(final)}, men med ${dec.format(s.inflation)} % årlig <span data-begrep="prisvekst">prisvekst</span> kan det kjøpe omtrent det samme som ${money(final/inflation(end))} kan kjøpe i dag.</p>`;if(s.growth)html+=`<p>Månedsbeløpet øker underveis. Siste måned setter du inn omtrent <b>${money(s.monthly*Math.pow(1+s.growth/100,Math.max(0,Math.round(end*12)-1)/12))}</b>.</p>`;html+='<p>Det du kan teste selv: beløpet du setter av, tiden du gir planen og kostnadene. Du kan velge en avkastning i modellen, men du kan ikke bestemme hva markedet faktisk gir.</p>';$('plainExplanation').innerHTML=html;}
 function tips(need){const content=[];if(s.years<5||s.purpose==='buffer')content.push(['Når pengene skal brukes snart','En kort eller fast frist gir lite rom for å vente etter et børsfall. Undersøk bankvilkår og innskuddsgaranti for penger du må ha tilgjengelige.']);else content.push(['En plan du kan holde fast ved','Test lavere avkastning før du bestemmer sparebeløpet. Store svingninger kan gjøre en plan vanskelig å følge, selv med lang tid igjen.']);if(view.showGoal||mode==='goal')content.push(['Veien til målet',Number.isFinite(need)?`Modellen trenger ${money(Math.ceil(need))} første måned for å nå målet. Mer tid eller et lavere mål kan være alternativer hvis beløpet er for høyt.`:'Med disse forutsetningene kan målet ikke nås i valgt periode.']);if(s.rate>10)content.push(['En krevende vekstforutsetning','Du har valgt over 10 % årlig avkastning. Prøv vesentlig lavere vekst før du baserer et viktig mål på resultatet.']);content.push(['Se kostnadene samlet','Ta med både fondskostnad og eventuelt plattformgebyr. Lavere kostnad gir mer igjen når alt annet er likt.']);$('tips').innerHTML=content.map(([h,p])=>`<div class="tip"><h3>${h}</h3><p>${p}</p></div>`).join('');}
@@ -264,9 +298,28 @@ function currentLabel(){return here()?' ('+escapeHTML(activePlan.name)+(planDirt
 function currentName(){return here()?activePlan.name+(planDirty()?' (ikke lagret)':''):'Nå i kalkulatoren';}
 function cmpStep(T,maxGroups){for(const st of [1,2,5,10,15,20,25,50])if(Math.ceil(T/st)<=maxGroups)return st;return 100;}
 function compareSeries(){const list=[...selectedComparisons()].sort((a,b)=>a.index-b.index);const cur=[];if(cmpCurrent&&!(here()&&!planDirty()&&list.some(c=>saved[c.index]===activePlan)))cur.push({name:currentName(),n:s,index:-1});return [...cur,...list.map((c,k)=>({...c,color:k+1}))].map(c=>({...c,color:c.color??0}));}
-// Tabellene i sammenligningen: enheten står over tabellen, så kolonnene får plass på mobil (3.11.2026).
+// Sammenligning: enheten står over tabellen. Smal visning har plannavn ved hvert beløp.
 // Myk bindestrek: det lange ordet kan deles i smale kolonner. Skjermlesere leser det som ett ord.
 const thName=n=>escapeHTML(n).replace(/kalkulatoren/g,'kalku&shy;latoren');
+function prepareCompareTable(){
+ const wrap=$('comparison').querySelector('.table-scroll'),tab=wrap?.querySelector('table');if(!tab)return;
+ tab.classList.add('savings-table');tab.setAttribute('role','table');
+ const headings=[...tab.querySelectorAll('thead th')];headings.forEach(h=>{h.scope='col';h.setAttribute('role','columnheader');});
+ for(const group of tab.querySelectorAll('thead,tbody'))group.setAttribute('role','rowgroup');
+ for(const row of tab.querySelectorAll('tr'))row.setAttribute('role','row');
+ for(const row of tab.querySelectorAll('tbody tr')){
+  const heading=row.querySelector('th');if(heading){heading.scope='row';heading.setAttribute('role','rowheader');}
+  [...row.querySelectorAll('td')].forEach((cell,i)=>{
+   cell.setAttribute('role','cell');
+   const value=document.createElement('span');value.className='savings-cell-value';value.append(...cell.childNodes);
+   const label=document.createElement('span');label.className='savings-cell-label';label.setAttribute('aria-hidden','true');label.textContent=headings[i+1].textContent;
+   cell.append(label,value);
+  });
+ }
+ fitSavingsTable(wrap);
+}
+let comparisonTableWidth=-1;
+new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width!==comparisonTableWidth){comparisonTableWidth=width;const wrap=$('comparison').querySelector('.table-scroll');if(wrap)requestAnimationFrame(()=>fitSavingsTable(wrap));}}).observe($('comparison'));
 const bare=x=>money(x).replace(/\s*kr$/,'');
 const ALT_NAMES={safe:'Trygt',moderate:'Moderat',risk:'Mer risiko'};
 function selectedKind(){const k=[...selectedPlans].map(i=>saved[i]?.state?.activePage==='dreams'?'dreams':'savings');return k.includes('dreams')?'dreams':'savings';}
@@ -295,7 +348,7 @@ function dreamCompareRender(box){
  if(cmpPick&&items[cmpPick[1]])detail(...cmpPick);
  wireCompareActions();return true;
 }
-function wireCompareActions(){$('cmpCurrent').onchange=e=>{cmpCurrent=e.target.checked;cmpFocus=-1;cmpPick=null;savedRender();$('cmpCurrent')?.focus({preventScroll:true});};$('cmpDownload').onclick=()=>{window.cmpExportRequest=true;$('reportButton').click();if($('exportDialog').open)$('exportTitle').textContent='Ta med deg sammenligningen';};$('cmpBack').onclick=()=>{$('saved').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});($('saved').querySelector('input')||$('savedHeading')).focus({preventScroll:true});};}
+function wireCompareActions(){prepareCompareTable();$('cmpCurrent').onchange=e=>{cmpCurrent=e.target.checked;cmpFocus=-1;cmpPick=null;savedRender();$('cmpCurrent')?.focus({preventScroll:true});};$('cmpDownload').onclick=()=>{window.cmpExportRequest=true;$('reportButton').click();if($('exportDialog').open)$('exportTitle').textContent='Ta med deg sammenligningen';};$('cmpBack').onclick=()=>{$('saved').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});($('saved').querySelector('input')||$('savedHeading')).focus({preventScroll:true});};}
 function compareRender(){
  const box=$('comparison');if(selectedKind()==='dreams')return dreamCompareRender(box);const items=compareSeries();if(!items.length){box.innerHTML=selectedPlans.size?'<h3 id="cmpHeading" class="cmp-heading" tabindex="-1">Sammenligning av spareplaner</h3><label class="check cmp-current"><input type="checkbox" id="cmpCurrent"> Ta med det som står i kalkulatoren</label>':'';const cc=$('cmpCurrent');if(cc)cc.onchange=()=>{cmpCurrent=cc.checked;savedRender();};window.lastCompare=null;return !!selectedPlans.size;}
  const W=Math.max(260,Math.round(box.getBoundingClientRect().width)||640),mobile=W<520,T=Math.max(...items.map(c=>endYear(c.n))),st=cmpStep(T,mobile?6:10);
@@ -442,6 +495,6 @@ for(const ev of ['input','change'])document.addEventListener(ev,()=>setTimeout((
 
 if($('saveDream'))$('saveDream').onclick=openSave;
 $('reportButton').addEventListener('click',()=>{window.reportComparisonOnly=!!window.cmpExportRequest;window.cmpExportRequest=false;},true);
-// «Last ned» ved resultatet i alle tre kalkulatorene: samme valg som «Last ned eller skriv ut» (Lars 3.11.2026).
+// «Last ned» ved resultatet i alle tre kalkulatorene: samme valg som «Last ned plan» (Lars 3.11.2026).
 for(const id of ['heroDownload','dreamDownload','withdrawDownload'])if($(id))$(id).onclick=()=>$('reportButton').click();
 if($('saveWithdraw'))$('saveWithdraw').onclick=openSave;

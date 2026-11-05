@@ -61,7 +61,7 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
     await ask(q);
     assert.ok(!await answerOpen(),engine+' '+label+': kjent hull åpner ikke et svar');
     const t=await status();
-    assert.ok(t.includes('Vi har ikke et eget svar på «'+label+'» ennå'),engine+' '+label+': status var «'+t+'»');
+    assert.ok(t.includes('Det finnes ikke et eget svar på «'+label+'» ennå'),engine+' '+label+': status var «'+t+'»');
     assert.match(t,/svarer ikke på spørsmålet ditt/);
     assert.ok(await page.locator('#matches .match-list button.match-suggest').count()>=1,'nærmeste tema har forslagsstil');
     await tapTargets(q);await noOverflow(q);

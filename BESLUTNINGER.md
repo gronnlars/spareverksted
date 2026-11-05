@@ -4,6 +4,12 @@ Beslutningsnotat, 24. oktober 2026.
 
 Les dette før du foreslår større endringer. Notatet samler prinsipper og valg fra prosjektarbeidet. Det er ikke dokumentasjon på at alle deler er ferdige eller fullstendig brukertestet.
 
+## Leseplass foran bunnvalg i rapporten (5. november 2026)
+
+Lars fant at bunnvalgene kunne dekke rapporten ved zoom, og at linjen så ut til å flyte inne i rapporten. Den tidligere kontrollen av bunnlinjens egen høyde og bredde var ikke tilstrekkelig til å kontrollere hele leseflaten. Valgt retting: rapportinnholdet får en egen rulleflate, og bunnvalgene får fast plass i dialogens oppsett inntil bunnkanten. Ingen overlapp med tekst. Bunnvalgene skjules ved høyst 360 CSS-piksler i vindushøyde, under 248 CSS-piksler i bredde eller hvis de ville tatt mer enn en tredjedel av dialogen. Dette styres av plassen, ikke av antatt zoomprosent. De opprinnelige toppknappene beholdes. × lukker rapporten og brukes ikke til å skjule en linje.
+
+Lukket resultatlinje på PC med mus flyttes til en liten knapp til venstre, også ved zoom. Mobilens eksisterende berøringsflate beholdes. Ingen endring i motor, lagring, utskriftsbygger eller rapportens tall. Den nye testen kontrollerer kantplassering, adskilt leseflate, skjulte bunnvalg og full nedrulling helt ned til 220 × 120 CSS-piksler. Se siste del av docs/sparekalkulator-testfunn-2026-11-05.md. Ingen ny generell ombygging eller funksjonsutvidelse.
+
 ## Aktive avvik fra reglene
 
 Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](KILDEREGLER.md), «Når en regel må brytes». Kontrollrunden går gjennom tabellen, og den som gjør runden varsler Lars minst to uker før utløp.
@@ -13,6 +19,114 @@ Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](K
 | Varsel om sparehorisont for Indeksfond under 5 år på kalkulatorsiden (PR #67) | Kalkulatorfrysen (plan, punkt 0) | Lars ved sammenslåing | 31.01.2027 | Lars | Foreslått. Aktivt først når #67 er slått sammen |
 | Nøytrale begrepsforklaringer publiseres under pausen | Prosjektpausen og kalkulatorfrysen (`docs/regulatorisk.md`) | Lars 28.10.2026 kl. 10.09 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
 | Forbedringer i kildekrav, UU, personvern og retting av opplagte lovbrudd under pausen | Prosjektpausen (`docs/regulatorisk.md`) | Lars 28.10.2026 | Når pausen oppheves | Lars | Utløpt 02.11.2026, pausen er avsluttet |
+
+## Automatisk klarspråkkontroll (4. november 2026)
+
+Forslag på egen gren etter Lars sitt oppdrag, ikke godkjent for sammenslåing. Ingen endring av brukerrettet tekst, design, beregninger eller funksjoner. [Metode og oppfølging](docs/klarsprak.md) bygger på KLARSPRAK.md, SPRAKREGLER.md og Språkrådets offentlige veiledning om de fire prinsippene i ISO 24495-1. Hele ISO-standarden er ikke kontrollert.
+
+Lokal Python-kontroll og en liten Node-adapter gjenbruker eksisterende publiseringsutvalg, faktaløsning og begrepsregister. LIX er en tekstindikator uten publiseringsgrense. Språklige treff er forslag. Konkrete verktøy- og registerfeil gir rød kontroll. Grunnmåling per side, publisert svar og kapittel bevares, og Actions sammenligner både med grunnmålingen og forrige kildeversjon. Artefakter varer 30 dager, git bevarer avtalte målepunkter.
+
+En egen analyseordliste refererer til eksisterende definisjoner. Nye forklaringer er upubliserte utkast med kildespor, mens ord uten ferdig kildekontroll bare får en oppgave. Godkjente nye definisjoner skal senere flyttes til det felles begrepsregisteret, ikke få et parallelt liv her. Ingen ny innhenter, ekstern analysetjeneste, KI-avhengighet eller datainnsamling.
+
+Forkastet: én LIX-score som godkjenner klarspråk, vilkårlig sperregrense, å telle knappetekster som løpende forklaring, blind omskriving av fagord og automatisk oppdatering av grunnmålingen i hver PR. Valgene revurderes ved feilsegmentering, nye innholdstyper, mange ubrukelige treff eller dokumenterte misforståelser i brukertesting. Første måleresultater og prioriterte tekster står i [sluttrapporten](docs/klarsprak/sluttrapport.md).
+
+### Oppfølging etter innspill til #215
+
+Lars stilte spørsmål ved ordtellingen og ba om vurdering av dekningsgap, varig historikk, rådgivende status og separat kontroll. Grunnmålingen inneholder 6 667 ordforekomster totalt, ikke gjentakelser av «tilgjengelighet». Det ordet forekommer åtte ganger i målte forklaringer. Telling av enkeltord er gjort etterprøvbar og testet, uten endring av historisk JSON-grunnmåling. Metode, JSON og kode ligger allerede i git.
+
+Kontrollen skal foreløpig være rådgivende uten ny flettesperre eller avhengighet i publiseringsjobben. Reelle tekniske kontrollfeil vises fortsatt rødt. Planpunkt 10b beskriver utvidet dekning av dynamiske lånetekster, og 10a lenker et separat kontrolloppdrag som ennå ikke er utført. BSU-setningen foreslås som første senere språk-PR, uten omskriving i denne runden. Nyere brukerrettede rettelser på main er bevart ved innfletting.
+
+## Låneskjema, rentescenarioer og dagens kroner (4. november 2026)
+
+Lars bestiller ferdig lånekalkulator med sparekalkulatoren som modell, og gir fullmakt til sammenslåing og publisering etter gjennomgang og grønne relevante kontroller. Dette erstatter utsettelsen av dagens kroner i v1-beslutningen. Resultatlinjen håndteres i annen tråd og endres ikke her. Grunnlag main `aa56156`, #204 og #207 merget, #208 og #206 åpne ved oppstart. #208 videreføres med rapportretting, renteforklaring og fjerning av innganger fra forsidekort og bunntekst.
+
+- Boliglån: lånebeløp og valgfri boligverdi. Forholdet mellom dem vises uten regelgrense eller kredittvurdering. Tom boligverdi stopper ikke en betalingsplan. Alternativet obligatorisk boligverdi ble forkastet fordi betalingene kan regnes uten den.
+- Billån: kjøpesum minus egenkapital gir et skrivebeskyttet lånebeløp. Bare to uavhengige beløpsfelt, ingen gjensidig synkronisering av tre redigerbare felt. Gebyrer betales separat og inngår ikke i bilens finansiering. Egenkapital lik eller over kjøpesum gir beskjed om at det ikke finnes lånebehov, ingen oppdiktet låneplan.
+- Forbrukslån: eksisterende beløp, tid og synlige gebyrer beholdes. Ingen regulatorisk maksimumstid eller lånetilsagn innføres.
+- Ringdiagram: avdrag inklusive ekstra innbetaling, renter og gebyrer som deler av tilbakebetaling. Alle tall og andeler står også som tekst. Rentesatser er ikke deler av kaken.
+- Utforsk: grunnscenario, lavere og høyere rente på samme lån. Justerbar forskjell i prosentpoeng, standard 1 er et eksempeltall. Rentesatsene begrenses til motorens 0 til 100 %, faktisk forskjell oppgis. Hendelser utelates fra alle tre for å vise rentens isolerte virkning. Månedstall inkluderer termingebyr, samlet kostnad inkluderer etableringsgebyr. Alternativet å flytte også planlagte renteendringer ble forkastet fordi det gjør sammenligningen vanskeligere å forstå.
+- Prisjustering: standard 2,5 % og grenser 0 til 100 %, samme modellforutsetning som sparekalkulatoren, kontrollert med en likhetstest mot Engine. Ingen markedsprognose. Hver betaling og restgjeld ved termin m omregnes med (1 + prisvekst/100)^(-m/12). Etableringsgebyret ligger på tidspunkt null. Avdrag i dagens kroner summeres fra hvert faktisk avdrag, de settes ikke lik det nominelle lånebeløpet. Brukerens nominelle betalingsplan er urørt. Dagens kroner på Enkel oppsummeres som skjult aktivt valg med Endre-knapp. Redusert realgjeld sier ingenting om automatisk inntektsvekst.
+- Rapport, Excel, CSV og JSON får alle forutsetninger, uansett skjult detaljnivå. CSV er rektangulær med forutsetningene i ekstra kolonner. JSON v2 beholder nominell plan og har egen visningsplan og rentescenarioer. Års- og månedstabell blir radvise oversikter på smal skjerm, med beholdt tabellstruktur og kolonneoverskrifter.
+
+Ingen nye eksterne avhengigheter, datakilder, lagringsnøkler eller overføring av lånetall. Ingen Finansportal-integrasjon. Effektiv rente avventer verifisert metode. Sammenligning av selvstendige lån og utlånsforskrift er egne senere oppdrag. ChatGPT/Codex, egenkontroll og separat programmatisk Decimal-kontroll, ingen påstand om uavhengig menneskelig fagkontroll. Kontroller og begrensninger loggføres i PR-en.
+
+Revurderes ved observerte misforståelser om kronevisning, etter tester med VoiceOver/NVDA eller hvis finansieringsmåten utvides til å ta gebyrer inn i gjelden.
+
+## Lånesiden skal følge kalkulatorstandarden (3. november 2026)
+
+Lars avviste grensesnittet fra #205 som utilstrekkelig. Lånekalkulatoren skal følge sparekalkulatorens etablerte mønster. Gebyretiketter som går over flere linjer skal ikke forskyve feltene sideveis. På smale flater står gebyr- og hendelsesfeltene under hverandre. Graf og tabell er tilgjengelige på alle detaljnivåer, med års- og månedstabell. Valgt tabellvisning beholdes ved bytte av detaljnivå.
+
+Hjelpeknapper, mobilens resultatlinje og nedlastingsdialog følger eksisterende kalkulator. Excel og CSV bruker `export-kit.js`. Rapport/PDF bruker en felles utskriftskontroller, `report-print.js`, for både spare- og lånekalkulatoren. Den lukker modalvinduet mens PDF-en lages, og gjenoppretter vindu, tittel og fokus etterpå. Rapporten har graf med tekstalternativ, årsplan, gebyrer og alle regneforutsetninger. Eksport stoppes ved ugyldige felt.
+
+Ingen nye lagringsnøkler eller nettforespørsler. Ingen referanserente, skatteberegning eller effektiv rente innføres her. Sparemotoren og lånemotorens regneregler endres ikke. Låneberegningen har fortsatt egne felter, mens stiler, filformater og utskriftsflyt deles. Beregningstester alene var ikke tilstrekkelig godkjenning av den tidligere brukeropplevelsen. Nettlesertestene utvides med faktiske nedlastinger, feltplassering, PDF-struktur og lånesiden i de eksisterende tilgjengelighetsmålingene. Faktisk iPhone Safari og skjermleser må fortsatt prøves manuelt.
+
+## Lånekalkulator v1 (3. november 2026)
+
+**Beslutning (Lars):** Lånekalkulatoren bygges nå, før fase 3 og 4 er ferdige, i avgrensede PR-er. PR 1 er regnemotoren (`dist/laan-motor.js`) med tester. Den avhenger ikke av rentekildene. Siden, referanserentene og effektiv rente kommer i egne PR-er. Regnereglene står i [docs/laanemodell.md](docs/laanemodell.md).
+
+**Begrunnelse:** Lån er ren regning med kjente formler, uten regelverk eller historiske serier, og kan kontrolleres uavhengig. Kalkulatoren forklarer betalinger og kostnader og anbefaler ingen lånetype eller långiver.
+
+**Vedtatt av Lars 3.11.2026:**
+
+1. **Egen motor.** Sparekalkulatoren røres ikke. Lån regnes ikke som negative sparebeløp.
+2. **Detaljnivåer som i sparekalkulatoren.** Enkel, Utforsk og Avansert. Valg gjort på et høyere nivå, for eksempel gebyrer, regnes fortsatt med på et enklere nivå og vises der som en kort oppsummering med mulighet til å endre.
+3. **Lånetyper:** boliglån, billån og forbrukslån. Typen endrer ikke regnemåten, bare referanserenten og hvilke felt som vises.
+4. **Gebyrer er med i v1.** Lånebeløp, rente, gebyrer og samlet tilbakebetalt vises hver for seg. Forbrukslån viser gebyrene på alle nivåer.
+5. **Effektiv rente i v1, i egen PR etter kildekontroll.** Motoren leverer betalingsstrømmen, men låser ikke metoden før regelverket er lest i primærkilden.
+6. **Terminbeløp i dagens kroner venter til v1.1.** Kjøpekraften til framtidige betalinger sier ikke i seg selv noe om betalingsevne, fordi inntekten kan utvikle seg annerledes.
+7. **Renteendring og ekstra innbetaling skilles.** Renteendring i annuitetslån gir nytt terminbeløp over gjenværende løpetid. Ekstra innbetaling beholder terminbeløpet (serie: avdraget), og løpetiden blir kortere. Samme termin: ny rente, så terminen, så den ekstra innbetalingen.
+8. **Siste termin og innfrielse.** Siste termin tar med påløpt rente og termingebyr. Ekstra innbetaling begrenses til restgjelden. Ingen rente eller gebyrer etter innfrielse.
+
+**Lars 3.11.2026, kveld:** Kalkulatoren skal ut, så den kan testes skikkelig, som et supplement i «kalkulatorverdenen». Gjennomført i PR 2: egen side `laan.html` med samme mal, fanen «Lån» etter Sparing, Sparemål og Uttak, et kort på startsiden og en lenke i bunnteksten. Hovedmenyen beholder «Kalkulator», som markeres på lånesiden. «Sparing» og «Lån» i hovedmenyen er ikke innført. Rentefeltet står tomt til referanserentene er kildekontrollert. Kjent begrensning: en spareplan som ikke er tatt med til «Spør om sparing», blir ikke husket på en tur til Lån, som ved andre sider. Å huske den krever lagring i fanen og vurderes for seg (personvern).
+
+**Foreslått, ikke avgjort:** Rentetall fra statistikk heter «referanserente», med måned, lånegruppe og kilde, og overskriver aldri en rente brukeren har skrevet inn. Finnes ingen god kilde for en lånetype, står rentefeltet tomt. Kildevakt kontrollerer månedlig, lager PR ved nye data og beholder siste gyldige verdi med synlig måned ved kildefeil.
+
+**Ord:** Ikke «billigere». Serielån gir lavere samlet rente fordi gjelden nedbetales raskere, og de første terminene er høyere.
+
+**Alternativer:**
+
+- Plassering: A. egen side (valgt for motoren, foreslått for siden). B. fjerde fane i kalkulatoren (forkastet: rører app.js, blander lån og spareplaner, størst regresjonsrisiko). C. innbakt i et svar i Spør om sparing (forkastet: blander svar og verktøy).
+- Rente ved manglende kilde: A. tomt felt (foreslått). B. merket eksempeltall (forkastet: kan leses som dagens rente). C. Finansportalen (vurderes etter kontroll av datagrunnlag og vilkår).
+- Forbrukslån: A. med gebyrer i v1 (valgt). B. uten gebyrer, med forbehold (forkastet: et forbehold retter ikke en beregning som utelater vesentlige kostnader). C. vente med forbrukslån.
+- Ekstra innbetaling: A. kortere løpetid (valgt). B. lavere terminbeløp. C. brukeren velger (kan komme senere).
+- Avrunding: A. ingen i beregningen, skjermen avrunder (valgt: lettest å etterprøve). B. avrunde terminbeløpet som en bank og justere siste termin (forkastet: krever en bestemt avrundingspraksis som ikke er kildekontrollert).
+
+**Kontroll:** Lukkede formler, egenskapstester på 400 tilfeldige planer og en uavhengig Python-implementasjon som sammenlignes termin for termin.
+
+**Revurderes hvis:** Brukere eller fagfolk peker på at en regel avviker fra vanlig bankpraksis på en måte som gir misvisende resultat, eller kildekontrollen av effektiv rente krever en annen tidsregning enn månedlige terminer.
+
+## Utviklingsfrys opphevet og PR godkjent for opplasting (3. november 2026)
+
+Lars presiserte 3.11.2026 at kalkulatoren og hele nettstedet er åpnet for videre utvikling. Den tidligere kalkulatorfrysen og generelle utviklingspausen gjelder ikke. Strenge kildekriterier, ingen personlige råd eller produktanbefalinger, universell utforming og personvern gjelder alle endringer. Ambisjonen om å være best i klassen er et utviklingsmål, ikke en dokumentert rangering.
+
+Lars godkjente uttrykkelig opplasting av svargrunnmur til `gronnlars/spareverksted` og opprettelse av PR uten sammenslåing. Eksisterende Kildevakt og Tidsmaskin videreføres. Ingen ny nattkjøring eller faglig godkjenning av pilotsvar følger av denne tillatelsen.
+
+## Svargrunnmur implementert (3. november 2026)
+
+Lars ba om å fullføre og implementere Claudes rammeverk som grunnmur. Codex har lagt anbefalingene D1 A, D2 A, D3 A, D4 B, D5 A og D6 A til grunn for implementeringen. Dette er ikke en påstand om at Lars har gitt særskilt faglig godkjenning av hvert pilotsvar.
+
+Markdown i `kilder/svar/` er redaksjonell fasit. `scripts/svar.py` kontrollerer struktur, påstands- og kildereferanser, registerreferanser og dokumentert kontroll/godkjenning. Kode genereres deterministisk. Separate kontroll- og godkjenningsrader knyttes til en SHA256 som også omfatter brukte fakta og begreper. Dette oppdager foreldet kontroll, men beviser hverken kontrollørens identitet eller at en kilde støtter påstanden. Git-historikk og Lars sin PR-godkjenning er fortsatt nødvendige.
+
+Ingen publiseringsliste er utvidet. Pilotene SV-133 og SV-022 er mekanisk overført med åpne sperrer. Ny kildekontroll, separat kontroll og godkjenning gjenstår. Nattkjøring startes ikke. De bekreftede innhentingsfeilene 1 og 2 er rettet. Funn 3 til 7 er ikke erklært løst.
+
+Se [teknisk kontrakt og avgrensning](docs/svargrunnmur.md). Ingen kalkulatorberegninger er endret.
+
+## Opprinnelig forslag til svarskjema (3. november 2026, historikk)
+
+**Status:** Historisk forslag fra Claude. Erstattet av implementeringsbeslutningen ovenfor. De opprinnelige alternativene står i [research/plan-svararbeid-2026-11-03.md](research/plan-svararbeid-2026-11-03.md).
+
+**Bakgrunn:** Lars vil at han og ChatGPT kan fylle ut spørsmål og svar på en fast måte, også med mindre modeller når Claude ikke er tilgjengelig. Reglene finnes, men er spredt over flere dokumenter, noen linjer er utdaterte, og ingen utfyllingsform speiler svarbasen. Publiserte svar mangler kobling mellom påstand og kilde.
+
+**Forslag:** Ett skjema per svar i `kilder/svar/SV-xxx.md` med faste overskrifter, en påstandstabell som kobler hver påstand til stedet i kilden, faste statuser og roller, stoppregler og ferdige oppdragstekster. Se [SVARSKJEMA.md](SVARSKJEMA.md). Skjemaet erstatter malen i research/DAGLIG-OPPGAVE.md. Det endrer ingen regler i KILDEREGLER, SPRAKREGLER, SVARMAL eller docs/regulatorisk.md, og de går foran skjemaet.
+
+**Alternativer:**
+A. Skjema i Markdown med faste overskrifter, kontrollert av skript, svarbasen generert senere. **Anbefalt.** Lars og ChatGPT kan lese og skrive det i samtale uten omgjøring, mindre modeller følger faste overskrifter godt, og et skript kan stoppe avvik.
+B. JSON per svar som fasit, som faktaregisteret. Ikke anbefalt: sikkert for maskiner, men tungt å skrive og lese lang tekst i JSON i en samtale.
+C. Fortsette å skrive rett i `dist/veileder-knowledge.js` etter malen i DAGLIG-OPPGAVE. Ikke anbefalt: ingen kobling mellom påstand og kilde, og hver tekstendring krever en modell som håndterer JavaScript.
+
+**Akseptert ulempe:** Til generatoren finnes, står teksten både i skjemaet og i svarbasen, og integrasjonen må sammenlignes ord for ord. Påstandstabellen gir mer arbeid for skribenten, men mindre for kontrolløren og Lars.
+
+**Vurder på nytt når:** piloten med BSU og renters rente er gjennomført, eller skjemaet gir mer arbeid enn det sparer etter ti svar.
 
 ## Informasjonssidene: utvidbare kapitler (3. november 2026)
 
@@ -1135,3 +1249,238 @@ C. Velge de tre med høyest sluttbeløp. Ikke valgt: det rangerer planene etter 
 **Akseptert ulempe:** Uttaksplaner står fortsatt blant spareplanene i lista, og sammenligningen på skjermen viser sparefasen for dem. I nedlastingen er uttak egen gruppe.
 
 **Vurder på nytt når:** uttak får egen gruppe i lista eller egen sammenligning på skjermen.
+## Kontakt og kapittelknapp på samme rad (3. november 2026)
+
+Lars bestiller «Kontakt ↓» til venstre og «+ Åpne alle kapitler» til høyre under sidelenkene på de fire informasjonssidene. Når alle kapitler er åpne, vises «− Lukk alle kapitler». Symbolene er dekorative for skjermleser. Kontakt forblir utenfor kapitlene og tilgjengelig uten JavaScript. Raden bryter når plassen er knapp, fremfor å krympe skriften. Alternativet kontakt som femte sidelenke beholdes ikke, fordi det gir en ufullstendig rad på mobil. Kapitlenes funksjon og kalkulatoren bevares. Revurder plasseringen ved brukertesting som viser at kontakt blir vanskeligere å finne. Bidrag: ChatGPT/Codex.
+
+## Undermeny før innledning og kontakt rett under overskriften (3. november 2026)
+
+Lars presiserer plasseringen etter mobilprøving: de fire sidelenkene flyttes inn i toppfeltet som en egen site-nav-rad med svak bakgrunnsfarge. Den gjenbruker hovedmenyens lenkestiler, trykkflater og mobilmønster, med to kolonner på smal skjerm. Om markeres som overordnet område på alle fire sider. Kontakt og kapittelknappen står umiddelbart etter h1, før varierende innledning. Dette erstatter plasseringen etter innledningen i forrige beslutning. Ingen ny fastlåsing ved rulling innføres, toppfeltet følger eksisterende hovedmeny. Datatilsynet lenkes også fra personvernsidens kontaktavslutning. Uu-tilsynet på tilgjengelighetssiden og kildekodelenker på Om og Ressursbruk beholdes, sammen med direkte lenke til e-postforklaringen. Alternativet egne menyer eller faste høyder på innledninger forkastes: mer kode og dårligere plassbruk ved zoom. Revurder etter mobilprøving med Lars. ChatGPT/Codex.
+
+Oppdateringen er samordnet med main `e9eb4c0` etter #182, #183, #186, #187, #188 og #189. Tilgjengelighetssiden forklarer skjulbar resultatlinje og terskelen på en tredjedel av skjermhøyden. Personvernsiden navngir nedlasting av alle eller valgte planer og forklarer lokal behandling. Bekreftet i `layout.js` og `last-ned-valgte.js`. Sikkerhetskontroll, engine-, tax-export- og personvern-lagring-test består. Tidligere nettleserkontroll dekket første radjustering, men ny menyplassering er ennå ikke nettleserprøvd: nettlesernedlasting feiler i arbeidsmiljøet. Ingen publisering.
+
+## Knapper før overskriften (3. november 2026)
+
+Etter mobil- og PC-prøving bestiller Lars Kontakt og Åpne alle kapitler rett under undermenyen, før overskrift og innledning på alle fire informasjonssider. Dette erstatter plasseringen under h1 fra #191. Lange overskrifter skal ikke flytte knappene mellom sider. Eksisterende funksjon, radbryting og overskrifter beholdes. Ingen sticky-posisjonering eller kalkulatorendring. Testen kontrollerer plassering før innledningen. ChatGPT/Codex.
+
+## PDF-rapporten: merket i Chrome og Edge, PDF/UA utsatt (3. november 2026)
+
+Frontkits PDF-sjekk av en rapport lagret fra Chrome på Windows viste umerket PDF uten tittel og bokmerker. Årsaken var vår egen: rapportvinduet er et modalt `<dialog>`, som gjør resten av siden inert, og utskriftskopien hadde `aria-hidden`. Chrome bygger PDF-merkene fra tilgjengelighetstreet, så kopien kom ikke med.
+
+Rettet (PR #198): vinduet lukkes mens utskriften lages og åpnes igjen etterpå, utskriftskopien har én h1 og h2 under, begrepsknapper blir tekst, og sidetittelen blir PDF-ens tittel. Målt i Chromium: merket struktur, lesrekkefølge (ParentTree), språk, tittel og grafen som figur med tekstalternativ. Lars kontrollerte en PDF lagret med «Lagre som PDF» i Chrome på Windows samme kveld: 82 av 100 i Frontkit, med struktur, lesrekkefølge og tittel i orden.
+
+Rettelse samme kveld: bokmerker kommer ikke med fra vanlig Chrome. Den automatiske testen lager PDF-en med et eget valg for bokmerker som brukerens Chrome ikke bruker, så testen viste mer enn brukerne får. Bokmerker hører derfor til det som er utsatt.
+
+Merk: Velger brukeren skriveren «Microsoft Print to PDF» i stedet for «Lagre som PDF», blir PDF-en umerket. Det kan ikke styres fra nettsiden. Rapportvinduet ber allerede om «Lagre som PDF».
+
+Utsatt: bokmerker, PDF/UA-merke, XMP-metadata og «fast web view». Ingen av dem kan settes av en nettside som bruker nettleserens utskrift. De krever at vi lager PDF-en selv.
+
+Vurderte alternativer:
+
+- A. Nettleserens utskrift som nå. Valgt. Ingen ekstra nedlasting, samme innhold som på skjermen, merket i Chrome og Edge. Safari og Firefox er ikke kontrollert.
+- B. PDFKit i nettleseren. Har PDF/UA-støtte, men rapporten og grafene må tegnes på nytt i kode, og vi må legge ved bibliotek og skrift (anslagsvis et par MB). Ikke prøvd.
+- C. Typst kompilert til WebAssembly. Merket PDF som standard fra versjon 0.14, men flere MB å laste og et eget rapportformat. Ikke prøvd.
+- Forkastet: html2pdf.js og lignende. Lager PDF av et bilde av siden, uten tekst, og er dårligere for skjermlesere enn i dag.
+
+PDF/UA-merket er en påstand om full samsvar med standarden. Det skal bare settes etter kontroll med et anerkjent verktøy (veraPDF eller PAC), ikke for å få grønt i en sjekk som bare ser etter merket.
+
+Ta opp igjen hvis: brukere eller tilsyn trenger PDF/UA, rapporten må fungere i Safari eller Firefox som merket PDF, eller vi uansett bygger egen PDF-produksjon.
+
+## Funn fra Frontkit-sjekkene av spareverksted.no (3. november 2026)
+
+Lars kjørte Frontkits gratis WCAG-sjekk, fokusrekkefølge og opplesning. Verktøyene leser rå HTML uten CSS og JavaScript. Hvert funn ble derfor kontrollert mot tilgjengelighetstreet i Chromium før endring.
+
+Rettet (PR #199): bunnteksten lå inni `<main>` på alle sider og ble ikke et eget landemerke, startvalgene fikk tittel og forklaring i samme navn, delelenken manglet synlig etikett, skjemaet etter startvalget manglet h1, to påkrevde felt sa ikke synlig at de må fylles ut, hoppelenken på forsiden het «Hopp til kalkulatoren» selv der den ikke leder dit, og fire tekster sa «vi».
+
+Ikke endret, vurdert som feilvisning i verktøyet:
+
+- «Ingen hoppelenke»: den finnes og er første element.
+- «7 skjulte elementer kan få fokus»: elementer med `hidden`, som nettleseren ikke gir fokus.
+- «2 h1» (2.4.6): den rå HTML-en har to h1, men bare én er synlig og lest opp i hvert steg. WCAG krever ikke én h1, men hvert steg har nå én.
+- «Bare én navigasjonsmåte» (2.4.5): hovedmenyen og bunntekstens liste med lenker til alle sider oppfyller 2.4.5 sammen (W3C-teknikk G126 for små nettsteder). Søk eller nettstedskart legges ikke til bare for å få grønt i verktøyet. Ta opp igjen hvis nettstedet får mange flere sider.
+- Avkuttede setninger og symboler i opplesningen: verktøyets lesing. Chromium gir hele navn uten pilsymbolene.
+
+Ikke testet: Safari, Firefox, VoiceOver og NVDA.
+
+## Resultatlinjen ved Safari-rulling og PC-zoom (3. november 2026)
+
+Lars viser at den lukkede resultatlinjen ser ut til å sveve når Safaris verktøylinje trekkes sammen. CSS-en la `safe-area-inset-bottom` som gjennomsiktig luft under knappen. Sikkerhetsfeltet flyttes inn i knappen med samme bakgrunn og trykkflate helt ned til bunnen. Ingen nettlesergjenkjenning eller nye rullelyttere.
+
+Ved maksimalt 760 px bredde og 420 px høyde får mus med hover en lukket knapp på minst 28 px. Berøring beholder 44 px, med eksisterende 30 px-unntak på skjermer under 300 px høyde. Sikkerhetsfeltet kommer i tillegg i alle tilfellene. Tekst, pil og tastaturfunksjon beholdes. Alternativet å fjerne sikkerhetsfeltet forkastes fordi hjemindikatoren fortsatt trenger plass.
+
+Eksisterende resultatlinjetest utvides med simulert sikkerhetsfelt på 0 og 34 px, endring av vindushøyde, trefflate nederst, sidebredde og mus mot berøring ved liten høyde. Smal viewport er ikke faktisk nettleserzoom, og skrivebords-WebKit er ikke Safari på iPhone. Lars må fortsatt prøve sammenfoldet og utvidet Safari-meny på iPhone. Lokale sikkerhets-, versjons- og gammel-kodekontroller består. Nettlesernedlasting feilet lokalt, så nettlesertestene kjøres i PR-ens eksisterende Chromium- og WebKit-jobb. ChatGPT/Codex. Ingen sammenslåing eller publisering i dette oppdraget.
+
+Revurder hvis faktisk Safari-prøving fortsatt viser et mellomrom eller knappen blir vanskelig å treffe ved zoom.
+
+
+## Etterkontroll av resultatlinjen og mobil-WAVE (4. november 2026)
+
+PR #206, opprinnelig Actions-kjøring #654, er gjennomgått på Lars sitt oppdrag. Designendringen er begrenset til sikkerhetsfeltet i den lukkede knappen og lavere høyde med mus på korte vinduer. Farger, tekst og den åpne linjen er bevart. Samordnet med main 525160e.
+
+Nettlesertesten avdekket en reell klikkfeil: fokus utløste setCollapsed(false), som erstattet knappens kryss selv når tilstanden allerede var åpen. Klikkmålet kunne forsvinne under trykket. setCollapsed returnerer nå når tilstanden er uendret. Den eksisterende testen kontrollerer eksplisitt lukket tilstand før geometrien måles. Samme test feiler lokalt med gammel JavaScript og består med rettingen i Chromium. Testen måler sikkerhetsfelt på 0 og 34 px, endret vindushøyde, trykkflate, mus/berøring og tastatur. Ingen geometri- eller tilgjengelighetskrav er fjernet. Manglende personvernrapport i CI var en følge av at denne testen stoppet før personverntestene.
+
+Lars sitt mobilbilde fra WAVE viser siden uten vanlig utforming og hvit tekst på #0088FF (3,52:1). Manglende utforming ble gjenskapt i WAVE på PC, hvor knappen fikk nettleserens grå/svarte standardfarger. WAVE-kopien ligger på wave.webaim.org, beholder sidens CSP med style-src self og peker på stilark fra spareverksted.no. Dette forklarer at den ikke bruker sidens utforming. Den direkte publiserte knappen er kontrollert i Chromium: hvit på #183F36 (11,65:1) i Nøytral/Lys og #13291D på #ACDCB9 (10,05:1) i Natt. Ingen design- eller CSP-endring er gjort for WAVE-kopien. WAVE-utvidelsen anbefales for kontroll av siden i opprinnelig nettleserkontekst, jf. https://wave.webaim.org/help (lest 3.11.2026).
+
+Direkte Safari på iPhone og bevegelig Safari-meny er ikke testet i denne økten. Skrivebords-WebKit og smal viewport erstatter ikke den prøven. ChatGPT/Codex, egenkontroll.
+
+
+## Resultatlinjen bare nedenfor resultatfeltet (4. november 2026)
+
+Lars presiserte at linjen aldri skal vises over eller på det grønne resultatfeltet. Den skal bare leve nedenfor feltet. Den tidligere IntersectionObserver-regelen viste linjen når feltet ikke var synlig, uansett retning, og fokus på inndata kunne overstyre skjuling. Begge er erstattet av felles styring i layout.js for spare- og lånesiden: et resultatfelt med høyde større enn null må ha hele underkanten over vindustoppen. Rulling måles maksimalt én gang per tegneramme, og vindus- og resultatstørrelse kontrolleres også. Fokus kan ikke tvinge fram en skjult linje. Valgt åpen/lukket tilstand beholdes ved rulling.
+
+Den tidligere rettingen som bevarer klikkmålet ved fokus, er beholdt. Nettlesertesten bruker nå også et faktisk trykk i berøringskontekst og prøver gjentatt rulling før, på og etter grønt felt på begge sider ved mobil og smale vinduer tilsvarende PC-zoom. Farger og utforming er uendret. Faktisk iPhone/Safari må fortsatt prøves manuelt. ChatGPT/Codex.
+
+
+## CI: navngitte nettleserkontroller uten følgefeil (4. november 2026)
+
+Lars ba om å rydde i årsaken til gjentatte røde kjøringer. Kjøring 41741226413 stoppet i veileder-browser.cjs: testen krevde resultatlinjen ved et inndatafelt, i strid med Lars sin nye regel om at linjen bare vises nedenfor grønt resultatfelt. Testen kontrollerer nå både skjuling ved feltet og visning nedenfor resultatet, og beholder kontrollene av tall, kurve og resultatlenke.
+
+De 81 nettleserkommandoene i static.yml er bevart i samme rekkefølge og med samme motorer, men hver kommando har et eget navngitt trinn. Etter vellykket installasjon fortsetter uavhengige tester selv om en annen test feiler. Ingen continue-on-error, automatisk omkjøring eller reduserte krav. En feilet kontroll gir fortsatt rød nettleserjobb og sperrer publisering. Installasjonsfeil stopper nettleserkontrollene.
+
+Personvernkontrollene har egne trinn og kan kjøre selv om en UI-test feiler. Rapporten skrives først når alle tre personvernmotorer består. Rapport og verifisert personvernside lastes bare opp når rapportgenereringen også består. Dermed forsøkes ikke opplasting av en rapport som aldri ble laget. UI-skjermbilder beholdes med eksisterende always-regel.
+
+Kontroll før opplasting: de 81 gamle og nye nettleserkommandoene er sammenlignet maskinelt og er identiske i innhold og rekkefølge. Ingen lokal kjøring var mulig i denne økten fordi kjøremiljøet var utilgjengelig. Endringen må verifiseres i GitHub Actions. ChatGPT/Codex, egenkontroll.
+
+
+### Fokus på store resultat- og grafpaneler (4. november 2026)
+
+Full CI-kjøring b8cf1c0 besto alle kontroller unntatt navigation-browser.cjs, som fanget et reelt ekstra rullehopp ved fokus på grafpanelet. Når den flytende linjen ble synlig nedenfor resultatet, behandlet unhide hele det høye grafpanelet som et lite kontrollfelt og flyttet panelets topp. Fokusjusteringen gjelder nå elementer som får plass over linjen, eller elementer som faktisk begynner under linjen. Et stort panel med synlig topp flyttes ikke bare fordi bunnen ligger utenfor vinduet. Den eksisterende navigasjonstesten og kontrollene av fokus som ikke skal dekkes, er beholdt uendret for denne rettingen. Ingen endring i beregning eller design. Lokal kjøring er fortsatt utilgjengelig; verifisering skjer i CI.
+
+## Lagrede lånerapporter og retur fra renteforklaringen, 4. november 2026
+
+Etter Lars sin iPhone-prøve får renteforklaringen en retur til lenken ved rentefeltet. Navigeringen flytter fokus uten å sette et varig adresseanker. Høydeendring alene utløser ingen ny resultatvisning. Egenkapital for bil får tallfelt og skyveknapp. Låneplaner lagres ved uttrykkelig trykk og kan slettes. Egen lagringsnøkkel beskytter eksisterende spareplaner mot feiltolking. Felles utskriftsflyt og Excel-verktøy gjenbrukes. Inntil tre valgte planer sammenlignes i listerekkefølge og løpende kroner. Alle valgte får full rapport i sin kronevisning. Revurder navigeringen etter fysisk iPhone-prøve.
+
+## Felles kalkulatordesign og navn uten æ, ø og å (4. november 2026)
+
+Lars vedtok at alle kalkulatorer skal følge design og brukerflyt i den opprinnelige sparekalkulatoren, med unntak der det trengs. Spareverksted skal være én sømløs opplevelse. Reglene står i [KALKULATORDESIGN.md](KALKULATORDESIGN.md). Bakgrunn: lånekalkulatoren fikk egne løsninger for lagring, overskrifter og PDF som avvek fra sparekalkulatoren, og fanene sto ikke på linje.
+
+Vurderte alternativer:
+
+- A. Sparekalkulatoren som mal, avvik i en tabell med begrunnelse. Valgt. Bygger på det som er testet mest, også på iPhone.
+- B. Et nytt designsystem som alle kalkulatorer bygges om etter. Forkastet: mye arbeid uten tydelig nytte for brukeren, bryter med «bra nok er mer enn nok».
+- C. Hver kalkulator velger selv. Forkastet: det var dette som ga avvikene.
+
+Navn på filer og adresser: æ blir a, ø blir o, å blir a. Vurdert:
+
+- A. a, o, a (`lan`). Valgt. Tilrådd i NS 4129:1995 ifølge Språkrådet, som også bruker det selv (`sprakradet.no`). Kilde: «Æ, ø og å i internasjonal sammenheng», lest av Lars 4.11.2026.
+- B. ae, o, a. Lars sitt første forslag. Språkrådet nevner det som «en annen løsning». Forkastet fordi målet var å følge Språkrådets tilråding. Ingen navn i repoet kom fra æ, så valget har ingen følger i dag.
+- C. ae, oe, aa (`laan`). Forkastet. Språkrådet påpeker at oe kan forveksles med oe i navn og aa kan leses som lang a. Brukt i lånefilene og `ressursmaaling`, som skal endres.
+- D. æ, ø og å direkte i adresser. Forkastet: kodes om til %C3%A5 og lignende ved kopiering, og fungerer dårlig i enkelte verktøy.
+
+Ulempe ved A: noen ord kan bli flertydige («lan», «sarlig»). «Det finnes ingen lytefri løsning» (Språkrådet). Lagringsnøkler endres ikke, slik at brukernes lagrede planer ikke forsvinner. Gamle adresser skal sende brukeren videre.
+
+Ta opp igjen hvis: Lars heller vil ha ae for æ, eller et navn blir misforstått i praksis.
+
+## Knappetekster: «plan» (4. november 2026)
+
+Lars: «Jeg tenker plan(en) er korteste, og derfor best når man er i en plan. Last ned plan, last ned sammenligning.» Alle kalkulatorer bruker «Lagre plan», «Del plan», «Last ned plan» og «Last ned planene» (se status under).
+
+Vurdert:
+
+- A. Kort og likt overalt: «Lagre plan», «Last ned plan». Valgt. Kortest, og brukeren står allerede i planen. Samme ord i alle kalkulatorer.
+- B. Navnet på kalkulatoren i knappen: «Lagre målet», «Lagre uttaksplanen», «Lagre låneplan». Forkastet: lengre, og ulike ord for samme handling.
+- C. «Lagre denne planen». Forkastet: lengre enn A uten å si mer.
+
+«Last ned planene» erstatter «Last ned valgte planer», «Last ned alle planene» og «Last ned valgte i Excel». Overskriftene i dialogene beholdes. Ta opp igjen hvis brukere ikke skjønner hva som lastes ned.
+
+Status: vedtatt 4.11.2026. Lars: «Korte ord der det er mulig. Best med tanke på UU.» Knappene blir «Lagre plan», «Del plan», «Last ned plan» og «Last ned planene». «Last ned sammenligning» ble byttet ut med «Last ned planene» etter vurderingen under.
+
+Vurdering mot KLARSPRAK.md (#213), Claude 4.11.2026. Regelen der: knappen skal beskrive neste faktiske handling, og ikke hete etter ett sluttresultat når den åpner en dialog med flere valg.
+
+- «Lagre plan» og «Del plan»: oppfyller regelen. Begge åpner en dialog for akkurat den handlingen.
+- «Last ned plan»: oppfyller regelen slik jeg leser den. Knappen åpner «Ta med deg beregningen», og alle valgene der (Excel, CSV, Rapport / PDF, Data) laster ned den samme planen. «Plan» er innholdet, ikke ett av formatene. Utskrift skjer fra PDF-valget.
+- «Last ned sammenligning»: oppfyller ikke regelen helt. Fila har sammenligningen først og deretter en egen del for hver plan, og knappen brukes både for valgte planer og for alle. Forslag: «Last ned planene». Like kort, og riktig både for valgte og alle.
+
+Lars valgte de korteste ordene som fortsatt stemmer med handlingen.
+
+
+## 4. november 2026: Lånesiden avpubliseres
+
+Lars har bedt om at lånesiden og lenkene fjernes fra nettstedet på grunn av mange feil og manglende samsvar med språkreglene. Regnemodeller, tester, kildearbeid og ideer skal bevares i GitHub. Kritiske feil i sparekalkulatoren prioriteres før lånedelen finpusses.
+
+Hele utgangspunktet er bevart på `arkiv/lan-for-avpublisering-2026-11-04` ved `c4e8299cfc2b69e046656613851968f22f036731`. Utviklingsfila beholdes for eksisterende tester, men publiseringsløpet fjerner `laan.html` og `lan.html` før opplasting. Bunny-speilingen fjerner gamle serverfiler og tømmer CDN-cachen. Lån-fanen fjernes. Å bare skjule lenken er forkastet fordi direkteadressen da fortsatt ville virke. Regnemotorene endres ikke.
+
+Ny publisering krever at feilene er rettet, språk og brukerreiser er gjennomgått, relevante beregnings-, rapport- og tilgjengelighetskontroller er utført, og Lars har godkjent publisering. Se `docs/laan-oppfolging-2026-11-04.md`.
+
+## Sparekalkulatoren: godkjent rettingsplan og utskriftsretur (4. november 2026)
+
+Lars godkjente planen for fanen Sparing og ba om ett grundig steg om gangen. Først rettes rapportens utskriftsflyt. Deretter følger tabeller/store tall, navigering/lagring, eksportdialoger og språk/måneder/vedlikehold. Lån forblir avpublisert. Tydelige overskrifter og etiketter i smal tabellvisning er et krav. Navigeringskommandoer skal tåle at resultatfeltet flyttes senere. Se [status og overlevering](docs/sparekalkulator-status-2026-11-04.md).
+
+Valgt: behold eksisterende rapportbygger og PDF-merking. Bruk utskriftshendelser fremfor hover til å styre retur. Et ignorert eller feilet utskriftskall skal gi rapport, sidetittel og fokus tilbake også ved berøring. Nettleserens egen utskrift skal kunne brukes med åpen rapport og beholde planutvalget. Den modale dialogen lukkes også i denne veien før PDF-en lages. Nye tester dekker feilforløp og de tre rapportutvalgene.
+
+Forkastet i dette steget: to knapper med ulike løfter som begge bare kaller `window.print`, en ny PDF-motor og ny utredning av de allerede dokumenterte PDF-begrensningene. Lars presiserer at 82/100 kom fra ThefrontKit. Claudes kontroll fra 3. november legges til grunn. Uu-tilsynets PDF-veiledning og W3Cs PDF-teknikker for WCAG 2.2 er lest, men gir ikke i seg selv en ny teknisk løsning eller en full godkjenning.
+
+Revurder hvis fysisk iPhone/Safari fortsatt sperrer begge utskriftsveier, mister rapporten eller gir feil innhold. Dette er ikke kontrollert på fysisk telefon i denne økten. Kode og tester: ChatGPT/Codex, egenkontroll. Ingen ny PDF-poengsum er målt.
+
+## HTML og PDF fra samme rapportvisning (4. november 2026)
+
+Lars ba om ett valg «Rapport (HTML / PDF)» i formatoversikten. Den samme forhåndsvisningen tilbyr «Last ned HTML» og eksisterende PDF/utskrift. Valget gjelder også sammenligninger og valgte planer. HTML-filen bruker rapportkopien som allerede er laget, ikke nye beregninger eller et nytt planutvalg.
+
+HTML skal være selvstendig: stiler og SVG-grafer følger fila, ingen skript eller nettressurser trengs. Dokumentet har norsk språk, rapporttittel og eksisterende overskrifter. Tabeller beholder verdier og får ekte rad-/kolonneoverskrifter og etiketter i smal visning. Fila har egen restriktiv CSP som sperrer skript og nettressurser. Nettsidens CSP og PDF-flyten endres ikke.
+
+Begrunnelse: Uu-tilsynet anbefaler HTML som hovedregel for publisert nettinnhold. OMB M-23-22 gjelder amerikanske føderale etater og er en relevant designreferanse, ikke et norsk krav til Spareverksted. HTML-alternativet retter ikke PDF-filene og dokumenterer ingen automatisk WCAG-godkjenning. Se [gjennomføring og kontroller](docs/rapport-html.md).
+
+Forkastet: et femte formatkort i hoveddialogen, en ny rapportbygger, nye beregninger og endringer i den fungerende PDF-motoren. Revurder hvis praktisk åpning av fila på iPhone eller hjelpemiddelprøver avdekker problemer. Fysisk Filer/VoiceOver er ikke kontrollert av Codex.
+
+## Sparetabellen tilpasser seg innholdet (4. november 2026)
+
+Første del av steg 2 i Lars sin godkjente plan: tabellen i fanen Sparing får ekte kolonne- og radoverskrifter. Den samme tabellen vises loddrett med etiketter ved verdiene når den faktisk er bredere enn plassen. ResizeObserver følger tilgjengelig bredde, også når Tabell åpnes og når vinduet endres. Ingen kopi av tallene, endret beregning eller skjulte datakolonner. Store hele beløp kan bryte ved tusenskiller, aldri inne i siffergruppene. Beløpene er avrundet til hele kroner, så teksten «eksakte beløp» er presisert.
+
+Forkastet: skjule overløp, redusere skriften eller alltid erstatte PC-tabellen med kort. Den nye testen prøver 256 til 1920 CSS-piksler, tre kronevisninger og vanlige/store beløp. Sparetabellen er også fjernet fra unntaket i den eksisterende UU-testen for intern sideveis rulling. Sammenligningstabeller, rapporttabeller og komprimering av store hovedtall tas i senere avgrensede deler av steg 2. Dette er ikke en erklæring om at hele steg 2 er ferdig.
+
+Lars bekreftet etter PR #217 at nedlasting fungerer på PC og iPhone. Han oppga 41/100 fra iPhone og beskrev god rapportvisning ved sterk zoom. PDF-scorearbeidet er parkert etter hans ønske. Claudes tidligere PDF-kontroll legges fortsatt til grunn. ChatGPT/Codex, egenkontroll. Fysisk iPhone og faktisk PC-zoom er ikke prøvd i tabellrettingen.
+
+## Sammenligningstabeller følger sparetabellens mønster (4. november 2026)
+
+Andre avgrensede del av steg 2: samme tabell og samme verdier, med plannavn ved hvert beløp når kolonnene ikke får plass. Felles sammenligningskomponent omfatter spareplaner og sparemål. Ekte overskrifter og eksisterende merknader beholdes. Lange plannavn kan brytes. Tabelloppsettet vender tilbake når plassen tillater det. Rapportbygger og eksportdata endres ikke.
+
+Kontroll: egen nettlesertest ved 256–1920 px for begge sammenligningstyper, uendrede verdier og ingen intern sideveis rulling. Lagrede planer, eksportinnhold og PDF-merking er regresjonskontrollert i Chromium. Fysisk iPhone, VoiceOver og faktisk PC-zoom gjenstår. Revurder hvis hjelpemidler mister overskriftskoblinger eller praktiske brukertester viser uklare plannavn. ChatGPT/Codex, egenkontroll.
+
+
+## Samle kalkulatorfinpuss før publisering (5. november 2026)
+
+Lars ba om én kontrollert retting om gangen av de resterende punktene i Sparing, samlet på arbeidsgren før sammenslåing og publisering. Målrettede lokale tester brukes underveis. Ingen venting på eller løpende oppfølging av full GitHub Actions-kjøring. Opprydding av testarbeidsflyten er en separat oppgave.
+
+Lagre plan ved resultatet bruker eksisterende lagredialog og navneforslag. Endre tall skjules i sparekalkulatorens tokolonneoppsett. Perioder vises som år og måneder fra motorens eksisterende månedsavrunding, uten å endre lagrede inndata eller beregning. Forhåndsvisningens tabeller kan tilpasses radvis, men skal ikke endre PDF-kopien. Sammenligning bruker samme formatdialog, med bare formater som passer innholdet. Se [overlevering og avgrensninger](docs/sparekalkulator-finpuss-2026-11-05.md) og [testlisten](docs/sparekalkulator-testplan-2026-11-05.md).
+
+
+## Testfunn etter #222 (5. november 2026)
+
+Lars ba om å samle og rette bekreftede funn før videre bred testing, uten publisering. Innskudd totalt er vedtatt etikett for samlede innskudd. Radvis tabell skal ha første/siste-år-hopp og årstallet skal følge egen rad. PC skal ha vei til resultatet også nederst i skjemaet. Rapport for en spareplan skal ha med den viste sparetabellen.
+
+Ved rapportens størrelsesgrense 10²¹ kr brukes en saklig begrensning og Lars sin testhilsen. HTML/PDF-knappene øverst i ekstremrapporten erstattes med Kontakt Lars til om.html#kontakt. Vanlige rapportvalg gjenopprettes ved normale tall. Ingen kontaktdata eller tall sendes automatisk. Ingen ny motor, nye lagringsnøkler eller endring i brukerens forutsetninger. Se [retting og kort testliste](docs/sparekalkulator-testfunn-2026-11-05.md). Kakediagram/tidslinje og CI-opprydding er egne senere oppdrag.
+
+
+## Siste visningsdetaljer etter brukertest av #224 (5. november 2026)
+
+Lars meldte at lange tabeller fortsatt manglet praktisk vei begge retninger når resultatlinjen var lukket. I tabellområdet brukes to små piler til resultat og siste år når linjen er lukket eller ikke vises på PC. Dette avløser at alle snarveier underveis krever åpen resultatlinje. Kontrollen er avgrenset til tabellområdet og bruker eksisterende fokus- og bevegelsesmønster. Resultatlinjen forkorter millionbeløp og større med etablerte korte enheter, med utvidet tekst for skjermleser. Rapportforhåndsvisning og HTML får roligere tabellbakgrunn. Ingen beregningsendring. Nytt klarsignal kreves før publisering. Se siste del av [testfunn og tre kontroller](docs/sparekalkulator-testfunn-2026-11-05.md).
+
+
+## Resultatlinje på PC og rapportvalg underveis (5. november 2026)
+
+Etter test av #226 ba Lars om samme åpne/lukke-mulighet for resultatlinjen på vanlig PC uten zoom. Den beholder grensen nedenfor grønt resultatfelt. Rapportforhåndsvisningen får bunnvalg først etter at toppknappene er rullet ut av syne. Smal visning samler HTML/PDF under ett nedlastingsvalg, mens opp/ned og lukk er direkte tilgjengelige. Eksisterende utskriftsflyt og rapportkopier bevares. Ekstremrapportens bunnlinje har bare Kontakt Lars. Tabellpilene beholdes som reserve. Lesbart linjeskift foran kr ved 500 % prioriteres ikke videre i denne runden. Full tilgjengelighet er ikke dokumentert av disse zoomtestene. Se [to siste manuelle kontroller](docs/sparekalkulator-testfunn-2026-11-05.md).
+
+
+## Bevar sparekalkulatoren gjennom trinnvis videre arbeid (5. november 2026)
+
+Lars bestiller samlet dokumentasjon av finpussen, oppdaterte arbeidsregler og vern mot gammel kode og andre tilbakefall. Gjeldende status samles i docs/sparekalkulator-status.md. Eldre trinnvise statusnotater beholdes som historikk. Videre kalkulatorarbeid skal bygge på fersk main, ha én konkret feil eller brukernytte, avgrensede endringer, relevante regresjonskontroller og godkjenning før sammenslåing. Dette er en stabiliseringsfase, ikke en generell utviklingsfrys eller påstand om at kalkulatoren er ferdig brukertestet.
+
+Eksisterende historikkvern, versjonskontroll og avhengighet fra publisering til checks/browser beholdes. De to nye målrettede testene testfunn-browser og rapportvalg-browser kobles til den eksisterende Chromium-kontrollen for navigering. Ingen nye jobber eller nettlesermatriser. Generell CI-opprydding venter. Produksjonskode, motor og lagring endres ikke i dokumentasjonsoppdraget.
+
+Lars har sendt Inklud e-post om muligheter for brukertesting og er i dialog med Forbrukerrådet om mulig databruk fra Finansportalen. Ingen ekstern godkjenning, gjennomført brukertest eller ferdig avklart dataavtale påstås. Detaljert Inklud-logg ligger i #225, og skal ikke dupliseres. Dataintegrasjon krever avklaring av innhold, formål og vilkår før implementering. Revurder stabiliseringens prioriteringer ved konkrete feil eller resultater fra brukertesting. Se [status og vern](docs/sparekalkulator-status.md).
+
+
+## Kontrollert artifact-revisjon og første opprydding (5. november 2026)
+
+Lars bestiller opprydding etter avsluttet kalkulatorfinpuss, samlet i én PR. Dagens funksjoner, grafikk, rapporter og beregninger skal bevares. Arbeidet bygger på main ae3531d. Valgt: fest download-artifact til verifisert v4.3.0-SHA, som inkluderer rettingen fra v4.1.3, og prøv faktisk opplasting/nedlasting av privacy-page i PR før samme Action brukes i deploy. Riktig varsel-ID er GHSA-cxww-7g56-2vh6. Behold deploy-avhengigheter og alle eksisterende testkommandoer.
+
+Vurderte alternativer: v4.1.3 direkte ble valgt bort fordi dagens v4 peker på en nyere rettet revisjon. Flytende v4 ble valgt bort fordi vi vil vite nøyaktig hvilken kode som kjøres. Stort versjonsbytte og generell parallellisering venter på kontroll av #193 og testavhengigheter. Ulempen ved fast SHA er at oppdateringer må gjøres bevisst. Revurder ved nye sikkerhetsmeldinger eller kompatibilitetskrav.
+
+Korriger misvisende kommentar i historisk renters rente-test og utdatert testinstruks i bidragsveiledningen. Ingen endring i testlogikk, offentlig svarstatus eller dist. Kontrollplan, kildebevis, lokale kontroller og gjenstående PR-/produksjonskontroll står i docs/github-oppfolging-2026-11-05.md. ChatGPT/Codex, egenkontroll.
+
+
+## Trinnvis Action-oppgradering: Java først, 5. november 2026
+
+Lars ber om neste steg i GitHub-oppryddingen etter grønn kjøring av #228. Eksisterende #193 avgrenses til setup-java fra v4 til en fast kontrollert v5-revisjon på alle tre brukssteder i static.yml. Java 21 og dagens tester beholdes. Det opprinnelige forslaget om flere Action-hovedversjoner og runner-bytte utsettes og er dokumentert i docs/github-oppfolging-2026-11-05.md. Alternativet med alle byttene samtidig forkastes for denne runden fordi feil da blir vanskeligere å avgrense. V6 for setup-java er ikke nødvendig for dette steget og vurderes separat.
+
+Bevar nyere artifact-kontroll, rettigheter, testutvalg og deploy-avhengigheter. Ingen produksjonsfiler endres. Egenkontroll lokalt, faktisk Action-kompatibilitet prøves i GitHub før Lars merger. Ny vurdering ved feil i runner/container, utfaset v5 eller dokumentert behov for en nyere hovedversjon. Ingen kortere kjøretid loves av dette vedlikeholdsgrepet.

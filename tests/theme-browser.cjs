@@ -1,5 +1,7 @@
 // Theme controls: layout, contrast, storage, keyboard, charts, privacy and print.
-const pickTheme=async(pg,t)=>{const b=pg.locator('[data-color-theme='+t+']');if(!await b.isVisible())await pg.locator('.theme-toggle').click();await b.click();};
+// Temabytte tones over der nettleseren støtter det (3.11.2026). Vent til fargen er satt og overgangen ferdig.
+const settled=(pg,t)=>pg.waitForFunction(t=>document.documentElement.dataset.theme===t&&!document.documentElement.classList.contains('tema-bytter'),t);
+const pickTheme=async(pg,t)=>{const b=pg.locator('[data-color-theme='+t+']');if(await pg.evaluate(()=>document.getElementById('themeOptions').hidden))await pg.locator('.theme-toggle').click();await b.click();await settled(pg,t);};
 const {chromium}=require('playwright'),assert=require('node:assert/strict');
 const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
 const contrast=(a,b)=>{const lum=c=>{const v=c.match(/[\d.]+/g).slice(0,3).map(Number).map(n=>{n/=255;return n<=.04045?n/12.92:((n+.055)/1.055)**2.4;});return .2126*v[0]+.7152*v[1]+.0722*v[2];};const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
@@ -20,13 +22,13 @@ const contrast=(a,b)=>{const lum=c=>{const v=c.match(/[\d.]+/g).slice(0,3).map(N
   for(const width of [320,375,390,768,1280]){
    await page.setViewportSize({width,height:900});
    for(const theme of themes){
-    if(!await page.locator('#themeOptions').isVisible())await page.locator('.theme-toggle').click();await page.getByRole('button',{name:theme==='neutral'?'Nøytral':theme==='light'?'Lys':'Natt',exact:true}).click();
+    if(await page.evaluate(()=>document.getElementById('themeOptions').hidden))await page.locator('.theme-toggle').click();await page.getByRole('button',{name:theme==='neutral'?'Nøytral':theme==='light'?'Lys':'Natt',exact:true}).click();await settled(page,theme);
     assert.equal(await page.locator('html').getAttribute('data-theme'),theme);await overflow();
     await page.locator('.theme-toggle').click();
     await checkContrast('.brand');await checkContrast('.theme-picker [aria-pressed=true]',3);await checkContrast('.theme-picker [aria-pressed=false]',3);
     const boxes=await page.locator('.theme-picker button:visible').evaluateAll(els=>els.map(e=>{const r=e.getBoundingClientRect();return {w:r.width,h:r.height};}));assert(boxes.every(b=>b.w>=24&&b.h>=44));
-    await page.keyboard.press('Escape');assert.equal(await page.locator('#themeOptions').isHidden(),true,'Esc lukker temavalget');assert.equal(await page.evaluate(()=>document.activeElement.className),'theme-toggle','Fokus tilbake på temaknappen');
-    await page.locator('.theme-toggle').click();for(let i=0;i<4;i++)await page.keyboard.press('Tab');assert.equal(await page.locator('#themeOptions').isHidden(),true,'Tab ut av pillen lukker den');
+    await page.keyboard.press('Escape');assert.equal(await page.evaluate(()=>document.getElementById('themeOptions').hidden),true,'Esc lukker temavalget');await page.waitForTimeout(350);assert.equal(await page.locator('#themeOptions').isHidden(),true,'Pillen er borte når den har foldet seg sammen');assert.equal(await page.evaluate(()=>document.activeElement.className),'theme-toggle','Fokus tilbake på temaknappen');
+    await page.locator('.theme-toggle').click();for(let i=0;i<4;i++)await page.keyboard.press('Tab');assert.equal(await page.evaluate(()=>document.getElementById('themeOptions').hidden),true,'Tab ut av pillen lukker den');
     const a=await page.locator('.brand-tools').boundingBox(),b=await page.locator('.site-header>.site-nav').boundingBox();if(b&&b.y<a.y+a.height-1)assert(a.x+a.width<=b.x+1,'Header controls do not overlap');
    }
   }
@@ -36,15 +38,17 @@ const contrast=(a,b)=>{const lum=c=>{const v=c.match(/[\d.]+/g).slice(0,3).map(N
   // iPhone gir fokus til nærmeste forelder med tabindex når en knapp trykkes. Toppfeltet fikk tabindex i #169, og da lukket pillen seg før trykket nådde fram (Lars 3.11.2026).
   assert.equal(await page.locator('.site-header').getAttribute('tabindex'),null,'Toppfeltet skal ikke kunne få fokus ved trykk');
   await pickTheme(page,'neutral');
-  assert.equal(await page.evaluate(()=>{const h=document.querySelector('.site-header');h.tabIndex=-1;document.querySelector('.theme-toggle').click();return new Promise(done=>setTimeout(()=>{h.focus();const open=!document.getElementById('themeOptions').hidden;document.querySelector('[data-color-theme=light]').click();h.removeAttribute('tabindex');done(open&&document.documentElement.dataset.theme==='light');},30));}),true,'Fokus til en forelder lukker ikke pillen');
+  // View Transitions kan starte senere enn 150 ms i CI. Kontroller fokus straks, og vent på faktisk ferdig temabytte.
+  assert.equal(await page.evaluate(()=>{const h=document.querySelector('.site-header');h.tabIndex=-1;document.querySelector('.theme-toggle').click();return new Promise(done=>setTimeout(()=>{h.focus();const open=!document.getElementById('themeOptions').hidden;document.querySelector('[data-color-theme=light]').click();h.removeAttribute('tabindex');done(open);},30));}),true,'Fokus til en forelder lukker ikke pillen');
+  await settled(page,'light');assert.equal(await page.locator('html').getAttribute('data-theme'),'light','Temavalget fullføres også etter fokus til en forelder');
   await pickTheme(page,'neutral');
-  await page.locator('.theme-toggle').focus();await page.keyboard.press('Enter');await page.locator('[data-color-theme=light]').focus();await page.keyboard.press('Space');assert.equal(await page.locator('#themeOptions').isHidden(),true,'Valget lukker');assert.match(await page.locator('.theme-toggle').getAttribute('aria-label'),/Lys/);assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
+  await page.locator('.theme-toggle').focus();await page.keyboard.press('Enter');await page.locator('[data-color-theme=light]').focus();await page.keyboard.press('Space');await settled(page,'light');assert.equal(await page.evaluate(()=>document.getElementById('themeOptions').hidden),true,'Valget lukker');assert.match(await page.locator('.theme-toggle').getAttribute('aria-label'),/Lys/);assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
   await pickTheme(page,'night');await page.reload();assert.equal(await page.locator('html').getAttribute('data-theme'),'night');
   await page.locator('#chooseGrowth').click();await page.locator('#beginJourney').click();
   const before=await page.locator('#total').textContent();
   for(const theme of themes){await pickTheme(page,theme);await page.waitForTimeout(180);assert.equal(await page.locator('#total').textContent(),before,'Theme never changes calculation');await checkContrast('#total');await checkContrast('#secondary');await checkContrast('#monthly');await checkContrast('.panel h2');await checkContrast('.chart-readout');await checkContrast('.chartpanel svg text',3);}
   const line=page.locator('#chart svg path[stroke="#24684f"]');assert.equal(await line.first().evaluate(e=>getComputedStyle(e).stroke),'rgb(155, 220, 181)');
-  await page.setViewportSize({width:390,height:844});await page.locator('#monthly').focus();await page.locator('#mobileResultButton').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'savingsResult');
+  await page.setViewportSize({width:390,height:844});await page.locator('#monthly').focus();await page.locator('.input-result[data-show-result]').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'savingsResult');
   await page.goto(origin+'/spor.html');assert.equal(await page.locator('html').getAttribute('data-theme'),'night');await checkContrast('.question-panel h2');await checkContrast('#question');await overflow();
   await page.locator('#topicPicker>summary').click();await page.locator('[data-topic=q-bsu-basics]').click();await checkContrast('.answer-lead');await checkContrast('.option-card');
   const other=await context.newPage();await other.goto(origin+'/index.html');await pickTheme(other,'light');assert.equal(await page.locator('html').getAttribute('data-theme'),'night','valget gjelder bare i egen fane');assert.equal(await other.evaluate(()=>localStorage.getItem('sv-color-theme')),null,'tema skal ikke i permanent lagring');await other.close();
@@ -52,6 +56,8 @@ const contrast=(a,b)=>{const lum=c=>{const v=c.match(/[\d.]+/g).slice(0,3).map(N
   await page.evaluate(()=>sessionStorage.setItem('sv-color-theme','invalid'));await page.reload();assert.equal(await page.locator('html').getAttribute('data-theme'),'neutral');
   const blocked=await browser.newContext();await blocked.addInitScript(()=>{Storage.prototype.getItem=Storage.prototype.setItem=function(){throw Error('Storage blocked');};});const q=await blocked.newPage();await q.goto(origin+'/index.html');await pickTheme(q,'night');assert.equal(await q.locator('html').getAttribute('data-theme'),'night');await blocked.close();
   assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
+  // Toppraden (logo, temaknapp, hovedmeny) står på samme sted på alle sider, så menyen ikke hopper ved sideskifte (3.11.2026).
+  for(const width of [390,800,1280]){const rows={};const top=await browser.newPage({viewport:{width,height:800}});for(const file of ['index.html','spor.html','om.html','personvern.html','tilgjengelighet.html','ressursbruk.html']){await top.goto(origin+'/'+file);rows[file]=await top.evaluate(()=>['.brand','.theme-toggle','.site-header>.site-nav:not(.info-nav)'].map(q=>{const r=document.querySelector(q).getBoundingClientRect();return Math.round(r.y)+','+Math.round(r.x)}).join(' '));}await top.close();assert.equal(new Set(Object.values(rows)).size,1,'Toppraden flytter seg ved '+width+' px: '+JSON.stringify(rows));}
   console.log('Passed: three themes, 320–1280 px, contrast, keyboard, chart, result, persistence, cross-tab, blocked storage, print, no external requests.');
  }finally{if(browser)await browser.close();server.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
