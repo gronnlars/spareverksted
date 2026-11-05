@@ -78,6 +78,7 @@ jobs:
           python3 tests/deploy_bunny.test.py
           node tests/personvern-lagring.test.cjs
           node tests/published-answers.test.cjs
+          node tests/publication-preflight.test.cjs
           node tests/begreper.test.cjs
           node --check dist/personvern.js
           node --check dist/kontakt.js
@@ -166,21 +167,30 @@ jobs:
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=webkit node tests/security-browser.cjs
       - name: "tests/published-answers-browser.cjs (chromium)"
+        id: published_chromium
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tests/published-answers-browser.cjs
       - name: "tests/published-answers-browser.cjs (firefox)"
+        id: published_firefox
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=firefox node tests/published-answers-browser.cjs
       - name: "tests/published-answers-browser.cjs (webkit)"
+        id: published_webkit
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=webkit node tests/published-answers-browser.cjs
       - name: "tests/svarmal-browser.cjs (chromium)"
+        env:
+          SPARE_PUBLICATION_CHECKED: ${{ steps.published_chromium.outcome == 'success' && format('{0}:{1}:{2}:chromium', github.run_id, github.run_attempt, github.sha) || '' }}
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tests/svarmal-browser.cjs
       - name: "tests/svarmal-browser.cjs (firefox)"
+        env:
+          SPARE_PUBLICATION_CHECKED: ${{ steps.published_firefox.outcome == 'success' && format('{0}:{1}:{2}:firefox', github.run_id, github.run_attempt, github.sha) || '' }}
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=firefox node tests/svarmal-browser.cjs
       - name: "tests/svarmal-browser.cjs (webkit)"
+        env:
+          SPARE_PUBLICATION_CHECKED: ${{ steps.published_webkit.outcome == 'success' && format('{0}:{1}:{2}:webkit', github.run_id, github.run_attempt, github.sha) || '' }}
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=webkit node tests/svarmal-browser.cjs
       - name: "tests/bsu-browser.cjs (chromium)"

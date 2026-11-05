@@ -1,5 +1,5 @@
 // Check the actual publication policy before the retained draft regressions.
-if(require('node:child_process').spawnSync(process.execPath,['tests/published-answers-browser.cjs'],{stdio:'inherit',env:process.env}).status!==0)process.exit(1);
+if(!require('./helpers/publication-preflight.cjs').publicationPreflight())process.exit(1);
 // Historical draft regression: production availability is tested separately.
 const readDraftAsset=require('./helpers/draft-assets.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('node:http'),path=require('node:path');

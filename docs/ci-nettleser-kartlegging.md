@@ -70,3 +70,13 @@ Browser-jobben tok 745 sekunder og hadde 107 steg. 91 steg med nettlesertester s
 Undersøk om den gjentatte publiseringskontrollen kan gjenbrukes innen samme CI-kjøring, samtidig som hver test beholder kontrollen ved isolert lokal bruk. Kartlegg først nøyaktig motor, rekkefølge, feilstatus og commit. Sammenlign kommandoutvalg og publiseringssperrer før og etter. Ikke fjern selve publiseringskontrollen.
 
 Mer omfattende filbasert testutvalg og parallellisering venter til avhengigheter og filbaner er kartlagt. Ingen målt tidsgevinst loves på forhånd. Dette notatet utvider ikke fullmakten til å endre kalkulator, testkrav eller publiseringsvilkår.
+
+## Første kodeforslag etter kartleggingen
+
+#235 prøvde dokumentasjonsregelen i praksis: checks bestod, mens browser og deploy ble skipped i PR-kjøring 42121746602. Ingen ny språkmåling startet for dokumentet. Dette var forventet, ikke et nytt resultat fra nettleser- eller språktestene.
+
+Neste forslag bygger på main 1dcf7c8. De tre separate published-answers-browser-stegene beholdes. Etter vellykket steg gir workflowen svarmal-testen en markør med kjørings-ID, forsøksnummer, commit og nettlesermotor. Hjelperen sammenligner disse med GitHub-miljøet og faktisk git HEAD. Bare da gjenbrukes kontrollen. Markøren settes ikke ved feilet steg. Ved manglende eller avvikende grunnlag kjører svarmal-testen kontrollen selv, og feil stopper testen som før. Lokal isolert bruk beholder dermed publiseringskontrollen. Ingen resultatfil gjenbrukes mellom jobber eller kjøringer.
+
+Kontrollert lokalt: 14 tilfeller med simulerte prosessutfall, inkludert tre motorer, ny kjøring, nytt forsøk, annen commit, feil i git, lokal kjøring og feil/avbrudd i publiseringskontrollen. Eksisterende lokal publiseringsfiltertest og JavaScript-syntaks består. YAML er sammenlignet med main: alle gamle kommandoer, kjørevilkår, rettigheter og hele deploy er bevart. Bare tre steg-ID-er, tre avgrensede miljømarkører og den nye raske kontrolltesten er lagt til. Ingen dist-endringer. Egenkontroll, ikke uavhengig gjennomgang.
+
+Nettleserorkestreringen må prøves i GitHub: publiseringsstegene skal bestå for hver motor, og svarmal-stegene skal logge at kontrollen gjenbrukes. Full lokal nettleserrunde er ikke kjørt. Ingen konkret tidsgevinst er målt etter endringen, og ingen testkrav er fjernet. Ved uventet markør eller HEAD kjører kontrollen ekstra framfor å hoppe over den.
