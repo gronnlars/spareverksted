@@ -11,10 +11,22 @@ concurrency:
 jobs:
   checks:
     runs-on: ubuntu-latest
+    outputs:
+      browser_required: ${{ steps.scope.outputs.browser_required }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Determine browser test scope
+        id: scope
+        env:
+          CI_EVENT: ${{ github.event_name }}
+          CI_BASE_REF: ${{ github.base_ref || 'main' }}
+        run: |
+          python3 tests/ci-omfang.test.py
+          REQUIRED=$(python3 scripts/ci-omfang.py --event "$CI_EVENT" --base "origin/$CI_BASE_REF")
+          echo "browser_required=$REQUIRED" >> "$GITHUB_OUTPUT"
+          echo "Browser tests required: $REQUIRED. Main always runs the full suite." >> "$GITHUB_STEP_SUMMARY"
       # Stopper PR-er og push som legger tilbake en eldre versjon av motor, sider eller tester (scripts/foreldet.py).
       # Publisering venter på denne jobben, så gammel kode når aldri spareverksted.no.
       - name: Stop old code
@@ -102,6 +114,9 @@ jobs:
           java -jar "$JAR" --format json --stdout --exit-zero-always dist/*.html > /tmp/w3c.json
           python3 scripts/w3c-status.py /tmp/w3c.json "$(java -jar "$JAR" --version)" >> "$GITHUB_STEP_SUMMARY"
   browser:
+    needs: checks
+    # Main always runs in full; only allowlisted Markdown-only PRs skip browsers.
+    if: ${{ needs.checks.outputs.browser_required == 'true' }}
     runs-on: ubuntu-latest
     env:
       SPARE_PRIVACY_REPORT: /tmp/spareverksted-privacy
