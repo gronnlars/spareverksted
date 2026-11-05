@@ -44,6 +44,23 @@ const engine=process.env.SPARE_ENGINE||'chromium';
   const offline=await browser.newContext({javaScriptEnabled:false});const h=await offline.newPage();await h.goto('file://'+file);
   assert.equal(await h.locator('tbody tr').count(),11);assert.match(await h.locator('thead').innerText(),/Innskudd totalt/);await offline.close();
   await p.locator('#closeReport').click();
+  // Fire planer i både sammenligningsrapport og vanlig planrapport, som i Lars sine bilder.
+  await p.evaluate(()=>{Object.assign(s,{start:533000,monthly:10100,years:36,rate:11.2,fee:.2,inflation:2.5,real:true});saved=[0,1,2].map(i=>({name:'Spareplan'+(i?' ('+(i+1)+')':''),state:{...s}}));selectedPlans=new Set([0,1,2]);cmpCurrent=true;document.getElementById('savedDetails').open=true;fill();render();savedRender();});
+  for(const route of ['comparison','plan']){
+   await p.locator(route==='comparison'?'#cmpDownload':'#heroDownload').click();await p.locator('#exportPdf').click();await frames();
+   assert.doesNotMatch(await p.locator('#reportPreview').innerText(),/Trykk på en søyle/,'statisk rapport har ingen klikk-instruks');
+   assert.equal(await p.locator('#reportPreview .cmp-key').count(),0,'planforklaringen er statisk tekst');
+   for(const width of [1280,640,390,320,256]){
+    await p.setViewportSize({width,height:844});await frames();
+    const lines=await p.locator('#reportPreview .savings-cell-value').evaluateAll(es=>es.flatMap(e=>{const out=[],texts=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);while(texts.nextNode()){const n=texts.currentNode;if(!/\d[ \u00a0]\d{3}/.test(n.textContent))continue;const r=document.createRange();r.selectNodeContents(n);out.push({text:n.textContent,lines:r.getClientRects().length});}return out;}));
+    assert(lines.length>0&&lines.every(x=>x.lines===1),route+', '+width+': '+JSON.stringify(lines));
+    const sizes=await p.locator('#reportPreview').evaluate(e=>[e,...e.querySelectorAll('.table-scroll,.report-table')].map(e=>[e.clientWidth,e.scrollWidth]));
+    assert(sizes.every(([outer,inner])=>inner<=outer+1),route+', '+width+': '+JSON.stringify(sizes));
+   }
+   if(process.env.SPARE_TESTFUNN_SCREENSHOTS)await p.screenshot({path:path.join(process.env.SPARE_TESTFUNN_SCREENSHOTS,route+'-fire-planer.png')});
+   await p.locator('#closeReport').click();
+  }
+  await p.evaluate(()=>{selectedPlans=new Set();saved=[];savedRender();});
   // Aksen får plass også med lange etiketter, lineært og logaritmisk.
   await p.evaluate(()=>{Object.assign(s,{start:9999999999,monthly:9999999,years:100,rate:15,fee:0,inflation:0});fill();render();document.getElementById('graphTab').click();});
   for(const width of [1280,640,390,256])for(const log of [false,true]){

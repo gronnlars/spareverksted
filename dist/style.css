@@ -186,3 +186,10 @@ body[data-level=simple] #savingsResult .metrics{grid-template-columns:repeat(2,m
  #planInputs .two{grid-template-columns:minmax(0,1fr)}
  #modes{flex-wrap:wrap}#modes button{white-space:normal}
 }
+
+/* Et helt beløp avgjør når rapporttabellen trenger radvis visning. */
+#reportPreview .savings-cell-value{white-space:nowrap}
+#reportPreview .savings-stacked .savings-cell-value{white-space:normal}
+.export-choices button{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start}
+#exportDialog:has(#exportJson[hidden]) #exportPdf{grid-column:1/-1}
+@media(max-width:560px){.export-choices{grid-template-columns:minmax(0,1fr)}}

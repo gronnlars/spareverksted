@@ -54,3 +54,16 @@ Prøv i tillegg 200, 400 og 500 % PC-zoom på punkt 1, 2 og 4. Noter bestått/fe
 ## Parkert funksjonsidé
 
 Kakediagram for innskudd og beregnet vekst, med tidslinje og eventuell avspilling, er diskutert og skal vurderes etter feilrettingene. Skill mellom vekst i en periode som overstiger periodens innskudd og samlet vekst som overstiger samlede innskudd. Et slikt punkt finnes ikke i alle scenarioer. Ved tap skal framstillingen være forståelig, og redusert kjøpekraft skal ikke kalles tap i kroner. Kakevalget kan dempes når framstillingen ikke passer, med eksisterende hjelpemønster uten ekstra tekstlinje. Denne funksjonen er ikke implementert her.
+
+## Flere rapportfunn, meldt etter at utkastet var opprettet
+
+Bildene IMG_3292–3295 viser den publiserte versjonen etter #222. #224 sto fortsatt som upublisert utkast da de ble gjennomgått.
+
+- Rapporttabeller skal ikke beholde kolonneoppsett bare fordi teksten kan presses til å passe ved at et vanlig kronebeløp deles over flere linjer. I forhåndsvisningen måles derfor hele beløpet uten slik bryting før radvis visning velges. Tallene er uendret. Lange beløp kan fortsatt bryte mellom siffergrupper når selv en hel rad er for smal.
+- Dette kontrolleres med fire planer, både i ren sammenligningsrapport og i en vanlig planrapport som inkluderer sammenligningen, ved 256, 320, 390, 640 og 1280 px. Vanlige beløp som 29 083 631 skal stå samlet når de har plass i en rad.
+- Statisk rapporttekst ber ikke lenger brukeren trykke på søyler eller plannavn. Begge rapportveier bruker samme opprydding av sammenligningskopien. HTML-id-er, knappetilstander og klikkdata fjernes fra denne kopien. SVG-definisjoner for skravering bevares.
+- Formatkortene får én kolonne på mobil. Excel står før Rapport også for valgte planer. I sammenligningsdialogens tokolonneoppsett får det tredje kortet full bredde. Korttitler starter på samme høyde.
+
+Til punkt 4 i den korte testlisten: prøv både ren sammenligning og en vanlig planrapport med tre valgte planer pluss den åpne planen. Kontroller at vanlige beløp står samlet, at radvis visning har riktige plannavn, og at rapporten ikke gir instruksjoner om å trykke på statiske søyler. Formatdialogene skal være lesbare uten trange sideordnede kort på mobil.
+
+Det rapporterte Aikido-varselet er bevart i [notatet til GitHub-gjennomgangen](github-oppfolging-2026-11-05.md). Ingen endring i GitHub Actions inngår.
