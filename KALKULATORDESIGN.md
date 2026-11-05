@@ -102,7 +102,7 @@ Delene kommer i denne rekkefølgen. Det som er felles for nettstedet (toppfelt, 
 - Spareperioder i forklaring og rapport vises med år og måneder, avrundet til samme antall måneder som motoren. Desimalår i tallfelt og eksportdata beholdes.
 - Resultatkortets delbeløp følger plassen i kolonnen og legges under hverandre ved plassmangel. Siffergrupper skal ikke deles midt i sifrene.
 - Rapportens forhåndsvisning bruker samme radvise tabellmønster ved plassmangel. Tilpasningen endrer ikke den separate PDF-kopien.
-- En lang sparetabell har hopp til siste år og tilbake til tabellstart. På mobil brukes også den eksisterende resultatlinjen mens man leser tabellen. Årstallet følger egen rad i radvis visning.
+- En lang sparetabell har hopp til siste år og tilbake til tabellstart. Ved åpen resultatlinje brukes også den eksisterende knappen mens man leser tabellen. Når linjen er lukket eller ikke vises på PC, vises to små piler til resultat og siste år i tabellområdet. Årstallet følger egen rad i radvis visning.
 - Samlede innskudd merkes «Innskudd totalt», med presisering om dagens kroner når det gjelder.
 - Ingen sideveis rulling ved 320 px. Liggende mobil skal fungere.
 - Ingen plutselige sprang i oppsettet når tall endres.

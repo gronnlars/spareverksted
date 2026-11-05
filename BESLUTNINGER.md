@@ -1443,3 +1443,8 @@ Lagre plan ved resultatet bruker eksisterende lagredialog og navneforslag. Endre
 Lars ba om å samle og rette bekreftede funn før videre bred testing, uten publisering. Innskudd totalt er vedtatt etikett for samlede innskudd. Radvis tabell skal ha første/siste-år-hopp og årstallet skal følge egen rad. PC skal ha vei til resultatet også nederst i skjemaet. Rapport for en spareplan skal ha med den viste sparetabellen.
 
 Ved rapportens størrelsesgrense 10²¹ kr brukes en saklig begrensning og Lars sin testhilsen. HTML/PDF-knappene øverst i ekstremrapporten erstattes med Kontakt Lars til om.html#kontakt. Vanlige rapportvalg gjenopprettes ved normale tall. Ingen kontaktdata eller tall sendes automatisk. Ingen ny motor, nye lagringsnøkler eller endring i brukerens forutsetninger. Se [retting og kort testliste](docs/sparekalkulator-testfunn-2026-11-05.md). Kakediagram/tidslinje og CI-opprydding er egne senere oppdrag.
+
+
+## Siste visningsdetaljer etter brukertest av #224 (5. november 2026)
+
+Lars meldte at lange tabeller fortsatt manglet praktisk vei begge retninger når resultatlinjen var lukket. I tabellområdet brukes to små piler til resultat og siste år når linjen er lukket eller ikke vises på PC. Dette avløser at alle snarveier underveis krever åpen resultatlinje. Kontrollen er avgrenset til tabellområdet og bruker eksisterende fokus- og bevegelsesmønster. Resultatlinjen forkorter millionbeløp og større med etablerte korte enheter, med utvidet tekst for skjermleser. Rapportforhåndsvisning og HTML får roligere tabellbakgrunn. Ingen beregningsendring. Nytt klarsignal kreves før publisering. Se siste del av [testfunn og tre kontroller](docs/sparekalkulator-testfunn-2026-11-05.md).
