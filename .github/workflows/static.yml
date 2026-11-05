@@ -90,7 +90,7 @@ jobs:
           python3 tests/personvern-status.test.py
       - name: Offline resource inventory
         run: python3 scripts/ressurskontroll.py
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5, kontrollert 2026-11-05
         with:
           distribution: temurin
           java-version: '21'
@@ -118,7 +118,7 @@ jobs:
       # Firefox requires the home directory to belong to the browser's current user.
       - name: Match CI home ownership for Firefox
         run: chown "$(id -u):$(id -g)" /github/home
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5, kontrollert 2026-11-05
         with:
           distribution: temurin
           java-version: '21'
@@ -465,7 +465,7 @@ jobs:
           rm -f dist/laan.html dist/lan.html
           test ! -e dist/laan.html
           test ! -e dist/lan.html
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5, kontrollert 2026-11-05
         with:
           distribution: temurin
           java-version: '21'

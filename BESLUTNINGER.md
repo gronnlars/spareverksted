@@ -1477,3 +1477,10 @@ Lars bestiller opprydding etter avsluttet kalkulatorfinpuss, samlet i én PR. Da
 Vurderte alternativer: v4.1.3 direkte ble valgt bort fordi dagens v4 peker på en nyere rettet revisjon. Flytende v4 ble valgt bort fordi vi vil vite nøyaktig hvilken kode som kjøres. Stort versjonsbytte og generell parallellisering venter på kontroll av #193 og testavhengigheter. Ulempen ved fast SHA er at oppdateringer må gjøres bevisst. Revurder ved nye sikkerhetsmeldinger eller kompatibilitetskrav.
 
 Korriger misvisende kommentar i historisk renters rente-test og utdatert testinstruks i bidragsveiledningen. Ingen endring i testlogikk, offentlig svarstatus eller dist. Kontrollplan, kildebevis, lokale kontroller og gjenstående PR-/produksjonskontroll står i docs/github-oppfolging-2026-11-05.md. ChatGPT/Codex, egenkontroll.
+
+
+## Trinnvis Action-oppgradering: Java først, 5. november 2026
+
+Lars ber om neste steg i GitHub-oppryddingen etter grønn kjøring av #228. Eksisterende #193 avgrenses til setup-java fra v4 til en fast kontrollert v5-revisjon på alle tre brukssteder i static.yml. Java 21 og dagens tester beholdes. Det opprinnelige forslaget om flere Action-hovedversjoner og runner-bytte utsettes og er dokumentert i docs/github-oppfolging-2026-11-05.md. Alternativet med alle byttene samtidig forkastes for denne runden fordi feil da blir vanskeligere å avgrense. V6 for setup-java er ikke nødvendig for dette steget og vurderes separat.
+
+Bevar nyere artifact-kontroll, rettigheter, testutvalg og deploy-avhengigheter. Ingen produksjonsfiler endres. Egenkontroll lokalt, faktisk Action-kompatibilitet prøves i GitHub før Lars merger. Ny vurdering ved feil i runner/container, utfaset v5 eller dokumentert behov for en nyere hovedversjon. Ingen kortere kjøretid loves av dette vedlikeholdsgrepet.

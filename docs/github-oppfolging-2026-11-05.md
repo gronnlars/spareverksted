@@ -66,3 +66,22 @@ Ved gjennomgangen:
 Lars opplyser også at domeneskanningen i Aikido ikke fant problemer. Dette er et avgrenset resultat fra hans skanning. Det er ikke utført en ny domeneskanning i denne økten, og notatet er ingen generell sikkerhetssertifisering.
 
 Arbeidsflytene er ikke endret som del av dette notatet. Oppfølgingen holdes atskilt fra kalkulatorens pågående feilrettinger.
+
+
+## Neste trinn: Java-varselet i #193
+
+Oppdatert 5. november 2026 etter main 018d80f og kjøring 42100281184. Kjøringen fullførte checks, browser og deploy med success. Browser hadde 107 steg og tok 689 sekunder. Checks tok 26 sekunder, deploy 75 sekunder. Dette er ett målepunkt, ikke et gjennomsnitt eller en garanti for neste kjøring. #228 er nå slått sammen, inkludert testfunn og rapportvalg. Eldre status over bevares som historikk.
+
+#193 avgrenses til de tre bruksstedene for setup-java i static.yml. Alle bruker fast revisjon b6effb05e454b25005698d916606bdc6ffcbf961 fra v5. Temurin og Java 21 beholdes. V5 bruker Node 24 og krever runner 2.327.1 eller nyere. Arbeidsflyten bruker GitHub-hostede ubuntu-latest-runnere, og browser beholder Playwright-bildet basert på Ubuntu Noble. Faktisk kjøring i GitHub må bekrefte kompatibilitet, også inne i containeren.
+
+Kilder lest i samme økt, 5. november 2026:
+
+- https://github.com/actions/setup-java/blob/v5/README.md
+- https://github.com/actions/setup-java/blob/b6effb05e454b25005698d916606bdc6ffcbf961/action.yml
+- https://api.github.com/repos/actions/setup-java/git/ref/tags/v5
+
+Alternativer: behold v4 og varselet, oppgrader Java-oppsettet alene, eller gjennomfør alle hovedversjonsbyttene fra opprinnelig #193 samtidig. Java alene er valgt for å kunne etterprøve én endring. Forslaget om checkout v5, setup-node v5, setup-python v6, upload-artifact v6, download-artifact v7 og ubuntu-24.04 fra opprinnelig #193 er utsatt, ikke godkjent eller slettet fra historikken. Versjoner og krav må undersøkes på nytt før de eventuelt brukes. Ingen nyere artifact-revisjon byttes ut.
+
+Testkommandoer, antall steg, jobber, rettigheter, vilkår og publiseringsavhengigheter beholdes. Dette fjerner et vedlikeholdsvarsel, men er ikke et tiltak som lover kortere kjøretid. Før testutvalg eller parallellisering endres, kartlegges avhengigheter og filbaner som kan kollidere.
+
+Kontrollform: ChatGPT/Codex, egenkontroll av YAML og diff mot fersk main. Ingen lokal full nettleserrunde for en Action-versjon som må prøves på GitHub. PR-kjøringen skal vise Java 21 og vellykket HTML-validering i checks og browser uten v4-varselet. Etter Lars sin merge må deploy vise det samme og fullføre. Publisering av denne endringen er ikke kontrollert på forhånd.
