@@ -1459,3 +1459,11 @@ Lars meldte at lange tabeller fortsatt manglet praktisk vei begge retninger når
 ## Resultatlinje på PC og rapportvalg underveis (5. november 2026)
 
 Etter test av #226 ba Lars om samme åpne/lukke-mulighet for resultatlinjen på vanlig PC uten zoom. Den beholder grensen nedenfor grønt resultatfelt. Rapportforhåndsvisningen får bunnvalg først etter at toppknappene er rullet ut av syne. Smal visning samler HTML/PDF under ett nedlastingsvalg, mens opp/ned og lukk er direkte tilgjengelige. Eksisterende utskriftsflyt og rapportkopier bevares. Ekstremrapportens bunnlinje har bare Kontakt Lars. Tabellpilene beholdes som reserve. Lesbart linjeskift foran kr ved 500 % prioriteres ikke videre i denne runden. Full tilgjengelighet er ikke dokumentert av disse zoomtestene. Se [to siste manuelle kontroller](docs/sparekalkulator-testfunn-2026-11-05.md).
+
+## Ett referansesvar før videre overføring (3. november 2026)
+
+Lars bestilte gjennomgang etter #198 og prioriterte ett grundig svar fremfor fem raske. ChatGPT/Codex har kartlagt de tre publiserte svarene og de to nye pilotskjemaene på main `298ffaf`. Renters rente, SV-022, er valgt som referanse: det prøver begrepsregister, matematiske kilder, egne beregninger, kjøpekraftskontrast og kalkulatorlenker uten produktvalg. Det nye skjemaet har status `til kontroll`.
+
+Alternativer: A. Overføre alle tre publiserte svar og flere utkast samtidig. B. Fullføre ett kildekontrollert referansesvar og en konkret utfyllingsveiledning. C. Bare skrive mer generelle regler. B er valgt innenfor Lars sitt oppdrag. Det gir en lesbar modell og en kjørbar egenkontroll. Ulempen er at BSU, ASK og fondskonto fortsatt må migreres hver for seg. Vurder videre tempo etter separat kontroll av referansen.
+
+Svarform, kilderegler, publiseringsutvalg og godkjenningskrav beholdes. Referansen er ingen publiseringsgodkjenning. Kildevakt-oppfølging av de fire kilde-ID-ene, separat kildekontroll og kandidatens søk og tilgjengelighet gjenstår før integrasjon. Eksisterende Kildevakt og Tidsmaskin videreføres uten en tredje innhenter. Ingen personlig tilpasning, produktomtale eller kalkulatorfunksjon innføres.

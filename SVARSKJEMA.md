@@ -19,6 +19,8 @@ Er skjemaet og et regeldokument uenige, gjelder regeldokumentet. Skriv avviket i
 
 Maskinell kontrakt, kommandoer og begrensninger: [docs/svargrunnmur.md](docs/svargrunnmur.md).
 
+Utfylt eksempel med kildekoblinger, feltmapping og kontrolloppdrag: [referansesvar](docs/referansesvar.md). Eksemplet har status `til kontroll`, ingen publiseringsgodkjenning.
+
 1. **Ett svar er én fil:** `kilder/svar/SV-xxx.md`, fylt ut etter malen i punkt 5. Ikke endre, legg til eller fjern overskrifter. Felt som ikke brukes, får «ingen».
 2. **Du setter bare `utkast` eller `til kontroll`.** En annen enn skribenten setter `kontrollert`. Bare Lars godkjenner og slår sammen. Ingen modell publiserer.
 3. **Hver påstand står i påstandstabellen** med en kilde du har åpnet og lest i samme arbeidsøkt. Får du ikke åpnet kilden, skriv «vet ikke» i tabellen og ta påstanden ut av teksten.

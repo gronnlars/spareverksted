@@ -194,3 +194,12 @@ Lars bestiller retting og publisering. Forklaringen av bundne BSU-midler avgrens
 ChatGPT/Codex, lest main `d254229cda4e9157c8d85b0e312314597888ce29`, gren `feat/svargrunnmur`. Lars bestilte implementering av vedlagte SVARSKJEMA og plan. Claudes dokumentpatch er bevart og presisert med maskinell kontrakt. Piloter SV-133 og SV-022 er mekanisk overført som utkast, ikke ny fagkontroll. Publiserte svar og publiseringsutvalg er uendret. Ingen aktiv innholdsreservasjon eller nattkjøring er startet.
 
 Validator, generator, kontrollbevis, avhengighetsindeks, CI og regresjonstester er lagt til. Retter navneoppslag i Kildevakt, HTTP-returkoder, pipefail og Tidsmaskins feilstatus ved hentefeil/manglende kilder. Detaljer, utførte kontroller og gjenstående oppgaver står i PR og docs/svargrunnmur.md. Automatisk test av struktur er egenkontroll, ikke separat kildekontroll.
+
+
+### Referansesvar etter #198, 3. november 2026
+
+SV-022 reservert på `docs/referansesvar-renters-rente` kl. 21.07 Europe/Oslo, reservasjon avsluttet ved leveransen. Arbeidsgrunnlag main `298ffaf8f202efcf6368b10d87743befffe8dcd9`. ChatGPT/Codex har kartlagt de tre publiserte svarene og de to nye skjemaene. Ett svar er revidert: [SV-022](../kilder/svar/SV-022.md), status `til kontroll`, 12 påstandsrader, fire kilder lest i økten, 250 ord i kortsvar, eksempel og fordypning. [Utfyllingsveiledning og kontrolloppdrag](../docs/referansesvar.md).
+
+Begge kalkulatorlenker er hentet fra Del plan og åpnet på nytt i Chrome. Hovedresultatene 11 025 kr og kontrastens 10 404 kr / 9 903 kr stemmer. Egen desimalregning er sammenlignet med kalkulatormotoren. Skjema, register, sikkerhet, cacheversjoner og relevante Python/Node-tester består. Et moteksempel avviser 526 kr i stedet for 525 kr. BSU-utkastets eksisterende lengdevarsler gjenstår.
+
+Ingen endring i offentlig svarlevering. Separat kildekontroll, godkjenning, faktisk visning av kandidaten, søkeparitet og automatisk oppfølging av de fire kilde-ID-ene gjenstår før integrasjon. Ingen tredje innhenter eller ny nattkjøring. Historisk publisering og tilbaketrekking er bevart. Videre arbeid bruker kontrolloppdraget i veiledningen, uten skribentens samtale.
