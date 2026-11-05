@@ -37,7 +37,7 @@ const engine=process.env.SPARE_ENGINE||'chromium',browserType={chromium,firefox,
   // (lesemodus, egne stilark, skjermleser). Samme prinsipp som grafforklaringen 28.10.2026.
   const pairs=await p.evaluate(()=>[...document.querySelectorAll('#savingsResult dl.metrics>div')].map(d=>[d.querySelector('dt')?.textContent.trim(),d.querySelector('dd strong')?.textContent.trim()]));
   assert(pairs.length>=2,'result rows are dt/dd pairs');
-  assert.deepEqual(pairs[0][0],'Du setter inn');assert.match(pairs[0][1],/^1\s200\s000\skr$/);
+  assert.deepEqual(pairs[0][0],'Innskudd totalt');assert.match(pairs[0][1],/^1\s200\s000\skr$/);
   assert(pairs.every(([k,v])=>k&&v),'every label has a value');
   // Resultat og forklaring i samme <article>, grafen utenfor.
   assert.equal(await p.evaluate(()=>{const a=document.querySelector('article.result-article');return !!a&&a.contains(document.getElementById('savingsResult'))&&a.contains(document.getElementById('meaning'))&&!a.contains(document.getElementById('chartPanel'));}),true);

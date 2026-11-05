@@ -72,3 +72,8 @@ body>footer{box-sizing:border-box;width:min(1280px,calc(100% - 48px));margin-inl
 @media(min-width:761px){#calculatorPanel [data-edit-fields]{display:none}}
 #savingsResult{scroll-margin-block-start:20px}
 @media(max-width:760px){#savingsResult{scroll-margin-block-start:-8px}}
+
+/* PC-brukere kan gå fra både grunnfeltene og bunnen av skjemaet til resultatet. */
+.input-result{display:block;width:100%;min-height:44px;margin-top:16px}
+.input-bottom-result{display:none}
+@media(min-width:761px){.input-bottom-result{display:block;width:100%;min-height:44px;margin-top:16px}}

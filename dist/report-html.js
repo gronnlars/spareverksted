@@ -5,6 +5,10 @@
 const preview=document.getElementById('reportPreview');
 function fitPreview(){for(const wrap of preview.querySelectorAll('.report-table,.table-scroll'))fitSavingsTable(wrap);}
 function preparePreview(){
+ const limited=!!preview.querySelector('[data-report-limit]');
+ document.getElementById('downloadReportHtml').hidden=limited;document.getElementById('printReport').hidden=limited;
+ document.getElementById('reportIntro').hidden=limited;document.getElementById('reportContact').hidden=!limited;
+ document.getElementById('reportHtmlError').hidden=true;
  for(const table of preview.querySelectorAll('table')){
   table.classList.add('savings-table');table.setAttribute('role','table');
   table.querySelectorAll('.savings-cell-label,.savings-year-label').forEach(e=>e.remove());

@@ -99,9 +99,9 @@ const FACTS=require('../dist/veileder-facts.js'),SAVINGS=FACTS.value('savingsRat
   await p.locator('#rate').fill('5');await p.locator('#rate').blur();await p.locator('#fee').fill('0,2');await p.locator('#fee').blur();
   const legend=()=>p.locator('#chartLegend').innerText();
   assert.equal(await p.locator('#valueModes [data-value-mode=nominal]').getAttribute('aria-pressed'),'true');
-  assert.match(await legend(),/Beløp i kroner/);assert.match(await legend(),/Du setter inn/);
+  assert.match(await legend(),/Beløp i kroner/);assert.match(await legend(),/Innskudd totalt/);
   await p.locator('#valueModes [data-value-mode=real]').click();
-  assert.equal(await p.evaluate(()=>s.real),true);assert.match(await legend(),/Kjøpekraft i dagens kroner/);assert.match(await legend(),/Innskudd i dagens kroner/);
+  assert.equal(await p.evaluate(()=>s.real),true);assert.match(await legend(),/Kjøpekraft i dagens kroner/);assert.match(await legend(),/Innskudd totalt i dagens kroner/);
   assert.match(await text(p,'#total'),/^238\s605 kr$/);
   await p.locator('#valueModes [data-value-mode=both]').click();
   assert.equal(await p.evaluate(()=>[s.real,view.both].join()),'false,true');assert.match(await text(p,'#total'),/^305\s434 kr$/,'hovedtallet er i kroner');

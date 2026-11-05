@@ -1436,3 +1436,10 @@ Kontroll: egen nettlesertest ved 256–1920 px for begge sammenligningstyper, ue
 Lars ba om én kontrollert retting om gangen av de resterende punktene i Sparing, samlet på arbeidsgren før sammenslåing og publisering. Målrettede lokale tester brukes underveis. Ingen venting på eller løpende oppfølging av full GitHub Actions-kjøring. Opprydding av testarbeidsflyten er en separat oppgave.
 
 Lagre plan ved resultatet bruker eksisterende lagredialog og navneforslag. Endre tall skjules i sparekalkulatorens tokolonneoppsett. Perioder vises som år og måneder fra motorens eksisterende månedsavrunding, uten å endre lagrede inndata eller beregning. Forhåndsvisningens tabeller kan tilpasses radvis, men skal ikke endre PDF-kopien. Sammenligning bruker samme formatdialog, med bare formater som passer innholdet. Se [overlevering og avgrensninger](docs/sparekalkulator-finpuss-2026-11-05.md) og [testlisten](docs/sparekalkulator-testplan-2026-11-05.md).
+
+
+## Testfunn etter #222 (5. november 2026)
+
+Lars ba om å samle og rette bekreftede funn før videre bred testing, uten publisering. Innskudd totalt er vedtatt etikett for samlede innskudd. Radvis tabell skal ha første/siste-år-hopp og årstallet skal følge egen rad. PC skal ha vei til resultatet også nederst i skjemaet. Rapport for en spareplan skal ha med den viste sparetabellen.
+
+Ved rapportens størrelsesgrense 10²¹ kr brukes en saklig begrensning og Lars sin testhilsen. HTML/PDF-knappene øverst i ekstremrapporten erstattes med Kontakt Lars til om.html#kontakt. Vanlige rapportvalg gjenopprettes ved normale tall. Ingen kontaktdata eller tall sendes automatisk. Ingen ny motor, nye lagringsnøkler eller endring i brukerens forutsetninger. Se [retting og kort testliste](docs/sparekalkulator-testfunn-2026-11-05.md). Kakediagram/tidslinje og CI-opprydding er egne senere oppdrag.

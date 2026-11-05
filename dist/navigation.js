@@ -8,13 +8,27 @@
   target.focus({preventScroll:true});
  }
  function fields(){return get(s.activePage==='dreams'?'dreamInputs':s.activePage==='withdrawals'?'withdrawInputs':'planInputs');}
+ function tableRows(){return [...get('tableWrap').querySelectorAll('tbody tr')];}
+ function tableLong(){const wrap=get('tableWrap');return s.activePage==='calculator'&&!wrap.hidden&&wrap.clientWidth>0&&wrap.scrollHeight>innerHeight*.8&&tableRows().length>1;}
+ function tableGo(last){const rows=tableRows(),row=last?rows.at(-1):rows[0];if(!row)return;row.tabIndex=-1;go(row);}
+ function tableJumpTarget(){
+  if(!tableLong())return null;
+  const wrap=get('tableWrap'),box=wrap.getBoundingClientRect(),available=innerHeight-get('mobileSummary').getBoundingClientRect().height-16;
+  if(box.top>=available||box.bottom<=0)return null;
+  const last=tableRows().at(-1).getBoundingClientRect();return last.top>=0&&last.top<available?'first':'last';
+ }
+ get('tableLast').onclick=()=>tableGo(true);get('tableFirst').onclick=()=>tableGo(false);
  function syncJump(){
+  const long=tableLong();get('tableJumpTop').hidden=!long;get('tableJumpBottom').hidden=!long;
+  for(const button of document.querySelectorAll('[data-show-result]')){const label='Se resultat '+(hero.getBoundingClientRect().top<button.getBoundingClientRect().top?'↑':'↓');if(button.textContent!==label)button.textContent=label;}
+  const tableTarget=tableJumpTarget();
+  if(tableTarget){const label=tableTarget==='last'?'Til siste år ↓':'Til tabellstart ↑';if(jump.textContent!==label)jump.textContent=label;jump.setAttribute('aria-controls','tableWrap');return;}
   const above=hero.getBoundingClientRect().bottom<=0;
   const text=above?'Endre tall ↑':'Se resultat ↓';
   if(jump.textContent!==text)jump.textContent=text;
   jump.setAttribute('aria-controls',above?'planInputs':'savingsResult');
  }
- jump.onclick=()=>{if(hero.getBoundingClientRect().bottom<=0)go(fields());else if(!blockIfInvalid('Rett feltet før du ser resultatet.'))go(hero);};
+ jump.onclick=()=>{const target=tableJumpTarget();if(target){tableGo(target==='last');return;}if(hero.getBoundingClientRect().bottom<=0)go(fields());else if(!blockIfInvalid('Rett feltet før du ser resultatet.'))go(hero);};
  // Keep an incomplete field focused until click validation. Otherwise its blur error can move
  // the button between pointerdown and pointerup in Firefox. The action still waits for click,
  // so dragging away cancels it and keyboard activation keeps its normal behavior.
