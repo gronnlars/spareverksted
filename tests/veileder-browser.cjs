@@ -41,7 +41,14 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
   await page.evaluate(()=>window.scrollBy(0,document.getElementById('savingsResult').getBoundingClientRect().bottom+20));
   await page.waitForFunction(()=>getComputedStyle(document.getElementById('mobileSummary')).display!=='none');
   assert(await page.locator('#mobileSummary').isVisible(),'resultatlinjen vises nedenfor grønt felt');
-  assert.equal(await page.locator('#mobileTotal').textContent(),await page.locator('#total').textContent());
+  // Kort visning og utvidet skjermlesertekst kontrolleres hver for seg.
+  const normalize=text=>text.replace(/[\u00a0\u202f]/g,' '),mainTotal=normalize(await page.locator('#total').textContent());
+  const full=page.locator('#mobileTotal .sr-only'),short=page.locator('#mobileTotal [aria-hidden=true]');
+  assert.equal(normalize(await full.textContent()),mainTotal,'skjermleserteksten beholder hovedresultatets beløp');
+  const kroner=Number(mainTotal.replace(/ kr$/,'').replace(/ /g,''));
+  assert(kroner>=1e6&&kroner<1e9,'referanseplanen skal ende i millionintervallet');
+  assert.equal(normalize(await short.textContent()),new Intl.NumberFormat('nb-NO',{maximumFractionDigits:2}).format(kroner/1e6)+' mill. kr','synlig beløp forkortes riktig');
+  assert.equal(await full.evaluate(e=>getComputedStyle(e).position),'absolute','utvidet tekst er visuelt skjult');
   assert(await page.locator('#mobileValueCurve').getAttribute('d'));
   await page.waitForFunction(()=>document.getElementById('mobileResultButton').textContent==='Endre tall ↑');
   await page.locator('#mobileResultButton').click();
