@@ -154,3 +154,23 @@ body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{displ
  #comparison .savings-stacked td{white-space:normal}
  #comparison .savings-stacked .savings-cell-label{white-space:normal;overflow-wrap:anywhere}
 }
+
+/* Et inaktivt scenariovalg skal fortsatt være lesbart i alle temaer. */
+.range-switch .range-unavailable{color:var(--muted)}
+
+/* Resultatkortet følger plassen i kolonnen, også ved forstørring. */
+#savingsResult{container-type:inline-size}
+#savingsResult .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
+body[data-level=simple] #savingsResult .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+#savingsResult .metrics>div{min-width:0}
+#savingsResult .metrics strong,#savingsResult .big{overflow-wrap:normal;word-break:normal}
+@container(max-width:480px){
+ #savingsResult .metrics,body[data-level=simple] #savingsResult .metrics{grid-template-columns:minmax(0,1fr);gap:14px}
+ #savingsResult .metrics>div{grid-column:auto}
+ #savingsResult .big{font-size:32px;letter-spacing:-.8px}
+}
+@media(max-width:360px){.level-control{min-width:0}#levels{flex-wrap:wrap}#levels button{white-space:normal}}
+
+#reportPreview .savings-stacked{overflow:visible;max-height:none}
+#reportPreview .savings-stacked td,#reportPreview .savings-stacked th{position:static;white-space:normal}
+#reportPreview .savings-stacked .savings-cell-label{white-space:normal}

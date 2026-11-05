@@ -82,3 +82,35 @@ PR-kontrollene på #219 besto, men kjøringen på main (`c5e1715`, Actions 41903
 Breddeavgjørelsen brukte bare tabellens `scrollWidth`. Den kontrollerer nå også områdets `scrollWidth` og tabellens ytre rektangel. Dermed brukes samme mål på faktisk overløp som i testen, også hvis tabellens eget mål avviker. Loggen inneholder ikke tabellens separate måleverdier, så den dokumenterer ikke alene hvilken WebKit-måling eller oppdatering som ga avviket. CI på rettingen må bekrefte utfallet. Ingen feil ignoreres, toleransen er uendret, og ventetiden i testen er ikke økt.
 
 Testmatrisen utvides med flere bredder rundt 1280 px etter at tabellen har vært smal. Lokal sparetabell- og sammenligningstest består i Chromium. Fysisk Safari/iPhone er ikke prøvd. Regnemotor, PDF og HTML-rapporten endres ikke.
+
+## Scenariovalg når «Begge» er valgt
+
+Lars påpekte at «Vis lavere og høyere scenario/vekst» kan krysses av selv om «Begge» ikke viser scenarioene. Avkryssingen er nå native `disabled` i denne visningen, med lesbar dempet etikett og forklaring via spørsmålstegnet om å velge «Kroner» eller «Kjøpekraft». Forklaringen er også koblet med `aria-describedby` mens valget er deaktivert. Hjelpeknappen er fortsatt tilgjengelig. Justering av forskjellen mellom utfallene skjules også når scenarioene ikke vises.
+
+Tidligere avkrysset eller ikke avkrysset tilstand beholdes ved bytte tilbake. Ingen beregning, planlagring eller eksport endres. Regelen gjelder i både graf- og tabellvisning. Eksisterende `forklaring-oppdateres-browser.cjs` er utvidet med begge avkrysningstilstander og begge visninger. Den består lokalt i Chromium og kjøres allerede i Chromium, Firefox og WebKit i CI. CI på siste commit må kontrolleres. Fysisk iPhone/VoiceOver er ikke prøvd.
+
+### Samordning av #222 etter HTML-rettingene
+
+Grenen er oppdatert mot main etter #223. HTML-konflikten gjaldt skriptlisten: scenariovalgets nye `journey.js` og `report-html.js` fra main er begge beholdt, og innholdsversjoner er generert på nytt.
+
+Den tidligere CI-feilen i navigasjonstesten var en timeout ved klikk på «Se resultat» under grafen. Loggen viste venting på synlig/aktiv/stabil knapp, men dokumenterte ikke årsaken. Stoppet er ikke gjenskapt lokalt: tre kjøringer består, inkludert én med fire ganger CPU-nedbremsing i Chromium. Navigasjonskoden og testkravene endres derfor ikke på grunnlag av denne ene loggen. Ved ny testfeil lagres skjermbilde og Playwright-sporing i eksisterende UI-testartefakt, slik at posisjon, fokus og hendelser kan undersøkes. Ingen tvungne klikk, økt ventetid eller svekkede krav er lagt inn.
+
+Scenariovalgets av/på-tilstand, bytte mellom graf/tabell og tilbake til Kroner/Kjøpekraft består lokalt. HTML-rapporten består etter samordningen, inkludert Nu-validering av alle fem rapportveier. Full CI på siste commit må kontrolleres før sammenslåing. Tidligere navigasjonsstopp regnes ikke som en dokumentert, rettet produktfeil.
+
+### Ingen ekstra tekstlinje ved deaktivering
+
+Lars presiserte under gjennomgangen at synlig hjelpetekst kan forstyrre oppsettet. Forklaringen ved scenariovalget beholdes derfor skjult i selve kalkulatoren, og tas fram via den eksisterende hjelpeknappen. Skjermlesere har fortsatt `aria-describedby` når feltet er deaktivert. Deaktiveringen legger ikke til en tekstlinje over grafen.
+
+En regresjonstest sammenligner avstanden fra scenarioraden til grafen før/etter «Begge». Den stoppet med den synlige forklaringen og består med denne rettingen. Testen kontrollerer også at hjelpeknappen gir instruksen og at tidligere avkrysning bevares. Lokalt bestått i Chromium. Tidligere grønn CI gjelder forrige commit; ny CI må bestå etter endringen.
+
+
+### Tabelltesten måler etter skjermoppdateringene
+
+CI på `e33b5b2` (Actions 41926717693) stoppet i WebKit: kjøpekraft, vanlige beløp, 640 px, 570 px tilgjengelig og 638 px innhold. Scenariotesten besto i alle tre motorer. Stoppet er gjenskapt lokalt også i andre kronevisninger. Midlertidig instrumentering viste at testens 80 ms kunne gå før ResizeObserver hadde behandlet breddeendringen. Den lagrede observerbredden var fortsatt 884 px mens området allerede var 320 px. Ved senere måling hadde den eksisterende tilpasningen kjørt og området var uten overløp.
+
+Testen venter derfor på tre faktiske skjermoppdateringer før måling, slik at ResizeObserver og den eksisterende køede requestAnimationFrame-tilpasningen får kjørt. Ingen kalkulatorkode endres. Grensen på ett piksel, alle bredder, celleverdier, overskrifter og feilkontroller beholdes. Tabellens rektangelbredde tas med i feilmeldingen. Testen består lokalt i Chromium og WebKit. En separat negativ kontroll med tilpasningen satt ut av spill stopper fortsatt ved 640 px, med 570 px tilgjengelig og 668 px innhold. Dette viser at ventingen ikke skjuler en vedvarende feil. Full CI på siste commit må bestå før publisering.
+
+
+## Samlet finpuss, 5. november
+
+Lars ba om å samle resten på arbeidsgrenen, kontrollere hvert punkt lokalt og la være å slå sammen eller publisere før gjennomgangen er ferdig. Ingen oppfølging av en full GitHub-kjøring inngår. [Samlet overlevering](sparekalkulator-finpuss-2026-11-05.md) erstatter statusene «Ikke startet» i den historiske tabellen øverst. Den skiller rettet kode, egenkontroll, senere vedlikeholdsarbeid og manuell kontroll. [Testlisten](sparekalkulator-testplan-2026-11-05.md) har konkrete tall, handlinger og forventet resultat for Lars.

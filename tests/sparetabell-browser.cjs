@@ -10,14 +10,17 @@ const engine=process.env.SPARE_ENGINE||'chromium';
   browser=await pw[engine].launch({headless:true,...(engine==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage']}: {})});
   const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto('http://127.0.0.1:'+server.address().port+'/index.html#activePage=calculator');
+  // ResizeObserver køer tilpasningen til neste skjermoppdatering. Vent på faktiske
+  // rammer før måling, ikke 80 ms som kan gå før WebKit har behandlet endringen.
+  const layoutReady=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))));
   for(const huge of [false,true])for(const mode of ['nominal','real','both']){
    await page.evaluate(({huge,mode})=>{Object.assign(s,{start:huge?9999999999:50000,monthly:huge?9999999:2000,years:huge?100:10,rate:huge?15:5,fee:0.2,inflation:2.5,real:mode==='real'});Object.assign(view,{both:mode==='both',showRange:true,showBank:true});fill();render();document.getElementById('tableTab').click();},{huge,mode});
    const values=await page.locator('.savings-cell-value').allTextContents();
    assert(values.length>0);assert.doesNotMatch(values.join(' '),/NaN|undefined|Infinity/);
    for(const width of [1920,1280,640,390,320,256,1296,1288,1280,1272,1264,1280,1920]){
     await page.setViewportSize({width,height:900});
-    await page.waitForTimeout(80);
-    const size=await page.locator('#tableWrap').evaluate(e=>({outer:e.clientWidth,inner:e.scrollWidth,stacked:e.classList.contains('savings-stacked')}));
+    await layoutReady();
+    const size=await page.locator('#tableWrap').evaluate(e=>({outer:e.clientWidth,inner:e.scrollWidth,stacked:e.classList.contains('savings-stacked'),table:e.querySelector('table').getBoundingClientRect().width}));
     assert(size.inner<=size.outer+1,`${mode}, ${huge}, ${width}: intern sideveis rulling ${JSON.stringify(size)}`);
     assert.deepEqual(await page.locator('.savings-cell-value').allTextContents(),values,'endret tall ved endret bredde');
     assert.equal(await page.getByRole('table').filter({has:page.locator('.savings-cell-value')}).count(),1,'én tabell for hjelpemidler');
@@ -27,7 +30,7 @@ const engine=process.env.SPARE_ENGINE||'chromium';
   }
   // Kort tabell vender tilbake til vanlig oppsett når den får nok plass.
   await page.evaluate(()=>{Object.assign(s,{start:0,monthly:1000,years:1,rate:0,fee:0,inflation:0,real:false});Object.assign(view,{both:false,showRange:false,showBank:false});fill();render();});
-  await page.setViewportSize({width:1920,height:900});await page.waitForTimeout(80);
+  await page.setViewportSize({width:1920,height:900});await layoutReady();
   assert.equal(await page.locator('#tableWrap').evaluate(e=>e.classList.contains('savings-stacked')),false);
   assert.match((await page.locator('.savings-table tbody tr').last().innerText()).replace(/\s/g,''),/12000kr/);
   assert.deepEqual(errors,[]);console.log('Sparetabell: tre kronevisninger, vanlige/store beløp, 256–1920 px, etiketter og uendrede verdier består i '+engine+'.');

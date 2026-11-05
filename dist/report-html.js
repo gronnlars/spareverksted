@@ -1,6 +1,35 @@
 // Selvstendig HTML fra rapporten som allerede vises. Ingen nye beregninger eller nettressurser.
 (function(){
 'use strict';
+// Samme tabellmønster i forhåndsvisningen som i kalkulatoren. PDF-kopien røres ikke.
+const preview=document.getElementById('reportPreview');
+function fitPreview(){for(const wrap of preview.querySelectorAll('.report-table,.table-scroll'))fitSavingsTable(wrap);}
+function preparePreview(){
+ for(const table of preview.querySelectorAll('table')){
+  table.classList.add('savings-table');table.setAttribute('role','table');
+  table.querySelectorAll('.savings-cell-label,.savings-year-label').forEach(e=>e.remove());
+  const headers=[...table.querySelectorAll('thead th')];
+  headers.forEach(h=>{h.scope='col';h.setAttribute('role','columnheader');});
+  for(const group of table.querySelectorAll('thead,tbody'))group.setAttribute('role','rowgroup');
+  for(const row of table.querySelectorAll('tr'))row.setAttribute('role','row');
+  for(const row of table.querySelectorAll('tbody tr')){
+   const first=row.cells[0];if(!first)continue;
+   let heading=first;if(first.tagName!=='TH'){heading=document.createElement('th');heading.append(...first.childNodes);first.replaceWith(heading);}
+   heading.scope='row';heading.setAttribute('role','rowheader');
+   [...row.cells].slice(1).forEach((cell,i)=>{
+    cell.setAttribute('role','cell');
+    const label=document.createElement('span');label.className='savings-cell-label';label.setAttribute('aria-hidden','true');label.textContent=headers[i+1]?.textContent||'';
+    const value=document.createElement('span');value.className='savings-cell-value';value.append(...cell.childNodes);
+    const text=document.createTreeWalker(value,NodeFilter.SHOW_TEXT);while(text.nextNode())text.currentNode.textContent=text.currentNode.textContent.replace(/[\u00a0\u202f]/g,' ');
+    cell.append(label,value);
+   });
+  }
+ }
+ fitPreview();
+}
+new MutationObserver(preparePreview).observe(preview,{childList:true});
+let previewWidth=-1;
+new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(width!==previewWidth){previewWidth=width;requestAnimationFrame(fitPreview);}}).observe(preview);
 function reportStyles(doc){
  function declarations(style){
   // Behold shorthands med var(...). Enkelte nettlesere gir tom verdi for hver langform.

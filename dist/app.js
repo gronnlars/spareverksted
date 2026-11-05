@@ -90,7 +90,7 @@ const timeTicks=(maxTime,most)=>{
  if(maxTime-out.at(-1).t>1e-9){if(out.length>1&&maxTime-out.at(-1).t<(months?step/12:step)*.75)out.pop();out.push({t:maxTime,label:(months?nf.format(span):oneDec.format(maxTime))+unit});}
  return out;
 };
-const periodText=t=>{const m=Math.round(t*12);return m<12?m+(m===1?' måned':' måneder'):dec.format(t)+' år';};
+const periodText=t=>{const m=Math.round(t*12),y=Math.floor(m/12),rest=m%12;return y?y+' år'+(rest?' og '+rest+(rest===1?' måned':' måneder'):''):m+(m===1?' måned':' måneder');};
 const inflation=(t,n=s)=>Math.exp(Math.log1p(n.inflation/100)*t);
 const display=(v,t,n=s)=>s.real?v/inflation(t,n):v;
 function nominalPaid(t,n=s){return E.raw({...n,rate:0,fee:0},t,0,0);}
@@ -137,6 +137,7 @@ function render(){
  if(mode!=='goal'&&Math.abs(shown)>=1e15)notes.push('Beløpet er så stort at det mister praktisk mening. Sjekk sparetid og vekst.');
  $('mobileTotal').textContent=$('total').textContent;$('paid').textContent=money(paid);$('gain').textContent=money(shown-paid);lastRealGain=s.real?shown-paid:0;
  $('paidLabel').textContent=s.real?'Innskudd i dagens kroner':'Du setter inn';$('paidNote').hidden=!s.real||Math.abs(paid-nominalPaidEnd)<0.5;$('paidNote').textContent=`Du setter inn ${money(nominalPaidEnd)}`;$('cost').textContent=money(display(E.value(s,end,s.rate,0)-final,end));
+ for(const id of ['total','mobileTotal','paid','gain','cost'])$(id).textContent=$(id).textContent.replace(/[\u00a0\u202f]/g,' ');
  // Et sluttbeløp under innskuddene skal aldri se ut som en gevinst. Tapet vises i resultatet og i sammendraget.
  // Tap i kroner: sluttverdien er lavere enn summen av innskuddene, målt i vanlige kroner i begge visninger.
  // Lavere kjøpekraft: sluttverdien i dagens kroner er lavere enn innskuddene i dagens kroner (paid i den visningen).
