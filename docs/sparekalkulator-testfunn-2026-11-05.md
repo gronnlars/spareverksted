@@ -1,5 +1,7 @@
 # Retting etter Lars sin test av #222
 
+**Finpussrunden er avsluttet av Lars 5. november 2026 etter #230.** Tidligere oppgavelister nedenfor er historikk. Se avslutningsloggen nederst for gjeldende status. Videre visningsfinpuss avventer brukertesting.
+
 Arbeidsgrunnlag: main `ac3043af0148ae8f1cc0af56c632bb03e13a1657`. Gren: `fix/sparekalkulator-testfunn`. Lars ba om å stoppe den brede testrunden og rette funnene samlet, slik at manuell etterprøving blir overkommelig. Ikke slå sammen eller publiser uten nytt klarsignal. Kakediagram, tidslinje og opprydding i GitHub Actions inngår ikke.
 
 ## Rettet
@@ -151,3 +153,22 @@ På PC med mus står lukket Vis resultat til venstre ved bred visning og til hø
 Målrettet kontroll: rapportvalg-browser og testfunn-browser kontrollerer tekst/navn, plass i linjen ved 256–1280 px, plassering ved bred/smal PC-visning og at bare pilene vises i tabellområdet. Den eksisterende overlappskontrollen gjelder fortsatt synlige knapper. Ingen endring i motor, lagring, rapportverdier eller utskriftsflyt. Fysisk iPhone og hjelpemidler er ikke testet i denne runden.
 
 Etter publisering: prøv HTML/PDF-valget på iPhone. På PC: prøv lukket knapp ved vanlig og smal visning, og rull inn i og ut av en lang tabell. Ingen ny full testliste.
+
+
+## Avslutningslogg, 5. november 2026
+
+Lars har kontrollert løsningen på en stor skjerm, en 13-tommers laptop og mobil. Han opplyser at oppsettet flyter svært godt på alle tre. På den store skjermen kan innholdet oppleves litt smått, men han ønsker ingen ny justering nå. Skjermmodeller, nettleserversjoner og målt CSS-visningsflate er ikke oppgitt for denne siste sammenligningen. Tidligere registrert oppløsning/systemskalering skal ikke automatisk tilordnes alle tre skjermene.
+
+Lars sier seg fornøyd og avslutter denne finpussrunden fram til brukertesting er på plass. Dette er hans manuelle samlede vurdering. Det påstås ikke at hvert historisk testpunkt er gjennomført på nytt eller at hjelpeteknologier og alle WCAG-krav er kontrollert. Ekstern brukertesting og testing med hjelpemidler er fortsatt ikke dokumentert gjennomført.
+
+Kontrollert GitHub-status: #230 er slått sammen, og main er 390a4629d221cdb0c2ce8a38566dcdfed6e66a8b. Lars har deretter meldt vurderingen over. Publiseringskjøringen er ikke fulgt på nytt i denne loggføringen.
+
+Videre arbeid:
+
+- Behold nåværende utseende, beregninger, lagring og rapportfunksjoner. Ingen videre kosmetisk finpuss bestilles gjennom denne avslutningen.
+- Konkrete alvorlige feil kan fortsatt håndteres i små, kontrollerte rettinger. Nye funksjoner eller ombygging krever et nytt oppdrag.
+- Brukertesting skal undersøke forståelse og praktisk bruk, inkludert hjelpemidler. Henvendelsen til Inklud står ved lag. Ikke erstatt brukertesting med en ny runde automatiske poengsummer.
+- GitHub-oppryddingen skjer separat. #228 skal oppdateres med endelig status i oppryddingsarbeidet. Bevar vernet mot gammel kode og de relevante regresjonstestene.
+- Den tidligere diskuterte gjennomgangen av felles rapportfunksjoner i Sparing, Sparemål og Uttak er et eget trinn. Ingen ny utrulling til andre kalkulatorer er gjennomført som del av denne loggen.
+
+Denne oppdateringen er bare dokumentasjon, skrevet av ChatGPT/Codex på Lars sin instruks. Ingen produksjonsfiler eller arbeidsflyter er endret. Ingen nye nettlesertester er kjørt for loggføringen.
