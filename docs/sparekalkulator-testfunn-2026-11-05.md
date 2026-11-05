@@ -101,3 +101,20 @@ Etter publisering gjenstår bare:
 
 1. **PC uten zoom:** Rull forbi grønt resultatfelt. Resultatlinjen skal komme, kunne lukkes og åpnes igjen, og forsvinne når du går tilbake til grønt felt.
 2. **Rapport på PC og iPhone:** Åpne en vanlig rapport og en sammenligning, rull ned til toppknappene er borte. Prøv HTML/PDF, opp/ned og lukk fra bunnlinjen. På smal visning åpnes HTML/PDF fra nedlastingssymbolet. Kontroller at linjen holder seg lav ved 400 % og ikke følger med i filene. Ekstremrapporten skal fortsatt ha Kontakt Lars.
+
+
+## Fysisk PC-oppsett presisert av Lars 5. november 2026
+
+Dette er Lars sine manuelle observasjoner, ikke nye tester kjørt av Codex. Skjermoppløsningen er **1920 × 1080**. Maskinen har **150 % systemskalering**, som Lars opplyser er anbefalt forhåndsinnstilling. Tidligere testfunn må leses med denne opplysningen i tillegg til angitt nettleserzoom.
+
+| Systemskalering | Nettleserzoom | Rapportert observasjon |
+| --- | --- | --- |
+| 150 % | Varierte, som oppgitt i tidligere funn | Oppsettet Lars normalt testet med. Ved 400 % var den omtalte beløpsvisningen lesbar. Ved 500 % kunne «kr» havne på neste linje |
+| 100 % | 500 % | Lars opplyser at alt ser fint ut |
+| 175 % | 500 % | Lars opplyser at det blir flere visningsproblemer. Berørte elementer og nøyaktig feilomfang er ikke kartlagt i denne prøven |
+
+Nettleserversjon, faktisk vindusstørrelse og målt bredde/høyde i CSS-piksler er ikke registrert for hver prøve. Skjermoppløsning alene beskriver derfor ikke den tilgjengelige visningsflaten. Systemskalering og nettleserzoom føres som separate innstillinger i videre testnotater. Ikke beregn en eksakt CSS-bredde fra oppløsningen alene.
+
+Ved senere brukertesting registreres enhet/operativsystem, nettleser og versjon, skjermoppløsning, systemskalering, nettleserzoom og vindusstørrelse eller målt CSS-visningsflate, sammen med handling og observasjon. Hvis en opplysning mangler, merkes den som ukjent. Disse observasjonene dokumenterer testoppsettet og er ingen full WCAG-godkjenning.
+
+Avgrensning: Ingen nye visningsrettinger bestilles av denne presiseringen. Videre kartlegging av kombinasjonen 175 % systemskalering og 500 % nettleserzoom avventer brukertesting. Tidligere bekreftede funn og de to avtalte endringene i #227 beholdes.
