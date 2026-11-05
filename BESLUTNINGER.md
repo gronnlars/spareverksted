@@ -1459,3 +1459,12 @@ Lars meldte at lange tabeller fortsatt manglet praktisk vei begge retninger når
 ## Resultatlinje på PC og rapportvalg underveis (5. november 2026)
 
 Etter test av #226 ba Lars om samme åpne/lukke-mulighet for resultatlinjen på vanlig PC uten zoom. Den beholder grensen nedenfor grønt resultatfelt. Rapportforhåndsvisningen får bunnvalg først etter at toppknappene er rullet ut av syne. Smal visning samler HTML/PDF under ett nedlastingsvalg, mens opp/ned og lukk er direkte tilgjengelige. Eksisterende utskriftsflyt og rapportkopier bevares. Ekstremrapportens bunnlinje har bare Kontakt Lars. Tabellpilene beholdes som reserve. Lesbart linjeskift foran kr ved 500 % prioriteres ikke videre i denne runden. Full tilgjengelighet er ikke dokumentert av disse zoomtestene. Se [to siste manuelle kontroller](docs/sparekalkulator-testfunn-2026-11-05.md).
+
+
+## Kontrollert artifact-revisjon og første opprydding (5. november 2026)
+
+Lars bestiller opprydding etter avsluttet kalkulatorfinpuss, samlet i én PR. Dagens funksjoner, grafikk, rapporter og beregninger skal bevares. Arbeidet bygger på main ae3531d. Valgt: fest download-artifact til verifisert v4.3.0-SHA, som inkluderer rettingen fra v4.1.3, og prøv faktisk opplasting/nedlasting av privacy-page i PR før samme Action brukes i deploy. Riktig varsel-ID er GHSA-cxww-7g56-2vh6. Behold deploy-avhengigheter og alle eksisterende testkommandoer.
+
+Vurderte alternativer: v4.1.3 direkte ble valgt bort fordi dagens v4 peker på en nyere rettet revisjon. Flytende v4 ble valgt bort fordi vi vil vite nøyaktig hvilken kode som kjøres. Stort versjonsbytte og generell parallellisering venter på kontroll av #193 og testavhengigheter. Ulempen ved fast SHA er at oppdateringer må gjøres bevisst. Revurder ved nye sikkerhetsmeldinger eller kompatibilitetskrav.
+
+Korriger misvisende kommentar i historisk renters rente-test og utdatert testinstruks i bidragsveiledningen. Ingen endring i testlogikk, offentlig svarstatus eller dist. Kontrollplan, kildebevis, lokale kontroller og gjenstående PR-/produksjonskontroll står i docs/github-oppfolging-2026-11-05.md. ChatGPT/Codex, egenkontroll.
