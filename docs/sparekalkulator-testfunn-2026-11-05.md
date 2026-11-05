@@ -85,3 +85,19 @@ Bare disse tre kontrollene trengs nå:
 1. På PC ved 150, 400 og 500 % zoom og på iPhone: åpne en lang tabell, lukk resultatlinjen og bruk pil ned. Bruk deretter pil opp til resultatet. Prøv også pil opp halvveis i tabellen. Pilene skal ligge i én lav rad uten å dekke hverandre eller knappen som åpner resultatlinjen.
 2. Prøv et stort sluttbeløp i milliarder og billioner. Resultatlinjen skal bruke korte enheter, hovedresultat og tabell beholder sine egne tallvisninger. Prøv å åpne og lukke linjen ved sterk zoom.
 3. Åpne både en vanlig planrapport og en sammenligningsrapport. Forhåndsvisning og HTML skal ha rolige tabellrader, tydelige overskrifter og samme beløp som før. Ingen ny full testrunde.
+
+
+## Avtalt siste runde etter publisert #226
+
+Arbeidsgrunnlag: main `d4656978c7ccf01e1024fc9a64db625757816e67`. Gren `fix/resultatlinje-og-rapportvalg`. Lars ba uttrykkelig om disse endringene. Ingen sammenslåing eller publisering inngår uten nytt klarsignal.
+
+Resultatlinjen er tilgjengelig også på PC uten zoom, først nedenfor resultatkortet, med samme åpne/lukke-funksjon og eksisterende fokushensyn. Rapporten får en lav bunnlinje etter at toppknappene er rullet ut av syne. HTML/PDF bruker de samme handlingene som toppknappene. Opp og ned flytter fokus til rapportens topp eller siste innholdsdel. Lukk bruker eksisterende lukkeknapp. Ved smal skjerm er HTML/PDF samlet i et eget nedlastingsvalg. Escape lukker dette valget først, deretter kan rapporten lukkes som før. Ekstremrapporten har bare Kontakt Lars i bunnlinjen.
+
+Bunnlinjen ligger utenfor rapportinnholdet som kopieres til HTML og PDF. Den endrer hverken beregning, lagring, rapportverdier eller utskriftsflyt. Lesbart linjeskift foran kr ved 500 % beholdes som avtalt.
+
+Målrettede lokale kontroller i Chromium: `rapportvalg-browser.cjs` kontrollerer PC-linjen over/på/under resultatet, åpne/lukke, tre rapportveier, bunnvalg ved 256–1280 px (256 × 200 px for den korteste flaten), én lav rad, fokus, formatvalg/Escape, HTML-nedlasting uten bunnvalg, utskriftskall med bevart PDF-kopi, lukking og ekstremkontakt. `rapport-html-browser.cjs` består for fem rapportveier, Nu HTML/CSS-validering, frakoblet fil uten JavaScript og bevart PDF-kopi. `resultatlinje-browser.cjs` består for tidligere mobil-/zoom-/fokusforløp. Versjoner, syntaks, sikkerhet, diff og vern mot gammel kode kontrolleres før opplasting. Ingen full CI-oppfølging. Fysisk iPhone/Safari, reell PC-zoom og skjermleser er ikke testet her.
+
+Etter publisering gjenstår bare:
+
+1. **PC uten zoom:** Rull forbi grønt resultatfelt. Resultatlinjen skal komme, kunne lukkes og åpnes igjen, og forsvinne når du går tilbake til grønt felt.
+2. **Rapport på PC og iPhone:** Åpne en vanlig rapport og en sammenligning, rull ned til toppknappene er borte. Prøv HTML/PDF, opp/ned og lukk fra bunnlinjen. På smal visning åpnes HTML/PDF fra nedlastingssymbolet. Kontroller at linjen holder seg lav ved 400 % og ikke følger med i filene. Ekstremrapporten skal fortsatt ha Kontakt Lars.

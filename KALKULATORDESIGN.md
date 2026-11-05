@@ -96,7 +96,7 @@ Delene kommer i denne rekkefølgen. Det som er felles for nettstedet (toppfelt, 
 
 ## 6. Mobil og PC
 
-- Mobil først. Under 761 px bredde ligger alt i én kolonne, med en resultatlinje nederst som kan skjules. Den skal ikke dekke feltet med fokus.
+- Mobil først. Under 761 px bredde ligger alt i én kolonne. Resultatlinjen nederst kan skjules og åpnes igjen, også på vanlig PC uten zoom. Den vises først nedenfor det grønne resultatkortet, aldri over eller på kortet, og skal ikke dekke feltet med fokus.
 - På PC står tallene til venstre og resultatet til høyre. «Endre tall» vises i sparekalkulatoren når oppsettet har én kolonne. «Se resultat» finnes etter grunnfeltene og ved bunnen av PC-skjemaet. Kommandoen bruker det levende resultatfeltet som mål.
 - «Lagre plan» finnes ved hovedresultatet og bruker samme lagredialog som plandelen.
 - Spareperioder i forklaring og rapport vises med år og måneder, avrundet til samme antall måneder som motoren. Desimalår i tallfelt og eksportdata beholdes.
@@ -146,3 +146,8 @@ Funnet ved å sammenligne sidene på main. Rettes i egne, små PR-er. Når et pu
 - Knappetekster, vedtatt av Lars 4.11.2026: rettes i #214 («Lagre plan», «Last ned plan», «Last ned planene»/«Last ned planen»).
 - Lån: «Dette betyr tallene dine» og «Metode, forutsetninger og kilder»: rettes i #214.
 - `ressursmaaling` (arbeidsflyt og skript) bruker «aa».
+
+
+### Rapportvalg etter nedrulling
+
+Rapportforhåndsvisningen beholder knappene øverst. Når disse er rullet ut av syne, vises en lav bunnlinje med HTML, PDF, opp til rapportens topp, ned til bunnen og lukk. Ved smal visning samles HTML/PDF i ett nedlastingsvalg. Bunnlinjen bruker eksisterende nedlastings- og utskriftshandlinger og ligger utenfor både HTML- og PDF-kopien. I ekstremrapporten vises bare Kontakt Lars i bunnlinjen. Avtalt med Lars 5. november 2026 etter test av #226. Linjeskift foran «kr» ved 500 % beholdes når tallet er lesbart og ikke klippes.
