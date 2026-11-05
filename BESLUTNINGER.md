@@ -4,6 +4,12 @@ Beslutningsnotat, 24. oktober 2026.
 
 Les dette før du foreslår større endringer. Notatet samler prinsipper og valg fra prosjektarbeidet. Det er ikke dokumentasjon på at alle deler er ferdige eller fullstendig brukertestet.
 
+## Leseplass foran bunnvalg i rapporten (5. november 2026)
+
+Lars fant at bunnvalgene kunne dekke rapporten ved zoom, og at linjen så ut til å flyte inne i rapporten. Den tidligere kontrollen av bunnlinjens egen høyde og bredde var ikke tilstrekkelig til å kontrollere hele leseflaten. Valgt retting: rapportinnholdet får en egen rulleflate, og bunnvalgene får fast plass i dialogens oppsett inntil bunnkanten. Ingen overlapp med tekst. Bunnvalgene skjules ved høyst 360 CSS-piksler i vindushøyde, under 248 CSS-piksler i bredde eller hvis de ville tatt mer enn en tredjedel av dialogen. Dette styres av plassen, ikke av antatt zoomprosent. De opprinnelige toppknappene beholdes. × lukker rapporten og brukes ikke til å skjule en linje.
+
+Lukket resultatlinje på PC med mus flyttes til en liten knapp til venstre, også ved zoom. Mobilens eksisterende berøringsflate beholdes. Ingen endring i motor, lagring, utskriftsbygger eller rapportens tall. Den nye testen kontrollerer kantplassering, adskilt leseflate, skjulte bunnvalg og full nedrulling helt ned til 220 × 120 CSS-piksler. Se siste del av docs/sparekalkulator-testfunn-2026-11-05.md. Ingen ny generell ombygging eller funksjonsutvidelse.
+
 ## Aktive avvik fra reglene
 
 Et avvik utløper på datoen og må fornyes eller fjernes. Se [KILDEREGLER.md](KILDEREGLER.md), «Når en regel må brytes». Kontrollrunden går gjennom tabellen, og den som gjør runden varsler Lars minst to uker før utløp.
