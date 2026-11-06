@@ -4,6 +4,9 @@
 const pw=require('playwright'),assert=require('node:assert/strict');
 const fs=require('node:fs'),http=require('node:http'),path=require('node:path');
 const engine=process.env.SPARE_ENGINE||'chromium';
+const timingTotal='resultatlinje '+engine+': total';
+const timingPhase=name=>'resultatlinje '+engine+': '+name;
+console.time(timingTotal);
 (async()=>{
  const root=path.resolve(__dirname,'../dist');
  const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!f.startsWith(root+path.sep)){res.writeHead(403);res.end();return;}try{const d=fs.readFileSync(f);res.setHeader('Content-Type',f.endsWith('.js')?'text/javascript':f.endsWith('.css')?'text/css':'text/html');res.end(d);}catch{res.writeHead(404);res.end();}});
@@ -13,8 +16,11 @@ const engine=process.env.SPARE_ENGINE||'chromium';
  const state=q=>q.evaluate(()=>{const a=document.activeElement,s=document.getElementById('mobileSummary'),ar=a.getBoundingClientRect(),sr=s.getBoundingClientRect(),shown=getComputedStyle(s).display!=='none';
   return {id:a.id,own:s.contains(a),shown,collapsed:s.classList.contains('is-collapsed'),covered:shown&&!s.contains(a)&&ar.bottom>sr.top+1&&ar.top<sr.bottom&&ar.right>sr.left&&ar.left<sr.right};});
  const pastResult=async q=>{await q.evaluate(()=>{const r=document.querySelector('.hero-result');window.scrollBy(0,r.getBoundingClientRect().bottom+20);});await q.waitForTimeout(120);};
+ console.time(timingPhase('oppstart'));
  try{
   browser=await pw[engine].launch({headless:true,...(engine==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu'],...(process.env.SPARE_BROWSER?{executablePath:process.env.SPARE_BROWSER}:{})}:{})});
+  console.timeEnd(timingPhase('oppstart'));
+  console.time(timingPhase('mobil og zoom'));
   // Vanlig mobil (390 px) og omtrent 200 % og 500 % zoom på en PC med 1280 x 900.
   for(const [w,h,autoCollapsed] of [[390,664,false],[640,450,false],[256,180,true]]){
    const c=await browser.newContext({viewport:{width:w,height:h}});const q=await c.newPage();const errors=[];q.on('pageerror',e=>errors.push(e.message));q.setDefaultTimeout(10000);
@@ -39,6 +45,8 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    if(!autoCollapsed){await q.keyboard.press('Enter');await q.evaluate(()=>{document.querySelector('#basic input').focus();window.scrollTo(0,0);});await q.waitForFunction(()=>getComputedStyle(document.getElementById('mobileSummary')).display==='none');assert(!(await state(q)).shown,'skjult igjen over resultatet');await pastResult(q);assert((await state(q)).collapsed,'valget huskes');}
    assert.deepEqual(errors,[]);await c.close();
   }
+  console.timeEnd(timingPhase('mobil og zoom'));
+  console.time(timingPhase('sikkerhetsfelt'));
   // Safari-sikkerhetsfeltet hører til selve knappen, så innhold ikke synes under den.
   // Playwright har ikke Safaris bevegelige verktøylinje. Prøv derfor CSS-en med både 0 og 34 px simulert inset.
   for(const inset of [0,34]){
@@ -62,6 +70,8 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    }
    await c.close();
   }
+  console.timeEnd(timingPhase('sikkerhetsfelt'));
+  console.time(timingPhase('lavt vindu'));
   // Lavt PC-vindu tilsvarer lite plass ved zoom. Mus får lavere knapp, berøring beholder 44 px.
   for(const hasTouch of [false,true]){
    const c=await browser.newContext({viewport:{width:320,height:320},hasTouch});const q=await c.newPage();
@@ -76,6 +86,8 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    await q.keyboard.press('Enter');assert((await state(q)).collapsed,'lukker med Enter');
    await c.close();
   }
+  console.timeEnd(timingPhase('lavt vindu'));
+  console.time(timingPhase('grønt felt'));
   // Begge kalkulatorer: aldri før/på grønt felt, bare etterpå. Gjenta opp/ned etter at linjen har vært vist.
   for(const file of ['index.html#activePage=calculator','laan.html'])for(const [w,h] of [[390,664],[640,450],[256,180]]){
    const q=await browser.newPage({viewport:{width:w,height:h}});await q.goto(origin.replace('index.html',file));await q.waitForTimeout(400);
@@ -88,6 +100,8 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    }
    await q.close();
   }
+  console.timeEnd(timingPhase('grønt felt'));
+  console.time(timingPhase('velkomst'));
   // Velkomstsiden: resultatlinjen vises aldri, heller ikke sammenlagt eller ved sterk zoom.
   for(const [w,h] of [[390,664],[256,180]]){const c=await browser.newContext({viewport:{width:w,height:h}});const q=await c.newPage();
    await q.goto(origin);await q.waitForTimeout(400);
@@ -96,6 +110,8 @@ const engine=process.env.SPARE_ENGINE||'chromium';
    for(const cls of [false,true]){await q.evaluate(c=>document.getElementById('mobileSummary').classList.toggle('is-collapsed',c),cls);
     assert.equal(await q.evaluate(()=>getComputedStyle(document.getElementById('mobileSummary')).display),'none',w+': ikke på velkomstsiden');}
    await c.close();}
+  console.timeEnd(timingPhase('velkomst'));
+  console.time(timingPhase('rapporttabell'));
   // Rapporttabellen for sparemål på 390 px.
   const c=await browser.newContext({viewport:{width:390,height:800}});const q=await c.newPage();
   await q.goto(origin+'#activePage=dreams&dreamType=car&dreamYears=3');await q.waitForTimeout(400);
@@ -104,6 +120,11 @@ const engine=process.env.SPARE_ENGINE||'chromium';
   assert(fit.sw<=fit.cw,'tabellen får plass på 390 px: '+JSON.stringify(fit));assert.equal(fit.dialog,0);
   assert.equal(await q.locator('#reportPreview td').nth(2).evaluate(e=>parseFloat(getComputedStyle(e).fontSize)>=13),true,'samme skriftstørrelse');
   await c.close();
+  console.timeEnd(timingPhase('rapporttabell'));
   console.log('resultatlinje (skjul, fokus, zoom) og rapporttabell: OK');
- }finally{if(browser)await browser.close();server.close();}
+ }finally{
+  console.time(timingPhase('opprydding'));
+  try{if(browser)await browser.close();server.close();}
+  finally{console.timeEnd(timingPhase('opprydding'));console.timeEnd(timingTotal);}
+ }
 })().catch(e=>{console.error(e);process.exit(1);});

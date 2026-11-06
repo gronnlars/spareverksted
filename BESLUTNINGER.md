@@ -1551,3 +1551,10 @@ Valgt som avgrenset videreføring framfor full parallellisering. Alternativet er
 Lars ber om neste steg etter #242. Main-kjøring 42272498115 bestod, men browser tok 733 sekunder mot 659 etter #241. Utskriftsparet tok 11 sekunder mot tidligere 6 + 8, mens flere uendrede steg også tok lengre tid. Dette gir ikke grunnlag for en sikker totalgevinst eller årsaksforklaring.
 
 Neste steg er derfor et dokumentert kontrollpunkt og undersøkelse av gjenværende flaskehalser framfor enda et testpar. Alternativet med fortsatt parvis gruppering uten samlet vurdering velges bort nå. Før neste kodeendring kartlegges kontrollkrav, fast venting og mulig dobbeltarbeid i navngitte tester. Eventuelle målepunkter skal besvare et konkret spørsmål. Bruk ordinære kjøringer som målegrunnlag, ikke løpende CI-overvåking eller ekstra fullkjøringer uten behov. Ingen tester eller produksjonsfiler endres her. Detaljer, faktiske tider og ferdigkriterier står i docs/ci-nettleser-kartlegging.md. Revurder ved dokumentert flaskehals eller ressursfeil. ChatGPT/Codex, egenkontroll.
+
+
+## Mål delene av resultatlinjetesten før endret venting, 6. november 2026
+
+Lars ber om videre arbeid etter kontrollpunktet i #243. Resultatlinje-, a11y- og tematestene er gjennomgått. Resultatlinjetesten ber om 12 580 ms faste pauser per motor, men lasting og handlinger er ikke målt separat. Tema- og tilgjengelighetstestene har ulike kontrollkrav og skal ikke slås sammen bare fordi de besøker samme side.
+
+Velg innebygd console.time/timeEnd rundt eksisterende deler av resultatlinjetesten. Alternativene med å kutte pauser, fjerne dekning eller parallellisere mer utsettes til målegrunnlaget er bedre. Ingen produksjonsfil, workflow, ventetid eller forventning endres. Syntaks, paritet og kontrollert oppstartsfeil prøves lokalt. Ekte nettlesere må bekrefte måleutskrift og bevarte tester i GitHub før Lars merger. Målingen gir ingen ytelsesforbedring i seg selv. Videre undersøkelse og begrensninger står i docs/ci-nettleser-kartlegging.md. ChatGPT/Codex, egenkontroll.
