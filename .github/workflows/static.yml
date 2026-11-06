@@ -297,9 +297,9 @@ jobs:
       - name: "tests/polish-browser.cjs (webkit)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=webkit node tests/polish-browser.cjs
-      - name: "tests/felt-browser.cjs (chromium)"
+      - name: "Number fields: chromium and firefox"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: node tests/felt-browser.cjs
+        run: python3 scripts/nettleserpar.py tests/felt-browser.cjs
       - name: "tests/forklaring-oppdateres-browser.cjs (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tests/forklaring-oppdateres-browser.cjs
@@ -427,9 +427,6 @@ jobs:
       - name: "tests/kontakt-browser.cjs (webkit)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=webkit node tests/kontakt-browser.cjs
-      - name: "tests/felt-browser.cjs (firefox)"
-        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: SPARE_ENGINE=firefox node tests/felt-browser.cjs
       - name: "tests/felt-browser.cjs (webkit)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=webkit node tests/felt-browser.cjs

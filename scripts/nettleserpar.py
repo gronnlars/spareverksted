@@ -12,6 +12,7 @@ import tempfile
 TESTS = {
     'tests/rapport-html-browser.cjs': 'HTML report',
     'tests/planer-browser.cjs': 'Saved plans',
+    'tests/felt-browser.cjs': 'Number fields',
 }
 ENGINES = ('chromium', 'firefox')
 
