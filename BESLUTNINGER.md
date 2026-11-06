@@ -1544,3 +1544,10 @@ Valgt som avgrenset videreføring av de to beståtte testparene. Alternativet er
 Lars ber om neste steg etter grønn #241. Hele rapport-utskrift-browser er gjennomgått: egne serverporter og nettleserkontekster, isolert lagring og PDF i minnet, ingen delte filskrivinger. Chromium og Firefox grupperes med eksisterende hjelper på samme plass. WebKit følger som før. Alle rapport-, fokus-, retur- og PDF-forventninger beholdes. Ingen produksjonsfiler endres.
 
 Valgt som avgrenset videreføring framfor full parallellisering. Alternativet er fortsatt sekvensiell kjøring. Grensen er to samtidige testprosesser. 18 lokale orkestreringstilfeller og YAML-paritet består. Ekte nettlesere må prøves i GitHub før Lars merger. Revurder ved ressursfeil eller ustabilitet uten å svekke testkrav. Ingen bestemt tidsgevinst loves. Detaljer og testbegrensninger i docs/ci-nettleser-kartlegging.md. ChatGPT/Codex, egenkontroll.
+
+
+## Mål samlet virkning før flere nettleserpar, 6. november 2026
+
+Lars ber om neste steg etter #242. Main-kjøring 42272498115 bestod, men browser tok 733 sekunder mot 659 etter #241. Utskriftsparet tok 11 sekunder mot tidligere 6 + 8, mens flere uendrede steg også tok lengre tid. Dette gir ikke grunnlag for en sikker totalgevinst eller årsaksforklaring.
+
+Neste steg er derfor et dokumentert kontrollpunkt og undersøkelse av gjenværende flaskehalser framfor enda et testpar. Alternativet med fortsatt parvis gruppering uten samlet vurdering velges bort nå. Før neste kodeendring kartlegges kontrollkrav, fast venting og mulig dobbeltarbeid i navngitte tester. Eventuelle målepunkter skal besvare et konkret spørsmål. Bruk ordinære kjøringer som målegrunnlag, ikke løpende CI-overvåking eller ekstra fullkjøringer uten behov. Ingen tester eller produksjonsfiler endres her. Detaljer, faktiske tider og ferdigkriterier står i docs/ci-nettleser-kartlegging.md. Revurder ved dokumentert flaskehals eller ressursfeil. ChatGPT/Codex, egenkontroll.

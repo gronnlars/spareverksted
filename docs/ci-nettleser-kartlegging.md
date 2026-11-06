@@ -161,3 +161,46 @@ Hele tests/rapport-utskrift-browser.cjs er gjennomgått. Hver motor leser dist, 
 Chromium og Firefox erstattes med ett par på samme plass, med eksisterende hjelper. WebKit kjører fortsatt etter paret. Alle testkrav bevares: tre rapportutvalg, gjentatt og ignorert utskrift, feil i print-kallet, tittel, synlig fokus, uendret forhåndsvisning og utskriftskopi, menyutskrift, asynkron retur, retur uten afterprint og PDF-struktur i Chromium. Simulerte hendelser er ikke fysisk iPhone/Safari eller en full PDF-tilgjengelighetsrevisjon. Maksimalt to testprosesser kjører samtidig.
 
 Lokalt består 18 orkestreringstilfeller i tre unittest-metoder: fire tillatte testfiler ganger fire utfall, manglende node og avvist ukjent test. Prosessprøvene bruker node-erstatning, ikke ekte nettlesere. YAML-paritet bekrefter uendret workflow når bare paret normaliseres til de to opprinnelige stegene. Syntaks, sikkerhet, versjoner, gammel-kode-vern og diff består. Ingen produksjonsfil eller nettleserforventning endres. GitHub må bekrefte begge motorers logg og sluttkode 0 samt etterfølgende WebKit før Lars merger. Undersøk eventuell ressurs- eller tidsfølsomhet uten omkjøring eller svakere forventninger. Ingen bestemt tidsgevinst loves. ChatGPT/Codex, egenkontroll.
+
+
+## Kontrollpunkt etter fire testpar, 6. november 2026
+
+Arbeidsgrunnlag main 61a9988 etter #242. Kjøring [42272498115](https://github.com/gronnlars/spareverksted/actions/runs/42272498115) fullførte checks, browser og deploy med success. Dette kontrollpunktet endrer bare dokumentasjon. Ingen flere tester grupperes før neste undersøkelse.
+
+### Faktisk tidsbruk
+
+Tidene er differansen mellom GitHubs start- og sluttstempler i sekunder. Hver rad gjelder én main-kjøring, med sekundoppløsning. Jobbtid er ikke hele workflowens veggklokketid.
+
+| Main etter | Kjøring | checks | browser | deploy |
+| --- | --- | ---: | ---: | ---: |
+| #240 | [42242757238](https://github.com/gronnlars/spareverksted/actions/runs/42242757238) | 18 | 676 | 117 |
+| #241 | [42255716544](https://github.com/gronnlars/spareverksted/actions/runs/42255716544) | 28 | 659 | 54 |
+| #242 | [42272498115](https://github.com/gronnlars/spareverksted/actions/runs/42272498115) | 24 | 733 | 56 |
+
+Feltparet tok 13 sekunder i begge de to siste kjøringene. Utskriftsparet tok 11 sekunder etter #242, mot tidligere 6 + 8 sekunder for de to sekvensielle motorene. Samtidig økte browser-jobben med 74 sekunder. Enkelte par viser dermed kortere stegtid, men disse kjøringene dokumenterer ikke at hele CI er blitt raskere. Ingen prosentvis totalgevinst beregnes fra ulike commits og enkeltkjøringer.
+
+Sammenligning av steg med identisk navn i de to siste kjøringene viser økning flere steder som ikke ble endret i #242:
+
+| Uendret steg | Etter #241 | Etter #242 | Endring |
+| --- | ---: | ---: | ---: |
+| HTML report: chromium and firefox | 19 | 24 | +5 |
+| svarmal, Firefox | 19 | 23 | +4 |
+| HTML-rapport, WebKit | 14 | 17 | +3 |
+| svarmal, WebKit | 17 | 20 | +3 |
+| resultatlinje, WebKit | 22 | 25 | +3 |
+| personvern, WebKit | 9 | 12 | +3 |
+
+Dette viser at forskjellen er fordelt over flere steg. Dataene avgjør ikke om årsaken er runner-belastning, oppstart, testenes venting eller noe annet. Ingen CPU-/minneprofil er samlet inn. Testparene kjører etter hverandre, ikke samtidig med senere steg. Vi skal hverken kalle forskjellen en dokumentert regresjon fra utskriftsparet eller forklare den bort som tilfeldig uten videre undersøkelse.
+
+### Hva undersøkes nå, og hva venter
+
+| Rekkefølge | Undersøkelse | Ferdigkriterium før kodeendring |
+| --- | --- | --- |
+| 1 | Les de tregeste gjenværende testene og skill fast venting fra beregning, sideoppstart og gjentatte brukerreiser. Start med resultatlinje/WebKit og de brede tilgjengelighets- og tematestene. | Navngitte kontrollkrav, avhengigheter og mulig dobbeltarbeid dokumenteres. Ingen forventning fjernes bare fordi to tester bruker samme side. |
+| 2 | Vurder om måling inne i én konkret test vil avklare flaskehalsen bedre enn flere nye par. | Små målepunkter med klart spørsmål, uten nye biblioteker, nettinnhenting eller endret brukeradferd. |
+| 3 | Bruk kommende ordinære kjøringer til å sammenligne samme testgrupper. Hvis en årsak må isoleres, vurder en kontrollert sammenligning med samme commit og miljø. | Skill stegtid, jobbtid og total ventetid. Ingen ekstra fullkjøringer eller automatisk overvåking startes bare for å fylle en tabell. |
+| 4 | Vurder neste optimalisering først når undersøkelsen gir et konkret funn. | Bevar nettlesermotorer, logger, kontrollkrav, personvernbevis og publiseringssperrer. Dokumenter både gevinst og kostnad. |
+
+Vedlikehold av kilder og språk beholder eksisterende filtre og tidsplaner. Rene dokumentasjons-PR-er bruker omfangsregelen fra #233. Main beholder full nettleserrunde før deploy. De 33 åpne PR-ene er inventert som liste i denne økten, men innholdet er ikke gjennomgått eller godkjent. Gamle PR-er skal vurderes mot fersk main enkeltvis. Antallet alene dokumenterer ingen årsak til utilgjengelig arbeidsmiljø. Ingen av dem lukkes eller merges i dette kontrollpunktet.
+
+Kontroll: målegrunnlag hentet fra GitHubs jobs/steps for kjøringene over. Diff begrenses til dette dokumentet og BESLUTNINGER.md. Ingen ny lokal nettlesertest er relevant for ren loggføring. Egenkontroll av tall, lenker og diff. Lars godkjenner sammenslåing. ChatGPT/Codex, egenkontroll.
