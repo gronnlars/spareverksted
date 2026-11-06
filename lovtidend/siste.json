@@ -44,9 +44,9 @@
    "tittel": "Forskrift om endring i forskrift til utfylling og gjennomføring mv. av skatteloven av 26. mars 1999 nr. 14"
   }
  ],
- "hentet": "2026-11-05T06:16:09+00:00",
+ "hentet": "2026-11-06T06:16:22+00:00",
  "pakke_endret": {
-  "lovtidend-avd1-2026.tar.bz2": "2026-11-05T02:30:00Z"
+  "lovtidend-avd1-2026.tar.bz2": "2026-11-06T02:30:00Z"
  },
  "sett": {
   "lti/2026/nl-20260123-001.xml": false,
@@ -1183,6 +1183,7 @@
   "lti/2026/sf-20261019-2097.xml": false,
   "lti/2026/sf-20261019-2098.xml": false,
   "lti/2026/sf-20261019-2106.xml": false,
+  "lti/2026/sf-20261019-2271.xml": false,
   "lti/2026/sf-20261020-2107.xml": false,
   "lti/2026/sf-20261021-2175.xml": false,
   "lti/2026/sf-20261022-2113.xml": false,
@@ -1250,6 +1251,7 @@
   "lti/2026/sf-20261103-2259.xml": false,
   "lti/2026/sf-20261103-2260.xml": false,
   "lti/2026/sf-20261103-2261.xml": false,
-  "lti/2026/sf-20261103-2262.xml": false
+  "lti/2026/sf-20261103-2262.xml": false,
+  "lti/2026/sf-20261105-2272.xml": false
  }
 }
