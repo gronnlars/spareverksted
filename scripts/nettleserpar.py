@@ -14,16 +14,18 @@ TESTS = {
     'tests/planer-browser.cjs': 'Saved plans',
     'tests/felt-browser.cjs': 'Number fields',
     'tests/rapport-utskrift-browser.cjs': 'Report printing',
+    'tests/resultatlinje-browser.cjs': 'Result bar',
 }
 ENGINES = ('chromium', 'firefox')
 
 
 def run_pair(test):
     label = TESTS[test]
+    engines = ('chromium', 'webkit') if test == 'tests/resultatlinje-browser.cjs' else ENGINES
     with tempfile.TemporaryDirectory(prefix='spare-browser-pair-') as directory:
         logs, processes, statuses = {}, {}, {}
         try:
-            for engine in ENGINES:
+            for engine in engines:
                 logs[engine] = Path(directory, engine + '.log').open('wb')
                 try:
                     processes[engine] = subprocess.Popen(
@@ -46,7 +48,7 @@ def run_pair(test):
                         process.wait()
             for log in logs.values():
                 log.close()
-        for engine in ENGINES:
+        for engine in engines:
             print(f'::group::{label}: {engine}', flush=True)
             with Path(directory, engine + '.log').open('rb') as log:
                 # Ingen avkorting eller sammenblanding av motorenes feilutskrift.
@@ -54,8 +56,8 @@ def run_pair(test):
                 sys.stdout.buffer.flush()
             print('\n::endgroup::', flush=True)
         print(f'{label} exit codes: ' + ' '.join(
-            f'{engine}={statuses[engine]}' for engine in ENGINES), flush=True)
-        return 0 if all(statuses[engine] == 0 for engine in ENGINES) else 1
+            f'{engine}={statuses[engine]}' for engine in engines), flush=True)
+        return 0 if all(statuses[engine] == 0 for engine in engines) else 1
 
 
 if __name__ == '__main__':

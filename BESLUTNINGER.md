@@ -1558,3 +1558,12 @@ Neste steg er derfor et dokumentert kontrollpunkt og undersøkelse av gjenværen
 Lars ber om videre arbeid etter kontrollpunktet i #243. Resultatlinje-, a11y- og tematestene er gjennomgått. Resultatlinjetesten ber om 12 580 ms faste pauser per motor, men lasting og handlinger er ikke målt separat. Tema- og tilgjengelighetstestene har ulike kontrollkrav og skal ikke slås sammen bare fordi de besøker samme side.
 
 Velg innebygd console.time/timeEnd rundt eksisterende deler av resultatlinjetesten. Alternativene med å kutte pauser, fjerne dekning eller parallellisere mer utsettes til målegrunnlaget er bedre. Ingen produksjonsfil, workflow, ventetid eller forventning endres. Syntaks, paritet og kontrollert oppstartsfeil prøves lokalt. Ekte nettlesere må bekrefte måleutskrift og bevarte tester i GitHub før Lars merger. Målingen gir ingen ytelsesforbedring i seg selv. Videre undersøkelse og begrensninger står i docs/ci-nettleser-kartlegging.md. ChatGPT/Codex, egenkontroll.
+
+
+## Behold resultatlinjens pauser og prøv to motorer samtidig, 7. november 2026
+
+Lars ber om én avgrenset videreføring etter grønn #244. Faktiske logger fra main-kjøring 42310693153 viser 15,774 sekunder i Chromium og 22,776 i WebKit. Grønt felt tar mest tid, men pauser der støtter også fraværsprøver etter gjentatt rulling. Å kutte dem uten et bedre synkroniseringsgrunnlag velges bort.
+
+Hele testfilen og produksjonens synlighetsoppdatering er gjennomgått. Egne serverporter, nettlesere og kontekster, bare lesing av dist og ingen delte filskrivinger gjør et avgrenset Chromium/WebKit-par egnet for prøving. Bruk eksisterende hjelper med fast motorvalg bare for resultatlinje. De fire gamle parene beholder Chromium/Firefox. Maksimalt to testprosesser. Alle pauser, forventninger og faseutskrifter beholdes. Ingen produksjonsfil endres.
+
+23 lokale orkestreringstilfeller og YAML-paritet består. Ekte motorer må prøves i GitHub før Lars merger. Ingen bestemt tidsgevinst loves. Revurder ved ressursfeil eller ustabilitet uten å svekke testkravene. Måling, avhengigheter og ferdigkriterier står i docs/ci-nettleser-kartlegging.md. ChatGPT/Codex, egenkontroll.

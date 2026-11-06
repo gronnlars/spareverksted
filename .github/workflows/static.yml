@@ -334,12 +334,9 @@ jobs:
       - name: "tests/last-ned-browser.cjs (webkit)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=webkit node tests/last-ned-browser.cjs
-      - name: "tests/resultatlinje-browser.cjs (chromium)"
+      - name: "Result bar: chromium and webkit"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: node tests/resultatlinje-browser.cjs
-      - name: "tests/resultatlinje-browser.cjs (webkit)"
-        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: SPARE_ENGINE=webkit node tests/resultatlinje-browser.cjs
+        run: python3 scripts/nettleserpar.py tests/resultatlinje-browser.cjs
       - name: "tests/eksport-innhold-browser.cjs (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tests/eksport-innhold-browser.cjs

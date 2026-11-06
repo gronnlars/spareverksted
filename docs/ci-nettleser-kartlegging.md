@@ -229,3 +229,30 @@ Ved feil beholdes opprinnelig feilutgang. Fullført del har tidslinje, mens den 
 Før neste endring: les målepunktene fra ordinær PR-/main-kjøring for begge eksisterende motorer. Sammenhold dem med planlagt venting per del. Undersøk grønt-felt-delen først hvis den faktisk dominerer. Eventuell erstatning av fast pause må vente på en relevant tilstand uten å gjøre en fraværs- eller fokusprøve til en tilfeldig øyeblikksmåling. Ikke fjern lån, zoom, berøring, velkomst eller rapportprøver for å spare tid. Tema og a11y endres først ved et eget konkret funn.
 
 Lokalt: JavaScript-syntaks og sikkerhets-/versjons-/gammel-kode-/diff-kontroller består. Maskinell paritet fjerner bare målekoden og gjenoppretter den opprinnelige testfilen byte for byte. En kontrollert feil ved nettleseroppstart prøver at opprydding/total logges og at prosessen fortsatt avslutter med feil. Ingen ekte lokal nettleserkjøring. GitHub må bekrefte uendrede krav og faktisk måleutskrift før Lars merger. Ingen kortere kjøretid påstås fra dette målegrepet. ChatGPT/Codex, egenkontroll.
+
+
+## Målt resultatlinje og avgrenset motorpar, 7. november 2026
+
+Arbeidsgrunnlag main 5edeebd etter #244. Kjøring [42310693153](https://github.com/gronnlars/spareverksted/actions/runs/42310693153) bestod checks, browser og deploy. Browser tok 660 sekunder. Tidslinjene er lest fra browser-jobb 128211238997, ikke beregnet fra stegnavn.
+
+| Del | Chromium, sekunder | WebKit, sekunder |
+| --- | ---: | ---: |
+| Oppstart | 0,058 | 0,072 |
+| Mobil og zoom | 3,218 | 4,576 |
+| Sikkerhetsfelt | 1,504 | 2,465 |
+| Lavt vindu | 1,484 | 2,444 |
+| Grønt felt | 7,841 | 10,517 |
+| Velkomst | 1,060 | 1,568 |
+| Rapporttabell | 0,588 | 1,065 |
+| Opprydding | 0,017 | 0,064 |
+| Total | 15,774 | 22,776 |
+
+Grønt-felt-delen er størst i begge motorer. 6,72 sekunder av denne delen er planlagte pauser. Det sier ikke at pausene kan fjernes uten å endre prøven. Testen undersøker både synlighet og fravær etter gjentatt rulling, med fokus og forsinkede nettleserhendelser. En umiddelbar fraværsprøve kan gi falskt grønt. Derfor beholdes alle pauser og forventninger i dette steget.
+
+Etter gjennomgang av hele testfilen og layout.js prøves i stedet Chromium og WebKit som ett par. Hver prosess har egen server fra listen(0), egen nettleser og egne kontekster. Kildekode og CSS leses, inkludert motorens lokale simulering av sikkerhetsfelt. Ingen felles filer skrives. Kontekster/sider lukkes gjennom hele prøven. De eksisterende testparene kjører etter hverandre, så dette gir maksimalt to samtidige testprosesser. Ingen ny motor eller større matrise.
+
+Hjelperen har ett eksplisitt unntak fra Chromium/Firefox: bare resultatlinje-browser bruker Chromium/WebKit. De fire tidligere parene beholder sine motorer. Tillatelseslisten utvides med bare denne testen. Begge prosesser ventes ferdig, hver motor beholder full logg og egen sluttkode, og enhver feil gir rødt steg. Tidsmålingene fra #244 beholdes uendret. Samme kommandolinje er grunnlag for begge motorer, og ingen ekstra miljøvariabler trengs.
+
+Lokalt består 23 orkestreringstilfeller i tre unittest-metoder: fem testfiler ganger fire utfall, manglende node for begge motorkombinasjoner og avvist ukjent testfil. Barriere i node-erstatningen krever begge avtalte motorer før fullføring og avviser annen motor. YAML-paritet bekrefter at bare de to resultatlinjestegene er erstattet. Sikkerhet, versjoner, gammel-kode-vern og diff består. Produksjon og resultatlinjetesten er uendret. Dette er prosessprøver, ikke ekte nettlesere.
+
+GitHub må bekrefte begge motorers komplette faseutskrift, sluttrapport og sluttkode 0 før Lars merger. Sammenlign parets veggklokketid med tidligere 38,550 sekunder samlet målt testtid, med forbehold om ulike kjøringer og ressursbruk. Tidsmålingene inne i prosessene kan øke under samtidighet. Ingen bestemt gevinst eller full regresjonsfrihet påstås fra enkeltkjøringen. Ved ressursfeil eller ustabilitet revurderes bare grupperingen, uten å svekke prøven. ChatGPT/Codex, egenkontroll.
