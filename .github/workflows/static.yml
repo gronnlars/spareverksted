@@ -367,12 +367,9 @@ jobs:
       - name: "tests/sammenligningstabell-browser.cjs (webkit)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=webkit node tests/sammenligningstabell-browser.cjs
-      - name: "tests/rapport-utskrift-browser.cjs (chromium)"
+      - name: "Report printing: chromium and firefox"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: node tests/rapport-utskrift-browser.cjs
-      - name: "tests/rapport-utskrift-browser.cjs (firefox)"
-        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: SPARE_ENGINE=firefox node tests/rapport-utskrift-browser.cjs
+        run: python3 scripts/nettleserpar.py tests/rapport-utskrift-browser.cjs
       - name: "tests/rapport-utskrift-browser.cjs (webkit)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=webkit node tests/rapport-utskrift-browser.cjs

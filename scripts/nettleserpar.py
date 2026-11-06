@@ -13,6 +13,7 @@ TESTS = {
     'tests/rapport-html-browser.cjs': 'HTML report',
     'tests/planer-browser.cjs': 'Saved plans',
     'tests/felt-browser.cjs': 'Number fields',
+    'tests/rapport-utskrift-browser.cjs': 'Report printing',
 }
 ENGINES = ('chromium', 'firefox')
 

@@ -1537,3 +1537,10 @@ Begge motorer og alle eksisterende forventninger beholdes. Feil i én motor skju
 Lars ber om neste steg etter grønn #240. Hele felt-browser er gjennomgått: egne porter og nettleserkontekster, kun lesing av dist og ingen felles filskriving. Chromium og Firefox kjøres med eksisterende nettleserpar-hjelper på det tidligere Chromium-stegets plass. Bare Firefox flyttes. WebKit beholder eget steg. Ingen produksjonsfiler eller testforventninger endres.
 
 Valgt som avgrenset videreføring av de to beståtte testparene. Alternativet er fortsatt sekvensiell kjøring. Grensen på to samtidige testprosesser beholdes. Ulempen er høyere CPU-belastning, særlig relevant for testens faste ventetider. 14 lokale orkestreringstilfeller og YAML-paritet består, men ekte motorer må prøves i GitHub før Lars merger. Ingen bestemt gevinst loves. Revurder grupperingen ved ustabilitet eller ressursfeil, uten å svekke testkravene. Se docs/ci-nettleser-kartlegging.md. ChatGPT/Codex, egenkontroll.
+
+
+## Prøv to samtidige utskriftskontroller, 6. november 2026
+
+Lars ber om neste steg etter grønn #241. Hele rapport-utskrift-browser er gjennomgått: egne serverporter og nettleserkontekster, isolert lagring og PDF i minnet, ingen delte filskrivinger. Chromium og Firefox grupperes med eksisterende hjelper på samme plass. WebKit følger som før. Alle rapport-, fokus-, retur- og PDF-forventninger beholdes. Ingen produksjonsfiler endres.
+
+Valgt som avgrenset videreføring framfor full parallellisering. Alternativet er fortsatt sekvensiell kjøring. Grensen er to samtidige testprosesser. 18 lokale orkestreringstilfeller og YAML-paritet består. Ekte nettlesere må prøves i GitHub før Lars merger. Revurder ved ressursfeil eller ustabilitet uten å svekke testkrav. Ingen bestemt tidsgevinst loves. Detaljer og testbegrensninger i docs/ci-nettleser-kartlegging.md. ChatGPT/Codex, egenkontroll.
