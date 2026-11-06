@@ -265,6 +265,9 @@ jobs:
           node tests/navigation-browser.cjs
           node tests/testfunn-browser.cjs
           node tests/rapportvalg-browser.cjs
+      - name: "tests/finpuss-browser.cjs (chromium)"
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/finpuss-browser.cjs
       - name: "tests/roundtrip-browser.cjs (chromium)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node tests/roundtrip-browser.cjs

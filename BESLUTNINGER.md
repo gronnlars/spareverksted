@@ -1502,3 +1502,10 @@ En ukentlig full språkmåling mandag 06.17 UTC og manuell start bevarer bred op
 Lars godkjenner å gå videre med den kartlagte dobbeltkjøringen. De separate publiseringskontrollene for Chromium, Firefox og WebKit beholdes. Svarmal-testen kan gjenbruke et vellykket resultat bare når kjøring, forsøksnummer, faktisk commit og motor stemmer. Manglende markør, lokal kjøring eller avvik utløser kontrollen som før. Ingen testforventninger eller produksjonsfiler endres.
 
 Alternativer: beholde dobbel kjøring, fjerne kontrollen fra isolert svarmal-test, eller gjenbruke vilkårlig resultat fra tidligere kjøring. De to sistnevnte forkastes fordi isolert bruk og ferskt publiseringsbevis må beholdes. Valgt avgrensning og kontroll står i docs/ci-nettleser-kartlegging.md. Lars merger etter grønne kontroller. Revurder ved endret checkout, motoroppsett eller nye avhengigheter mellom stegene. Målt tidsgevinst etter endringen gjenstår.
+
+
+## Koble eksisterende finpusstest til CI, 6. november 2026
+
+Lars ber om neste steg i grunnmursarbeidet. Etter gjennomgang av main e0f499a legges den eksisterende finpuss-browser-testen til som ett eget Chromium-steg. Valgt fordi den dekker månedsavrunding, lagring, store tall, sammenligning og bevart PDF-kopi og hittil ikke kjøres automatisk. Alternativet å la den stå som lokal prøve gir ikke løpende vern. Bred parallellisering og endring i testutvalg utsettes. Alle gamle steg, vilkår, artifact-kontroller, rettigheter og deploy-avhengigheter beholdes. Ingen testforventning eller produksjonsfil endres.
+
+Ulempe: noe lengre full nettleserrunde. Lokal kjøring er blokkert før teststart av manglende nettleser og mislykket nedlasting. GitHub må prøve eksisterende test før Lars merger. Revurder ved dokumentert overlapp, foreldede krav eller ustabilitet, uten å redusere relevante brukerkrav. Detaljer i docs/ci-nettleser-kartlegging.md. ChatGPT/Codex, egenkontroll.
