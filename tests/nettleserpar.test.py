@@ -31,7 +31,7 @@ sys.exit(int(os.environ.get('FAIL_' + engine, '0')))
 
 class BrowserPairTests(unittest.TestCase):
     def test_engines_complete_and_errors_are_preserved(self):
-        for test in ['tests/rapport-html-browser.cjs', 'tests/planer-browser.cjs']:
+        for test in ['tests/rapport-html-browser.cjs', 'tests/planer-browser.cjs', 'tests/felt-browser.cjs']:
             for failure in ['none', 'chromium', 'firefox', 'both']:
                 with self.subTest(test=test, failure=failure), tempfile.TemporaryDirectory() as directory:
                     root = Path(directory)
