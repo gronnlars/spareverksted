@@ -1523,3 +1523,10 @@ Valgt som en begrenset prøve. Alternativene er fortsatt sekvensiell kjøring, a
 Lars ber om neste avgrensede steg etter grønn #238. Hele planer-browser er gjennomgått: egne serverporter, nettleserprosesser og profiler; ingen delte filskrivinger. Chromium og Firefox kan derfor prøves samtidig med samme logg- og feilhåndtering som de to HTML-kontrollene. Gruppene kjører etter hverandre, og maksimalt to testprosesser kjører samtidig. WebKit og alle andre steg bevares.
 
 Valgt framfor en stor jobbmatrise eller full parallellisering. Fordel: mulig kortere ventetid uten færre tester. Ulempe: mer samtidig CPU/minnebruk og to motorer i ett navngitt trinn, med separate logggrupper og sluttkoder. Fire lokale orkestreringstilfeller og YAML-paritet består. Ekte motorer og tidsbruk må bekreftes i GitHub. Ingen produksjonskode, forventninger eller publiseringskrav endres. Avhengighetskart og kontrollstatus står i docs/ci-nettleser-kartlegging.md. Revurder ved ressursfeil, manglende logger eller ingen praktisk gevinst. ChatGPT/Codex, egenkontroll.
+
+
+## Samle orkestreringen for gjennomgåtte nettleserpar, 6. november 2026
+
+Lars ber om neste steg etter grønn #239. De to like Bash-blokkene erstattes med én Python-hjelper med eksplisitt tillatelsesliste for rapport-html-browser og planer-browser. Valgt for å holde logging og feilbehandling samlet før eventuell senere utvidelse. Alternativet er fortsatt duplisering. En generell kjøreplattform eller flere samtidige motorer velges bort i denne runden.
+
+Begge motorer og alle eksisterende forventninger beholdes. Feil i én motor skjuler ikke den andres logg og gir fortsatt feilet steg. Ti lokale orkestreringstilfeller består, og hjelpertesten kjøres i checks. Ingen produksjonskode endres. Ekte nettlesere prøves i GitHub før Lars merger. Detaljer og begrensninger står i docs/ci-nettleser-kartlegging.md. Revurder ved manglende logger, endrede ressursavhengigheter eller behov for andre motorpar. ChatGPT/Codex, egenkontroll.
