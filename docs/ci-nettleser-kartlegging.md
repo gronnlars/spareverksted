@@ -80,3 +80,14 @@ Neste forslag bygger på main 1dcf7c8. De tre separate published-answers-browser
 Kontrollert lokalt: 14 tilfeller med simulerte prosessutfall, inkludert tre motorer, ny kjøring, nytt forsøk, annen commit, feil i git, lokal kjøring og feil/avbrudd i publiseringskontrollen. Eksisterende lokal publiseringsfiltertest og JavaScript-syntaks består. YAML er sammenlignet med main: alle gamle kommandoer, kjørevilkår, rettigheter og hele deploy er bevart. Bare tre steg-ID-er, tre avgrensede miljømarkører og den nye raske kontrolltesten er lagt til. Ingen dist-endringer. Egenkontroll, ikke uavhengig gjennomgang.
 
 Nettleserorkestreringen må prøves i GitHub: publiseringsstegene skal bestå for hver motor, og svarmal-stegene skal logge at kontrollen gjenbrukes. Full lokal nettleserrunde er ikke kjørt. Ingen konkret tidsgevinst er målt etter endringen, og ingen testkrav er fjernet. Ved uventet markør eller HEAD kjører kontrollen ekstra framfor å hoppe over den.
+
+
+## Neste steg: automatisk finpusskontroll, 6. november 2026
+
+Arbeidsgrunnlag main e0f499a etter #236. Den eksisterende `tests/finpuss-browser.cjs` er ikke kalt fra noen workflow. #228 koblet inn testfunn og rapportvalg, men ikke finpuss. Dette steget legger bare til ett eget Chromium-steg, med samme kjørevilkår som de øvrige nettlesertestene. Alle eksisterende kommandoer og testforventninger bevares. Ingen produksjonsfiler endres.
+
+Testen dekker 256 til 1920 CSS-piksler, store tall på tre nivåer, seks månedsavrundinger, to faste kalenderdatoer, navneforslag ved lagring, hopp med bevart tilstand, sammenligning/eksport, uendret PDF-kopi ved endret forhåndsvisningsbredde og skjulte verdier ved nivåbytte. Dette utfyller de smalere testene, men er ikke en full tilgjengelighetskontroll eller faktisk nettleserzoom. Den låneavhengige linjeforing-testen kobles ikke inn i denne runden.
+
+Lokal gjennomgang: lest hele testen og sammenholdt navnereglene med den vedtatte testplanen. YAML er sammenlignet med main: eneste funksjonelle endring er det nye nettlesersteget. Testfilen er uendret. Syntaks, sikkerhet, versjoner, gammel-kode-vern og diff kontrolleres. Lokal nettleserkjøring er forsøkt, men stoppet før testen startet fordi nettleser manglet. Nedlasting av nettleseren ga en ugyldig ZIP-fil. Ingen bestått lokal nettlesertest påstås. GitHub Actions med prosjektets Playwright 1.56.0-bilde må bekrefte at testen består før sammenslåing.
+
+Dette øker dekningen og kan øke kjøretiden. Ingen tidsbesparelse loves. Ved feil undersøkes om årsaken er testoppsett, foreldet forventning eller produktfeil. Testforventninger skal ikke svekkes for å få grønt, og eventuell produktretting er et eget avgrenset arbeid. Main beholder full nettleserkjøring før deploy. Rene dokumentasjons-PR-er beholder dagens avgrensning. ChatGPT/Codex, egenkontroll.
