@@ -204,3 +204,28 @@ Dette viser at forskjellen er fordelt over flere steg. Dataene avgjør ikke om �
 Vedlikehold av kilder og språk beholder eksisterende filtre og tidsplaner. Rene dokumentasjons-PR-er bruker omfangsregelen fra #233. Main beholder full nettleserrunde før deploy. De 33 åpne PR-ene er inventert som liste i denne økten, men innholdet er ikke gjennomgått eller godkjent. Gamle PR-er skal vurderes mot fersk main enkeltvis. Antallet alene dokumenterer ingen årsak til utilgjengelig arbeidsmiljø. Ingen av dem lukkes eller merges i dette kontrollpunktet.
 
 Kontroll: målegrunnlag hentet fra GitHubs jobs/steps for kjøringene over. Diff begrenses til dette dokumentet og BESLUTNINGER.md. Ingen ny lokal nettlesertest er relevant for ren loggføring. Egenkontroll av tall, lenker og diff. Lars godkjenner sammenslåing. ChatGPT/Codex, egenkontroll.
+
+
+## Gjennomgang og målepunkter i resultatlinjetesten, 6. november 2026
+
+Arbeidsgrunnlag main f79352c etter #243. Hele resultatlinje-browser, a11y-browser og theme-browser er lest. Neste kodeendring gjelder bare loggføring av tid i resultatlinje-browser. Ingen ny parallellisering eller endring i venting, motorer, skjermstørrelser, forventninger eller workflow.
+
+### Funn fra koden, ikke en kjøretidsprofil
+
+| Test | Konkret omfang og planlagt venting | Vurdering |
+| --- | --- | --- |
+| resultatlinje | 16 sidebesøk. Faste pauser summerer til 12 580 ms per fullført motor. | Måles først fordi deler av tidsbruken er eksplisitt venting, og WebKit var blant de tregere stegene. |
+| a11y | 3 temaer × 3 bredder × 7 sider = 63 grunnmålinger. 42 av disse gjør inntil 40 Tab-trykk hver. I tillegg kommer 640 px, korte skjermer og egen tastaturreise. Grunnmålingene alene ber om 9450 ms faste pauser. | Bredde og fokusdekning er reelle kontrollkrav. Samme sidesti er ikke bevis på dobbeltarbeid. |
+| theme | 5 bredder × 3 temaer med temavelger, kontrast, fokus og lukking. 5790 ms faste pauser i breddeløkken og de tre resultatkontrollene. Dessuten lagring, separate faner, blokkert lagring, utskrift og toppfelt på seks sider. | Tester selve temabytteflyten og tilstander som a11y-grunnmålingen ikke erstatter. |
+
+Resultatlinjens planlagte pauser er fordelt slik: mobil/zoom 2580 ms, simulert sikkerhetsfelt 1040 ms, lavt vindu 1040 ms, gjentatt opp/ned over grønt felt på to kalkulatorer 6720 ms, velkomst 800 ms og rapporttabell 400 ms. Summen er 12 580 ms. Disse tallene kommer fra løkkene og waitForTimeout, ikke fra observerte millisekunder. Nettleserhandlinger, lasting, betinget venting og opprydding kommer i tillegg.
+
+### Hva målingen skal svare på
+
+console.time/timeEnd i Node logger nettleseroppstart, mobil/zoom, sikkerhetsfelt, lavt vindu, grønt felt, velkomst, rapporttabell og opprydding, med motor i hvert navn. En totalmåling inkluderer serveroppsett og fram til oppryddingskallet er utført. Den er ikke identisk med GitHub-stegets levetid, og server.close venter fortsatt ikke eksplisitt på alle forbindelser. Ingen brukerdata eller nye filer logges. Ingen nye avhengigheter.
+
+Ved feil beholdes opprinnelig feilutgang. Fullført del har tidslinje, mens den avbrutte delens timeEnd ikke nås. Total og opprydding logges også ved feil inne i try-blokken, men er da ikke en vellykket fullmåling. Feil før try-blokken kan avslutte uten totalmåling. Ingen tidsgrense eller hastighetskrav legges til.
+
+Før neste endring: les målepunktene fra ordinær PR-/main-kjøring for begge eksisterende motorer. Sammenhold dem med planlagt venting per del. Undersøk grønt-felt-delen først hvis den faktisk dominerer. Eventuell erstatning av fast pause må vente på en relevant tilstand uten å gjøre en fraværs- eller fokusprøve til en tilfeldig øyeblikksmåling. Ikke fjern lån, zoom, berøring, velkomst eller rapportprøver for å spare tid. Tema og a11y endres først ved et eget konkret funn.
+
+Lokalt: JavaScript-syntaks og sikkerhets-/versjons-/gammel-kode-/diff-kontroller består. Maskinell paritet fjerner bare målekoden og gjenoppretter den opprinnelige testfilen byte for byte. En kontrollert feil ved nettleseroppstart prøver at opprydding/total logges og at prosessen fortsatt avslutter med feil. Ingen ekte lokal nettleserkjøring. GitHub må bekrefte uendrede krav og faktisk måleutskrift før Lars merger. Ingen kortere kjøretid påstås fra dette målegrepet. ChatGPT/Codex, egenkontroll.
