@@ -325,12 +325,27 @@ jobs:
       - name: "tests/forklaring-oppdateres-browser.cjs (webkit)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=webkit node tests/forklaring-oppdateres-browser.cjs
-      - name: "tests/planer-browser.cjs (chromium)"
+      - name: "Saved plans: chromium and firefox"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: node tests/planer-browser.cjs
-      - name: "tests/planer-browser.cjs (firefox)"
-        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: SPARE_ENGINE=firefox node tests/planer-browser.cjs
+        shell: bash
+        run: |
+          logs=$(mktemp -d "${RUNNER_TEMP:-/tmp}/spare-plan-checks.XXXXXX")
+          SPARE_ENGINE=chromium node tests/planer-browser.cjs > "$logs/chromium.log" 2>&1 &
+          chromium_pid=$!
+          SPARE_ENGINE=firefox node tests/planer-browser.cjs > "$logs/firefox.log" 2>&1 &
+          firefox_pid=$!
+          chromium_status=0
+          firefox_status=0
+          wait "$chromium_pid" || chromium_status=$?
+          wait "$firefox_pid" || firefox_status=$?
+          echo '::group::Saved plans: chromium'
+          cat "$logs/chromium.log"
+          echo '::endgroup::'
+          echo '::group::Saved plans: firefox'
+          cat "$logs/firefox.log"
+          echo '::endgroup::'
+          echo "Saved plans exit codes: chromium=$chromium_status firefox=$firefox_status"
+          test "$chromium_status" -eq 0 && test "$firefox_status" -eq 0
       - name: "tests/planer-browser.cjs (webkit)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: SPARE_ENGINE=webkit node tests/planer-browser.cjs
