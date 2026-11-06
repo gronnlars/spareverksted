@@ -139,18 +139,30 @@ jobs:
           distribution: temurin
           java-version: '21'
           java-package: jre
-      - name: "tests/rapport-html-browser.cjs (chromium)"
+      - name: "HTML report: chromium and firefox"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        shell: bash
         env:
           SPARE_HTML_VALIDATOR: node_modules/vnu-jar/build/dist/vnu.jar
           SPARE_HTML_OUTPUT_DIR: /tmp/spareverksted-ui-review/html
-        run: node tests/rapport-html-browser.cjs
-      - name: "tests/rapport-html-browser.cjs (firefox)"
-        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        env:
-          SPARE_HTML_VALIDATOR: node_modules/vnu-jar/build/dist/vnu.jar
-          SPARE_HTML_OUTPUT_DIR: /tmp/spareverksted-ui-review/html
-        run: SPARE_ENGINE=firefox node tests/rapport-html-browser.cjs
+        run: |
+          logs=$(mktemp -d "${RUNNER_TEMP:-/tmp}/spare-html-checks.XXXXXX")
+          SPARE_ENGINE=chromium node tests/rapport-html-browser.cjs > "$logs/chromium.log" 2>&1 &
+          chromium_pid=$!
+          SPARE_ENGINE=firefox node tests/rapport-html-browser.cjs > "$logs/firefox.log" 2>&1 &
+          firefox_pid=$!
+          chromium_status=0
+          firefox_status=0
+          wait "$chromium_pid" || chromium_status=$?
+          wait "$firefox_pid" || firefox_status=$?
+          echo '::group::HTML report: chromium'
+          cat "$logs/chromium.log"
+          echo '::endgroup::'
+          echo '::group::HTML report: firefox'
+          cat "$logs/firefox.log"
+          echo '::endgroup::'
+          echo "HTML report exit codes: chromium=$chromium_status firefox=$firefox_status"
+          test "$chromium_status" -eq 0 && test "$firefox_status" -eq 0
       - name: "tests/rapport-html-browser.cjs (webkit)"
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         env:

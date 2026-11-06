@@ -91,3 +91,29 @@ Testen dekker 256 til 1920 CSS-piksler, store tall på tre nivåer, seks måneds
 Lokal gjennomgang: lest hele testen og sammenholdt navnereglene med den vedtatte testplanen. YAML er sammenlignet med main: eneste funksjonelle endring er det nye nettlesersteget. Testfilen er uendret. Syntaks, sikkerhet, versjoner, gammel-kode-vern og diff kontrolleres. Lokal nettleserkjøring er forsøkt, men stoppet før testen startet fordi nettleser manglet. Nedlasting av nettleseren ga en ugyldig ZIP-fil. Ingen bestått lokal nettlesertest påstås. GitHub Actions med prosjektets Playwright 1.56.0-bilde må bekrefte at testen består før sammenslåing.
 
 Dette øker dekningen og kan øke kjøretiden. Ingen tidsbesparelse loves. Ved feil undersøkes om årsaken er testoppsett, foreldet forventning eller produktfeil. Testforventninger skal ikke svekkes for å få grønt, og eventuell produktretting er et eget avgrenset arbeid. Main beholder full nettleserkjøring før deploy. Rene dokumentasjons-PR-er beholder dagens avgrensning. ChatGPT/Codex, egenkontroll.
+
+
+## Første avgrensede parallellprøve: HTML-rapport, 6. november 2026
+
+Arbeidsgrunnlag main 7800067 etter #237. Finpusstesten bestod i PR-kjøring 42200961064 på fire sekunder. Main-kjøring 42204088590 fullførte også med success. Det er et bekreftet dekningssteg, ikke en tidsoptimalisering.
+
+Neste prøve gjelder bare Chromium og Firefox i `rapport-html-browser.cjs`. Samme test og samme Nu-validator kjøres i begge motorene. WebKit kjører fortsatt etter dem. Alle andre kontroller og publiseringskrav beholdes. Dette begrenser prøven til maksimalt to samtidige nettleserprosesser, hver med egen Java-validering på høyst 512 MiB. Faktisk samlet minne- og CPU-belastning må vurderes i GitHub før videre utvidelse.
+
+Gjennomgåtte avhengigheter i hele testfilen:
+
+| Ressurs | Isolasjon |
+| --- | --- |
+| Kildekode i dist | Bare lesing, ingen generering eller skriving |
+| Lokal HTTP-server | `listen(0)` velger egen ledig port per prosess |
+| Nedlastinger | Egen mappe fra `mkdtemp` per prosess, fjernes først av prosessen selv |
+| Nettleser og lagring | Egne prosesser og nettleserkontekster |
+| HTML-bevis | Filnavn har motorprefiks, som chromium-plan.html og firefox-plan.html |
+| Mobilbilde med fast filnavn | Skrives bare av Chromium |
+| Personvernrapport og publiseringsmarkør | Ingen av disse brukes av HTML-testen |
+| Nu-validator | Samme JAR leses, hver prosess mottar sin egen rapportfil |
+
+Begge kommandoer startes før noen av dem ventes på. Hver prosess skriver til egen logg i en unik midlertidig mappe. Begge ventes ferdig også ved testfeil. Loggene vises i navngitte grupper med eksplisitt sluttkode per motor. Samlet trinn feiler hvis én eller begge kontroller feiler. De eksisterende `!cancelled()`-vilkårene lar senere uavhengige tester fortsette ved vanlig testfeil, mens browser-jobben og deploy-sperren forblir røde. Ingen `continue-on-error`, automatisk omkjøring eller bortfiltrering av tester.
+
+Lokalt: fire simuleringer med den faktiske YAML-kommandoen og en midlertidig node-erstatning prøvde begge bestått, Chromium-feil, Firefox-feil og feil i begge. En barriere beviste at begge prosesser faktisk startet før den første fullførte. Alle tilfeller kontrollerte fullføring, begge logger og riktig samlet feilstatus. Disse simuleringene prøver orkestrering, ikke nettleserne. YAML-paritet bekrefter at bare de to gamle stegene er erstattet; WebKit, miljøvariabler, øvrige jobber, testkrav, rettigheter og deploy er identiske. Sikkerhet, versjoner, gammel-kode-vern og diff består. Ingen dist- eller testfiler endres.
+
+Full lokal nettleserrunde er ikke kjørt fordi forrige nedlastingsforsøk ga ugyldig ZIP. GitHub må bekrefte at begge motorer består samtidig, at begge logger og de ti HTML-filene finnes, og at WebKit deretter består med sine fem HTML-filer. Sammenlign det nye trinnets tid med tidligere sum for de samme to motorene. Ikke bruk færre synlige trinn som bevis på færre tester eller bedre ytelse. Ingen bestemt tidsgevinst loves. Reell samtidighetsfeil eller ressursmangel skal undersøkes før merge. Om nødvendig tilbakeføres bare grupperingen til de to opprinnelige stegene, uten å endre testene. Lars merger etter grønne kontroller. Ingen løpende full CI-overvåking. ChatGPT/Codex, egenkontroll.

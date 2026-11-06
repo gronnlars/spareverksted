@@ -1509,3 +1509,10 @@ Alternativer: beholde dobbel kjøring, fjerne kontrollen fra isolert svarmal-tes
 Lars ber om neste steg i grunnmursarbeidet. Etter gjennomgang av main e0f499a legges den eksisterende finpuss-browser-testen til som ett eget Chromium-steg. Valgt fordi den dekker månedsavrunding, lagring, store tall, sammenligning og bevart PDF-kopi og hittil ikke kjøres automatisk. Alternativet å la den stå som lokal prøve gir ikke løpende vern. Bred parallellisering og endring i testutvalg utsettes. Alle gamle steg, vilkår, artifact-kontroller, rettigheter og deploy-avhengigheter beholdes. Ingen testforventning eller produksjonsfil endres.
 
 Ulempe: noe lengre full nettleserrunde. Lokal kjøring er blokkert før teststart av manglende nettleser og mislykket nedlasting. GitHub må prøve eksisterende test før Lars merger. Revurder ved dokumentert overlapp, foreldede krav eller ustabilitet, uten å redusere relevante brukerkrav. Detaljer i docs/ci-nettleser-kartlegging.md. ChatGPT/Codex, egenkontroll.
+
+
+## Prøv to samtidige HTML-rapportkontroller, 6. november 2026
+
+Lars ber om neste steg i oppryddingen etter grønn #237. Basert på avhengighetsgjennomgang av rapport-html-browser kjøres bare Chromium og Firefox samtidig i samme eksisterende browser-jobb. Egne porter, midlertidige mapper, nettleserkontekster og motorprefiks på HTML-filene hindrer identifiserte filkollisjoner. WebKit og alle andre tester beholder rekkefølgen. Begge resultater og logger beholdes, og enhver feil sperrer publisering som før.
+
+Valgt som en begrenset prøve. Alternativene er fortsatt sekvensiell kjøring, alle tre rapportmotorer samtidig eller bred ny jobbmatrise. De to siste venter fordi ressursbruk og rapportinnsamling må prøves i mindre skala først. Ulempen er større samtidig CPU- og minnebruk. Dokumentert tidsgevinst gjenstår. Tilbakefør bare grupperingen ved samtidighetsfeil eller ressursmangel, uten å svekke forventningene. Ingen dist- eller testfiler endres. Fire lokale orkestreringstilfeller, YAML-paritet og avhengighetskart står i docs/ci-nettleser-kartlegging.md. GitHub må prøve ekte motorer før Lars merger. ChatGPT/Codex, egenkontroll.
