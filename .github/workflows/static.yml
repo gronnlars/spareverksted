@@ -430,7 +430,7 @@ jobs:
         run: python3 scripts/personvern-status.py /tmp/spareverksted-privacy
       - name: Privacy evidence
         if: ${{ !cancelled() && steps.privacy_report.outcome == 'success' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0, Node 24
         with:
           name: privacy-evidence
           path: /tmp/spareverksted-privacy
@@ -438,7 +438,7 @@ jobs:
           retention-days: 30
       - name: Verified privacy page
         if: ${{ !cancelled() && steps.privacy_report.outcome == 'success' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0, Node 24
         with:
           name: privacy-page
           path: dist/personvern.html
@@ -455,7 +455,7 @@ jobs:
         run: cmp dist/personvern.html "$PRIVACY_ROUNDTRIP/personvern.html"
       - name: UI review screenshots
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0, Node 24
         with:
           name: ui-review
           path: /tmp/spareverksted-ui-review
