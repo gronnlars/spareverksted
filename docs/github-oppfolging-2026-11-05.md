@@ -85,3 +85,32 @@ Alternativer: behold v4 og varselet, oppgrader Java-oppsettet alene, eller gjenn
 Testkommandoer, antall steg, jobber, rettigheter, vilkår og publiseringsavhengigheter beholdes. Dette fjerner et vedlikeholdsvarsel, men er ikke et tiltak som lover kortere kjøretid. Før testutvalg eller parallellisering endres, kartlegges avhengigheter og filbaner som kan kollidere.
 
 Kontrollform: ChatGPT/Codex, egenkontroll av YAML og diff mot fersk main. Ingen lokal full nettleserrunde for en Action-versjon som må prøves på GitHub. PR-kjøringen skal vise Java 21 og vellykket HTML-validering i checks og browser uten v4-varselet. Etter Lars sin merge må deploy vise det samme og fullføre. Publisering av denne endringen er ikke kontrollert på forhånd.
+
+
+## Trinnvis artifact-oppgradering til Node 24, 7. november 2026
+
+Arbeidsgrunnlag main 27b13e9 etter #245. Main-kjøring 42319736189 bestod checks, browser og deploy. Browser tok 612 sekunder. Resultatlinjeparet og WebKit-kontrollen av infosidene bestod. Dette er én kjøring, ikke et gjennomsnitt.
+
+Lars viste to varsler i den separate «pages build and deployment»-kjøringen. Kjøring 42319735178 bruker den genererte stien dynamic/pages/pages-build-deployment. Den er ikke definert i static.yml. Opplasting via upload-artifact@v4 varsler om Node 20 som er tvunget over på Node 24. ubuntu-latest varsler om flytting til Ubuntu 26.04. Begge er vedlikeholdsmeldinger i en bestått kjøring, ikke bevis på feil i kalkulatoren. Endringen under fjerner ikke disse meldingene fra GitHubs genererte workflow.
+
+Neste avgrensede PR oppdaterer bare de tre upload-artifact-stegene i static.yml til fast SHA b7c566a772e6b6bfb58ed0dc250532a479d7789f, kontrollert som både v6 og v6.0.0 den 7. november. Action-filen på denne SHA-en angir runs.using: node24. V6 krever runner 2.327.1 eller nyere. Vi bruker GitHub-hostede ubuntu-latest-runnere, og browser beholder Playwright/Noble-containeren. Faktisk kjøring må bekrefte Node 24-støtte også der.
+
+V7.0.2 er nyeste publiserte versjon ved kontrollen. V6 velges her for det avgrensede Node 24-bytte. V7 innfører også ESM og nye muligheter for direkte filopplasting. Dette er ikke en påstand om at v7 er inkompatibel eller usikker. Større dependency-/modulbytte vurderes separat. Andre workflows beholder sine upload-versjoner til denne runden er prøvd.
+
+Alle artifact-navn, filbaner, lagringstider, kjørevilkår og rettigheter beholdes. Personvernbevis, personvernside og UI-bilder er de tre opplastingene. Eksisterende download-artifact er fortsatt festet til v4.3.0 med sikkerhetsrettingen. Den skal ikke nedgraderes. Rundturen laster ned privacy-page og sammenligner byte for byte før publisering, og deploy laster ned samme navngitte artifact fra samme kjøring. Ingen endring i testutvalg, produksjonsfiler eller deploy-avhengigheter. Ingen bestemt tidsgevinst loves.
+
+Primærkilder lest i denne økten:
+
+- https://github.com/actions/upload-artifact/releases/tag/v6.0.0
+- https://api.github.com/repos/actions/upload-artifact/git/ref/tags/v6
+- https://api.github.com/repos/actions/upload-artifact/git/ref/tags/v6.0.0
+- https://github.com/actions/upload-artifact/blob/b7c566a772e6b6bfb58ed0dc250532a479d7789f/action.yml
+- https://github.com/actions/upload-artifact/blob/v6/README.md
+- https://github.com/actions/upload-artifact/releases/tag/v7.0.0
+- https://github.com/actions/upload-artifact/releases/tag/v7.0.2
+- https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+- https://github.com/actions/runner-images/issues/14748
+
+Lokalt: YAML-paritet viser nøyaktig tre endrede uses-felt og identisk øvrig workflow. Sikkerhet, versjoner, gammel-kode-vern og diff består. Ingen ny lokal full nettleserrunde for en Action som kjører i GitHub. Før Lars merger: PR må bestå alle kontroller, de tre opplastingene og personvern-rundturen. Etter merge må main bekrefte deploy-nedlasting og publisering. Manglende UI-bilder følger fortsatt eksisterende ignore-valg.
+
+Pages-oppsettet og valg av runner endres ikke. Før eventuell avvikling av Pages må domene/DNS, eventuelle lenker til github.io, reservebruk og hvilken publiseringsvei som faktisk betjener brukerne avklares. Ingen konklusjon om overflødig publisering trekkes bare fra at Bunny også kjører. ChatGPT/Codex, egenkontroll.

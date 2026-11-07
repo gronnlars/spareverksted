@@ -1574,3 +1574,10 @@ Hele testfilen og produksjonens synlighetsoppdatering er gjennomgått. Egne serv
 Lars melder feil i #245. Kjøring 42312709348 viser bestått resultatlinjepar, men WebKit feiler i umiddelbar open-kontroll etter navigering til en direkte overskriftslenke. Produksjonen åpner via hashchange, som kan behandles etter page.goto. Velg eksplisitt venting på åpent kapittel med 3000 ms grense, og behold opprinnelig kontroll med bedre feilbeskrivelse.
 
 Alternativene med fast pause, blind omkjøring eller å fjerne kontrollen velges bort. Ingen produksjon eller publiseringssperre endres. Simulert hendelseslevering prøver faktisk infosider.js lokalt, men ekte nettlesere må bekrefte rettingen i samme PR. Ikke merge rød kjøring. Nøyaktig årsak i den observerte WebKit-kjøringen er ikke bevist av simuleringen. ChatGPT/Codex, egenkontroll.
+
+
+## Oppgrader tre artifact-opplastinger til Node 24, 7. november 2026
+
+Lars ber om neste vedlikeholdssteg etter varsler om Node 20 og ubuntu-latest. Bare de tre upload-artifact-bruksstedene i static.yml oppgraderes til fast v6.0.0-revisjon b7c566a772e6b6bfb58ed0dc250532a479d7789f. Action-filen bruker Node 24 og krever runner minst 2.327.1. Navn, baner, lagringstider, testutvalg og publiseringssperrer beholdes. Eksisterende sikre download-revisjon og bytekontroll bevares.
+
+Alternativer: beholde v4-varselet, oppgradere alle Actions samtidig eller ta nyeste v7.0.2 med modul-/dependency-bytte i samme runde. V6 velges for avgrenset runtime-bytte. Dette er ikke en generell sikkerhets- eller kompatibilitetsvurdering av v7. Andre workflows og runner-valg venter på denne prøven. GitHubs genererte Pages-jobb endres ikke av static.yml, og eventuell avvikling krever først avklaring av domene, lenker og reservebruk. Lokale struktursjekker består. Faktisk artifact-rundtur må bestå i PR, og main må bekrefte deploy etter Lars sin merge. Detaljer og primærkilder i docs/github-oppfolging-2026-11-05.md. ChatGPT/Codex, egenkontroll.
