@@ -114,3 +114,16 @@ Primærkilder lest i denne økten:
 Lokalt: YAML-paritet viser nøyaktig tre endrede uses-felt og identisk øvrig workflow. Sikkerhet, versjoner, gammel-kode-vern og diff består. Ingen ny lokal full nettleserrunde for en Action som kjører i GitHub. Før Lars merger: PR må bestå alle kontroller, de tre opplastingene og personvern-rundturen. Etter merge må main bekrefte deploy-nedlasting og publisering. Manglende UI-bilder følger fortsatt eksisterende ignore-valg.
 
 Pages-oppsettet og valg av runner endres ikke. Før eventuell avvikling av Pages må domene/DNS, eventuelle lenker til github.io, reservebruk og hvilken publiseringsvei som faktisk betjener brukerne avklares. Ingen konklusjon om overflødig publisering trekkes bare fra at Bunny også kjører. ChatGPT/Codex, egenkontroll.
+
+
+## Samme artifact-revisjon i øvrige egne workflows, 7. november 2026
+
+Arbeidsgrunnlag main 4cd0321 etter #246. Kjøring 42352020964 bestod checks, browser og deploy. Alle tre opplastinger, nedlasting av privacy-page og bytekontrollen bestod. Dermed er v6.0.0-revisjonen prøvd i prosjektets hovedløp og container. Det beviser ikke at alle andre arbeidsflyter har kjørt med den.
+
+Neste steg bruker samme faste SHA b7c566a772e6b6bfb58ed0dc250532a479d7789f i de fire gjenværende upload-artifact-bruksstedene: én i klarsprak.yml, to i kildevakt.yml og én i ressursmaaling.yml. Alle tre workflows er lest i sin helhet. Bare uses-feltene endres. Filtre, tidsplaner, tillatelser, rapportnavn, filbaner, lagringstider, feilvalg og kommandoer er identiske. Ingen hovedworkflow, produksjonsfil, kildebehandling eller målemetode endres.
+
+Disse filendringene utløser eksisterende PR-kontroller for klarspråk, Kildevakts provekjoring og ressursmåling. Kildevakts vakt-jobb er sperret for pull_request og skal være skipped i PR. Vi starter ikke vakt manuelt. Prøvekjøringen beholder eksisterende innhenting og tørrkjørt varsling uten saker og lagring på kildedata-grenen. Forventede rapporter er klarsprak, kildevakt-provekjoring og ressursmaaling. Gjeldende warn/always-valg kan gi opplastet delrapport selv om tidligere steg feiler. En artifact alene er derfor ikke bevis på bestått måling.
+
+Før Lars merger skal relevante PR-kontroller og rapportopplastinger bekreftes i GitHub. Den fjerde opplastingen, kildevakt-${{ github.run_id }}, hører til vakt-jobben og prøves først ved neste ordinære planlagte eller særskilt autoriserte kjøring etter merge. Ingen påstand om at denne er verifisert før den faktisk kjører. Main beholder full hovedtest og publisering som før.
+
+Lokalt: maskinell YAML-paritet normaliserer bare de fire nye uses-feltene og sammenligner hele workflowene med main. Sikkerhet, versjoner, gammel-kode-vern og diff består. Ingen ny lokal nettleserrunde eller ekstern kildehenting er startet for dette revisjonsbyttet. Node 24-krav og primærkilder er dokumentert i forrige avsnitt. GitHubs genererte Pages-workflow og ubuntu-latest endres ikke, så varsler der kan fortsatt forekomme. ChatGPT/Codex, egenkontroll.
