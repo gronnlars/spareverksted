@@ -1567,3 +1567,10 @@ Lars ber om én avgrenset videreføring etter grønn #244. Faktiske logger fra m
 Hele testfilen og produksjonens synlighetsoppdatering er gjennomgått. Egne serverporter, nettlesere og kontekster, bare lesing av dist og ingen delte filskrivinger gjør et avgrenset Chromium/WebKit-par egnet for prøving. Bruk eksisterende hjelper med fast motorvalg bare for resultatlinje. De fire gamle parene beholder Chromium/Firefox. Maksimalt to testprosesser. Alle pauser, forventninger og faseutskrifter beholdes. Ingen produksjonsfil endres.
 
 23 lokale orkestreringstilfeller og YAML-paritet består. Ekte motorer må prøves i GitHub før Lars merger. Ingen bestemt tidsgevinst loves. Revurder ved ressursfeil eller ustabilitet uten å svekke testkravene. Måling, avhengigheter og ferdigkriterier står i docs/ci-nettleser-kartlegging.md. ChatGPT/Codex, egenkontroll.
+
+
+## Vent på hashchange-resultat i infosidetesten, 7. november 2026
+
+Lars melder feil i #245. Kjøring 42312709348 viser bestått resultatlinjepar, men WebKit feiler i umiddelbar open-kontroll etter navigering til en direkte overskriftslenke. Produksjonen åpner via hashchange, som kan behandles etter page.goto. Velg eksplisitt venting på åpent kapittel med 3000 ms grense, og behold opprinnelig kontroll med bedre feilbeskrivelse.
+
+Alternativene med fast pause, blind omkjøring eller å fjerne kontrollen velges bort. Ingen produksjon eller publiseringssperre endres. Simulert hendelseslevering prøver faktisk infosider.js lokalt, men ekte nettlesere må bekrefte rettingen i samme PR. Ikke merge rød kjøring. Nøyaktig årsak i den observerte WebKit-kjøringen er ikke bevist av simuleringen. ChatGPT/Codex, egenkontroll.

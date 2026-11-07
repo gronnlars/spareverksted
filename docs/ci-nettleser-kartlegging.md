@@ -256,3 +256,14 @@ Hjelperen har ett eksplisitt unntak fra Chromium/Firefox: bare resultatlinje-bro
 Lokalt består 23 orkestreringstilfeller i tre unittest-metoder: fem testfiler ganger fire utfall, manglende node for begge motorkombinasjoner og avvist ukjent testfil. Barriere i node-erstatningen krever begge avtalte motorer før fullføring og avviser annen motor. YAML-paritet bekrefter at bare de to resultatlinjestegene er erstattet. Sikkerhet, versjoner, gammel-kode-vern og diff består. Produksjon og resultatlinjetesten er uendret. Dette er prosessprøver, ikke ekte nettlesere.
 
 GitHub må bekrefte begge motorers komplette faseutskrift, sluttrapport og sluttkode 0 før Lars merger. Sammenlign parets veggklokketid med tidligere 38,550 sekunder samlet målt testtid, med forbehold om ulike kjøringer og ressursbruk. Tidsmålingene inne i prosessene kan øke under samtidighet. Ingen bestemt gevinst eller full regresjonsfrihet påstås fra enkeltkjøringen. Ved ressursfeil eller ustabilitet revurderes bare grupperingen, uten å svekke prøven. ChatGPT/Codex, egenkontroll.
+
+
+## Feil i PR #245: direkte kapittellenke i WebKit, 7. november 2026
+
+PR-kjøring 42312709348 feilet i tests/infosider-browser.cjs (webkit), med «direct heading link opens chapter» på linje 93. Checks bestod. Resultatlinjeparet bestod med chromium=0 og webkit=0. Motorenes målte totaler var 17,359 og 25,479 sekunder. Dette godkjenner ikke hele PR-en: browser var rød og deploy ble skipped. Ingen sammenslåing.
+
+Testen bruker page.goto til ny hash i samme dokument og leser umiddelbart open-attributtet. Produksjonens infosider.js åpner kapitlet gjennom hashchange. Navigeringskallet kan fullføre før denne hendelsen behandles. Det er en konkret synkroniseringsrisiko i testen. Feilloggen alene fastslår ikke motorens nøyaktige hendelsesrekkefølge eller at den nye grupperingen forårsaket feilen. Infosidetesten kjører senere, etter at begge resultatlinjeprosesser er avsluttet.
+
+Rett samme PR med eksplisitt venting på at første kapittel faktisk er åpent, høyst 3000 ms, før den opprinnelige open-kontrollen. Feilmeldingen får fil og anker. Ingen fast pause, omkjøring eller continue-on-error. En manglende eller feil kapittelåpning gir fortsatt feil. Ingen produksjonsfil endres. Andre kontroller av utskrift, fokus og lagring bevares.
+
+Lokalt: syntaks, sikkerhet, versjoner, gammel-kode-vern og diff består. Faktisk infosider.js er prøvd med en simulert utsatt hashchange: lukket før hendelsen, åpent etter hendelsen og fortsatt lukket ved ukjent anker. Dette underbygger tidsrisikoen, men er ikke en ekte WebKit-kjøring. GitHub må bekrefte alle tre infosidemotorer og resten av PR-en etter rettingen før Lars merger. Ingen automatisk omkjøring av gammel commit. ChatGPT/Codex, egenkontroll.
