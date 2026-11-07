@@ -90,7 +90,10 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('n
    // Old heading IDs are deep links too, not just the new section IDs.
    const id=await summary.locator('h2').getAttribute('id');
    await page.goto(origin+'/'+file+'#'+id);
-   assert.notEqual(await first.getAttribute('open'),null,'direct heading link opens chapter');
+   // Ved samme dokument kan goto fullføre før hashchange åpner kapitlet.
+   // Vent på faktisk åpning, ikke en fast pause. Manglende åpning feiler fortsatt.
+   await page.waitForFunction(()=>document.querySelector('.info-chapter')?.open,null,{timeout:3000});
+   assert.notEqual(await first.getAttribute('open'),null,'direct heading link opens chapter: '+file+'#'+id);
    const printState=await page.locator('main details').evaluateAll(ds=>ds.map(d=>d.open));
    await page.evaluate(()=>window.dispatchEvent(new Event('beforeprint')));
    assert.equal(await page.locator('main details:not([open])').count(),0,'print includes nested logs');
