@@ -160,3 +160,49 @@ Primærkilder lest 8. november:
 - https://github.com/actions/checkout/blob/fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09/README.md
 
 Lokalt: YAML-paritet viser bare tre endrede uses-felt. Sikkerhet, versjoner, gammel-kode-vern og diff består. Ingen produksjonsfil eller testforventning endres. GitHub må bekrefte checkout og opprydding i checks/browser, riktig git-grunnlag, full testpakke og artifact-rundtur før Lars merger. Deploy-checkout prøves først i main-push etter merge. Ingen bestemt tidsgevinst loves. ChatGPT/Codex, egenkontroll.
+
+
+## Siste Node 20-Actions i hovedløpet, 8. november 2026
+
+Arbeidsgrunnlag main e7cbb10 etter #249. Claude, egenkontroll. Main-kjøring 42500414892 er kontrollert, se eget avsnitt nederst.
+
+Annotasjonene i main-kjøring 42497112368 viser hvilke Actions i static.yml som fortsatt deklarerer Node 20 og tvinges over på Node 24. Etter #249 gjenstår tre: setup-node i checks, download-artifact i browser og deploy, og setup-python i deploy. Denne PR-en fester disse fire bruksstedene til revisjoner som deklarerer node24. Målet er null Node 20-varsler fra egne steg i hovedløpet, slik at publiseringen ikke er avhengig av GitHubs midlertidige tvangsoverføring.
+
+| Action | Fra | Til | Bruk |
+| --- | --- | --- | --- |
+| setup-node | v4 (flyttbar tagg) | a0853c24544627f65ddf259abe73b1d18a591444, v5.0.0 | checks |
+| download-artifact | d3f86a1, v4.3.0 | 37930b1c2abaa49bbe596cd826c3c89aef350131, v7.0.0 | browser-rundtur og deploy |
+| setup-python | v5 (flyttbar tagg) | e797f83bcb11b83ae66e0230d6156d7c80228e7c, v6.0.0 | deploy |
+
+Taggene er lest med git ls-remote mot actions-repoene 8. november, og action.yml på hver revisjon er lest. Alle tre angir runs.using: node24.
+
+Vurdering per Action:
+
+- setup-node v5 legger til automatisk mellomlagring når package.json har feltet packageManager. Repoet har ingen package.json. Koden fanger manglende fil og slår da ikke på mellomlagring. Node-versjon 22 beholdes. Ellers er inndata uendret.
+- download-artifact v5 endret utpakking ved nedlasting med artifact-ID, slik at den blir lik nedlasting med navn. Begge brukssteder laster ned med navn til fast mappe, så filbanen dist/personvern.html er den samme. v6.0.0 deklarerer fortsatt node20. v7.0.0 er første versjon med node24 som standard. Sikkerhetsrettingen for GHSA-cxww-7g56-2vh6 kom i 4.1.3, og v7.0.0 er nyere. Ingen nedgradering. v8 er nyere, men velges ikke i samme runde.
+- setup-python v6 legger bare til inndata pip-version. Python 3.12 og pip-installasjonen fra requirements-deploy.txt beholdes.
+
+Alternativer: tre separate PR-er, eller bare de stegene som kan prøves på PR. Én samlet PR velges fordi alle tre er rene runtime-bytter uten endrede inndata, og fordi deploy uansett først kan prøves på main. Tre separate runder ville gitt tre main-publiseringer for samme type endring. Ulempen er at en feil i deploy må spores mellom to Actions. Første feillogg viser hvilken.
+
+Hva som prøves hvor:
+
+- PR: setup-node i checks og download-artifact i browser-rundturen, inkludert bytesammenligning av personvernsiden. Rundturen bruker samme navn og samme kallform som deploy.
+- Main etter merge: download-artifact og setup-python i deploy, W3C-skriving, Bunny-opplasting og cache-tømming.
+
+Lokalt: YAML-paritet viser nøyaktig fire endrede uses-felt og identisk øvrig struktur. Sikkerhet, versjoner, gammel-kode-vern og diff består. Ingen produksjonsfil, testforventning, tillatelse eller publiseringsvilkår endres. Ingen tidsgevinst loves.
+
+Utenfor denne PR-en, egne workflows: checkout@v4 (seks steder i klarspråk, Kildevakt, Tidsmaskin og ressursmåling), setup-node@v4 (tre), setup-python@v5 (ett) og ubuntu-latest (fem jobber). Kildevakt bruker git-worktrees, autentisering og push, og vurderes for seg. GitHubs genererte Pages-jobb endres ikke av dette.
+
+Primærkilder lest 8. november 2026:
+
+- https://github.com/actions/setup-node/blob/a0853c24544627f65ddf259abe73b1d18a591444/action.yml
+- https://github.com/actions/setup-node/blob/a0853c24544627f65ddf259abe73b1d18a591444/README.md
+- https://github.com/actions/download-artifact/blob/37930b1c2abaa49bbe596cd826c3c89aef350131/action.yml
+- https://github.com/actions/download-artifact/blob/37930b1c2abaa49bbe596cd826c3c89aef350131/README.md
+- https://github.com/actions/download-artifact/blob/018cc2cf5baa6db3ef3c5f8a56943fffe632ef53/action.yml (v6.0.0, node20)
+- https://github.com/actions/setup-python/blob/e797f83bcb11b83ae66e0230d6156d7c80228e7c/action.yml
+- https://github.com/advisories/GHSA-cxww-7g56-2vh6
+
+### Kontroll av #249 på main
+
+Main-kjøring 42500414892 på e7cbb10 fullførte med success: checks 24 sekunder, browser 9 min 34 s, deploy 58 sekunder. Alle tre jobber oppgir Image ubuntu-26.04 og lastet ned checkout fbc6f39. Post Run for checkout bestod i alle tre. I browser bestod personvernrapport, opplasting, nedlasting og bytesammenligning. Deploy bestod nedlasting av privacy-page, W3C-skriving, opplasting til Bunny Storage og tømming av CDN-cachen. Checkout er ikke lenger nevnt i Node 20-annotasjonene. De gjenværende annotasjonene nevner nøyaktig setup-node@v4, download-artifact d3f86a1 og setup-python@v5, som er de tre denne PR-en endrer. Én kjøring, ikke et gjennomsnitt.

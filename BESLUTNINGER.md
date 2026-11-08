@@ -1602,3 +1602,10 @@ Dette fester OS-hovedversjon, ikke et uforanderlig runnerbilde. Playwright/Noble
 Lars ber om videre vedlikehold etter grønn #248. De tre checkout-stegene i static.yml festes til v5.1.0-revisjon fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 med Node 24. V5s runnerkrav og v5.1.0s strengere standarder for privilegerte PR-hendelser er lest. Hovedløpet bruker vanlig pull_request. Ingen sikkerhetsunntak, eksplisitt ref eller token legges til. Historikkdybde og øvrige valg beholdes.
 
 Velges framfor flere samtidige Action-bytter eller endret checkout-adferd. Andre workflows venter på prøving. YAML-paritet og lokale strukturkontroller består. PR må bekrefte checkout, opprydding og alle eksisterende kontroller før Lars merger. Main må deretter bekrefte deploy-checkout og publisering. Revurder ved dokumentert git-, container- eller credentials-feil. Ingen produksjonsfil endres. Primærkilder og ferdigkriterier i docs/github-oppfolging-2026-11-05.md. ChatGPT/Codex, egenkontroll.
+
+
+## Fest de siste Node 20-Actions i hovedløpet, 8. november 2026
+
+Main-kjøring 42497112368 viser tre gjenværende Actions med Node 20 i static.yml: setup-node i checks, download-artifact i browser og deploy, og setup-python i deploy. Fest alle fire bruksstedene til revisjoner som deklarerer node24: setup-node v5.0.0, download-artifact v7.0.0 og setup-python v6.0.0. Inndata, filbaner, navn, Node 22, Python 3.12, rettigheter og publiseringssperrer beholdes. download-artifact v6.0.0 velges bort fordi den fortsatt deklarerer node20. Sikkerhetsrettingen fra 4.1.3 er med, og det nedgraderes ikke.
+
+Én samlet PR velges framfor tre, fordi endringene er rene runtime-bytter og deploy uansett bare prøves på main. Ulempen er at en deploy-feil kan komme fra to Actions; første feillogg skiller dem. PR må bekrefte checks og personvern-rundturen før Lars merger. Main må deretter bekrefte deploy. Øvrige egne workflows og generert Pages-jobb venter. Revurder ved dokumentert runtime-, artifact- eller pip-feil. Detaljer i docs/github-oppfolging-2026-11-05.md. Claude, egenkontroll.
