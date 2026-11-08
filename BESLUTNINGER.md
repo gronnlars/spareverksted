@@ -1595,3 +1595,10 @@ Bare uses-feltene endres. Filtre, tidsplaner, rettigheter, rapportinnhold og Kil
 Lars ber om videre vedlikehold etter #247. Alle tre hovedjobber i main-kjøring 42355033323 bestod på Ubuntu 26.04.1, kontrollert i deres oppstartslogger. Fest bare static.yml til ubuntu-26.04 framfor den flyttbare latest-etiketten. Ingen tilbakegang til 24.04 uten konkret feilgrunnlag. Alternativet er videre automatisk hovedversjonsbytte.
 
 Dette fester OS-hovedversjon, ikke et uforanderlig runnerbilde. Playwright/Noble-container, testkrav, artifact-kontroller og deploy-sperrer beholdes. Andre workflows og generert Pages-jobb venter. YAML-paritet og lokale strukturkontroller består. Faktiske PR-jobber må bestå før Lars merger, og main må deretter bekrefte deploy på eksplisitt etikett. Revurder ved dokumentert kompatibilitetsfeil eller utfasing. Detaljer i docs/github-oppfolging-2026-11-05.md. ChatGPT/Codex, egenkontroll.
+
+
+## Oppgrader checkout alene i hovedløpet, 8. november 2026
+
+Lars ber om videre vedlikehold etter grønn #248. De tre checkout-stegene i static.yml festes til v5.1.0-revisjon fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 med Node 24. V5s runnerkrav og v5.1.0s strengere standarder for privilegerte PR-hendelser er lest. Hovedløpet bruker vanlig pull_request. Ingen sikkerhetsunntak, eksplisitt ref eller token legges til. Historikkdybde og øvrige valg beholdes.
+
+Velges framfor flere samtidige Action-bytter eller endret checkout-adferd. Andre workflows venter på prøving. YAML-paritet og lokale strukturkontroller består. PR må bekrefte checkout, opprydding og alle eksisterende kontroller før Lars merger. Main må deretter bekrefte deploy-checkout og publisering. Revurder ved dokumentert git-, container- eller credentials-feil. Ingen produksjonsfil endres. Primærkilder og ferdigkriterier i docs/github-oppfolging-2026-11-05.md. ChatGPT/Codex, egenkontroll.

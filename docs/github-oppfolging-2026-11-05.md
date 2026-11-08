@@ -140,3 +140,23 @@ Neste PR endrer bare runs-on fra ubuntu-latest til ubuntu-26.04 i de tre jobbene
 Alternativer: behold latest, gå tilbake til 24.04 eller navngi faktisk prøvd 26.04. Sistnevnte velges for kontroll over framtidige hovedversjonsbytter. Tilbakegang til 24.04 mangler et konkret feilgrunnlag her. GitHubs migreringsmelding er lest på https://github.com/actions/runner-images/issues/14748 og støtter eksplisitt 26.04 som valgt etikett. Dette er ingen full livsløpsvurdering av runnerplattformen.
 
 Lokalt: YAML-paritet bekrefter bare tre endrede runs-on-felt. Alle Actions, kommandoer, containere, rettigheter, artifact-rundtur og publiseringsvilkår er identiske. Sikkerhet, versjoner, gammel-kode-vern og diff består. Ingen produksjonsfil endres. PR må bekrefte samme runnerhovedversjon og alle kontroller før Lars merger. Deploy på eksplisitt etikett bekreftes først på main etter merge. Revurder ved dokumentert kompatibilitetsfeil eller varslet utfasing. ChatGPT/Codex, egenkontroll.
+
+
+## Checkout til Node 24 i hovedløpet, 8. november 2026
+
+Arbeidsgrunnlag main 326c8e7 etter #248. Kjøring 42497112368 fullførte med success. Neste avgrensning oppdaterer bare tre checkout-brukssteder i static.yml til fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09. Både v5 og v5.1.0 er kontrollert mot denne commit-en. Action-filen angir node24 for kjøring og opprydding. V5 krever runner minst 2.327.1; prosjektet bruker GitHub-hostede runnere og har allerede prøvd Node 24-Actions i Playwright-containeren. Checkout må likevel prøves i sin egen oppstarts- og oppryddingsfase.
+
+V5.1.0 har strengere standarder rundt checkout av PR-kode ved privilegerte hendelser som pull_request_target og workflow_run. static.yml bruker push/main og vanlig pull_request. Ingen eksplisitt ref, token eller allow-unsafe-pr-checkout legges til. fetch-depth: 0 i checks beholdes for omfang og gammel-kode-vern. Standard checkout av PR-mergegrunnlaget, safe-directory-håndtering, credentials-opprydding og etterfølgende HEAD-kontroller skal fortsatt virke. Browser og deploy beholder sine øvrige standardvalg.
+
+Alternativer: behold v4, oppgrader checkout alene til v5 med Node 24, eller flytt samtidig flere Actions og endre checkout-innstillinger. V5 alene velges for avgrenset prøving. Ingen påstand om at v5 er nyeste hovedversjon. Andre egne workflows beholdes til dette er prøvd.
+
+Primærkilder lest 8. november:
+
+- https://github.com/actions/checkout/releases/tag/v5.0.0
+- https://github.com/actions/checkout/releases/tag/v5.1.0
+- https://api.github.com/repos/actions/checkout/git/ref/tags/v5
+- https://api.github.com/repos/actions/checkout/git/ref/tags/v5.1.0
+- https://github.com/actions/checkout/blob/fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09/action.yml
+- https://github.com/actions/checkout/blob/fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09/README.md
+
+Lokalt: YAML-paritet viser bare tre endrede uses-felt. Sikkerhet, versjoner, gammel-kode-vern og diff består. Ingen produksjonsfil eller testforventning endres. GitHub må bekrefte checkout og opprydding i checks/browser, riktig git-grunnlag, full testpakke og artifact-rundtur før Lars merger. Deploy-checkout prøves først i main-push etter merge. Ingen bestemt tidsgevinst loves. ChatGPT/Codex, egenkontroll.
