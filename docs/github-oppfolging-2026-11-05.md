@@ -127,3 +127,16 @@ Disse filendringene utløser eksisterende PR-kontroller for klarspråk, Kildevak
 Før Lars merger skal relevante PR-kontroller og rapportopplastinger bekreftes i GitHub. Den fjerde opplastingen, kildevakt-${{ github.run_id }}, hører til vakt-jobben og prøves først ved neste ordinære planlagte eller særskilt autoriserte kjøring etter merge. Ingen påstand om at denne er verifisert før den faktisk kjører. Main beholder full hovedtest og publisering som før.
 
 Lokalt: maskinell YAML-paritet normaliserer bare de fire nye uses-feltene og sammenligner hele workflowene med main. Sikkerhet, versjoner, gammel-kode-vern og diff består. Ingen ny lokal nettleserrunde eller ekstern kildehenting er startet for dette revisjonsbyttet. Node 24-krav og primærkilder er dokumentert i forrige avsnitt. GitHubs genererte Pages-workflow og ubuntu-latest endres ikke, så varsler der kan fortsatt forekomme. ChatGPT/Codex, egenkontroll.
+
+
+## Fest hovedløpet til faktisk prøvd Ubuntu-versjon, 8. november 2026
+
+Arbeidsgrunnlag main 21c2567 etter #247. Main-kjøring 42355033323 bestod checks, browser og deploy. Klarspråk 42355033319 og ressursmåling 42355033260 bestod også på samme commit. Kildevakts ordinære vakt er ikke bekreftet i denne gjennomgangen og startes ikke manuelt.
+
+Oppstartsloggene fra alle tre hovedjobber er lest: checks 128351148608, browser 128351254124 og deploy 128353842144. Alle oppgir Ubuntu 26.04.1, Image ubuntu-26.04. Det er dermed feil å anta at prosjektet fortsatt bruker Ubuntu 24.04 på vertsmaskinen. Browser kjører fortsatt sin faste Playwright 1.56.0/Noble-container oppå verten.
+
+Neste PR endrer bare runs-on fra ubuntu-latest til ubuntu-26.04 i de tre jobbene i static.yml. Dette fester OS-hovedversjonen til den som nettopp bestod. Det fryser ikke runnerbildet, sikkerhetsoppdateringer eller alle installerte verktøy. Ingen påstand om raskere kjøring eller løst produktproblem. Andre egne workflows og GitHubs genererte Pages-jobb beholdes i denne avgrensningen.
+
+Alternativer: behold latest, gå tilbake til 24.04 eller navngi faktisk prøvd 26.04. Sistnevnte velges for kontroll over framtidige hovedversjonsbytter. Tilbakegang til 24.04 mangler et konkret feilgrunnlag her. GitHubs migreringsmelding er lest på https://github.com/actions/runner-images/issues/14748 og støtter eksplisitt 26.04 som valgt etikett. Dette er ingen full livsløpsvurdering av runnerplattformen.
+
+Lokalt: YAML-paritet bekrefter bare tre endrede runs-on-felt. Alle Actions, kommandoer, containere, rettigheter, artifact-rundtur og publiseringsvilkår er identiske. Sikkerhet, versjoner, gammel-kode-vern og diff består. Ingen produksjonsfil endres. PR må bekrefte samme runnerhovedversjon og alle kontroller før Lars merger. Deploy på eksplisitt etikett bekreftes først på main etter merge. Revurder ved dokumentert kompatibilitetsfeil eller varslet utfasing. ChatGPT/Codex, egenkontroll.
