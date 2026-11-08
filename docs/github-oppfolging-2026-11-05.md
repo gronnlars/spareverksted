@@ -202,3 +202,7 @@ Primærkilder lest 8. november 2026:
 - https://github.com/actions/download-artifact/blob/018cc2cf5baa6db3ef3c5f8a56943fffe632ef53/action.yml (v6.0.0, node20)
 - https://github.com/actions/setup-python/blob/e797f83bcb11b83ae66e0230d6156d7c80228e7c/action.yml
 - https://github.com/advisories/GHSA-cxww-7g56-2vh6
+
+### Kontroll av #249 på main
+
+Main-kjøring 42500414892 på e7cbb10 fullførte med success: checks 24 sekunder, browser 9 min 34 s, deploy 58 sekunder. Alle tre jobber oppgir Image ubuntu-26.04 og lastet ned checkout fbc6f39. Post Run for checkout bestod i alle tre. I browser bestod personvernrapport, opplasting, nedlasting og bytesammenligning. Deploy bestod nedlasting av privacy-page, W3C-skriving, opplasting til Bunny Storage og tømming av CDN-cachen. Checkout er ikke lenger nevnt i Node 20-annotasjonene. De gjenværende annotasjonene nevner nøyaktig setup-node@v4, download-artifact d3f86a1 og setup-python@v5, som er de tre denne PR-en endrer. Én kjøring, ikke et gjennomsnitt.
