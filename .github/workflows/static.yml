@@ -14,7 +14,7 @@ jobs:
     outputs:
       browser_required: ${{ steps.scope.outputs.browser_required }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0, Node 24
         with:
           fetch-depth: 0
       - name: Determine browser test scope
@@ -127,7 +127,7 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.56.0-noble
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0, Node 24
       - name: Install Playwright
         id: install
         run: npm install --no-save --no-package-lock playwright@1.56.0 vnu-jar
@@ -466,7 +466,7 @@ jobs:
     needs: [checks, browser]
     runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0, Node 24
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0, includes GHSA-cxww-7g56-2vh6 fix
         with:
           name: privacy-page
