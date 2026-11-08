@@ -1588,3 +1588,10 @@ Alternativer: beholde v4-varselet, oppgradere alle Actions samtidig eller ta nye
 Lars ber om neste steg etter grønn #246. Hovedløpets tre opplastinger og personvern-rundtur er bekreftet i main-kjøring 42352020964. De fire gjenværende upload-artifact-bruksstedene i klarspråk, Kildevakt og ressursmåling festes til samme v6.0.0-revisjon for Node 24. Alternativet er ulik runtime-deklarasjon og fortsatte vedlikeholdsvarsler i egne workflows.
 
 Bare uses-feltene endres. Filtre, tidsplaner, rettigheter, rapportinnhold og Kildevakts sak-/PR-handlinger beholdes. PR prøver klarspråk, Kildevakts tørrkjøring og ressursmåling med rapportopplasting. Vakt-jobben skal være skipped på PR og prøves først i ordinær kjøring etter merge. Ingen manuell vaktstart eller publiseringsendring. YAML-paritet og lokale strukturkontroller består. Lars merger etter relevante grønne kontroller. Revurder ved dokumentert runtime- eller artifact-feil. Detaljer i docs/github-oppfolging-2026-11-05.md. ChatGPT/Codex, egenkontroll.
+
+
+## Fest hovedløpets runner til prøvd Ubuntu 26.04, 8. november 2026
+
+Lars ber om videre vedlikehold etter #247. Alle tre hovedjobber i main-kjøring 42355033323 bestod på Ubuntu 26.04.1, kontrollert i deres oppstartslogger. Fest bare static.yml til ubuntu-26.04 framfor den flyttbare latest-etiketten. Ingen tilbakegang til 24.04 uten konkret feilgrunnlag. Alternativet er videre automatisk hovedversjonsbytte.
+
+Dette fester OS-hovedversjon, ikke et uforanderlig runnerbilde. Playwright/Noble-container, testkrav, artifact-kontroller og deploy-sperrer beholdes. Andre workflows og generert Pages-jobb venter. YAML-paritet og lokale strukturkontroller består. Faktiske PR-jobber må bestå før Lars merger, og main må deretter bekrefte deploy på eksplisitt etikett. Revurder ved dokumentert kompatibilitetsfeil eller utfasing. Detaljer i docs/github-oppfolging-2026-11-05.md. ChatGPT/Codex, egenkontroll.
