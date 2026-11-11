@@ -3,7 +3,7 @@
 Forslag, feilrapporter og pull requests er velkomne. Beskriv forventet resultat,
 faktisk resultat og hvordan feilen kan gjenskapes. Bruk oppdiktede tall.
 
-1. Fork prosjektet og opprett en egen gren.
+1. Fork prosjektet og opprett en egen gren. Les BESLUTNINGER.md først: der står hva som er valgt, hva som er valgt bort og hvorfor. Legg til en ny oppføring når en viktig avveining endres.
 2. Kjør lokalt som beskrevet i README.
 3. Gjør en avgrenset endring og forklar hvordan den hjelper brukeren.
 4. Kjør relevante beregnings-, Python- og nettlesertester for endringen. Kommandoene står i `.github/workflows/static.yml`. Oppgi nøyaktig hva du har kjørt og hva som gjenstår. For sparekalkulatoren følger du [arbeidsmåten og vernet ved videre endringer](docs/sparekalkulator-status.md).
