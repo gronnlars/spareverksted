@@ -1,0 +1,317 @@
+# Kartlegging av tre svar og kjente tall
+
+Generert fra main-grunnlaget med prove.py. Dette er kandidater til faglig oppdeling, ikke kildekontrollerte fakta eller en fullstendighetsgaranti.
+
+## Tekstfelt i svarene
+
+Alle tekstfelt tas med, også metadata. Klassifisering må vurderes før felt blir fakta. RegExp-søkeregler blir tomme objekter ved JSON-eksport og er ikke analysert.
+
+
+### q-aksjesparekonto
+
+- `q-aksjesparekonto.kind` (dist/veileder-knowledge.js:24,104,145,184,282,373,530): explainer
+- `q-aksjesparekonto.layout` (dist/veileder-knowledge.js:97,136,182,185,283,374,488,528,564): overview
+- `q-aksjesparekonto.id` (dist/veileder-knowledge.js:186): q-aksjesparekonto
+- `q-aksjesparekonto.title` (dist/veileder-knowledge.js:187,277): Hva er en aksjesparekonto (ASK)?
+- `q-aksjesparekonto.published` (dist/veileder-knowledge.js:188,286,533): 2026-10-24
+- `q-aksjesparekonto.changed` (dist/veileder-knowledge.js:189,190,287,288,381,382): 2026-10-29
+- `q-aksjesparekonto.checked` (dist/veileder-knowledge.js:189,190,287,288,381,382): 2026-10-29
+- `q-aksjesparekonto.intro` (dist/veileder-knowledge.js:192): En aksjesparekonto (ASK) er en konto for bestemte aksjer og aksjefond i EØS. Du betaler skatt av gevinst og utbytte først ved uttak utover gjenværende innskudd, etter eventuelt skjermingsfradrag. Det er et fradrag som reduserer beløpet du betaler skatt av. Risikoen avhenger av hva du investerer i.
+- `q-aksjesparekonto.tradeoffs.pros[0].title` (dist/veileder-knowledge.js:196): Skatten utsettes
+- `q-aksjesparekonto.tradeoffs.pros[0].text` (dist/veileder-knowledge.js:197): Gevinst og utbytte kan investeres videre uten at du betaler skatt underveis.
+- `q-aksjesparekonto.tradeoffs.pros[1].title` (dist/veileder-knowledge.js:200): Innskuddet kommer ut først
+- `q-aksjesparekonto.tradeoffs.pros[1].text` (dist/veileder-knowledge.js:201): Innskuddet du har igjen, kan tas ut uten skatt.
+- `q-aksjesparekonto.tradeoffs.cons[0].title` (dist/veileder-knowledge.js:206): Ikke alle aksjer er tillatt
+- `q-aksjesparekonto.tradeoffs.cons[0].text` (dist/veileder-knowledge.js:207): Selskapet må være hjemmehørende i EØS, altså høre til der skattemessig. Enkeltaksjer i for eksempel amerikanske selskaper kan derfor ikke kjøpes på ASK. Dette kan også gjelde selskaper på Oslo Børs.
+- `q-aksjesparekonto.tradeoffs.cons[1].title` (dist/veileder-knowledge.js:210): Tapsfradrag først til slutt
+- `q-aksjesparekonto.tradeoffs.cons[1].text` (dist/veileder-knowledge.js:211): Taper du penger, får du fradrag først når kontoen avsluttes. Salg med tap inne på kontoen gir ikke fradrag.
+- `q-aksjesparekonto.tradeoffs.cons[2].title` (dist/veileder-knowledge.js:214): Kontanter gir ikke rente
+- `q-aksjesparekonto.tradeoffs.cons[2].text` (dist/veileder-knowledge.js:215): Penger som står uinvestert på kontoen, gir ingen rente.
+- `q-aksjesparekonto.example.title` (dist/veileder-knowledge.js:220): Eksempel: skatt når kontoen avsluttes
+- `q-aksjesparekonto.example.text` (dist/veileder-knowledge.js:221): Du har satt inn 100 000 kr og ikke tatt ut noe. Kontoen er verdt 150 000 kr. Du tar ut alt og avslutter kontoen. 100 000 kr er innskudd og skattefritt. 50 000 kr er gevinst. Med 5 000 kr i skjermingsfradrag er 45 000 kr skattepliktig. Med satsen for 2026 blir skatten 17 028 kr. Tallene er valgt for eksemplet og er ikke en beregning av din skatt.
+- `q-aksjesparekonto.parts[0].title` (dist/veileder-knowledge.js:225): Skatt ved uttak
+- `q-aksjesparekonto.parts[0].text` (dist/veileder-knowledge.js:226): Tar du ut mer enn innskuddet du har igjen, betaler du skatt av det som overstiger innskuddet. Først trekkes eventuelt skjermingsfradrag fra. I 2026 er skatten 37,84 prosent av det skattepliktige beløpet. Tidligere uttak av innskudd reduserer beløpet du kan ta ut skattefritt.
+- `q-aksjesparekonto.parts[1].title` (dist/veileder-knowledge.js:229): Skjermingsfradrag
+- `q-aksjesparekonto.parts[1].text` (dist/veileder-knowledge.js:230): Grunnlaget er årets laveste innskuddssaldo pluss ubenyttet skjerming fra tidligere år. Grunnlaget ganges med årets skjermingsrente.
+- `q-aksjesparekonto.parts[2].title` (dist/veileder-knowledge.js:233): Krav til konto og investeringer
+- `q-aksjesparekonto.parts[2].text` (dist/veileder-knowledge.js:234): Personlige skattytere bosatt i EØS kan opprette ASK. Aksjene må være børsnoterte. Fond må være hjemmehørende i EØS og ha mer enn 80 prosent aksjer ved inntektsårets begynnelse. Kravene gjelder når du kjøper. Et verdipapir kan bli stående selv om det senere ikke oppfyller dem, for eksempel fordi selskapet flytter til USA.
+- `q-aksjesparekonto.parts[3].title` (dist/veileder-knowledge.js:237): Flytting
+- `q-aksjesparekonto.parts[3].text` (dist/veileder-knowledge.js:238): Du kan flytte ASK til en annen tilbyder eller mellom egne ASK-er uten skatt. Innskudd og ubenyttet skjerming følger med i samme forhold som verdiene. Overføring av aksjer og fond fra en vanlig verdipapirkonto til ASK behandles skattemessig som salg, med beregning av gevinst eller tap.
+- `q-aksjesparekonto.parts[4].title` (dist/veileder-knowledge.js:241): Gave og arv
+- `q-aksjesparekonto.parts[4].text` (dist/veileder-knowledge.js:242): ASK kan arves uten at overføringen skattlegges. Den kan også gis i gave, men da må hele kontoen overføres. Mottakeren fører videre innskuddet og skjermingen som hører til kontoen. Skattereglene kaller dette skattemessig kontinuitet. Når et dødsbo fordeles, kan også utvalgte aksjer og fond overføres til arvingens ASK. Innskudd og ubenyttet skjerming følger da med i samme forhold som verdiene. En ASK kan ikke eies av flere sammen. Vil du gi til flere, kan du fordele verdiene på flere egne ASK-er og gi bort hver konto.
+- `q-aksjesparekonto.sources[0].id` (dist/veileder-knowledge.js:12,247,346): tax-ask-no
+- `q-aksjesparekonto.sources[0].title` (dist/veileder-knowledge.js:248,347): Skatteetaten: Aksjesparekonto (ASK)
+- `q-aksjesparekonto.sources[0].url` (dist/veileder-knowledge.js:249): https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/aksjer-og-verdipapirer/om/aksjesparekonto-ask/
+- `q-aksjesparekonto.sources[1].id` (dist/veileder-knowledge.js:252,341): tax-aksjefaktor-2026
+- `q-aksjesparekonto.sources[1].title` (dist/veileder-knowledge.js:253): Skatteetaten: Faktor for oppjustering av gevinst, tap eller utbytte på aksjer, 2026
+- `q-aksjesparekonto.sources[1].url` (dist/veileder-knowledge.js:254,343): https://www.skatteetaten.no/satser/faktor-for-oppjustering-av-gevinsttap-eller-utbytte-pa-aksjer/
+- `q-aksjesparekonto.sources[2].id` (dist/veileder-knowledge.js:257): tax-ask-opprette
+- `q-aksjesparekonto.sources[2].title` (dist/veileder-knowledge.js:258): Skatteetaten: Skatte-ABC 2025/2026, hvem som kan opprette ASK
+- `q-aksjesparekonto.sources[2].url` (dist/veileder-knowledge.js:259): https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/a-10-aksjesparekonto/A-10.001/
+- `q-aksjesparekonto.sources[3].id` (dist/veileder-knowledge.js:262): tax-ask-arv-gave
+- `q-aksjesparekonto.sources[3].title` (dist/veileder-knowledge.js:263): Skatteetaten: Skatte-ABC 2025/2026, A-10-9 Videreføring av aksjesparekonto ved arv eller gave
+- `q-aksjesparekonto.sources[3].url` (dist/veileder-knowledge.js:264): https://www.skatteetaten.no/nn/rettskjelder/type/handboker/skatte-abc/gjeldende/a-10-aksjesparekonto/A-10.030/
+- `q-aksjesparekonto.review.text` (dist/veileder-knowledge.js:268): Skatteetatens sider er udaterte. Satsen gjelder inntektsåret 2026. Skatte-ABC gjelder utgaven 2025/2026. Lest 29.10.2026 av ChatGPT/Codex, egenkontroll. Jeg har ikke tatt med skatt ved flytting til utlandet, formuesskatt eller utenlandsk kildeskatt.
+- `q-aksjesparekonto.keys[0]` (dist/veileder-knowledge.js:8,12,16,17,247,249,257,262,271,278,346,348,366,367,368,369,443,451,460,462,490,494,499,501,560): ask
+- `q-aksjesparekonto.keys[1]` (dist/veileder-knowledge.js:8,12,17,186,187,192,249,259,263,264,272,274,275,277,279,348,366,367,368,369,451,461,462,494,495,500,501): aksjesparekonto
+- `q-aksjesparekonto.questions[0]` (dist/veileder-knowledge.js:273): Hva er ASK?
+- `q-aksjesparekonto.questions[1]` (dist/veileder-knowledge.js:274): Hva er en aksjesparekonto?
+- `q-aksjesparekonto.questions[2]` (dist/veileder-knowledge.js:275): Hva er aksjesparekonto?
+- `q-aksjesparekonto.questions[3]` (dist/veileder-knowledge.js:276): Hva betyr ASK?
+- `q-aksjesparekonto.questions[4]` (dist/veileder-knowledge.js:187,277): Hva er en aksjesparekonto (ASK)?
+
+### q-fondskonto
+
+- `q-fondskonto.kind` (dist/veileder-knowledge.js:24,104,145,184,282,373,530): explainer
+- `q-fondskonto.layout` (dist/veileder-knowledge.js:97,136,182,185,283,374,488,528,564): overview
+- `q-fondskonto.id` (dist/veileder-knowledge.js:284): q-fondskonto
+- `q-fondskonto.title` (dist/veileder-knowledge.js:285,362): Hva er en fondskonto?
+- `q-fondskonto.published` (dist/veileder-knowledge.js:188,286,533): 2026-10-24
+- `q-fondskonto.changed` (dist/veileder-knowledge.js:189,190,287,288,381,382): 2026-10-29
+- `q-fondskonto.checked` (dist/veileder-knowledge.js:189,190,287,288,381,382): 2026-10-29
+- `q-fondskonto.intro` (dist/veileder-knowledge.js:289): En fondskonto, også kalt investeringskonto, kombinerer investering og forsikring. Pengene kan plasseres i aksjer, fond og andre verdipapirer. Du bærer risikoen, og verdien kan falle.
+- `q-fondskonto.caveat` (dist/veileder-knowledge.js:290): Skatteforklaringen gjelder privatpersoner med konto uten garantert avkastning og med et lite forsikringstillegg ved død eller uførhet.
+- `q-fondskonto.tradeoffs.pros[0].title` (dist/veileder-knowledge.js:295): Bredere utvalg enn ASK
+- `q-fondskonto.tradeoffs.pros[0].text` (dist/veileder-knowledge.js:296): Avhengig av tilbyderen kan kontoen gi tilgang til blant annet aksjer i selskaper utenfor EØS og rentefond. Disse kan ikke kjøpes på ASK.
+- `q-fondskonto.tradeoffs.pros[1].title` (dist/veileder-knowledge.js:299): Utsatt skatt ved handel
+- `q-fondskonto.tradeoffs.pros[1].text` (dist/veileder-knowledge.js:300): Kjøp og salg inne på kontoen utløser normalt ikke skatt på gevinsten for deg. Kontoen inngår likevel i formuen din.
+- `q-fondskonto.tradeoffs.cons[0].title` (dist/veileder-knowledge.js:305): Gevinst følger med ved uttak
+- `q-fondskonto.tradeoffs.cons[0].text` (dist/veileder-knowledge.js:306): Har kontoen steget i verdi, inneholder hvert uttak både innskudd og gevinst. Du kan ikke ta ut innskuddet først, slik du kan på ASK.
+- `q-fondskonto.example.title` (dist/veileder-knowledge.js:311): Eksempel på uttak
+- `q-fondskonto.example.text` (dist/veileder-knowledge.js:312): Du har satt inn 100 000 kr, og kontoen er verdt 150 000 kr. Uten tidligere uttak består et uttak på 30 000 kr av 20 000 kr innskudd og 10 000 kr gevinst før skjermingsfradrag. Tallene er et eksempel, ikke en beregning av skatten din.
+- `q-fondskonto.parts[0].title` (dist/veileder-knowledge.js:316): Eierskap og forsikring
+- `q-fondskonto.parts[0].text` (dist/veileder-knowledge.js:317): Forsikringsselskapet eier investeringene. Du har et krav mot selskapet som tilsvarer kontoverdien. Forsikringstillegget regnes som lite når det er under 50 prosent av kontoverdien. Er tillegget et fast beløp, må det være lavere enn gjenværende innbetalt sparebeløp, uten avkastning.
+- `q-fondskonto.parts[1].title` (dist/veileder-knowledge.js:320): Skatt og fradrag
+- `q-fondskonto.parts[1].text` (dist/veileder-knowledge.js:321): Aksjeandel betyr hvor stor del som regnes som aksjer. Ved skatteberegningen regnes over 80 prosent som 100 prosent og under 20 prosent som null. Gjennomsnittet av de årlige andelene bestemmer fordelingen av gevinst mellom aksjedelen og rentedelen. Satsene i 2026 er henholdsvis 37,84 og 22 prosent. Aksjedelen gir grunnlag for skjermingsfradrag, som reduserer skattepliktig gevinst. Ved uttak må ubenyttet skjerming brukes mot gevinsten, også rentedelen. Ved verdifall gir uttak fradrag for en forholdsmessig del av tapet.
+- `q-fondskonto.sources[0].id` (dist/veileder-knowledge.js:13,326): tax-fondskonto-no
+- `q-fondskonto.sources[0].title` (dist/veileder-knowledge.js:327): Skatteetaten: Fondskonto
+- `q-fondskonto.sources[0].url` (dist/veileder-knowledge.js:10,328,504): https://www.skatteetaten.no/person/skatt/hjelp-til-riktig-skatt/aksjer-og-verdipapirer/om/skatteregler-investere-i-aksjer-og-andre-verdipapirer-gjennom-kapitalforsikring-fondskonto/
+- `q-fondskonto.sources[1].id` (dist/veileder-knowledge.js:331): tax-fondskonto-abc
+- `q-fondskonto.sources[1].title` (dist/veileder-knowledge.js:332): Skatteetaten: Skatte-ABC 2025/2026, spesielt om fondskonto
+- `q-fondskonto.sources[1].url` (dist/veileder-knowledge.js:333): https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/v-6-verdipapirfond/V-6.001/V-6.003/
+- `q-fondskonto.sources[2].id` (dist/veileder-knowledge.js:14,336): tax-fondskonto-rettledning
+- `q-fondskonto.sources[2].title` (dist/veileder-knowledge.js:337): Skatteetaten: Rettledning om fondskonto, 2026 og senere
+- `q-fondskonto.sources[2].url` (dist/veileder-knowledge.js:338): https://www.skatteetaten.no/nn/bedrift-og-organisasjon/rapportering-og-bransjar/tredjepartsopplysninger/bank-finans-og-forsikring/fondskonto/rettledning/
+- `q-fondskonto.sources[3].id` (dist/veileder-knowledge.js:252,341): tax-aksjefaktor-2026
+- `q-fondskonto.sources[3].title` (dist/veileder-knowledge.js:342): Skatteetaten: Gevinst, tap eller utbytte på aksjer, 2026
+- `q-fondskonto.sources[3].url` (dist/veileder-knowledge.js:343): https://www.skatteetaten.no/satser/faktor-for-oppjustering-av-gevinsttap-eller-utbytte-pa-aksjer/?year=2026
+- `q-fondskonto.sources[4].id` (dist/veileder-knowledge.js:12,247,346): tax-ask-no
+- `q-fondskonto.sources[4].title` (dist/veileder-knowledge.js:248,347): Skatteetaten: Aksjesparekonto (ASK)
+- `q-fondskonto.sources[4].url` (dist/veileder-knowledge.js:12,348): https://www.skatteetaten.no/person/skatt/hjelp-til-rett-skatt/aksjar-og-verdipapir/om/aksjesparekonto-ask/
+- `q-fondskonto.sources[5].id` (dist/veileder-knowledge.js:351): fin-fondskonto-utvalg
+- `q-fondskonto.sources[5].title` (dist/veileder-knowledge.js:352): Finansdepartementet: Prop. 1 LS (2025/2026), punkt 8.10.2, fondskonto og gjeldende rett
+- `q-fondskonto.sources[5].url` (dist/veileder-knowledge.js:353): https://www.regjeringen.no/no/dokumenter/prop.-1-ls-20252026/id3124192/?ch=2
+- `q-fondskonto.review.text` (dist/veileder-knowledge.js:357): Regelår 2026. Skatte-ABC 2025/2026 og rettledningen for 2026 og senere er lest sammen med personsidene og Prop. 1 LS (2025/2026), punkt 8.10.2 om gjeldende rett. Ingen oppdateringsdato oppgitt på Skatteetatens sider. Lest 29.10.2026 av ChatGPT/Codex, egenkontroll. Kontrollert av Lars og Claude, bekreftet av Lars 29.10.2026. Jeg har ikke tatt med selskaper, utflytting eller bestemte tilbyderes vilkår.
+- `q-fondskonto.keys[0]` (dist/veileder-knowledge.js:10,13,14,17,278,279,284,285,289,326,328,331,332,336,337,338,351,352,359,362,363,366,492,494,495,496,498,502,503,504,516): fondskonto
+- `q-fondskonto.keys[1]` (dist/veileder-knowledge.js:17,278,279,289,360,365,368,494,497,498): investeringskonto
+- `q-fondskonto.keys[2]` (dist/veileder-knowledge.js:10,13,17,278,279,328,361,364,367,494,504,517,529): kapitalforsikring
+- `q-fondskonto.questions[0]` (dist/veileder-knowledge.js:285,362): Hva er en fondskonto?
+- `q-fondskonto.questions[1]` (dist/veileder-knowledge.js:363): Hva er fondskonto?
+- `q-fondskonto.questions[2]` (dist/veileder-knowledge.js:364): Hva er kapitalforsikring?
+- `q-fondskonto.questions[3]` (dist/veileder-knowledge.js:365): Hva er en investeringskonto?
+
+### q-bsu-basics
+
+- `q-bsu-basics.kind` (dist/veileder-knowledge.js:24,104,145,184,282,373,530): explainer
+- `q-bsu-basics.layout` (dist/veileder-knowledge.js:97,136,182,185,283,374,488,528,564): overview
+- `q-bsu-basics.id` (dist/veileder-knowledge.js:375): q-bsu-basics
+- `q-bsu-basics.searchFamily` (dist/veileder-knowledge.js:6,7,375,376,378,384,422,426,427,428,430,432,435,442): bsu
+- `q-bsu-basics.category` (dist/veileder-knowledge.js:6,7,375,376,378,384,422,426,427,428,430,432,435,442): bsu
+- `q-bsu-basics.title` (dist/veileder-knowledge.js:379,388): Hva er BSU?
+- `q-bsu-basics.published` (dist/veileder-knowledge.js:380): 2026-10-22
+- `q-bsu-basics.changed` (dist/veileder-knowledge.js:189,190,287,288,381,382): 2026-10-29
+- `q-bsu-basics.checked` (dist/veileder-knowledge.js:189,190,287,288,381,382): 2026-10-29
+- `q-bsu-basics.keys[0]` (dist/veileder-knowledge.js:6,7,375,376,378,384,422,426,427,428,430,432,435,442): bsu
+- `q-bsu-basics.keys[1]` (dist/veileder-knowledge.js:385,390,392,426,427,442): boligsparing
+- `q-bsu-basics.questions[0]` (dist/veileder-knowledge.js:379,388): Hva er BSU?
+- `q-bsu-basics.questions[1]` (dist/veileder-knowledge.js:389): Hva betyr BSU?
+- `q-bsu-basics.questions[2]` (dist/veileder-knowledge.js:390): Hvordan fungerer boligsparing for ungdom?
+- `q-bsu-basics.intro` (dist/veileder-knowledge.js:392): BSU betyr boligsparing for ungdom. Du kan spare til og med året du fyller 33 og sette inn opptil 27 500 kroner i året og 300 000 kroner totalt. Rentene kommer i tillegg og teller ikke med i innskuddsgrensene.
+- `q-bsu-basics.tradeoffs.pros[0].title` (dist/veileder-knowledge.js:396): Lavere skatt
+- `q-bsu-basics.tradeoffs.pros[0].text` (dist/veileder-knowledge.js:397): Du kan få 10 prosent av årets innskudd i skattefradrag, maksimalt 2 750 kroner. Du må betale nok skatt for å få fullt fradrag. Eier du bolig 31. desember, alene eller sammen med andre, får du ikke fradrag det året. Pengene må være satt inn før årets slutt, og banken må rapportere innskuddet til Skatteetaten.
+- `q-bsu-basics.tradeoffs.pros[1].title` (dist/veileder-knowledge.js:400): Høyere rente
+- `q-bsu-basics.tradeoffs.pros[1].text` (dist/veileder-knowledge.js:401): Ifølge SSB har BSU i snitt hatt høyere rente enn andre bundne bankinnskudd hvert år siden 2018. Bankene bestemmer renten, så din kan være høyere eller lavere.
+- `q-bsu-basics.tradeoffs.cons[0].title` (dist/veileder-knowledge.js:406): Tilbakebetaling ved annen bruk
+- `q-bsu-basics.tradeoffs.cons[0].text` (dist/veileder-knowledge.js:407): Bruker du tidligere års innskudd til andre formål, bryter du vilkårene og må betale tilbake skattefradrag du tidligere har fått, gjennom økt skatt. Har du brukt en del av pengene på egen bolig etter vilkårene, gjelder tilbakebetalingen bare resten.
+- `q-bsu-basics.parts[0].title` (dist/veileder-knowledge.js:413): Hvilken bolig teller?
+- `q-bsu-basics.parts[0].text` (dist/veileder-knowledge.js:414): Både boligen du bor i og annen bolig teller, også en andel i et borettslag. Fritidsbolig alene hindrer ikke fradrag.
+- `q-bsu-basics.parts[1].title` (dist/veileder-knowledge.js:417): Hva kan pengene brukes til?
+- `q-bsu-basics.parts[1].text` (dist/veileder-knowledge.js:418): Blant annet kjøp av egen fast bolig, kjøpskostnader, renter og avdrag på boliglånet og oppussing og oppgradering av boligen. Det trenger ikke være ditt første boligkjøp. Når du har begynt å bruke bundne BSU-midler, det vil si tidligere års innskudd og renter opptjent til og med året du fyller 33, eller har brutt vilkårene, kan du ikke sette inn mer.
+- `q-bsu-basics.parts[2].title` (dist/veileder-knowledge.js:421): Mer om renter og konto
+- `q-bsu-basics.parts[2].table.caption` (tekst satt inn fra import eller annen formatering, se feltstien): Gjennomsnittlig innskuddsrente for husholdninger, prosent
+- `q-bsu-basics.parts[2].table.columns[0]` (dist/veileder-knowledge.js:423): År
+- `q-bsu-basics.parts[2].table.columns[1]` (dist/veileder-knowledge.js:7,379,388,389,392,401,418,423,426,427,431): BSU
+- `q-bsu-basics.parts[2].table.columns[2]` (tekst satt inn fra import eller annen formatering, se feltstien): Bundne innskudd
+- `q-bsu-basics.parts[2].table.rows[0][0]` (dist/veileder-knowledge.js:401,436,440): 2018
+- `q-bsu-basics.parts[2].table.rows[1][0]` (tekst satt inn fra import eller annen formatering, se feltstien): 2019
+- `q-bsu-basics.parts[2].table.rows[2][0]` (tekst satt inn fra import eller annen formatering, se feltstien): 2020
+- `q-bsu-basics.parts[2].table.rows[3][0]` (tekst satt inn fra import eller annen formatering, se feltstien): 2021
+- `q-bsu-basics.parts[2].table.rows[4][0]` (dist/veileder-knowledge.js:72,99,563): 2022
+- `q-bsu-basics.parts[2].table.rows[5][0]` (tekst satt inn fra import eller annen formatering, se feltstien): 2023
+- `q-bsu-basics.parts[2].table.rows[6][0]` (tekst satt inn fra import eller annen formatering, se feltstien): 2024
+- `q-bsu-basics.parts[2].table.rows[7][0]` (dist/veileder-knowledge.js:67,99,258,263,268,332,352,353,357,426,440,486): 2025
+- `q-bsu-basics.parts[2].table.rows[8][0]` (tekst satt inn fra import eller annen formatering, se feltstien): 2026 (jan. til aug.)
+- `q-bsu-basics.parts[2].table.note` (tekst satt inn fra import eller annen formatering, se feltstien): Snitt per år, regnet fra SSBs månedstall. Renten varierer med rentenivået i samfunnet. Tidligere renter sier ikke hva renten blir framover.
+- `q-bsu-basics.parts[2].text` (dist/veileder-knowledge.js:423): Årets innskudd kan tas ut før årets slutt uten å bryte vilkårene. Rentene er bundet til bolig. Renter som påløper fra og med året du fyller 34, kan likevel tas ut. Du kan bare opprette BSU-konto én gang, men kan flytte den ved direkte overføring mellom bankene.
+- `q-bsu-basics.sources[0].id` (dist/veileder-knowledge.js:426): tax-bsu-uttak
+- `q-bsu-basics.sources[0].title` (dist/veileder-knowledge.js:426): Skatteetaten: Skatte-ABC 2025/2026, uttak fra BSU
+- `q-bsu-basics.sources[0].url` (dist/veileder-knowledge.js:426): https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/b-19-boligsparing-for-ungdom-bsu/B-19.034/B-19.035/
+- `q-bsu-basics.sources[1].id` (dist/veileder-knowledge.js:427): bsu-satser-2026
+- `q-bsu-basics.sources[1].title` (dist/veileder-knowledge.js:427): Skatteetaten: Fradrag for boligsparing for ungdom (BSU), 2026
+- `q-bsu-basics.sources[1].url` (dist/veileder-knowledge.js:427): https://www.skatteetaten.no/satser/fradrag-for-boligsparing-for-ungdom-bsu/?year=2026
+- `q-bsu-basics.sources[2].id` (dist/veileder-knowledge.js:428): bsu-forskudd-2026
+- `q-bsu-basics.sources[2].title` (dist/veileder-knowledge.js:428): Skatteetaten: Forskuddsutskrivingen 2026
+- `q-bsu-basics.sources[2].url` (dist/veileder-knowledge.js:428): https://www.skatteetaten.no/rettskilder/type/uttalelser/uttalelser/forskuddsutskrivingen-2026/
+- `q-bsu-basics.sources[3].id` (dist/veileder-knowledge.js:7,426,430): tax-bsu
+- `q-bsu-basics.sources[3].title` (dist/veileder-knowledge.js:431): Skatteetaten: Bustadsparing for ungdom (BSU)
+- `q-bsu-basics.sources[3].url` (dist/veileder-knowledge.js:7,432): https://www.skatteetaten.no/nn/person/skatt/hjelp-til-rett-skatt/bank-og-lan/bsu--bustadsparing-for-ungdom/
+- `q-bsu-basics.sources[4].id` (dist/veileder-knowledge.js:435): ssb-bsu-historikk
+- `q-bsu-basics.sources[4].title` (dist/veileder-knowledge.js:436): SSB: Renter på innskudd, tabell 11018. Husholdninger, januar 2018 til august 2026. Uttrekk 28. oktober 2026.
+- `q-bsu-basics.sources[4].url` (dist/veileder-knowledge.js:437): https://www.ssb.no/statbank/table/11018?sq=30128709
+- `q-bsu-basics.review.text` (dist/veileder-knowledge.js:440): Regelår 2026. Skatte-ABC 2025/2026. Forskuddsutskrivingen er datert 15.12.2025, øvrige skattesider er udaterte. SSB-tabellen gjelder januar 2018 til august 2026. Lest 29.10.2026 av ChatGPT/Codex, egenkontroll.
+
+## Talltreff i sporede dist-filer
+
+Søk etter utvalgte kjente tallvarianter, ikke alle tall. Genererte filer er med og merkes. Treff er vurderingskandidater, ikke feil. Ingen byggesperre.
+
+- `dist/app.js:75` [må klassifiseres], tall 33: `// Aksen viser hele år eller hele måneder med like steg, aldri «2,33 år». Sluttidspunktet vises alltid.`
+- `dist/app.js:82` [må klassifiseres], tall 10: `const step=(months?[1,2,3,6,12]:[1,2,5,10,20,25,50,100,200,500,1000]).find(st=>count(st)<=most)\|\|Math.ceil(span/(most-1));`
+- `dist/app.js:184` [må klassifiseres], tall 10: `const niceStep=x=>{const p=10**Math.floor(Math.log10(x)),f=x/p;return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p;};`
+- `dist/app.js:185` [må klassifiseres], tall 10: `const transform=v=>s.log?Math.log10(1+Math.max(0,v)):v,top=s.log?(Number.isFinite(transform(max)*1.08)?transform(max)*1.08:transform(max)):(Number.isFinite(max*1.04/4)?niceStep(max*1.04/4)*4:max);`
+- `dist/app.js:192` [må klassifiseres], tall 10: `for(let i=0;i<5;i++){const yy=T+h-i*h/4,v=s.log?10**(top*i/4)-1:top*i/4;svg+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="#e6ebe1"/><text x="${L-9}" y="${yy+4}" text-anchor="end">${axisCompact(v)}</text>`;}`
+- `dist/app.js:193` [må klassifiseres], tall 10: `for(const tick of timeTicks(maxTime,W<300?3:W<450?4:7)){const pos=maxTime?tick.t/maxTime:0;svg+=`<text x="${L+w*pos}" y="${H-10}" text-anchor="${pos>.97?'end':pos<.03?'start':'middle'}">${tick.label}</text>`;}`
+- `dist/app.js:198` [må klassifiseres], tall 10: `for(const a of series)svg+=`<path d="${path(a.points)}" fill="none" stroke="${a.color}" stroke-width="${a.bold\|\|a.longDash?3:2}" ${a.dash?'stroke-dasharray="5 5"':a.longDash?'stroke-dasharray="10 6"':''}/>`;`
+- `dist/app.js:210` [må klassifiseres], tall 10: `function tips(need){const content=[];if(s.years<5\|\|s.purpose==='buffer')content.push(['Når pengene skal brukes snart','En kort eller fast frist gir lite rom for å vente etter et børsfall. Undersøk bankvilkår og innskuddsgaranti for penger du må ha tilgjengelige.']);else content.push(['En plan du kan holde fast ved','Test lavere avkastning før du bestemmer sparebeløpet. Store svingninger kan gjøre en plan vanskelig å følge, selv med lang tid igj [avkortet, se kildelinjen]`
+- `dist/app.js:262` [må klassifiseres], tall 10: `// kopiering fikk dem som om de var riktige (funnet i Safari Reader 29.10.2026).`
+- `dist/assumptions.js:7` [må klassifiseres], tall 10: `checked:'23.10.2026',`
+- `dist/bsu-rates.js:3` [generert], tall 33: `const data={"caption":"Gjennomsnittlig innskuddsrente for husholdninger, prosent","columns":["År","BSU","Bundne innskudd"],"rows":[["2018",3.04,2.03],["2019",3.33,2.25],["2020",2.94,1.95],["2021",2.47,1.42],["2022",3.01,1.97],["2023",4.98,3.79],["2024",5.99,4.8],["2025",5.85,4.68],["2026 (jan. til aug.)",5.49,4.48]],"note":"Snitt per år, regnet fra SSBs månedstall. Renten varierer med rentenivået i samfunnet. Tidligere renter sier ikke hva renten [avkortet, se kildelinjen]`
+- `dist/chart-summary.js:2` [må klassifiseres], tall 10: `// Retter UU-feilen fra ekstern skjermlesertest 28.10.2026 (WCAG 1.1.1): grafen hadde bare sluttbeløp og akser i tekst.`
+- `dist/engine.js:2` [må klassifiseres], tall 10, 300000, 37.84: `const defaults={userAge:0,ageKnown:false,until67:false,riskChosen:false,taxEnabled:false,taxModel:"ask",taxFreeCapital:0,taxShield:0,taxRate:37.84,taxableShare:50,start:0,monthly:2000,years:10,rate:5,inflation:2.5,fee:0.2,growth:0,goal:500000,goalReal:false,real:false,bank:3.5,spread:2,extra:0,extraYear:10,crash:0,crashYear:15,stress:'medium',purpose:'freedom',log:false,withdraw:25000,retireYears:25,annualWithdraw:24000,withdrawMode:"amount",with [avkortet, se kildelinjen]`
+- `dist/engine.js:27` [må klassifiseres], tall 10: `start:R(0,1e10,' kr','Du har allerede'),monthly:R(0,1e7,' kr','Du sparer hver måned'),years:R(1/24,100,' år','Du vil spare i',{minText:'én måned'}),rate:R(-100,100,' %','Antatt årlig vekst',{open:true}),`
+- `dist/engine.js:29` [må klassifiseres], tall 10: `bank:R(0,100,' %','Bankrente å sammenligne med'),spread:R(0,100,' prosentpoeng','Avvik fra valgt avkastning'),extra:R(0,1e10,' kr','Ekstrainnskudd'),extraYear:R(0,100,' år','Innskudd etter'),`
+- `dist/engine.js:34` [må klassifiseres], tall 10: `dreamCost:R(0,1e11,' kr','Budsjett for kjøpet'),dreamStart:R(0,1e10,' kr','Allerede satt av'),dreamYears:R(1/24,100,' år','Tid til kjøpet',{minText:'én måned'}),`
+- `dist/engine.js:42` [må klassifiseres], tall 34: `purpose:[['freedom','home','buffer','dream'],'Formål'],savingsType:[['','checking','savings','index'],'Spareform'],ageGroup:[['all','18-24','25-29','30-34','35-39','40-44','45-49','50-54','55-66','67+'],'Aldersgruppe']};`
+- `dist/engine.js:48` [må klassifiseres], tall 10: `// Antatt årlig vekst kan være negativ (beslutning 23.10.2026): modellen gjør årsveksten om til månedsvekst med`
+- `dist/experience.js:35` [må klassifiseres], tall 300000: `freedom:{name:'Friår',cost:300000,years:8,monthly:2500,type:'freedom'},`
+- `dist/export-kit.js:9` [må klassifiseres], tall 10: `for(const [name,value]of Object.entries(files)){const filename=encoder.encode(name),data=typeof value==='string'?encoder.encode(value):value,crc=crc32(data),head=new Uint8Array(30+filename.length),h=new DataView(head.buffer);h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(6,0x800,true);h.setUint16(10,0,true);h.setUint16(12,0x21,true);h.setUint32(14,crc,true);h.setUint32(18,data.length,true);h.setUint32(22,data.length,true);h.set [avkortet, se kildelinjen]`
+- `dist/export-kit.js:12` [må klassifiseres], tall 10: `const directory=concat(central),end=new Uint8Array(22),e=new DataView(end.buffer);e.setUint32(0,0x06054b50,true);e.setUint16(8,central.length,true);e.setUint16(10,central.length,true);e.setUint32(12,directory.length,true);e.setUint32(16,offset,true);return concat([...parts,directory,end]);`
+- `dist/guidance.js:1` [må klassifiseres], tall 10: `const SOURCES={cpi:'https://www.ssb.no/priser-og-prisindekser/konsumpriser/statistikk/konsumprisindeksen',forecast:'https://www.norges-bank.no/aktuelt/publikasjoner/Pengepolitisk-rapport/2026/ppr-32026/nettrapport-ppr-32026/',fund:'https://www.forbrukerradet.no/sparing-i-fond-og-spareprofiler/',age:'https://vff.no/documents/Faktablad/2026/Spareavtaleunders%C3%B8kelsen/FAKTAARK_Spareavtaleunders%C3%B8kelsen-10.07.26.pdf'};`
+- `dist/guidance.js:5` [må klassifiseres], tall 34: `const AGE_CHOICES={'all':'Alle voksne','18-24':'18 til 24 år','25-29':'25 til 29 år','30-34':'30 til 34 år','35-39':'35 til 39 år','40-44':'40 til 44 år','45-49':'45 til 49 år','50-54':'50 til 54 år','55-66':'55 til 66 år','67+':'67 år og eldre'};`
+- `dist/guidance.js:7` [må klassifiseres], tall 34: `const BANK_STATS=[{label:'17 til 34 år',max:34,mean:170500,median:68300},{label:'35 til 54 år',max:54,mean:264100,median:81400},{label:'55 til 66 år',max:66,mean:535300,median:143400},{label:'67 år og eldre',max:Infinity,mean:834800,median:377700}];`
+- `dist/guidance.js:9` [må klassifiseres], tall 10: `const all=key==='all',age=Number.parseInt(key,10);`
+- `dist/guidance.js:13` [må klassifiseres], tall 34: `const legacy={'18-29':['18-24','25-29'],'30-39':['30-34','35-39'],'40-49':['40-44','45-49'],'50+':['50-54','55-66','67+']};`
+- `dist/guidance.js:29` [må klassifiseres], tall 10: `const historical=(Math.pow(100/72.6,1/10)-1)*100;`
+- `dist/index.html:8` [må klassifiseres], tall 10: `<link rel="stylesheet" href="layout.css?v=10"><script defer src="layout.js?v=5"></script><link rel="stylesheet" href="theme.css?v=2"><link rel="stylesheet" href="navigation.css?v=4"><link rel="canonical" href="https://spareverksted.no/">`
+- `dist/index.html:69` [må klassifiseres], tall 34: `<details class="panel context-panel"><summary>Hva er vanlig å ha spart?</summary><p>Statistikk gir perspektiv, men er ikke en målestokk for hva du bør ha.</p><label for="ageGroup">Aldersgruppe<select id="ageGroup"><option value="all">Alle voksne</option><option value="18-24">18 til 24 år</option><option value="25-29">25 til 29 år</option><option value="30-34">30 til 34 år</option><option value="35-39">35 til 39 år</option><option value="40-44">40 [avkortet, se kildelinjen]`
+- `dist/index.html:73` [må klassifiseres], tall 80: `<div id="mobileSummary" class="mobile-summary"><div class="mobile-amount"><span id="mobileResultLabel">Regneeksempel · før skatt</span><strong id="mobileTotal"></strong></div><svg id="mobileCurve" viewBox="0 0 80 38" aria-hidden="true"><path id="mobilePaidCurve" d="M0 0" fill="none" stroke="currentColor" stroke-dasharray="3 3"></path><path id="mobileValueCurve" d="M0 0" fill="none" stroke="currentColor" stroke-width="2.5"></path></svg><button id= [avkortet, se kildelinjen]`
+- `dist/index.html:80` [må klassifiseres], tall 37,84: `<dialog id="taxDialog" aria-labelledby="taxTitle"><div class="panel-title"><h2 id="taxTitle">Et anslag etter skatt</h2><button type="button" id="closeTax">Lukk</button></div><p>Skatten avhenger av kontoen og hvor mye av uttaket som er skattepliktig.</p><form id="taxForm"><label for="taxModel">Hvordan vil du anslå skatten?<select id="taxModel"><option value="ask">ASK: innskudd tas ut først</option><option value="share">Jeg velger skattepliktig and [avkortet, se kildelinjen]`
+- `dist/index.html:81` [må klassifiseres], tall 10: `<noscript><p>Slå på JavaScript for å bruke kalkulatoren.</p></noscript><script src="engine.js?v=19"></script><script src="tax.js?v=10"></script><script src="export-kit.js?v=10"></script><script src="assumptions.js?v=3"></script><script src="meaning.js?v=7"></script><script src="chart-summary.js?v=1"></script><script src="app.js?v=ux39"></script><script src="guidance.js?v=19"></script><script src="experience.js?v=ux11"></script><script src="journe [avkortet, se kildelinjen]`
+- `dist/journey.js:28` [må klassifiseres], tall 34: `function ageGroupFor(age){if(age<18)return 'all';if(age<25)return '18-24';if(age<30)return '25-29';if(age<35)return '30-34';if(age<40)return '35-39';if(age<45)return '40-44';if(age<50)return '45-49';if(age<55)return '50-54';if(age<67)return '55-66';return '67+';}`
+- `dist/journey.js:37` [må klassifiseres], tall 10: `const SLIDER_SPECS={start:[0,1000000,1000],monthly:[0,20000,100],years:[0.5,50,.5],rate:[0,15,.1],spread:[0,5,.1],dreamStart:[0,500000,1000],dreamMonthly:[0,20000,100],dreamYears:[0.5,30,.5],dreamCost:[0,1000000,1000],annualWithdraw:[0,600000,1000],withdrawPercent:[0,10,.1]};`
+- `dist/journey.js:105` [må klassifiseres], tall 10: `$('exportJson').onclick=()=>guardedExport(()=>downloadData(JSON.stringify({format:'spareverksted',version:10,created:new Date().toISOString(),state:{...s},mode,view:{...view},level,tables:exportSheets()},null,2),'application/json;charset=utf-8','spareverksted.json'));`
+- `dist/layout.css:8` [må klassifiseres], tall 10: `.site-menu>summary{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-weight:600;list-style:none;cursor:pointer}`
+- `dist/layout.css:12` [må klassifiseres], tall 10: `.menu-panel{position:absolute;right:0;top:calc(100% + 10px);width:260px;max-width:calc(100vw - 32px);padding:8px;border:1px solid var(--line);border-radius:14px;background:var(--surface,#fff);box-shadow:0 12px 36px #183f3626;z-index:40}`
+- `dist/layout.css:14` [må klassifiseres], tall 10: `.site-header .site-menu .site-nav a{min-height:44px;padding:10px 12px;font-size:14px;white-space:normal}`
+- `dist/layout.css:16` [må klassifiseres], tall 10: `.site-menu .actions button,.site-menu .actions .guide-return{margin:0;padding:10px 12px;min-height:44px;border:0;background:none;font-size:14px!important;text-align:left;color:var(--ink);font-weight:500;flex:none}`
+- `dist/layout.css:22` [må klassifiseres], tall 10: `.display-options>summary{list-style:none;cursor:pointer;padding:8px 10px;min-height:40px;border:1px solid var(--line);border-radius:9px;font-size:13px;white-space:nowrap;background:var(--surface,#fff)}`
+- `dist/layout.css:27` [må klassifiseres], tall 10: `.page-nav button{padding:10px 18px;font-size:14px;min-height:44px}`
+- `dist/layout.css:37` [må klassifiseres], tall 10: `.journey-open .start-choices button,.journey-open .start-choices button[aria-pressed=true]{display:block;padding:11px 12px;border-radius:10px;text-align:center}`
+- `dist/layout.css:72` [må klassifiseres], tall 34: `#basic .field-label{min-height:34px;padding-right:24px;line-height:1.4}`
+- `dist/layout.css:84` [må klassifiseres], tall 10: `.chartpanel .segmented button{font-size:12px;padding:7px 10px}`
+- `dist/layout.css:86` [må klassifiseres], tall 10, 34: `.welcome-intro h1{font-size:34px;margin:4px 0 10px}.welcome-intro>p:last-child{font-size:14px}`
+- `dist/layout.css:87` [må klassifiseres], tall 10: `.start-choices{grid-template-columns:1fr;gap:10px}`
+- `dist/layout.css:93` [må klassifiseres], tall 10: `.journey-fields label{margin-top:12px;font-size:12px}.journey-fields .optional{display:inline;font-size:10px}`
+- `dist/layout.css:95` [må klassifiseres], tall 10: `.journey-form .panel-title h2{font-size:17px}.journey-form .button-row{gap:10px}`
+- `dist/layout.css:99` [må klassifiseres], tall 10: `.question-row input{font-size:16px}.topic-buttons{gap:6px}.topic-buttons button{font-size:12px;padding:8px 10px;min-height:40px}`
+- `dist/layout.css:104` [må klassifiseres], tall 10: `@media(max-width:350px){.brand{font-size:18px}.site-menu>summary{padding:8px;font-size:13px}.intro h1{font-size:25px}.journey-fields{gap:0 10px}}`
+- `dist/layout.css:109` [må klassifiseres], tall 10: `.context-strip>p:not(:empty){color:var(--ink,#244c3d);background:var(--surface-soft,#edf3e7);border:1px solid var(--control-border,#d4dfcc);border-radius:10px;padding:12px 15px;line-height:1.6;font-weight:550}`
+- `dist/layout.css:129` [må klassifiseres], tall 10: `.next-steps h3{font-size:16px}.next-steps ol{padding-left:21px;margin:10px 0 0;font-size:14px}.next-steps li+li{margin-top:7px}`
+- `dist/layout.css:131` [må klassifiseres], tall 10: `.full-answer>summary:after,.answer-sources>summary:after,.guidance-about>summary:after{top:10px}`
+- `dist/layout.css:137` [må klassifiseres], tall 10: `.suggested-questions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}`
+- `dist/layout.css:139` [må klassifiseres], tall 10: `.topic-picker>summary{min-height:44px;display:flex;align-items:center}.topic-picker>summary:after{top:10px}`
+- `dist/layout.css:161` [må klassifiseres], tall 10: `.question-row{flex-direction:row}.question-row button{align-self:stretch;padding:10px 13px}`
+- `dist/layout.css:165` [må klassifiseres], tall 10: `.mobile-summary{gap:10px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));min-height:76px}`
+- `dist/layout.css:194` [må klassifiseres], tall 10: `.meaning-action-text{background:var(--soft);border-radius:10px;padding:10px 12px}`
+- `dist/layout.css:196` [må klassifiseres], tall 10: `.value-mode{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:4px 0 10px}.value-mode>span{font-size:14px;font-weight:600}.value-mode .segmented{flex:1 1 240px}`
+- `dist/layout.css:198` [må klassifiseres], tall 10: `.savings-note{font-size:14px;line-height:1.45;background:var(--soft);border-radius:10px;padding:8px 12px;margin:8px 0 0}.savings-note button{min-height:44px;font-size:14px;padding:0 4px}`
+- `dist/navigation.css:4` [må klassifiseres], tall 10: `.hero-result .result-assumptions{font-size:13px;line-height:1.5;color:inherit;margin:10px 0 0}`
+- `dist/navigation.css:6` [må klassifiseres], tall 10: `.result-navigation .text-link,.return-fields{min-height:44px;padding-block:10px}`
+- `dist/om.css:3` [må klassifiseres], tall 34: `.about-intro h1{font-size:clamp(34px,5vw,54px);line-height:1.12;letter-spacing:-1.5px;margin:14px 0 24px;font-weight:600}`
+- `dist/om.css:7` [må klassifiseres], tall 34: `.giving-section>h2{font-size:clamp(25px,3.5vw,34px);line-height:1.2;max-width:650px}`
+- `dist/om.css:13` [må klassifiseres], tall 10: `.give-button{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:52px;padding:12px 16px;background:var(--primary-bg,#183f36);color:var(--on-primary,#fff);border-radius:9px;text-decoration:none;font-weight:650;line-height:1.4}`
+- `dist/om.css:26` [må klassifiseres], tall 10: `.giving-choice{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}.giving-choice a,.time-action{display:inline-flex;align-items:center;min-height:48px;padding:10px 16px;border:1px solid var(--line);border-radius:9px;font-weight:600;text-underline-offset:3px;box-sizing:border-box}#tid,#gaver{scroll-margin-top:24px}`
+- `dist/om.css:30` [må klassifiseres], tall 10: `.kontakt button{min-height:48px;padding:10px 16px}`
+- `dist/om.css:36` [må klassifiseres], tall 10: `.check-log summary{padding-top:4px;padding-bottom:4px;margin:6px 0}.check-log ul{margin-top:10px}`
+- `dist/om.html:12` [må klassifiseres], tall 10: `<link rel="stylesheet" href="layout.css?v=10"><script defer src="layout.js?v=5"></script>`
+- `dist/personvern.html:12` [må klassifiseres], tall 10: `<link rel="stylesheet" href="layout.css?v=10"><script defer src="layout.js?v=5"></script>`
+- `dist/personvern.html:21` [må klassifiseres], tall 10: `.privacy-table th,.privacy-table td{border-top:1px solid var(--line,#d6dbd2);padding:10px 8px;text-align:left;vertical-align:top}`
+- `dist/spor.html:2` [må klassifiseres], tall 10: `<html lang="nb"><head><meta charset="utf-8"><script src="theme.js?v=1"></script><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Forklaringer av BSU, ASK og fondskonto, med kilder og kontrollgrunnlag."><meta name="theme-color" content="#183f36"><title>Spør om sparing · Spareverksted</title><link rel="stylesheet" href="style.css?v=17"><link rel="stylesheet" href="veileder.css?v=13"><script defer  [avkortet, se kildelinjen]`
+- `dist/spor.html:23` [må klassifiseres], tall 80: `<section id="contextPanel" class="context-strip" aria-label="Opplysningene dine"><p id="contextSummary"></p><details id="profileDetails"><summary>Endre eller legg til opplysninger</summary><p class="hint">Valgfritt. Brukes bare til å tilpasse forklaringene. Sparetiden gjelder temaet du ser på.</p><form id="profileForm"><div class="ask-fields"><label for="age">Din alder<input type="number" id="age" name="age" min="0" max="110" step="1" placeholder [avkortet, se kildelinjen]`
+- `dist/style.css:2` [må klassifiseres], tall 10, 34, 80: `*{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button,a,summary,input,select{touch-action:manipulation}button{cursor:pointer;border:1px solid var(--control-border,#cfdacf);border-radius:9px;background:var(--surface);color:var(--ink);padding:10px 16px;font-weight:600;tran [avkortet, se kildelinjen]`
+- `dist/style.css:6` [må klassifiseres], tall 10: `@media(max-width:390px){.brand{font-size:19px}.site-header{padding:14px 18px}.actions{width:100%}.actions button{flex:1}.intro h1{font-size:35px}.big{font-size:36px}#basic{gap:0 11px}label,.field{font-size:12px}.metrics{grid-template-columns:1fr 1fr}.metrics>div:last-child{grid-column:1/-1}.two{gap:0 10px}.dist-row{grid-template-columns:110px minmax(0,1fr) 42px;gap:8px}.chartpanel .panel-title{flex-wrap:wrap}}`
+- `dist/style.css:8` [må klassifiseres], tall 10: `@media print{@page{size:A4;margin:16mm}body{background:var(--surface,white);color:var(--ink,#172f28);font-size:11px}body>*{display:none!important}#printReportContent{display:block!important}#printReportContent .report-result{background:var(--surface-soft,#edf2e6)!important;print-color-adjust:exact}#printReportContent h2{font-size:25px}#printReportContent .report-grid{display:grid;grid-template-columns:1fr 1fr}#printReportContent .report-assumptio [avkortet, se kildelinjen]`
+- `dist/style.css:10` [må klassifiseres], tall 10, 34: `@media(max-width:760px){.intro h1{margin:0 0 10px;font-size:34px}.level-control{margin-top:19px}.level-control p{font-size:12px!important}.page-nav{margin-bottom:18px}.page-nav button{padding-top:9px;padding-bottom:10px}.plan-inputs .panel-title{margin-bottom:2px}.plan-inputs h2{font-size:16px}#basic .field{position:relative}#basic .field-label{display:block;padding-right:26px;min-height:36px;line-height:1.4}#basic .help-button{position:absolute; [avkortet, se kildelinjen]`
+- `dist/style.css:15` [må klassifiseres], tall 10: `body[data-stage=welcome] .actions,body[data-stage=welcome] .mobile-summary{display:none!important}.guide-return{margin-left:auto;margin-right:18px}.welcome-wizard{max-width:940px;margin:14px auto 70px}.welcome-intro{max-width:650px;margin-bottom:30px}.welcome-intro h1{font-size:clamp(36px,4.8vw,57px);line-height:1.12;letter-spacing:-1.8px;font-weight:550;margin:14px 0 18px}.welcome-intro em{color:var(--muted,#55744e)}.welcome-intro>p:last-child{c [avkortet, se kildelinjen]`
+- `dist/style.css:17` [må klassifiseres], tall 10: `@media(max-width:760px){.welcome-wizard{margin-top:10px}.welcome-intro h1{font-size:39px;letter-spacing:-1.3px}.welcome-intro>p:last-child{font-size:15px}.start-choices{gap:12px}.start-choices button{padding:20px 17px}.start-choices button[aria-pressed=true]{padding:19px 16px}.start-choices strong{font-size:18px}.start-choices button>span:last-child{font-size:12px}.choice-icon{font-size:26px;margin-bottom:15px}.journey-form{padding:22px 20px}.jou [avkortet, se kildelinjen]`
+- `dist/style.css:18` [må klassifiseres], tall 10: `@media(max-width:390px){.start-choices{grid-template-columns:1fr}.start-choices button{display:grid;grid-template-columns:28px 1fr;column-gap:16px}.choice-icon{grid-row:1/3;margin:0}.start-choices strong{font-size:19px}.start-choices button>span:last-child{grid-column:2;margin-top:6px;font-size:12px}.welcome-intro{margin-bottom:23px}.welcome-intro h1{font-size:36px}.journey-fields{grid-template-columns:1fr}.fan-summary{grid-template-columns:1fr;g [avkortet, se kildelinjen]`
+- `dist/style.css:38` [må klassifiseres], tall 10: `/* Gyldig HTML (W3C-validator 28.10.2026): feltboksen er span inne i label, og hjelpeknapper står utenfor label. Utseendet skal være uendret. */`
+- `dist/theme.css:6` [må klassifiseres], tall 33: `--muted:#b8cbbf;--line:#647e6d;--soft:#293e33;--shadow:0 12px 36px #0003;--white:#1c2f27;`
+- `dist/theme.css:7` [må klassifiseres], tall 33: `--surface-soft:#293e33;--control-border:#8ca895;--positive:#b4e4c3;--positive-bg:#243d2c;`
+- `dist/theme.css:46` [må klassifiseres], tall 34: `@media(max-width:480px){.brand-tools{gap:0 6px}.site-header,.guidance-page .site-header{min-height:64px;gap:6px;padding-inline:12px}.brand{font-size:18px;letter-spacing:-.7px}.theme-picker button{width:34px}.site-menu>summary{padding-inline:8px;gap:5px}}`
+- `dist/tilgjengelighet.html:12` [må klassifiseres], tall 10: `<link rel="stylesheet" href="layout.css?v=10"><script defer src="layout.js?v=5"></script>`
+- `dist/veileder-context.js:8` [må klassifiseres], tall 80: `const p=raw.profile\|\|{},nums={age:[0,110],years:[0,80]};`
+- `dist/veileder-context.js:12` [må klassifiseres], tall 80: `for(const [id,n]of Object.entries(raw.horizons\|\|{})){if(!/^[a-z][a-z0-9-]{0,60}$/.test(id)\|\|['constructor','prototype'].includes(id))continue;if(n===null\|\|typeof n==='number'&&Number.isFinite(n)&&n>=0&&n<=80)out.horizons[id]=n;}`
+- `dist/veileder-engine.js:50` [må klassifiseres], tall 80: `const out={age:number(p.age,0,110,'Alder'),years:number(p.years,0,80,'Tidshorisont')};`
+- `dist/veileder-facts.js:4` [må klassifiseres], tall 10: `const checked='2026-10-22',year=2026;`
+- `dist/veileder-facts.js:10` [må klassifiseres], tall 10, 2750, 27500, 300000, 33: `bsuMaxAge:record(33,'år',bsu),bsuAnnual:record(27500,'kr',bsu),bsuTotal:record(300000,'kr',bsu),bsuPercent:record(10,'prosent',bsu),bsuMaxDeduction:record(2750,'kr',bsu),`
+- `dist/veileder-facts.js:11` [må klassifiseres], tall 10, 80: `ipsAnnual:record(25000,'kr',ips),ipsStartAge:record(62,'år',ips),ipsEndAge:record(80,'år',ips),ipsMinYears:record(10,'år',ips),ipsIntroduced:record(2017,'årstall',ips),`
+- `dist/veileder-knowledge.js:28` [må klassifiseres], tall 10: `"checked": "2026-10-25",`
+- `dist/veileder-knowledge.js:43` [må klassifiseres], tall 10: `"title": "Eksempel: 10 000 kr i to år",`
+- `dist/veileder-knowledge.js:44` [må klassifiseres], tall 10: `"text": "10 000 kr til 5 % årlig rente blir 10 500 kr etter ett år og 11 025 kr etter to. Det andre året er rentene 525 kr, hvorav 25 kr kommer fra tidligere renter. Alle regneeksemplene bruker valgte tall, uten nye innskudd eller uttak med mindre annet er beskrevet, før skatt og kostnader. Prisvekst er bare med der den er oppgitt. Renten er uendret, med årlig rentetillegg, med mindre annet er beskrevet. Tallene er ingen prognose."`
+- `dist/veileder-knowledge.js:49` [må klassifiseres], tall 10: `"text": "Ved 5 % rente blir startbeløpet omtrent 16 289 kr etter 10 år og 26 533 kr etter 20. Renten og tiden påvirker begge resultatet. Tas rentene ut årlig, blir de i stedet 500 kr per år: etter to år står 10 000 kr igjen, og 1 000 kr er utbetalt. Kontovilkårene avgjør når renter legges til."`
+- `dist/veileder-knowledge.js:53` [må klassifiseres], tall 10: `"text": "Hovedregelen er at renteinntekt er skattepliktig. Skatt og kostnader reduserer beløpet. Med 2 % rente blir 10 000 kr til 10 404 kr etter to år. Ved 2,5 % prisvekst tilsvarer det omtrent 9 903 kr ved startens priser. Med 5 % rente ville også kjøpekraften økt."`
+- `dist/veileder-knowledge.js:57` [må klassifiseres], tall 10: `"text": "Risiko og forventet avkastning varierer med plasseringen. 10 000 kr som stiger 10 % og så faller 10 %, blir 9 900 kr. Avkastning betyr det investeringen tjener eller taper."`
+- `dist/veileder-knowledge.js:67` [må klassifiseres], tall 10: `"title": "Skatteetaten: Skatte-ABC R-10-1.1 Hovedregel (2025/2026)",`
+- `dist/veileder-knowledge.js:68` [må klassifiseres], tall 10: `"url": "https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/r-10-renteinntekter/R-10.001/R-10.002/"`
+- `dist/veileder-knowledge.js:99` [må klassifiseres], tall 10: `"text": "Skatte-ABC: 2025/2026. SSB: 15.09.2022. Kildekontroll 25.10.2026. OpenStax-formelen lest 28.10.2026. Språkrevisjon samme dato, egenkontroll. Ingen ny uavhengig fagkontroll."`
+- `dist/veileder-knowledge.js:108` [må klassifiseres], tall 10: `"checked":"2026-10-28",`
+- `dist/veileder-knowledge.js:149` [må klassifiseres], tall 10: `"checked":"2026-10-25",`
+- `dist/veileder-knowledge.js:188` [må klassifiseres], tall 10: `"published": "2026-10-24",`
+- `dist/veileder-knowledge.js:189` [må klassifiseres], tall 10: `"changed": "2026-10-29",`
+- `dist/veileder-knowledge.js:190` [må klassifiseres], tall 10: `"checked": "2026-10-29",`
+- `dist/veileder-knowledge.js:226` [må klassifiseres], tall 37,84: `"text": "Tar du ut mer enn innskuddet du har igjen, betaler du skatt av det som overstiger innskuddet. Først trekkes eventuelt skjermingsfradrag fra. I 2026 er skatten 37,84 prosent av det skattepliktige beløpet. Tidligere uttak av innskudd reduserer beløpet du kan ta ut skattefritt."`
+- `dist/veileder-knowledge.js:234` [må klassifiseres], tall 80: `"text": "Personlige skattytere bosatt i EØS kan opprette ASK. Aksjene må være børsnoterte. Fond må være hjemmehørende i EØS og ha mer enn 80 prosent aksjer ved inntektsårets begynnelse. Kravene gjelder når du kjøper. Et verdipapir kan bli stående selv om det senere ikke oppfyller dem, for eksempel fordi selskapet flytter til USA."`
+- `dist/veileder-knowledge.js:259` [må klassifiseres], tall 10: `"url": "https://www.skatteetaten.no/rettskilder/type/handboker/skatte-abc/gjeldende/a-10-aksjesparekonto/A-10.001/"`
+- `dist/veileder-knowledge.js:263` [må klassifiseres], tall 10: `"title": "Skatteetaten: Skatte-ABC 2025/2026, A-10-9 Videreføring av aksjesparekonto ved arv eller gave",`
+- `dist/veileder-knowledge.js:264` [må klassifiseres], tall 10: `"url": "https://www.skatteetaten.no/nn/rettskjelder/type/handboker/skatte-abc/gjeldende/a-10-aksjesparekonto/A-10.030/"`
+- `dist/veileder-knowledge.js:268` [må klassifiseres], tall 10: `"text": "Skatteetatens sider er udaterte. Satsen gjelder inntektsåret 2026. Skatte-ABC gjelder utgaven 2025/2026. Lest 29.10.2026 av ChatGPT/Codex, egenkontroll. Jeg har ikke tatt med skatt ved flytting til utlandet, formuesskatt eller utenlandsk kildeskatt."`
+- `dist/veileder-knowledge.js:286` [må klassifiseres], tall 10: `"published": "2026-10-24",`
+- `dist/veileder-knowledge.js:287` [må klassifiseres], tall 10: `"changed": "2026-10-29",`
+- `dist/veileder-knowledge.js:288` [må klassifiseres], tall 10: `"checked": "2026-10-29",`
+- `dist/veileder-knowledge.js:312` [må klassifiseres], tall 10: `"text": "Du har satt inn 100 000 kr, og kontoen er verdt 150 000 kr. Uten tidligere uttak består et uttak på 30 000 kr av 20 000 kr innskudd og 10 000 kr gevinst før skjermingsfradrag. Tallene er et eksempel, ikke en beregning av skatten din."`
+- `dist/veileder-knowledge.js:321` [må klassifiseres], tall 37,84, 80: `"text": "Aksjeandel betyr hvor stor del som regnes som aksjer. Ved skatteberegningen regnes over 80 prosent som 100 prosent og under 20 prosent som null. Gjennomsnittet av de årlige andelene bestemmer fordelingen av gevinst mellom aksjedelen og rentedelen. Satsene i 2026 er henholdsvis 37,84 og 22 prosent. Aksjedelen gir grunnlag for skjermingsfradrag, som reduserer skattepliktig gevinst. Ved uttak må ubenyttet skjerming brukes mot gevinsten, ogs [avkortet, se kildelinjen]`
+- `dist/veileder-knowledge.js:352` [må klassifiseres], tall 10: `"title": "Finansdepartementet: Prop. 1 LS (2025/2026), punkt 8.10.2, fondskonto og gjeldende rett",`
+- `dist/veileder-knowledge.js:357` [må klassifiseres], tall 10: `"text": "Regelår 2026. Skatte-ABC 2025/2026 og rettledningen for 2026 og senere er lest sammen med personsidene og Prop. 1 LS (2025/2026), punkt 8.10.2 om gjeldende rett. Ingen oppdateringsdato oppgitt på Skatteetatens sider. Lest 29.10.2026 av ChatGPT/Codex, egenkontroll. Kontrollert av Lars og Claude, bekreftet av Lars 29.10.2026. Jeg har ikke tatt med selskaper, utflytting eller bestemte tilbyderes vilkår."`
+- `dist/veileder-knowledge.js:380` [må klassifiseres], tall 10: `"published": "2026-10-22",`
+- `dist/veileder-knowledge.js:381` [må klassifiseres], tall 10: `"changed": "2026-10-29",`
+- `dist/veileder-knowledge.js:382` [må klassifiseres], tall 10: `"checked": "2026-10-29",`
+- `dist/veileder-knowledge.js:392` [må klassifiseres], tall 27 500, 300 000, 33: `"intro": "BSU betyr boligsparing for ungdom. Du kan spare til og med året du fyller 33 og sette inn opptil 27 500 kroner i året og 300 000 kroner totalt. Rentene kommer i tillegg og teller ikke med i innskuddsgrensene.",`
+- `dist/veileder-knowledge.js:397` [må klassifiseres], tall 10, 2 750: `"text": "Du kan få 10 prosent av årets innskudd i skattefradrag, maksimalt 2 750 kroner. Du må betale nok skatt for å få fullt fradrag. Eier du bolig 31. desember, alene eller sammen med andre, får du ikke fradrag det året. Pengene må være satt inn før årets slutt, og banken må rapportere innskuddet til Skatteetaten."`
+- `dist/veileder-knowledge.js:418` [må klassifiseres], tall 33: `"text": "Blant annet kjøp av egen fast bolig, kjøpskostnader, renter og avdrag på boliglånet og oppussing og oppgradering av boligen. Det trenger ikke være ditt første boligkjøp. Når du har begynt å bruke bundne BSU-midler, det vil si tidligere års innskudd og renter opptjent til og med året du fyller 33, eller har brutt vilkårene, kan du ikke sette inn mer."`
+- `dist/veileder-knowledge.js:423` [må klassifiseres], tall 34: `"text": "Årets innskudd kan tas ut før årets slutt uten å bryte vilkårene. Rentene er bundet til bolig. Renter som påløper fra og med året du fyller 34, kan likevel tas ut. Du kan bare opprette BSU-konto én gang, men kan flytte den ved direkte overføring mellom bankene."`
+- `dist/veileder-knowledge.js:440` [må klassifiseres], tall 10: `"review": {"text": "Regelår 2026. Skatte-ABC 2025/2026. Forskuddsutskrivingen er datert 15.12.2025, øvrige skattesider er udaterte. SSB-tabellen gjelder januar 2018 til august 2026. Lest 29.10.2026 av ChatGPT/Codex, egenkontroll."}`
+- `dist/veileder-knowledge.js:446` [må klassifiseres], tall 10: `"checked":"2026-10-28",`
+- `dist/veileder-knowledge.js:486` [må klassifiseres], tall 10: `"review":{"text":"Skatteetatens hovedsider er udaterte. Regelår 2026; Skatte-ABC 2025/2026. Lest 28.10.2026, egenkontroll. Neste kontroll før 01.01.2027."},`
+- `dist/veileder-knowledge.js:493` [må klassifiseres], tall 10: `"checked":"2026-10-28",`
+- `dist/veileder-knowledge.js:513` [må klassifiseres], tall 80: `"text":"Ved kjøp må aksjene eller aksjefondet være hjemmehørende i EØS. Fondet må ha over 80 prosent aksjeandel ved inntektsårets begynnelse. Rene rentefond faller utenfor. Verdipapirer som oppfylte kravene ved kjøp, kan beholdes hvis kravene senere ikke er oppfylt."},`
+- `dist/veileder-knowledge.js:526` [må klassifiseres], tall 10: `"review":{"text":"Skatteetatens veiledning er udatert og omtaler 2026. Lest 28.10.2026, egenkontroll. Neste kontroll før 01.01.2027."},`
+- `dist/veileder-knowledge.js:533` [må klassifiseres], tall 10: `"checked":"2026-10-24",`
+- `dist/veileder-knowledge.js:563` [må klassifiseres], tall 10: `"review":{"text":"SSB-artikkel publisert 15.09.2022. Tidligere kildekontroll: 24.10.2026. Språkrevisjon: 28.10.2026, egenkontroll. Ingen ny faglig godkjenning."},`
+- `dist/veileder-published.js:1` [må klassifiseres], tall 10: `/* Publiseringsutvalg vedtatt av Lars 29.10.2026. Andre svar er utkast. */`
+- `dist/veileder.css:1` [må klassifiseres], tall 10, 34: `.guidance-page main{max-width:1080px}.guidance-page .site-header nav{display:flex;gap:20px;flex-wrap:wrap;font-size:14px}.guidance-page [aria-current=page]{font-weight:700;text-underline-offset:5px}.ask-intro{max-width:780px;margin-bottom:28px}.ask-intro h1{font-size:clamp(34px,5vw,50px);font-weight:550;letter-spacing:-1.5px;line-height:1.2;margin:12px 0}.ask-intro>p:last-child{font-size:18px;color:var(--muted)}.question-panel{margin-bottom:18px} [avkortet, se kildelinjen]`
+- `dist/veileder.css:3` [må klassifiseres], tall 10: `@media(max-width:480px){.ask-fields{grid-template-columns:1fr}.question-row{flex-direction:column}.question-row button{align-self:flex-start}.guidance-page .site-header nav{gap:16px}.topic-buttons button{padding:9px 10px}.context-strip .button-row button{width:100%}}`
+- `dist/veileder.css:5` [må klassifiseres], tall 10: `.explain-example{padding:16px 18px;background:var(--surface,white);border:1px solid var(--line);border-radius:12px}.explain-terms{max-width:800px;margin:19px 0}.explain-terms h3{font-size:15px;margin-bottom:5px}.explain-terms dl{margin:0}.explain-terms dt{font-size:14px;font-weight:600;margin-top:10px}.explain-terms dd{font-size:14px;margin:2px 0 0}.explain-next{max-width:800px;margin:18px 0}.explain-next a{display:inline-flex;align-items:center; [avkortet, se kildelinjen]`
+
+Tekstfelt: 154. Linjer med talltreff: 137.
+
+Filene undersøkes fra git ls-files. Usporede filer, bilder, PDF, andre tall, tallord og framtidige funksjoner dekkes ikke.
